@@ -26,7 +26,7 @@ export const BasicAuth = {
         }
         return {
             username,
-            password,
+            password
         };
-    },
+    }
 };

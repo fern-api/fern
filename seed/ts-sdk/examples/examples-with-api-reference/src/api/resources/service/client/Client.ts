@@ -2,21 +2,25 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import * as environments from "../../../../environments.js";
 import * as core from "../../../../core/index.js";
+import * as SeedExamples from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedExamples from "../../../index.js";
 
 export declare namespace ServiceClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ServiceClient {
     protected readonly _options: ServiceClient.Options;
 
     constructor(options: ServiceClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -27,28 +31,14 @@ export class ServiceClient {
      * @example
      *     await client.service.getMovie("movie-c06a4ad7")
      */
-    public getMovie(
-        movieId: SeedExamples.MovieId,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.Movie> {
+    public getMovie(movieId: SeedExamples.MovieId, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedExamples.Movie> {
         return core.HttpResponsePromise.fromPromise(this.__getMovie(movieId, requestOptions));
     }
 
-    private async __getMovie(
-        movieId: SeedExamples.MovieId,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.Movie>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getMovie(movieId: SeedExamples.MovieId, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedExamples.Movie>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/movie/${core.url.encodePathParam(movieId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/movie/${core.url.encodePathParam(movieId)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -56,7 +46,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedExamples.Movie, rawResponse: _response.rawResponse };
@@ -66,24 +56,21 @@ export class ServiceClient {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExamplesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /movie/{movieId}.");
-            case "unknown":
-                throw new errors.SeedExamplesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /movie/{movieId}.");
+            case "unknown": throw new errors.SeedExamplesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -115,28 +102,14 @@ export class ServiceClient {
      *         revenue: 1000000
      *     })
      */
-    public createMovie(
-        request: SeedExamples.Movie,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.MovieId> {
+    public createMovie(request: SeedExamples.Movie, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedExamples.MovieId> {
         return core.HttpResponsePromise.fromPromise(this.__createMovie(request, requestOptions));
     }
 
-    private async __createMovie(
-        request: SeedExamples.Movie,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.MovieId>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __createMovie(request: SeedExamples.Movie, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedExamples.MovieId>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/movie",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/movie"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -147,7 +120,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedExamples.MovieId, rawResponse: _response.rawResponse };
@@ -157,24 +130,21 @@ export class ServiceClient {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExamplesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /movie.");
-            case "unknown":
-                throw new errors.SeedExamplesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /movie.");
+            case "unknown": throw new errors.SeedExamplesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -189,45 +159,29 @@ export class ServiceClient {
      *         tag: "development"
      *     })
      */
-    public getMetadata(
-        request: SeedExamples.GetMetadataRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.Metadata> {
+    public getMetadata(request: SeedExamples.GetMetadataRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedExamples.Metadata> {
         return core.HttpResponsePromise.fromPromise(this.__getMetadata(request, requestOptions));
     }
 
-    private async __getMetadata(
-        request: SeedExamples.GetMetadataRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.Metadata>> {
+    private async __getMetadata(request: SeedExamples.GetMetadataRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedExamples.Metadata>> {
         const { shallow, tag, "X-API-Version": xApiVersion } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (shallow != null) {
-            _queryParams.shallow = shallow.toString();
+            _queryParams["shallow"] = shallow.toString();
         }
 
         if (tag != null) {
             if (Array.isArray(tag)) {
-                _queryParams.tag = tag.map((item) => item);
-            } else {
-                _queryParams.tag = tag;
+                _queryParams["tag"] = tag.map(item => item);
+            }
+            else {
+                _queryParams["tag"] = tag;
             }
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-API-Version": xApiVersion,
-            }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-API-Version": xApiVersion }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/metadata",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/metadata"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -235,7 +189,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedExamples.Metadata, rawResponse: _response.rawResponse };
@@ -245,24 +199,21 @@ export class ServiceClient {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExamplesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /metadata.");
-            case "unknown":
-                throw new errors.SeedExamplesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /metadata.");
+            case "unknown": throw new errors.SeedExamplesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -449,28 +400,14 @@ export class ServiceClient {
      *         }
      *     })
      */
-    public createBigEntity(
-        request: SeedExamples.BigEntity,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.Response> {
+    public createBigEntity(request: SeedExamples.BigEntity, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedExamples.Response> {
         return core.HttpResponsePromise.fromPromise(this.__createBigEntity(request, requestOptions));
     }
 
-    private async __createBigEntity(
-        request: SeedExamples.BigEntity,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.Response>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __createBigEntity(request: SeedExamples.BigEntity, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedExamples.Response>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/big-entity",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/big-entity"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -481,7 +418,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedExamples.Response, rawResponse: _response.rawResponse };
@@ -491,24 +428,21 @@ export class ServiceClient {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExamplesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /big-entity.");
-            case "unknown":
-                throw new errors.SeedExamplesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /big-entity.");
+            case "unknown": throw new errors.SeedExamplesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -524,28 +458,14 @@ export class ServiceClient {
      *         ttl: 420
      *     })
      */
-    public refreshToken(
-        request?: SeedExamples.RefreshTokenRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public refreshToken(request?: SeedExamples.RefreshTokenRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__refreshToken(request, requestOptions));
     }
 
-    private async __refreshToken(
-        request?: SeedExamples.RefreshTokenRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __refreshToken(request?: SeedExamples.RefreshTokenRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/refresh-token",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/refresh-token"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -556,7 +476,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -566,24 +486,21 @@ export class ServiceClient {
             throw new errors.SeedExamplesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExamplesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /refresh-token.");
-            case "unknown":
-                throw new errors.SeedExamplesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExamplesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /refresh-token.");
+            case "unknown": throw new errors.SeedExamplesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

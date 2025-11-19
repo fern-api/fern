@@ -1,5 +1,5 @@
 # Reference
-## FolderD Service
+## folderD.service
 <details><summary><code>client.folderD.service.<a href="/src/api/resources/folderD/resources/service/client/Client.ts">getDirectThread</a>() -> SeedAudiences.Response</code></summary>
 <dl>
 <dd>

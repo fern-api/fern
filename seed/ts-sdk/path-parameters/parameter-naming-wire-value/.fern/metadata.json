@@ -1,8 +1,8 @@
 {
-    "cliVersion": "DUMMY",
-    "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
-    "generatorConfig": {
-        "parameterNaming": "wireValue"
-    }
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-typescript-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "parameterNaming": "wireValue"
+  }
 }

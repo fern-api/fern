@@ -2,16 +2,18 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
+import * as SeedMixedFileDirectory from "../../../../../index.js";
+import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedMixedFileDirectory from "../../../../../index.js";
 import { MetadataClient } from "../resources/metadata/client/Client.js";
 
 export declare namespace EventsClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class EventsClient {
@@ -19,6 +21,7 @@ export class EventsClient {
     protected _metadata: MetadataClient | undefined;
 
     constructor(options: EventsClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -37,30 +40,20 @@ export class EventsClient {
      *         limit: 1
      *     })
      */
-    public listEvents(
-        request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
-        requestOptions?: EventsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedFileDirectory.user.Event[]> {
+    public listEvents(request: SeedMixedFileDirectory.user.ListUserEventsRequest = {}, requestOptions?: EventsClient.RequestOptions): core.HttpResponsePromise<SeedMixedFileDirectory.user.Event[]> {
         return core.HttpResponsePromise.fromPromise(this.__listEvents(request, requestOptions));
     }
 
-    private async __listEvents(
-        request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
-        requestOptions?: EventsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.user.Event[]>> {
+    private async __listEvents(request: SeedMixedFileDirectory.user.ListUserEventsRequest = {}, requestOptions?: EventsClient.RequestOptions): Promise<core.WithRawResponse<SeedMixedFileDirectory.user.Event[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
-            _queryParams.limit = limit.toString();
+            _queryParams["limit"] = limit.toString();
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users/events/",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/users/events/"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -68,7 +61,7 @@ export class EventsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedMixedFileDirectory.user.Event[], rawResponse: _response.rawResponse };
@@ -78,26 +71,21 @@ export class EventsClient {
             throw new errors.SeedMixedFileDirectoryError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedMixedFileDirectoryError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedMixedFileDirectoryTimeoutError(
-                    "Timeout exceeded when calling GET /users/events/.",
-                );
-            case "unknown":
-                throw new errors.SeedMixedFileDirectoryError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedMixedFileDirectoryError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedMixedFileDirectoryTimeoutError("Timeout exceeded when calling GET /users/events/.");
+            case "unknown": throw new errors.SeedMixedFileDirectoryError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

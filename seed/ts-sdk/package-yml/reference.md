@@ -52,7 +52,7 @@ await client.echo({
 </details>
 
 ## 
-## Service
+## service
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">nop</a>(nestedId) -> void</code></summary>
 <dl>
 <dd>

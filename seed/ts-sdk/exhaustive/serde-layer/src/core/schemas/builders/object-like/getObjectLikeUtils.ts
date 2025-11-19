@@ -7,7 +7,7 @@ import type { ObjectLikeSchema, ObjectLikeUtils } from "./types.js";
 
 export function getObjectLikeUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>): ObjectLikeUtils<Raw, Parsed> {
     return {
-        withParsedProperties: (properties) => withParsedProperties(schema, properties),
+        withParsedProperties: (properties) => withParsedProperties(schema, properties)
     };
 }
 
@@ -17,7 +17,7 @@ export function getObjectLikeUtils<Raw, Parsed>(schema: BaseSchema<Raw, Parsed>)
 
 export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properties>(
     objectLike: BaseSchema<RawObjectShape, ParsedObjectShape>,
-    properties: { [K in keyof Properties]: Properties[K] | ((parsed: ParsedObjectShape) => Properties[K]) },
+    properties: { [K in keyof Properties]: Properties[K] | ((parsed: ParsedObjectShape) => Properties[K]) }
 ): ObjectLikeSchema<RawObjectShape, ParsedObjectShape & Properties> {
     const objectSchema: BaseSchema<RawObjectShape, ParsedObjectShape & Properties> = {
         parse: (raw, opts) => {
@@ -30,18 +30,18 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
                 (processed, [key, value]) => {
                     return {
                         ...processed,
-                        [key]: typeof value === "function" ? value(parsedObject.value) : value,
+                        [key]: typeof value === "function" ? value(parsedObject.value) : value
                     };
                 },
-                {},
+                {}
             );
 
             return {
                 ok: true,
                 value: {
                     ...parsedObject.value,
-                    ...(additionalProperties as Properties),
-                },
+                    ...(additionalProperties as Properties)
+                }
             };
         },
 
@@ -52,9 +52,9 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
                     errors: [
                         {
                             path: opts?.breadcrumbsPrefix ?? [],
-                            message: getErrorMessageForIncorrectType(parsed, "object"),
-                        },
-                    ],
+                            message: getErrorMessageForIncorrectType(parsed, "object")
+                        }
+                    ]
                 };
             }
 
@@ -62,18 +62,18 @@ export function withParsedProperties<RawObjectShape, ParsedObjectShape, Properti
             const addedPropertyKeys = new Set(Object.keys(properties));
             const parsedWithoutAddedProperties = filterObject(
                 parsed,
-                Object.keys(parsed).filter((key) => !addedPropertyKeys.has(key)),
+                Object.keys(parsed).filter((key) => !addedPropertyKeys.has(key))
             );
 
             return objectLike.json(parsedWithoutAddedProperties as ParsedObjectShape, opts);
         },
 
-        getType: () => objectLike.getType(),
+        getType: () => objectLike.getType()
     };
 
     return {
         ...objectSchema,
         ...getSchemaUtils(objectSchema),
-        ...getObjectLikeUtils(objectSchema),
+        ...getObjectLikeUtils(objectSchema)
     };
 }

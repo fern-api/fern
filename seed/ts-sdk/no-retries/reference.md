@@ -1,5 +1,5 @@
 # Reference
-## Retries
+## retries
 <details><summary><code>client.retries.<a href="/src/api/resources/retries/client/Client.ts">getUsers</a>() -> SeedNoRetries.User[]</code></summary>
 <dl>
 <dd>

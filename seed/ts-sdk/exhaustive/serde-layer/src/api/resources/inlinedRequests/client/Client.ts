@@ -2,22 +2,25 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as errors from "../../../../errors/index.js";
-import * as serializers from "../../../../serialization/index.js";
 import * as SeedExhaustive from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import * as serializers from "../../../../serialization/index.js";
+import * as errors from "../../../../errors/index.js";
 
 export declare namespace InlinedRequestsClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class InlinedRequestsClient {
     protected readonly _options: InlinedRequestsClient.Options;
 
     constructor(options: InlinedRequestsClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -52,92 +55,52 @@ export class InlinedRequestsClient {
      *         }
      *     })
      */
-    public postWithObjectBodyandResponse(
-        request: SeedExhaustive.PostWithObjectBody,
-        requestOptions?: InlinedRequestsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    public postWithObjectBodyandResponse(request: SeedExhaustive.PostWithObjectBody, requestOptions?: InlinedRequestsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__postWithObjectBodyandResponse(request, requestOptions));
     }
 
-    private async __postWithObjectBodyandResponse(
-        request: SeedExhaustive.PostWithObjectBody,
-        requestOptions?: InlinedRequestsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __postWithObjectBodyandResponse(request: SeedExhaustive.PostWithObjectBody, requestOptions?: InlinedRequestsClient.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/req-bodies/object",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/req-bodies/object"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.PostWithObjectBody.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: serializers.PostWithObjectBody.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 400:
-                    throw new SeedExhaustive.BadRequestBody(
-                        serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
+                case 400: throw new SeedExhaustive.BadRequestBody(serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), _response.rawResponse);
+                default: throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse
+                });
             }
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /req-bodies/object.");
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /req-bodies/object.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

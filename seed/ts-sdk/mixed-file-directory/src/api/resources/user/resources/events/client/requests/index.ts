@@ -1,1 +1,1 @@
-export type { ListUserEventsRequest } from "./ListUserEventsRequest.js";
+export { type ListUserEventsRequest } from "./ListUserEventsRequest.js";

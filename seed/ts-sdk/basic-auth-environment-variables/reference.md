@@ -1,5 +1,5 @@
 # Reference
-## BasicAuth
+## basicAuth
 <details><summary><code>client.basicAuth.<a href="/src/api/resources/basicAuth/client/Client.ts">getWithBasicAuth</a>() -> boolean</code></summary>
 <dl>
 <dd>

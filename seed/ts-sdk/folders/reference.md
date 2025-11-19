@@ -41,7 +41,7 @@ await client.foo();
 </details>
 
 ## 
-## A B
+## a.b
 <details><summary><code>client.a.b.<a href="/src/api/resources/a/resources/b/client/Client.ts">foo</a>() -> void</code></summary>
 <dl>
 <dd>
@@ -83,7 +83,7 @@ await client.a.b.foo();
 </dl>
 </details>
 
-## A C
+## a.c
 <details><summary><code>client.a.c.<a href="/src/api/resources/a/resources/c/client/Client.ts">foo</a>() -> void</code></summary>
 <dl>
 <dd>
@@ -125,7 +125,7 @@ await client.a.c.foo();
 </dl>
 </details>
 
-## Folder
+## folder
 <details><summary><code>client.folder.<a href="/src/api/resources/folder/client/Client.ts">foo</a>() -> void</code></summary>
 <dl>
 <dd>
@@ -167,7 +167,7 @@ await client.folder.foo();
 </dl>
 </details>
 
-## Folder Service
+## folder.service
 <details><summary><code>client.folder.service.<a href="/src/api/resources/folder/resources/service/client/Client.ts">endpoint</a>() -> void</code></summary>
 <dl>
 <dd>

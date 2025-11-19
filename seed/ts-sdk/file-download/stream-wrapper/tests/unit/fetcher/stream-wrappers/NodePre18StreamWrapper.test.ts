@@ -37,10 +37,10 @@ describe("NodePre18StreamWrapper", () => {
         const rawStream = (await import("readable-stream")).Readable.from(["test", "test"]);
         const stream = new NodePre18StreamWrapper(rawStream);
         const dest = new (await import("readable-stream")).Writable({
-            write(chunk, _encoding, callback) {
+            write(chunk, encoding, callback) {
                 expect(chunk.toString()).toEqual("test");
                 callback();
-            },
+            }
         });
 
         stream.pipe(dest);
@@ -51,10 +51,10 @@ describe("NodePre18StreamWrapper", () => {
         const stream = new NodePre18StreamWrapper(rawStream);
         const buffer: Uint8Array[] = [];
         const dest = new (await import("readable-stream")).Writable({
-            write(chunk, _encoding, callback) {
+            write(chunk, encoding, callback) {
                 buffer.push(chunk);
                 callback();
-            },
+            }
         });
         stream.pipe(dest);
         stream.unpipe();

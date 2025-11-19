@@ -16,7 +16,7 @@ export interface BaseObjectSchema<Raw, Parsed> extends BaseSchema<Raw, Parsed> {
 
 export interface ObjectUtils<Raw, Parsed> {
     extend: <RawExtension, ParsedExtension>(
-        schemas: ObjectSchema<RawExtension, ParsedExtension>,
+        schemas: ObjectSchema<RawExtension, ParsedExtension>
     ) => ObjectSchema<Raw & RawExtension, Parsed & ParsedExtension>;
     passthrough: () => ObjectSchema<Raw & { [key: string]: unknown }, Parsed & { [key: string]: unknown }>;
 }
@@ -69,5 +69,5 @@ export type inferParsedPropertySchema<P extends Property<any, any, any> | Schema
 
 export type inferRawKey<
     ParsedKey extends string | number | symbol,
-    P extends Property<any, any, any> | Schema<any, any>,
+    P extends Property<any, any, any> | Schema<any, any>
 > = P extends Property<infer Raw, any, any> ? Raw : ParsedKey;

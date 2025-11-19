@@ -1,1 +1,1 @@
-export type { Inlined } from "./Inlined.js";
+export { type Inlined } from "./Inlined.js";

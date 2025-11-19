@@ -1,9 +1,9 @@
 {
-    "cliVersion": "DUMMY",
-    "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
-    "generatorConfig": {
-        "useBigInt": true,
-        "testFramework": "jest"
-    }
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-typescript-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "useBigInt": true,
+    "testFramework": "jest"
+  }
 }

@@ -66,7 +66,7 @@ const DEFAULT_OPTIONS = {
     maxRetries: Infinity,
     maxEnqueuedMessages: Infinity,
     startClosed: false,
-    debug: false,
+    debug: false
 };
 
 export class ReconnectingWebSocket {
@@ -75,7 +75,7 @@ export class ReconnectingWebSocket {
         error: [],
         message: [],
         open: [],
-        close: [],
+        close: []
     };
     private _retryCount = -1;
     private _uptimeTimeout: any;
@@ -263,7 +263,7 @@ export class ReconnectingWebSocket {
      */
     public addEventListener<T extends keyof Events.WebSocketEventListenerMap>(
         type: T,
-        listener: Events.WebSocketEventListenerMap[T],
+        listener: Events.WebSocketEventListenerMap[T]
     ): void {
         if (this._listeners[type]) {
             // @ts-ignore
@@ -286,13 +286,13 @@ export class ReconnectingWebSocket {
      */
     public removeEventListener<T extends keyof Events.WebSocketEventListenerMap>(
         type: T,
-        listener: Events.WebSocketEventListenerMap[T],
+        listener: Events.WebSocketEventListenerMap[T]
     ): void {
         if (this._listeners[type]) {
             // @ts-ignore
             this._listeners[type] = this._listeners[type].filter(
                 // @ts-ignore
-                (l) => l !== listener,
+                (l) => l !== listener
             );
         }
     }
@@ -310,11 +310,11 @@ export class ReconnectingWebSocket {
         const {
             reconnectionDelayGrowFactor = DEFAULT_OPTIONS.reconnectionDelayGrowFactor,
             minReconnectionDelay = DEFAULT_OPTIONS.minReconnectionDelay,
-            maxReconnectionDelay = DEFAULT_OPTIONS.maxReconnectionDelay,
+            maxReconnectionDelay = DEFAULT_OPTIONS.maxReconnectionDelay
         } = this._options;
         let delay = 0;
         if (this._retryCount > 0) {
-            delay = minReconnectionDelay * reconnectionDelayGrowFactor ** (this._retryCount - 1);
+            delay = minReconnectionDelay * Math.pow(reconnectionDelayGrowFactor, this._retryCount - 1);
             if (delay > maxReconnectionDelay) {
                 delay = maxReconnectionDelay;
             }
@@ -355,7 +355,7 @@ export class ReconnectingWebSocket {
         const {
             maxRetries = DEFAULT_OPTIONS.maxRetries,
             connectionTimeout = DEFAULT_OPTIONS.connectionTimeout,
-            WebSocket = getGlobalWebSocket(),
+            WebSocket = getGlobalWebSocket()
         } = this._options;
 
         if (this._retryCount >= maxRetries) {
@@ -409,7 +409,7 @@ export class ReconnectingWebSocket {
         try {
             this._ws.close(code, reason);
             this._handleClose(new Events.CloseEvent(code, reason, this));
-        } catch (_error) {
+        } catch (error) {
             // ignore
         }
     }
@@ -421,7 +421,7 @@ export class ReconnectingWebSocket {
 
     private _callEventListener<T extends keyof Events.WebSocketEventListenerMap>(
         event: Events.WebSocketEventMap[T],
-        listener: Events.WebSocketEventListenerMap[T],
+        listener: Events.WebSocketEventListenerMap[T]
     ) {
         if ("handleEvent" in listener) {
             // @ts-ignore

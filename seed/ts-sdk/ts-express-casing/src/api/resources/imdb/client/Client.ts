@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as errors from "../../../../errors/index.js";
 import * as SeedApi from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import * as errors from "../../../../errors/index.js";
 
 export declare namespace ImdbClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ImdbClient {
     protected readonly _options: ImdbClient.Options;
 
     constructor(options: ImdbClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -33,28 +36,14 @@ export class ImdbClient {
      *         movie_rating: 1.1
      *     })
      */
-    public createMovie(
-        request: SeedApi.CreateMovieRequest,
-        requestOptions?: ImdbClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.MovieId> {
+    public createMovie(request: SeedApi.CreateMovieRequest, requestOptions?: ImdbClient.RequestOptions): core.HttpResponsePromise<SeedApi.MovieId> {
         return core.HttpResponsePromise.fromPromise(this.__createMovie(request, requestOptions));
     }
 
-    private async __createMovie(
-        request: SeedApi.CreateMovieRequest,
-        requestOptions?: ImdbClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.MovieId>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __createMovie(request: SeedApi.CreateMovieRequest, requestOptions?: ImdbClient.RequestOptions): Promise<core.WithRawResponse<SeedApi.MovieId>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/movies/create-movie",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/movies/create-movie"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -65,7 +54,7 @@ export class ImdbClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedApi.MovieId, rawResponse: _response.rawResponse };
@@ -75,24 +64,21 @@ export class ImdbClient {
             throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /movies/create-movie.");
-            case "unknown":
-                throw new errors.SeedApiError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /movies/create-movie.");
+            case "unknown": throw new errors.SeedApiError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -105,28 +91,14 @@ export class ImdbClient {
      * @example
      *     await client.imdb.getMovie("movie_id")
      */
-    public getMovie(
-        movie_id: SeedApi.MovieId,
-        requestOptions?: ImdbClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.Movie> {
+    public getMovie(movie_id: SeedApi.MovieId, requestOptions?: ImdbClient.RequestOptions): core.HttpResponsePromise<SeedApi.Movie> {
         return core.HttpResponsePromise.fromPromise(this.__getMovie(movie_id, requestOptions));
     }
 
-    private async __getMovie(
-        movie_id: SeedApi.MovieId,
-        requestOptions?: ImdbClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.Movie>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getMovie(movie_id: SeedApi.MovieId, requestOptions?: ImdbClient.RequestOptions): Promise<core.WithRawResponse<SeedApi.Movie>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/movies/${core.url.encodePathParam(movie_id)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/movies/${core.url.encodePathParam(movie_id)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -134,7 +106,7 @@ export class ImdbClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedApi.Movie, rawResponse: _response.rawResponse };
@@ -142,34 +114,26 @@ export class ImdbClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 404:
-                    throw new SeedApi.MovieDoesNotExistError(
-                        _response.error.body as SeedApi.MovieId,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
+                case 404: throw new SeedApi.MovieDoesNotExistError(_response.error.body as SeedApi.MovieId, _response.rawResponse);
+                default: throw new errors.SeedApiError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse
+                });
             }
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /movies/{movie_id}.");
-            case "unknown":
-                throw new errors.SeedApiError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedApiTimeoutError("Timeout exceeded when calling GET /movies/{movie_id}.");
+            case "unknown": throw new errors.SeedApiError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

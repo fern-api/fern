@@ -2,20 +2,23 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace ServiceClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ServiceClient {
     protected readonly _options: ServiceClient.Options;
 
     constructor(options: ServiceClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -23,16 +26,10 @@ export class ServiceClient {
         return core.HttpResponsePromise.fromPromise(this.__get(requestOptions));
     }
 
-    private async __get(
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.BinaryResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __get(requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<core.BinaryResponse>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<core.BinaryResponse>({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/helloworld.txt",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/helloworld.txt"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -41,7 +38,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body, rawResponse: _response.rawResponse };
@@ -51,24 +48,21 @@ export class ServiceClient {
             throw new errors.SeedPublicObjectError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPublicObjectError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPublicObjectTimeoutError("Timeout exceeded when calling GET /helloworld.txt.");
-            case "unknown":
-                throw new errors.SeedPublicObjectError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedPublicObjectError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPublicObjectTimeoutError("Timeout exceeded when calling GET /helloworld.txt.");
+            case "unknown": throw new errors.SeedPublicObjectError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

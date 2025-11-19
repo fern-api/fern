@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedNoRetries from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedNoRetries from "../../../index.js";
 
 export declare namespace RetriesClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class RetriesClient {
     protected readonly _options: RetriesClient.Options;
 
     constructor(options: RetriesClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -30,16 +33,10 @@ export class RetriesClient {
         return core.HttpResponsePromise.fromPromise(this.__getUsers(requestOptions));
     }
 
-    private async __getUsers(
-        requestOptions?: RetriesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNoRetries.User[]>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __getUsers(requestOptions?: RetriesClient.RequestOptions): Promise<core.WithRawResponse<SeedNoRetries.User[]>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/users"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -47,7 +44,7 @@ export class RetriesClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedNoRetries.User[], rawResponse: _response.rawResponse };
@@ -57,24 +54,21 @@ export class RetriesClient {
             throw new errors.SeedNoRetriesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedNoRetriesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedNoRetriesTimeoutError("Timeout exceeded when calling GET /users.");
-            case "unknown":
-                throw new errors.SeedNoRetriesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedNoRetriesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedNoRetriesTimeoutError("Timeout exceeded when calling GET /users.");
+            case "unknown": throw new errors.SeedNoRetriesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

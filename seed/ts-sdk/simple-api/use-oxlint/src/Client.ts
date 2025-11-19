@@ -7,9 +7,11 @@ import * as core from "./core/index.js";
 import { UserClient } from "./api/resources/user/client/Client.js";
 
 export declare namespace SeedSimpleApiClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class SeedSimpleApiClient {
@@ -17,6 +19,7 @@ export class SeedSimpleApiClient {
     protected _user: UserClient | undefined;
 
     constructor(options: SeedSimpleApiClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 

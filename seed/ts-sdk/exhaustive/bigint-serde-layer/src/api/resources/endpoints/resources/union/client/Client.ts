@@ -2,22 +2,25 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import * as errors from "../../../../../../errors/index.js";
+import * as SeedExhaustive from "../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as serializers from "../../../../../../serialization/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import * as errors from "../../../../../../errors/index.js";
 
 export declare namespace UnionClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class UnionClient {
     protected readonly _options: UnionClient.Options;
 
     constructor(options: UnionClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -32,78 +35,49 @@ export class UnionClient {
      *         likesToWoof: true
      *     })
      */
-    public getAndReturnUnion(
-        request: SeedExhaustive.types.Animal,
-        requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
+    public getAndReturnUnion(request: SeedExhaustive.types.Animal, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.Animal> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
     }
 
-    private async __getAndReturnUnion(
-        request: SeedExhaustive.types.Animal,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.Animal>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnUnion(request: SeedExhaustive.types.Animal, requestOptions?: UnionClient.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.Animal>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/union",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/union"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.types.Animal.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: serializers.types.Animal.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.types.Animal.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.types.Animal.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /union.");
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /union.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

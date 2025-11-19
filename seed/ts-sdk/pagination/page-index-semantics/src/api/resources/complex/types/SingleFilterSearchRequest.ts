@@ -8,16 +8,16 @@ export interface SingleFilterSearchRequest {
 
 export namespace SingleFilterSearchRequest {
     export const Operator = {
-        Equals: "=",
-        NotEquals: "!=",
-        In: "IN",
-        NotIn: "NIN",
-        LessThan: "<",
-        GreaterThan: ">",
-        Contains: "~",
-        DoesNotContain: "!~",
-        StartsWith: "^",
-        EndsWith: "$",
-    } as const;
-    export type Operator = (typeof Operator)[keyof typeof Operator];
+            Equals: "=",
+            NotEquals: "!=",
+            In: "IN",
+            NotIn: "NIN",
+            LessThan: "<",
+            GreaterThan: ">",
+            Contains: "~",
+            DoesNotContain: "!~",
+            StartsWith: "^",
+            EndsWith: "$"
+        } as const;
+    export type Operator = typeof Operator[keyof typeof Operator];
 }

@@ -1,3 +1,4 @@
+
 import { RUNTIME } from "../runtime/index.js";
 
 /**
@@ -16,10 +17,11 @@ export async function getFetchFn(): Promise<any> {
 
     // Otherwise the SDK uses global fetch if available,
     // and falls back to node-fetch.
-    if (typeof fetch === "function") {
+    if (typeof fetch == "function") {
         return fetch;
     }
 
     // Defaults to node `node-fetch` if global fetch isn't available
     return (await import("node-fetch")).default as any;
 }
+

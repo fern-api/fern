@@ -2,6 +2,6 @@
 
 /** Keep in sync with SubmissionType. */
 export const SubmissionTypeEnum = {
-    Test: "TEST",
-} as const;
-export type SubmissionTypeEnum = (typeof SubmissionTypeEnum)[keyof typeof SubmissionTypeEnum];
+        Test: "TEST"
+    } as const;
+export type SubmissionTypeEnum = typeof SubmissionTypeEnum[keyof typeof SubmissionTypeEnum];

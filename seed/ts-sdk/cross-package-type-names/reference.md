@@ -1,5 +1,5 @@
 # Reference
-## FolderA Service
+## folderA.service
 <details><summary><code>client.folderA.service.<a href="/src/api/resources/folderA/resources/service/client/Client.ts">getDirectThread</a>() -> SeedCrossPackageTypeNames.Response</code></summary>
 <dl>
 <dd>
@@ -41,7 +41,7 @@ await client.folderA.service.getDirectThread();
 </dl>
 </details>
 
-## FolderD Service
+## folderD.service
 <details><summary><code>client.folderD.service.<a href="/src/api/resources/folderD/resources/service/client/Client.ts">getDirectThread</a>() -> SeedCrossPackageTypeNames.Response</code></summary>
 <dl>
 <dd>
@@ -83,7 +83,7 @@ await client.folderD.service.getDirectThread();
 </dl>
 </details>
 
-## Foo
+## foo
 <details><summary><code>client.foo.<a href="/src/api/resources/foo/client/Client.ts">find</a>({ ...params }) -> SeedCrossPackageTypeNames.ImportingType</code></summary>
 <dl>
 <dd>

@@ -15,7 +15,7 @@ describe("RawResponse", () => {
                 status: 200,
                 statusText: "OK",
                 type: "basic" as ResponseType,
-                url: "https://example.com",
+                url: "https://example.com"
             };
 
             const result = toRawResponse(mockResponse as unknown as Response);

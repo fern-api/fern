@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedApi from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
 
 export declare namespace FileUploadExampleClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class FileUploadExampleClient {
     protected readonly _options: FileUploadExampleClient.Options;
 
     constructor(options: FileUploadExampleClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -32,17 +35,11 @@ export class FileUploadExampleClient {
      *         name: "name"
      *     })
      */
-    public uploadFile(
-        request: SeedApi.UploadFileRequest,
-        requestOptions?: FileUploadExampleClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.FileId> {
+    public uploadFile(request: SeedApi.UploadFileRequest, requestOptions?: FileUploadExampleClient.RequestOptions): core.HttpResponsePromise<SeedApi.FileId> {
         return core.HttpResponsePromise.fromPromise(this.__uploadFile(request, requestOptions));
     }
 
-    private async __uploadFile(
-        request: SeedApi.UploadFileRequest,
-        requestOptions?: FileUploadExampleClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.FileId>> {
+    private async __uploadFile(request: SeedApi.UploadFileRequest, requestOptions?: FileUploadExampleClient.RequestOptions): Promise<core.WithRawResponse<SeedApi.FileId>> {
         const _request = await core.newFormData();
         _request.append("name", request.name);
         if (request.file != null) {
@@ -50,17 +47,9 @@ export class FileUploadExampleClient {
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "upload-file",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "upload-file"),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -71,7 +60,7 @@ export class FileUploadExampleClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedApi.FileId, rawResponse: _response.rawResponse };
@@ -81,24 +70,21 @@ export class FileUploadExampleClient {
             throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /upload-file.");
-            case "unknown":
-                throw new errors.SeedApiError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /upload-file.");
+            case "unknown": throw new errors.SeedApiError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

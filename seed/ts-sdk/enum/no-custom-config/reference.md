@@ -1,5 +1,5 @@
 # Reference
-## Headers
+## headers
 <details><summary><code>client.headers.<a href="/src/api/resources/headers/client/Client.ts">send</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -54,7 +54,7 @@ await client.headers.send({
 </dl>
 </details>
 
-## InlinedRequest
+## inlinedRequest
 <details><summary><code>client.inlinedRequest.<a href="/src/api/resources/inlinedRequest/client/Client.ts">send</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -107,8 +107,8 @@ await client.inlinedRequest.send({
 </dl>
 </details>
 
-## MultipartForm
-## PathParam
+## multipartForm
+## pathParam
 <details><summary><code>client.pathParam.<a href="/src/api/resources/pathParam/client/Client.ts">send</a>(operand, operandOrColor) -> void</code></summary>
 <dl>
 <dd>
@@ -166,7 +166,7 @@ await client.pathParam.send(">", "red");
 </dl>
 </details>
 
-## QueryParam
+## queryParam
 <details><summary><code>client.queryParam.<a href="/src/api/resources/queryParam/client/Client.ts">send</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>

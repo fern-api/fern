@@ -1,5 +1,5 @@
 # Reference
-## Endpoints Container
+## endpoints.container
 <details><summary><code>client.endpoints.container.<a href="/src/test-packagePath/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnListOfPrimitives</a>({ ...params }) -> string[]</code></summary>
 <dl>
 <dd>
@@ -357,7 +357,7 @@ await client.endpoints.container.getAndReturnOptional({
 </dl>
 </details>
 
-## Endpoints ContentType
+## endpoints.contentType
 <details><summary><code>client.endpoints.contentType.<a href="/src/test-packagePath/api/resources/endpoints/resources/contentType/client/Client.ts">postJsonPatchContentType</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -488,7 +488,7 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
 </dl>
 </details>
 
-## Endpoints Enum
+## endpoints.enum
 <details><summary><code>client.endpoints.enum.<a href="/src/test-packagePath/api/resources/endpoints/resources/enum/client/Client.ts">getAndReturnEnum</a>({ ...params }) -> SeedExhaustive.WeatherReport</code></summary>
 <dl>
 <dd>
@@ -538,7 +538,7 @@ await client.endpoints.enum.getAndReturnEnum("SUNNY");
 </dl>
 </details>
 
-## Endpoints HttpMethods
+## endpoints.httpMethods
 <details><summary><code>client.endpoints.httpMethods.<a href="/src/test-packagePath/api/resources/endpoints/resources/httpMethods/client/Client.ts">testGet</a>(id) -> string</code></summary>
 <dl>
 <dd>
@@ -820,7 +820,7 @@ await client.endpoints.httpMethods.testDelete("id");
 </dl>
 </details>
 
-## Endpoints Object
+## endpoints.object
 <details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnWithOptionalField</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
@@ -1223,7 +1223,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
 </dl>
 </details>
 
-## Endpoints Params
+## endpoints.params
 <details><summary><code>client.endpoints.params.<a href="/src/test-packagePath/api/resources/endpoints/resources/params/client/Client.ts">getWithPath</a>(param) -> string</code></summary>
 <dl>
 <dd>
@@ -1760,7 +1760,7 @@ await client.endpoints.params.modifyWithInlinePath({
 </dl>
 </details>
 
-## Endpoints Primitive
+## endpoints.primitive
 <details><summary><code>client.endpoints.primitive.<a href="/src/test-packagePath/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnString</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
@@ -2202,7 +2202,7 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 </dl>
 </details>
 
-## Endpoints Put
+## endpoints.put
 <details><summary><code>client.endpoints.put.<a href="/src/test-packagePath/api/resources/endpoints/resources/put/client/Client.ts">add</a>({ ...params }) -> SeedExhaustive.PutResponse</code></summary>
 <dl>
 <dd>
@@ -2254,7 +2254,7 @@ await client.endpoints.put.add({
 </dl>
 </details>
 
-## Endpoints Union
+## endpoints.union
 <details><summary><code>client.endpoints.union.<a href="/src/test-packagePath/api/resources/endpoints/resources/union/client/Client.ts">getAndReturnUnion</a>({ ...params }) -> SeedExhaustive.Animal</code></summary>
 <dl>
 <dd>
@@ -2308,7 +2308,7 @@ await client.endpoints.union.getAndReturnUnion({
 </dl>
 </details>
 
-## Endpoints Urls
+## endpoints.urls
 <details><summary><code>client.endpoints.urls.<a href="/src/test-packagePath/api/resources/endpoints/resources/urls/client/Client.ts">withMixedCase</a>() -> string</code></summary>
 <dl>
 <dd>
@@ -2473,7 +2473,7 @@ await client.endpoints.urls.withUnderscores();
 </dl>
 </details>
 
-## InlinedRequests
+## inlinedRequests
 <details><summary><code>client.inlinedRequests.<a href="/src/test-packagePath/api/resources/inlinedRequests/client/Client.ts">postWithObjectBodyandResponse</a>({ ...params }) -> SeedExhaustive.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
@@ -2557,7 +2557,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
 </dl>
 </details>
 
-## NoAuth
+## noAuth
 <details><summary><code>client.noAuth.<a href="/src/test-packagePath/api/resources/noAuth/client/Client.ts">postWithNoAuth</a>({ ...params }) -> boolean</code></summary>
 <dl>
 <dd>
@@ -2623,7 +2623,7 @@ await client.noAuth.postWithNoAuth({
 </dl>
 </details>
 
-## NoReqBody
+## noReqBody
 <details><summary><code>client.noReqBody.<a href="/src/test-packagePath/api/resources/noReqBody/client/Client.ts">getWithNoRequestBody</a>() -> SeedExhaustive.ObjectWithOptionalField</code></summary>
 <dl>
 <dd>
@@ -2706,7 +2706,7 @@ await client.noReqBody.postWithNoRequestBody();
 </dl>
 </details>
 
-## ReqWithHeaders
+## reqWithHeaders
 <details><summary><code>client.reqWithHeaders.<a href="/src/test-packagePath/api/resources/reqWithHeaders/client/Client.ts">getWithCustomHeader</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>

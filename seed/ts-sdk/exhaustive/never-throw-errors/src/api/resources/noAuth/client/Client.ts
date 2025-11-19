@@ -2,20 +2,23 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as SeedExhaustive from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 
 export declare namespace NoAuthClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class NoAuthClient {
     protected readonly _options: NoAuthClient.Options;
 
     constructor(options: NoAuthClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -30,28 +33,14 @@ export class NoAuthClient {
      *         "key": "value"
      *     })
      */
-    public postWithNoAuth(
-        request?: unknown,
-        requestOptions?: NoAuthClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<boolean, SeedExhaustive.noAuth.postWithNoAuth.Error>> {
+    public postWithNoAuth(request?: unknown, requestOptions?: NoAuthClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<boolean, SeedExhaustive.noAuth.postWithNoAuth.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__postWithNoAuth(request, requestOptions));
     }
 
-    private async __postWithNoAuth(
-        request?: unknown,
-        requestOptions?: NoAuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<boolean, SeedExhaustive.noAuth.postWithNoAuth.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __postWithNoAuth(request?: unknown, requestOptions?: NoAuthClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<boolean, SeedExhaustive.noAuth.postWithNoAuth.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/no-auth",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/no-auth"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -62,44 +51,32 @@ export class NoAuthClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as boolean,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 400:
-                    return {
-                        data: {
-                            ok: false,
-                            error: SeedExhaustive.noAuth.postWithNoAuth.Error.badRequestBody(
-                                _response.error.body as SeedExhaustive.BadObjectRequestInfo,
-                            ),
-                            rawResponse: _response.rawResponse,
-                        },
-                        rawResponse: _response.rawResponse,
-                    };
+                case 400: return { data: {
+                        ok: false,
+                        error: SeedExhaustive.noAuth.postWithNoAuth.Error.badRequestBody(_response.error.body as SeedExhaustive.BadObjectRequestInfo),
+                        rawResponse: _response.rawResponse
+                    }, rawResponse: _response.rawResponse };
             }
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.noAuth.postWithNoAuth.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

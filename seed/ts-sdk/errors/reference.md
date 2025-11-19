@@ -1,5 +1,5 @@
 # Reference
-## Simple
+## simple
 <details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">fooWithoutEndpointError</a>({ ...params }) -> SeedErrors.FooResponse</code></summary>
 <dl>
 <dd>

@@ -2,22 +2,25 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
+import * as core from "../../../../core/index.js";
+import * as SeedMultiUrlEnvironment from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedMultiUrlEnvironment from "../../../index.js";
 
 export declare namespace S3Client {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class S3Client {
     protected readonly _options: S3Client.Options;
 
     constructor(options: S3Client.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -30,31 +33,14 @@ export class S3Client {
      *         s3Key: "s3Key"
      *     })
      */
-    public getPresignedUrl(
-        request: SeedMultiUrlEnvironment.GetPresignedUrlRequest,
-        requestOptions?: S3Client.RequestOptions,
-    ): core.HttpResponsePromise<string> {
+    public getPresignedUrl(request: SeedMultiUrlEnvironment.GetPresignedUrlRequest, requestOptions?: S3Client.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getPresignedUrl(request, requestOptions));
     }
 
-    private async __getPresignedUrl(
-        request: SeedMultiUrlEnvironment.GetPresignedUrlRequest,
-        requestOptions?: S3Client.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getPresignedUrl(request: SeedMultiUrlEnvironment.GetPresignedUrlRequest, requestOptions?: S3Client.RequestOptions): Promise<core.WithRawResponse<string>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.SeedMultiUrlEnvironmentEnvironment.Production
-                    ).s3,
-                "/s3/presigned-url",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedMultiUrlEnvironmentEnvironment.Production).s3, "/s3/presigned-url"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -65,7 +51,7 @@ export class S3Client {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -75,26 +61,21 @@ export class S3Client {
             throw new errors.SeedMultiUrlEnvironmentError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedMultiUrlEnvironmentError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedMultiUrlEnvironmentTimeoutError(
-                    "Timeout exceeded when calling POST /s3/presigned-url.",
-                );
-            case "unknown":
-                throw new errors.SeedMultiUrlEnvironmentError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedMultiUrlEnvironmentError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedMultiUrlEnvironmentTimeoutError("Timeout exceeded when calling POST /s3/presigned-url.");
+            case "unknown": throw new errors.SeedMultiUrlEnvironmentError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

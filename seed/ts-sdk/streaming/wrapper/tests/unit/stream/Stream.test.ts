@@ -1,3 +1,4 @@
+
 import { Readable } from "stream";
 
 import { Stream } from "../../../src/core/stream/Stream";
@@ -37,7 +38,7 @@ describe("Stream", () => {
         });
 
         it("should handle messages split across chunks", async () => {
-            const mockStream = createReadableStream(['{"val', 'ue": 1}\n{"value":', " 2}\n"]);
+            const mockStream = createReadableStream(['{"val', 'ue": 1}\n{"value":', ' 2}\n']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -103,7 +104,9 @@ describe("Stream", () => {
         });
 
         it("should parse multiple SSE events", async () => {
-            const mockStream = createReadableStream(['data: {"value": 1}\ndata: {"value": 2}\ndata: {"value": 3}\n']);
+            const mockStream = createReadableStream([
+                'data: {"value": 1}\ndata: {"value": 2}\ndata: {"value": 3}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -119,7 +122,9 @@ describe("Stream", () => {
         });
 
         it("should stop at stream terminator", async () => {
-            const mockStream = createReadableStream(['data: {"value": 1}\ndata: [DONE]\ndata: {"value": 2}\n']);
+            const mockStream = createReadableStream([
+                'data: {"value": 1}\ndata: [DONE]\ndata: {"value": 2}\n',
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -190,7 +195,10 @@ describe("Stream", () => {
 
         it("should handle binary data chunks", async () => {
             const encoder = new TextEncoder();
-            const mockStream = createReadableStream([encoder.encode('{"val'), encoder.encode('ue": 1}\n')]);
+            const mockStream = createReadableStream([
+                encoder.encode('{"val'),
+                encoder.encode('ue": 1}\n'),
+            ]);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -300,7 +308,7 @@ describe("Stream", () => {
         });
 
         it("should handle stream with only whitespace", async () => {
-            const mockStream = createReadableStream(["   \n\n\t\n   "]);
+            const mockStream = createReadableStream(['   \n\n\t\n   ']);
             const stream = new Stream({
                 stream: mockStream,
                 parse: async (val: unknown) => val as { value: number },
@@ -335,6 +343,7 @@ describe("Stream", () => {
 
 // Helper function to create a ReadableStream from string chunks
 function createReadableStream(chunks: (string | Uint8Array)[]): Readable | ReadableStream {
+
     // For wrapper type, return Node.js Readable stream
     const readable = new Readable({
         read() {
@@ -345,4 +354,5 @@ function createReadableStream(chunks: (string | Uint8Array)[]): Readable | Reada
         },
     });
     return readable;
+
 }

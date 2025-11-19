@@ -1,5 +1,5 @@
-import type { Mock } from "vitest";
 import { makeRequest } from "../../../../../src/test-packagePath/core/fetcher/makeRequest";
+import { Mock } from "vitest";
 
 describe("Test makeRequest", () => {
     const mockPostUrl = "https://httpbin.org/post";
@@ -26,8 +26,8 @@ describe("Test makeRequest", () => {
                 method: "POST",
                 headers: mockHeaders,
                 body: mockBody,
-                credentials: undefined,
-            }),
+                credentials: undefined
+            })
         );
         expect(calledOptions.signal).toBeDefined();
         expect(calledOptions.signal).toBeInstanceOf(AbortSignal);
@@ -45,8 +45,8 @@ describe("Test makeRequest", () => {
                 method: "GET",
                 headers: mockHeaders,
                 body: undefined,
-                credentials: undefined,
-            }),
+                credentials: undefined
+            })
         );
         expect(calledOptions.signal).toBeDefined();
         expect(calledOptions.signal).toBeInstanceOf(AbortSignal);

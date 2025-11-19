@@ -1,1 +1,1 @@
-export type { GenerateRequest } from "./GenerateRequest.js";
+export { type GenerateRequest } from "./GenerateRequest.js";

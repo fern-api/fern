@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedResponseProperty from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedResponseProperty from "../../../index.js";
 
 export declare namespace ServiceClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ServiceClient {
     protected readonly _options: ServiceClient.Options;
 
     constructor(options: ServiceClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -27,24 +30,14 @@ export class ServiceClient {
      * @example
      *     await client.service.getMovie("string")
      */
-    public getMovie(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+    public getMovie(request: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedResponseProperty.Response> {
         return core.HttpResponsePromise.fromPromise(this.__getMovie(request, requestOptions));
     }
 
-    private async __getMovie(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __getMovie(request: string, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "movie",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "movie"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -55,7 +48,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedResponseProperty.Response, rawResponse: _response.rawResponse };
@@ -65,24 +58,21 @@ export class ServiceClient {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedResponsePropertyError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
-            case "unknown":
-                throw new errors.SeedResponsePropertyError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedResponsePropertyError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
+            case "unknown": throw new errors.SeedResponsePropertyError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -93,24 +83,14 @@ export class ServiceClient {
      * @example
      *     await client.service.getMovieDocs("string")
      */
-    public getMovieDocs(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+    public getMovieDocs(request: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedResponseProperty.Response> {
         return core.HttpResponsePromise.fromPromise(this.__getMovieDocs(request, requestOptions));
     }
 
-    private async __getMovieDocs(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __getMovieDocs(request: string, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "movie",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "movie"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -121,7 +101,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedResponseProperty.Response, rawResponse: _response.rawResponse };
@@ -131,24 +111,21 @@ export class ServiceClient {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedResponsePropertyError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
-            case "unknown":
-                throw new errors.SeedResponsePropertyError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedResponsePropertyError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
+            case "unknown": throw new errors.SeedResponsePropertyError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -159,24 +136,14 @@ export class ServiceClient {
      * @example
      *     await client.service.getMovieName("string")
      */
-    public getMovieName(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.StringResponse> {
+    public getMovieName(request: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedResponseProperty.StringResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getMovieName(request, requestOptions));
     }
 
-    private async __getMovieName(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.StringResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __getMovieName(request: string, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedResponseProperty.StringResponse>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "movie",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "movie"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -187,7 +154,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedResponseProperty.StringResponse, rawResponse: _response.rawResponse };
@@ -197,24 +164,21 @@ export class ServiceClient {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedResponsePropertyError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
-            case "unknown":
-                throw new errors.SeedResponsePropertyError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedResponsePropertyError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
+            case "unknown": throw new errors.SeedResponsePropertyError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -225,24 +189,14 @@ export class ServiceClient {
      * @example
      *     await client.service.getMovieMetadata("string")
      */
-    public getMovieMetadata(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.Response> {
+    public getMovieMetadata(request: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedResponseProperty.Response> {
         return core.HttpResponsePromise.fromPromise(this.__getMovieMetadata(request, requestOptions));
     }
 
-    private async __getMovieMetadata(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __getMovieMetadata(request: string, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedResponseProperty.Response>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "movie",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "movie"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -253,7 +207,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedResponseProperty.Response, rawResponse: _response.rawResponse };
@@ -263,24 +217,21 @@ export class ServiceClient {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedResponsePropertyError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
-            case "unknown":
-                throw new errors.SeedResponsePropertyError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedResponsePropertyError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
+            case "unknown": throw new errors.SeedResponsePropertyError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -291,24 +242,14 @@ export class ServiceClient {
      * @example
      *     await client.service.getOptionalMovie("string")
      */
-    public getOptionalMovie(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.Response | undefined> {
+    public getOptionalMovie(request: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedResponseProperty.Response | undefined> {
         return core.HttpResponsePromise.fromPromise(this.__getOptionalMovie(request, requestOptions));
     }
 
-    private async __getOptionalMovie(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.Response | undefined>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __getOptionalMovie(request: string, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedResponseProperty.Response | undefined>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "movie",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "movie"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -319,37 +260,31 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedResponseProperty.Response | undefined,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedResponseProperty.Response | undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedResponsePropertyError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
-            case "unknown":
-                throw new errors.SeedResponsePropertyError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedResponsePropertyError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
+            case "unknown": throw new errors.SeedResponsePropertyError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -360,24 +295,14 @@ export class ServiceClient {
      * @example
      *     await client.service.getOptionalMovieDocs("string")
      */
-    public getOptionalMovieDocs(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.OptionalWithDocs | undefined> {
+    public getOptionalMovieDocs(request: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedResponseProperty.OptionalWithDocs | undefined> {
         return core.HttpResponsePromise.fromPromise(this.__getOptionalMovieDocs(request, requestOptions));
     }
 
-    private async __getOptionalMovieDocs(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalWithDocs | undefined>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __getOptionalMovieDocs(request: string, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedResponseProperty.OptionalWithDocs | undefined>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "movie",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "movie"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -388,37 +313,31 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedResponseProperty.OptionalWithDocs | undefined,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedResponseProperty.OptionalWithDocs | undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedResponsePropertyError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
-            case "unknown":
-                throw new errors.SeedResponsePropertyError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedResponsePropertyError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
+            case "unknown": throw new errors.SeedResponsePropertyError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -429,24 +348,14 @@ export class ServiceClient {
      * @example
      *     await client.service.getOptionalMovieName("string")
      */
-    public getOptionalMovieName(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedResponseProperty.OptionalStringResponse | undefined> {
+    public getOptionalMovieName(request: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedResponseProperty.OptionalStringResponse | undefined> {
         return core.HttpResponsePromise.fromPromise(this.__getOptionalMovieName(request, requestOptions));
     }
 
-    private async __getOptionalMovieName(
-        request: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedResponseProperty.OptionalStringResponse | undefined>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __getOptionalMovieName(request: string, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedResponseProperty.OptionalStringResponse | undefined>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "movie",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "movie"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -457,37 +366,31 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedResponseProperty.OptionalStringResponse | undefined,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedResponseProperty.OptionalStringResponse | undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedResponsePropertyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedResponsePropertyError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
-            case "unknown":
-                throw new errors.SeedResponsePropertyError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedResponsePropertyError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedResponsePropertyTimeoutError("Timeout exceeded when calling POST /movie.");
+            case "unknown": throw new errors.SeedResponsePropertyError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

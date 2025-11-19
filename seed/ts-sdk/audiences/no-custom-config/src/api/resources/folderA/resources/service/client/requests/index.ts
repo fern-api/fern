@@ -1,1 +1,1 @@
-export type { GetDirectThreadRequest } from "./GetDirectThreadRequest.js";
+export { type GetDirectThreadRequest } from "./GetDirectThreadRequest.js";

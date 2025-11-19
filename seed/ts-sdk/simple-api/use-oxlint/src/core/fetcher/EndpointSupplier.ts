@@ -10,5 +10,5 @@ export const EndpointSupplier = {
         } else {
             return supplier;
         }
-    },
+    }
 };

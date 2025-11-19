@@ -1,5 +1,5 @@
 # Reference
-## Users
+## users
 <details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listUsernamesCustom</a>({ ...params }) -> SeedPagination.UsernameCursor</code></summary>
 <dl>
 <dd>

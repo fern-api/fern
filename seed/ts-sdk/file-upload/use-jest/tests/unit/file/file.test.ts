@@ -1,7 +1,7 @@
 import fs from "fs";
 import { join } from "path";
 import { Readable } from "stream";
-import { toBinaryUploadRequest, type Uploadable } from "../../../src/core/file/index";
+import { toBinaryUploadRequest, Uploadable } from "../../../src/core/file/index";
 
 describe("toBinaryUploadRequest", () => {
     const TEST_FILE_PATH = join(__dirname, "..", "test-file.txt");
@@ -17,7 +17,7 @@ describe("toBinaryUploadRequest", () => {
                 data: buffer,
                 filename: "test.txt",
                 contentType: "text/plain",
-                contentLength: 42,
+                contentLength: 42
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -26,21 +26,21 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="test.txt"',
                 "Content-Type": "text/plain",
-                "Content-Length": "42",
+                "Content-Length": "42"
             });
         });
 
         it("should handle Buffer without metadata", async () => {
             const buffer = Buffer.from("test data");
             const input: Uploadable.WithMetadata = {
-                data: buffer,
+                data: buffer
             };
 
             const result = await toBinaryUploadRequest(input);
 
             expect(result.body).toBe(buffer);
             expect(result.headers).toEqual({
-                "Content-Length": "9", // buffer.length
+                "Content-Length": "9" // buffer.length
             });
         });
 
@@ -51,7 +51,7 @@ describe("toBinaryUploadRequest", () => {
 
             expect(result.body).toBe(buffer);
             expect(result.headers).toEqual({
-                "Content-Length": "9", // buffer.length
+                "Content-Length": "9" // buffer.length
             });
         });
     });
@@ -62,7 +62,7 @@ describe("toBinaryUploadRequest", () => {
             const input: Uploadable.WithMetadata = {
                 data: arrayBuffer,
                 filename: "data.bin",
-                contentType: "application/octet-stream",
+                contentType: "application/octet-stream"
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -71,7 +71,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="data.bin"',
                 "Content-Type": "application/octet-stream",
-                "Content-Length": "10", // arrayBuffer.byteLength
+                "Content-Length": "10" // arrayBuffer.byteLength
             });
         });
 
@@ -82,7 +82,7 @@ describe("toBinaryUploadRequest", () => {
 
             expect(result.body).toBe(arrayBuffer);
             expect(result.headers).toEqual({
-                "Content-Length": "10", // arrayBuffer.byteLength
+                "Content-Length": "10" // arrayBuffer.byteLength
             });
         });
     });
@@ -93,7 +93,7 @@ describe("toBinaryUploadRequest", () => {
             const input: Uploadable.WithMetadata = {
                 data: uint8Array,
                 filename: "bytes.bin",
-                contentType: "application/octet-stream",
+                contentType: "application/octet-stream"
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -102,7 +102,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="bytes.bin"',
                 "Content-Type": "application/octet-stream",
-                "Content-Length": "5", // uint8Array.byteLength
+                "Content-Length": "5" // uint8Array.byteLength
             });
         });
 
@@ -113,7 +113,7 @@ describe("toBinaryUploadRequest", () => {
 
             expect(result.body).toBe(uint8Array);
             expect(result.headers).toEqual({
-                "Content-Length": "5", // uint8Array.byteLength
+                "Content-Length": "5" // uint8Array.byteLength
             });
         });
     });
@@ -124,7 +124,7 @@ describe("toBinaryUploadRequest", () => {
             const input: Uploadable.WithMetadata = {
                 data: blob,
                 filename: "override.txt",
-                contentType: "text/html", // Override blob's type
+                contentType: "text/html" // Override blob's type
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -133,7 +133,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="override.txt"',
                 "Content-Type": "text/html", // Should use provided contentType
-                "Content-Length": "12", // blob.size
+                "Content-Length": "12" // blob.size
             });
         });
 
@@ -141,7 +141,7 @@ describe("toBinaryUploadRequest", () => {
             const blob = new Blob(["test content"], { type: "application/json" });
             const input: Uploadable.WithMetadata = {
                 data: blob,
-                filename: "data.json",
+                filename: "data.json"
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -150,7 +150,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="data.json"',
                 "Content-Type": "application/json", // Should use blob's type
-                "Content-Length": "12", // blob.size
+                "Content-Length": "12" // blob.size
             });
         });
 
@@ -162,7 +162,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.body).toBe(blob);
             expect(result.headers).toEqual({
                 "Content-Type": "text/plain", // Should use blob's type
-                "Content-Length": "12", // blob.size
+                "Content-Length": "12" // blob.size
             });
         });
     });
@@ -173,7 +173,7 @@ describe("toBinaryUploadRequest", () => {
             const input: Uploadable.WithMetadata = {
                 data: file,
                 filename: "renamed.txt",
-                contentType: "text/html", // Override file's type
+                contentType: "text/html" // Override file's type
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -182,14 +182,14 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="renamed.txt"',
                 "Content-Type": "text/html", // Should use provided contentType
-                "Content-Length": "12", // file.size
+                "Content-Length": "12" // file.size
             });
         });
 
         it("should handle File with intrinsic properties", async () => {
             const file = new File(["file content"], "test.json", { type: "application/json" });
             const input: Uploadable.WithMetadata = {
-                data: file,
+                data: file
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -198,7 +198,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="test.json"', // Should use file's name
                 "Content-Type": "application/json", // Should use file's type
-                "Content-Length": "12", // file.size
+                "Content-Length": "12" // file.size
             });
         });
 
@@ -211,7 +211,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="direct.txt"',
                 "Content-Type": "text/plain",
-                "Content-Length": "12", // file.size
+                "Content-Length": "12" // file.size
             });
         });
     });
@@ -222,13 +222,13 @@ describe("toBinaryUploadRequest", () => {
                 start(controller) {
                     controller.enqueue(new TextEncoder().encode("stream data"));
                     controller.close();
-                },
+                }
             });
             const input: Uploadable.WithMetadata = {
                 data: stream,
                 filename: "stream.txt",
                 contentType: "text/plain",
-                contentLength: 100,
+                contentLength: 100
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -237,7 +237,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="stream.txt"',
                 "Content-Type": "text/plain",
-                "Content-Length": "100", // Should use provided contentLength
+                "Content-Length": "100" // Should use provided contentLength
             });
         });
 
@@ -246,12 +246,12 @@ describe("toBinaryUploadRequest", () => {
                 start(controller) {
                     controller.enqueue(new TextEncoder().encode("stream data"));
                     controller.close();
-                },
+                }
             });
             const input: Uploadable.WithMetadata = {
                 data: stream,
                 filename: "stream.txt",
-                contentType: "text/plain",
+                contentType: "text/plain"
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -259,7 +259,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.body).toBe(stream);
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="stream.txt"',
-                "Content-Type": "text/plain",
+                "Content-Type": "text/plain"
                 // No Content-Length header since it cannot be determined from ReadableStream
             });
         });
@@ -269,7 +269,7 @@ describe("toBinaryUploadRequest", () => {
                 start(controller) {
                     controller.enqueue(new TextEncoder().encode("stream data"));
                     controller.close();
-                },
+                }
             });
 
             const result = await toBinaryUploadRequest(stream);
@@ -287,13 +287,13 @@ describe("toBinaryUploadRequest", () => {
                 read() {
                     this.push("readable data");
                     this.push(null);
-                },
+                }
             });
             const input: Uploadable.WithMetadata = {
                 data: readable,
                 filename: "readable.txt",
                 contentType: "text/plain",
-                contentLength: 50,
+                contentLength: 50
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -302,7 +302,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="readable.txt"',
                 "Content-Type": "text/plain",
-                "Content-Length": "50", // Should use provided contentLength
+                "Content-Length": "50" // Should use provided contentLength
             });
         });
 
@@ -311,12 +311,12 @@ describe("toBinaryUploadRequest", () => {
                 read() {
                     this.push("readable data");
                     this.push(null);
-                },
+                }
             });
             const input: Uploadable.WithMetadata = {
                 data: readable,
                 filename: "readable.txt",
-                contentType: "text/plain",
+                contentType: "text/plain"
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -324,7 +324,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.body).toBe(readable);
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="readable.txt"',
-                "Content-Type": "text/plain",
+                "Content-Type": "text/plain"
                 // No Content-Length header since it cannot be determined from Readable
             });
         });
@@ -334,7 +334,7 @@ describe("toBinaryUploadRequest", () => {
                 read() {
                     this.push("readable data");
                     this.push(null);
-                },
+                }
             });
 
             const result = await toBinaryUploadRequest(readable);
@@ -352,7 +352,7 @@ describe("toBinaryUploadRequest", () => {
                 path: TEST_FILE_PATH,
                 filename: "custom.txt",
                 contentType: "text/html",
-                contentLength: 42,
+                contentLength: 42
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -361,14 +361,14 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="custom.txt"',
                 "Content-Type": "text/html",
-                "Content-Length": "42", // Should use provided contentLength
+                "Content-Length": "42" // Should use provided contentLength
             });
         });
 
         it("should handle file path with minimal metadata", async () => {
             const input: Uploadable.FromPath = {
                 path: TEST_FILE_PATH,
-                contentType: "text/plain",
+                contentType: "text/plain"
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -377,13 +377,13 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="test-file.txt"', // Should extract from path
                 "Content-Type": "text/plain",
-                "Content-Length": "21", // Should determine from file system (test file is 21 bytes)
+                "Content-Length": "21" // Should determine from file system (test file is 21 bytes)
             });
         });
 
         it("should handle file path with no metadata", async () => {
             const input: Uploadable.FromPath = {
-                path: TEST_FILE_PATH,
+                path: TEST_FILE_PATH
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -391,7 +391,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.body).toBeInstanceOf(fs.ReadStream);
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="test-file.txt"', // Should extract from path
-                "Content-Length": "21", // Should determine from file system (test file is 21 bytes)
+                "Content-Length": "21" // Should determine from file system (test file is 21 bytes)
             });
         });
     });
@@ -403,7 +403,7 @@ describe("toBinaryUploadRequest", () => {
             const input: Uploadable.WithMetadata = {
                 data: arrayBufferView,
                 filename: "view.bin",
-                contentType: "application/octet-stream",
+                contentType: "application/octet-stream"
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -412,7 +412,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="view.bin"',
                 "Content-Type": "application/octet-stream",
-                "Content-Length": "10", // arrayBufferView.byteLength
+                "Content-Length": "10" // arrayBufferView.byteLength
             });
         });
 
@@ -424,7 +424,7 @@ describe("toBinaryUploadRequest", () => {
 
             expect(result.body).toBe(arrayBufferView);
             expect(result.headers).toEqual({
-                "Content-Length": "10", // arrayBufferView.byteLength
+                "Content-Length": "10" // arrayBufferView.byteLength
             });
         });
     });
@@ -433,14 +433,14 @@ describe("toBinaryUploadRequest", () => {
         it("should handle empty headers when no metadata is available", async () => {
             const buffer = Buffer.from("");
             const input: Uploadable.WithMetadata = {
-                data: buffer,
+                data: buffer
             };
 
             const result = await toBinaryUploadRequest(input);
 
             expect(result.body).toBe(buffer);
             expect(result.headers).toEqual({
-                "Content-Length": "0",
+                "Content-Length": "0"
             });
         });
 
@@ -448,14 +448,14 @@ describe("toBinaryUploadRequest", () => {
             const buffer = Buffer.from("test");
             const input: Uploadable.WithMetadata = {
                 data: buffer,
-                contentLength: 0,
+                contentLength: 0
             };
 
             const result = await toBinaryUploadRequest(input);
 
             expect(result.body).toBe(buffer);
             expect(result.headers).toEqual({
-                "Content-Length": "0", // Should use provided 0
+                "Content-Length": "0" // Should use provided 0
             });
         });
 
@@ -464,7 +464,7 @@ describe("toBinaryUploadRequest", () => {
             const input: Uploadable.WithMetadata = {
                 data: buffer,
                 filename: undefined,
-                contentType: "text/plain",
+                contentType: "text/plain"
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -472,7 +472,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.body).toBe(buffer);
             expect(result.headers).toEqual({
                 "Content-Type": "text/plain",
-                "Content-Length": "4",
+                "Content-Length": "4"
                 // No Content-Disposition since filename is undefined
             });
         });
@@ -482,7 +482,7 @@ describe("toBinaryUploadRequest", () => {
             const input: Uploadable.WithMetadata = {
                 data: buffer,
                 filename: "test.txt",
-                contentType: undefined,
+                contentType: undefined
             };
 
             const result = await toBinaryUploadRequest(input);
@@ -490,7 +490,7 @@ describe("toBinaryUploadRequest", () => {
             expect(result.body).toBe(buffer);
             expect(result.headers).toEqual({
                 "Content-Disposition": 'attachment; filename="test.txt"',
-                "Content-Length": "4",
+                "Content-Length": "4"
                 // No Content-Type since contentType is undefined
             });
         });

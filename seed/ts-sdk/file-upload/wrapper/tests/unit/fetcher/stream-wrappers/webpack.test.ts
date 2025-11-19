@@ -12,17 +12,17 @@ describe("test env compatibility", () => {
                             {
                                 test: /\.tsx?$/,
                                 use: "ts-loader",
-                                exclude: /node_modules/,
-                            },
-                        ],
+                                exclude: /node_modules/
+                            }
+                        ]
                     },
                     resolve: {
                         extensions: [".tsx", ".ts", ".jsx", ".js"],
                         extensionAlias: {
                             ".js": [".ts", ".js"],
-                            ".jsx": [".tsx", ".jsx"],
-                        },
-                    },
+                            ".jsx": [".tsx", ".jsx"]
+                        }
+                    }
                 },
                 (err, stats) => {
                     try {
@@ -35,7 +35,7 @@ describe("test env compatibility", () => {
                     } catch (error) {
                         reject(error);
                     }
-                },
+                }
             );
         });
     }, 180_000);

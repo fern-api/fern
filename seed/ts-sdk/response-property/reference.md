@@ -1,5 +1,5 @@
 # Reference
-## Service
+## service
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getMovie</a>({ ...params }) -> SeedResponseProperty.Response</code></summary>
 <dl>
 <dd>

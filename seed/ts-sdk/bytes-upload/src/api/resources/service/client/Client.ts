@@ -2,20 +2,23 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace ServiceClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ServiceClient {
     protected readonly _options: ServiceClient.Options;
 
     constructor(options: ServiceClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -27,29 +30,15 @@ export class ServiceClient {
      *     import { createReadStream } from "fs";
      *     await client.service.upload(createReadStream("path/to/file"))
      */
-    public upload(
-        uploadable: core.file.Uploadable,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public upload(uploadable: core.file.Uploadable, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__upload(uploadable, requestOptions));
     }
 
-    private async __upload(
-        uploadable: core.file.Uploadable,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __upload(uploadable: core.file.Uploadable, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _binaryUploadRequest = await core.file.toBinaryUploadRequest(uploadable);
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            _binaryUploadRequest.headers,
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, _binaryUploadRequest.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "upload-content",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "upload-content"),
             method: "POST",
             headers: _headers,
             contentType: "application/octet-stream",
@@ -61,7 +50,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -71,24 +60,21 @@ export class ServiceClient {
             throw new errors.SeedBytesUploadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedBytesUploadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedBytesUploadTimeoutError("Timeout exceeded when calling POST /upload-content.");
-            case "unknown":
-                throw new errors.SeedBytesUploadError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedBytesUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedBytesUploadTimeoutError("Timeout exceeded when calling POST /upload-content.");
+            case "unknown": throw new errors.SeedBytesUploadError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

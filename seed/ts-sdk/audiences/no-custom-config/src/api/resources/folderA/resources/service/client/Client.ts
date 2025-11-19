@@ -2,21 +2,25 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../core/headers.js";
+import * as environments from "../../../../../../environments.js";
 import * as core from "../../../../../../core/index.js";
+import * as SeedAudiences from "../../../../../index.js";
+import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedAudiences from "../../../../../index.js";
 
 export declare namespace ServiceClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ServiceClient {
     protected readonly _options: ServiceClient.Options;
 
     constructor(options: ServiceClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -30,36 +34,30 @@ export class ServiceClient {
      *         tags: "tags"
      *     })
      */
-    public getDirectThread(
-        request: SeedAudiences.folderA.GetDirectThreadRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedAudiences.folderA.Response> {
+    public getDirectThread(request: SeedAudiences.folderA.GetDirectThreadRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedAudiences.folderA.Response> {
         return core.HttpResponsePromise.fromPromise(this.__getDirectThread(request, requestOptions));
     }
 
-    private async __getDirectThread(
-        request: SeedAudiences.folderA.GetDirectThreadRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedAudiences.folderA.Response>> {
+    private async __getDirectThread(request: SeedAudiences.folderA.GetDirectThreadRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedAudiences.folderA.Response>> {
         const { ids, tags } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(ids)) {
-            _queryParams.ids = ids.map((item) => item);
-        } else {
-            _queryParams.ids = ids;
+            _queryParams["ids"] = ids.map(item => item);
+        }
+        else {
+            _queryParams["ids"] = ids;
         }
 
         if (Array.isArray(tags)) {
-            _queryParams.tags = tags.map((item) => item);
-        } else {
-            _queryParams.tags = tags;
+            _queryParams["tags"] = tags.map(item => item);
+        }
+        else {
+            _queryParams["tags"] = tags;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+            url: await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -67,7 +65,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedAudiences.folderA.Response, rawResponse: _response.rawResponse };
@@ -77,24 +75,21 @@ export class ServiceClient {
             throw new errors.SeedAudiencesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedAudiencesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedAudiencesTimeoutError("Timeout exceeded when calling GET /.");
-            case "unknown":
-                throw new errors.SeedAudiencesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedAudiencesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedAudiencesTimeoutError("Timeout exceeded when calling GET /.");
+            case "unknown": throw new errors.SeedAudiencesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

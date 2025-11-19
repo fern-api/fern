@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as errors from "../../../../errors/index.js";
 import * as SeedErrorProperty from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
+import * as errors from "../../../../errors/index.js";
 
 export declare namespace PropertyBasedErrorClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class PropertyBasedErrorClient {
     protected readonly _options: PropertyBasedErrorClient.Options;
 
     constructor(options: PropertyBasedErrorClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -34,16 +37,10 @@ export class PropertyBasedErrorClient {
         return core.HttpResponsePromise.fromPromise(this.__throwError(requestOptions));
     }
 
-    private async __throwError(
-        requestOptions?: PropertyBasedErrorClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __throwError(requestOptions?: PropertyBasedErrorClient.RequestOptions): Promise<core.WithRawResponse<string>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "property-based-error",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "property-based-error"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -51,44 +48,34 @@ export class PropertyBasedErrorClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
-            switch ((_response.error.body as any)?.errorName) {
-                case "PropertyBasedErrorTest":
-                    throw new SeedErrorProperty.PropertyBasedErrorTest(
-                        _response.error.body as SeedErrorProperty.PropertyBasedErrorTestBody,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedErrorPropertyError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
+            switch ((_response.error.body as any)?.["errorName"]) {
+                case "PropertyBasedErrorTest": throw new SeedErrorProperty.PropertyBasedErrorTest(_response.error.body as SeedErrorProperty.PropertyBasedErrorTestBody, _response.rawResponse);
+                default: throw new errors.SeedErrorPropertyError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse
+                });
             }
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedErrorPropertyError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedErrorPropertyTimeoutError(
-                    "Timeout exceeded when calling GET /property-based-error.",
-                );
-            case "unknown":
-                throw new errors.SeedErrorPropertyError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedErrorPropertyError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedErrorPropertyTimeoutError("Timeout exceeded when calling GET /property-based-error.");
+            case "unknown": throw new errors.SeedErrorPropertyError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

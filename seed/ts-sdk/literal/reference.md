@@ -1,5 +1,5 @@
 # Reference
-## Headers
+## headers
 <details><summary><code>client.headers.<a href="/src/api/resources/headers/client/Client.ts">send</a>({ ...params }) -> SeedLiteral.SendResponse</code></summary>
 <dl>
 <dd>
@@ -51,7 +51,7 @@ await client.headers.send({
 </dl>
 </details>
 
-## Inlined
+## inlined
 <details><summary><code>client.inlined.<a href="/src/api/resources/inlined/client/Client.ts">send</a>({ ...params }) -> SeedLiteral.SendResponse</code></summary>
 <dl>
 <dd>
@@ -111,7 +111,7 @@ await client.inlined.send({
 </dl>
 </details>
 
-## Path
+## path
 <details><summary><code>client.path.<a href="/src/api/resources/path/client/Client.ts">send</a>(id) -> SeedLiteral.SendResponse</code></summary>
 <dl>
 <dd>
@@ -161,7 +161,7 @@ await client.path.send("123");
 </dl>
 </details>
 
-## Query
+## query
 <details><summary><code>client.query.<a href="/src/api/resources/query/client/Client.ts">send</a>({ ...params }) -> SeedLiteral.SendResponse</code></summary>
 <dl>
 <dd>
@@ -221,7 +221,7 @@ await client.query.send({
 </dl>
 </details>
 
-## Reference
+## reference
 <details><summary><code>client.reference.<a href="/src/api/resources/reference/client/Client.ts">send</a>({ ...params }) -> SeedLiteral.SendResponse</code></summary>
 <dl>
 <dd>

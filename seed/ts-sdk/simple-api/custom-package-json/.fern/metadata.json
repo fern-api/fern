@@ -1,37 +1,40 @@
 {
-    "cliVersion": "DUMMY",
-    "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
-    "generatorConfig": {
-        "private": true,
-        "extraDependencies": {
-            "lodash-es": "^4.17.21"
-        },
-        "extraDevDependencies": {
-            "jest": "^29.7.0"
-        },
-        "extraPeerDependencies": {
-            "openai": "^4.47.1"
-        },
-        "extraPeerDependenciesMeta": {
-            "openai": {
-                "optional": true
-            }
-        },
-        "packageJson": {
-            "version": "0.0.2",
-            "dependencies": {
-                "stream": "^0.0.2",
-                "qs": "^6.11.2"
-            },
-            "files": ["exampleFile", "dist"],
-            "browser": {
-                "command-exists": false,
-                "execa": false
-            },
-            "engines": {
-                "node": ">=16.0.0"
-            }
-        }
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-typescript-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "private": true,
+    "extraDependencies": {
+      "lodash-es": "^4.17.21"
+    },
+    "extraDevDependencies": {
+      "jest": "^29.7.0"
+    },
+    "extraPeerDependencies": {
+      "openai": "^4.47.1"
+    },
+    "extraPeerDependenciesMeta": {
+      "openai": {
+        "optional": true
+      }
+    },
+    "packageJson": {
+      "version": "0.0.2",
+      "dependencies": {
+        "stream": "^0.0.2",
+        "qs": "^6.11.2"
+      },
+      "files": [
+        "exampleFile",
+        "dist"
+      ],
+      "browser": {
+        "command-exists": false,
+        "execa": false
+      },
+      "engines": {
+        "node": ">=16.0.0"
+      }
     }
+  }
 }

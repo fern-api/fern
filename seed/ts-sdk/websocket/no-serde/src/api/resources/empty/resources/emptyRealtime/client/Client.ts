@@ -6,7 +6,8 @@ import * as core from "../../../../../../core/index.js";
 import { EmptyRealtimeSocket } from "./Socket.js";
 
 export declare namespace EmptyRealtimeClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
     export interface ConnectArgs {
         /** Arbitrary headers to send with the websocket connect request. */
@@ -22,23 +23,14 @@ export class EmptyRealtimeClient {
     protected readonly _options: EmptyRealtimeClient.Options;
 
     constructor(options: EmptyRealtimeClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
     public async connect(args: EmptyRealtimeClient.ConnectArgs = {}): Promise<EmptyRealtimeSocket> {
         const { headers, debug, reconnectAttempts } = args;
-        const _headers: Record<string, unknown> = { ...headers };
-        const socket = new core.ReconnectingWebSocket({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/empty/realtime/",
-            ),
-            protocols: [],
-            queryParameters: {},
-            headers: _headers,
-            options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
-        });
+        let _headers: Record<string, unknown> = { ...headers };
+        const socket = new core.ReconnectingWebSocket({ url: core.url.join(await core.Supplier.get(this._options["baseUrl"]) ?? await core.Supplier.get(this._options["environment"]), "/empty/realtime/"), protocols: [], queryParameters: {}, headers: _headers, options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 } });
         return new EmptyRealtimeSocket({ socket });
     }
 }

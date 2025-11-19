@@ -2,6 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
+import * as core from "../../../../core/index.js";
 import { ContainerClient } from "../resources/container/client/Client.js";
 import { ContentTypeClient } from "../resources/contentType/client/Client.js";
 import { EnumClient } from "../resources/enum/client/Client.js";
@@ -14,7 +15,8 @@ import { UnionClient } from "../resources/union/client/Client.js";
 import { UrlsClient } from "../resources/urls/client/Client.js";
 
 export declare namespace EndpointsClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 }
 
 export class EndpointsClient {
@@ -31,6 +33,7 @@ export class EndpointsClient {
     protected _urls: UrlsClient | undefined;
 
     constructor(options: EndpointsClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 

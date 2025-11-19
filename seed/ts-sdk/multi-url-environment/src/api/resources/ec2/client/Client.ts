@@ -2,22 +2,25 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
+import * as core from "../../../../core/index.js";
+import * as SeedMultiUrlEnvironment from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedMultiUrlEnvironment from "../../../index.js";
 
 export declare namespace Ec2Client {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class Ec2Client {
     protected readonly _options: Ec2Client.Options;
 
     constructor(options: Ec2Client.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -30,31 +33,14 @@ export class Ec2Client {
      *         size: "size"
      *     })
      */
-    public bootInstance(
-        request: SeedMultiUrlEnvironment.BootInstanceRequest,
-        requestOptions?: Ec2Client.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public bootInstance(request: SeedMultiUrlEnvironment.BootInstanceRequest, requestOptions?: Ec2Client.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__bootInstance(request, requestOptions));
     }
 
-    private async __bootInstance(
-        request: SeedMultiUrlEnvironment.BootInstanceRequest,
-        requestOptions?: Ec2Client.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __bootInstance(request: SeedMultiUrlEnvironment.BootInstanceRequest, requestOptions?: Ec2Client.RequestOptions): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.SeedMultiUrlEnvironmentEnvironment.Production
-                    ).ec2,
-                "/ec2/boot",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedMultiUrlEnvironmentEnvironment.Production).ec2, "/ec2/boot"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -65,7 +51,7 @@ export class Ec2Client {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -75,24 +61,21 @@ export class Ec2Client {
             throw new errors.SeedMultiUrlEnvironmentError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedMultiUrlEnvironmentError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedMultiUrlEnvironmentTimeoutError("Timeout exceeded when calling POST /ec2/boot.");
-            case "unknown":
-                throw new errors.SeedMultiUrlEnvironmentError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedMultiUrlEnvironmentError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedMultiUrlEnvironmentTimeoutError("Timeout exceeded when calling POST /ec2/boot.");
+            case "unknown": throw new errors.SeedMultiUrlEnvironmentError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

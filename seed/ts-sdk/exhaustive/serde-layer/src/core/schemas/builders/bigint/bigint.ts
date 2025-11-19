@@ -9,13 +9,13 @@ export function bigint(): Schema<bigint | number, bigint> {
             if (typeof raw === "bigint") {
                 return {
                     ok: true,
-                    value: raw,
+                    value: raw
                 };
             }
             if (typeof raw === "number") {
                 return {
                     ok: true,
-                    value: BigInt(raw),
+                    value: BigInt(raw)
                 };
             }
             return {
@@ -23,9 +23,9 @@ export function bigint(): Schema<bigint | number, bigint> {
                 errors: [
                     {
                         path: breadcrumbsPrefix,
-                        message: getErrorMessageForIncorrectType(raw, "bigint | number"),
-                    },
-                ],
+                        message: getErrorMessageForIncorrectType(raw, "bigint | number")
+                    }
+                ]
             };
         },
         json: (bigint, { breadcrumbsPrefix = [] } = {}) => {
@@ -35,21 +35,21 @@ export function bigint(): Schema<bigint | number, bigint> {
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(bigint, "bigint"),
-                        },
-                    ],
+                            message: getErrorMessageForIncorrectType(bigint, "bigint")
+                        }
+                    ]
                 };
             }
             return {
                 ok: true,
-                value: bigint,
+                value: bigint
             };
         },
-        getType: () => SchemaType.BIGINT,
+        getType: () => SchemaType.BIGINT
     };
 
     return {
         ...maybeSkipValidation(baseSchema),
-        ...getSchemaUtils(baseSchema),
+        ...getSchemaUtils(baseSchema)
     };
 }

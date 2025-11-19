@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../../../core/headers.js";
-import * as core from "../../../../../../../../core/index.js";
 import * as environments from "../../../../../../../../environments.js";
+import * as core from "../../../../../../../../core/index.js";
 import * as SeedTrace from "../../../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../../../core/headers.js";
 
 export declare namespace ProblemClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ProblemClient {
     protected readonly _options: ProblemClient.Options;
 
     constructor(options: ProblemClient.Options = {}) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -28,77 +31,38 @@ export class ProblemClient {
      * @example
      *     await client.v2.v3.problem.getLightweightProblems()
      */
-    public getLightweightProblems(
-        requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedTrace.v2.v3.LightweightProblemInfoV2[],
-            SeedTrace.v2.v3.problem.getLightweightProblems.Error
-        >
-    > {
+    public getLightweightProblems(requestOptions?: ProblemClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedTrace.v2.v3.LightweightProblemInfoV2[], SeedTrace.v2.v3.problem.getLightweightProblems.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getLightweightProblems(requestOptions));
     }
 
-    private async __getLightweightProblems(
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                SeedTrace.v2.v3.LightweightProblemInfoV2[],
-                SeedTrace.v2.v3.problem.getLightweightProblems.Error
-            >
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __getLightweightProblems(requestOptions?: ProblemClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.v2.v3.LightweightProblemInfoV2[], SeedTrace.v2.v3.problem.getLightweightProblems.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/lightweight-problem-info",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), "/problems-v2/lightweight-problem-info"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : this._options?.timeoutInSeconds != null ? (this._options?.timeoutInSeconds * 1000) : undefined,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedTrace.v2.v3.LightweightProblemInfoV2[],
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedTrace.v2.v3.problem.getLightweightProblems.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -109,71 +73,38 @@ export class ProblemClient {
      * @example
      *     await client.v2.v3.problem.getProblems()
      */
-    public getProblems(
-        requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>
-    > {
+    public getProblems(requestOptions?: ProblemClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getProblems(requestOptions));
     }
 
-    private async __getProblems(
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __getProblems(requestOptions?: ProblemClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2[], SeedTrace.v2.v3.problem.getProblems.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/problems-v2/problem-info",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), "/problems-v2/problem-info"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : this._options?.timeoutInSeconds != null ? (this._options?.timeoutInSeconds * 1000) : undefined,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedTrace.v2.v3.ProblemInfoV2[],
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedTrace.v2.v3.problem.getProblems.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -185,73 +116,38 @@ export class ProblemClient {
      * @example
      *     await client.v2.v3.problem.getLatestProblem(SeedTrace.ProblemId("problemId"))
      */
-    public getLatestProblem(
-        problemId: SeedTrace.ProblemId,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>
-    > {
+    public getLatestProblem(problemId: SeedTrace.ProblemId, requestOptions?: ProblemClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getLatestProblem(problemId, requestOptions));
     }
 
-    private async __getLatestProblem(
-        problemId: SeedTrace.ProblemId,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __getLatestProblem(problemId: SeedTrace.ProblemId, requestOptions?: ProblemClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getLatestProblem.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${core.url.encodePathParam(problemId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), `/problems-v2/problem-info/${core.url.encodePathParam(problemId)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : this._options?.timeoutInSeconds != null ? (this._options?.timeoutInSeconds * 1000) : undefined,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedTrace.v2.v3.ProblemInfoV2,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedTrace.v2.v3.problem.getLatestProblem.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -264,77 +160,38 @@ export class ProblemClient {
      * @example
      *     await client.v2.v3.problem.getProblemVersion(SeedTrace.ProblemId("problemId"), 1)
      */
-    public getProblemVersion(
-        problemId: SeedTrace.ProblemId,
-        problemVersion: number,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>
-    > {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getProblemVersion(problemId, problemVersion, requestOptions),
-        );
+    public getProblemVersion(problemId: SeedTrace.ProblemId, problemVersion: number, requestOptions?: ProblemClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__getProblemVersion(problemId, problemVersion, requestOptions));
     }
 
-    private async __getProblemVersion(
-        problemId: SeedTrace.ProblemId,
-        problemVersion: number,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __getProblemVersion(problemId: SeedTrace.ProblemId, problemVersion: number, requestOptions?: ProblemClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.v2.v3.ProblemInfoV2, SeedTrace.v2.v3.problem.getProblemVersion.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/problems-v2/problem-info/${core.url.encodePathParam(problemId)}/version/${core.url.encodePathParam(problemVersion)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), `/problems-v2/problem-info/${core.url.encodePathParam(problemId)}/version/${core.url.encodePathParam(problemVersion)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : this._options?.timeoutInSeconds != null ? (this._options?.timeoutInSeconds * 1000) : undefined,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedTrace.v2.v3.ProblemInfoV2,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedTrace.v2.v3.problem.getProblemVersion.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

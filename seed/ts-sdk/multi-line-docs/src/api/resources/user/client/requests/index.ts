@@ -1,1 +1,1 @@
-export type { CreateUserRequest } from "./CreateUserRequest.js";
+export { type CreateUserRequest } from "./CreateUserRequest.js";

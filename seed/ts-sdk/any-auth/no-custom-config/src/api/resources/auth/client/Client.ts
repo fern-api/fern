@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedAnyAuth from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedAnyAuth from "../../../index.js";
 
 export declare namespace AuthClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class AuthClient {
     protected readonly _options: AuthClient.Options;
 
     constructor(options: AuthClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -31,42 +34,25 @@ export class AuthClient {
      *         scope: "scope"
      *     })
      */
-    public getToken(
-        request: SeedAnyAuth.GetTokenRequest,
-        requestOptions?: AuthClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedAnyAuth.TokenResponse> {
+    public getToken(request: SeedAnyAuth.GetTokenRequest, requestOptions?: AuthClient.RequestOptions): core.HttpResponsePromise<SeedAnyAuth.TokenResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
     }
 
-    private async __getToken(
-        request: SeedAnyAuth.GetTokenRequest,
-        requestOptions?: AuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedAnyAuth.TokenResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                ...(await this._getCustomAuthorizationHeaders()),
-            }),
-            requestOptions?.headers,
-        );
+    private async __getToken(request: SeedAnyAuth.GetTokenRequest, requestOptions?: AuthClient.RequestOptions): Promise<core.WithRawResponse<SeedAnyAuth.TokenResponse>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), ...await this._getCustomAuthorizationHeaders() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/token",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/token"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: { ...request, audience: "https://api.example.com", grant_type: "client_credentials" },
+            body: { ...(request), audience: "https://api.example.com", grant_type: "client_credentials" },
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedAnyAuth.TokenResponse, rawResponse: _response.rawResponse };
@@ -76,24 +62,21 @@ export class AuthClient {
             throw new errors.SeedAnyAuthError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedAnyAuthError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedAnyAuthTimeoutError("Timeout exceeded when calling POST /token.");
-            case "unknown":
-                throw new errors.SeedAnyAuthError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedAnyAuthError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedAnyAuthTimeoutError("Timeout exceeded when calling POST /token.");
+            case "unknown": throw new errors.SeedAnyAuthError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -107,7 +90,7 @@ export class AuthClient {
     }
 
     protected async _getCustomAuthorizationHeaders(): Promise<Record<string, string | undefined>> {
-        const apiKeyValue = (await core.Supplier.get(this._options.apiKey)) ?? process?.env.MY_API_KEY;
+        const apiKeyValue = (await core.Supplier.get(this._options.apiKey)) ?? process?.env["MY_API_KEY"];
         return { "X-API-Key": apiKeyValue };
     }
 }

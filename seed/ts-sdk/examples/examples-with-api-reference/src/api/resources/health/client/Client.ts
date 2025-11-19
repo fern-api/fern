@@ -2,10 +2,13 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
+import * as environments from "../../../../environments.js";
+import * as core from "../../../../core/index.js";
 import { ServiceClient } from "../resources/service/client/Client.js";
 
 export declare namespace HealthClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 }
 
 export class HealthClient {
@@ -13,6 +16,7 @@ export class HealthClient {
     protected _service: ServiceClient | undefined;
 
     constructor(options: HealthClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 

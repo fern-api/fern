@@ -2,23 +2,26 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
-import * as errors from "../../../../errors/index.js";
+import * as core from "../../../../core/index.js";
+import * as SeedTrace from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedTrace from "../../../index.js";
+import * as errors from "../../../../errors/index.js";
 
 export declare namespace MigrationClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class MigrationClient {
     protected readonly _options: MigrationClient.Options;
 
     constructor(options: MigrationClient.Options = {}) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -31,34 +34,15 @@ export class MigrationClient {
      *         adminKeyHeader: "admin-key-header"
      *     })
      */
-    public getAttemptedMigrations(
-        request: SeedTrace.GetAttemptedMigrationsRequest,
-        requestOptions?: MigrationClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.Migration[]> {
+    public getAttemptedMigrations(request: SeedTrace.GetAttemptedMigrationsRequest, requestOptions?: MigrationClient.RequestOptions): core.HttpResponsePromise<SeedTrace.Migration[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
     }
 
-    private async __getAttemptedMigrations(
-        request: SeedTrace.GetAttemptedMigrationsRequest,
-        requestOptions?: MigrationClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.Migration[]>> {
+    private async __getAttemptedMigrations(request: SeedTrace.GetAttemptedMigrationsRequest, requestOptions?: MigrationClient.RequestOptions): Promise<core.WithRawResponse<SeedTrace.Migration[]>> {
         const { adminKeyHeader } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "admin-key-header": adminKeyHeader,
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "admin-key-header": adminKeyHeader, "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/migration-info/all",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), "/migration-info/all"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -66,43 +50,31 @@ export class MigrationClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.migration.getAttemptedMigrations.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedTraceError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /migration-info/all.");
-            case "unknown":
-                throw new errors.SeedTraceError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /migration-info/all.");
+            case "unknown": throw new errors.SeedTraceError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

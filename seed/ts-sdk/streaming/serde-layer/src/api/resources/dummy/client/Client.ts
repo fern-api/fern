@@ -2,107 +2,82 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as errors from "../../../../errors/index.js";
+import * as SeedStreaming from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedStreaming from "../../../index.js";
+import * as errors from "../../../../errors/index.js";
 
 export declare namespace DummyClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class DummyClient {
     protected readonly _options: DummyClient.Options;
 
     constructor(options: DummyClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
-    public generateStream(
-        request: SeedStreaming.GenerateStreamRequest,
-        requestOptions?: DummyClient.RequestOptions,
-    ): core.HttpResponsePromise<core.Stream<SeedStreaming.StreamResponse>> {
+    public generateStream(request: SeedStreaming.GenerateStreamRequest, requestOptions?: DummyClient.RequestOptions): core.HttpResponsePromise<core.Stream<SeedStreaming.StreamResponse>> {
         return core.HttpResponsePromise.fromPromise(this.__generateStream(request, requestOptions));
     }
 
-    private async __generateStream(
-        request: SeedStreaming.GenerateStreamRequest,
-        requestOptions?: DummyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __generateStream(request: SeedStreaming.GenerateStreamRequest, requestOptions?: DummyClient.RequestOptions): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<ReadableStream>({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "generate-stream",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "generate-stream"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: {
-                ...serializers.GenerateStreamRequest.jsonOrThrow(request, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-                stream: true,
-            },
+            body: { ...(serializers.GenerateStreamRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true })), stream: true },
             responseType: "sse",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: new core.Stream({
+            return { data: new core.Stream({
                     stream: _response.body,
                     parse: async (data) => {
-                        return serializers.StreamResponse.parseOrThrow(data, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        });
+                        return serializers.StreamResponse.parseOrThrow(data, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] });
                     },
                     signal: requestOptions?.abortSignal,
                     eventShape: {
                         type: "json",
-                        messageTerminator: "\n",
-                    },
-                }),
-                rawResponse: _response.rawResponse,
-            };
+                        messageTerminator: "\n"
+                    }
+                }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedStreamingError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedStreamingError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate-stream.");
-            case "unknown":
-                throw new errors.SeedStreamingError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedStreamingError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate-stream.");
+            case "unknown": throw new errors.SeedStreamingError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -115,77 +90,49 @@ export class DummyClient {
      *         numEvents: 5
      *     })
      */
-    public generate(
-        request: SeedStreaming.Generateequest,
-        requestOptions?: DummyClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedStreaming.StreamResponse> {
+    public generate(request: SeedStreaming.Generateequest, requestOptions?: DummyClient.RequestOptions): core.HttpResponsePromise<SeedStreaming.StreamResponse> {
         return core.HttpResponsePromise.fromPromise(this.__generate(request, requestOptions));
     }
 
-    private async __generate(
-        request: SeedStreaming.Generateequest,
-        requestOptions?: DummyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedStreaming.StreamResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __generate(request: SeedStreaming.Generateequest, requestOptions?: DummyClient.RequestOptions): Promise<core.WithRawResponse<SeedStreaming.StreamResponse>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "generate",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "generate"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: {
-                ...serializers.Generateequest.jsonOrThrow(request, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-                stream: false,
-            },
+            body: { ...(serializers.Generateequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true })), stream: false },
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.StreamResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.StreamResponse.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedStreamingError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedStreamingError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate.");
-            case "unknown":
-                throw new errors.SeedStreamingError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedStreamingError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedStreamingTimeoutError("Timeout exceeded when calling POST /generate.");
+            case "unknown": throw new errors.SeedStreamingError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

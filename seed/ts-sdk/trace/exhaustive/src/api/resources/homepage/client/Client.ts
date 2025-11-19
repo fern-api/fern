@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
+import * as core from "../../../../core/index.js";
 import * as SeedTrace from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 
 export declare namespace HomepageClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class HomepageClient {
     protected readonly _options: HomepageClient.Options;
 
     constructor(options: HomepageClient.Options = {}) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -26,67 +29,38 @@ export class HomepageClient {
      * @example
      *     await client.homepage.getHomepageProblems()
      */
-    public getHomepageProblems(
-        requestOptions?: HomepageClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
+    public getHomepageProblems(requestOptions?: HomepageClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getHomepageProblems(requestOptions));
     }
 
-    private async __getHomepageProblems(
-        requestOptions?: HomepageClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>>
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __getHomepageProblems(requestOptions?: HomepageClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), "/homepage-problems"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : this._options?.timeoutInSeconds != null ? (this._options?.timeoutInSeconds * 1000) : undefined,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedTrace.ProblemId[],
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedTrace.homepage.getHomepageProblems.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -96,70 +70,41 @@ export class HomepageClient {
      * @example
      *     await client.homepage.setHomepageProblems([SeedTrace.ProblemId("string"), SeedTrace.ProblemId("string")])
      */
-    public setHomepageProblems(
-        request: SeedTrace.ProblemId[],
-        requestOptions?: HomepageClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>> {
+    public setHomepageProblems(request: SeedTrace.ProblemId[], requestOptions?: HomepageClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__setHomepageProblems(request, requestOptions));
     }
 
-    private async __setHomepageProblems(
-        request: SeedTrace.ProblemId[],
-        requestOptions?: HomepageClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __setHomepageProblems(request: SeedTrace.ProblemId[], requestOptions?: HomepageClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), "/homepage-problems"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : this._options?.timeoutInSeconds != null ? (this._options?.timeoutInSeconds * 1000) : undefined,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: undefined,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedTrace.homepage.setHomepageProblems.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

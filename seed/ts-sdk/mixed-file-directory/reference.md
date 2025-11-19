@@ -1,5 +1,5 @@
 # Reference
-## Organization
+## organization
 <details><summary><code>client.organization.<a href="/src/api/resources/organization/client/Client.ts">create</a>({ ...params }) -> SeedMixedFileDirectory.Organization</code></summary>
 <dl>
 <dd>
@@ -65,7 +65,7 @@ await client.organization.create({
 </dl>
 </details>
 
-## User
+## user
 <details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">list</a>({ ...params }) -> SeedMixedFileDirectory.User[]</code></summary>
 <dl>
 <dd>
@@ -131,7 +131,7 @@ await client.user.list({
 </dl>
 </details>
 
-## User Events
+## user.events
 <details><summary><code>client.user.events.<a href="/src/api/resources/user/resources/events/client/Client.ts">listEvents</a>({ ...params }) -> SeedMixedFileDirectory.Event[]</code></summary>
 <dl>
 <dd>
@@ -197,7 +197,7 @@ await client.user.events.listEvents({
 </dl>
 </details>
 
-## User Events Metadata
+## user.events.metadata
 <details><summary><code>client.user.events.metadata.<a href="/src/api/resources/user/resources/events/resources/metadata/client/Client.ts">getMetadata</a>({ ...params }) -> SeedMixedFileDirectory.Metadata</code></summary>
 <dl>
 <dd>

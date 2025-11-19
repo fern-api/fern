@@ -3,11 +3,11 @@ import type {
     inferParsedPropertySchema,
     inferRawObjectFromPropertySchemas,
     ObjectSchema,
-    PropertySchemas,
+    PropertySchemas
 } from "./types.js";
 
 export function objectWithoutOptionalProperties<ParsedKeys extends string, T extends PropertySchemas<ParsedKeys>>(
-    schemas: T,
+    schemas: T
 ): inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas<T> {
     return object(schemas) as unknown as inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas<T>;
 }

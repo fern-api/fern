@@ -1,9 +1,9 @@
 {
-    "cliVersion": "DUMMY",
-    "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
-    "generatorConfig": {
-        "noSerdeLayer": true,
-        "shouldGenerateWebsocketClients": true
-    }
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-typescript-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "noSerdeLayer": true,
+    "shouldGenerateWebsocketClients": true
+  }
 }

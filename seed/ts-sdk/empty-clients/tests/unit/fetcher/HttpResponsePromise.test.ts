@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { HttpResponsePromise } from "../../../src/core/fetcher/HttpResponsePromise";
-import type { RawResponse, WithRawResponse } from "../../../src/core/fetcher/RawResponse";
+import { RawResponse, WithRawResponse } from "../../../src/core/fetcher/RawResponse";
 
 describe("HttpResponsePromise", () => {
     const mockRawResponse: RawResponse = {
@@ -10,12 +10,12 @@ describe("HttpResponsePromise", () => {
         status: 200,
         statusText: "OK",
         type: "basic" as ResponseType,
-        url: "https://example.com",
+        url: "https://example.com"
     };
     const mockData = { id: "123", name: "test" };
     const mockWithRawResponse: WithRawResponse<typeof mockData> = {
         data: mockData,
-        rawResponse: mockRawResponse,
+        rawResponse: mockRawResponse
     };
 
     describe("fromFunction", () => {
@@ -33,7 +33,7 @@ describe("HttpResponsePromise", () => {
             const resultWithRawResponse = await responsePromise.withRawResponse();
             expect(resultWithRawResponse).toEqual({
                 data: mockData,
-                rawResponse: mockRawResponse,
+                rawResponse: mockRawResponse
             });
         });
     });
@@ -50,7 +50,7 @@ describe("HttpResponsePromise", () => {
             const resultWithRawResponse = await responsePromise.withRawResponse();
             expect(resultWithRawResponse).toEqual({
                 data: mockData,
-                rawResponse: mockRawResponse,
+                rawResponse: mockRawResponse
             });
         });
     });
@@ -67,7 +67,7 @@ describe("HttpResponsePromise", () => {
             const resultWithRawResponse = await responsePromise.withRawResponse();
             expect(resultWithRawResponse).toEqual({
                 data: mockData,
-                rawResponse: mockRawResponse,
+                rawResponse: mockRawResponse
             });
         });
     });
@@ -82,7 +82,7 @@ describe("HttpResponsePromise", () => {
             const resultWithRawResponse = await responsePromise.withRawResponse();
             expect(resultWithRawResponse).toEqual({
                 data: mockData,
-                rawResponse: mockRawResponse,
+                rawResponse: mockRawResponse
             });
         });
     });
@@ -97,12 +97,12 @@ describe("HttpResponsePromise", () => {
         it("should support then() method", async () => {
             const result = await responsePromise.then((data) => ({
                 ...data,
-                modified: true,
+                modified: true
             }));
 
             expect(result).toEqual({
                 ...mockData,
-                modified: true,
+                modified: true
             });
         });
 
@@ -136,7 +136,7 @@ describe("HttpResponsePromise", () => {
 
             expect(result).toEqual({
                 data: mockData,
-                rawResponse: mockRawResponse,
+                rawResponse: mockRawResponse
             });
         });
     });

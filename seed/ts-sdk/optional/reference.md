@@ -1,5 +1,5 @@
 # Reference
-## Optional
+## optional
 <details><summary><code>client.optional.<a href="/src/api/resources/optional/client/Client.ts">sendOptionalBody</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>

@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../../../../../core/headers.js";
 import * as core from "../../../../../../../../core/index.js";
+import * as SeedMixedFileDirectory from "../../../../../../../index.js";
+import { mergeHeaders } from "../../../../../../../../core/headers.js";
 import * as errors from "../../../../../../../../errors/index.js";
-import type * as SeedMixedFileDirectory from "../../../../../../../index.js";
 
 export declare namespace MetadataClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class MetadataClient {
     protected readonly _options: MetadataClient.Options;
 
     constructor(options: MetadataClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -31,27 +34,17 @@ export class MetadataClient {
      *         id: "id"
      *     })
      */
-    public getMetadata(
-        request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
-        requestOptions?: MetadataClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedFileDirectory.user.events.Metadata> {
+    public getMetadata(request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest, requestOptions?: MetadataClient.RequestOptions): core.HttpResponsePromise<SeedMixedFileDirectory.user.events.Metadata> {
         return core.HttpResponsePromise.fromPromise(this.__getMetadata(request, requestOptions));
     }
 
-    private async __getMetadata(
-        request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest,
-        requestOptions?: MetadataClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.user.events.Metadata>> {
+    private async __getMetadata(request: SeedMixedFileDirectory.user.events.GetEventMetadataRequest, requestOptions?: MetadataClient.RequestOptions): Promise<core.WithRawResponse<SeedMixedFileDirectory.user.events.Metadata>> {
         const { id } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.id = id;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        _queryParams["id"] = id;
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users/events/metadata/",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/users/events/metadata/"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -59,39 +52,31 @@ export class MetadataClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedMixedFileDirectory.user.events.Metadata,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedMixedFileDirectory.user.events.Metadata, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedMixedFileDirectoryError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedMixedFileDirectoryError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedMixedFileDirectoryTimeoutError(
-                    "Timeout exceeded when calling GET /users/events/metadata/.",
-                );
-            case "unknown":
-                throw new errors.SeedMixedFileDirectoryError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedMixedFileDirectoryError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedMixedFileDirectoryTimeoutError("Timeout exceeded when calling GET /users/events/metadata/.");
+            case "unknown": throw new errors.SeedMixedFileDirectoryError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

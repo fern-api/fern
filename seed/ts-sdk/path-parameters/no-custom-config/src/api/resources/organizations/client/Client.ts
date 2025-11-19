@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedPathParameters from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedPathParameters from "../../../index.js";
 
 export declare namespace OrganizationsClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class OrganizationsClient {
     protected readonly _options: OrganizationsClient.Options;
 
     constructor(options: OrganizationsClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -27,24 +30,14 @@ export class OrganizationsClient {
      * @example
      *     await client.organizations.getOrganization("organization_id")
      */
-    public getOrganization(
-        organization_id: string,
-        requestOptions?: OrganizationsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedPathParameters.Organization> {
+    public getOrganization(organization_id: string, requestOptions?: OrganizationsClient.RequestOptions): core.HttpResponsePromise<SeedPathParameters.Organization> {
         return core.HttpResponsePromise.fromPromise(this.__getOrganization(organization_id, requestOptions));
     }
 
-    private async __getOrganization(
-        organization_id: string,
-        requestOptions?: OrganizationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __getOrganization(organization_id: string, requestOptions?: OrganizationsClient.RequestOptions): Promise<core.WithRawResponse<SeedPathParameters.Organization>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -52,7 +45,7 @@ export class OrganizationsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedPathParameters.Organization, rawResponse: _response.rawResponse };
@@ -62,26 +55,21 @@ export class OrganizationsClient {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPathParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/.",
-                );
-            case "unknown":
-                throw new errors.SeedPathParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPathParametersTimeoutError("Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/.");
+            case "unknown": throw new errors.SeedPathParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -95,25 +83,15 @@ export class OrganizationsClient {
      *         user_id: "user_id"
      *     })
      */
-    public getOrganizationUser(
-        request: SeedPathParameters.GetOrganizationUserRequest,
-        requestOptions?: OrganizationsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedPathParameters.User> {
+    public getOrganizationUser(request: SeedPathParameters.GetOrganizationUserRequest, requestOptions?: OrganizationsClient.RequestOptions): core.HttpResponsePromise<SeedPathParameters.User> {
         return core.HttpResponsePromise.fromPromise(this.__getOrganizationUser(request, requestOptions));
     }
 
-    private async __getOrganizationUser(
-        request: SeedPathParameters.GetOrganizationUserRequest,
-        requestOptions?: OrganizationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
-        const { organization_id: organizationId, user_id: userId } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __getOrganizationUser(request: SeedPathParameters.GetOrganizationUserRequest, requestOptions?: OrganizationsClient.RequestOptions): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+        const { "organization_id": organizationId, "user_id": userId } = request;
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organizationId)}/users/${core.url.encodePathParam(userId)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -121,7 +99,7 @@ export class OrganizationsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedPathParameters.User, rawResponse: _response.rawResponse };
@@ -131,26 +109,21 @@ export class OrganizationsClient {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPathParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/users/{user_id}.",
-                );
-            case "unknown":
-                throw new errors.SeedPathParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPathParametersTimeoutError("Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/users/{user_id}.");
+            case "unknown": throw new errors.SeedPathParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -164,34 +137,20 @@ export class OrganizationsClient {
      *         limit: 1
      *     })
      */
-    public searchOrganizations(
-        organization_id: string,
-        request: SeedPathParameters.SearchOrganizationsRequest = {},
-        requestOptions?: OrganizationsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedPathParameters.Organization[]> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__searchOrganizations(organization_id, request, requestOptions),
-        );
+    public searchOrganizations(organization_id: string, request: SeedPathParameters.SearchOrganizationsRequest = {}, requestOptions?: OrganizationsClient.RequestOptions): core.HttpResponsePromise<SeedPathParameters.Organization[]> {
+        return core.HttpResponsePromise.fromPromise(this.__searchOrganizations(organization_id, request, requestOptions));
     }
 
-    private async __searchOrganizations(
-        organization_id: string,
-        request: SeedPathParameters.SearchOrganizationsRequest = {},
-        requestOptions?: OrganizationsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.Organization[]>> {
+    private async __searchOrganizations(organization_id: string, request: SeedPathParameters.SearchOrganizationsRequest = {}, requestOptions?: OrganizationsClient.RequestOptions): Promise<core.WithRawResponse<SeedPathParameters.Organization[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
-            _queryParams.limit = limit.toString();
+            _queryParams["limit"] = limit.toString();
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/search`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/${core.url.encodePathParam(this._options.tenant_id)}/organizations/${core.url.encodePathParam(organization_id)}/search`),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -199,7 +158,7 @@ export class OrganizationsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedPathParameters.Organization[], rawResponse: _response.rawResponse };
@@ -209,26 +168,21 @@ export class OrganizationsClient {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPathParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/search.",
-                );
-            case "unknown":
-                throw new errors.SeedPathParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPathParametersTimeoutError("Timeout exceeded when calling GET /{tenant_id}/organizations/{organization_id}/search.");
+            case "unknown": throw new errors.SeedPathParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

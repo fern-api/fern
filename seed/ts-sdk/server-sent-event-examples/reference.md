@@ -1,5 +1,5 @@
 # Reference
-## Completions
+## completions
 <details><summary><code>client.completions.<a href="/src/api/resources/completions/client/Client.ts">stream</a>({ ...params }) -> core.Stream<SeedServerSentEvents.StreamedCompletion></code></summary>
 <dl>
 <dd>

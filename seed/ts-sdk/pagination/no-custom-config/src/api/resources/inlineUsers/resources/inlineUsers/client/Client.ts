@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
+import * as SeedPagination from "../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedPagination from "../../../../../index.js";
 
 export declare namespace InlineUsersClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class InlineUsersClient {
     protected readonly _options: InlineUsersClient.Options;
 
     constructor(options: InlineUsersClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -32,100 +35,52 @@ export class InlineUsersClient {
      *         starting_after: "starting_after"
      *     })
      */
-    public async listWithCursorPagination(
-        request: SeedPagination.inlineUsers.ListUsersCursorPaginationRequest = {},
-        requestOptions?: InlineUsersClient.RequestOptions,
-    ): Promise<
-        core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >
-    > {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.inlineUsers.ListUsersCursorPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
-                const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (page != null) {
-                    _queryParams.page = page.toString();
-                }
-                if (perPage != null) {
-                    _queryParams.per_page = perPage.toString();
-                }
-                if (order != null) {
-                    _queryParams.order = order;
-                }
-                if (startingAfter != null) {
-                    _queryParams.starting_after = startingAfter;
-                }
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async listWithCursorPagination(request: SeedPagination.inlineUsers.ListUsersCursorPaginationRequest = {}, requestOptions?: InlineUsersClient.RequestOptions): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.inlineUsers.ListUsersCursorPaginationRequest): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => { const { page, "per_page": perPage, order, "starting_after": startingAfter } = request; const _queryParams: Record<string, string | string[] | object | object[] | null> = {}; if (page != null) {
+            _queryParams["page"] = page.toString();
+        } if (perPage != null) {
+            _queryParams["per_page"] = perPage.toString();
+        } if (order != null) {
+            _queryParams["order"] = order;
+        } if (startingAfter != null) {
+            _queryParams["starting_after"] = startingAfter;
+        } let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-users"),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >({
+        return new core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.page?.next?.starting_after != null &&
-                !(
-                    typeof response?.page?.next?.starting_after === "string" &&
-                    response?.page?.next?.starting_after === ""
-                ),
-            getItems: (response) => response?.data.users ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "starting_after", response?.page?.next?.starting_after));
-            },
+            hasNextPage: response => response?.page?.next?.starting_after != null && !(typeof response?.page?.next?.starting_after === "string" && response?.page?.next?.starting_after === ""),
+            getItems: response => response?.data.users ?? [],
+            loadPage: response => { return list(core.setObjectProperty(request, "starting_after", response?.page?.next?.starting_after)); }
         });
     }
 
@@ -138,89 +93,46 @@ export class InlineUsersClient {
      *         cursor: "cursor"
      *     })
      */
-    public async listWithMixedTypeCursorPagination(
-        request: SeedPagination.inlineUsers.ListUsersMixedTypeCursorPaginationRequest = {},
-        requestOptions?: InlineUsersClient.RequestOptions,
-    ): Promise<
-        core.Page<
-            SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse
-        >
-    > {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.inlineUsers.ListUsersMixedTypeCursorPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse>> => {
-                const { cursor } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (cursor != null) {
-                    _queryParams.cursor = cursor;
-                }
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError(
-                            "Timeout exceeded when calling POST /inline-users.",
-                        );
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async listWithMixedTypeCursorPagination(request: SeedPagination.inlineUsers.ListUsersMixedTypeCursorPaginationRequest = {}, requestOptions?: InlineUsersClient.RequestOptions): Promise<core.Page<SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.inlineUsers.ListUsersMixedTypeCursorPaginationRequest): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse>> => { const { cursor } = request; const _queryParams: Record<string, string | string[] | object | object[] | null> = {}; if (cursor != null) {
+            _queryParams["cursor"] = cursor;
+        } let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-users"),
+            method: "POST",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /inline-users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<
-            SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse
-        >({
+        return new core.Page<SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersMixedTypePaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
-            getItems: (response) => response?.data.users ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "cursor", response?.next));
-            },
+            hasNextPage: response => response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
+            getItems: response => response?.data.users ?? [],
+            loadPage: response => { return list(core.setObjectProperty(request, "cursor", response?.next)); }
         });
     }
 
@@ -235,91 +147,47 @@ export class InlineUsersClient {
      *         }
      *     })
      */
-    public async listWithBodyCursorPagination(
-        request: SeedPagination.inlineUsers.ListUsersBodyCursorPaginationRequest = {},
-        requestOptions?: InlineUsersClient.RequestOptions,
-    ): Promise<
-        core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >
-    > {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.inlineUsers.ListUsersBodyCursorPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    contentType: "application/json",
-                    queryParameters: requestOptions?.queryParams,
-                    requestType: "json",
-                    body: request,
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError(
-                            "Timeout exceeded when calling POST /inline-users.",
-                        );
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async listWithBodyCursorPagination(request: SeedPagination.inlineUsers.ListUsersBodyCursorPaginationRequest = {}, requestOptions?: InlineUsersClient.RequestOptions): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.inlineUsers.ListUsersBodyCursorPaginationRequest): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => { let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-users"),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /inline-users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >({
+        return new core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.page?.next?.starting_after != null &&
-                !(
-                    typeof response?.page?.next?.starting_after === "string" &&
-                    response?.page?.next?.starting_after === ""
-                ),
-            getItems: (response) => response?.data.users ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "pagination.cursor", response?.page?.next?.starting_after));
-            },
+            hasNextPage: response => response?.page?.next?.starting_after != null && !(typeof response?.page?.next?.starting_after === "string" && response?.page?.next?.starting_after === ""),
+            getItems: response => response?.data.users ?? [],
+            loadPage: response => { return list(core.setObjectProperty(request, "pagination.cursor", response?.page?.next?.starting_after)); }
         });
     }
 
@@ -335,97 +203,53 @@ export class InlineUsersClient {
      *         starting_after: "starting_after"
      *     })
      */
-    public async listWithOffsetPagination(
-        request: SeedPagination.inlineUsers.ListUsersOffsetPaginationRequest = {},
-        requestOptions?: InlineUsersClient.RequestOptions,
-    ): Promise<
-        core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >
-    > {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.inlineUsers.ListUsersOffsetPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
-                const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (page != null) {
-                    _queryParams.page = page.toString();
-                }
-                if (perPage != null) {
-                    _queryParams.per_page = perPage.toString();
-                }
-                if (order != null) {
-                    _queryParams.order = order;
-                }
-                if (startingAfter != null) {
-                    _queryParams.starting_after = startingAfter;
-                }
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async listWithOffsetPagination(request: SeedPagination.inlineUsers.ListUsersOffsetPaginationRequest = {}, requestOptions?: InlineUsersClient.RequestOptions): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.inlineUsers.ListUsersOffsetPaginationRequest): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => { const { page, "per_page": perPage, order, "starting_after": startingAfter } = request; const _queryParams: Record<string, string | string[] | object | object[] | null> = {}; if (page != null) {
+            _queryParams["page"] = page.toString();
+        } if (perPage != null) {
+            _queryParams["per_page"] = perPage.toString();
+        } if (order != null) {
+            _queryParams["order"] = order;
+        } if (startingAfter != null) {
+            _queryParams["starting_after"] = startingAfter;
+        } let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-users"),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         let _offset = request?.page != null ? request?.page : 0;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >({
+        return new core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data.users ?? []).length > 0,
-            getItems: (response) => response?.data.users ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
+            hasNextPage: response => (response?.data.users ?? []).length > 0,
+            getItems: response => response?.data.users ?? [],
+            loadPage: _response => { _offset += 1; return list(core.setObjectProperty(request, "page", _offset)); }
         });
     }
 
@@ -441,97 +265,53 @@ export class InlineUsersClient {
      *         starting_after: "starting_after"
      *     })
      */
-    public async listWithDoubleOffsetPagination(
-        request: SeedPagination.inlineUsers.ListUsersDoubleOffsetPaginationRequest = {},
-        requestOptions?: InlineUsersClient.RequestOptions,
-    ): Promise<
-        core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >
-    > {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.inlineUsers.ListUsersDoubleOffsetPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
-                const { page, per_page: perPage, order, starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (page != null) {
-                    _queryParams.page = page.toString();
-                }
-                if (perPage != null) {
-                    _queryParams.per_page = perPage.toString();
-                }
-                if (order != null) {
-                    _queryParams.order = order;
-                }
-                if (startingAfter != null) {
-                    _queryParams.starting_after = startingAfter;
-                }
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async listWithDoubleOffsetPagination(request: SeedPagination.inlineUsers.ListUsersDoubleOffsetPaginationRequest = {}, requestOptions?: InlineUsersClient.RequestOptions): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.inlineUsers.ListUsersDoubleOffsetPaginationRequest): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => { const { page, "per_page": perPage, order, "starting_after": startingAfter } = request; const _queryParams: Record<string, string | string[] | object | object[] | null> = {}; if (page != null) {
+            _queryParams["page"] = page.toString();
+        } if (perPage != null) {
+            _queryParams["per_page"] = perPage.toString();
+        } if (order != null) {
+            _queryParams["order"] = order;
+        } if (startingAfter != null) {
+            _queryParams["starting_after"] = startingAfter;
+        } let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-users"),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         let _offset = request?.page != null ? request?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >({
+        return new core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data.users ?? []).length > 0,
-            getItems: (response) => response?.data.users ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
+            hasNextPage: response => (response?.data.users ?? []).length > 0,
+            getItems: response => response?.data.users ?? [],
+            loadPage: _response => { _offset += 1; return list(core.setObjectProperty(request, "page", _offset)); }
         });
     }
 
@@ -546,88 +326,48 @@ export class InlineUsersClient {
      *         }
      *     })
      */
-    public async listWithBodyOffsetPagination(
-        request: SeedPagination.inlineUsers.ListUsersBodyOffsetPaginationRequest = {},
-        requestOptions?: InlineUsersClient.RequestOptions,
-    ): Promise<
-        core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >
-    > {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.inlineUsers.ListUsersBodyOffsetPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    contentType: "application/json",
-                    queryParameters: requestOptions?.queryParams,
-                    requestType: "json",
-                    body: request,
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError(
-                            "Timeout exceeded when calling POST /inline-users.",
-                        );
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async listWithBodyOffsetPagination(request: SeedPagination.inlineUsers.ListUsersBodyOffsetPaginationRequest = {}, requestOptions?: InlineUsersClient.RequestOptions): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.inlineUsers.ListUsersBodyOffsetPaginationRequest): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => { let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-users"),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /inline-users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >({
+        return new core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data.users ?? []).length > 0,
-            getItems: (response) => response?.data.users ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "pagination.page", _offset));
-            },
+            hasNextPage: response => (response?.data.users ?? []).length > 0,
+            getItems: response => response?.data.users ?? [],
+            loadPage: _response => { _offset += 1; return list(core.setObjectProperty(request, "pagination.page", _offset)); }
         });
     }
 
@@ -642,94 +382,51 @@ export class InlineUsersClient {
      *         order: "asc"
      *     })
      */
-    public async listWithOffsetStepPagination(
-        request: SeedPagination.inlineUsers.ListUsersOffsetStepPaginationRequest = {},
-        requestOptions?: InlineUsersClient.RequestOptions,
-    ): Promise<
-        core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >
-    > {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.inlineUsers.ListUsersOffsetStepPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
-                const { page, limit, order } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (page != null) {
-                    _queryParams.page = page.toString();
-                }
-                if (limit != null) {
-                    _queryParams.limit = limit.toString();
-                }
-                if (order != null) {
-                    _queryParams.order = order;
-                }
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async listWithOffsetStepPagination(request: SeedPagination.inlineUsers.ListUsersOffsetStepPaginationRequest = {}, requestOptions?: InlineUsersClient.RequestOptions): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.inlineUsers.ListUsersOffsetStepPaginationRequest): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => { const { page, limit, order } = request; const _queryParams: Record<string, string | string[] | object | object[] | null> = {}; if (page != null) {
+            _queryParams["page"] = page.toString();
+        } if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        } if (order != null) {
+            _queryParams["order"] = order;
+        } let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-users"),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         let _offset = request?.page != null ? request?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >({
+        return new core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.data.users ?? []).length >= Math.floor(request?.limit ?? 1),
-            getItems: (response) => response?.data.users ?? [],
-            loadPage: (response) => {
-                _offset += response?.data.users != null ? response.data.users.length : 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
+            hasNextPage: response => (response?.data.users ?? []).length >= Math.floor((request?.limit ?? 1)),
+            getItems: response => response?.data.users ?? [],
+            loadPage: response => { _offset += response?.data.users != null ? response.data.users.length : 1; return list(core.setObjectProperty(request, "page", _offset)); }
         });
     }
 
@@ -744,95 +441,51 @@ export class InlineUsersClient {
      *         order: "asc"
      *     })
      */
-    public async listWithOffsetPaginationHasNextPage(
-        request: SeedPagination.inlineUsers.ListWithOffsetPaginationHasNextPageRequest = {},
-        requestOptions?: InlineUsersClient.RequestOptions,
-    ): Promise<
-        core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >
-    > {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.inlineUsers.ListWithOffsetPaginationHasNextPageRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => {
-                const { page, limit, order } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (page != null) {
-                    _queryParams.page = page.toString();
-                }
-                if (limit != null) {
-                    _queryParams.limit = limit.toString();
-                }
-                if (order != null) {
-                    _queryParams.order = order;
-                }
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async listWithOffsetPaginationHasNextPage(request: SeedPagination.inlineUsers.ListWithOffsetPaginationHasNextPageRequest = {}, requestOptions?: InlineUsersClient.RequestOptions): Promise<core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.inlineUsers.ListWithOffsetPaginationHasNextPageRequest): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersPaginationResponse>> => { const { page, limit, order } = request; const _queryParams: Record<string, string | string[] | object | object[] | null> = {}; if (page != null) {
+            _queryParams["page"] = page.toString();
+        } if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        } if (order != null) {
+            _queryParams["order"] = order;
+        } let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-users"),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.inlineUsers.ListUsersPaginationResponse, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         let _offset = request?.page != null ? request?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<
-            SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item,
-            SeedPagination.inlineUsers.ListUsersPaginationResponse
-        >({
+        return new core.Page<SeedPagination.inlineUsers.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.inlineUsers.ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.hasNextPage ?? (response?.data.users ?? []).length >= Math.floor(request?.limit ?? 1),
-            getItems: (response) => response?.data.users ?? [],
-            loadPage: (response) => {
-                _offset += response?.data.users != null ? response.data.users.length : 1;
-                return list(core.setObjectProperty(request, "page", _offset));
-            },
+            hasNextPage: response => response?.hasNextPage ?? (response?.data.users ?? []).length >= Math.floor((request?.limit ?? 1)),
+            getItems: response => response?.data.users ?? [],
+            loadPage: response => { _offset += response?.data.users != null ? response.data.users.length : 1; return list(core.setObjectProperty(request, "page", _offset)); }
         });
     }
 
@@ -845,87 +498,46 @@ export class InlineUsersClient {
      *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
      *     })
      */
-    public async listWithExtendedResults(
-        request: SeedPagination.inlineUsers.ListUsersExtendedRequest = {},
-        requestOptions?: InlineUsersClient.RequestOptions,
-    ): Promise<
-        core.Page<
-            SeedPagination.inlineUsers.UserListContainer.Users.Item,
-            SeedPagination.inlineUsers.ListUsersExtendedResponse
-        >
-    > {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.inlineUsers.ListUsersExtendedRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersExtendedResponse>> => {
-                const { cursor } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (cursor != null) {
-                    _queryParams.cursor = cursor;
-                }
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.inlineUsers.ListUsersExtendedResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async listWithExtendedResults(request: SeedPagination.inlineUsers.ListUsersExtendedRequest = {}, requestOptions?: InlineUsersClient.RequestOptions): Promise<core.Page<SeedPagination.inlineUsers.UserListContainer.Users.Item, SeedPagination.inlineUsers.ListUsersExtendedResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.inlineUsers.ListUsersExtendedRequest): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersExtendedResponse>> => { const { cursor } = request; const _queryParams: Record<string, string | string[] | object | object[] | null> = {}; if (cursor != null) {
+            _queryParams["cursor"] = cursor;
+        } let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-users"),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.inlineUsers.ListUsersExtendedResponse, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<
-            SeedPagination.inlineUsers.UserListContainer.Users.Item,
-            SeedPagination.inlineUsers.ListUsersExtendedResponse
-        >({
+        return new core.Page<SeedPagination.inlineUsers.UserListContainer.Users.Item, SeedPagination.inlineUsers.ListUsersExtendedResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
-            getItems: (response) => response?.data.users ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "cursor", response?.next));
-            },
+            hasNextPage: response => response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
+            getItems: response => response?.data.users ?? [],
+            loadPage: response => { return list(core.setObjectProperty(request, "cursor", response?.next)); }
         });
     }
 
@@ -938,87 +550,46 @@ export class InlineUsersClient {
      *         cursor: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
      *     })
      */
-    public async listWithExtendedResultsAndOptionalData(
-        request: SeedPagination.inlineUsers.ListUsersExtendedRequestForOptionalData = {},
-        requestOptions?: InlineUsersClient.RequestOptions,
-    ): Promise<
-        core.Page<
-            SeedPagination.inlineUsers.UserOptionalListContainer.Users.Item,
-            SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse
-        >
-    > {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.inlineUsers.ListUsersExtendedRequestForOptionalData,
-            ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse>> => {
-                const { cursor } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (cursor != null) {
-                    _queryParams.cursor = cursor;
-                }
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async listWithExtendedResultsAndOptionalData(request: SeedPagination.inlineUsers.ListUsersExtendedRequestForOptionalData = {}, requestOptions?: InlineUsersClient.RequestOptions): Promise<core.Page<SeedPagination.inlineUsers.UserOptionalListContainer.Users.Item, SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.inlineUsers.ListUsersExtendedRequestForOptionalData): Promise<core.WithRawResponse<SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse>> => { const { cursor } = request; const _queryParams: Record<string, string | string[] | object | object[] | null> = {}; if (cursor != null) {
+            _queryParams["cursor"] = cursor;
+        } let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-users"),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<
-            SeedPagination.inlineUsers.UserOptionalListContainer.Users.Item,
-            SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse
-        >({
+        return new core.Page<SeedPagination.inlineUsers.UserOptionalListContainer.Users.Item, SeedPagination.inlineUsers.ListUsersExtendedOptionalListResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
-            getItems: (response) => response?.data.users ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "cursor", response?.next));
-            },
+            hasNextPage: response => response?.next != null && !(typeof response?.next === "string" && response?.next === ""),
+            getItems: response => response?.data.users ?? [],
+            loadPage: response => { return list(core.setObjectProperty(request, "cursor", response?.next)); }
         });
     }
 
@@ -1031,80 +602,46 @@ export class InlineUsersClient {
      *         starting_after: "starting_after"
      *     })
      */
-    public async listUsernames(
-        request: SeedPagination.inlineUsers.ListUsernamesRequest = {},
-        requestOptions?: InlineUsersClient.RequestOptions,
-    ): Promise<core.Page<string, SeedPagination.UsernameCursor>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.inlineUsers.ListUsernamesRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> => {
-                const { starting_after: startingAfter } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (startingAfter != null) {
-                    _queryParams.starting_after = startingAfter;
-                }
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.UsernameCursor,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async listUsernames(request: SeedPagination.inlineUsers.ListUsernamesRequest = {}, requestOptions?: InlineUsersClient.RequestOptions): Promise<core.Page<string, SeedPagination.UsernameCursor>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.inlineUsers.ListUsernamesRequest): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> => { const { "starting_after": startingAfter } = request; const _queryParams: Record<string, string | string[] | object | object[] | null> = {}; if (startingAfter != null) {
+            _queryParams["starting_after"] = startingAfter;
+        } let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-users"),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.UsernameCursor, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Page<string, SeedPagination.UsernameCursor>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.cursor.after != null &&
-                !(typeof response?.cursor.after === "string" && response?.cursor.after === ""),
-            getItems: (response) => response?.cursor.data ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "starting_after", response?.cursor.after));
-            },
+            hasNextPage: response => response?.cursor.after != null && !(typeof response?.cursor.after === "string" && response?.cursor.after === ""),
+            getItems: response => response?.cursor.data ?? [],
+            loadPage: response => { return list(core.setObjectProperty(request, "starting_after", response?.cursor.after)); }
         });
     }
 
@@ -1117,80 +654,47 @@ export class InlineUsersClient {
      *         offset: 1
      *     })
      */
-    public async listWithGlobalConfig(
-        request: SeedPagination.inlineUsers.ListWithGlobalConfigRequest = {},
-        requestOptions?: InlineUsersClient.RequestOptions,
-    ): Promise<core.Page<string, SeedPagination.inlineUsers.UsernameContainer>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.inlineUsers.ListWithGlobalConfigRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.inlineUsers.UsernameContainer>> => {
-                const { offset } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (offset != null) {
-                    _queryParams.offset = offset.toString();
-                }
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        "/inline-users",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.inlineUsers.UsernameContainer,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async listWithGlobalConfig(request: SeedPagination.inlineUsers.ListWithGlobalConfigRequest = {}, requestOptions?: InlineUsersClient.RequestOptions): Promise<core.Page<string, SeedPagination.inlineUsers.UsernameContainer>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.inlineUsers.ListWithGlobalConfigRequest): Promise<core.WithRawResponse<SeedPagination.inlineUsers.UsernameContainer>> => { const { offset } = request; const _queryParams: Record<string, string | string[] | object | object[] | null> = {}; if (offset != null) {
+            _queryParams["offset"] = offset.toString();
+        } let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-users"),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.inlineUsers.UsernameContainer, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         let _offset = request?.offset != null ? request?.offset : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Page<string, SeedPagination.inlineUsers.UsernameContainer>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) => (response?.results ?? []).length > 0,
-            getItems: (response) => response?.results ?? [],
-            loadPage: (_response) => {
-                _offset += 1;
-                return list(core.setObjectProperty(request, "offset", _offset));
-            },
+            hasNextPage: response => (response?.results ?? []).length > 0,
+            getItems: response => response?.results ?? [],
+            loadPage: _response => { _offset += 1; return list(core.setObjectProperty(request, "offset", _offset)); }
         });
     }
 

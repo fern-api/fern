@@ -1,5 +1,5 @@
 # Reference
-## NullableOptional
+## nullableOptional
 <details><summary><code>client.nullableOptional.<a href="/src/api/resources/nullableOptional/client/Client.ts">getUser</a>(userId) -> SeedNullableOptional.UserResponse</code></summary>
 <dl>
 <dd>

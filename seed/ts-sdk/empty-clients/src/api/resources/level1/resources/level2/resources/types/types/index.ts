@@ -1,2 +1,2 @@
-export * from "./Address.js";
 export * from "./Person.js";
+export * from "./Address.js";

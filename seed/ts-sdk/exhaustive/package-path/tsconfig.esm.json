@@ -5,6 +5,10 @@
         "outDir": "dist/esm",
         "verbatimModuleSyntax": true
     },
-    "include": ["src/test-packagePath"],
-    "exclude": ["src/test-packagePath/tests"]
+    "include": [
+        "src/test-packagePath"
+    ],
+    "exclude": [
+        "src/test-packagePath/tests"
+    ]
 }

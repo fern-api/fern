@@ -1,12 +1,12 @@
 import type { Uploadable } from "./types.js";
 
 export async function toBinaryUploadRequest(
-    file: Uploadable,
+    file: Uploadable
 ): Promise<{ body: Uploadable.FileLike; headers?: Record<string, string> }> {
     const { data, filename, contentLength, contentType } = await getFileWithMetadata(file);
     const request = {
         body: data,
-        headers: {} as Record<string, string>,
+        headers: {} as Record<string, string>
     };
     if (filename) {
         request.headers["Content-Disposition"] = `attachment; filename="${filename}"`;
@@ -21,28 +21,28 @@ export async function toBinaryUploadRequest(
 }
 
 export async function toMultipartDataPart(
-    file: Uploadable,
+    file: Uploadable
 ): Promise<{ data: Uploadable.FileLike; filename?: string; contentType?: string }> {
     const { data, filename, contentType } = await getFileWithMetadata(file, {
-        noSniffFileSize: true,
+        noSniffFileSize: true
     });
     return {
         data,
         filename,
-        contentType,
+        contentType
     };
 }
 
 async function getFileWithMetadata(
     file: Uploadable,
-    { noSniffFileSize }: { noSniffFileSize?: boolean } = {},
+    { noSniffFileSize }: { noSniffFileSize?: boolean } = {}
 ): Promise<Uploadable.WithMetadata> {
     if (isFileLike(file)) {
         return getFileWithMetadata(
             {
-                data: file,
+                data: file
             },
-            { noSniffFileSize },
+            { noSniffFileSize }
         );
     }
 
@@ -59,7 +59,7 @@ async function getFileWithMetadata(
             data,
             filename,
             contentType: file.contentType,
-            contentLength,
+            contentLength
         };
     }
     if ("data" in file) {
@@ -67,14 +67,14 @@ async function getFileWithMetadata(
         const contentLength =
             file.contentLength ??
             (await tryGetContentLengthFromFileLike(data, {
-                noSniffFileSize,
+                noSniffFileSize
             }));
         const filename = file.filename ?? tryGetNameFromFileLike(data);
         return {
             data,
             filename,
             contentType: file.contentType ?? tryGetContentTypeFromFileLike(data),
-            contentLength,
+            contentLength
         };
     }
 
@@ -102,7 +102,7 @@ async function tryGetFileSizeFromPath(path: string): Promise<number | undefined>
         }
         const fileStat = await fs.promises.stat(path);
         return fileStat.size;
-    } catch (_fallbackError) {
+    } catch (fallbackError) {
         return undefined;
     }
 }
@@ -119,7 +119,7 @@ function tryGetNameFromFileLike(data: Uploadable.FileLike): string | undefined {
 
 async function tryGetContentLengthFromFileLike(
     data: Uploadable.FileLike,
-    { noSniffFileSize }: { noSniffFileSize?: boolean } = {},
+    { noSniffFileSize }: { noSniffFileSize?: boolean } = {}
 ): Promise<number | undefined> {
     if (isBuffer(data)) {
         return data.length;

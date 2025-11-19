@@ -2,22 +2,25 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import * as errors from "../../../../../../errors/index.js";
+import * as SeedExhaustive from "../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as serializers from "../../../../../../serialization/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import * as errors from "../../../../../../errors/index.js";
 
 export declare namespace ObjectClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ObjectClient {
     protected readonly _options: ObjectClient.Options;
 
     constructor(options: ObjectClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -44,80 +47,49 @@ export class ObjectClient {
      *         bigint: "1000000"
      *     })
      */
-    public getAndReturnWithOptionalField(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    public getAndReturnWithOptionalField(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithOptionalField(request, requestOptions));
     }
 
-    private async __getAndReturnWithOptionalField(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnWithOptionalField(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-with-optional-field",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/object/get-and-return-with-optional-field"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /object/get-and-return-with-optional-field.",
-                );
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-with-optional-field.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -130,80 +102,49 @@ export class ObjectClient {
      *         string: "string"
      *     })
      */
-    public getAndReturnWithRequiredField(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
+    public getAndReturnWithRequiredField(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithRequiredField(request, requestOptions));
     }
 
-    private async __getAndReturnWithRequiredField(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnWithRequiredField(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-with-required-field",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/object/get-and-return-with-required-field"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /object/get-and-return-with-required-field.",
-                );
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-with-required-field.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -220,80 +161,49 @@ export class ObjectClient {
      *         }
      *     })
      */
-    public getAndReturnWithMapOfMap(
-        request: SeedExhaustive.types.ObjectWithMapOfMap,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMapOfMap> {
+    public getAndReturnWithMapOfMap(request: SeedExhaustive.types.ObjectWithMapOfMap, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMapOfMap> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnWithMapOfMap(request, requestOptions));
     }
 
-    private async __getAndReturnWithMapOfMap(
-        request: SeedExhaustive.types.ObjectWithMapOfMap,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithMapOfMap>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnWithMapOfMap(request: SeedExhaustive.types.ObjectWithMapOfMap, requestOptions?: ObjectClient.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithMapOfMap>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-with-map-of-map",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/object/get-and-return-with-map-of-map"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /object/get-and-return-with-map-of-map.",
-                );
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-with-map-of-map.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -323,82 +233,49 @@ export class ObjectClient {
      *         }
      *     })
      */
-    public getAndReturnNestedWithOptionalField(
-        request: SeedExhaustive.types.NestedObjectWithOptionalField,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getAndReturnNestedWithOptionalField(request, requestOptions),
-        );
+    public getAndReturnNestedWithOptionalField(request: SeedExhaustive.types.NestedObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnNestedWithOptionalField(request, requestOptions));
     }
 
-    private async __getAndReturnNestedWithOptionalField(
-        request: SeedExhaustive.types.NestedObjectWithOptionalField,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithOptionalField>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnNestedWithOptionalField(request: SeedExhaustive.types.NestedObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithOptionalField>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-nested-with-optional-field",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/object/get-and-return-nested-with-optional-field"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /object/get-and-return-nested-with-optional-field.",
-                );
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-nested-with-optional-field.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -429,84 +306,49 @@ export class ObjectClient {
      *         }
      *     })
      */
-    public getAndReturnNestedWithRequiredField(
-        string: string,
-        request: SeedExhaustive.types.NestedObjectWithRequiredField,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getAndReturnNestedWithRequiredField(string, request, requestOptions),
-        );
+    public getAndReturnNestedWithRequiredField(string: string, request: SeedExhaustive.types.NestedObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnNestedWithRequiredField(string, request, requestOptions));
     }
 
-    private async __getAndReturnNestedWithRequiredField(
-        string: string,
-        request: SeedExhaustive.types.NestedObjectWithRequiredField,
-        requestOptions?: ObjectClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnNestedWithRequiredField(string: string, request: SeedExhaustive.types.NestedObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/object/get-and-return-nested-with-required-field/${core.url.encodePathParam(string)}`),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /object/get-and-return-nested-with-required-field/{string}.",
-                );
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-nested-with-required-field/{string}.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -555,82 +397,49 @@ export class ObjectClient {
      *             }
      *         }])
      */
-    public getAndReturnNestedWithRequiredFieldAsList(
-        request: SeedExhaustive.types.NestedObjectWithRequiredField[],
-        requestOptions?: ObjectClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getAndReturnNestedWithRequiredFieldAsList(request, requestOptions),
-        );
+    public getAndReturnNestedWithRequiredFieldAsList(request: SeedExhaustive.types.NestedObjectWithRequiredField[], requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField> {
+        return core.HttpResponsePromise.fromPromise(this.__getAndReturnNestedWithRequiredFieldAsList(request, requestOptions));
     }
 
-    private async __getAndReturnNestedWithRequiredFieldAsList(
-        request: SeedExhaustive.types.NestedObjectWithRequiredField[],
-        requestOptions?: ObjectClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnNestedWithRequiredFieldAsList(request: SeedExhaustive.types.NestedObjectWithRequiredField[], requestOptions?: ObjectClient.RequestOptions): Promise<core.WithRawResponse<SeedExhaustive.types.NestedObjectWithRequiredField>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/object/get-and-return-nested-with-required-field-list",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/object/get-and-return-nested-with-required-field-list"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling POST /object/get-and-return-nested-with-required-field-list.",
-                );
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-nested-with-required-field-list.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

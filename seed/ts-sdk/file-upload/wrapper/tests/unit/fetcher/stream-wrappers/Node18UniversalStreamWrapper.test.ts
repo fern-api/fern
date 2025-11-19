@@ -39,13 +39,13 @@ describe("Node18UniversalStreamWrapper", () => {
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            },
+            }
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
         const dest = new WritableStream({
             write(chunk) {
                 expect(chunk).toEqual(new TextEncoder().encode("test"));
-            },
+            }
         });
 
         stream.pipe(dest);
@@ -57,14 +57,14 @@ describe("Node18UniversalStreamWrapper", () => {
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            },
+            }
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
         const dest = new (await import("readable-stream")).Writable({
-            write(chunk, _encoding, callback) {
+            write(chunk, encoding, callback) {
                 expect(chunk.toString()).toEqual("test");
                 callback();
-            },
+            }
         });
 
         stream.pipe(dest);
@@ -76,14 +76,14 @@ describe("Node18UniversalStreamWrapper", () => {
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            },
+            }
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
         const buffer: Uint8Array[] = [];
         const dest = new WritableStream({
             write(chunk) {
                 buffer.push(chunk);
-            },
+            }
         });
 
         stream.pipe(dest);
@@ -122,7 +122,7 @@ describe("Node18UniversalStreamWrapper", () => {
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            },
+            }
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
 
@@ -136,7 +136,7 @@ describe("Node18UniversalStreamWrapper", () => {
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            },
+            }
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
 
@@ -150,7 +150,7 @@ describe("Node18UniversalStreamWrapper", () => {
             start(controller) {
                 controller.enqueue(new TextEncoder().encode(JSON.stringify({ test: "test" })));
                 controller.close();
-            },
+            }
         });
         const stream = new Node18UniversalStreamWrapper(rawStream);
 
@@ -165,7 +165,7 @@ describe("Node18UniversalStreamWrapper", () => {
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.enqueue(new TextEncoder().encode("test"));
                 controller.close();
-            },
+            }
         });
         let data = "";
         const stream = new Node18UniversalStreamWrapper(rawStream);

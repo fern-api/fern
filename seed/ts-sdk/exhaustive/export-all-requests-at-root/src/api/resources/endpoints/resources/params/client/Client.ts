@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import * as SeedExhaustive from "../../../../../index.js";
 
 export declare namespace ParamsClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ParamsClient {
     protected readonly _options: ParamsClient.Options;
 
     constructor(options: ParamsClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -33,21 +36,10 @@ export class ParamsClient {
         return core.HttpResponsePromise.fromPromise(this.__getWithPath(param, requestOptions));
     }
 
-    private async __getWithPath(
-        param: string,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getWithPath(param: string, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<string>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/params/path/${core.url.encodePathParam(param)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -55,7 +47,7 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -65,24 +57,21 @@ export class ParamsClient {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params/path/{param}.");
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params/path/{param}.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -97,29 +86,15 @@ export class ParamsClient {
      *         param: "param"
      *     })
      */
-    public getWithInlinePath(
-        request: SeedExhaustive.GetWithInlinePath,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<string> {
+    public getWithInlinePath(request: SeedExhaustive.GetWithInlinePath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getWithInlinePath(request, requestOptions));
     }
 
-    private async __getWithInlinePath(
-        request: SeedExhaustive.GetWithInlinePath,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
+    private async __getWithInlinePath(request: SeedExhaustive.GetWithInlinePath, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<string>> {
         const { param } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/params/path/${core.url.encodePathParam(param)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -127,7 +102,7 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -137,24 +112,21 @@ export class ParamsClient {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params/path/{param}.");
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params/path/{param}.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -170,32 +142,18 @@ export class ParamsClient {
      *         number: 1
      *     })
      */
-    public getWithQuery(
-        request: SeedExhaustive.GetWithQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public getWithQuery(request: SeedExhaustive.GetWithQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__getWithQuery(request, requestOptions));
     }
 
-    private async __getWithQuery(
-        request: SeedExhaustive.GetWithQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const { query, number: number_ } = request;
+    private async __getWithQuery(request: SeedExhaustive.GetWithQuery, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        const { query, "number": number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.query = query;
-        _queryParams.number = number_.toString();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        _queryParams["query"] = query;
+        _queryParams["number"] = number_.toString();
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/params",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/params"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -203,7 +161,7 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -213,24 +171,21 @@ export class ParamsClient {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params.");
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -246,42 +201,30 @@ export class ParamsClient {
      *         number: 1
      *     })
      */
-    public getWithAllowMultipleQuery(
-        request: SeedExhaustive.GetWithMultipleQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public getWithAllowMultipleQuery(request: SeedExhaustive.GetWithMultipleQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__getWithAllowMultipleQuery(request, requestOptions));
     }
 
-    private async __getWithAllowMultipleQuery(
-        request: SeedExhaustive.GetWithMultipleQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const { query, number: number_ } = request;
+    private async __getWithAllowMultipleQuery(request: SeedExhaustive.GetWithMultipleQuery, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        const { query, "number": number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(query)) {
-            _queryParams.query = query.map((item) => item);
-        } else {
-            _queryParams.query = query;
+            _queryParams["query"] = query.map(item => item);
+        }
+        else {
+            _queryParams["query"] = query;
         }
 
         if (Array.isArray(number_)) {
-            _queryParams.number = number_.map((item) => item.toString());
-        } else {
-            _queryParams.number = number_.toString();
+            _queryParams["number"] = number_.map(item => item.toString());
+        }
+        else {
+            _queryParams["number"] = number_.toString();
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/params",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/params"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -289,7 +232,7 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -299,24 +242,21 @@ export class ParamsClient {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params.");
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -332,33 +272,17 @@ export class ParamsClient {
      *         query: "query"
      *     })
      */
-    public getWithPathAndQuery(
-        param: string,
-        request: SeedExhaustive.GetWithPathAndQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public getWithPathAndQuery(param: string, request: SeedExhaustive.GetWithPathAndQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__getWithPathAndQuery(param, request, requestOptions));
     }
 
-    private async __getWithPathAndQuery(
-        param: string,
-        request: SeedExhaustive.GetWithPathAndQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __getWithPathAndQuery(param: string, request: SeedExhaustive.GetWithPathAndQuery, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.query = query;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        _queryParams["query"] = query;
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path-query/${core.url.encodePathParam(param)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/params/path-query/${core.url.encodePathParam(param)}`),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -366,7 +290,7 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -376,26 +300,21 @@ export class ParamsClient {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling GET /params/path-query/{param}.",
-                );
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params/path-query/{param}.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -411,31 +330,17 @@ export class ParamsClient {
      *         query: "query"
      *     })
      */
-    public getWithInlinePathAndQuery(
-        request: SeedExhaustive.GetWithInlinePathAndQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public getWithInlinePathAndQuery(request: SeedExhaustive.GetWithInlinePathAndQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__getWithInlinePathAndQuery(request, requestOptions));
     }
 
-    private async __getWithInlinePathAndQuery(
-        request: SeedExhaustive.GetWithInlinePathAndQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __getWithInlinePathAndQuery(request: SeedExhaustive.GetWithInlinePathAndQuery, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const { param, query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.query = query;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        _queryParams["query"] = query;
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path-query/${core.url.encodePathParam(param)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/params/path-query/${core.url.encodePathParam(param)}`),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -443,7 +348,7 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -453,26 +358,21 @@ export class ParamsClient {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError(
-                    "Timeout exceeded when calling GET /params/path-query/{param}.",
-                );
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params/path-query/{param}.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -486,30 +386,14 @@ export class ParamsClient {
      * @example
      *     await client.endpoints.params.modifyWithPath("param", "string")
      */
-    public modifyWithPath(
-        param: string,
-        request: string,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<string> {
+    public modifyWithPath(param: string, request: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__modifyWithPath(param, request, requestOptions));
     }
 
-    private async __modifyWithPath(
-        param: string,
-        request: string,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __modifyWithPath(param: string, request: string, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<string>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/params/path/${core.url.encodePathParam(param)}`),
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
@@ -520,7 +404,7 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -530,24 +414,21 @@ export class ParamsClient {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PUT /params/path/{param}.");
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PUT /params/path/{param}.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -563,29 +444,15 @@ export class ParamsClient {
      *         body: "string"
      *     })
      */
-    public modifyWithInlinePath(
-        request: SeedExhaustive.ModifyResourceAtInlinedPath,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<string> {
+    public modifyWithInlinePath(request: SeedExhaustive.ModifyResourceAtInlinedPath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__modifyWithInlinePath(request, requestOptions));
     }
 
-    private async __modifyWithInlinePath(
-        request: SeedExhaustive.ModifyResourceAtInlinedPath,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
+    private async __modifyWithInlinePath(request: SeedExhaustive.ModifyResourceAtInlinedPath, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<string>> {
         const { param, body: _body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/params/path/${core.url.encodePathParam(param)}`),
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
@@ -596,7 +463,7 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -606,24 +473,21 @@ export class ParamsClient {
             throw new errors.SeedExhaustiveError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedExhaustiveError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PUT /params/path/{param}.");
-            case "unknown":
-                throw new errors.SeedExhaustiveError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedExhaustiveError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PUT /params/path/{param}.");
+            case "unknown": throw new errors.SeedExhaustiveError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

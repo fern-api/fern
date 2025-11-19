@@ -2,20 +2,23 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 
 export declare namespace EnumClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class EnumClient {
     protected readonly _options: EnumClient.Options;
 
     constructor(options: EnumClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -26,34 +29,14 @@ export class EnumClient {
      * @example
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
      */
-    public getAndReturnEnum(
-        request: SeedExhaustive.types.WeatherReport,
-        requestOptions?: EnumClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedExhaustive.types.WeatherReport, SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error>
-    > {
+    public getAndReturnEnum(request: SeedExhaustive.types.WeatherReport, requestOptions?: EnumClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedExhaustive.types.WeatherReport, SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnEnum(request, requestOptions));
     }
 
-    private async __getAndReturnEnum(
-        request: SeedExhaustive.types.WeatherReport,
-        requestOptions?: EnumClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedExhaustive.types.WeatherReport, SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error>
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnEnum(request: SeedExhaustive.types.WeatherReport, requestOptions?: EnumClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedExhaustive.types.WeatherReport, SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/enum",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/enum"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -64,28 +47,22 @@ export class EnumClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedExhaustive.types.WeatherReport,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.enum_.getAndReturnEnum.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

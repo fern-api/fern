@@ -1,5 +1,5 @@
 # Reference
-## FileUploadExample
+## fileUploadExample
 <details><summary><code>client.fileUploadExample.<a href="/src/api/resources/fileUploadExample/client/Client.ts">uploadFile</a>({ ...params }) -> SeedApi.FileId</code></summary>
 <dl>
 <dd>

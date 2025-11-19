@@ -2,20 +2,23 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 
 export declare namespace ContentTypeClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ContentTypeClient {
     protected readonly _options: ContentTypeClient.Options;
 
     constructor(options: ContentTypeClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -42,34 +45,14 @@ export class ContentTypeClient {
      *         bigint: "1000000"
      *     })
      */
-    public postJsonPatchContentType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ContentTypeClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentType.Error>
-    > {
+    public postJsonPatchContentType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentType.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentType(request, requestOptions));
     }
 
-    private async __postJsonPatchContentType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ContentTypeClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentType.Error>
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __postJsonPatchContentType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentType.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/foo/bar",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/foo/bar"),
             method: "POST",
             headers: _headers,
             contentType: "application/json-patch+json",
@@ -80,28 +63,22 @@ export class ContentTypeClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: undefined,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.contentType.postJsonPatchContentType.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -127,36 +104,14 @@ export class ContentTypeClient {
      *         bigint: "1000000"
      *     })
      */
-    public postJsonPatchContentWithCharsetType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ContentTypeClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>
-    > {
-        return core.HttpResponsePromise.fromPromise(
-            this.__postJsonPatchContentWithCharsetType(request, requestOptions),
-        );
+    public postJsonPatchContentWithCharsetType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentWithCharsetType(request, requestOptions));
     }
 
-    private async __postJsonPatchContentWithCharsetType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: ContentTypeClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __postJsonPatchContentWithCharsetType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/foo/baz",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/foo/baz"),
             method: "POST",
             headers: _headers,
             contentType: "application/json-patch+json; charset=utf-8",
@@ -167,30 +122,22 @@ export class ContentTypeClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: undefined,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
-                error: SeedExhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType.Error._unknown(
-                    _response.error,
-                ),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                error: SeedExhaustive.endpoints.contentType.postJsonPatchContentWithCharsetType.Error._unknown(_response.error),
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

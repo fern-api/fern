@@ -1,5 +1,5 @@
 # Reference
-## Auth
+## auth
 <details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> SeedOauthClientCredentialsEnvironmentVariables.TokenResponse</code></summary>
 <dl>
 <dd>
@@ -107,7 +107,7 @@ await client.auth.refreshToken({
 </dl>
 </details>
 
-## NestedNoAuth Api
+## nestedNoAuth.api
 <details><summary><code>client.nestedNoAuth.api.<a href="/src/api/resources/nestedNoAuth/resources/api/client/Client.ts">getSomething</a>() -> void</code></summary>
 <dl>
 <dd>
@@ -149,7 +149,7 @@ await client.nestedNoAuth.api.getSomething();
 </dl>
 </details>
 
-## Nested Api
+## nested.api
 <details><summary><code>client.nested.api.<a href="/src/api/resources/nested/resources/api/client/Client.ts">getSomething</a>() -> void</code></summary>
 <dl>
 <dd>
@@ -191,7 +191,7 @@ await client.nested.api.getSomething();
 </dl>
 </details>
 
-## Simple
+## simple
 <details><summary><code>client.simple.<a href="/src/api/resources/simple/client/Client.ts">getSomething</a>() -> void</code></summary>
 <dl>
 <dd>

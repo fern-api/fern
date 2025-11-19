@@ -2,9 +2,9 @@
 
 /** Test enum with values for optional enum fields */
 export const UserStatus = {
-    Active: "active",
-    Inactive: "inactive",
-    Suspended: "suspended",
-    Deleted: "deleted",
-} as const;
-export type UserStatus = (typeof UserStatus)[keyof typeof UserStatus];
+        Active: "active",
+        Inactive: "inactive",
+        Suspended: "suspended",
+        Deleted: "deleted"
+    } as const;
+export type UserStatus = typeof UserStatus[keyof typeof UserStatus];

@@ -2,13 +2,14 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as errors from "../../../../errors/index.js";
+import { mergeOnlyDefinedHeaders, mergeHeaders } from "../../../../core/headers.js";
 import { RealtimeSocket } from "./Socket.js";
+import * as errors from "../../../../errors/index.js";
 
 export declare namespace RealtimeClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
     export interface ConnectArgs {
         session_id: string;
@@ -27,6 +28,7 @@ export class RealtimeClient {
     protected readonly _options: RealtimeClient.Options;
 
     constructor(options: RealtimeClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -34,37 +36,23 @@ export class RealtimeClient {
         const { session_id: sessionId, model, temperature, headers, debug, reconnectAttempts } = args;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (model != null) {
-            _queryParams.model = model;
+            _queryParams["model"] = model;
         }
 
         if (temperature != null) {
-            _queryParams.temperature = temperature.toString();
+            _queryParams["temperature"] = temperature.toString();
         }
 
-        const _headers: Record<string, unknown> = mergeHeaders(
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            headers,
-        );
-        const socket = new core.ReconnectingWebSocket({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/realtime/${core.url.encodePathParam(sessionId)}`,
-            ),
-            protocols: [],
-            queryParameters: _queryParams,
-            headers: _headers,
-            options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
-        });
+        let _headers: Record<string, unknown> = mergeHeaders(mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }), headers);
+        const socket = new core.ReconnectingWebSocket({ url: core.url.join(await core.Supplier.get(this._options["baseUrl"]) ?? await core.Supplier.get(this._options["environment"]), `/realtime/${core.url.encodePathParam(sessionId)}`), protocols: [], queryParameters: _queryParams, headers: _headers, options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 } });
         return new RealtimeSocket({ socket });
     }
 
     protected async _getAuthorizationHeader(): Promise<string> {
-        const bearer = (await core.Supplier.get(this._options.apiKey)) ?? process?.env.SEED_API_KEY;
+        const bearer = (await core.Supplier.get(this._options.apiKey)) ?? process?.env["SEED_API_KEY"];
         if (bearer == null) {
             throw new errors.SeedWebsocketBearerAuthError({
-                message:
-                    "Please specify a bearer by either passing it in to the constructor or initializing a SEED_API_KEY environment variable",
+                message: "Please specify a bearer by either passing it in to the constructor or initializing a SEED_API_KEY environment variable"
             });
         }
 

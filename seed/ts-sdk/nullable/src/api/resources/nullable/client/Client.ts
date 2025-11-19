@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedNullable from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedNullable from "../../../index.js";
 
 export declare namespace NullableClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class NullableClient {
     protected readonly _options: NullableClient.Options;
 
     constructor(options: NullableClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -33,58 +36,51 @@ export class NullableClient {
      *         extra: true
      *     })
      */
-    public getUsers(
-        request: SeedNullable.GetUsersRequest = {},
-        requestOptions?: NullableClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullable.User[]> {
+    public getUsers(request: SeedNullable.GetUsersRequest = {}, requestOptions?: NullableClient.RequestOptions): core.HttpResponsePromise<SeedNullable.User[]> {
         return core.HttpResponsePromise.fromPromise(this.__getUsers(request, requestOptions));
     }
 
-    private async __getUsers(
-        request: SeedNullable.GetUsersRequest = {},
-        requestOptions?: NullableClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullable.User[]>> {
+    private async __getUsers(request: SeedNullable.GetUsersRequest = {}, requestOptions?: NullableClient.RequestOptions): Promise<core.WithRawResponse<SeedNullable.User[]>> {
         const { usernames, avatar, activated, tags, extra } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (usernames != null) {
             if (Array.isArray(usernames)) {
-                _queryParams.usernames = usernames.map((item) => item);
-            } else {
-                _queryParams.usernames = usernames;
+                _queryParams["usernames"] = usernames.map(item => item);
+            }
+            else {
+                _queryParams["usernames"] = usernames;
             }
         }
 
         if (avatar != null) {
-            _queryParams.avatar = avatar;
+            _queryParams["avatar"] = avatar;
         }
 
         if (activated != null) {
             if (Array.isArray(activated)) {
-                _queryParams.activated = activated.map((item) => item.toString());
-            } else {
-                _queryParams.activated = activated.toString();
+                _queryParams["activated"] = activated.map(item => item.toString());
+            }
+            else {
+                _queryParams["activated"] = activated.toString();
             }
         }
 
         if (tags !== undefined) {
             if (Array.isArray(tags)) {
-                _queryParams.tags = tags.map((item) => item);
-            } else {
-                _queryParams.tags = tags;
+                _queryParams["tags"] = tags.map(item => item);
+            }
+            else {
+                _queryParams["tags"] = tags;
             }
         }
 
         if (extra !== undefined) {
-            _queryParams.extra = extra?.toString() ?? null;
+            _queryParams["extra"] = extra?.toString() ?? null;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/users"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -92,7 +88,7 @@ export class NullableClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedNullable.User[], rawResponse: _response.rawResponse };
@@ -102,24 +98,21 @@ export class NullableClient {
             throw new errors.SeedNullableError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedNullableError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling GET /users.");
-            case "unknown":
-                throw new errors.SeedNullableError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedNullableError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling GET /users.");
+            case "unknown": throw new errors.SeedNullableError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -146,24 +139,14 @@ export class NullableClient {
      *         avatar: "avatar"
      *     })
      */
-    public createUser(
-        request: SeedNullable.CreateUserRequest,
-        requestOptions?: NullableClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedNullable.User> {
+    public createUser(request: SeedNullable.CreateUserRequest, requestOptions?: NullableClient.RequestOptions): core.HttpResponsePromise<SeedNullable.User> {
         return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
-    private async __createUser(
-        request: SeedNullable.CreateUserRequest,
-        requestOptions?: NullableClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNullable.User>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __createUser(request: SeedNullable.CreateUserRequest, requestOptions?: NullableClient.RequestOptions): Promise<core.WithRawResponse<SeedNullable.User>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/users"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -174,7 +157,7 @@ export class NullableClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedNullable.User, rawResponse: _response.rawResponse };
@@ -184,24 +167,21 @@ export class NullableClient {
             throw new errors.SeedNullableError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedNullableError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling POST /users.");
-            case "unknown":
-                throw new errors.SeedNullableError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedNullableError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling POST /users.");
+            case "unknown": throw new errors.SeedNullableError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -214,24 +194,14 @@ export class NullableClient {
      *         username: "xy"
      *     })
      */
-    public deleteUser(
-        request: SeedNullable.DeleteUserRequest = {},
-        requestOptions?: NullableClient.RequestOptions,
-    ): core.HttpResponsePromise<boolean> {
+    public deleteUser(request: SeedNullable.DeleteUserRequest = {}, requestOptions?: NullableClient.RequestOptions): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__deleteUser(request, requestOptions));
     }
 
-    private async __deleteUser(
-        request: SeedNullable.DeleteUserRequest = {},
-        requestOptions?: NullableClient.RequestOptions,
-    ): Promise<core.WithRawResponse<boolean>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __deleteUser(request: SeedNullable.DeleteUserRequest = {}, requestOptions?: NullableClient.RequestOptions): Promise<core.WithRawResponse<boolean>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/users"),
             method: "DELETE",
             headers: _headers,
             contentType: "application/json",
@@ -242,7 +212,7 @@ export class NullableClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
@@ -252,24 +222,21 @@ export class NullableClient {
             throw new errors.SeedNullableError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedNullableError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling DELETE /users.");
-            case "unknown":
-                throw new errors.SeedNullableError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedNullableError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedNullableTimeoutError("Timeout exceeded when calling DELETE /users.");
+            case "unknown": throw new errors.SeedNullableError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }
