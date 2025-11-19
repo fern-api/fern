@@ -1,16 +1,7 @@
-import { mkdir } from "fs/promises";
+import { mkdir, cp } from "fs/promises";
 import { join, dirname } from "path";
-import { cp } from "fs/promises";
 import { fileURLToPath } from "url";
-import tsup from "tsdown";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-import { join, dirname } from "path";
-import { cp, mkdir } from "fs/promises";
-import { fileURLToPath } from "url";
-import tsup from "tsdown";
+import { build as tsup } from "tsdown";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -19,7 +10,7 @@ main();
 
 async function main() {
   // Build with tsdown
-  await tsup.build({
+  await tsup({
     entry: ["src/cli.ts"],
     format: ["cjs"],
     noExternal: [/@fern-api\/.*/, /dedent/],

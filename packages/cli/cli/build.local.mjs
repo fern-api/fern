@@ -1,19 +1,17 @@
-import { writeFile } from "fs/promises";
+import { readFile, writeFile } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import tsup from "tsdown";
+import { build as tsup } from "tsdown";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const packageJson = JSON.parse(await readFile(new URL("./package.json", import.meta.url), "utf-8"));
-const aiPackageJson = JSON.parse(await readFile(new URL("../ai/package.json", import.meta.url), "utf-8"));
-
 
 main();
 
 async function main() {
-    await tsup.build({
+    await tsup({
         entry: ['src/cli.ts'],
         format: ['cjs'],
         minify: false,

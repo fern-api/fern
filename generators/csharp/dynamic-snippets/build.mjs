@@ -1,13 +1,12 @@
-import { writeFile, mkdir } from "fs/promises";
+import { readFile, writeFile, mkdir } from "fs/promises";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import tsup from "tsdown";
+import { build as tsup } from "tsdown";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const packageJson = JSON.parse(await readFile(new URL("./package.json", import.meta.url), "utf-8"));
-
 
 main();
 
@@ -22,14 +21,14 @@ async function main() {
         tsconfig: "./build.tsconfig.json"
     };
 
-    await tsup.build({
+    await tsup({
         ...config,
         format: ['cjs'],
         outDir: 'dist/cjs',
         clean: true,
     });
 
-    await tsup.build({
+    await tsup({
         ...config,
         format: ['esm'],
         outDir: 'dist/esm',

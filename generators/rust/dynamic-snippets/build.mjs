@@ -1,9 +1,9 @@
+import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import tsup from "tsdown";
+import { build as tsup } from "tsdown";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
 
 main();
 

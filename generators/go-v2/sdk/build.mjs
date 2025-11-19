@@ -1,15 +1,7 @@
-import { join, dirname } from "path";
 import { cp } from "fs/promises";
-import { fileURLToPath } from "url";
-import tsup from "tsdown";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 import { join, dirname } from "path";
-import { cp } from "fs/promises";
 import { fileURLToPath } from "url";
-import tsup from "tsdown";
+import { build as tsup } from "tsdown";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
