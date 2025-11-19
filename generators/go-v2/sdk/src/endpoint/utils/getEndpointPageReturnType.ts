@@ -72,7 +72,11 @@ function getCustomPagerReturnType({
     endpoint: HttpEndpoint;
     pagination: Pagination;
 }): go.Type {
-    const responseBodyType = getResponseBodyType({ context, body: endpoint.response!.body! });
+    const response = endpoint.response;
+    if (response?.body == null) {
+        throw new Error("Custom pagination endpoint must have a response body");
+    }
+    const responseBodyType = getResponseBodyType({ context, body: response.body });
     const customPagerName = context.customConfig.customPagerName ?? "CustomPager";
     return go.Type.pointer(
         go.Type.reference(
