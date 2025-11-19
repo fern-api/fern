@@ -88,15 +88,23 @@ jobs:
             const commentBody = context.payload.comment.body;
             const commentId = context.payload.comment.id;
             const prNumber = context.issue.number;
+            const marker = '<!-- seed-selector -->';
             
-            // Only process comments from the github-actions bot with the seed-selector marker
-            if (context.payload.comment.user?.login !== 'github-actions[bot]') {
-              console.log('Comment not from github-actions bot, skipping');
+            // Validate this is the seed selector comment
+            if (!commentBody.includes(marker)) {
+              console.log('Comment does not contain seed-selector marker, skipping');
               return;
             }
             
-            if (!commentBody.includes('<!-- seed-selector -->')) {
-              console.log('Comment does not contain seed-selector marker, skipping');
+            // Only process comments originally authored by the github-actions bot
+            if (context.payload.comment.user?.login !== 'github-actions[bot]') {
+              console.log('Comment not originally authored by github-actions bot, skipping');
+              return;
+            }
+            
+            // Skip if the edit was made by the bot itself (to prevent loops when we update status)
+            if (context.payload.sender?.login === 'github-actions[bot]') {
+              console.log('Edit made by bot (likely our own status update), skipping to prevent loops');
               return;
             }
 
