@@ -24,7 +24,7 @@ export interface TestCaseContext {
 
 export interface RemoteVsLocalTestCase {
     generator: GeneratorNickname;
-    fixture: TestFixture;
+    fixture: string;
     outputMode: OutputMode;
     outputFolder?: string;
     localGeneratorVersions: Record<GeneratorName, string>;
