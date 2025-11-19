@@ -276,8 +276,8 @@ client.union().testCamelCaseProperties(
             PaymentMethodUnion.of(
                 TokenizeCard
                     .builder()
-                    .method("method")
-                    .cardNumber("cardNumber")
+                    .method("card")
+                    .cardNumber("1234567890123456")
                     .build()
             )
         )

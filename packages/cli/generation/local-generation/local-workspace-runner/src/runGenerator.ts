@@ -72,6 +72,7 @@ export async function writeFilesToDiskAndRunGenerator({
     inspect,
     executionEnvironment,
     runner,
+    whiteLabel,
     ir,
     ai
 }: {
@@ -96,6 +97,7 @@ export async function writeFilesToDiskAndRunGenerator({
     inspect: boolean;
     executionEnvironment?: ExecutionEnvironment;
     runner: ContainerRunner | undefined;
+    whiteLabel?: boolean;
     ir: IntermediateRepresentation;
     ai: generatorsYml.AiServicesSchema | undefined;
 }): Promise<{
@@ -187,6 +189,7 @@ export async function writeFilesToDiskAndRunGenerator({
         writeUnitTests,
         generateOauthClients,
         generatePaginatedClients,
+        whiteLabel,
         paths
     });
 
@@ -220,7 +223,8 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToTmpSnippetJSON,
         absolutePathToTmpSnippetTemplatesJSON,
         version,
-        ai
+        ai,
+        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 

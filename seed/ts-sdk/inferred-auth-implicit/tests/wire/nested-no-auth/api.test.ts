@@ -2,10 +2,13 @@
 
 import { SeedInferredAuthImplicitClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
+import { mockInferredAuthScheme } from "../mockAuth";
 
 describe("ApiClient", () => {
     test("getSomething", async () => {
         const server = mockServerPool.createServer();
+        mockInferredAuthScheme(server);
+
         const client = new SeedInferredAuthImplicitClient({
             maxRetries: 0,
             xApiKey: "X-Api-Key",

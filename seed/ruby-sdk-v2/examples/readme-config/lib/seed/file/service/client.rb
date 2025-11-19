@@ -4,12 +4,18 @@ module Seed
   module File
     module Service
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::File::Service::Client]
         def initialize(client:)
           @client = client
         end
 
         # This endpoint returns a file by its name.
+        #
+        # @param request_options [Seed::RequestOptions]
+        #
+        # @param params [Hash[untyped, untyped]]
         #
         # @return [Seed::Types::Types::File]
         def get_file(request_options: {}, **params)

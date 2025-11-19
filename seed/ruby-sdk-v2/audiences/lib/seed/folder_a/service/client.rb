@@ -4,11 +4,17 @@ module Seed
   module FolderA
     module Service
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::FolderA::Service::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Seed::RequestOptions]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::FolderA::Service::Types::Response]
         def get_direct_thread(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)

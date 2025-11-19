@@ -3,11 +3,17 @@
 module Seed
   module QueryParam
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::QueryParam::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -37,6 +43,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def send_list(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)

@@ -3,12 +3,18 @@
 module Seed
   module Service
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Service::Client]
       def initialize(client:)
         @client = client
       end
 
       # GET request with custom api key
+      #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [String]
       def get_with_bearer_token(request_options: {}, **_params)

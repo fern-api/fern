@@ -1,6 +1,30 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix AutoVersioning to exclude Fern branding from commit messages and PR titles/descriptions when whitelabel config is present.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.11.1
+
+- changelogEntry:
+    - summary: |
+        Use commit message for auto versioning PR title and description. When auto versioning is successful, the first line of the commit message becomes the PR title and the rest becomes the PR body.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.11.0
+
+- changelogEntry:
+    - summary: |
+        Fix whitelabel behavior for local generation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.10.3
+
+- changelogEntry:
+    - summary: |
         Support JSX titles in `<Code />` components.
       type: fix
   irVersion: 61
@@ -155,7 +179,7 @@
 
 - changelogEntry:
     - summary: |
-        Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays `generating AI examples for {API name} - X/Y`` to track progress without creating terminal noise.
+        Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays `generating AI examples for {API name} - X/Y` to track progress without creating terminal noise.
       type: feat
   irVersion: 61
   createdAt: "2025-11-14"

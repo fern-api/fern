@@ -140,25 +140,23 @@ export class WireMock {
                 } else if (errorName === "InternalServerError") {
                     status = 500;
                 }
-                bodyObj = example.response.body?.jsonExample?.toString() || "";
+                bodyObj = example.response.body?.jsonExample ?? "";
             }
         }
 
-        // Format response body
+        // Format response body with validation and fallback
         let body = "";
         if (bodyObj !== null && bodyObj !== undefined) {
             if (typeof bodyObj === "object") {
-                const isArray = Array.isArray(bodyObj);
-                body = JSON.stringify(bodyObj, null, 2)
-                    .split("\n")
-                    .map((line) => "  " + line)
-                    .join("\n");
-
-                // Wrap with appropriate brackets based on whether it's an array or object
-                if (isArray) {
-                    body = "[\n" + body.substring(4, body.length - 2) + "\n]";
-                } else {
-                    body = "{\n" + body.substring(4, body.length - 2) + "\n}";
+                try {
+                    body = JSON.stringify(bodyObj, null, 2);
+                    if (!body || body.trim() === "") {
+                        body = Array.isArray(bodyObj) ? "[]" : "{}";
+                    } else {
+                        JSON.parse(body);
+                    }
+                } catch {
+                    body = Array.isArray(bodyObj) ? "[]" : "{}";
                 }
             } else {
                 // For primitives (string, number, boolean), use JSON.stringify to properly quote strings
@@ -168,7 +166,7 @@ export class WireMock {
 
         // Build descriptive name
         const endpointName = endpoint.displayName || endpoint.name.originalName;
-        const exampleName = example?.name || "default";
+        const exampleName = typeof example?.name === "string" ? example.name : "default";
         const name = `${endpointName} - ${exampleName}`;
         const uuid = this.deterministicUUIDv4(`${name}-${endpoint.id}-${urlPathTemplate}-${endpoint.method}`);
 

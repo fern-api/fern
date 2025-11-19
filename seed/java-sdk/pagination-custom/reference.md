@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.users.listUsernamesCustom() -> UsernameCursor</code></summary>
+<details><summary><code>client.users.listUsernamesCustom() -> CustomPager&lt;UsernameCursor&gt;</code></summary>
 <dl>
 <dd>
 

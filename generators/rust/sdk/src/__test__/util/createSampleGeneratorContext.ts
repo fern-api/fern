@@ -37,6 +37,6 @@ export function createSampleGeneratorContext(args: CreateSampleGeneratorContextA
         ir: mockIR,
         getClientName: () => "TestClient",
         getApiClientBuilderClientName: () => "TestClient",
-        customConfig: { generateExamples: false }
+        customConfig: {}
     } as SdkGeneratorContext;
 }

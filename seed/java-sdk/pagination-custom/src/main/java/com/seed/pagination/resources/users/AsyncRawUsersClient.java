@@ -10,6 +10,7 @@ import com.seed.pagination.core.RequestOptions;
 import com.seed.pagination.core.SeedPaginationApiException;
 import com.seed.pagination.core.SeedPaginationException;
 import com.seed.pagination.core.SeedPaginationHttpResponse;
+import com.seed.pagination.core.pagination.AsyncCustomPager;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
 import com.seed.pagination.types.UsernameCursor;
 import java.io.IOException;
@@ -31,17 +32,18 @@ public class AsyncRawUsersClient {
         this.clientOptions = clientOptions;
     }
 
-    public CompletableFuture<SeedPaginationHttpResponse<UsernameCursor>> listUsernamesCustom() {
+    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncCustomPager<String>>>>
+            listUsernamesCustom() {
         return listUsernamesCustom(ListUsernamesRequestCustom.builder().build());
     }
 
-    public CompletableFuture<SeedPaginationHttpResponse<UsernameCursor>> listUsernamesCustom(
-            ListUsernamesRequestCustom request) {
+    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncCustomPager<String>>>>
+            listUsernamesCustom(ListUsernamesRequestCustom request) {
         return listUsernamesCustom(request, null);
     }
 
-    public CompletableFuture<SeedPaginationHttpResponse<UsernameCursor>> listUsernamesCustom(
-            ListUsernamesRequestCustom request, RequestOptions requestOptions) {
+    public CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncCustomPager<String>>>>
+            listUsernamesCustom(ListUsernamesRequestCustom request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("users");
@@ -59,7 +61,8 @@ public class AsyncRawUsersClient {
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
             client = clientOptions.httpClientWithTimeout(requestOptions);
         }
-        CompletableFuture<SeedPaginationHttpResponse<UsernameCursor>> future = new CompletableFuture<>();
+        CompletableFuture<SeedPaginationHttpResponse<CompletableFuture<AsyncCustomPager<String>>>> future =
+                new CompletableFuture<>();
         client.newCall(okhttpRequest).enqueue(new Callback() {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
@@ -68,7 +71,10 @@ public class AsyncRawUsersClient {
                     if (response.isSuccessful()) {
                         UsernameCursor parsedResponse =
                                 ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsernameCursor.class);
-                        future.complete(new SeedPaginationHttpResponse<>(parsedResponse, response));
+                        future.complete(new SeedPaginationHttpResponse<>(
+                                AsyncCustomPager.createAsync(
+                                        parsedResponse, clientOptions.httpClient(), requestOptions),
+                                response));
                         return;
                     }
                     Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);

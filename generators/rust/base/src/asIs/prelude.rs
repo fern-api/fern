@@ -11,11 +11,9 @@ pub use crate::error::ApiError;
 // Main client and resource clients
 pub use crate::api::*;
 
-// Re-export commonly used external types
-pub use chrono::{DateTime, NaiveDate, NaiveDateTime, Utc};
+// Re-export commonly used external types{{CHRONO_EXPORTS}}
 pub use ordered_float::OrderedFloat;
 pub use serde::{Deserialize, Serialize};
 pub use serde_json::{json, Value};
 pub use std::collections::{HashMap, HashSet};
-pub use std::fmt;
-pub use uuid::Uuid;
+pub use std::fmt;{{UUID_EXPORTS}}

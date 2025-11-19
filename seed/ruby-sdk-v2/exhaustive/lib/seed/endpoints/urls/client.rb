@@ -4,11 +4,17 @@ module Seed
   module Endpoints
     module Urls
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::Endpoints::Urls::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Seed::RequestOptions]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [String]
         def with_mixed_case(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
@@ -28,6 +34,10 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [String]
         def no_ending_slash(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
@@ -47,6 +57,10 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [String]
         def with_ending_slash(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
@@ -66,6 +80,10 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [String]
         def with_underscores(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(

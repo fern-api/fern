@@ -5,8 +5,8 @@ package com.seed.pagination.resources.users;
 
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.RequestOptions;
+import com.seed.pagination.core.pagination.AsyncCustomPager;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
-import com.seed.pagination.types.UsernameCursor;
 import java.util.concurrent.CompletableFuture;
 
 public class AsyncUsersClient {
@@ -26,15 +26,16 @@ public class AsyncUsersClient {
         return this.rawClient;
     }
 
-    public CompletableFuture<UsernameCursor> listUsernamesCustom() {
+    public CompletableFuture<CompletableFuture<AsyncCustomPager<String>>> listUsernamesCustom() {
         return this.rawClient.listUsernamesCustom().thenApply(response -> response.body());
     }
 
-    public CompletableFuture<UsernameCursor> listUsernamesCustom(ListUsernamesRequestCustom request) {
+    public CompletableFuture<CompletableFuture<AsyncCustomPager<String>>> listUsernamesCustom(
+            ListUsernamesRequestCustom request) {
         return this.rawClient.listUsernamesCustom(request).thenApply(response -> response.body());
     }
 
-    public CompletableFuture<UsernameCursor> listUsernamesCustom(
+    public CompletableFuture<CompletableFuture<AsyncCustomPager<String>>> listUsernamesCustom(
             ListUsernamesRequestCustom request, RequestOptions requestOptions) {
         return this.rawClient.listUsernamesCustom(request, requestOptions).thenApply(response -> response.body());
     }

@@ -38,8 +38,8 @@ export function normalizeClientOptions<T extends BaseClientOptions>(options: T):
         {
             "X-Fern-Language": "JavaScript",
             "X-Fern-SDK-Name": "@fern-fern/test-remote-local-sdk",
-            "X-Fern-SDK-Version": "0.0.17551",
-            "User-Agent": "@fern-fern/test-remote-local-sdk/0.0.17551",
+            "X-Fern-SDK-Version": "7.7.7",
+            "User-Agent": "@fern-fern/test-remote-local-sdk/7.7.7",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
         },

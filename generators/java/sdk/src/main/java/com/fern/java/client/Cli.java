@@ -183,7 +183,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
                 customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList),
-                customConfig.packageLayout());
+                customConfig.packageLayout(),
+                sdkCustomConfig.customPagerName());
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir,
                 generatorConfig,
@@ -215,8 +216,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .map(List::of)
                 .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
                         ir, generatorConfig.getOrganization()));
-        ClientPoetClassNameFactory clientPoetClassNameFactory =
-                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
+        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
+                packagePrefixTokens, customConfig.packageLayout(), customConfig.customPagerName());
         List<AuthScheme> resolvedAuthSchemes =
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(
@@ -608,8 +609,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .map(List::of)
                 .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
                         ir, generatorConfig.getOrganization()));
-        ClientPoetClassNameFactory clientPoetClassNameFactory =
-                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
+        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
+                packagePrefixTokens, customConfig.packageLayout(), customConfig.customPagerName());
         List<AuthScheme> resolvedAuthSchemes =
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(

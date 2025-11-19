@@ -174,16 +174,6 @@ export class SubClientGenerator {
             );
         }
 
-        // Add futures::Stream if we have JSON streaming endpoints (they return impl Stream<...>)
-        if (hasJsonStreamingEndpoints) {
-            imports.push(
-                new UseStatement({
-                    path: "futures",
-                    items: ["Stream"]
-                })
-            );
-        }
-
         // Add std::collections imports for HashMap, HashSet, BTreeMap, etc.
         if (typeAnalysis.stdCollections.length > 0) {
             imports.push(
@@ -395,7 +385,7 @@ export class SubClientGenerator {
                 return true;
             },
             reference: (reference) => this.isCustomType(reference.requestBodyType),
-            fileUpload: () => false, // File uploads don't typically use custom types
+            fileUpload: () => true, // File upload request types are always custom generated types that need crate::api imports
             bytes: () => false, // Bytes are built-in
             _other: () => false
         });
@@ -992,12 +982,7 @@ export class SubClientGenerator {
     private getQueryBuilderMethod(queryParam: QueryParameter): string {
         const valueType = queryParam.valueType;
 
-        // Check for structured query parameter by name
-        if (queryParam.name.wireValue === "query" && this.isStringType(valueType)) {
-            return "structured_query";
-        }
-
-        // Handle allow-multiple query parameters (repeating query params like ?tag=a&tag=b)
+        // Handle allow-multiple query parameters first (repeating query params like ?tag=a&tag=b)
         // These have type Vec<Option<T>> and need special array methods
         // Note: The model generator wraps allowMultiple types in a list, so the actual type is Vec<Option<T>>
         // But the SDK generator sees the original valueType before wrapping
@@ -1008,8 +993,13 @@ export class SubClientGenerator {
             if (["string", "int", "float", "bool"].includes(baseMethod)) {
                 return `${baseMethod}_array`;
             }
-            // Fall back to serialize for complex types
-            return "serialize";
+            // Use serialize_array for complex types (enums, named types, etc.) with allow-multiple
+            return "serialize_array";
+        }
+
+        // Check for structured query parameter by name (only for non-array queries)
+        if (queryParam.name.wireValue === "query" && this.isStringType(valueType)) {
+            return "structured_query";
         }
 
         // Map types to appropriate QueryBuilder methods
@@ -1027,7 +1017,7 @@ export class SubClientGenerator {
                     bigInteger: () => "big_int",
                     date: () => "date",
                     dateTime: () => "datetime",
-                    base64: () => "string",
+                    base64: () => "serialize", // Vec<u8> needs serialization, not string conversion
                     uuid: () => "uuid",
                     _other: () => "serialize"
                 });
@@ -1071,7 +1061,7 @@ export class SubClientGenerator {
                     bigInteger: () => "big_int",
                     date: () => "date",
                     dateTime: () => "datetime",
-                    base64: () => "string",
+                    base64: () => "serialize", // Vec<u8> needs serialization, not string conversion
                     uuid: () => "uuid",
                     _other: () => "serialize"
                 });
@@ -1345,13 +1335,10 @@ export class SubClientGenerator {
                 streaming: (streaming) => {
                     return streaming._visit({
                         json: (jsonChunk) => {
-                            // Newline-delimited JSON streaming - not yet fully implemented
+                            // Returns complete response at once (not streaming)
+                            // Note: Method name may suggest streaming, but execute_request returns complete response
                             const payloadType = generateRustTypeForTypeReference(jsonChunk.payload, this.context);
-                            return rust.Type.reference(
-                                rust.reference({
-                                    name: `impl Stream<Item = Result<${payloadType.toString()}, ApiError>>`
-                                })
-                            );
+                            return payloadType;
                         },
                         sse: (sseChunk) => {
                             // Server-Sent Events streaming
@@ -2058,7 +2045,7 @@ export class SubClientGenerator {
                 bytes: () => "Streaming byte response (use .into_bytes() to collect or stream chunks)",
                 streaming: (streaming) => {
                     return streaming._visit({
-                        json: () => "Newline-delimited JSON stream (use futures::StreamExt to iterate)",
+                        json: () => "Complete JSON response (fetched at once, not streaming)",
                         sse: () => "Server-Sent Events stream (use futures::StreamExt to iterate)",
                         text: () => "Text streaming response",
                         _other: () => "Streaming response"

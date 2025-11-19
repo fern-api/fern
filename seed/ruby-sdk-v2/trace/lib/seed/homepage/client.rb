@@ -3,11 +3,17 @@
 module Seed
   module Homepage
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Homepage::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Array[String]]
       def get_homepage_problems(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
@@ -27,6 +33,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def set_homepage_problems(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

@@ -3,17 +3,23 @@
 module Seed
   module Service
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Service::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def post(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/service/#{params[:endpointParam]}"
+          path: "/service/#{params[:endpoint_param]}"
         )
         begin
           _response = @client.send(_request)
