@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 1.16.3
+  changelogEntry:
+    - summary: |
+        Bump generator CLI version to publish new Docker image.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 60
+
+- version: 1.16.2
+  changelogEntry:
+    - summary: |
+        Ensure wire tests run in CI correctly with docker compose strategy.
+      type: fix
+  createdAt: "2025-11-18"
+  irVersion: 60
+
 - version: 1.16.1
   changelogEntry:
     - summary: |

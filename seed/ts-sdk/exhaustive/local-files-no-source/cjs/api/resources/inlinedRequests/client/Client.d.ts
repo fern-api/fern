@@ -43,5 +43,4 @@ export declare class InlinedRequestsClient {
      */
     postWithObjectBodyandResponse(request: SeedExhaustive.PostWithObjectBody, requestOptions?: InlinedRequestsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
     private __postWithObjectBodyandResponse;
-    protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
