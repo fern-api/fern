@@ -141,6 +141,21 @@ export class EndpointSnippetGenerator {
             ];
         }
 
+        if (baseUrl != null && this.context.hasMultipleBaseUrlEnvironments()) {
+            const defaultEnvironmentId = this.context.getDefaultEnvironmentId();
+            if (defaultEnvironmentId != null) {
+                const environmentTypeReference = this.context.getEnvironmentTypeReferenceFromID(defaultEnvironmentId);
+                if (environmentTypeReference != null) {
+                    return [
+                        {
+                            name: "environment",
+                            value: environmentValue
+                        }
+                    ];
+                }
+            }
+        }
+
         return [
             {
                 name: this.getEnvironmentOptionName({ environment }),
@@ -164,6 +179,16 @@ export class EndpointSnippetGenerator {
             return undefined;
         }
         if (baseUrl != null) {
+            if (this.context.hasMultipleBaseUrlEnvironments()) {
+                const defaultEnvironmentId = this.context.getDefaultEnvironmentId();
+                if (defaultEnvironmentId != null) {
+                    const environmentTypeReference =
+                        this.context.getEnvironmentTypeReferenceFromID(defaultEnvironmentId);
+                    if (environmentTypeReference != null) {
+                        return python.TypeInstantiation.reference(environmentTypeReference);
+                    }
+                }
+            }
             return python.TypeInstantiation.str(baseUrl);
         }
         if (environment != null) {
