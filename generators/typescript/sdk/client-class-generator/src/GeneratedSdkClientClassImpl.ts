@@ -843,7 +843,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             ts.factory.createObjectLiteralExpression(
                                 [
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier("username"),
+                                        ts.factory.createIdentifier(this.basicAuthScheme.username.camelCase.safeName),
                                         ts.factory.createPropertyAccessExpression(
                                             ts.factory.createIdentifier("this._options"),
                                             ts.factory.createIdentifier(
@@ -852,7 +852,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                         )
                                     ),
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier("password"),
+                                        ts.factory.createIdentifier(this.basicAuthScheme.password.camelCase.safeName),
                                         ts.factory.createPropertyAccessExpression(
                                             ts.factory.createIdentifier("this._options"),
                                             ts.factory.createIdentifier(
