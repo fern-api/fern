@@ -37,7 +37,7 @@ types:
           Configuration that will be used for any custom fixture specified by --custom-fixture
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
-      scripts: optional<list<DockerScriptConfig>>
+      scripts: optional<list<ContainerScriptConfig>>
       allowedFailures:
         type: optional<list<string>>
         docs: |
@@ -45,17 +45,12 @@ types:
           just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
       features: optional<features.GeneratorFeatures>
 
-  PublishContainerConfiguration:
+  PublishDockerConfiguration:
     properties:
       context: string
       image: string
       aliases: optional<list<string>>
       file: string
-
-  PublishDockerConfiguration:
-    docs: |
-      @deprecated Use PublishContainerConfiguration instead
-    extends: PublishContainerConfiguration
 
   PublishDocker:
     docs: |
@@ -63,8 +58,7 @@ types:
     properties:
       workingDirectory: optional<string>
       preBuildCommands: optional<DockerCommand>
-      docker: PublishContainerConfiguration
-      podman: optional<PublishContainerConfiguration>
+      docker: PublishDockerConfiguration
 
   PublishCommand:
     docs: |
@@ -89,11 +83,6 @@ types:
     properties:
       image: string
       command: optional<DockerCommand>
-
-  TestDockerConfiguration:
-    docs: |
-      @deprecated Use TestContainerConfiguration instead
-    extends: TestContainerConfiguration
 
   TestConfiguration:
     properties:
@@ -143,10 +132,10 @@ types:
         type: optional<string>
       commands: list<string>
 
-  DockerScriptConfig:
+  ContainerScriptConfig:
     extends: Script
     properties:
-      docker: string
+      image: string
 
   Language:
     enum:

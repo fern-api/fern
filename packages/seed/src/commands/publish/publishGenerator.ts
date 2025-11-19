@@ -1,4 +1,3 @@
-import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
@@ -66,10 +65,7 @@ export async function publishGenerator({
               : [];
 
         await runCommands(preBuildCommands, context, workingDirectory);
-
-        const runner: ContainerRunner = publishConfig.podman != null ? "podman" : "docker";
-        const containerConfig = runner === "podman" ? publishConfig.podman! : publishConfig.docker;
-        await buildAndPushContainerImage(containerConfig, publishVersion, context, runner);
+        await buildAndPushContainerImage(publishConfig.docker, publishVersion, context);
     } else {
         // Instance of PublishCommand configuration, leverage these commands outright
         const unparsedCommands = publishConfig.command;
@@ -83,8 +79,7 @@ export async function publishGenerator({
 async function buildAndPushContainerImage(
     containerConfig: PublishDockerConfiguration,
     version: string,
-    context: TaskContext,
-    runner: ContainerRunner
+    context: TaskContext
 ) {
     const dockerHubUsername = process?.env?.DOCKER_USERNAME;
     const dockerHubPassword = process?.env?.DOCKER_PASSWORD;
@@ -92,15 +87,15 @@ async function buildAndPushContainerImage(
         context.failAndThrow("Docker Hub credentials not found within your environment variables.");
     }
 
-    context.logger.debug(`Logging into container registry using ${runner}...`);
-    await loggingExeca(context.logger, runner, ["login", "-u", dockerHubUsername, "--password-stdin"], {
+    context.logger.debug(`Logging into container registry...`);
+    await loggingExeca(context.logger, "docker", ["login", "-u", dockerHubUsername, "--password-stdin"], {
         doNotPipeOutput: true,
         input: dockerHubPassword
     });
 
     const aliases = [containerConfig.image, ...(containerConfig.aliases ?? [])].map((alias) => `${alias}:${version}`);
     const tagArgs = aliases.map((imageTag) => ["-t", imageTag]).flat();
-    context.logger.debug(`Pushing container image ${aliases[0]} using ${runner}...`);
+    context.logger.debug(`Pushing container image ${aliases[0]} using docker...`);
     if (aliases.length > 1) {
         context.logger.debug(`Also tagging with aliases: ${aliases.slice(1).join(", ")}`);
     }
@@ -115,13 +110,9 @@ async function buildAndPushContainerImage(
         containerConfig.context
     ];
     try {
-        await loggingExeca(context.logger, runner, standardBuildOptions, { doNotPipeOutput: true });
+        await loggingExeca(context.logger, "docker", standardBuildOptions, { doNotPipeOutput: true });
     } catch (e) {
-        if (
-            runner === "docker" &&
-            e instanceof Error &&
-            e.message.includes("Multi-platform build is not supported for the docker driver")
-        ) {
+        if (e instanceof Error && e.message.includes("Multi-platform build is not supported for the docker driver")) {
             context.logger.error(
                 "Docker cannot build multi-platform images with the current driver, trying `docker buildx`."
             );

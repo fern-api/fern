@@ -17,9 +17,9 @@ import { publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
 import { registerGenerator } from "./commands/register/registerGenerator";
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
-import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test";
+import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
-import { DockerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
+import { ContainerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures";
 import { executeTestRemoteLocalCommand, isFernRepo, isLocalFernCliBuilt } from "./commands/test-remote-local";
 import { assertValidSemVerOrThrow } from "./commands/validate/semVerUtils";
@@ -87,11 +87,12 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
                 })
-                .option("keepDocker", {
+                .option("keepContainer", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
-                    description: "Keeps the docker container after the tests are finished"
+                    description: "Keeps the docker container after the tests are finished",
+                    alias: ["keepDocker"]
                 })
                 .option("skip-scripts", {
                     type: "boolean",
@@ -216,21 +217,22 @@ function addTestCommand(cli: Argv) {
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
                         scriptRunner,
-                        keepDocker: false, // not used for local
+                        keepContainer: false, // not used for local
                         inspect: argv.inspect
                     });
                 } else {
-                    scriptRunner = new DockerScriptRunner(
+                    scriptRunner = new ContainerScriptRunner(
                         generator,
                         argv.skipScripts,
-                        taskContextFactory.create("docker-script-runner")
+                        taskContextFactory.create("docker-script-runner"),
+                        argv.containerRuntime as "docker" | "podman" | undefined
                     );
-                    testRunner = new DockerTestRunner({
+                    testRunner = new ContainerTestRunner({
                         generator,
                         lock,
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
-                        keepDocker: argv.keepDocker,
+                        keepContainer: argv.keepContainer,
                         scriptRunner,
                         inspect: argv.inspect,
                         runner: argv.containerRuntime as "docker" | "podman" | undefined
@@ -416,7 +418,7 @@ function addRunCommand(cli: Argv) {
                     default: false,
                     description: "Run the generator locally instead of using Docker"
                 })
-                .option("keepDocker", {
+                .option("keepContainer", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
@@ -458,7 +460,7 @@ function addRunCommand(cli: Argv) {
                     : undefined,
                 inspect: argv.inspect,
                 local: argv.local,
-                keepDocker: argv.keepDocker
+                keepContainer: argv.keepContainer
             });
         }
     );

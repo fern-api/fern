@@ -15,6 +15,9 @@ test:
   docker:
     image: fernapi/fern-swift-sdk:latest
     command: pnpm --filter @fern-api/swift-sdk dockerTagLatest
+  podman:
+    image: fernapi/fern-swift-sdk:latest
+    command: pnpm --filter @fern-api/swift-sdk podmanTagLatest
   local:
     workingDirectory: generators/swift
     buildCommand:
@@ -27,7 +30,7 @@ defaultOutputMode: github
 defaultCustomConfig: {}
 
 scripts:
-  - docker: swift:6.1.2
+  - image: swift:6.1.2
     commands:
       - swift build -c release --build-tests
       - swift test

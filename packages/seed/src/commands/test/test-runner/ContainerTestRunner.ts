@@ -9,13 +9,11 @@ import { ALL_AUDIENCES, DUMMY_ORGANIZATION } from "../../../utils/constants";
 import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
 import { TestRunner } from "./TestRunner";
 
-export class DockerTestRunner extends TestRunner {
+export class ContainerTestRunner extends TestRunner {
     private readonly runner: ContainerRunner;
-    private readonly explicitRunner: boolean;
 
     constructor(args: TestRunner.Args & { runner?: ContainerRunner }) {
         super(args);
-        this.explicitRunner = args.runner != null;
 
         if (args.runner != null) {
             this.runner = args.runner;
@@ -64,7 +62,7 @@ export class DockerTestRunner extends TestRunner {
         taskContext,
         selectAudiences,
         outputVersion,
-        keepDocker,
+        keepContainer,
         language,
         customConfig,
         publishConfig,
@@ -107,7 +105,7 @@ export class DockerTestRunner extends TestRunner {
             shouldGenerateDynamicSnippetTests,
             skipUnstableDynamicSnippetTests: true,
             inspect,
-            keepDocker: keepDocker ?? false,
+            keepDocker: keepContainer ?? false,
             dockerImage: this.getContainerImageName(),
             runner: this.runner,
             ai: undefined

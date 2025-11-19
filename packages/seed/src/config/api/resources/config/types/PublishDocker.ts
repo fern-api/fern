@@ -10,6 +10,5 @@ import * as FernSeedConfig from "../../../index";
 export interface PublishDocker {
     workingDirectory?: string;
     preBuildCommands?: FernSeedConfig.DockerCommand;
-    docker: FernSeedConfig.PublishContainerConfiguration;
-    podman?: FernSeedConfig.PublishContainerConfiguration;
+    docker: FernSeedConfig.PublishDockerConfiguration;
 }
