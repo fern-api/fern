@@ -45,7 +45,8 @@ export class ReadmeConfigBuilder {
         const readmeSnippetBuilder = new ReadmeSnippetBuilder({
             context,
             endpointSnippets: this.endpointSnippets,
-            fileResponseType: this.fileResponseType
+            fileResponseType: this.fileResponseType,
+            generateSubpackageExports: this.generateSubpackageExports
         });
         const snippets = readmeSnippetBuilder.buildReadmeSnippets();
         const addendums = readmeSnippetBuilder.buildReadmeAddendums();
@@ -139,39 +140,6 @@ function getCustomSections(
             language: FernGeneratorCli.Language.Typescript,
             content: section.content
         });
-    }
-
-    if (generateSubpackageExports) {
-        const packageName = context.npmPackage?.packageName ?? "@acme/sdk";
-
-        const firstSubpackageWithClient = Object.values(context.ir.subpackages).find(
-            (subpackage) => subpackage.hasEndpointsInTree
-        );
-
-        if (firstSubpackageWithClient != null) {
-            const pathSegments = firstSubpackageWithClient.fernFilepath.packagePath.map(
-                (name) => name.camelCase.safeName
-            );
-            const subpackageName = firstSubpackageWithClient.name.camelCase.safeName;
-            if (pathSegments.length === 0 || pathSegments[pathSegments.length - 1] !== subpackageName) {
-                pathSegments.push(subpackageName);
-            }
-            const importPath = pathSegments.join("/");
-            const clientName = `${firstSubpackageWithClient.name.pascalCase.unsafeName}Client`;
-
-            sections.push({
-                name: "Subpackage Exports",
-                language: FernGeneratorCli.Language.Typescript,
-                content: `This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
-
-**Example:**
-\`\`\`typescript
-import { ${clientName} } from '${packageName}/${importPath}';
-
-const client = new ${clientName}({...});
-\`\`\``
-            });
-        }
     }
 
     return sections.length > 0 ? sections : undefined;
