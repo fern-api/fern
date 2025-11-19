@@ -4,7 +4,7 @@
   changelogEntry:
     - summary: |
         Ensure wire tests run in CI correctly with docker compose strategy.
-      type: feat
+      type: fix
   createdAt: "2025-11-18"
   irVersion: 60
 
