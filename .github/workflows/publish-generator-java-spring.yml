@@ -40,3 +40,13 @@ jobs:
           manual-trigger: "true"
           fern-token: ${{ secrets.FERN_TOKEN }}
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+  bulk-update-generator:
+    needs: publish
+    if: ${{ always() && needs.publish.result == 'success' }}
+    uses: ./.github/workflows/_bulk-update-generator.yml
+    with:
+      generator-name: "java-spring"
+      version-file: "generators/java/spring/versions.yml"
+      manual-version: ${{ inputs.version }}
+    secrets: inherit

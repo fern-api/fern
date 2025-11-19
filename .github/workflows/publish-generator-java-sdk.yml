@@ -59,3 +59,13 @@ jobs:
           docker tag fernapi/fern-java-sdk:${{ inputs.version }} 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:${{ inputs.version }}-$SANITIZED_BRANCH-${{ github.sha }}
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 985111089818.dkr.ecr.us-east-1.amazonaws.com
           docker push 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:${{ inputs.version }}-$SANITIZED_BRANCH-${{ github.sha }}
+  
+  bulk-update-generator:
+    needs: publish
+    if: ${{ always() && needs.publish.result == 'success' }}
+    uses: ./.github/workflows/_bulk-update-generator.yml
+    with:
+      generator-name: "java-sdk"
+      version-file: "generators/java/sdk/versions.yml"
+      manual-version: ${{ inputs.version }}
+    secrets: inherit

@@ -119,3 +119,13 @@ jobs:
           NEW_VERSION: ${{ needs.check-version.outputs.version }}
         run: |
           fern generate --api generator-cli --version "${NEW_VERSION}" --group sdk
+
+  bulk-update-generator:
+    needs: [check-version, publish-cli, publish-sdks]
+    if: ${{ always() && needs.check-version.outputs.has_new_version == 'true' && (needs.publish-cli.result == 'success' || needs.publish-sdks.result == 'success') }}
+    uses: ./.github/workflows/_bulk-update-generator.yml
+    with:
+      generator-name: "generator-cli"
+      version-file: "packages/generator-cli/versions.yml"
+      manual-version: ""
+    secrets: inherit
