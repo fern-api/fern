@@ -1,78 +1,5 @@
 imports:
   streamRoot: __package__.yml
-types:
-  Symbol:
-    docs: >
-      Symbols are formatted as CCY1CCY2 where prices are in CCY2 and quantities
-      are in CCY1. To read more click
-      [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
-    enum:
-      - btcusd
-      - ethbtc
-      - ethusd
-      - zecusd
-      - zecbtc
-      - zeceth
-      - zecbch
-      - zecltc
-      - bchusd
-      - bchbtc
-      - bcheth
-      - ltcusd
-      - ltcbtc
-      - ltceth
-      - ltcbch
-      - batusd
-      - daiusd
-      - linkusd
-      - oxtusd
-      - batbtc
-      - linkbtc
-      - oxtbtc
-      - bateth
-      - linketh
-      - oxteth
-      - ampusd
-      - compusd
-      - paxgusd
-      - mkrusd
-      - zrxusd
-      - kncusd
-      - manausd
-      - storjusd
-      - snxusd
-      - crvusd
-      - balusd
-      - uniusd
-      - renusd
-      - umausd
-      - yfiusd
-      - btcdai
-      - ethdai
-      - aaveusd
-      - filusd
-      - btceur
-      - btcgbp
-      - etheur
-      - ethgbp
-      - btcsgd
-      - ethsgd
-      - sklusd
-      - grtusd
-      - bntusd
-      - name: OneInchusd
-        value: 1inchusd
-      - enjusd
-      - lrcusd
-      - sandusd
-      - cubeusd
-      - lptusd
-      - bondusd
-      - maticusd
-      - injusd
-      - sushiusd
-    source:
-      openapi: asyncapi/sample.yml
 channel:
   auth: false
   examples:
@@ -88,5 +15,5 @@ channel:
         Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
         quantities are in CCY1. To read more click
         [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
-      type: Symbol
+      type: streamRoot.Symbol
   url: public
