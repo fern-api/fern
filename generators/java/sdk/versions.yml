@@ -1,3 +1,17 @@
+- version: 3.18.0
+  changelogEntry:
+    - summary: |
+        Add support for custom bidirectional pagination. APIs using custom pagination (e.g., HATEOAS links) can configure a custom pager name and receive skeleton classes with bidirectional navigation methods (`nextPage()`, `previousPage()`, `hasNext()`, `hasPrevious()`).
+
+        Configuration:
+        ```yaml
+        customConfig:
+          custom-pager-name: MyCustomPaginator
+        ```
+      type: feat
+  createdAt: "2025-11-19"
+  irVersion: 61
+
 - version: 3.17.1
   changelogEntry:
     - summary: |

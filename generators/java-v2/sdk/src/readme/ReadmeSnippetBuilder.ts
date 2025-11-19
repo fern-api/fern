@@ -134,39 +134,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Usage] = this.getOptionalNullableDocumentation();
         }
 
-        // Check if any endpoints use custom pagination
-        const hasCustomPagination = Object.values(this.context.ir.services).some((service) =>
-            service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
-        );
-
-        if (hasCustomPagination) {
-            const customPagerName = customConfig?.["custom-pager-name"] ?? "CustomPager";
-            // Add custom pagination documentation as an addendum to the Pagination feature
-            addendumsByFeatureId[FernGeneratorCli.StructuredFeatureId.Pagination] =
-                this.getCustomPaginationDocumentation(customPagerName);
-        }
-
         return addendumsByFeatureId;
-    }
-
-    private getCustomPaginationDocumentation(customPagerName: string): string {
-        return `## Bidirectional Pagination
-
-Paginated endpoints use a custom implementation configured for this API. You can navigate both forward and backward through pages:
-
-\`\`\`java
-${customPagerName}<Item> page = client.listItems();
-
-// Navigate forward
-while (page.hasNext()) {
-    page = page.nextPage();
-}
-
-// Navigate backward
-if (page.hasPrevious()) {
-    page = page.previousPage();
-}
-\`\`\``;
     }
 
     private getOptionalNullableDocumentation(): string {
@@ -529,24 +497,22 @@ UpdateRequest request = UpdateRequest.builder()
         const isCustomPagination = endpoint.endpoint.pagination?.type === "custom";
 
         if (isCustomPagination) {
-            // For custom pagination, provide a concise example
+            // For custom pagination, show bidirectional navigation
             const customPagerClassName = this.context.customConfig?.["custom-pager-name"] ?? "CustomPager";
-            const endpointMethodCall = this.getMethodCall(endpoint, [ReadmeSnippetBuilder.ELLIPSES]);
 
             const snippet = java.codeblock((writer) => {
-                writer.writeNode(clientClassReference);
-                writer.write(` ${this.getRootPackageClientName()} = `);
-                writer.writeNodeStatement(clientInitialization);
+                writer.write(`${customPagerClassName}<Item> page = client.listItems();`);
                 writer.newLine();
-                writer.write(`${customPagerClassName}<?> response = `);
-                writer.writeNodeStatement(endpointMethodCall);
                 writer.newLine();
-                writer.writeLine("// Iterate through items");
-                writer.controlFlow("for", java.codeblock("item : response"));
-                writer.writeLine("// Process each item");
+                writer.writeLine("// Navigate forward through pages");
+                writer.controlFlow("while", java.codeblock("page.hasNext()"));
+                writer.writeLine("page = page.nextPage();");
                 writer.endControlFlow();
                 writer.newLine();
-                writer.writeLine("// Manual navigation: response.nextPage(), response.previousPage()");
+                writer.writeLine("// Navigate backward through pages");
+                writer.controlFlow("if", java.codeblock("page.hasPrevious()"));
+                writer.writeLine("page = page.previousPage();");
+                writer.endControlFlow();
             });
 
             return this.renderSnippet(snippet);

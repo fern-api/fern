@@ -91,39 +91,17 @@ SeedPaginationClient client = SeedPaginationClient
 
 ## Pagination
 
-Paginated requests will return an Iterable<T>, which can be used to loop through the underlying items, or stream them. You can also call
-`nextPage` to perform the pagination manually
-
-```java
-import com.seed.pagination.SeedPaginationClient;
-
-SeedPaginationClient client = SeedPaginationClient
-    .builder()
-    .build();
-
-FernCustomPaginator<?> response = client.users().listUsernamesCustom(...);
-
-// Iterate through items
-for (item : response){
-    // Process each item
-}
-
-// Manual navigation: response.nextPage(), response.previousPage()
-```
-## Bidirectional Pagination
-
-Paginated endpoints support bidirectional navigation:
-
+Paginated endpoints return a pager that supports navigation in both directions.
 ```java
 FernCustomPaginator<Item> page = client.listItems();
 
-// Navigate forward
-while (page.hasNext()) {
+// Navigate forward through pages
+while (page.hasNext()){
     page = page.nextPage();
 }
 
-// Navigate backward
-if (page.hasPrevious()) {
+// Navigate backward through pages
+if (page.hasPrevious()){
     page = page.previousPage();
 }
 ```

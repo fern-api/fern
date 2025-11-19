@@ -41,8 +41,9 @@ import java.util.concurrent.CompletionStage;
  *     @Override
  *     public CompletableFuture<BiDirectionalPage<T>> nextPageAsync() {
  *         if (!hasNext()) {
- *             return CompletableFuture.failedFuture(
- *                 new NoSuchElementException("No next page available"));
+ *             CompletableFuture<BiDirectionalPage<T>> future = new CompletableFuture<>();
+ *             future.completeExceptionally(new NoSuchElementException("No next page available"));
+ *             return future;
  *         }
  *         // Make async HTTP request to nextUrl
  *         return client.getAsync(nextUrl)
@@ -92,9 +93,11 @@ public class AsyncCustomPager<T> implements BiDirectionalPage<T> {
      * @throws java.util.NoSuchElementException if no next page exists (wrapped in CompletableFuture)
      */
     public CompletableFuture<BiDirectionalPage<T>> nextPageAsync() {
-        return CompletableFuture.failedFuture(
+        CompletableFuture<BiDirectionalPage<T>> future = new CompletableFuture<>();
+        future.completeExceptionally(
                 new UnsupportedOperationException("AsyncCustomPager.nextPageAsync() must be implemented. "
                         + "This method should asynchronously fetch and return the next page of results."));
+        return future;
     }
 
     /**
@@ -104,9 +107,11 @@ public class AsyncCustomPager<T> implements BiDirectionalPage<T> {
      * @throws java.util.NoSuchElementException if no previous page exists (wrapped in CompletableFuture)
      */
     public CompletableFuture<BiDirectionalPage<T>> previousPageAsync() {
-        return CompletableFuture.failedFuture(
+        CompletableFuture<BiDirectionalPage<T>> future = new CompletableFuture<>();
+        future.completeExceptionally(
                 new UnsupportedOperationException("AsyncCustomPager.previousPageAsync() must be implemented. "
                         + "This method should asynchronously fetch and return the previous page of results."));
+        return future;
     }
 
     @Override
