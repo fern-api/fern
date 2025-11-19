@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Use commit message for auto versioning PR title and description. When auto versioning is successful, the first line of the commit message becomes the PR title and the rest becomes the PR body.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.11.0
+
+- changelogEntry:
+    - summary: |
         Fix whitelabel behavior for local generation.
       type: fix
   irVersion: 61
