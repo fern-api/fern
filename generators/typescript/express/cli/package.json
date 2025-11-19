@@ -42,7 +42,7 @@
     "@types/lodash-es": "^4.17.12",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
-    "tsup": "^8.5.0",
+    "tsdown": "^0.15.3",
     "typescript": "5.9.3",
     "zod": "^3.22.3"
   }

@@ -1,7 +1,7 @@
 import { join, dirname } from "path";
 import { cp, mkdir } from "fs/promises";
 import { fileURLToPath } from "url";
-import tsup from "tsup";
+import tsup from "tsdown";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -9,7 +9,7 @@ const __dirname = dirname(__filename);
 main();
 
 async function main() {
-  // Build with tsup
+  // Build with tsdown
   await tsup.build({
     entry: ["src/cli.ts"],
     format: ["cjs"],

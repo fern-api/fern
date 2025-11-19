@@ -620,8 +620,8 @@ trevorblades
 trippable
 trivago
 tsconfg
+tsdown
 tsgolint
-tsup
 ttlock
 TVOS
 twilio

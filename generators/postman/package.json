@@ -27,7 +27,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup",
+    "dist:cli": "pnpm compile && tsdown",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-postman:latest .",
     "dockerTagVersion": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-postman:${0} .",
     "format": "prettier --write --ignore-unknown --ignore-path ../../shared/.prettierignore \"**\"",
@@ -51,7 +51,7 @@
     "depcheck": "^1.4.7",
     "endent": "^2.1.0",
     "lodash": "^4.17.21",
-    "tsup": "^8.5.0",
+    "tsdown": "^0.15.3",
     "typescript": "5.9.3",
     "vitest": "^4.0.8",
     "zod": "^3.22.3"

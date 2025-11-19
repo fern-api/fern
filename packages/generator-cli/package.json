@@ -15,8 +15,8 @@
   "files": ["dist"],
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
-    "compile": "tsup && pnpm compile:api:dts && echo '#!/usr/bin/env node' | cat - dist/cli.cjs > dist/tmp && mv dist/tmp dist/cli.cjs",
-    "compile:api:dts": "tsup ./src/api.ts --format cjs --dts --dts-only",
+    "compile": "tsdown && pnpm compile:api:dts && echo '#!/usr/bin/env node' | cat - dist/cli.cjs > dist/tmp && mv dist/tmp dist/cli.cjs",
+    "compile:api:dts": "tsdown ./src/api.ts --format cjs --dts --dts-only",
     "depcheck": "depcheck",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
     "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
@@ -34,7 +34,7 @@
     "esbuild": "^0.25.0",
     "execa": "^9.5.1",
     "tmp-promise": "^3.0.3",
-    "tsup": "^8.5.0",
+    "tsdown": "^0.15.3",
     "typescript": "5.9.3",
     "vitest": "^4.0.8",
     "yargs": "^17.4.1"

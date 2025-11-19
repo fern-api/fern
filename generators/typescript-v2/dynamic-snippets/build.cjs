@@ -1,7 +1,7 @@
 const { NodeModulesPolyfillPlugin } = require('@esbuild-plugins/node-modules-polyfill');
 const { NodeGlobalsPolyfillPlugin } = require('@esbuild-plugins/node-globals-polyfill');
 const packageJson = require("./package.json");
-const tsup = require('tsup');
+const tsup = require('tsdown');
 const { writeFile, mkdir } = require("fs/promises");
 const path = require("path");
 

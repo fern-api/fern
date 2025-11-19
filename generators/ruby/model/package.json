@@ -26,7 +26,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
+    "dist:cli": "pnpm compile && tsdown ./src/cli.ts --format cjs --sourcemap",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-model:latest ../../..",
     "dockerTagVersion": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-model:${0} ../../..",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
@@ -49,7 +49,7 @@
     "@fern-fern/ir-sdk": "^39",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "tsup": "^8.5.0",
+    "tsdown": "^0.15.3",
     "typescript": "5.9.3",
     "vitest": "^4.0.8",
     "zod": "^3.22.3"

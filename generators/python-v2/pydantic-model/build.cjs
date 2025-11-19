@@ -1,4 +1,4 @@
-const tsup = require('tsup');
+const tsup = require('tsdown');
 
 main();
 

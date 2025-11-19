@@ -1,5 +1,5 @@
 const packageJson = require("./package.json");
-const tsup = require('tsup');
+const tsup = require('tsdown');
 
 main();
 

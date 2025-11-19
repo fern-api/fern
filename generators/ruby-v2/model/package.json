@@ -26,7 +26,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
+    "dist:cli": "pnpm compile && tsdown ./src/cli.ts --format cjs --sourcemap",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-go-model:latest ../../..",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
@@ -47,7 +47,7 @@
     "@fern-fern/ir-sdk": "^61.7.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "tsup": "^8.5.0",
+    "tsdown": "^0.15.3",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

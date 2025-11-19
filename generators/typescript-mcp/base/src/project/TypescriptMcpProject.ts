@@ -226,8 +226,8 @@ class PackageJson {
             scripts: {
                 preinstall: "cd sdk && npm run build && npm run prepack",
                 dev: `concurrently 'npm run build:watch' 'nodemon --env-file=.env -q --watch ${DIST_DIRECTORY_NAME} ${DIST_DIRECTORY_NAME}/index.js'`,
-                build: `tsup ${SRC_DIRECTORY_NAME}/index.ts --dts --clean`,
-                "build:watch": `tsup ${SRC_DIRECTORY_NAME}/index.ts --dts --watch`,
+                build: `tsdown ${SRC_DIRECTORY_NAME}/index.ts --dts --clean`,
+                "build:watch": `tsdown ${SRC_DIRECTORY_NAME}/index.ts --dts --watch`,
                 test: "jest"
             },
             dependencies: {
@@ -242,7 +242,7 @@ class PackageJson {
                 jest: "^29.7.0",
                 nodemon: "^3.1.9",
                 "ts-jest": "^29.3.1",
-                tsup: "^8.4.0",
+                tsdown: "^0.15.3",
                 typescript: "^5.8.2"
             }
         };

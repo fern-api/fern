@@ -26,7 +26,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
+    "dist:cli": "pnpm compile && tsdown ./src/cli.ts --format cjs --sourcemap",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "test": "vitest --passWithNoTests --run",
@@ -45,7 +45,7 @@
     "@fern-fern/ir-sdk": "^39",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "tsup": "^8.5.0",
+    "tsdown": "^0.15.3",
     "typescript": "5.9.3",
     "vitest": "^4.0.8",
     "zod": "^3.22.3"
