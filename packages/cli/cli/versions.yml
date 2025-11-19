@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Improve error messaging when remote job creation fails. The CLI now extracts and displays HTTP status codes, error messages, and provides actionable guidance including suggesting the --local flag for rate limits (429) and server errors (5xx).
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.12.0
+
+- changelogEntry:
+    - summary: |
         Fix AutoVersioning to exclude Fern branding from commit messages and PR titles/descriptions when whitelabel config is present.
       type: fix
   irVersion: 61
