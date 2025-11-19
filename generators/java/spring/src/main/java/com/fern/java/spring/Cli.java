@@ -11,6 +11,7 @@ import com.fern.ir.model.ir.IntermediateRepresentation;
 import com.fern.java.AbstractGeneratorCli;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.FeatureResolver;
+import com.fern.java.generators.AuthCredentialRedactionTestGenerator;
 import com.fern.java.generators.AuthGenerator;
 import com.fern.java.generators.DateTimeDeserializerGenerator;
 import com.fern.java.generators.ObjectMappersGenerator;
@@ -113,6 +114,83 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
         AuthGenerator authGenerator = new AuthGenerator(context);
         Optional<GeneratedAuthFiles> maybeAuth = authGenerator.generate();
         maybeAuth.ifPresent(this::addGeneratedFile);
+
+        // auth credential redaction test (only if auth was generated)
+        if (maybeAuth.isPresent()) {
+            GeneratedAuthFiles generatedAuthFiles = maybeAuth.get();
+            boolean isBearer = generatedAuthFiles
+                    .authScheme()
+                    .visit(new com.fern.ir.model.auth.AuthScheme.Visitor<Boolean>() {
+                        @Override
+                        public Boolean visitBearer(com.fern.ir.model.auth.BearerAuthScheme value) {
+                            return true;
+                        }
+
+                        @Override
+                        public Boolean visitBasic(com.fern.ir.model.auth.BasicAuthScheme value) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean visitHeader(com.fern.ir.model.auth.HeaderAuthScheme value) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean visitOauth(com.fern.ir.model.auth.OAuthScheme value) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean visitInferred(com.fern.ir.model.auth.InferredAuthScheme value) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean _visitUnknown(Object unknownType) {
+                            return false;
+                        }
+                    });
+            boolean isBasic = generatedAuthFiles
+                    .authScheme()
+                    .visit(new com.fern.ir.model.auth.AuthScheme.Visitor<Boolean>() {
+                        @Override
+                        public Boolean visitBearer(com.fern.ir.model.auth.BearerAuthScheme value) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean visitBasic(com.fern.ir.model.auth.BasicAuthScheme value) {
+                            return true;
+                        }
+
+                        @Override
+                        public Boolean visitHeader(com.fern.ir.model.auth.HeaderAuthScheme value) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean visitOauth(com.fern.ir.model.auth.OAuthScheme value) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean visitInferred(com.fern.ir.model.auth.InferredAuthScheme value) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean _visitUnknown(Object unknownType) {
+                            return false;
+                        }
+                    });
+
+            if (isBearer || isBasic) {
+                AuthCredentialRedactionTestGenerator authCredentialRedactionTestGenerator =
+                        new AuthCredentialRedactionTestGenerator(context, isBearer, isBasic);
+                this.addGeneratedFile(authCredentialRedactionTestGenerator.generateFile());
+            }
+        }
 
         // types
         TypesGenerator typesGenerator = new TypesGenerator(context);
