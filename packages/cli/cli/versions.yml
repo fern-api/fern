@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix whitelabel behavior for local generation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.10.2
+
+- changelogEntry:
+    - summary: |
         Tweak SDK diffing AI prompt to work better with larger diffs.
       type: fix
   irVersion: 61
