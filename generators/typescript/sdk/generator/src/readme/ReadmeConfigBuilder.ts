@@ -169,9 +169,7 @@ function getCustomSections(
 import { ${clientName} } from '${packageName}/${importPath}';
 
 const client = new ${clientName}({...});
-\`\`\`
-
-This feature is enabled by the \`generateSubpackageExports\` configuration option in your _generators.yml_ file.`
+\`\`\``
             });
         }
     }

@@ -26,8 +26,6 @@ import { EndpointsClient } from '@fern/exhaustive/endpoints';
 const client = new EndpointsClient({...});
 ```
 
-This feature is enabled by the `generateSubpackageExports` configuration option in your _generators.yml_ file.
-
 ## Usage
 
 Instantiate and use the client with the following:
