@@ -52,7 +52,7 @@ export class SdkGeneratorCli extends AbstractPythonGeneratorCli<SdkCustomConfigS
     }
 
     private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {
-        if (!context.customConfig.enableWireTests) {
+        if (!context.customConfig.enable_wire_tests) {
             return;
         }
 

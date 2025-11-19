@@ -1,6 +1,4 @@
 import { WireMockMapping } from "@fern-api/mock-utils";
-import { PythonFile } from "@fern-api/python-ast";
-import { DynamicSnippetsGenerator } from "@fern-api/python-dynamic-snippets";
 import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
@@ -14,7 +12,6 @@ import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
     private dynamicIr: dynamic.DynamicIntermediateRepresentation;
-    private dynamicSnippetsGenerator: DynamicSnippetsGenerator;
     private wireMockConfigContent: Record<string, WireMockMapping>;
 
     constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
@@ -24,10 +21,6 @@ export class WireTestGenerator {
             throw new Error("Cannot generate wire tests without dynamic IR");
         }
         this.dynamicIr = dynamicIr;
-        this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
-            ir: this.convertIr(dynamicIr),
-            config: this.context.config
-        });
         this.wireMockConfigContent = this.getWireMockConfigContent();
     }
 
@@ -62,62 +55,20 @@ export class WireTestGenerator {
     // FILE GENERATION
     // =============================================================================
 
-    private async generateServiceTestFile(serviceName: string, endpoints: HttpEndpoint[]): Promise<PythonFile | null> {
-        const endpointTestCases = new Map<string, { snippet: string; endpoint: HttpEndpoint }>();
-
+    private async generateServiceTestFile(serviceName: string, endpoints: HttpEndpoint[]): Promise<null> {
+        let endpointCount = 0;
         for (const endpoint of endpoints) {
             const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
             if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
-                const firstExample = this.getDynamicEndpointExample(endpoint);
-                if (firstExample) {
-                    try {
-                        const snippet = await this.generateSnippetForExample(firstExample);
-                        endpointTestCases.set(endpoint.id, { snippet, endpoint });
-                    } catch (error) {
-                        this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
-                        continue;
-                    }
-                }
+                endpointCount++;
             }
         }
 
-        if (endpointTestCases.size === 0) {
-            return null;
-        }
-
         this.context.logger.info(
-            `Would generate test file for service ${serviceName} with ${endpointTestCases.size} test cases`
+            `Would generate test file for service ${serviceName} with ${endpointCount} test cases`
         );
 
         return null;
-    }
-
-    // =============================================================================
-    // =============================================================================
-
-    private async generateSnippetForExample(example: dynamic.EndpointExample): Promise<string> {
-        const snippetRequest = this.convertDynamicEndpointSnippetRequest(example);
-        const response = await this.dynamicSnippetsGenerator.generate(snippetRequest, {
-            config: { outputWiremockTests: true }
-        });
-        if (!response.snippet) {
-            throw new Error("No snippet generated for example");
-        }
-        return response.snippet;
-    }
-
-    private convertDynamicEndpointSnippetRequest(example: dynamic.EndpointExample): dynamic.EndpointSnippetRequest {
-        return {
-            endpoint: example.endpointId,
-            example: example
-        };
-    }
-
-    // =============================================================================
-    // =============================================================================
-
-    private convertIr(dynamicIr: dynamic.DynamicIntermediateRepresentation): dynamic.DynamicIntermediateRepresentation {
-        return dynamicIr;
     }
 
     // =============================================================================
