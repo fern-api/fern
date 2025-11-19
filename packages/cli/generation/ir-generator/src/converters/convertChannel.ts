@@ -1,5 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isPlainObject } from "@fern-api/core-utils";
+import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     ExampleHeader,
@@ -124,20 +124,13 @@ export function convertChannel({
                 ...convertHeaders({ channel, example, typeResolver, exampleResolver, file, workspace }),
                 queryParameters:
                     example["query-parameters"] != null
-                        ? Object.entries(example["query-parameters"]).map(([wireKey, value]) => {
-                              const queryParameterDeclaration = channel["query-parameters"]?.[wireKey];
-                              if (queryParameterDeclaration == null) {
-                                  throw new Error(`Query parameter ${wireKey} does not exist`);
-                              }
-                              return {
-                                  name: file.casingsGenerator.generateNameAndWireValue({
-                                      name: getQueryParameterName({
-                                          queryParameterKey: wireKey,
-                                          queryParameter: queryParameterDeclaration
-                                      }).name,
-                                      wireValue: wireKey
-                                  }),
-                                  value: convertTypeReferenceExample({
+                        ? Object.entries(example["query-parameters"])
+                              .map(([wireKey, value]) => {
+                                  const queryParameterDeclaration = channel["query-parameters"]?.[wireKey];
+                                  if (queryParameterDeclaration == null) {
+                                      throw new Error(`Query parameter ${wireKey} does not exist`);
+                                  }
+                                  const convertedValue = convertTypeReferenceExample({
                                       example: value,
                                       rawTypeBeingExemplified:
                                           typeof queryParameterDeclaration === "string"
@@ -148,10 +141,25 @@ export function convertChannel({
                                       fileContainingRawTypeReference: file,
                                       fileContainingExample: file,
                                       workspace
-                                  }),
-                                  shape: getQueryParamaterDeclationShape({ queryParameter: queryParameterDeclaration })
-                              };
-                          })
+                                  });
+                                  if (convertedValue == null) {
+                                      return undefined;
+                                  }
+                                  return {
+                                      name: file.casingsGenerator.generateNameAndWireValue({
+                                          name: getQueryParameterName({
+                                              queryParameterKey: wireKey,
+                                              queryParameter: queryParameterDeclaration
+                                          }).name,
+                                          wireValue: wireKey
+                                      }),
+                                      value: convertedValue,
+                                      shape: getQueryParamaterDeclationShape({
+                                          queryParameter: queryParameterDeclaration
+                                      })
+                                  };
+                              })
+                              .filter(isNonNullish)
                         : [],
                 messages: example.messages.map((messageExample): ExampleWebSocketMessage => {
                     const message = channel.messages?.[messageExample.type];
@@ -203,17 +211,19 @@ function convertExampleWebSocketMessageBody({
     workspace: FernWorkspace;
 }): ExampleWebSocketMessageBody {
     if (!isInlineMessageBody(message.body)) {
-        return ExampleWebSocketMessageBody.reference(
-            convertTypeReferenceExample({
-                example,
-                rawTypeBeingExemplified: typeof message.body !== "string" ? message.body.type : message.body,
-                typeResolver,
-                exampleResolver,
-                fileContainingRawTypeReference: file,
-                fileContainingExample: file,
-                workspace
-            })
-        );
+        const convertedValue = convertTypeReferenceExample({
+            example,
+            rawTypeBeingExemplified: typeof message.body !== "string" ? message.body.type : message.body,
+            typeResolver,
+            exampleResolver,
+            fileContainingRawTypeReference: file,
+            fileContainingExample: file,
+            workspace
+        });
+        if (convertedValue == null) {
+            throw new Error("Failed to convert WebSocket message body example");
+        }
+        return ExampleWebSocketMessageBody.reference(convertedValue);
     }
 
     if (!isPlainObject(example)) {
@@ -224,25 +234,29 @@ function convertExampleWebSocketMessageBody({
     for (const [wireKey, propertyExample] of Object.entries(example)) {
         const inlinedRequestPropertyDeclaration = message.body.properties?.[wireKey];
         if (inlinedRequestPropertyDeclaration != null) {
-            exampleProperties.push({
-                name: file.casingsGenerator.generateNameAndWireValue({
-                    name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name,
-                    wireValue: wireKey
-                }),
-                value: convertTypeReferenceExample({
-                    example: propertyExample,
-                    rawTypeBeingExemplified:
-                        typeof inlinedRequestPropertyDeclaration !== "string"
-                            ? inlinedRequestPropertyDeclaration.type
-                            : inlinedRequestPropertyDeclaration,
-                    typeResolver,
-                    exampleResolver,
-                    fileContainingRawTypeReference: file,
-                    fileContainingExample: file,
-                    workspace
-                }),
-                originalTypeDeclaration: undefined
+            const convertedValue = convertTypeReferenceExample({
+                example: propertyExample,
+                rawTypeBeingExemplified:
+                    typeof inlinedRequestPropertyDeclaration !== "string"
+                        ? inlinedRequestPropertyDeclaration.type
+                        : inlinedRequestPropertyDeclaration,
+                typeResolver,
+                exampleResolver,
+                fileContainingRawTypeReference: file,
+                fileContainingExample: file,
+                workspace
             });
+            if (convertedValue != null) {
+                exampleProperties.push({
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration })
+                            .name,
+                        wireValue: wireKey
+                    }),
+                    value: convertedValue,
+                    originalTypeDeclaration: undefined
+                });
+            }
         } else {
             const originalTypeDeclaration = getOriginalTypeDeclarationForPropertyFromExtensions({
                 extends_: message.body.extends,
@@ -253,26 +267,31 @@ function convertExampleWebSocketMessageBody({
             if (originalTypeDeclaration == null) {
                 throw new Error("Could not find original type declaration for property: " + wireKey);
             }
-            exampleProperties.push({
-                name: file.casingsGenerator.generateNameAndWireValue({
-                    name: getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType })
-                        .name,
-                    wireValue: wireKey
-                }),
-                value: convertTypeReferenceExample({
-                    example: propertyExample,
-                    rawTypeBeingExemplified:
-                        typeof originalTypeDeclaration.rawPropertyType === "string"
-                            ? originalTypeDeclaration.rawPropertyType
-                            : originalTypeDeclaration.rawPropertyType.type,
-                    typeResolver,
-                    exampleResolver,
-                    fileContainingRawTypeReference: originalTypeDeclaration.file,
-                    fileContainingExample: file,
-                    workspace
-                }),
-                originalTypeDeclaration: originalTypeDeclaration.typeName
+            const convertedValue = convertTypeReferenceExample({
+                example: propertyExample,
+                rawTypeBeingExemplified:
+                    typeof originalTypeDeclaration.rawPropertyType === "string"
+                        ? originalTypeDeclaration.rawPropertyType
+                        : originalTypeDeclaration.rawPropertyType.type,
+                typeResolver,
+                exampleResolver,
+                fileContainingRawTypeReference: originalTypeDeclaration.file,
+                fileContainingExample: file,
+                workspace
             });
+            if (convertedValue != null) {
+                exampleProperties.push({
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        name: getPropertyName({
+                            propertyKey: wireKey,
+                            property: originalTypeDeclaration.rawPropertyType
+                        }).name,
+                        wireValue: wireKey
+                    }),
+                    value: convertedValue,
+                    originalTypeDeclaration: originalTypeDeclaration.typeName
+                });
+            }
         }
     }
 
@@ -359,17 +378,21 @@ function convertChannelPathParameters({
             variableResolver,
             file
         });
+        const convertedValue = convertTypeReferenceExample({
+            example: examplePathParameter,
+            rawTypeBeingExemplified: resolvedPathParameter.rawType,
+            typeResolver,
+            exampleResolver,
+            fileContainingRawTypeReference: resolvedPathParameter.file,
+            fileContainingExample: file,
+            workspace
+        });
+        if (convertedValue == null) {
+            return undefined;
+        }
         return {
             name,
-            value: convertTypeReferenceExample({
-                example: examplePathParameter,
-                rawTypeBeingExemplified: resolvedPathParameter.rawType,
-                typeResolver,
-                exampleResolver,
-                fileContainingRawTypeReference: resolvedPathParameter.file,
-                fileContainingExample: file,
-                workspace
-            })
+            value: convertedValue
         };
     };
 
@@ -380,13 +403,14 @@ function convertChannelPathParameters({
             const pathParameterDeclaration = rawEndpointPathParameters[key];
 
             if (pathParameterDeclaration != null) {
-                pathParameters.push(
-                    buildExamplePathParameter({
-                        name: file.casingsGenerator.generateName(key),
-                        pathParameterDeclaration,
-                        examplePathParameter
-                    })
-                );
+                const param = buildExamplePathParameter({
+                    name: file.casingsGenerator.generateName(key),
+                    pathParameterDeclaration,
+                    examplePathParameter
+                });
+                if (param != null) {
+                    pathParameters.push(param);
+                }
             } else {
                 throw new Error(`Path parameter ${key} does not exist`);
             }
@@ -417,22 +441,25 @@ function convertHeaders({
         for (const [wireKey, exampleHeader] of Object.entries(example.headers)) {
             const headerDeclaration = channel.headers?.[wireKey];
             if (headerDeclaration != null) {
-                headers.push({
-                    name: file.casingsGenerator.generateNameAndWireValue({
-                        name: getHeaderName({ headerKey: wireKey, header: headerDeclaration }).name,
-                        wireValue: wireKey
-                    }),
-                    value: convertTypeReferenceExample({
-                        example: exampleHeader,
-                        rawTypeBeingExemplified:
-                            typeof headerDeclaration === "string" ? headerDeclaration : headerDeclaration.type,
-                        typeResolver,
-                        exampleResolver,
-                        fileContainingRawTypeReference: file,
-                        fileContainingExample: file,
-                        workspace
-                    })
+                const convertedValue = convertTypeReferenceExample({
+                    example: exampleHeader,
+                    rawTypeBeingExemplified:
+                        typeof headerDeclaration === "string" ? headerDeclaration : headerDeclaration.type,
+                    typeResolver,
+                    exampleResolver,
+                    fileContainingRawTypeReference: file,
+                    fileContainingExample: file,
+                    workspace
                 });
+                if (convertedValue != null) {
+                    headers.push({
+                        name: file.casingsGenerator.generateNameAndWireValue({
+                            name: getHeaderName({ headerKey: wireKey, header: headerDeclaration }).name,
+                            wireValue: wireKey
+                        }),
+                        value: convertedValue
+                    });
+                }
             }
         }
     }

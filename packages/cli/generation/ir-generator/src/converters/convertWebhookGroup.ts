@@ -1,5 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { isPlainObject } from "@fern-api/core-utils";
+import { isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/fern-definition-schema";
 import {
     Availability,
@@ -154,19 +154,27 @@ function convertWebhookExamples({
               ? webhook.payload.type
               : undefined;
     if (typeName != null) {
-        return examples.map((example) => ({
-            docs: webhook.docs,
-            name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
-            payload: convertTypeReferenceExample({
-                example: example.payload,
-                rawTypeBeingExemplified: typeName,
-                fileContainingRawTypeReference: file,
-                fileContainingExample: file,
-                typeResolver,
-                exampleResolver,
-                workspace
+        return examples
+            .map((example) => {
+                const convertedPayload = convertTypeReferenceExample({
+                    example: example.payload,
+                    rawTypeBeingExemplified: typeName,
+                    fileContainingRawTypeReference: file,
+                    fileContainingExample: file,
+                    typeResolver,
+                    exampleResolver,
+                    workspace
+                });
+                if (convertedPayload == null) {
+                    return undefined;
+                }
+                return {
+                    docs: webhook.docs,
+                    name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+                    payload: convertedPayload
+                };
             })
-        }));
+            .filter(isNonNullish);
     }
     if (!isPlainObject(webhook.payload)) {
         throw new Error(`Example webhook payload is not an object. Got: ${JSON.stringify(webhook.payload)}`);
@@ -174,17 +182,25 @@ function convertWebhookExamples({
     // The payload example is a simple object of key, value pairs, so we format the example as
     // a map<string, unknown> for simplicity. If we ever add support for webhooks in the generated
     // SDKs, we'll need to revisit this.
-    return examples.map((example) => ({
-        docs: webhook.docs,
-        name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
-        payload: convertTypeReferenceExample({
-            example: example.payload,
-            rawTypeBeingExemplified: "map<string, unknown>",
-            fileContainingRawTypeReference: file,
-            fileContainingExample: file,
-            typeResolver,
-            exampleResolver,
-            workspace
+    return examples
+        .map((example) => {
+            const convertedPayload = convertTypeReferenceExample({
+                example: example.payload,
+                rawTypeBeingExemplified: "map<string, unknown>",
+                fileContainingRawTypeReference: file,
+                fileContainingExample: file,
+                typeResolver,
+                exampleResolver,
+                workspace
+            });
+            if (convertedPayload == null) {
+                return undefined;
+            }
+            return {
+                docs: webhook.docs,
+                name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+                payload: convertedPayload
+            };
         })
-    }));
+        .filter(isNonNullish);
 }

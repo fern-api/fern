@@ -78,23 +78,16 @@ export function convertExampleEndpointCall({
         ...convertHeaders({ service, endpoint, example, typeResolver, exampleResolver, file, workspace }),
         queryParameters:
             example["query-parameters"] != null
-                ? Object.entries(example["query-parameters"]).map(([wireKey, value]) => {
-                      const queryParameterDeclaration =
-                          typeof endpoint.request !== "string"
-                              ? endpoint.request?.["query-parameters"]?.[wireKey]
-                              : undefined;
-                      if (queryParameterDeclaration == null) {
-                          throw new Error(`Query parameter ${wireKey} does not exist`);
-                      }
-                      return {
-                          name: file.casingsGenerator.generateNameAndWireValue({
-                              name: getQueryParameterName({
-                                  queryParameterKey: wireKey,
-                                  queryParameter: queryParameterDeclaration
-                              }).name,
-                              wireValue: wireKey
-                          }),
-                          value: convertTypeReferenceExample({
+                ? Object.entries(example["query-parameters"])
+                      .map(([wireKey, value]) => {
+                          const queryParameterDeclaration =
+                              typeof endpoint.request !== "string"
+                                  ? endpoint.request?.["query-parameters"]?.[wireKey]
+                                  : undefined;
+                          if (queryParameterDeclaration == null) {
+                              throw new Error(`Query parameter ${wireKey} does not exist`);
+                          }
+                          const convertedValue = convertTypeReferenceExample({
                               example: value,
                               rawTypeBeingExemplified:
                                   typeof queryParameterDeclaration === "string"
@@ -105,10 +98,23 @@ export function convertExampleEndpointCall({
                               fileContainingRawTypeReference: file,
                               fileContainingExample: file,
                               workspace
-                          }),
-                          shape: getQueryParamaterDeclationShape({ queryParameter: queryParameterDeclaration })
-                      };
-                  })
+                          });
+                          if (convertedValue == null) {
+                              return undefined;
+                          }
+                          return {
+                              name: file.casingsGenerator.generateNameAndWireValue({
+                                  name: getQueryParameterName({
+                                      queryParameterKey: wireKey,
+                                      queryParameter: queryParameterDeclaration
+                                  }).name,
+                                  wireValue: wireKey
+                              }),
+                              value: convertedValue,
+                              shape: getQueryParamaterDeclationShape({ queryParameter: queryParameterDeclaration })
+                          };
+                      })
+                      .filter(isNonNullish)
                 : [],
         request: convertExampleRequestBody({ endpoint, example, typeResolver, exampleResolver, file, workspace }),
         response: convertExampleResponse({
@@ -168,17 +174,21 @@ function convertPathParameters({
             variableResolver,
             file
         });
+        const convertedValue = convertTypeReferenceExample({
+            example: examplePathParameter,
+            rawTypeBeingExemplified: resolvedPathParameter.rawType,
+            typeResolver,
+            exampleResolver,
+            fileContainingRawTypeReference: resolvedPathParameter.file,
+            fileContainingExample: file,
+            workspace
+        });
+        if (convertedValue == null) {
+            return undefined;
+        }
         return {
             name,
-            value: convertTypeReferenceExample({
-                example: examplePathParameter,
-                rawTypeBeingExemplified: resolvedPathParameter.rawType,
-                typeResolver,
-                exampleResolver,
-                fileContainingRawTypeReference: resolvedPathParameter.file,
-                fileContainingExample: file,
-                workspace
-            })
+            value: convertedValue
         };
     };
 
@@ -190,29 +200,32 @@ function convertPathParameters({
             const endpointPathParameterDeclaration = rawEndpointPathParameters[key];
 
             if (rootPathParameterDeclaration != null) {
-                rootPathParameters.push(
-                    buildExamplePathParameter({
-                        name: file.casingsGenerator.generateName(key),
-                        pathParameterDeclaration: rootPathParameterDeclaration,
-                        examplePathParameter
-                    })
-                );
+                const param = buildExamplePathParameter({
+                    name: file.casingsGenerator.generateName(key),
+                    pathParameterDeclaration: rootPathParameterDeclaration,
+                    examplePathParameter
+                });
+                if (param != null) {
+                    rootPathParameters.push(param);
+                }
             } else if (endpointPathParameterDeclaration != null) {
-                endpointPathParameters.push(
-                    buildExamplePathParameter({
-                        name: file.casingsGenerator.generateName(key),
-                        pathParameterDeclaration: endpointPathParameterDeclaration,
-                        examplePathParameter
-                    })
-                );
+                const param = buildExamplePathParameter({
+                    name: file.casingsGenerator.generateName(key),
+                    pathParameterDeclaration: endpointPathParameterDeclaration,
+                    examplePathParameter
+                });
+                if (param != null) {
+                    endpointPathParameters.push(param);
+                }
             } else if (servicePathParameterDeclaration != null) {
-                servicePathParameters.push(
-                    buildExamplePathParameter({
-                        name: file.casingsGenerator.generateName(key),
-                        pathParameterDeclaration: servicePathParameterDeclaration,
-                        examplePathParameter
-                    })
-                );
+                const param = buildExamplePathParameter({
+                    name: file.casingsGenerator.generateName(key),
+                    pathParameterDeclaration: servicePathParameterDeclaration,
+                    examplePathParameter
+                });
+                if (param != null) {
+                    servicePathParameters.push(param);
+                }
             } else {
                 throw new Error(`Path parameter ${key} does not exist`);
             }
@@ -255,43 +268,49 @@ function convertHeaders({
             // TODO: add global headers field in ExampleEndpointCall
             // const globalHeaderDeclaration = workspace.definition.rootApiFile.contents.headers?.[wireKey];
             if (endpointHeaderDeclaration != null) {
-                endpointHeaders.push({
-                    name: file.casingsGenerator.generateNameAndWireValue({
-                        name: getHeaderName({ headerKey: wireKey, header: endpointHeaderDeclaration }).name,
-                        wireValue: wireKey
-                    }),
-                    value: convertTypeReferenceExample({
-                        example: exampleHeader,
-                        rawTypeBeingExemplified:
-                            typeof endpointHeaderDeclaration === "string"
-                                ? endpointHeaderDeclaration
-                                : endpointHeaderDeclaration.type,
-                        typeResolver,
-                        exampleResolver,
-                        fileContainingRawTypeReference: file,
-                        fileContainingExample: file,
-                        workspace
-                    })
+                const convertedValue = convertTypeReferenceExample({
+                    example: exampleHeader,
+                    rawTypeBeingExemplified:
+                        typeof endpointHeaderDeclaration === "string"
+                            ? endpointHeaderDeclaration
+                            : endpointHeaderDeclaration.type,
+                    typeResolver,
+                    exampleResolver,
+                    fileContainingRawTypeReference: file,
+                    fileContainingExample: file,
+                    workspace
                 });
+                if (convertedValue != null) {
+                    endpointHeaders.push({
+                        name: file.casingsGenerator.generateNameAndWireValue({
+                            name: getHeaderName({ headerKey: wireKey, header: endpointHeaderDeclaration }).name,
+                            wireValue: wireKey
+                        }),
+                        value: convertedValue
+                    });
+                }
             } else if (serviceHeaderDeclaration != null) {
-                serviceHeaders.push({
-                    name: file.casingsGenerator.generateNameAndWireValue({
-                        name: getHeaderName({ headerKey: wireKey, header: serviceHeaderDeclaration }).name,
-                        wireValue: wireKey
-                    }),
-                    value: convertTypeReferenceExample({
-                        example: exampleHeader,
-                        rawTypeBeingExemplified:
-                            typeof serviceHeaderDeclaration === "string"
-                                ? serviceHeaderDeclaration
-                                : serviceHeaderDeclaration.type,
-                        typeResolver,
-                        exampleResolver,
-                        fileContainingRawTypeReference: file,
-                        fileContainingExample: file,
-                        workspace
-                    })
+                const convertedValue = convertTypeReferenceExample({
+                    example: exampleHeader,
+                    rawTypeBeingExemplified:
+                        typeof serviceHeaderDeclaration === "string"
+                            ? serviceHeaderDeclaration
+                            : serviceHeaderDeclaration.type,
+                    typeResolver,
+                    exampleResolver,
+                    fileContainingRawTypeReference: file,
+                    fileContainingExample: file,
+                    workspace
                 });
+                if (convertedValue != null) {
+                    serviceHeaders.push({
+                        name: file.casingsGenerator.generateNameAndWireValue({
+                            name: getHeaderName({ headerKey: wireKey, header: serviceHeaderDeclaration }).name,
+                            wireValue: wireKey
+                        }),
+                        value: convertedValue
+                    });
+                }
             }
             // TODO: add global headers field in ExampleEndpointCall
             // else if (globalHeaderDeclaration != null) {
@@ -349,17 +368,19 @@ function convertExampleRequestBody({
     }
 
     if (!isInlineRequestBody(requestType)) {
-        return ExampleRequestBody.reference(
-            convertTypeReferenceExample({
-                example: example.request,
-                rawTypeBeingExemplified: typeof requestType !== "string" ? requestType.type : requestType,
-                typeResolver,
-                exampleResolver,
-                fileContainingRawTypeReference: file,
-                fileContainingExample: file,
-                workspace
-            })
-        );
+        const convertedValue = convertTypeReferenceExample({
+            example: example.request,
+            rawTypeBeingExemplified: typeof requestType !== "string" ? requestType.type : requestType,
+            typeResolver,
+            exampleResolver,
+            fileContainingRawTypeReference: file,
+            fileContainingExample: file,
+            workspace
+        });
+        if (convertedValue == null) {
+            return undefined;
+        }
+        return ExampleRequestBody.reference(convertedValue);
     }
 
     if (!example.request) {
@@ -383,25 +404,29 @@ function convertExampleRequestBody({
             continue;
         }
         if (inlinedRequestPropertyDeclaration != null) {
-            exampleProperties.push({
-                name: file.casingsGenerator.generateNameAndWireValue({
-                    name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration }).name,
-                    wireValue: wireKey
-                }),
-                value: convertTypeReferenceExample({
-                    example: propertyExample,
-                    rawTypeBeingExemplified:
-                        typeof inlinedRequestPropertyDeclaration !== "string"
-                            ? inlinedRequestPropertyDeclaration.type
-                            : inlinedRequestPropertyDeclaration,
-                    typeResolver,
-                    exampleResolver,
-                    fileContainingRawTypeReference: file,
-                    fileContainingExample: file,
-                    workspace
-                }),
-                originalTypeDeclaration: undefined
+            const convertedValue = convertTypeReferenceExample({
+                example: propertyExample,
+                rawTypeBeingExemplified:
+                    typeof inlinedRequestPropertyDeclaration !== "string"
+                        ? inlinedRequestPropertyDeclaration.type
+                        : inlinedRequestPropertyDeclaration,
+                typeResolver,
+                exampleResolver,
+                fileContainingRawTypeReference: file,
+                fileContainingExample: file,
+                workspace
             });
+            if (convertedValue != null) {
+                exampleProperties.push({
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        name: getPropertyName({ propertyKey: wireKey, property: inlinedRequestPropertyDeclaration })
+                            .name,
+                        wireValue: wireKey
+                    }),
+                    value: convertedValue,
+                    originalTypeDeclaration: undefined
+                });
+            }
         } else {
             const originalTypeDeclaration = getOriginalTypeDeclarationForPropertyFromExtensions({
                 extends_: requestType.extends,
@@ -427,26 +452,31 @@ function convertExampleRequestBody({
                 }
                 throw new Error("Could not find original type declaration for property: " + wireKey);
             }
-            exampleProperties.push({
-                name: file.casingsGenerator.generateNameAndWireValue({
-                    name: getPropertyName({ propertyKey: wireKey, property: originalTypeDeclaration.rawPropertyType })
-                        .name,
-                    wireValue: wireKey
-                }),
-                value: convertTypeReferenceExample({
-                    example: propertyExample,
-                    rawTypeBeingExemplified:
-                        typeof originalTypeDeclaration.rawPropertyType === "string"
-                            ? originalTypeDeclaration.rawPropertyType
-                            : originalTypeDeclaration.rawPropertyType.type,
-                    typeResolver,
-                    exampleResolver,
-                    fileContainingRawTypeReference: originalTypeDeclaration.file,
-                    fileContainingExample: file,
-                    workspace
-                }),
-                originalTypeDeclaration: originalTypeDeclaration.typeName
+            const convertedValue = convertTypeReferenceExample({
+                example: propertyExample,
+                rawTypeBeingExemplified:
+                    typeof originalTypeDeclaration.rawPropertyType === "string"
+                        ? originalTypeDeclaration.rawPropertyType
+                        : originalTypeDeclaration.rawPropertyType.type,
+                typeResolver,
+                exampleResolver,
+                fileContainingRawTypeReference: originalTypeDeclaration.file,
+                fileContainingExample: file,
+                workspace
             });
+            if (convertedValue != null) {
+                exampleProperties.push({
+                    name: file.casingsGenerator.generateNameAndWireValue({
+                        name: getPropertyName({
+                            propertyKey: wireKey,
+                            property: originalTypeDeclaration.rawPropertyType
+                        }).name,
+                        wireValue: wireKey
+                    }),
+                    value: convertedValue,
+                    originalTypeDeclaration: originalTypeDeclaration.typeName
+                });
+            }
         }
     }
 
@@ -557,6 +587,10 @@ function convertExampleResponse({
                                 fileContainingExample: file,
                                 workspace
                             });
+
+                            if (convertedExample == null) {
+                                return undefined;
+                            }
 
                             return { event, data: convertedExample };
                         })

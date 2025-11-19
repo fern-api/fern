@@ -26,23 +26,26 @@ export function convertErrorDeclaration({
     const examples: FernIr.ExampleError[] = [];
     if (errorDeclaration.type != null && errorDeclaration.examples != null) {
         for (const example of errorDeclaration.examples) {
-            examples.push({
-                name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
-                docs: example.docs,
-                jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
-                    example: example.value,
-                    file
-                }).resolvedExample,
-                shape: convertTypeReferenceExample({
-                    example: example.value,
-                    rawTypeBeingExemplified: errorDeclaration.type,
-                    fileContainingRawTypeReference: file,
-                    fileContainingExample: file,
-                    typeResolver,
-                    exampleResolver,
-                    workspace
-                })
+            const convertedShape = convertTypeReferenceExample({
+                example: example.value,
+                rawTypeBeingExemplified: errorDeclaration.type,
+                fileContainingRawTypeReference: file,
+                fileContainingExample: file,
+                typeResolver,
+                exampleResolver,
+                workspace
             });
+            if (convertedShape != null) {
+                examples.push({
+                    name: example.name != null ? file.casingsGenerator.generateName(example.name) : undefined,
+                    docs: example.docs,
+                    jsonExample: exampleResolver.resolveAllReferencesInExampleOrThrow({
+                        example: example.value,
+                        file
+                    }).resolvedExample,
+                    shape: convertedShape
+                });
+            }
         }
     }
 

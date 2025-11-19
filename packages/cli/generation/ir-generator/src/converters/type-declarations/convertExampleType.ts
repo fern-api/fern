@@ -1,5 +1,5 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { assertNever, Examples, isPlainObject } from "@fern-api/core-utils";
+import { assertNever, Examples, isNonNullish, isPlainObject } from "@fern-api/core-utils";
 import {
     EXAMPLE_REFERENCE_PREFIX,
     isRawAliasDefinition,
@@ -66,17 +66,21 @@ export function convertTypeExample({
 }): ExampleTypeShape {
     return visitRawTypeDeclaration<ExampleTypeShape>(typeDeclaration, {
         alias: (rawAlias) => {
+            const convertedValue = convertTypeReferenceExample({
+                example,
+                rawTypeBeingExemplified: typeof rawAlias === "string" ? rawAlias : rawAlias.type,
+                fileContainingRawTypeReference: fileContainingType,
+                fileContainingExample,
+                typeResolver,
+                exampleResolver,
+                workspace,
+                recursionContext
+            });
+            if (convertedValue == null) {
+                throw new Error("Failed to convert alias example");
+            }
             return ExampleTypeShape.alias({
-                value: convertTypeReferenceExample({
-                    example,
-                    rawTypeBeingExemplified: typeof rawAlias === "string" ? rawAlias : rawAlias.type,
-                    fileContainingRawTypeReference: fileContainingType,
-                    fileContainingExample,
-                    typeResolver,
-                    exampleResolver,
-                    workspace,
-                    recursionContext
-                })
+                value: convertedValue
             });
         },
         object: (rawObject) => {
@@ -123,21 +127,25 @@ export function convertTypeExample({
                     if (propertyExample == null) {
                         return undefined;
                     }
+                    const convertedValue = convertTypeReferenceExample({
+                        example: propertyExample,
+                        rawTypeBeingExemplified: typeof property === "string" ? property : property.type,
+                        fileContainingRawTypeReference: fileContainingType,
+                        fileContainingExample,
+                        typeResolver,
+                        exampleResolver,
+                        workspace,
+                        recursionContext
+                    });
+                    if (convertedValue == null) {
+                        return undefined;
+                    }
                     return {
                         name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
                             name: propertyName,
                             wireValue: propertyName
                         }),
-                        value: convertTypeReferenceExample({
-                            example: propertyExample,
-                            rawTypeBeingExemplified: typeof property === "string" ? property : property.type,
-                            fileContainingRawTypeReference: fileContainingType,
-                            fileContainingExample,
-                            typeResolver,
-                            exampleResolver,
-                            workspace,
-                            recursionContext
-                        })
+                        value: convertedValue
                     };
                 })
                 .filter((property): property is ExampleUnionBaseProperty => property != null);
@@ -166,21 +174,25 @@ export function convertTypeExample({
                         if (propertyExample == null) {
                             return undefined;
                         }
+                        const convertedValue = convertTypeReferenceExample({
+                            example: propertyExample,
+                            rawTypeBeingExemplified: typeof property === "string" ? property : property.type,
+                            fileContainingRawTypeReference: fileContainingType,
+                            fileContainingExample,
+                            typeResolver,
+                            exampleResolver,
+                            workspace,
+                            recursionContext
+                        });
+                        if (convertedValue == null) {
+                            return undefined;
+                        }
                         return {
                             name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
                                 name: typeof property === "string" ? propertyName : (property.name ?? propertyName),
                                 wireValue: propertyName
                             }),
-                            value: convertTypeReferenceExample({
-                                example: propertyExample,
-                                rawTypeBeingExemplified: typeof property === "string" ? property : property.type,
-                                fileContainingRawTypeReference: fileContainingType,
-                                fileContainingExample,
-                                typeResolver,
-                                exampleResolver,
-                                workspace,
-                                recursionContext
-                            }),
+                            value: convertedValue,
                             propertyAccess: getPropertyAccess({ property }),
                             originalTypeDeclaration: typeName
                         };
@@ -238,18 +250,22 @@ export function convertTypeExample({
                     depth: 0
                 });
                 if (violationsForMember.length === 0) {
+                    const convertedValue = convertTypeReferenceExample({
+                        example,
+                        rawTypeBeingExemplified: typeof variant === "string" ? variant : variant.type,
+                        fileContainingRawTypeReference: fileContainingType,
+                        fileContainingExample,
+                        typeResolver,
+                        exampleResolver,
+                        workspace,
+                        recursionContext
+                    });
+                    if (convertedValue == null) {
+                        continue;
+                    }
                     return ExampleTypeShape.undiscriminatedUnion({
                         index,
-                        singleUnionType: convertTypeReferenceExample({
-                            example,
-                            rawTypeBeingExemplified: typeof variant === "string" ? variant : variant.type,
-                            fileContainingRawTypeReference: fileContainingType,
-                            fileContainingExample,
-                            typeResolver,
-                            exampleResolver,
-                            workspace,
-                            recursionContext
-                        })
+                        singleUnionType: convertedValue
                     });
                 }
             }
@@ -280,7 +296,7 @@ export function convertTypeReferenceExample({
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
     recursionContext?: RecursionContext;
-}): ExampleTypeReference {
+}): ExampleTypeReference | undefined {
     const ctx = recursionContext ?? { depth: 0, seenTypeIds: new Set() };
 
     const { resolvedExample, file: fileContainingResolvedExample } = exampleResolver.resolveExampleOrThrow({
@@ -292,7 +308,7 @@ export function convertTypeReferenceExample({
         file: fileContainingExample
     }).resolvedExample;
 
-    const shape = visitRawTypeReference<ExampleTypeReferenceShape>({
+    const shape = visitRawTypeReference<ExampleTypeReferenceShape | undefined>({
         type: rawTypeBeingExemplified,
         _default: undefined,
         validation: undefined,
@@ -310,28 +326,37 @@ export function convertTypeReferenceExample({
                 const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.map({
-                        map: Object.entries(resolvedExample).map(([key, value]) => ({
-                            key: convertTypeReferenceExample({
-                                example: key,
-                                fileContainingExample: fileContainingResolvedExample,
-                                rawTypeBeingExemplified: keyType,
-                                fileContainingRawTypeReference,
-                                typeResolver,
-                                exampleResolver,
-                                workspace,
-                                recursionContext: nextContext
-                            }),
-                            value: convertTypeReferenceExample({
-                                example: value,
-                                fileContainingExample: fileContainingResolvedExample,
-                                rawTypeBeingExemplified: valueType,
-                                fileContainingRawTypeReference,
-                                typeResolver,
-                                exampleResolver,
-                                workspace,
-                                recursionContext: nextContext
+                        map: Object.entries(resolvedExample)
+                            .map(([key, value]) => {
+                                const convertedKey = convertTypeReferenceExample({
+                                    example: key,
+                                    fileContainingExample: fileContainingResolvedExample,
+                                    rawTypeBeingExemplified: keyType,
+                                    fileContainingRawTypeReference,
+                                    typeResolver,
+                                    exampleResolver,
+                                    workspace,
+                                    recursionContext: nextContext
+                                });
+                                const convertedValue = convertTypeReferenceExample({
+                                    example: value,
+                                    fileContainingExample: fileContainingResolvedExample,
+                                    rawTypeBeingExemplified: valueType,
+                                    fileContainingRawTypeReference,
+                                    typeResolver,
+                                    exampleResolver,
+                                    workspace,
+                                    recursionContext: nextContext
+                                });
+                                if (convertedKey == null || convertedValue == null) {
+                                    return undefined;
+                                }
+                                return {
+                                    key: convertedKey,
+                                    value: convertedValue
+                                };
                             })
-                        })),
+                            .filter(isNonNullish),
                         keyType: fileContainingRawTypeReference.parseTypeReference(keyType),
                         valueType: fileContainingRawTypeReference.parseTypeReference(valueType)
                     })
@@ -344,18 +369,20 @@ export function convertTypeReferenceExample({
                 const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.list({
-                        list: resolvedExample.map((exampleItem) =>
-                            convertTypeReferenceExample({
-                                example: exampleItem,
-                                fileContainingExample: fileContainingResolvedExample,
-                                rawTypeBeingExemplified: itemType,
-                                fileContainingRawTypeReference,
-                                typeResolver,
-                                exampleResolver,
-                                workspace,
-                                recursionContext: nextContext
-                            })
-                        ),
+                        list: resolvedExample
+                            .map((exampleItem) =>
+                                convertTypeReferenceExample({
+                                    example: exampleItem,
+                                    fileContainingExample: fileContainingResolvedExample,
+                                    rawTypeBeingExemplified: itemType,
+                                    fileContainingRawTypeReference,
+                                    typeResolver,
+                                    exampleResolver,
+                                    workspace,
+                                    recursionContext: nextContext
+                                })
+                            )
+                            .filter(isNonNullish),
                         itemType: fileContainingRawTypeReference.parseTypeReference(itemType)
                     })
                 );
@@ -367,18 +394,20 @@ export function convertTypeReferenceExample({
                 const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.set({
-                        set: resolvedExample.map((exampleItem) =>
-                            convertTypeReferenceExample({
-                                example: exampleItem,
-                                fileContainingExample: fileContainingResolvedExample,
-                                rawTypeBeingExemplified: itemType,
-                                fileContainingRawTypeReference,
-                                typeResolver,
-                                exampleResolver,
-                                workspace,
-                                recursionContext: nextContext
-                            })
-                        ),
+                        set: resolvedExample
+                            .map((exampleItem) =>
+                                convertTypeReferenceExample({
+                                    example: exampleItem,
+                                    fileContainingExample: fileContainingResolvedExample,
+                                    rawTypeBeingExemplified: itemType,
+                                    fileContainingRawTypeReference,
+                                    typeResolver,
+                                    exampleResolver,
+                                    workspace,
+                                    recursionContext: nextContext
+                                })
+                            )
+                            .filter(isNonNullish),
                         itemType: fileContainingRawTypeReference.parseTypeReference(itemType)
                     })
                 );
@@ -433,7 +462,7 @@ export function convertTypeReferenceExample({
                         );
                     case "string":
                         if (literal.string == null) {
-                            throw new Error("Literal string value is null or undefined");
+                            return undefined;
                         }
                         return ExampleTypeReferenceShape.container(
                             ExampleContainer.literal({
@@ -492,6 +521,10 @@ export function convertTypeReferenceExample({
         }
     });
 
+    if (shape == null) {
+        return undefined;
+    }
+
     return {
         shape,
         jsonExample
@@ -512,12 +545,12 @@ function convertPrimitiveExample({
 }: {
     example: RawSchemas.ExampleTypeReferenceSchema;
     typeBeingExemplified: PrimitiveTypeV1;
-}): ExampleTypeReferenceShape {
+}): ExampleTypeReferenceShape | undefined {
     return PrimitiveTypeV1._visit(typeBeingExemplified, {
         string: () => {
             if (typeof example !== "string") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for string type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
@@ -537,7 +570,7 @@ function convertPrimitiveExample({
         dateTime: () => {
             if (typeof example !== "string") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for dateTime type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
@@ -555,7 +588,7 @@ function convertPrimitiveExample({
         date: () => {
             if (typeof example !== "string") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for date type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
@@ -568,7 +601,7 @@ function convertPrimitiveExample({
         base64: () => {
             if (typeof example !== "string") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for base64 type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
@@ -585,7 +618,7 @@ function convertPrimitiveExample({
         uint: () => {
             if (typeof example !== "number") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for uint type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint(Examples.UINT));
             }
@@ -594,7 +627,7 @@ function convertPrimitiveExample({
         uint64: () => {
             if (typeof example !== "number") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for uint64 type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.uint64(Examples.UINT64));
             }
@@ -603,7 +636,7 @@ function convertPrimitiveExample({
         integer: () => {
             if (typeof example !== "number") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for integer type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.integer(Examples.INT));
             }
@@ -612,7 +645,7 @@ function convertPrimitiveExample({
         float: () => {
             if (typeof example !== "number") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for float type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.float(Examples.FLOAT));
             }
@@ -621,7 +654,7 @@ function convertPrimitiveExample({
         double: () => {
             if (typeof example !== "number") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for double type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.double(Examples.DOUBLE));
             }
@@ -630,7 +663,7 @@ function convertPrimitiveExample({
         long: () => {
             if (typeof example !== "number") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for long type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.long(Examples.UINT));
             }
@@ -639,7 +672,7 @@ function convertPrimitiveExample({
         boolean: () => {
             if (typeof example !== "boolean") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for boolean type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(ExamplePrimitive.boolean(Examples.BOOLEAN));
             }
@@ -648,7 +681,7 @@ function convertPrimitiveExample({
         uuid: () => {
             if (typeof example !== "string") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for uuid type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
@@ -661,7 +694,7 @@ function convertPrimitiveExample({
         bigInteger: () => {
             if (typeof example !== "string") {
                 if (example == null) {
-                    throw new Error("Example value is null or undefined for bigInteger type");
+                    return undefined;
                 }
                 return ExampleTypeReferenceShape.primitive(
                     ExamplePrimitive.string({
@@ -735,33 +768,38 @@ function convertObject({
     return ExampleTypeShape.object({
         properties:
             rawObject.properties != null || rawObject.extends != null
-                ? propertiesWithTypeDeclaration.map(([wireKey, propertyExample, originalTypeDeclaration]) => {
-                      const valueExample = convertTypeReferenceExample({
-                          example: propertyExample,
-                          fileContainingExample,
-                          rawTypeBeingExemplified:
-                              typeof originalTypeDeclaration.rawPropertyType === "string"
-                                  ? originalTypeDeclaration.rawPropertyType
-                                  : originalTypeDeclaration.rawPropertyType.type,
-                          fileContainingRawTypeReference: originalTypeDeclaration.file,
-                          typeResolver,
-                          exampleResolver,
-                          workspace,
-                          recursionContext
-                      });
-                      return {
-                          name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
-                              name: getPropertyName({
-                                  propertyKey: wireKey,
-                                  property: originalTypeDeclaration.rawPropertyType
-                              }).name,
-                              wireValue: wireKey
-                          }),
-                          value: valueExample,
-                          originalTypeDeclaration: originalTypeDeclaration.typeName,
-                          propertyAccess: getPropertyAccess({ property: originalTypeDeclaration.rawPropertyType })
-                      };
-                  })
+                ? propertiesWithTypeDeclaration
+                      .map(([wireKey, propertyExample, originalTypeDeclaration]) => {
+                          const valueExample = convertTypeReferenceExample({
+                              example: propertyExample,
+                              fileContainingExample,
+                              rawTypeBeingExemplified:
+                                  typeof originalTypeDeclaration.rawPropertyType === "string"
+                                      ? originalTypeDeclaration.rawPropertyType
+                                      : originalTypeDeclaration.rawPropertyType.type,
+                              fileContainingRawTypeReference: originalTypeDeclaration.file,
+                              typeResolver,
+                              exampleResolver,
+                              workspace,
+                              recursionContext
+                          });
+                          if (valueExample == null) {
+                              return undefined;
+                          }
+                          return {
+                              name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
+                                  name: getPropertyName({
+                                      propertyKey: wireKey,
+                                      property: originalTypeDeclaration.rawPropertyType
+                                  }).name,
+                                  wireValue: wireKey
+                              }),
+                              value: valueExample,
+                              originalTypeDeclaration: originalTypeDeclaration.typeName,
+                              propertyAccess: getPropertyAccess({ property: originalTypeDeclaration.rawPropertyType })
+                          };
+                      })
+                      .filter(isNonNullish)
                 : [],
         extraProperties:
             rawObject["extra-properties"] !== true || propertiesWithoutTypeDeclaration.length === 0
@@ -895,20 +933,22 @@ function convertSingleUnionType({
             if (!isPlainObject(example)) {
                 throw new Error("Example is not an object");
             }
+            const convertedValue = convertTypeReferenceExample({
+                example: example[parsedSingleUnionTypeProperties.name.wireValue],
+                rawTypeBeingExemplified: rawValueType,
+                typeResolver,
+                exampleResolver,
+                fileContainingRawTypeReference: fileContainingType,
+                fileContainingExample,
+                workspace,
+                recursionContext
+            });
+            if (convertedValue == null) {
+                throw new Error("Failed to convert single union type property example");
+            }
             return {
                 wireDiscriminantValue,
-                shape: ExampleSingleUnionTypeProperties.singleProperty(
-                    convertTypeReferenceExample({
-                        example: example[parsedSingleUnionTypeProperties.name.wireValue],
-                        rawTypeBeingExemplified: rawValueType,
-                        typeResolver,
-                        exampleResolver,
-                        fileContainingRawTypeReference: fileContainingType,
-                        fileContainingExample,
-                        workspace,
-                        recursionContext
-                    })
-                )
+                shape: ExampleSingleUnionTypeProperties.singleProperty(convertedValue)
             };
         }
         case "samePropertiesAsObject": {
