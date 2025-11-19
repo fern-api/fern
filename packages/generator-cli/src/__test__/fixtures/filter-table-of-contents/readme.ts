@@ -10,6 +10,7 @@ const CONFIG: FernGeneratorCli.ReadmeConfig = {
     features: [
         {
             id: FernGeneratorCli.StructuredFeatureId.Usage,
+            snippetsAreOptional: true,
             snippets: [
                 `import { BasicClient } from "basic";
 
