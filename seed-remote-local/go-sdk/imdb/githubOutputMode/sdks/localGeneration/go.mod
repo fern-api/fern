@@ -1,4 +1,4 @@
-module github.com/fern-api/test-remote-local-sdk
+module github.com/fern-api/empty/v7
 
 go 1.21
 

@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix whitelabel behavior for local generation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.10.3
+
+- changelogEntry:
+    - summary: |
         Support JSX titles in `<Code />` components.
       type: fix
   irVersion: 61
