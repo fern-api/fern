@@ -1425,15 +1425,9 @@ importers:
       '@fern-api/mock-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/mock-utils
-      '@fern-api/python-ast':
-        specifier: workspace:*
-        version: link:../ast
       '@fern-api/python-base':
         specifier: workspace:*
         version: link:../base
-      '@fern-api/python-dynamic-snippets':
-        specifier: workspace:*
-        version: link:../dynamic-snippets
       '@fern-fern/generator-cli-sdk':
         specifier: ^0.1.5
         version: 0.1.8
