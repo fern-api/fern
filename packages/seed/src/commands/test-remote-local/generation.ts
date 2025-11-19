@@ -1,6 +1,7 @@
-import { LogLevel } from "@fern-api/logger";
+import { Logger, LogLevel } from "@fern-api/logger";
 import { runExeca } from "@fern-api/logging-execa";
 import path from "path";
+import readline from "readline";
 import {
     ENV_VAR_FERN_TOKEN,
     ENV_VAR_GITHUB_TOKEN,
@@ -19,6 +20,60 @@ import {
 } from "./constants";
 import { copyGithubOutputToOutputDirectory } from "./githubIntegration";
 import type { GenerationResult, RemoteVsLocalTestCase } from "./types";
+
+/**
+ * Creates a logger wrapper that parses log level prefixes from output lines
+ * and calls the appropriate logging method on the underlying logger.
+ *
+ * Patterns matched:
+ * - "DEBUG ..." -> logger.debug()
+ * - "INFO ..." -> logger.info()
+ * - "WARN ..." -> logger.warn()
+ * - "ERROR ..." -> logger.error()
+ * - "TRACE ..." -> logger.trace()
+ */
+function createPrefixParsingLogger(logger: Logger): Logger {
+    const LOG_LEVEL_PATTERN = /^(DEBUG|INFO|WARN|ERROR|TRACE)\s+(.*)$/;
+
+    function parseAndLog(message: string): void {
+        const match = message.match(LOG_LEVEL_PATTERN);
+        if (match && match[1] && match[2]) {
+            const level = match[1];
+            const content = match[2];
+            switch (level) {
+                case "DEBUG":
+                    logger.debug(content);
+                    break;
+                case "INFO":
+                    logger.info(content);
+                    break;
+                case "WARN":
+                    logger.warn(content);
+                    break;
+                case "ERROR":
+                    logger.error(content);
+                    break;
+                case "TRACE":
+                    logger.trace(content);
+                    break;
+            }
+        } else {
+            // No prefix found, log as-is using debug level
+            logger.debug(message);
+        }
+    }
+
+    return {
+        disable: () => logger.disable(),
+        enable: () => logger.enable(),
+        trace: (...args: string[]) => args.forEach(parseAndLog),
+        debug: (...args: string[]) => args.forEach(parseAndLog),
+        info: (...args: string[]) => args.forEach(parseAndLog),
+        warn: (...args: string[]) => args.forEach(parseAndLog),
+        error: (...args: string[]) => args.forEach(parseAndLog),
+        log: (_level: LogLevel, ...args: string[]) => args.forEach(parseAndLog)
+    };
+}
 
 export async function runGeneration(
     testCase: RemoteVsLocalTestCase,
@@ -40,16 +95,38 @@ export async function runGeneration(
     const startTime = Date.now();
 
     try {
-        // Use execa directly instead of loggingExeca to avoid forwarding all subprocess logs
-        const result = await runExeca(undefined, fernExecutable, args, {
+        // Wrap logger to parse log level prefixes from CLI output
+        const prefixParsingLogger = createPrefixParsingLogger(logger);
+
+        // Run the command with execa but don't pipe output directly
+        const command = runExeca(logger, fernExecutable, args, {
             cwd: workingDirectory,
             env: {
                 [ENV_VAR_GITHUB_TOKEN]: githubToken,
-                [ENV_VAR_FERN_TOKEN]: fernToken
+                [ENV_VAR_FERN_TOKEN]: fernToken,
+                ["FERN_NO_VERSION_REDIRECTION"]: "true"
             },
             reject: false,
-            all: true // Combine stdout and stderr for easier parsing
+            all: true
         });
+
+        // Process stdout line-by-line using the prefix-parsing logger
+        if (command.stdout) {
+            const stdoutReader = readline.createInterface({ input: command.stdout });
+            stdoutReader.on("line", (line) => {
+                prefixParsingLogger.debug(line);
+            });
+        }
+
+        // Process stderr line-by-line using the prefix-parsing logger
+        if (command.stderr) {
+            const stderrReader = readline.createInterface({ input: command.stderr });
+            stderrReader.on("line", (line) => {
+                prefixParsingLogger.error(line);
+            });
+        }
+
+        const result = await command;
 
         const duration = Date.now() - startTime;
 
@@ -57,6 +134,7 @@ export async function runGeneration(
             logger.error(
                 `${MSG_GENERATION_FAILED_PREFIX} ${generationMode} generation failed after ${duration}ms (exit code: ${result.exitCode})`
             );
+            logger.debug(`Result: ${JSON.stringify(result, null, 2)}`);
 
             // Show error output from the subprocess
             if (result.stderr) {

@@ -6,7 +6,7 @@ groups:
         config:
           module:
             path: github.com/fern-api/test-remote-local-sdk
-        version: 1.15.1
+        version: 1.16.0
         github:
           repository: fern-api/empty
           mode: pull-request
@@ -16,7 +16,7 @@ groups:
         config:
           module:
             path: github.com/fern-api/test-remote-local-sdk
-        version: 1.15.1
+        version: 1.16.0
         github:
           uri: fern-api/empty
           token: ${GITHUB_TOKEN}

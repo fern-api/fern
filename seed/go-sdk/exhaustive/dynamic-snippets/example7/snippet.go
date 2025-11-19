@@ -40,7 +40,7 @@ func do() {
             ),
         ),
         Date: fern.Time(
-            fern.MustParseDateTime(
+            fern.MustParseDate(
                 "2023-01-15",
             ),
         ),

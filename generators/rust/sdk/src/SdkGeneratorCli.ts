@@ -18,6 +18,7 @@ import { ReferenceConfigAssembler } from "./reference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils";
+import { WireTestGenerator } from "./wire-tests";
 
 const execAsync = promisify(exec);
 
@@ -198,6 +199,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug("Generating reference.md documentation...");
         // Generate reference.md if configured
         await this.generateReference(context);
+
+        // Generate wire tests if enabled
+        await this.generateWireTestFiles(context);
 
         context.logger.debug(`Persisting files to ${context.project.absolutePathToOutputDirectory}...`);
         await context.project.persist();
@@ -687,6 +691,29 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const errorMsg = extractErrorMessage(error);
             context.logger.debug(`Reference generation failed: ${errorMsg}`);
             throw new Error(`Failed to generate reference.md: ${errorMsg}`);
+        }
+    }
+
+    // ===========================
+    // WIRE TEST GENERATION
+    // ===========================
+
+    private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {
+        if (!context.customConfig.enableWireTests) {
+            return;
+        }
+
+        try {
+            context.logger.debug("Generating WireMock integration tests...");
+            const wireTestGenerator = new WireTestGenerator(context, context.ir);
+            await wireTestGenerator.generate();
+            context.logger.debug("WireMock test generation complete");
+        } catch (error) {
+            context.logger.error("Failed to generate WireMock tests");
+            if (error instanceof Error) {
+                context.logger.debug(error.message);
+                context.logger.debug(error.stack ?? "");
+            }
         }
     }
 

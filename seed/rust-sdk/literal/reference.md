@@ -25,11 +25,13 @@ async fn main() {
         .headers
         .send(
             &SendLiteralsInHeadersRequest {
-                endpoint_version: "02-12-2024".to_string(),
-                r#async: true,
                 query: "What is the weather today".to_string(),
             },
-            None,
+            Some(
+                RequestOptions::new()
+                    .additional_header("X-Endpoint-Version", "02-12-2024".to_string())
+                    .additional_header("X-Async", true),
+            ),
         )
         .await;
 }
@@ -393,9 +395,11 @@ async fn main() {
         .send(
             &SendRequest {
                 prompt: "You are a helpful assistant".to_string(),
-                stream: false,
-                context: SomeLiteral("You're super wise".to_string()),
                 query: "What is the weather today".to_string(),
+                stream: false,
+                ending: Default::default(),
+                context: SomeLiteral("You're super wise".to_string()),
+                maybe_context: None,
                 container_object: ContainerObject {
                     nested_objects: vec![NestedObjectWithLiterals {
                         literal_1: "literal1".to_string(),

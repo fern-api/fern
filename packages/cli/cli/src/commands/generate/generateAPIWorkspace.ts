@@ -74,6 +74,8 @@ export async function generateWorkspace({
         return context.failAndThrow(`Group '${groupNameOrDefault}' does not exist.`);
     }
 
+    const { ai } = workspace.generatorsConfiguration;
+
     // Apply lfs-override if specified
     if (lfsOverride != null) {
         group = applyLfsOverride(group, lfsOverride, context);
@@ -96,7 +98,8 @@ export async function generateWorkspace({
             context,
             runner,
             absolutePathToPreview,
-            inspect
+            inspect,
+            ai
         });
     } else {
         if (!token) {

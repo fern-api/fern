@@ -29,8 +29,8 @@ export function configureBamlClient(config: generatorsYml.AiServicesSchema): Cli
 
     // BAML logs are too verbose by default (includes prompt and request/response bodies)
     // We only do this once to avoid polluting the logs with messages about the log level change
-    if (getLogLevel() !== "WARN") {
-        setLogLevel("WARN");
+    if (getLogLevel() !== "ERROR") {
+        setLogLevel("ERROR");
     }
 
     return registry;
