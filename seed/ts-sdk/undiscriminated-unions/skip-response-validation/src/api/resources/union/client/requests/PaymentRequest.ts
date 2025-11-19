@@ -6,8 +6,8 @@ import type * as SeedUndiscriminatedUnions from "../../../../index.js";
  * @example
  *     {
  *         paymentMethod: {
- *             method: "method",
- *             cardNumber: "cardNumber"
+ *             method: "card",
+ *             cardNumber: "1234567890123456"
  *         }
  *     }
  */
