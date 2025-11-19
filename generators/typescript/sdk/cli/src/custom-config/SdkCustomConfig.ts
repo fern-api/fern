@@ -59,4 +59,6 @@ export interface SdkCustomConfig {
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     generateSubpackageExports: boolean | undefined;
     offsetSemantics: "item-index" | "page-index";
+    clientClassName: string | undefined;
+    exportedClientClassName: string | undefined;
 }

@@ -16,15 +16,26 @@ const CLIENT_DIRECTORY = "client";
 export declare namespace AbstractSdkClientClassDeclarationReferencer {
     export interface Init extends AbstractDeclarationReferencer.Init {
         packageResolver: PackageResolver;
+        clientClassName?: string;
+        exportedClientClassName?: string;
     }
 }
 
 export abstract class AbstractSdkClientClassDeclarationReferencer<Name> extends AbstractDeclarationReferencer<Name> {
     protected packageResolver: PackageResolver;
+    protected clientClassName?: string;
+    protected exportedClientClassName?: string;
 
-    constructor({ packageResolver, ...superInit }: AbstractSdkClientClassDeclarationReferencer.Init) {
+    constructor({
+        packageResolver,
+        clientClassName,
+        exportedClientClassName,
+        ...superInit
+    }: AbstractSdkClientClassDeclarationReferencer.Init) {
         super(superInit);
         this.packageResolver = packageResolver;
+        this.clientClassName = clientClassName;
+        this.exportedClientClassName = exportedClientClassName;
     }
 
     protected getExportedDirectory(
