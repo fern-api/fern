@@ -43,17 +43,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Enum = void 0;
+exports.EnumClient = void 0;
+const BaseClient_js_1 = require("../../../../../../BaseClient.js");
 const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
 const errors = __importStar(require("../../../../../../errors/index.js"));
-class Enum {
-    constructor(_options) {
-        this._options = _options;
+class EnumClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
      * @param {SeedExhaustive.types.WeatherReport} request
-     * @param {Enum.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {EnumClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.enum.getAndReturnEnum("SUNNY")
@@ -116,4 +117,4 @@ class Enum {
         });
     }
 }
-exports.Enum = Enum;
+exports.EnumClient = EnumClient;

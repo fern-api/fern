@@ -3,7 +3,7 @@
 import { SeedTraceClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Playlist", () => {
+describe("PlaylistClient", () => {
     test("createPlaylist", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });

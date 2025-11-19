@@ -178,6 +178,7 @@ esnext
 esutils
 etag
 Etag
+ETARGET
 ethbtc
 ethdai
 etheur
@@ -421,6 +422,7 @@ noreferrer
 noreqbody
 Nort
 Nort's
+notarget
 npmjs
 ntropy
 nuint

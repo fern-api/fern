@@ -224,3 +224,43 @@ client.union.nested_unions();
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.union.test_camel_case_properties(request) -> String</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.union.test_camel_case_properties(paymentMethod: );
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**payment_method:** `Seed::Union::Types::PaymentMethodUnion` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

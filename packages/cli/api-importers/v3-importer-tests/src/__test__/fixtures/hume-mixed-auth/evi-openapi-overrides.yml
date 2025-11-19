@@ -1,9 +1,0 @@
-security:
-  - bearerAuth: []
-
-components:
-  securitySchemes:
-    bearerAuth:
-      type: apiKey
-      name: X-Hume-Api-Key
-      in: header

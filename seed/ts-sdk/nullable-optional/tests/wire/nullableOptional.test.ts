@@ -3,7 +3,7 @@
 import { SeedNullableOptionalClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("NullableOptional", () => {
+describe("NullableOptionalClient", () => {
     test("getUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNullableOptionalClient({ environment: server.baseUrl });

@@ -50,8 +50,8 @@ class ServiceClient
     /**
      * @param string $pathParam
      * @param string $serviceParam
-     * @param string $resourceParam
      * @param int $endpointParam
+     * @param string $resourceParam
      * @param ?array{
      *   baseUrl?: string,
      *   maxRetries?: int,
@@ -63,7 +63,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function post(string $pathParam, string $serviceParam, string $resourceParam, int $endpointParam, ?array $options = null): void
+    public function post(string $pathParam, string $serviceParam, int $endpointParam, string $resourceParam, ?array $options = null): void
     {
         $options = array_merge($this->options, $options ?? []);
         try {

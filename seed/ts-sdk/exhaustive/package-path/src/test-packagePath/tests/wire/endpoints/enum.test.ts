@@ -3,7 +3,7 @@
 import { SeedExhaustiveClient } from "../../../Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Enum", () => {
+describe("EnumClient", () => {
     test("getAndReturnEnum", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });

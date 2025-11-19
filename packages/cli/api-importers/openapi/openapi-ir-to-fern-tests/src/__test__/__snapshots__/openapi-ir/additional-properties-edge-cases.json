@@ -1,0 +1,940 @@
+{
+  "title": "Additional Properties Edge Cases",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createFlexible",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateFlexibleRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateFlexibleRequest",
+          "schema": "FlexibleObject",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateFlexibleResponse",
+          "schema": "FlexibleObject",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/flexible",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createStrict",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateStrictRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateStrictRequest",
+          "schema": "StrictObject",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateStrictResponse",
+          "schema": "StrictObject",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/strict",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createStringMap",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateStringMapRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateStringMapRequest",
+          "schema": "StringMap",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateStringMapResponse",
+          "schema": "StringMap",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/string-map",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createObjectMap",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateObjectMapRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateObjectMapRequest",
+          "schema": "ObjectMap",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateObjectMapResponse",
+          "schema": "ObjectMap",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/object-map",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "value": [
+              {
+                "key": {
+                  "value": "key",
+                  "type": "string"
+                },
+                "value": {
+                  "properties": {},
+                  "type": "object"
+                }
+              }
+            ],
+            "type": "map"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "properties": {
+                      "value": {
+                        "value": {
+                          "value": "value",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "count": {
+                        "value": {
+                          "value": 1,
+                          "type": "int"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createUserMap",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateUserMapRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateUserMapRequest",
+          "schema": "UserMap",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateUserMapResponse",
+          "schema": "UserMap",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/user-map",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "value": [
+              {
+                "key": {
+                  "value": "key",
+                  "type": "string"
+                },
+                "value": {
+                  "properties": {},
+                  "type": "object"
+                }
+              }
+            ],
+            "type": "map"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "properties": {
+                      "id": {
+                        "value": {
+                          "value": "id",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      },
+                      "name": {
+                        "value": {
+                          "value": "name",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "object"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createArrayMap",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateArrayMapRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateArrayMapRequest",
+          "schema": "ArrayMap",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateArrayMapResponse",
+          "schema": "ArrayMap",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/array-map",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "value": [
+              {
+                "key": {
+                  "value": "key",
+                  "type": "string"
+                },
+                "value": {
+                  "value": [
+                    {
+                      "value": {
+                        "value": "value",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  ],
+                  "type": "array"
+                }
+              }
+            ],
+            "type": "map"
+          },
+          "response": {
+            "value": {
+              "value": [
+                {
+                  "key": {
+                    "value": "key",
+                    "type": "string"
+                  },
+                  "value": {
+                    "value": [
+                      {
+                        "value": {
+                          "value": "value",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    ],
+                    "type": "array"
+                  }
+                }
+              ],
+              "type": "map"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "FlexibleObject": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "flexibleObjectId",
+            "key": "id",
+            "schema": {
+              "generatedName": "FlexibleObjectId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "FlexibleObjectId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "flexibleObjectName",
+            "key": "name",
+            "schema": {
+              "generatedName": "FlexibleObjectName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "FlexibleObjectName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "FlexibleObject",
+        "groupName": [],
+        "additionalProperties": true,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "StrictObject": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "strictObjectId",
+            "key": "id",
+            "schema": {
+              "generatedName": "StrictObjectId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "StrictObjectId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "strictObjectName",
+            "key": "name",
+            "schema": {
+              "generatedName": "StrictObjectName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "StrictObjectName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "StrictObject",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "StringMap": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "stringMapId",
+            "key": "id",
+            "schema": {
+              "generatedName": "StringMapId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "StringMapId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "StringMap",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ObjectMap": {
+        "key": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "ObjectMapKey",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "value": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "objectMapValueValue",
+              "key": "value",
+              "schema": {
+                "generatedName": "ObjectMapValueValue",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "ObjectMapValueValue",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "objectMapValueCount",
+              "key": "count",
+              "schema": {
+                "generatedName": "ObjectMapValueCount",
+                "value": {
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "ObjectMapValueCount",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "ObjectMapValue",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "inline": true,
+          "type": "object"
+        },
+        "generatedName": "ObjectMap",
+        "groupName": [],
+        "type": "map"
+      },
+      "User": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "userId",
+            "key": "id",
+            "schema": {
+              "generatedName": "UserId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "userName",
+            "key": "name",
+            "schema": {
+              "generatedName": "UserName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "UserName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "User",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "UserMap": {
+        "key": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "UserMapKey",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "value": {
+          "generatedName": "UserMapValue",
+          "schema": "User",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "generatedName": "UserMap",
+        "groupName": [],
+        "type": "map"
+      },
+      "ArrayMap": {
+        "key": {
+          "schema": {
+            "type": "string"
+          },
+          "generatedName": "ArrayMapKey",
+          "groupName": [],
+          "type": "primitive"
+        },
+        "value": {
+          "value": {
+            "schema": {
+              "type": "string"
+            },
+            "generatedName": "ArrayMapValueItem",
+            "groupName": [],
+            "type": "primitive"
+          },
+          "generatedName": "ArrayMapValue",
+          "groupName": [],
+          "inline": true,
+          "type": "array"
+        },
+        "generatedName": "ArrayMap",
+        "groupName": [],
+        "type": "map"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

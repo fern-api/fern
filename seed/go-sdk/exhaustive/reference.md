@@ -375,7 +375,7 @@ request := &types.ObjectWithOptionalField{
             ),
         ),
         Date: fern.Time(
-            fern.MustParseDateTime(
+            fern.MustParseDate(
                 "2023-01-15",
             ),
         ),
@@ -465,7 +465,7 @@ request := &types.ObjectWithOptionalField{
             ),
         ),
         Date: fern.Time(
-            fern.MustParseDateTime(
+            fern.MustParseDate(
                 "2023-01-15",
             ),
         ),
@@ -748,7 +748,7 @@ request := &types.ObjectWithOptionalField{
             ),
         ),
         Date: fern.Time(
-            fern.MustParseDateTime(
+            fern.MustParseDate(
                 "2023-01-15",
             ),
         ),
@@ -892,7 +892,7 @@ request := &types.ObjectWithOptionalField{
             ),
         ),
         Date: fern.Time(
-            fern.MustParseDateTime(
+            fern.MustParseDate(
                 "2023-01-15",
             ),
         ),
@@ -1084,7 +1084,7 @@ request := &types.NestedObjectWithOptionalField{
                 ),
             ),
             Date: fern.Time(
-                fern.MustParseDateTime(
+                fern.MustParseDate(
                     "2023-01-15",
                 ),
             ),
@@ -1177,7 +1177,7 @@ request := &types.NestedObjectWithRequiredField{
                 ),
             ),
             Date: fern.Time(
-                fern.MustParseDateTime(
+                fern.MustParseDate(
                     "2023-01-15",
                 ),
             ),
@@ -1280,7 +1280,7 @@ request := []*types.NestedObjectWithRequiredField{
                     ),
                 ),
                 Date: fern.Time(
-                    fern.MustParseDateTime(
+                    fern.MustParseDate(
                         "2023-01-15",
                     ),
                 ),
@@ -1329,7 +1329,7 @@ request := []*types.NestedObjectWithRequiredField{
                     ),
                 ),
                 Date: fern.Time(
-                    fern.MustParseDateTime(
+                    fern.MustParseDate(
                         "2023-01-15",
                     ),
                 ),
@@ -2328,9 +2328,12 @@ client.Endpoints.Primitive.GetAndReturnBase64(
 <dd>
 
 ```go
+request := &endpoints.PutRequest{
+        Id: "id",
+    }
 client.Endpoints.Put.Add(
         context.TODO(),
-        "id",
+        request,
     )
 }
 ```
@@ -2576,7 +2579,7 @@ request := &fern.PostWithObjectBody{
                 ),
             ),
             Date: fern.Time(
-                fern.MustParseDateTime(
+                fern.MustParseDate(
                     "2023-01-15",
                 ),
             ),

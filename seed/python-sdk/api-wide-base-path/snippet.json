@@ -9,8 +9,8 @@
                 "identifier_override": "endpoint_service.post"
             },
             "snippet": {
-                "sync_client": "from seed import SeedApiWideBasePath\n\nclient = SeedApiWideBasePath(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.post(\n    service_param=\"serviceParam\",\n    resource_param=\"resourceParam\",\n    endpoint_param=1,\n)\n",
-                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApiWideBasePath\n\nclient = AsyncSeedApiWideBasePath(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.post(\n        service_param=\"serviceParam\",\n        resource_param=\"resourceParam\",\n        endpoint_param=1,\n    )\n\n\nasyncio.run(main())\n",
+                "sync_client": "from seed import SeedApiWideBasePath\n\nclient = SeedApiWideBasePath(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.service.post(\n    service_param=\"serviceParam\",\n    endpoint_param=1,\n    resource_param=\"resourceParam\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedApiWideBasePath\n\nclient = AsyncSeedApiWideBasePath(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.service.post(\n        service_param=\"serviceParam\",\n        endpoint_param=1,\n        resource_param=\"resourceParam\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
         }

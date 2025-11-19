@@ -3,7 +3,7 @@
 import { SeedMultiUrlEnvironmentNoDefaultClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("S3", () => {
+describe("S3Client", () => {
     test("getPresignedUrl", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedMultiUrlEnvironmentNoDefaultClient({

@@ -22,10 +22,39 @@ impl QueryBuilder {
         self
     }
 
+    /// Add multiple string parameters with the same key (for allow-multiple query params)
+    /// Handles Vec<Option<String>> by adding each non-None value as a separate query parameter
+    pub fn string_array(mut self, key: &str, values: Vec<Option<String>>) -> Self {
+        for value in values {
+            if let Some(v) = value {
+                self.params.push((key.to_string(), v));
+            }
+        }
+        self
+    }
+
     /// Add an integer parameter (accept both required/optional)
     pub fn int(mut self, key: &str, value: impl Into<Option<i64>>) -> Self {
         if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+
+    /// Add a big integer parameter (accept both required/optional)
+    pub fn big_int(mut self, key: &str, value: impl Into<Option<num_bigint::BigInt>>) -> Self {
+        if let Some(v) = value.into() {
+            self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+    
+    /// Add multiple integer parameters with the same key (for allow-multiple query params)
+    pub fn int_array(mut self, key: &str, values: Vec<Option<i64>>) -> Self {
+        for value in values {
+            if let Some(v) = value {
+                self.params.push((key.to_string(), v.to_string()));
+            }
         }
         self
     }
@@ -38,10 +67,30 @@ impl QueryBuilder {
         self
     }
 
+    /// Add multiple float parameters with the same key (for allow-multiple query params)
+    pub fn float_array(mut self, key: &str, values: Vec<Option<f64>>) -> Self {
+        for value in values {
+            if let Some(v) = value {
+                self.params.push((key.to_string(), v.to_string()));
+            }
+        }
+        self
+    }
+
     /// Add a boolean parameter
     pub fn bool(mut self, key: &str, value: impl Into<Option<bool>>) -> Self {
         if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+
+    /// Add multiple boolean parameters with the same key (for allow-multiple query params)
+    pub fn bool_array(mut self, key: &str, values: Vec<Option<bool>>) -> Self {
+        for value in values {
+            if let Some(v) = value {
+                self.params.push((key.to_string(), v.to_string()));
+            }
         }
         self
     }

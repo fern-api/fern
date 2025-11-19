@@ -1,6 +1,6 @@
 import Foundation
 
-public enum Animal: Codable, Hashable, Sendable {
+public indirect enum Animal: Codable, Hashable, Sendable {
     case cat(Cat)
     case dog(Dog)
 

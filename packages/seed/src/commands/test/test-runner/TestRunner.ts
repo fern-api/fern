@@ -141,6 +141,7 @@ export abstract class TestRunner {
                 );
             }
             const taskContext = this.taskContextFactory.create(`${this.generator.workspaceName}:${id}`);
+            const disableDynamicSnippetTests = configuration?.disableDynamicSnippetTests ?? false;
             const outputFolder = configuration?.outputFolder ?? "";
             if (!outputDir) {
                 outputDir =
@@ -212,7 +213,8 @@ export abstract class TestRunner {
                     keepDocker: this.keepDocker,
                     publishMetadata,
                     readme,
-                    shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(this.generator),
+                    shouldGenerateDynamicSnippetTests:
+                        !disableDynamicSnippetTests && workspaceShouldGenerateDynamicSnippetTests(this.generator),
                     inspect,
                     license
                 });

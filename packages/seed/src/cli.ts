@@ -7,6 +7,7 @@ import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
+import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
 import { getLatestVersionsYml } from "./commands/latest/getLatestVersionsYml";
@@ -19,6 +20,8 @@ import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { DockerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures";
+import { executeTestRemoteLocalCommand, isFernRepo, isLocalFernCliBuilt } from "./commands/test-remote-local";
+import { assertValidSemVerOrThrow } from "./commands/validate/semVerUtils";
 import { validateCliRelease } from "./commands/validate/validateCliChangelog";
 import { validateGenerator } from "./commands/validate/validateGeneratorChangelog";
 import { validateVersionsYml } from "./commands/validate/validateVersionsYml";
@@ -40,7 +43,9 @@ export async function tryRunCli(): Promise<void> {
         });
 
     addTestCommand(cli);
+    addTestRemoteLocalCommand(cli);
     addRunCommand(cli);
+    addImgCommand(cli);
     addGetAvailableFixturesCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
@@ -226,6 +231,117 @@ function addTestCommand(cli: Argv) {
     );
 }
 
+function addTestRemoteLocalCommand(cli: Argv) {
+    cli.command(
+        "test-remote-local",
+        "Run snapshot tests for the generators comparing local vs remote generation",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    alias: "g",
+                    description: "The generators to run tests for"
+                })
+                .option("parallel", {
+                    type: "number",
+                    default: 4,
+                    alias: "p",
+                    description: "Number of parallel test cases to run"
+                })
+                .option("fixture", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    description: "Runs on all fixtures if not provided"
+                })
+                .option("outputFolder", {
+                    string: true,
+                    demandOption: false,
+                    description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
+                })
+                .option("output-mode", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    alias: "m",
+                    description: "The output modes to test. Options: 'local', 'github'. Runs all modes if not provided."
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                })
+                .option("fern-repo-directory", {
+                    string: true,
+                    demandOption: false,
+                    description:
+                        "These tests must run with the fern repo path as their working directory. Defaults to the current working directory."
+                })
+                .option("github-token", {
+                    string: true,
+                    demandOption: false,
+                    description:
+                        "The GitHub token to use for the tests. Defaults to the GITHUB_TOKEN environment variable."
+                })
+                .option("fern-token", {
+                    string: true,
+                    demandOption: false,
+                    description: "The Fern token to use for the tests. Defaults to the FERN_TOKEN environment variable."
+                })
+                .option("build-generator", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description:
+                        "Build generator Docker images at version 99.99.99 for local generation mode. Uses 'pnpm seed img' internally."
+                }),
+        async (argv) => {
+            // Verify that the working directory is a valid path and is the root folder of the fern repo
+            const inputValidationErrors = [];
+
+            const fernRepoDirectory = argv.fernRepoDirectory ?? process.cwd();
+            const isFernRepoResult = isFernRepo(fernRepoDirectory);
+            if (!isFernRepoResult.success) {
+                inputValidationErrors.push(
+                    `The working directory (${fernRepoDirectory}) is not the root folder of the fern repo. ${isFernRepoResult.error}`
+                );
+            }
+
+            const localFernCliIsBuilt = await isLocalFernCliBuilt(fernRepoDirectory);
+            if (!localFernCliIsBuilt.success) {
+                inputValidationErrors.push(localFernCliIsBuilt.error);
+            }
+
+            const githubToken = argv.githubToken ?? process.env.GITHUB_TOKEN;
+            if (githubToken == null) {
+                inputValidationErrors.push("GITHUB_TOKEN environment variable is not set");
+            }
+            const fernToken = argv.fernToken ?? process.env.FERN_TOKEN;
+            if (fernToken == null) {
+                inputValidationErrors.push("FERN_TOKEN environment variable is not set");
+            }
+
+            if (inputValidationErrors.length > 0) {
+                throw new Error(inputValidationErrors.join("\n"));
+            }
+
+            await executeTestRemoteLocalCommand({
+                generator: argv.generator ?? [],
+                fixture: argv.fixture ?? [],
+                outputFolder: argv.outputFolder ?? "",
+                outputMode: argv.outputMode ?? [],
+                logLevel: argv.logLevel,
+                fernRepoDirectory,
+                githubToken: githubToken ?? "",
+                fernToken: fernToken ?? "",
+                buildGenerator: argv.buildGenerator ?? false,
+                parallel: argv.parallel
+            });
+        }
+    );
+}
+
 function addRunCommand(cli: Argv) {
     cli.command(
         "run",
@@ -311,6 +427,71 @@ function addRunCommand(cli: Argv) {
                 inspect: argv.inspect,
                 local: argv.local,
                 keepDocker: argv.keepDocker
+            });
+        }
+    );
+}
+
+const DEFAULT_IMAGE_VERSION = "99.99.99";
+function addImgCommand(cli: Argv) {
+    cli.command(
+        "img <generator> [tag]",
+        "Builds a docker image for the specified generator and stores it in the local docker daemon",
+        (yargs) =>
+            yargs
+                .version(false)
+                .positional("generator", {
+                    type: "string",
+                    demandOption: true,
+                    description: "Generator to build docker image for"
+                })
+                .positional("tag", {
+                    type: "string",
+                    demandOption: false,
+                    description: "Version tag (optional positional)"
+                })
+                .option("version", {
+                    alias: "v",
+                    type: "string",
+                    demandOption: false,
+                    description: `Version tag for the docker image (must be valid semver, defaults to ${DEFAULT_IMAGE_VERSION})`
+                })
+                .option("log-level", {
+                    default: LogLevel.Info,
+                    choices: LOG_LEVELS
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+
+            const generator = generators.find((g) => g.workspaceName === argv.generator);
+            if (generator == null) {
+                throw new Error(
+                    `Generator ${argv.generator} not found. Please make sure that there is a folder with the name ${argv.generator} in the seed directory.`
+                );
+            }
+
+            const positionalTag = argv.tag as string | undefined;
+            const version = positionalTag ?? argv.version ?? DEFAULT_IMAGE_VERSION;
+            try {
+                assertValidSemVerOrThrow(version);
+            } catch (error) {
+                throw new Error(
+                    `Invalid version: ${version}. Version must be a valid semver (e.g., 1.2.3 or 1.2.3-rc5).`
+                );
+            }
+
+            const logLevel = argv["log-level"];
+            const taskContextFactory = new TaskContextFactory(logLevel);
+            const taskContext = taskContextFactory.create(`Building docker image for ${generator.workspaceName}`);
+
+            taskContext.logger.info(`Using version: ${version}`);
+
+            await buildGeneratorImage({
+                generator,
+                version,
+                context: taskContext,
+                logLevel
             });
         }
     );

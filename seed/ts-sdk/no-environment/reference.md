@@ -29,7 +29,7 @@ await client.dummy.getDummy();
 <dl>
 <dd>
 
-**requestOptions:** `Dummy.RequestOptions` 
+**requestOptions:** `DummyClient.RequestOptions` 
     
 </dd>
 </dl>

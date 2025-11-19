@@ -4,14 +4,32 @@ import chalk from "chalk";
 import { CliContext } from "./cli-context/CliContext";
 import { FERN_CWD_ENV_VAR } from "./cwd";
 
+export class RerunCliError extends Error {
+    public readonly stdout: string;
+    public readonly stderr: string;
+    public readonly version: string;
+
+    constructor({ version, stdout, stderr }: { version: string; stdout: string; stderr: string }) {
+        super(`Failed to rerun CLI at version ${version}`);
+        this.name = "RerunCliError";
+        this.version = version;
+        this.stdout = stdout;
+        this.stderr = stderr;
+    }
+}
+
 export async function rerunFernCliAtVersion({
     version,
     cliContext,
-    env
+    env,
+    args,
+    throwOnError = false
 }: {
     version: string;
     cliContext: CliContext;
     env?: Record<string, string>;
+    args?: string[];
+    throwOnError?: boolean;
 }): Promise<void> {
     cliContext.suppressUpgradeMessage();
 
@@ -19,7 +37,7 @@ export async function rerunFernCliAtVersion({
         "--quiet",
         "--yes",
         `${cliContext.environment.packageName}@${version}`,
-        ...process.argv.slice(2)
+        ...(args ?? process.argv.slice(2))
     ];
     cliContext.logger.debug(
         [
@@ -28,23 +46,30 @@ export async function rerunFernCliAtVersion({
         ].join("\n")
     );
 
-    const { failed, stdout, stderr } = await loggingExeca(cliContext.logger, "npx", ["--quiet", ...commandLineArgs], {
+    const { failed, stdout, stderr } = await loggingExeca(cliContext.logger, "npx", commandLineArgs, {
         stdio: "inherit",
         reject: false,
         env: {
             ...env,
-            [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd()
+            [FERN_CWD_ENV_VAR]: process.env[FERN_CWD_ENV_VAR] ?? process.cwd(),
+            FERN_NO_VERSION_REDIRECTION: "true"
         }
     });
     if (stdout.includes("code EEXIST") || stderr.includes("code EEXIST")) {
         // try again if there is a npx conflict
         return await rerunFernCliAtVersion({
             version,
-            cliContext
+            cliContext,
+            env,
+            args,
+            throwOnError
         });
     }
 
     if (failed) {
+        if (throwOnError) {
+            throw new RerunCliError({ version, stdout, stderr });
+        }
         cliContext.failWithoutThrowing();
     }
 }

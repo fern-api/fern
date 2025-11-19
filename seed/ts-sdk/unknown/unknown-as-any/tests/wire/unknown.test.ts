@@ -3,7 +3,7 @@
 import { SeedUnknownAsAnyClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Unknown", () => {
+describe("UnknownClient", () => {
     test("post", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedUnknownAsAnyClient({ environment: server.baseUrl });

@@ -4,7 +4,7 @@ import { SeedInferredAuthImplicitClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 import { mockAuth } from "./mockAuth";
 
-describe("Simple", () => {
+describe("SimpleClient", () => {
     test("getSomething", async () => {
         const server = mockServerPool.createServer();
         mockAuth(server);

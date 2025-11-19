@@ -3,7 +3,7 @@
 import { SeedUnionsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Bigunion", () => {
+describe("BigunionClient", () => {
     test("get", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedUnionsClient({ environment: server.baseUrl });

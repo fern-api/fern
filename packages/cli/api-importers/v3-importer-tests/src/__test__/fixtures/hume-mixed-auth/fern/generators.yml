@@ -1,5 +1,0 @@
-# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
-api:
-  - path: ../evi-asyncapi.json
-  - path: ../evi-openapi.json
-    overrides: ../evi-openapi-overrides.yml

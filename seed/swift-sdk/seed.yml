@@ -106,8 +106,6 @@ allowedFailures:
   - api-wide-base-path
   - audiences
   - auth-environment-variables
-  - circular-references
-  - circular-references-advanced
   - client-side-params:with-custom-config
   - client-side-params:no-custom-config
   - cross-package-type-names
@@ -131,6 +129,7 @@ allowedFailures:
   - nullable:nullable-as-optional
   - nullable-optional:no-custom-config
   - nullable-optional:nullable-as-optional
+  - nullable-request-body
   - oauth-client-credentials-custom
   - oauth-client-credentials-with-variables
   - pagination:no-custom-config
@@ -144,7 +143,6 @@ allowedFailures:
   - required-nullable:nullable-as-optional
   - reserved-keywords
   - response-property
-  - simple-fhir
   - streaming
   - streaming-parameter
   - trace

@@ -3,7 +3,7 @@
 import { SeedAudiencesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Foo", () => {
+describe("FooClient", () => {
     test("find", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedAudiencesClient({ environment: server.baseUrl });

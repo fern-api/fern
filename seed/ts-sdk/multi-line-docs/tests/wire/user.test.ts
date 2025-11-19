@@ -3,7 +3,7 @@
 import { SeedMultiLineDocsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("User", () => {
+describe("UserClient", () => {
     test("getUser", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedMultiLineDocsClient({ environment: server.baseUrl });
