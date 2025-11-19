@@ -56,7 +56,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "deploy/#{params[:actionId]}/versions/#{params[:id]}",
+          path: "deploy/#{params[:action_id]}/versions/#{params[:id]}",
           body: params
         )
         begin

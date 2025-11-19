@@ -56,7 +56,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/resources/#{params[:resourceId]}",
+          path: "/api/resources/#{params[:resource_id]}",
           query: _query
         )
         begin
@@ -159,7 +159,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{params[:userId]}",
+          path: "/api/users/#{params[:user_id]}",
           query: _query
         )
         begin
@@ -207,7 +207,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "/api/users/#{params[:userId]}",
+          path: "/api/users/#{params[:user_id]}",
           body: Seed::Types::Types::UpdateUserRequest.new(params).to_h
         )
         begin
@@ -231,7 +231,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/api/users/#{params[:userId]}"
+          path: "/api/users/#{params[:user_id]}"
         )
         begin
           _response = @client.send(_request)
@@ -288,7 +288,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/connections/#{params[:connectionId]}",
+          path: "/api/connections/#{params[:connection_id]}",
           query: _query
         )
         begin
@@ -356,7 +356,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/clients/#{params[:clientId]}",
+          path: "/api/clients/#{params[:client_id]}",
           query: _query
         )
         begin

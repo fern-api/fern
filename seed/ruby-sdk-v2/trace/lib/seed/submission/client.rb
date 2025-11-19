@@ -38,7 +38,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
-          path: "/sessions/#{params[:sessionId]}"
+          path: "/sessions/#{params[:session_id]}"
         )
         begin
           _response = @client.send(_request)
@@ -59,7 +59,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "DELETE",
-          path: "/sessions/stop/#{params[:sessionId]}"
+          path: "/sessions/stop/#{params[:session_id]}"
         )
         begin
           _response = @client.send(_request)

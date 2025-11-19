@@ -37,7 +37,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/movies/#{params[:movieId]}"
+          path: "/movies/#{params[:movie_id]}"
         )
         begin
           _response = @client.send(_request)

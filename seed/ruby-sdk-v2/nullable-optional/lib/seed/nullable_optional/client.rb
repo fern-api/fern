@@ -15,7 +15,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{params[:userId]}"
+          path: "/api/users/#{params[:user_id]}"
         )
         begin
           _response = @client.send(_request)
@@ -62,7 +62,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "/api/users/#{params[:userId]}",
+          path: "/api/users/#{params[:user_id]}",
           body: Seed::NullableOptional::Types::UpdateUserRequest.new(params).to_h
         )
         begin
@@ -172,7 +172,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/profiles/complex/#{params[:profileId]}"
+          path: "/api/profiles/complex/#{params[:profile_id]}"
         )
         begin
           _response = @client.send(_request)
@@ -200,7 +200,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
-          path: "/api/profiles/complex/#{params[:profileId]}",
+          path: "/api/profiles/complex/#{params[:profile_id]}",
           body: Seed::NullableOptional::Types::UpdateComplexProfileRequest.new(_body_bag).to_h
         )
         begin
@@ -278,7 +278,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{params[:userId]}/notifications"
+          path: "/api/users/#{params[:user_id]}/notifications"
         )
         begin
           _response = @client.send(_request)
@@ -304,7 +304,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PUT",
-          path: "/api/users/#{params[:userId]}/tags",
+          path: "/api/users/#{params[:user_id]}/tags",
           body: Seed::NullableOptional::Types::UpdateTagsRequest.new(_body_bag).to_h
         )
         begin

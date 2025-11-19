@@ -59,7 +59,7 @@ module Seed
             _request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url] || Seed::Environment::PROD,
               method: "GET",
-              path: "/problems-v2/problem-info/#{params[:problemId]}"
+              path: "/problems-v2/problem-info/#{params[:problem_id]}"
             )
             begin
               _response = @client.send(_request)
@@ -82,7 +82,7 @@ module Seed
             _request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url] || Seed::Environment::PROD,
               method: "GET",
-              path: "/problems-v2/problem-info/#{params[:problemId]}/version/#{params[:problemVersion]}"
+              path: "/problems-v2/problem-info/#{params[:problem_id]}/version/#{params[:problem_version]}"
             )
             begin
               _response = @client.send(_request)

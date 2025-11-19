@@ -25,7 +25,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
-          path: "/v2/playlist/#{params[:serviceParam]}/create",
+          path: "/v2/playlist/#{params[:service_param]}/create",
           query: _query,
           body: Seed::Playlist::Types::PlaylistCreateRequest.new(_body).to_h
         )
@@ -60,7 +60,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
-          path: "/v2/playlist/#{params[:serviceParam]}/all",
+          path: "/v2/playlist/#{params[:service_param]}/all",
           query: _query
         )
         begin
@@ -82,7 +82,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
-          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}"
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}"
         )
         begin
           _response = @client.send(_request)
@@ -105,7 +105,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "PUT",
-          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}",
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}",
           body: params
         )
         begin
@@ -127,7 +127,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "DELETE",
-          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlist_id]}"
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}"
         )
         begin
           _response = @client.send(_request)

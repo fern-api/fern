@@ -13,7 +13,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:id]}//#{params[:nestedId]}"
+          path: "/#{params[:id]}//#{params[:nested_id]}"
         )
         begin
           _response = @client.send(_request)

@@ -39,7 +39,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
-          path: "/problem-crud/update/#{params[:problemId]}",
+          path: "/problem-crud/update/#{params[:problem_id]}",
           body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h
         )
         begin
@@ -63,7 +63,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "DELETE",
-          path: "/problem-crud/delete/#{params[:problemId]}"
+          path: "/problem-crud/delete/#{params[:problem_id]}"
         )
         begin
           _response = @client.send(_request)

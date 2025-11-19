@@ -15,7 +15,7 @@ module Seed
             _request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
-              path: "/file/notification/#{params[:notificationId]}"
+              path: "/file/notification/#{params[:notification_id]}"
             )
             begin
               _response = @client.send(_request)
