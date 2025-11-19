@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add automatic semantic versioning to local generation with `--version AUTO --local` flags.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.10.0
+
+- changelogEntry:
+    - summary: |
         Fix issue where x-fern-explorer was not hiding routes from the API Explorer
       type: fix
   irVersion: 61
