@@ -84,6 +84,9 @@
     },
     {
       "path": "../../remote-generation/remote-workspace-runner"
+    },
+    {
+      "path": "../../../ai"
     }
   ]
 }

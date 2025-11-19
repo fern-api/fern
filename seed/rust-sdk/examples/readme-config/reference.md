@@ -167,7 +167,12 @@ async fn main() {
     client
         .file
         .service
-        .get_file(&"file.txt".to_string(), None)
+        .get_file(
+            &"file.txt".to_string(),
+            Some(
+                RequestOptions::new().additional_header("X-File-API-Version", "0.0.2".to_string()),
+            ),
+        )
         .await;
 }
 ```
@@ -398,19 +403,16 @@ async fn main() {
                 prequel: Some(MovieId("movie-cv9b914f".to_string())),
                 title: "The Boy and the Heron".to_string(),
                 from: "Hayao Miyazaki".to_string(),
-                rating: 8,
+                rating: 8.0,
                 r#type: "movie".to_string(),
                 tag: Tag("tag-wf9as23d".to_string()),
+                book: None,
                 metadata: HashMap::from([
                     (
                         "actors".to_string(),
-                        vec![
-                            "Christian Bale".to_string(),
-                            "Florence Pugh".to_string(),
-                            "Willem Dafoe".to_string(),
-                        ],
+                        serde_json::json!(["Christian Bale", "Florence Pugh", "Willem Dafoe"]),
                     ),
-                    ("releaseDate".to_string(), "2023-12-08".to_string()),
+                    ("releaseDate".to_string(), serde_json::json!("2023-12-08")),
                     (
                         "ratings".to_string(),
                         serde_json::json!({"rottenTomatoes":97,"imdb":7.6}),
@@ -461,9 +463,8 @@ async fn main() {
             &GetMetadataQueryRequest {
                 shallow: Some(false),
                 tag: vec![Some("development".to_string())],
-                x_api_version: "0.0.1".to_string(),
             },
-            None,
+            Some(RequestOptions::new().additional_header("X-API-Version", "0.0.1".to_string())),
         )
         .await;
 }
@@ -532,7 +533,6 @@ async fn main() {
                     id: "id".to_string(),
                 })),
                 extended_movie: Some(ExtendedMovie {
-                    cast: vec!["cast".to_string(), "cast".to_string()],
                     id: MovieId("id".to_string()),
                     prequel: Some(MovieId("prequel".to_string())),
                     title: "title".to_string(),
@@ -546,12 +546,17 @@ async fn main() {
                         serde_json::json!({"key":"value"}),
                     )]),
                     revenue: 1000000,
+                    cast: vec!["cast".to_string(), "cast".to_string()],
                 }),
                 entity: Some(Entity {
                     r#type: Type::BasicType(BasicType::Primitive),
                     name: "name".to_string(),
                 }),
-                metadata: Some(Metadata::Html { value: None }),
+                metadata: Some(Metadata2::Html {
+                    value: "value".to_string(),
+                    extra: HashMap::from([("extra".to_string(), "extra".to_string())]),
+                    tags: HashSet::from(["tags".to_string()]),
+                }),
                 common_metadata: Some(Metadata {
                     id: "id".to_string(),
                     data: Some(HashMap::from([("data".to_string(), "data".to_string())])),
@@ -564,7 +569,9 @@ async fn main() {
                         json_string: Some("jsonString".to_string()),
                     },
                 }),
-                data: Some(Data::String_ { value: None }),
+                data: Some(Data::r#String {
+                    value: "value".to_string(),
+                }),
                 migration: Some(Migration {
                     name: "name".to_string(),
                     status: MigrationStatus::Running,
@@ -576,7 +583,7 @@ async fn main() {
                         exception_stacktrace: "exceptionStacktrace".to_string(),
                     },
                 }),
-                test: Some(Test::And { value: None }),
+                test: Some(Test::And { value: false }),
                 node: Some(Node {
                     name: "name".to_string(),
                     nodes: Some(vec![
