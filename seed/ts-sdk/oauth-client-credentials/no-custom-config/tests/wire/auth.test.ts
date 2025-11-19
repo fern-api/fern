@@ -2,22 +2,14 @@
 
 import { SeedOauthClientCredentialsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
-import { mockAuth } from "./mockAuth";
 
-describe("Auth", () => {
+describe("AuthClient", () => {
     test("getTokenWithClientCredentials", async () => {
         const server = mockServerPool.createServer();
-        mockAuth(server);
-
         const client = new SeedOauthClientCredentialsClient({
             clientId: "my_oauth_app_123",
             clientSecret: "sk_live_abcdef123456789",
             environment: server.baseUrl,
-        });
-        await await client.auth.getTokenWithClientCredentials({
-            client_id: "my_oauth_app_123",
-            client_secret: "sk_live_abcdef123456789",
-            scope: "read:users",
         });
 
         const rawRequestBody = {
@@ -51,18 +43,10 @@ describe("Auth", () => {
 
     test("refreshToken", async () => {
         const server = mockServerPool.createServer();
-        mockAuth(server);
-
         const client = new SeedOauthClientCredentialsClient({
             clientId: "my_oauth_app_123",
             clientSecret: "sk_live_abcdef123456789",
             environment: server.baseUrl,
-        });
-        await await client.auth.refreshToken({
-            client_id: "my_oauth_app_123",
-            client_secret: "sk_live_abcdef123456789",
-            refresh_token: "refresh_token",
-            scope: "read:users",
         });
 
         const rawRequestBody = {

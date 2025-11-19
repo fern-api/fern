@@ -469,7 +469,7 @@ describe("test", () => {
                 const functionName = `mock${upperFirst(camelCase(inferredAuthScheme.key))}`;
 
                 mockFunctions.push(code`
-export function ${functionName}(server: MockServer) {
+export function ${functionName}(server: MockServer): void {
     ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
@@ -529,7 +529,7 @@ export function ${functionName}(server: MockServer) {
                     const functionName = `mock${upperFirst(camelCase(oauthScheme.key))}`;
 
                     mockFunctions.push(code`
-export function ${functionName}(server: MockServer) {
+export function ${functionName}(server: MockServer): void {
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
         .mockEndpoint()
