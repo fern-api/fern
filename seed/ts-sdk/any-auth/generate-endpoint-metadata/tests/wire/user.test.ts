@@ -10,6 +10,7 @@ describe("UserClient", () => {
         mockOAuth(server);
 
         const client = new SeedAnyAuthClient({
+            maxRetries: 0,
             token: "test",
             apiKey: "test",
             clientId: "client_id",
@@ -41,6 +42,7 @@ describe("UserClient", () => {
         mockOAuth(server);
 
         const client = new SeedAnyAuthClient({
+            maxRetries: 0,
             token: "test",
             apiKey: "test",
             clientId: "client_id",

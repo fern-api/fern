@@ -876,7 +876,9 @@ export function ${functionName}(server: MockServer): void {
             isRoot: true
         });
 
-        const baseOptions: Record<string, Code> = {};
+        const baseOptions: Record<string, Code> = {
+            maxRetries: code`0`
+        };
 
         // Add variables to baseOptions
         this.ir.variables.forEach((variable) => {
@@ -1144,6 +1146,7 @@ describe("${serviceName}", () => {
             }
         }
 
+        const hasPagination = endpoint.pagination !== undefined;
         const expectedName =
             endpoint.pagination !== undefined
                 ? context.type.generateGetterForResponsePropertyAsString({
@@ -1195,7 +1198,7 @@ describe("${serviceName}", () => {
         ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
         ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
         server
-            .mockEndpoint()
+            .mockEndpoint(${hasPagination ? "{ once: false }" : ""})
             .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
                 return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                     `;

@@ -10,6 +10,7 @@ describe("AuthClient", () => {
         mockInferredAuthScheme(server);
 
         const client = new SeedWebsocketAuthClient({
+            maxRetries: 0,
             xApiKey: "X-Api-Key",
             clientId: "client_id",
             clientSecret: "client_secret",
@@ -51,6 +52,7 @@ describe("AuthClient", () => {
         mockInferredAuthScheme(server);
 
         const client = new SeedWebsocketAuthClient({
+            maxRetries: 0,
             xApiKey: "X-Api-Key",
             clientId: "client_id",
             clientSecret: "client_secret",

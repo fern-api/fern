@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.11.4
+  changelogEntry:
+    - summary: Bump generator CLI version to publish new Docker image.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+
 - version: 1.11.3
   changelogEntry:
     - summary: Fix circular reference issue for recursive types and unions.

@@ -10,6 +10,7 @@ describe("ApiClient", () => {
         mockInferredAuthScheme(server);
 
         const client = new SeedInferredAuthExplicitClient({
+            maxRetries: 0,
             xApiKey: "X-Api-Key",
             clientId: "client_id",
             clientSecret: "client_secret",

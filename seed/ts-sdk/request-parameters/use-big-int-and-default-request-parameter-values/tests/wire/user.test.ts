@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("UserClient", () => {
     test("createUsername", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedRequestParametersClient({ environment: server.baseUrl });
+        const client = new SeedRequestParametersClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { username: "username", password: "password", name: "test" };
 
         server.mockEndpoint().post("/user/username").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
@@ -22,7 +22,7 @@ describe("UserClient", () => {
 
     test("createUsernameWithReferencedType", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedRequestParametersClient({ environment: server.baseUrl });
+        const client = new SeedRequestParametersClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { username: "username", password: "password", name: "test" };
 
         server
@@ -46,7 +46,7 @@ describe("UserClient", () => {
 
     test("createUsernameOptional", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedRequestParametersClient({ environment: server.baseUrl });
+        const client = new SeedRequestParametersClient({ maxRetries: 0, environment: server.baseUrl });
 
         server.mockEndpoint().post("/user/username-optional").respondWith().statusCode(200).build();
 
@@ -56,7 +56,7 @@ describe("UserClient", () => {
 
     test("getUsername", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedRequestParametersClient({ environment: server.baseUrl });
+        const client = new SeedRequestParametersClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server.mockEndpoint().get("/user").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
