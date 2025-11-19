@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Fix AutoVersioning to exclude Fern branding from commit messages and PR titles/descriptions when whitelabel config is present. The AI no longer generates the "🌿 Generated with Fern" footer, which is instead added in post-processing only for non-whitelabel customers.
+        Fix AutoVersioning to exclude Fern branding from commit messages and PR titles/descriptions when whitelabel config is present.
       type: fix
   irVersion: 61
   createdAt: "2025-11-19"
