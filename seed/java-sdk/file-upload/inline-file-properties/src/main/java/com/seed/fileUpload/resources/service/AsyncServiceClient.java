@@ -13,7 +13,9 @@ import com.seed.fileUpload.resources.service.requests.MyRequest;
 import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
+import java.io.InputStream;
 import java.util.concurrent.CompletableFuture;
+import okhttp3.MediaType;
 
 public class AsyncServiceClient {
     protected final ClientOptions clientOptions;
@@ -48,6 +50,25 @@ public class AsyncServiceClient {
         return this.rawClient.justFile(request, requestOptions).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Void> justFile(InputStream stream, String filename) {
+        return this.rawClient.justFile(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFile(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.justFile(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFile(InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.justFile(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFile(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .justFile(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Void> justFileWithQueryParams(JustFileWithQueryParamsRequest request) {
         return this.rawClient.justFileWithQueryParams(request).thenApply(response -> response.body());
     }
@@ -55,6 +76,30 @@ public class AsyncServiceClient {
     public CompletableFuture<Void> justFileWithQueryParams(
             JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
         return this.rawClient.justFileWithQueryParams(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFileWithQueryParams(InputStream stream, String filename) {
+        return this.rawClient.justFileWithQueryParams(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFileWithQueryParams(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient
+                .justFileWithQueryParams(stream, filename, mediaType)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFileWithQueryParams(
+            InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient
+                .justFileWithQueryParams(stream, filename, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> justFileWithQueryParams(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .justFileWithQueryParams(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> withContentType(WithContentTypeRequest request) {
@@ -65,12 +110,51 @@ public class AsyncServiceClient {
         return this.rawClient.withContentType(request, requestOptions).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<Void> withContentType(InputStream stream, String filename) {
+        return this.rawClient.withContentType(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withContentType(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.withContentType(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withContentType(InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.withContentType(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withContentType(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withContentType(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
     public CompletableFuture<Void> withFormEncoding(WithFormEncodingRequest request) {
         return this.rawClient.withFormEncoding(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> withFormEncoding(WithFormEncodingRequest request, RequestOptions requestOptions) {
         return this.rawClient.withFormEncoding(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withFormEncoding(InputStream stream, String filename) {
+        return this.rawClient.withFormEncoding(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withFormEncoding(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.withFormEncoding(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withFormEncoding(
+            InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.withFormEncoding(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<Void> withFormEncoding(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withFormEncoding(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> withFormEncodedContainers(MyOtherRequest request) {
@@ -93,12 +177,51 @@ public class AsyncServiceClient {
         return this.rawClient.optionalArgs(request, requestOptions).thenApply(response -> response.body());
     }
 
+    public CompletableFuture<String> optionalArgs(InputStream stream, String filename) {
+        return this.rawClient.optionalArgs(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> optionalArgs(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.optionalArgs(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> optionalArgs(InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.optionalArgs(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> optionalArgs(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .optionalArgs(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
     public CompletableFuture<String> withInlineType(InlineTypeRequest request) {
         return this.rawClient.withInlineType(request).thenApply(response -> response.body());
     }
 
     public CompletableFuture<String> withInlineType(InlineTypeRequest request, RequestOptions requestOptions) {
         return this.rawClient.withInlineType(request, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withInlineType(InputStream stream, String filename) {
+        return this.rawClient.withInlineType(stream, filename).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withInlineType(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.withInlineType(stream, filename, mediaType).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withInlineType(
+            InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.withInlineType(stream, filename, requestOptions).thenApply(response -> response.body());
+    }
+
+    public CompletableFuture<String> withInlineType(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withInlineType(stream, filename, mediaType, requestOptions)
+                .thenApply(response -> response.body());
     }
 
     public CompletableFuture<Void> simple() {
