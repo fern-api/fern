@@ -737,10 +737,14 @@ try:
         pass
     except TypeError:
         pass
+    except ValueError:
+        pass
 
 except ImportError as e:
     print("ImportError: " + str(e), file=sys.stderr)
     sys.exit(1)
+except TypeError as e:
+    pass
 except BaseException as e:
     print(type(e).__name__ + ": " + str(e), file=sys.stderr)
     sys.exit(1)
