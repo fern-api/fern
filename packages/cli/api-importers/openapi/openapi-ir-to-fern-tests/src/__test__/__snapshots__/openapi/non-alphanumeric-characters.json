@@ -67,7 +67,6 @@
                 "value": "",
               },
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

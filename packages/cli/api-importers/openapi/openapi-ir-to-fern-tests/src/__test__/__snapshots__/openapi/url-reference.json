@@ -107,7 +107,6 @@
               "pending",
               "sold",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -185,7 +184,6 @@ types:
       - pending
       - sold
     docs: pet status in the store
-    inline: true
     source:
       openapi: ../openapi.yml
   Pet:

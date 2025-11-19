@@ -360,7 +360,6 @@
               "savings",
               "credit",
             ],
-            "inline": true,
             "source": {
               "openapi": "../fintech-api.yml",
             },
@@ -394,7 +393,6 @@
               "accepted",
               "rejected",
             ],
-            "inline": true,
             "source": {
               "openapi": "../payments-api.yml",
             },
@@ -431,7 +429,6 @@
               "completed",
               "failed",
             ],
-            "inline": true,
             "source": {
               "openapi": "../payments-api.yml",
             },
@@ -442,7 +439,6 @@
               "completed",
               "failed",
             ],
-            "inline": true,
             "source": {
               "openapi": "../payments-api.yml",
             },
@@ -467,7 +463,6 @@
               "completed",
               "failed",
             ],
-            "inline": true,
             "source": {
               "openapi": "../payments-api.yml",
             },
@@ -710,7 +705,6 @@ types:
       - checking
       - savings
       - credit
-    inline: true
     source:
       openapi: ../fintech-api.yml
   Account:
@@ -725,7 +719,6 @@ types:
       - pending
       - completed
       - failed
-    inline: true
     source:
       openapi: ../payments-api.yml
   Transaction:
@@ -741,7 +734,6 @@ types:
     enum:
       - accepted
       - rejected
-    inline: true
     source:
       openapi: ../payments-api.yml
   PaymentResponse:
@@ -756,7 +748,6 @@ types:
       - pending
       - completed
       - failed
-    inline: true
     source:
       openapi: ../payments-api.yml
   RefundResponse:
@@ -771,7 +762,6 @@ types:
       - pending
       - completed
       - failed
-    inline: true
     source:
       openapi: ../payments-api.yml
   Refund:

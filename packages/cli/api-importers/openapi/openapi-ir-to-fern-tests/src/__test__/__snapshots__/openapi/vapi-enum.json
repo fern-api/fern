@@ -34,7 +34,6 @@
               "foo",
               "bar",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -46,7 +45,6 @@
     enum:
       - foo
       - bar
-    inline: true
     source:
       openapi: ../openapi.json
   ThingProblem:

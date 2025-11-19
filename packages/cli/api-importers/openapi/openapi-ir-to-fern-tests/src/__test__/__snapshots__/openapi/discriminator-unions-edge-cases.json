@@ -207,7 +207,6 @@
               "ETH",
               "USDT",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -399,7 +398,6 @@ types:
       - BTC
       - ETH
       - USDT
-    inline: true
     source:
       openapi: ../openapi.yml
   CryptoPayment:

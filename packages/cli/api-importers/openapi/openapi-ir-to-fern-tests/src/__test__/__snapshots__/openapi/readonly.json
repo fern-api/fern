@@ -157,7 +157,6 @@
               "suspended",
               "deleted",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -282,7 +281,6 @@ types:
       - active
       - suspended
       - deleted
-    inline: true
     source:
       openapi: ../openapi.yml
   UserStatsRead:

@@ -65,7 +65,6 @@
               "COLL",
               "COMP",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -143,7 +142,6 @@
               "lessor",
               "interest",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -226,7 +224,6 @@
       - UIMPD
       - COLL
       - COMP
-    inline: true
     source:
       openapi: ../openapi.yml
   Coverage:
@@ -275,7 +272,6 @@
       - lessor
       - interest
     default: interest
-    inline: true
     source:
       openapi: ../openapi.yml
   ThirdParty:
@@ -474,7 +470,6 @@
               "auto",
               "motorcycle",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -512,7 +507,6 @@ types:
     enum:
       - auto
       - motorcycle
-    inline: true
     source:
       openapi: ../openapi.yml
   Policy:

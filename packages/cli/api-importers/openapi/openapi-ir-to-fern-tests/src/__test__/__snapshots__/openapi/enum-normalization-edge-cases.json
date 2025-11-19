@@ -56,7 +56,6 @@
               "v2",
               "v3",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -67,7 +66,6 @@
               "green",
               "blue",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -81,7 +79,6 @@
               "value1",
               "value2",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -97,7 +94,6 @@
                 "value": "kebab-case",
               },
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -125,7 +121,6 @@
                 "value": "999",
               },
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -149,7 +144,6 @@
                 "value": "guest",
               },
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -170,7 +164,6 @@
                 "value": "value with space",
               },
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -182,7 +175,6 @@
               "pending",
               "archived",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

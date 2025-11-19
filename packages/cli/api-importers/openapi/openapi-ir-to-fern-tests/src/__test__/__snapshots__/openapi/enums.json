@@ -45,7 +45,6 @@
               "UNAUTHORIZED",
               "BAD_REQUEST",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -72,7 +71,6 @@
             "enum": [
               "SingleUniqueValue",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -86,7 +84,6 @@
               "INACTIVE",
               "PENDING",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

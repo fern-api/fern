@@ -582,7 +582,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "JINJA",
               "FUNCTION_DEFINITION",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -620,7 +619,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "USER",
               "FUNCTION",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -652,7 +650,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "STRING",
               "JSON",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -759,7 +756,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "INACTIVE",
               "ARCHIVED",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -914,7 +910,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "ACTIVE",
               "ARCHIVED",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -972,7 +967,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "STAGING",
               "PRODUCTION",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1012,7 +1006,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "STOP",
               "UNKNOWN",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1169,7 +1162,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "INDEXED",
               "FAILED",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1181,7 +1173,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "ALL",
               "NONE",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1193,7 +1184,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "GENERATE",
               "CLASSIFY",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1377,7 +1367,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "CREATION_FAILED",
               "DISABLED",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1482,7 +1471,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "PROCESSED",
               "FAILED",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1670,7 +1658,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "OPENAI",
               "PYQ",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -1942,7 +1929,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "TEXT",
               "CHAT_HISTORY",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2367,7 +2353,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "WORKFLOW_INITIALIZATION",
               "NODE_EXECUTION",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -2441,7 +2426,6 @@ Used to submit feedback regarding the quality of previously generated completion
               "FULFILLED",
               "REJECTED",
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

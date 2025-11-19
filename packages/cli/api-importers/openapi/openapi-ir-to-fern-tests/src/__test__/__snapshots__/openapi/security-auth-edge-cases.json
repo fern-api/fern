@@ -136,7 +136,6 @@
                 "value": "admin",
               },
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.yml",
             },

@@ -216,7 +216,6 @@ types:
               "private",
               "public",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -239,7 +238,6 @@ types:
       - private
       - public
     docs: Access level
-    inline: true
     source:
       openapi: ../openapi.yml
   SearchResponse:

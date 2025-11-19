@@ -94,7 +94,6 @@
                 "value": "voices:all",
               },
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -173,7 +172,6 @@
                 "value": "simba-turbo",
               },
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -196,7 +194,6 @@
               "shared",
               "personal",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -270,7 +267,6 @@ Enabling loudness normalization can increase latency due to additional processin
               "ogg",
               "aac",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -318,7 +314,6 @@ Enabling loudness normalization can increase latency due to additional processin
               "female",
               "notSpecified",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -339,7 +334,6 @@ Enabling loudness normalization can increase latency due to additional processin
               "shared",
               "personal",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -374,7 +368,6 @@ Enabling loudness normalization can increase latency due to additional processin
                 "value": "simba-turbo",
               },
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -413,7 +406,6 @@ Enabling loudness normalization can increase latency due to additional processin
               "unsupported_grant_type",
               "invalid_scope",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -502,7 +494,6 @@ types:
       - value: voices:all
         name: VoicesAll
     docs: The scope, or a space-delimited list of scopes the token is issued for
-    inline: true
     source:
       openapi: ../openapi.json
   AccessToken:
@@ -535,7 +526,6 @@ types:
         name: SimbaMultilingual
       - value: simba-turbo
         name: SimbaTurbo
-    inline: true
     source:
       openapi: ../openapi.json
   CreateVoiceModel:
@@ -548,7 +538,6 @@ types:
     enum:
       - shared
       - personal
-    inline: true
     source:
       openapi: ../openapi.json
   CreatedVoice:
@@ -614,7 +603,6 @@ types:
       - ogg
       - aac
     docs: The format of the audio data
-    inline: true
     source:
       openapi: ../openapi.json
   GetSpeechResponse:
@@ -665,14 +653,12 @@ types:
       - male
       - female
       - notSpecified
-    inline: true
     source:
       openapi: ../openapi.json
   GetVoiceType:
     enum:
       - shared
       - personal
-    inline: true
     source:
       openapi: ../openapi.json
   GetVoice:
@@ -703,7 +689,6 @@ types:
         name: SimbaMultilingual
       - value: simba-turbo
         name: SimbaTurbo
-    inline: true
     source:
       openapi: ../openapi.json
   GetVoicesModel:
@@ -732,7 +717,6 @@ types:
       - invalid_request
       - unsupported_grant_type
       - invalid_scope
-    inline: true
     source:
       openapi: ../openapi.json
   OAuthError:
@@ -1346,7 +1330,6 @@ simba-turbo ModelTurbo",
                 "value": "simba-turbo",
               },
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1360,7 +1343,6 @@ simba-turbo ModelTurbo",
               "ogg",
               "aac",
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1390,7 +1372,6 @@ simba-turbo ModelTurbo",
                 "value": "simba-turbo",
               },
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1410,7 +1391,6 @@ simba-turbo ModelTurbo",
                 "value": "audio/aac",
               },
             ],
-            "inline": undefined,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1440,7 +1420,6 @@ simba-turbo ModelTurbo",
                 "value": "simba-turbo",
               },
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1470,7 +1449,6 @@ simba-turbo ModelTurbo",
 
       simba-turbo ModelTurbo
     default: simba-base
-    inline: true
     source:
       openapi: ../openapi.json
   GetSpeechRequestAudioFormat:
@@ -1484,7 +1462,6 @@ simba-turbo ModelTurbo",
       but there's no guarantee it will not change in the future. We recommend
       always passing the specific param you expect.
     default: wav
-    inline: true
     source:
       openapi: ../openapi.json
   GetSpeechRequestModel:
@@ -1509,7 +1486,6 @@ simba-turbo ModelTurbo",
 
       simba-turbo ModelTurbo
     default: simba-base
-    inline: true
     source:
       openapi: ../openapi.json
   GetStreamRequestAccept:
@@ -1544,7 +1520,6 @@ simba-turbo ModelTurbo",
 
       simba-turbo ModelTurbo
     default: simba-base
-    inline: true
     source:
       openapi: ../openapi.json
 imports:
@@ -1908,7 +1883,6 @@ in: body",
                 "value": "voices:all",
               },
             ],
-            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -1935,7 +1909,6 @@ in: body",
     docs: |-
       The scope, or a space-delimited list of scopes the token is requested for
       in: body
-    inline: true
     source:
       openapi: ../openapi.json
 imports:
