@@ -4,11 +4,17 @@ module Seed
   module FolderD
     module Service
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::FolderD::Service::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::FolderD::Service::Types::Response]
         def get_direct_thread(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(

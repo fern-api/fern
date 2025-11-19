@@ -4,11 +4,17 @@ module Seed
   module A
     module C
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::A::C::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [untyped]
         def foo(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(

@@ -4,12 +4,18 @@ module Seed
   module Health
     module Service
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::Health::Service::Client]
         def initialize(client:)
           @client = client
         end
 
         # This endpoint checks the health of a resource.
+        #
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
         #
         # @return [untyped]
         def check(request_options: {}, **params)
@@ -31,6 +37,10 @@ module Seed
         end
 
         # This endpoint checks the health of the service.
+        #
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
         #
         # @return [bool]
         def ping(request_options: {}, **_params)

@@ -3,12 +3,18 @@
 module Seed
   module Playlist
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Playlist::Client]
       def initialize(client:)
         @client = client
       end
 
       # Create a new playlist
+      #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Playlist::Types::Playlist]
       def create_playlist(request_options: {}, **params)
@@ -45,6 +51,10 @@ module Seed
 
       # Returns the user's playlists
       #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Array[Seed::Playlist::Types::Playlist]]
       def get_playlists(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -77,6 +87,10 @@ module Seed
 
       # Returns a playlist
       #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Playlist::Types::Playlist]
       def get_playlist(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -100,6 +114,10 @@ module Seed
 
       # Updates a playlist
       #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Playlist::Types::Playlist | nil]
       def update_playlist(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -121,6 +139,10 @@ module Seed
       end
 
       # Deletes a playlist
+      #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]
       def delete_playlist(request_options: {}, **params)

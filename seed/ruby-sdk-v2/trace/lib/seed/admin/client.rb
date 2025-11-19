@@ -3,11 +3,17 @@
 module Seed
   module Admin
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Admin::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def update_test_submission_status(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -28,6 +34,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def send_test_submission_update(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -48,6 +58,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def update_workspace_submission_status(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -68,6 +82,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def send_workspace_submission_update(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -88,6 +106,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def store_traced_test_case(request_options: {}, **params)
         _path_param_names = %i[submission_id test_case_id]
@@ -113,6 +135,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def store_traced_test_case_v_2(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -133,6 +159,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def store_traced_workspace(request_options: {}, **params)
         _path_param_names = %i[submission_id]
@@ -158,6 +188,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def store_traced_workspace_v_2(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

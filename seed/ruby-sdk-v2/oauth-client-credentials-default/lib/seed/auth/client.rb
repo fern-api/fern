@@ -3,11 +3,17 @@
 module Seed
   module Auth
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Auth::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token(request_options: {}, **params)
         _body_prop_names = %i[client_id client_secret grant_type]

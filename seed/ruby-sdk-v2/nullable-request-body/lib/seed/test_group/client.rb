@@ -3,12 +3,18 @@
 module Seed
   module TestGroup
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::TestGroup::Client]
       def initialize(client:)
         @client = client
       end
 
       # Post a nullable request body
+      #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [Hash[String, Object]]
       def test_method_name(request_options: {}, **params)

@@ -3,11 +3,17 @@
 module Seed
   module Path
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Path::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

@@ -3,11 +3,17 @@
 module Seed
   module Package
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Package::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def test(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)

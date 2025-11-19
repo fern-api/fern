@@ -3,11 +3,17 @@
 module Seed
   module Service
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Service::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def post(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -100,6 +106,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def just_file(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -123,6 +133,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def just_file_with_query_params(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -146,6 +160,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def with_content_type(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -189,6 +207,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def with_form_encoding(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -224,6 +246,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def with_form_encoded_containers(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -322,6 +348,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [String]
       def optional_args(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -352,6 +382,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [String]
       def with_inline_type(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -381,6 +415,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def simple(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(

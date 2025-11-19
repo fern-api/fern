@@ -3,11 +3,17 @@
 module Seed
   module Payment
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Payment::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [String]
       def create(request_options: {}, **params)
         _body_prop_names = %i[amount currency]
@@ -31,6 +37,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def delete(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

@@ -3,11 +3,17 @@
 module Seed
   module Dummy
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Dummy::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def generate(request_options: {}, **params)
         _body_prop_names = %i[stream num_events]

@@ -3,11 +3,17 @@
 module Seed
   module Simple
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Simple::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Simple::Types::FooResponse]
       def foo_without_endpoint_error(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -30,6 +36,10 @@ module Seed
         end
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Simple::Types::FooResponse]
       def foo(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -52,6 +62,10 @@ module Seed
         end
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Simple::Types::FooResponse]
       def foo_with_examples(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

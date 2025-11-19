@@ -3,11 +3,17 @@
 module Seed
   module Auth
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Auth::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token_with_client_credentials(request_options: {}, **params)
         _body_prop_names = %i[cid csr scp entity_id audience grant_type scope]
@@ -33,6 +39,10 @@ module Seed
         end
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def refresh_token(request_options: {}, **params)
         _body_prop_names = %i[client_id client_secret refresh_token audience grant_type scope]

@@ -3,11 +3,17 @@
 module Seed
   module Service
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Service::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Service::Types::Resource]
       def get_resource(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -29,6 +35,10 @@ module Seed
         end
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Array[Seed::Service::Types::Resource]]
       def list_resources(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)

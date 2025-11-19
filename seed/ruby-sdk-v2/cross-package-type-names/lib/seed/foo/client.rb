@@ -3,11 +3,17 @@
 module Seed
   module Foo
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Foo::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Foo::Types::ImportingType]
       def find(request_options: {}, **params)
         _body_prop_names = %i[public_property private_property]

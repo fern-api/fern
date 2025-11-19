@@ -3,12 +3,18 @@
 module Seed
   module Service
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Service::Client]
       def initialize(client:)
         @client = client
       end
 
       # List resources with pagination
+      #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::Types::Types::Resource]]
       def list_resources(request_options: {}, **params)
@@ -44,6 +50,10 @@ module Seed
 
       # Get a single resource
       #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Types::Types::Resource]
       def get_resource(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -74,6 +84,10 @@ module Seed
       end
 
       # Search resources with complex parameters
+      #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::SearchResponse]
       def search_resources(request_options: {}, **params)
@@ -109,6 +123,10 @@ module Seed
       end
 
       # List or search for users
+      #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::PaginatedUserResponse]
       def list_users(request_options: {}, **params)
@@ -147,6 +165,10 @@ module Seed
 
       # Get a user by ID
       #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Types::Types::User]
       def get_user_by_id(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -178,6 +200,10 @@ module Seed
 
       # Create a new user
       #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Types::Types::User]
       def create_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -201,6 +227,10 @@ module Seed
       end
 
       # Update a user
+      #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::User]
       def update_user(request_options: {}, **params)
@@ -226,6 +256,10 @@ module Seed
 
       # Delete a user
       #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def delete_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -246,6 +280,10 @@ module Seed
       end
 
       # List all connections
+      #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::Types::Types::Connection]]
       def list_connections(request_options: {}, **params)
@@ -277,6 +315,10 @@ module Seed
 
       # Get a connection by ID
       #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Types::Types::Connection]
       def get_connection(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -306,6 +348,10 @@ module Seed
       end
 
       # List all clients/applications
+      #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::PaginatedClientResponse]
       def list_clients(request_options: {}, **params)
@@ -343,6 +389,10 @@ module Seed
       end
 
       # Get a client by ID
+      #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::Client]
       def get_client(request_options: {}, **params)

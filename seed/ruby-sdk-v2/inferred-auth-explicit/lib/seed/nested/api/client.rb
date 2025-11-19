@@ -4,11 +4,17 @@ module Seed
   module Nested
     module Api
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::Nested::Api::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [untyped]
         def get_something(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(

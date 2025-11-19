@@ -3,11 +3,17 @@
 module Seed
   module Organizations
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Organizations::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Organizations::Types::Organization]
       def get_organization(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -29,6 +35,10 @@ module Seed
         end
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::User::Types::User]
       def get_organization_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -50,6 +60,10 @@ module Seed
         end
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Array[Seed::Organizations::Types::Organization]]
       def search_organizations(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)

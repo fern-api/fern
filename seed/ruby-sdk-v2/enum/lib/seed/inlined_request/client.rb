@@ -3,11 +3,17 @@
 module Seed
   module InlinedRequest
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::InlinedRequest::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def send_(request_options: {}, **params)
         _body_prop_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]

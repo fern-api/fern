@@ -4,11 +4,17 @@ module Seed
   module InlineUsers
     module InlineUsers
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::InlineUsers::InlineUsers::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
         def list_with_cursor_pagination(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -47,6 +53,10 @@ module Seed
           end
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersMixedTypePaginationResponse]
         def list_with_mixed_type_cursor_pagination(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -82,6 +92,10 @@ module Seed
           end
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
         def list_with_body_cursor_pagination(request_options: {}, **params)
           _body_prop_names = %i[pagination]
@@ -114,6 +128,10 @@ module Seed
           end
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
         def list_with_offset_pagination(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -153,6 +171,10 @@ module Seed
           end
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
         def list_with_double_offset_pagination(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -192,6 +214,10 @@ module Seed
           end
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
         def list_with_body_offset_pagination(request_options: {}, **params)
           _body_prop_names = %i[pagination]
@@ -225,6 +251,10 @@ module Seed
           end
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
         def list_with_offset_step_pagination(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -263,6 +293,10 @@ module Seed
           end
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
         def list_with_offset_pagination_has_next_page(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -301,6 +335,10 @@ module Seed
           end
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedResponse]
         def list_with_extended_results(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -336,6 +374,10 @@ module Seed
           end
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersExtendedOptionalListResponse]
         def list_with_extended_results_and_optional_data(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -371,6 +413,10 @@ module Seed
           end
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::Types::UsernameCursor]
         def list_usernames(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -406,6 +452,10 @@ module Seed
           end
         end
 
+        # @param request_options [Hash[untyped, untyped]]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::InlineUsers::InlineUsers::Types::UsernameContainer]
         def list_with_global_config(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)

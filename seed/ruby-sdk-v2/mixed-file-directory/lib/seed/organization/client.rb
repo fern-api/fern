@@ -3,12 +3,18 @@
 module Seed
   module Organization
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Organization::Client]
       def initialize(client:)
         @client = client
       end
 
       # Create a new organization.
+      #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Organization::Types::Organization]
       def create(request_options: {}, **params)

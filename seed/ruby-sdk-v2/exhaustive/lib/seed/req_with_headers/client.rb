@@ -3,11 +3,17 @@
 module Seed
   module ReqWithHeaders
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::ReqWithHeaders::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def get_with_custom_header(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
