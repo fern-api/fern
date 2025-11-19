@@ -172,10 +172,7 @@ public final class ExceptionGenerator extends AbstractFileGenerator {
                         controllerAdviceParameter.name);
             } else {
                 handleMethod.addStatement(
-                        "return $T.status($T.$L).build()",
-                        ResponseEntity.class,
-                        className,
-                        statusCodeFieldSpec.name);
+                        "return $T.status($T.$L).build()", ResponseEntity.class, className, statusCodeFieldSpec.name);
             }
             return null;
         }
