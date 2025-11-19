@@ -1,4 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
+import { ContainerRunner } from "@fern-api/core-utils";
 import { runContainerizedGenerationForSeed } from "@fern-api/local-workspace-runner";
 import { CONSOLE_LOGGER } from "@fern-api/logger";
 import path from "path";
@@ -9,22 +10,35 @@ import { getGeneratorInvocation } from "../../../utils/getGeneratorInvocation";
 import { TestRunner } from "./TestRunner";
 
 export class DockerTestRunner extends TestRunner {
-    public async build(): Promise<void> {
-        const dockerCommands =
-            typeof this.generator.workspaceConfig.test.docker.command === "string"
-                ? [this.generator.workspaceConfig.test.docker.command]
-                : this.generator.workspaceConfig.test.docker.command;
-        if (dockerCommands == null) {
-            throw new Error(`Failed. No docker command for ${this.generator.workspaceName}`);
+    private readonly runner: ContainerRunner;
+
+    constructor(args: TestRunner.Args & { runner?: ContainerRunner }) {
+        super(args);
+        if (args.runner != null) {
+            this.runner = args.runner;
+        } else {
+            this.runner = args.generator.workspaceConfig.test.podman != null ? "podman" : "docker";
         }
-        const dockerBuildReturn = await runScript({
-            commands: dockerCommands,
+    }
+
+    public async build(): Promise<void> {
+        const testConfig =
+            this.runner === "podman" && this.generator.workspaceConfig.test.podman != null
+                ? this.generator.workspaceConfig.test.podman
+                : this.generator.workspaceConfig.test.docker;
+
+        const containerCommands = typeof testConfig.command === "string" ? [testConfig.command] : testConfig.command;
+        if (containerCommands == null) {
+            throw new Error(`Failed. No ${this.runner} command for ${this.generator.workspaceName}`);
+        }
+        const containerBuildReturn = await runScript({
+            commands: containerCommands,
             logger: CONSOLE_LOGGER,
             workingDir: path.dirname(path.dirname(this.generator.absolutePathToWorkspace)),
             doNotPipeOutput: false
         });
-        if (dockerBuildReturn.exitCode !== 0) {
-            throw new Error(`Failed to build the docker container for ${this.generator.workspaceName}.`);
+        if (containerBuildReturn.exitCode !== 0) {
+            throw new Error(`Failed to build the container for ${this.generator.workspaceName}.`);
         }
     }
 
@@ -80,8 +94,17 @@ export class DockerTestRunner extends TestRunner {
             skipUnstableDynamicSnippetTests: true,
             inspect,
             keepDocker: keepDocker ?? false,
-            dockerImage: this.getDockerImageName(),
+            dockerImage: this.getContainerImageName(),
+            runner: this.runner,
             ai: undefined
         });
+    }
+
+    protected getContainerImageName(): string {
+        const testConfig =
+            this.runner === "podman" && this.generator.workspaceConfig.test.podman != null
+                ? this.generator.workspaceConfig.test.podman
+                : this.generator.workspaceConfig.test.docker;
+        return testConfig.image;
     }
 }
