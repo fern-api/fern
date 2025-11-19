@@ -44,9 +44,16 @@ jobs:
   bulk-update-generator:
     needs: publish
     if: ${{ always() && needs.publish.result == 'success' }}
-    uses: ./.github/workflows/_bulk-update-generator.yml
-    with:
-      generator-name: "pydantic"
-      version-file: "generators/python/pydantic/versions.yml"
-      manual-version: ${{ inputs.version }}
-    secrets: inherit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Trigger bulk update
+        uses: ./.github/actions/bulk-update-generator
+        with:
+          generator-name: "pydantic"
+          version-file: "generators/python/pydantic/versions.yml"
+          manual-version: ${{ inputs.version }}
+          fern-token: ${{ secrets.FERN_TOKEN }}
+          autopilot-host: ${{ vars.AUTOPILOT_HOST != '' && vars.AUTOPILOT_HOST || 'https://autopilot.buildwithfern.com' }}
