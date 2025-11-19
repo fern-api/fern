@@ -92,6 +92,13 @@ class ClientWrapperGenerator:
         timeout_param = self._get_timeout_constructor_parameter()
         constructor_parameters = [param for param in constructor_info.constructor_parameters]
         constructor_parameters.append(url_constructor_param)
+        
+        # For single URL environments, also add the environment parameter
+        url_storage_type = get_client_wrapper_url_type(ir=self._context.ir)
+        if url_storage_type is ClientWrapperUrlStorage.URL and self._context.ir.environments is not None:
+            environment_param = self._get_environment_constructor_parameter()
+            constructor_parameters.append(environment_param)
+        
         constructor_parameters.append(timeout_param)
 
         source_file.add_class_declaration(
@@ -154,9 +161,17 @@ class ClientWrapperGenerator:
         )
 
     def _get_environment_constructor_parameter(self) -> ConstructorParameter:
+        # For single URL environments, the environment parameter should be optional
+        url_storage_type = get_client_wrapper_url_type(ir=self._context.ir)
+        is_single_url_environment = url_storage_type is ClientWrapperUrlStorage.URL and self._context.ir.environments is not None
+        
+        environment_type_hint = AST.TypeHint(self._context.get_reference_to_environments_class())
+        if is_single_url_environment:
+            environment_type_hint = AST.TypeHint.optional(environment_type_hint)
+        
         return ConstructorParameter(
             constructor_parameter_name=ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME,
-            type_hint=AST.TypeHint(self._context.get_reference_to_environments_class()),
+            type_hint=environment_type_hint,
             private_member_name=f"_{ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME}",
             initializer=self._get_environment_instantiation(
                 self._generated_environment,
@@ -164,7 +179,7 @@ class ClientWrapperGenerator:
             getter_method=AST.FunctionDeclaration(
                 name=ClientWrapperGenerator.GET_ENVIRONMENT_METHOD_NAME,
                 signature=AST.FunctionSignature(
-                    return_type=AST.TypeHint(self._context.get_reference_to_environments_class())
+                    return_type=environment_type_hint
                 ),
                 body=AST.CodeWriter(f"return self._{ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME}"),
             ),

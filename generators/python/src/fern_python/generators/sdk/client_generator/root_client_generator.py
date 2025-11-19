@@ -767,6 +767,12 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     ),
                 )
             )
+            client_wrapper_constructor_kwargs.append(
+                (
+                    ClientWrapperGenerator.ENVIRONMENT_PARAMETER_NAME,
+                    AST.Expression(RootClientGenerator.ENVIRONMENT_CONSTRUCTOR_PARAMETER_NAME),
+                )
+            )
         elif environments_config.environments.get_as_union().type == "multipleBaseUrls":
             client_wrapper_constructor_kwargs.append(
                 (
