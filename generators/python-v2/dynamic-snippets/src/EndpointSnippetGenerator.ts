@@ -142,12 +142,18 @@ export class EndpointSnippetGenerator {
         }
 
         if (baseUrl != null && this.context.hasMultipleBaseUrlEnvironments()) {
-            return [
-                {
-                    name: "environment",
-                    value: environmentValue
+            const defaultEnvironmentId = this.context.getDefaultEnvironmentId();
+            if (defaultEnvironmentId != null) {
+                const environmentTypeReference = this.context.getEnvironmentTypeReferenceFromID(defaultEnvironmentId);
+                if (environmentTypeReference != null) {
+                    return [
+                        {
+                            name: "environment",
+                            value: environmentValue
+                        }
+                    ];
                 }
-            ];
+            }
         }
 
         return [

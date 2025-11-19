@@ -150,7 +150,7 @@ jobs:
         with:
           script: |
             const generatorName = '${{ needs.parse-comment.outputs.generator }}';
-            
+
             // Map generator names to their source paths
             const generatorPathMap = {
               'python-sdk': 'generators/python',
@@ -178,13 +178,13 @@ jobs:
               'openapi': 'generators/openapi',
               'postman': 'generators/postman'
             };
-            
+
             const generatorPath = generatorPathMap[generatorName];
             if (!generatorPath) {
               core.setFailed(`Unknown generator path for: ${generatorName}`);
               return;
             }
-            
+
             core.setOutput('generator-path', generatorPath);
 
       - name: Create check run
