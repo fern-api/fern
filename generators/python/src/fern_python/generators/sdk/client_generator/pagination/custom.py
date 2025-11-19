@@ -10,7 +10,7 @@ import fern.ir.resources as ir_types
 class CustomPagination(Paginator):
     """
     Custom pagination implementation for Python SDK.
-    
+
     This generates code that raises NotImplementedError, instructing SDK users
     to extend the CustomPager base class and implement their own pagination logic.
     """
@@ -32,7 +32,7 @@ class CustomPagination(Paginator):
         return
 
     def init_custom_vars_after_next(self, *, writer: AST.NodeWriter) -> None:
-        # No custom vars needed for custom pagination  
+        # No custom vars needed for custom pagination
         return
 
     def get_next_none_safe_condition(self) -> Optional[str]:
@@ -49,17 +49,17 @@ class CustomPagination(Paginator):
 
     def get_results_property(self) -> ir_types.ResponseProperty:
         return self.custom.results
-    
+
     def write(self, *, writer: AST.NodeWriter) -> None:
         """
         For custom pagination, we generate code that instantiates a user-provided
         CustomPager class with the parsed response and client wrapper.
-        
+
         The user is expected to define CustomPager in their codebase, which will
         receive the initial response and can access the client for subsequent requests.
-        
+
         Expected CustomPager signature:
-        
+
         class CustomPager(Generic[T, R]):
             def __init__(
                 self,
@@ -71,9 +71,9 @@ class CustomPagination(Paginator):
         """
         # Parse the initial response
         self.init_parsed_response(writer=writer)
-        
+
         pager_reference = self._context.core_utilities.get_custom_paginator_reference(self._is_async)
-        
+
         # Instantiate CustomPager with the response and client wrapper
         writer.write("return ")
         writer.write_node(
@@ -86,4 +86,3 @@ class CustomPagination(Paginator):
             )
         )
         writer.write_newline_if_last_line_not()
-

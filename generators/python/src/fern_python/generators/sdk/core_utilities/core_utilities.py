@@ -220,7 +220,9 @@ class CoreUtilities:
                     directories=self.filepath,
                     file=Filepath.FilepathPart(module_name="custom_pagination"),
                 ),
-                exports={f"Sync{self._custom_pager_base_name}", f"Async{self._custom_pager_base_name}"} if not self._exclude_types_from_init_exports else set(),
+                exports={f"Sync{self._custom_pager_base_name}", f"Async{self._custom_pager_base_name}"}
+                if not self._exclude_types_from_init_exports
+                else set(),
                 string_replacements={"CustomPager": self._custom_pager_base_name},
             )
 
@@ -267,7 +269,13 @@ class CoreUtilities:
             project.add_dependency(PYDANTIC_DEPENDENCY)
 
     def _copy_file_to_project(
-        self, *, project: Project, relative_filepath_on_disk: str, filepath_in_project: Filepath, exports: Set[str], string_replacements: Optional[dict[str, str]] = None
+        self,
+        *,
+        project: Project,
+        relative_filepath_on_disk: str,
+        filepath_in_project: Filepath,
+        exports: Set[str],
+        string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
         source = (
             os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
@@ -670,7 +678,9 @@ class CoreUtilities:
     def get_paginator_type(
         self, inner_type: AST.TypeHint, response_type: AST.TypeHint, is_async: bool, is_custom: bool = False
     ) -> AST.TypeHint:
-        pager_reference = self.get_custom_paginator_reference(is_async) if is_custom else self.get_paginator_reference(is_async)
+        pager_reference = (
+            self.get_custom_paginator_reference(is_async) if is_custom else self.get_paginator_reference(is_async)
+        )
         return AST.TypeHint(
             type=pager_reference,
             type_parameters=[AST.TypeParameter(inner_type), AST.TypeParameter(response_type)],

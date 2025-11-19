@@ -131,7 +131,7 @@ class SDKCustomConfig(pydantic.BaseModel):
             obj = obj.copy()
             if "custom-pager-name" in obj and "custom_pager_name" not in obj:
                 obj["custom_pager_name"] = obj.pop("custom-pager-name")
-        
+
         obj = super().parse_obj(obj)
 
         use_typeddict_requests = obj.use_typeddict_requests or obj.pydantic_config.use_typeddict_requests

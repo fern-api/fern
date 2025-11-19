@@ -13,7 +13,7 @@ Users should:
 
 from __future__ import annotations
 
-from typing import Any, AsyncIterator, Generic, Iterator, List, Optional, TypeVar
+from typing import Any, AsyncIterator, Generic, Iterator, TypeVar
 
 # Import the base utilities you'll need
 # Adjust these imports based on your actual structure
@@ -31,15 +31,15 @@ TResponse = TypeVar("TResponse")
 class SyncCustomPager(Generic[TItem, TResponse]):
     """
     Adapter for custom synchronous pagination.
-    
+
     The generator will call this with:
         SyncCustomPager(initial_response=response, client_wrapper=client_wrapper)
-    
+
     Implement this class to extract pagination metadata from your response
     and delegate to your custom pager implementation.
-    
+
     Example implementation:
-    
+
         class SyncCustomPager(Generic[TItem, TResponse]):
             def __init__(
                 self,
@@ -50,7 +50,7 @@ class SyncCustomPager(Generic[TItem, TResponse]):
                 # Extract data and pagination metadata from response
                 data = initial_response.data  # Adjust based on your response structure
                 links = initial_response.links
-                
+
                 # Initialize your custom pager
                 self._pager = MyCustomPager(
                     current_page=Page(data),
@@ -58,10 +58,10 @@ class SyncCustomPager(Generic[TItem, TResponse]):
                     get_headers=client_wrapper.get_headers,
                     # ... other parameters
                 )
-            
+
             def __iter__(self):
                 return iter(self._pager)
-            
+
             # Delegate other methods to your pager...
     """
 
@@ -73,7 +73,7 @@ class SyncCustomPager(Generic[TItem, TResponse]):
     ):
         """
         Initialize the custom pager.
-        
+
         Args:
             initial_response: The parsed API response from the first request
             client_wrapper: The client wrapper providing HTTP client and utilities
@@ -92,15 +92,15 @@ class SyncCustomPager(Generic[TItem, TResponse]):
 class AsyncCustomPager(Generic[TItem, TResponse]):
     """
     Adapter for custom asynchronous pagination.
-    
+
     The generator will call this with:
         AsyncCustomPager(initial_response=response, client_wrapper=client_wrapper)
-    
+
     Implement this class to extract pagination metadata from your response
     and delegate to your custom async pager implementation.
-    
+
     Example implementation:
-    
+
         class AsyncCustomPager(Generic[TItem, TResponse]):
             def __init__(
                 self,
@@ -111,7 +111,7 @@ class AsyncCustomPager(Generic[TItem, TResponse]):
                 # Extract data and pagination metadata from response
                 data = initial_response.data  # Adjust based on your response structure
                 links = initial_response.links
-                
+
                 # Initialize your custom async pager
                 self._pager = MyAsyncCustomPager(
                     current_page=Page(data),
@@ -119,10 +119,10 @@ class AsyncCustomPager(Generic[TItem, TResponse]):
                     get_headers=client_wrapper.get_headers,
                     # ... other parameters
                 )
-            
+
             async def __aiter__(self):
                 return self._pager.__aiter__()
-            
+
             # Delegate other methods to your pager...
     """
 
@@ -134,7 +134,7 @@ class AsyncCustomPager(Generic[TItem, TResponse]):
     ):
         """
         Initialize the custom async pager.
-        
+
         Args:
             initial_response: The parsed API response from the first request
             client_wrapper: The client wrapper providing HTTP client and utilities
@@ -148,4 +148,3 @@ class AsyncCustomPager(Generic[TItem, TResponse]):
     async def __aiter__(self) -> AsyncIterator[TItem]:
         """Asynchronously iterate through all items across all pages."""
         raise NotImplementedError("Must implement __aiter__ method")
-
