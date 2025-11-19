@@ -78,3 +78,83 @@ func (p *CustomPager[T]) GetPrevPage(ctx context.Context) (*T, error) {
 func (p *CustomPager[T]) Current() *T {
 	return p.current
 }
+
+// Iter returns a channel-based iterator for iterating through pages.
+// This works with all Go versions and can be used with range loops.
+// The iterator will yield the current page and continue fetching next pages
+// until no more pages are available or the context is cancelled.
+func (p *CustomPager[T]) Iter(ctx context.Context) <-chan *T {
+	ch := make(chan *T)
+	go func() {
+		defer close(ch)
+		current := p.current
+		for current != nil {
+			select {
+			case <-ctx.Done():
+				return
+			case ch <- current:
+			}
+			if !p.HasNextPage() {
+				return
+			}
+			next, err := p.GetNextPage(ctx)
+			if err != nil {
+				return
+			}
+			current = next
+		}
+	}()
+	return ch
+}
+
+// Seq returns a range-over-func iterator for Go 1.23+ compatibility.
+// This allows using the pager with range loops: for page := range pager.Seq(ctx) { ... }
+// The iterator will yield the current page and continue fetching next pages
+// until no more pages are available or the context is cancelled.
+func (p *CustomPager[T]) Seq(ctx context.Context) func(yield func(*T) bool) {
+	return func(yield func(*T) bool) {
+		current := p.current
+		for current != nil {
+			select {
+			case <-ctx.Done():
+				return
+			default:
+			}
+			if !yield(current) {
+				return
+			}
+			if !p.HasNextPage() {
+				return
+			}
+			next, err := p.GetNextPage(ctx)
+			if err != nil {
+				return
+			}
+			current = next
+		}
+	}
+}
+
+// ForEach iterates through all pages and calls the provided function for each page.
+// If the function returns false, iteration stops early.
+func (p *CustomPager[T]) ForEach(ctx context.Context, fn func(*T) bool) {
+	current := p.current
+	for current != nil {
+		select {
+		case <-ctx.Done():
+			return
+		default:
+		}
+		if !fn(current) {
+			return
+		}
+		if !p.HasNextPage() {
+			return
+		}
+		next, err := p.GetNextPage(ctx)
+		if err != nil {
+			return
+		}
+		current = next
+	}
+}

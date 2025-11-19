@@ -1,7 +1,7 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { defaultBaseGoCustomConfigSchema } from "@fern-api/go-ast";
-import { AbstractGoGeneratorCli } from "@fern-api/go-base";
+import { defaultBaseGoCustomConfigSchema, go } from "@fern-api/go-ast";
+import { AbstractGoGeneratorCli, GoFile } from "@fern-api/go-base";
 import { DynamicSnippetsGenerator } from "@fern-api/go-dynamic-snippets";
 
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -59,6 +59,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         this.generateClients(context);
         this.generateRawClients(context);
         this.generateInternalFiles(context);
+        this.generateCustomPagerAlias(context);
 
         await context.snippetGenerator.populateSnippetsCache();
 
@@ -174,6 +175,28 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         for (const file of internalFiles.generate()) {
             context.project.addGoFiles(file);
         }
+    }
+
+    private generateCustomPagerAlias(context: SdkGeneratorContext) {
+        if (context.customConfig.customPagerName == null) {
+            return;
+        }
+        const customPagerName = context.customConfig.customPagerName;
+        const wrapperContent = go.codeblock((writer) => {
+            writer.writeLine(`type ${customPagerName}[T any] struct {`);
+            writer.writeLine(`\t*CustomPager[T]`);
+            writer.writeLine(`}`);
+        });
+        const wrapperFile = new GoFile({
+            node: wrapperContent,
+            directory: RelativeFilePath.of("core"),
+            filename: "custom_pager_wrapper.go",
+            packageName: "core",
+            rootImportPath: context.getRootImportPath(),
+            importPath: context.getCoreImportPath(),
+            customConfig: context.customConfig
+        });
+        context.project.addGoFiles(wrapperFile);
     }
 
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {

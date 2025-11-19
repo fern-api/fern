@@ -8,6 +8,7 @@ import (
 	core "github.com/pagination-custom/fern/core"
 	internal "github.com/pagination-custom/fern/internal"
 	option "github.com/pagination-custom/fern/option"
+	http "net/http"
 )
 
 type Client struct {
@@ -37,13 +38,49 @@ func (c *Client) ListUsernamesCustom(
 	request *fern.ListUsernamesRequestCustom,
 	opts ...option.RequestOption,
 ) (*fern.UsernameCursor, error) {
-	response, err := c.WithRawResponse.ListUsernamesCustom(
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"",
+	)
+	endpointURL := baseURL + "/users"
+	queryParams, err := internal.QueryValues(request)
+	if err != nil {
+		return nil, err
+	}
+	if len(queryParams) > 0 {
+		endpointURL += "?" + queryParams.Encode()
+	}
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *fern.UsernameCursor
+	var response *fern.UsernameCursor
+	_, err := c.caller.Call(
 		ctx,
-		request,
-		opts...,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return response.Body, nil
+	base := core.NewCustomPager(
+		response,
+		nil,
+		nil,
+		nil,
+		nil,
+	)
+	pager := &PayrocPager[*fern.UsernameCursor]{CustomPager: base}
+	return pager, nil
 }

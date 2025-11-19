@@ -206,6 +206,10 @@ fixtures:
   nullable-request-body:
     - outputFolder: dynamic-snippets-disabled
       disableDynamicSnippetTests: true
+  pagination-custom:
+    - outputFolder: .
+      customConfig:
+        customPagerName: PayrocPager
 scripts:
   - image: fernapi/go-seed:1.0.0
     commands:

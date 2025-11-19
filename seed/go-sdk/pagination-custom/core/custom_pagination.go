@@ -4,14 +4,18 @@ import (
 	"context"
 )
 
+// CustomPager is a generic pager for custom pagination endpoints.
+// It provides bidirectional navigation through pages of results.
 type CustomPager[T any] struct {
-	current  *T
-	hasNext  func(*T) bool
-	hasPrev  func(*T) bool
-	getNext  func(context.Context, *T) (*T, error)
-	getPrev  func(context.Context, *T) (*T, error)
+	current *T
+	hasNext func(*T) bool
+	hasPrev func(*T) bool
+	getNext func(context.Context, *T) (*T, error)
+	getPrev func(context.Context, *T) (*T, error)
 }
 
+// NewCustomPager creates a new custom pager with the given initial response
+// and navigation functions.
 func NewCustomPager[T any](
 	initial *T,
 	hasNext func(*T) bool,
@@ -28,6 +32,7 @@ func NewCustomPager[T any](
 	}
 }
 
+// HasNextPage returns true if there is a next page available.
 func (p *CustomPager[T]) HasNextPage() bool {
 	if p.current == nil || p.hasNext == nil {
 		return false
@@ -48,6 +53,7 @@ func (p *CustomPager[T]) GetNextPage(ctx context.Context) (*T, error) {
 	return next, nil
 }
 
+// HasPrevPage returns true if there is a previous page available.
 func (p *CustomPager[T]) HasPrevPage() bool {
 	if p.current == nil || p.hasPrev == nil {
 		return false
@@ -55,6 +61,7 @@ func (p *CustomPager[T]) HasPrevPage() bool {
 	return p.hasPrev(p.current)
 }
 
+// GetPrevPage fetches the previous page of results.
 func (p *CustomPager[T]) GetPrevPage(ctx context.Context) (*T, error) {
 	if p.getPrev == nil {
 		return nil, ErrNoPages
@@ -67,10 +74,15 @@ func (p *CustomPager[T]) GetPrevPage(ctx context.Context) (*T, error) {
 	return prev, nil
 }
 
+// Current returns the current page response.
 func (p *CustomPager[T]) Current() *T {
 	return p.current
 }
 
+// Iter returns a channel-based iterator for iterating through pages.
+// This works with all Go versions and can be used with range loops.
+// The iterator will yield the current page and continue fetching next pages
+// until no more pages are available or the context is cancelled.
 func (p *CustomPager[T]) Iter(ctx context.Context) <-chan *T {
 	ch := make(chan *T)
 	go func() {
@@ -95,6 +107,10 @@ func (p *CustomPager[T]) Iter(ctx context.Context) <-chan *T {
 	return ch
 }
 
+// Seq returns a range-over-func iterator for Go 1.23+ compatibility.
+// This allows using the pager with range loops: for page := range pager.Seq(ctx) { ... }
+// The iterator will yield the current page and continue fetching next pages
+// until no more pages are available or the context is cancelled.
 func (p *CustomPager[T]) Seq(ctx context.Context) func(yield func(*T) bool) {
 	return func(yield func(*T) bool) {
 		current := p.current
@@ -119,6 +135,8 @@ func (p *CustomPager[T]) Seq(ctx context.Context) func(yield func(*T) bool) {
 	}
 }
 
+// ForEach iterates through all pages and calls the provided function for each page.
+// If the function returns false, iteration stops early.
 func (p *CustomPager[T]) ForEach(ctx context.Context, fn func(*T) bool) {
 	current := p.current
 	for current != nil {

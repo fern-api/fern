@@ -1289,7 +1289,7 @@ func (f *fileWriter) WriteClient(
 		f.P()
 
 		// Prepare a response variable.
-		if endpoint.ResponseType != "" && endpoint.PaginationInfo == nil {
+		if endpoint.ResponseType != "" && endpoint.PaginationInfo == nil && !endpoint.HasCustomPagination {
 			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
 		}
 
@@ -1448,6 +1448,45 @@ func (f *fileWriter) WriteClient(
 			f.P(")")
 
 			f.P("return pager.GetPage(ctx, ", endpoint.PaginationInfo.PageFirstRequestParameter, ")")
+			f.P("}")
+			f.P()
+		} else if endpoint.HasCustomPagination {
+			f.P("var response ", endpoint.ResponseType)
+			f.P("if _, err := ", receiver, ".caller.Call(")
+			f.P("ctx,")
+			f.P("&internal.CallParams{")
+			f.P("URL: endpointURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
+			f.P("Client: options.HTTPClient,")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ResponseParameterName != "" {
+				f.P("Response: ", endpoint.ResponseParameterName, ",")
+			}
+			if endpoint.ResponseIsOptionalParameter {
+				f.P("ResponseIsOptional: true,")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			f.P("},")
+			f.P("); err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
+			f.P("base := core.NewCustomPager(")
+			f.P("response,")
+			f.P("nil,")
+			f.P("nil,")
+			f.P("nil,")
+			f.P("nil,")
+			f.P(")")
+			f.P("pager := &core.", endpoint.CustomPagerName, "[", endpoint.ResponseType, "]{CustomPager: base}")
+			f.P("return pager, nil")
 			f.P("}")
 			f.P()
 		} else {
@@ -2230,6 +2269,8 @@ type endpoint struct {
 	FileBodyProperties          []*ir.FileUploadBodyProperty
 	StreamingInfo               *streamingInfo
 	PaginationInfo              *paginationInfo
+	HasCustomPagination         bool
+	CustomPagerName             string
 }
 
 type signatureParameter struct {
@@ -2583,6 +2624,18 @@ func (f *fileWriter) endpointFromIR(
 		contentType = contentTypeOverride
 	}
 
+	var hasCustomPagination bool
+	var customPagerName string
+	if irEndpoint.Pagination != nil && irEndpoint.Pagination.Type == "custom" {
+		hasCustomPagination = true
+		customPagerName = f.customPagerName
+		if customPagerName == "" {
+			customPagerName = "CustomPager"
+		}
+		signatureReturnValues = fmt.Sprintf("(*core.%s[%s], error)", customPagerName, responseType)
+		errorReturnValues = "nil, err"
+	}
+
 	return &endpoint{
 		Name:                        irEndpoint.Name,
 		Docs:                        irEndpoint.Docs,
@@ -2619,6 +2672,8 @@ func (f *fileWriter) endpointFromIR(
 		FileBodyProperties:          fileBodyProperties,
 		StreamingInfo:               streamingInfo,
 		PaginationInfo:              paginationInfo,
+		HasCustomPagination:         hasCustomPagination,
+		CustomPagerName:             customPagerName,
 	}, nil
 }
 

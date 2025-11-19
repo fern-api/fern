@@ -219,20 +219,40 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     endpoint,
                     subpackage,
                     errorDecoder: undefined,
-                    rawClient: true
+                    rawClient: false
                 })
             );
             writer.newLine();
-            const responseInitialization = this.getResponseInitialization({ endpoint });
-            if (responseInitialization != null) {
-                writer.writeNode(responseInitialization);
-                writer.newLine();
+            const responseBody = endpoint.response?.body;
+            if (responseBody == null) {
+                writer.writeLine("return nil, nil");
+                return;
             }
+            let baseResponseType: go.Type;
+            switch (responseBody.type) {
+                case "json":
+                    baseResponseType = this.context.goTypeMapper.convert({ reference: responseBody.value.responseBodyType });
+                    break;
+                case "fileDownload":
+                case "text":
+                    baseResponseType = go.Type.string();
+                    break;
+                case "bytes":
+                    throw new Error("Returning bytes is not supported");
+                case "streaming":
+                case "streamParameter":
+                    throw new Error("Custom pagination with streaming is not supported");
+                default:
+                    assertNever(responseBody);
+            }
+            writer.write("var response ");
+            writer.writeNode(baseResponseType);
+            writer.newLine();
             writer.write("_, err := ");
             writer.writeNode(
                 this.context.caller.call({
                     endpoint,
-                    clientReference: this.getCallerFieldReference({ rawClient: true }),
+                    clientReference: this.getCallerFieldReference({ subpackage }),
                     optionsReference: go.codeblock("options"),
                     url: go.codeblock("endpointURL"),
                     request: signature.request?.getRequestReference(),
@@ -247,12 +267,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.newLine();
             writer.dedent();
             writer.writeLine("}");
-            const responseBody = endpoint.response?.body;
-            if (responseBody == null) {
-                writer.writeLine("return nil, nil");
-                return;
-            }
-            writer.write("pager := ");
+            writer.write("base := ");
             writer.writeNode(
                 go.invokeFunc({
                     func: go.typeReference({
@@ -268,6 +283,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     ]
                 })
             );
+            writer.newLine();
+            const customPagerName = this.context.customConfig.customPagerName ?? "CustomPager";
+            writer.write(`pager := &${customPagerName}[`);
+            writer.writeNode(baseResponseType);
+            writer.write("]{CustomPager: base}");
             writer.newLine();
             writer.writeLine("return pager, nil");
         });
