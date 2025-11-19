@@ -3,6 +3,7 @@
 import typing
 
 import httpx
+from ..environment import SeedSingleUrlEnvironmentNoDefaultEnvironment
 from .http_client import AsyncHttpClient, HttpClient
 
 
@@ -13,11 +14,13 @@ class BaseClientWrapper:
         token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
+        environment: typing.Optional[SeedSingleUrlEnvironmentNoDefaultEnvironment] = None,
         timeout: typing.Optional[float] = None,
     ):
         self._token = token
         self._headers = headers
         self._base_url = base_url
+        self._environment = environment
         self._timeout = timeout
 
     def get_headers(self) -> typing.Dict[str, str]:
@@ -43,6 +46,9 @@ class BaseClientWrapper:
     def get_base_url(self) -> str:
         return self._base_url
 
+    def get_environment(self) -> typing.Optional[SeedSingleUrlEnvironmentNoDefaultEnvironment]:
+        return self._environment
+
     def get_timeout(self) -> typing.Optional[float]:
         return self._timeout
 
@@ -54,10 +60,11 @@ class SyncClientWrapper(BaseClientWrapper):
         token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
+        environment: typing.Optional[SeedSingleUrlEnvironmentNoDefaultEnvironment] = None,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.Client,
     ):
-        super().__init__(token=token, headers=headers, base_url=base_url, timeout=timeout)
+        super().__init__(token=token, headers=headers, base_url=base_url, environment=environment, timeout=timeout)
         self.httpx_client = HttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
@@ -73,10 +80,11 @@ class AsyncClientWrapper(BaseClientWrapper):
         token: typing.Union[str, typing.Callable[[], str]],
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
+        environment: typing.Optional[SeedSingleUrlEnvironmentNoDefaultEnvironment] = None,
         timeout: typing.Optional[float] = None,
         httpx_client: httpx.AsyncClient,
     ):
-        super().__init__(token=token, headers=headers, base_url=base_url, timeout=timeout)
+        super().__init__(token=token, headers=headers, base_url=base_url, environment=environment, timeout=timeout)
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,

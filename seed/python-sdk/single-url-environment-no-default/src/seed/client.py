@@ -64,6 +64,7 @@ class SeedSingleUrlEnvironmentNoDefault:
         )
         self._client_wrapper = SyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
+            environment=environment,
             token=token,
             headers=headers,
             httpx_client=httpx_client
@@ -136,6 +137,7 @@ class AsyncSeedSingleUrlEnvironmentNoDefault:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=_get_base_url(base_url=base_url, environment=environment),
+            environment=environment,
             token=token,
             headers=headers,
             httpx_client=httpx_client
