@@ -144,6 +144,49 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Map generator to path
+        id: map-generator
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const generatorName = '${{ needs.parse-comment.outputs.generator }}';
+            
+            // Map generator names to their source paths
+            const generatorPathMap = {
+              'python-sdk': 'generators/python',
+              'pydantic': 'generators/python',
+              'pydantic-v2': 'generators/python-v2',
+              'fastapi': 'generators/python',
+              'ts-sdk': 'generators/typescript',
+              'ts-express': 'generators/typescript',
+              'java-sdk': 'generators/java',
+              'java-spring': 'generators/java',
+              'java-model': 'generators/java',
+              'go-sdk': 'generators/go',
+              'go-fiber': 'generators/go',
+              'go-model': 'generators/go',
+              'ruby-sdk': 'generators/ruby',
+              'ruby-model': 'generators/ruby',
+              'ruby-sdk-v2': 'generators/ruby-v2',
+              'csharp-sdk': 'generators/csharp',
+              'csharp-model': 'generators/csharp',
+              'php-sdk': 'generators/php',
+              'php-model': 'generators/php',
+              'swift-sdk': 'generators/swift',
+              'rust-sdk': 'generators/rust',
+              'rust-model': 'generators/rust',
+              'openapi': 'generators/openapi',
+              'postman': 'generators/postman'
+            };
+            
+            const generatorPath = generatorPathMap[generatorName];
+            if (!generatorPath) {
+              core.setFailed(`Unknown generator path for: ${generatorName}`);
+              return;
+            }
+            
+            core.setOutput('generator-path', generatorPath);
+
       - name: Create check run
         id: create-check
         uses: actions/github-script@v7
@@ -165,33 +208,22 @@ jobs:
 
       - name: Run seed test
         id: seed-test
-        run: |
-          set +e
-          pnpm seed:local test --generator ${{ needs.parse-comment.outputs.generator }} 2>&1 | tee seed-output.log
-          echo "exit-code=$?" >> $GITHUB_OUTPUT
+        uses: ./.github/actions/auto-update-seed
         continue-on-error: true
+        with:
+          generator-name: ${{ needs.parse-comment.outputs.generator }}
+          generator-path: ${{ steps.map-generator.outputs.generator-path }}
+          allow-unexpected-failures: false
+          fixtures-to-run: '["all"]'
+          index: 0
+          skip-scripts: false
 
       - name: Update check run with result
         if: always()
         uses: actions/github-script@v7
         with:
           script: |
-            const fs = require('fs');
-            let output = '';
-            try {
-              output = fs.readFileSync('seed-output.log', 'utf8');
-            } catch (e) {
-              output = 'No output captured';
-            }
-
-            // Truncate output if too long (GitHub has a limit)
-            const maxLength = 65000;
-            if (output.length > maxLength) {
-              output = output.substring(0, maxLength) + '\n\n... (output truncated)';
-            }
-
-            const exitCode = '${{ steps.seed-test.outputs.exit-code }}';
-            const success = exitCode === '0';
+            const success = '${{ steps.seed-test.outcome }}' === 'success';
 
             await github.rest.checks.update({
               owner: context.repo.owner,
@@ -204,8 +236,10 @@ jobs:
                 title: success ? 'Seed test passed ✓' : 'Seed test failed ✗',
                 summary: success 
                   ? 'All seed tests passed for ${{ needs.parse-comment.outputs.generator }}'
-                  : 'Seed tests failed for ${{ needs.parse-comment.outputs.generator }}. See details below.',
-                text: '```\n' + output + '\n```'
+                  : 'Seed tests failed for ${{ needs.parse-comment.outputs.generator }}. See details in the workflow run.',
+                text: success 
+                  ? 'Seed tests completed successfully.'
+                  : 'Seed tests failed. Check the [workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.'
               }
             });
 
