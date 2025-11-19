@@ -18,7 +18,6 @@ import { EndpointSignatureInfo } from "./EndpointSignatureInfo";
 import { EndpointRequest } from "./request/EndpointRequest";
 import { getEndpointPageReturnType } from "./utils/getEndpointPageReturnType";
 import { getEndpointRequest } from "./utils/getEndpointRequest";
-import { getEndpointReturnType } from "./utils/getEndpointReturnType";
 import { getEndpointReturnZeroValue } from "./utils/getEndpointReturnZeroValue";
 import { getRawEndpointReturnTypeReference } from "./utils/getRawEndpointReturnTypeReference";
 
