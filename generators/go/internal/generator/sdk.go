@@ -1451,7 +1451,6 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			f.P()
 		} else if endpoint.HasCustomPagination {
-			f.P("var response ", endpoint.ResponseType)
 			f.P("if _, err := ", receiver, ".caller.Call(")
 			f.P("ctx,")
 			f.P("&internal.CallParams{")
