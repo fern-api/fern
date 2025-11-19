@@ -270,7 +270,7 @@ export class HttpEndpointGenerator {
     }
 
     private getPathParameterName({ pathParameter }: { pathParameter: PathParameter }): string {
-        return pathParameter.name.originalName;
+        return pathParameter.name.snakeCase.safeName;
     }
 
     private loadResponseBodyFromJson({
