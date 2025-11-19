@@ -16,6 +16,6 @@ public final class PlaylistIdNotFoundErrorExceptionHandler {
   @ExceptionHandler(PlaylistIdNotFoundError.class)
   ResponseEntity<Object> handle(PlaylistIdNotFoundError playlistIdNotFoundError) {
     ErrorBody body = new ErrorBody<>(PlaylistIdNotFoundError.ERROR_NAME, playlistIdNotFoundError.getBody());
-    return new ResponseEntity<>(body, null, PlaylistIdNotFoundError.STATUS_CODE);
+    return ResponseEntity.status(PlaylistIdNotFoundError.STATUS_CODE).body(body);
   }
 }
