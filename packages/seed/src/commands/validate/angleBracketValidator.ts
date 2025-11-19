@@ -66,20 +66,22 @@ export function findUnescapedAngleBrackets(text: string): string[] {
 }
 
 /**
- * Finds instances of double backticks (`` or more consecutive backticks) in text.
+ * Finds instances of exactly double backticks (`` but not ```) in text.
  * Double backticks can break MDX parsing in the docs.
+ * Triple backticks (```) are allowed as they're used for fenced code blocks.
  *
  * Returns an array of problematic patterns found.
  */
 export function findDoubleBackticks(text: string): string[] {
     const patterns: string[] = [];
 
-    const doubleBacktickPattern = /``+/g;
-    const matches = text.match(doubleBacktickPattern);
+    const textWithoutCodeBlocks = text.replace(/```[\s\S]*?```/g, "");
+
+    const doubleBacktickPattern = /(?<!`)``(?!`)/g;
+    const matches = textWithoutCodeBlocks.match(doubleBacktickPattern);
 
     if (matches) {
-        const uniquePatterns = [...new Set(matches)];
-        patterns.push(...uniquePatterns);
+        patterns.push("``");
     }
 
     return patterns;
