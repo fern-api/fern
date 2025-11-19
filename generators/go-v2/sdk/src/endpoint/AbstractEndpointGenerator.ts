@@ -51,17 +51,17 @@ export abstract class AbstractEndpointGenerator {
                 ? this.context.getVariadicIdempotentRequestOptionParameter()
                 : this.context.getVariadicRequestOptionParameter()
         ].filter((p): p is go.Parameter => p != null);
-        
+
         const pagination = this.context.getPagination(endpoint);
         const isCustomPagination = pagination?.type === "custom" && this.context.customConfig.customPagerName != null;
-        
+
         return {
             pathParameters,
             pathParameterReferences,
             request,
             requestParameter,
             allParameters,
-            returnType: isCustomPagination 
+            returnType: isCustomPagination
                 ? this.context.getReturnTypeForEndpoint(endpoint)
                 : getEndpointReturnType({ context: this.context, endpoint }),
             pageReturnType: getEndpointPageReturnType({ context: this.context, endpoint }),
