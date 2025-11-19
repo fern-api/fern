@@ -171,7 +171,7 @@
 
 - changelogEntry:
     - summary: |
-        Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays `generating AI examples for {API name} - X/Y`` to track progress without creating terminal noise.
+        Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays `generating AI examples for {API name} - X/Y` to track progress without creating terminal noise.
       type: feat
   irVersion: 61
   createdAt: "2025-11-14"
