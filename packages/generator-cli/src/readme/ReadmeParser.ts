@@ -16,7 +16,7 @@ export class ReadmeParser {
         for (const line of lines) {
             const h2Match = line.match(/^##\s+(.*)/);
             if (h2Match) {
-                if (currentBlock && !this.isCoreBlock(currentBlock.id)) {
+                if (currentBlock && !this.isTableOfContentsBlock(currentBlock.id)) {
                     blocks.push(currentBlock);
                 }
                 currentBlock = new Block({
@@ -32,7 +32,7 @@ export class ReadmeParser {
         }
 
         // Don't forget to push the last block
-        if (currentBlock && !this.isCoreBlock(currentBlock.id)) {
+        if (currentBlock && !this.isTableOfContentsBlock(currentBlock.id)) {
             blocks.push(currentBlock);
         }
 
@@ -42,7 +42,7 @@ export class ReadmeParser {
         };
     }
 
-    private isCoreBlock(blockId: string): boolean {
+    private isTableOfContentsBlock(blockId: string): boolean {
         return blockId === "TABLE_OF_CONTENTS" || blockId === "CONTENTS";
     }
 }
