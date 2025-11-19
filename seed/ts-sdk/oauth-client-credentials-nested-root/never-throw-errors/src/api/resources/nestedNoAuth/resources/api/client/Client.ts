@@ -4,7 +4,7 @@ import * as core from "../../../../../../core/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
 import * as SeedOauthClientCredentials from "../../../../../index.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
+import { mergeHeaders } from "../../../../../../core/headers.js";
 
 export declare namespace ApiClient {
     export interface Options extends BaseClientOptions {
@@ -34,7 +34,7 @@ export class ApiClient {
     }
 
     private async __getSomething(requestOptions?: ApiClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<void, SeedOauthClientCredentials.nestedNoAuth.api.getSomething.Error>>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/nested-no-auth/get-something"),
             method: "GET",

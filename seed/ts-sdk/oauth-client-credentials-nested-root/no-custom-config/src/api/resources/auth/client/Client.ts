@@ -4,7 +4,7 @@ import * as core from "../../../../core/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
 import * as SeedOauthClientCredentials from "../../../index.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace AuthClient {
@@ -40,7 +40,7 @@ export class AuthClient {
     }
 
     private async __getToken(request: SeedOauthClientCredentials.auth.GetTokenRequest, requestOptions?: AuthClient.RequestOptions): Promise<core.WithRawResponse<SeedOauthClientCredentials.auth.TokenResponse>> {
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/token"),
             method: "POST",
