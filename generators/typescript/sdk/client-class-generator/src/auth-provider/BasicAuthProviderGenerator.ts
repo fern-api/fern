@@ -181,19 +181,8 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         
         const authHeader = ${getTextOfTsNode(
             context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                ts.factory.createObjectLiteralExpression(
-                    [
-                        ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier("username"),
-                            ts.factory.createIdentifier(usernameVar)
-                        ),
-                        ts.factory.createPropertyAssignment(
-                            ts.factory.createIdentifier("password"),
-                            ts.factory.createIdentifier(passwordVar)
-                        )
-                    ],
-                    true
-                )
+                ts.factory.createIdentifier(usernameVar),
+                ts.factory.createIdentifier(passwordVar)
             )
         )};
         
