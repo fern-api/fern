@@ -15,5 +15,5 @@ channel:
         Symbols are formatted as CCY1CCY2 where prices are in CCY2 and
         quantities are in CCY1. To read more click
         [here](https://docs.sandbox.gemini.com/websocket-api/#symbols-and-minimums).
-      type: streamRoot.Symbol
+      type: Symbol
   url: public
