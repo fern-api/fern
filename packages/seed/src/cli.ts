@@ -118,6 +118,12 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     default: false,
                     description: "Execute Node with --inspect flag for debugging"
+                })
+                .option("container-runtime", {
+                    type: "string",
+                    choices: ["docker", "podman"],
+                    demandOption: false,
+                    description: "Explicitly specify which container runtime to use (docker or podman)"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -168,6 +174,27 @@ function addTestCommand(cli: Argv) {
                     );
                 }
 
+                if (argv.local && argv.containerRuntime != null) {
+                    throw new Error(
+                        `Cannot specify both --local and --container-runtime flags. The --container-runtime flag is only applicable for container-based test runners.`
+                    );
+                }
+
+                if (argv.containerRuntime != null) {
+                    const runtime = argv.containerRuntime as "docker" | "podman";
+                    const hasConfig =
+                        runtime === "docker"
+                            ? generator.workspaceConfig.test.docker != null
+                            : generator.workspaceConfig.test.podman != null;
+
+                    if (!hasConfig) {
+                        throw new Error(
+                            `Generator ${generator.workspaceName} does not have a test.${runtime} configuration in seed.yml. ` +
+                                `Either add a 'test.${runtime}' section to your seed.yml or omit the --container-runtime flag to use auto-detection.`
+                        );
+                    }
+                }
+
                 if (argv.local) {
                     if (generator.workspaceConfig.test.local == null) {
                         throw new Error(
@@ -205,7 +232,8 @@ function addTestCommand(cli: Argv) {
                         skipScripts: argv.skipScripts,
                         keepDocker: argv.keepDocker,
                         scriptRunner,
-                        inspect: argv.inspect
+                        inspect: argv.inspect,
+                        runner: argv.containerRuntime as "docker" | "podman" | undefined
                     });
                 }
 

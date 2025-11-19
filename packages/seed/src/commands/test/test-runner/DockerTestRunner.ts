@@ -11,11 +11,25 @@ import { TestRunner } from "./TestRunner";
 
 export class DockerTestRunner extends TestRunner {
     private readonly runner: ContainerRunner;
+    private readonly explicitRunner: boolean;
 
     constructor(args: TestRunner.Args & { runner?: ContainerRunner }) {
         super(args);
+        this.explicitRunner = args.runner != null;
+
         if (args.runner != null) {
             this.runner = args.runner;
+            const hasConfig =
+                this.runner === "docker"
+                    ? this.generator.workspaceConfig.test.docker != null
+                    : this.generator.workspaceConfig.test.podman != null;
+
+            if (!hasConfig) {
+                throw new Error(
+                    `Generator ${this.generator.workspaceName} does not have a test.${this.runner} configuration in seed.yml. ` +
+                        `Cannot use explicitly specified container runtime '${this.runner}' without corresponding configuration.`
+                );
+            }
         } else {
             this.runner = args.generator.workspaceConfig.test.podman != null ? "podman" : "docker";
         }
