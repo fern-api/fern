@@ -1078,13 +1078,4 @@ export class ServiceClient {
                 });
         }
     }
-
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer = await core.Supplier.get(this._options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
-    }
 }

@@ -96,15 +96,6 @@ export class AuthClient {
         }
     }
 
-    protected async _getAuthorizationHeader(endpointMetadata: core.EndpointMetadata): Promise<string | undefined> {
-        const bearer = await core.EndpointSupplier.get(this._options.token, { endpointMetadata });
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
-    }
-
     protected async _getCustomAuthorizationHeaders(
         endpointMetadata: core.EndpointMetadata,
     ): Promise<Record<string, string | undefined>> {

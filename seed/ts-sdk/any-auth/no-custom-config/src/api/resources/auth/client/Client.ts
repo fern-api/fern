@@ -94,15 +94,6 @@ export class AuthClient {
         }
     }
 
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer = await core.Supplier.get(this._options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
-    }
-
     protected async _getCustomAuthorizationHeaders(): Promise<Record<string, string | undefined>> {
         const apiKeyValue = (await core.Supplier.get(this._options.apiKey)) ?? process?.env.MY_API_KEY;
         return { "X-API-Key": apiKeyValue };

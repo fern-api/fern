@@ -1018,7 +1018,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
+        if (this.shouldGenerateAuthorizationHeaderHelperMethod({ context })) {
             const returnsMaybeAuth =
                 !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
                 this.basicAuthScheme != null ||
@@ -1089,11 +1089,20 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return code`this._options = normalizeClientOptions(options);`;
     }
 
-    public shouldGenerateAuthorizationHeaderHelperMethod(): boolean {
+    public shouldGenerateAuthorizationHeaderHelperMethod({ context }: { context: SdkContext }): boolean {
         if (this.generatedEndpointImplementations.length === 0 && this.generatedWebsocketImplementation == null) {
             return false;
         }
-        return this.oauthAuthScheme != null || this.bearerAuthScheme != null || this.basicAuthScheme != null;
+        if (
+            anyEndpointsNeedAuth({
+                context,
+                packageId: this.packageId,
+                packageResolver: this.packageResolver
+            })
+        ) {
+            return this.oauthAuthScheme != null || this.bearerAuthScheme != null || this.basicAuthScheme != null;
+        }
+        return false;
     }
 
     public shouldGenerateCustomAuthorizationHeaderHelperMethod(): boolean {
@@ -1143,8 +1152,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
     }
 
-    public getAuthorizationHeaderValue(): ts.Expression | undefined {
-        if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
+    public getAuthorizationHeaderValue({ context }: { context: SdkContext }): ts.Expression | undefined {
+        if (this.shouldGenerateAuthorizationHeaderHelperMethod({ context })) {
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
@@ -2201,6 +2210,33 @@ function anyEndpointWithAuth({
                 packageResolver
             });
         })
+    ) {
+        return true;
+    }
+
+    return false;
+}
+
+function anyEndpointsNeedAuth({
+    context,
+    packageId,
+    packageResolver
+}: {
+    context: SdkContext;
+    packageId: PackageId;
+    packageResolver: PackageResolver;
+}): boolean {
+    const websocketChannel = packageResolver.getWebSocketChannelDeclaration(packageId);
+    if (websocketChannel?.auth) {
+        return true;
+    }
+
+    const service = packageResolver.getServiceDeclaration(packageId);
+    if (
+        service &&
+        service.endpoints
+            .filter((endpoint) => !context.authProvider.isAuthEndpoint(endpoint))
+            .some((endpoint) => endpoint.auth)
     ) {
         return true;
     }
