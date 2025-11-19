@@ -20,10 +20,17 @@ export class BasicAuthProvider implements core.AuthProvider {
 
     public async getAuthRequest(): Promise<core.AuthRequest> {
         const username = (await core.Supplier.get(this.username)) ?? process.env?.USERNAME;
-        const accessToken = (await core.Supplier.get(this.password)) ?? process.env?.PASSWORD;
+        if (username == null) {
+            throw new Error(
+                "Please specify a username by either passing it in to the constructor or initializing a USERNAME environment variable",
+            );
+        }
 
-        if (username == null || accessToken == null) {
-            return { headers: {} };
+        const accessToken = (await core.Supplier.get(this.password)) ?? process.env?.PASSWORD;
+        if (accessToken == null) {
+            throw new Error(
+                "Please specify a accessToken by either passing it in to the constructor or initializing a PASSWORD environment variable",
+            );
         }
 
         const authHeader = core.BasicAuth.toAuthorizationHeader({

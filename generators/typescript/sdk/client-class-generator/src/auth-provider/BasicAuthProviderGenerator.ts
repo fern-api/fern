@@ -58,6 +58,37 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeClass(context: SdkContext): void {
+        const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
+        const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
+
+        const usernameFieldType = hasUsernameEnv
+            ? ts.factory.createUnionTypeNode([
+                  context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                      ts.factory.createUnionTypeNode([
+                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                      ])
+                  ),
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+              );
+
+        const passwordFieldType = hasPasswordEnv
+            ? ts.factory.createUnionTypeNode([
+                  context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                      ts.factory.createUnionTypeNode([
+                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                      ])
+                  ),
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+              );
+
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,
@@ -65,34 +96,14 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
             properties: [
                 {
                     name: USERNAME_FIELD_NAME,
-                    type: getTextOfTsNode(
-                        ts.factory.createUnionTypeNode([
-                            context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                                ts.factory.createUnionTypeNode([
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                                ])
-                            ),
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                        ])
-                    ),
+                    type: getTextOfTsNode(usernameFieldType),
                     hasQuestionToken: false,
                     isReadonly: true,
                     scope: Scope.Private
                 },
                 {
                     name: PASSWORD_FIELD_NAME,
-                    type: getTextOfTsNode(
-                        ts.factory.createUnionTypeNode([
-                            context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                                ts.factory.createUnionTypeNode([
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                                ])
-                            ),
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                        ])
-                    ),
+                    type: getTextOfTsNode(passwordFieldType),
                     hasQuestionToken: false,
                     isReadonly: true,
                     scope: Scope.Private
@@ -132,6 +143,8 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     private generateGetAuthRequestStatements(context: SdkContext): string {
         const usernameVar = this.authScheme.username.camelCase.unsafeName;
         const passwordVar = this.authScheme.password.camelCase.unsafeName;
+        const usernameFieldName = this.authScheme.username.camelCase.safeName;
+        const passwordFieldName = this.authScheme.password.camelCase.safeName;
 
         const usernameExpression =
             this.authScheme.usernameEnvVar != null
@@ -171,12 +184,25 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                       )
                   );
 
+        const usernameErrorMessage =
+            this.authScheme.usernameEnvVar != null
+                ? `Please specify a ${usernameFieldName} by either passing it in to the constructor or initializing a ${this.authScheme.usernameEnvVar} environment variable`
+                : `Please specify a ${usernameFieldName} by passing it in to the constructor`;
+
+        const passwordErrorMessage =
+            this.authScheme.passwordEnvVar != null
+                ? `Please specify a ${passwordFieldName} by either passing it in to the constructor or initializing a ${this.authScheme.passwordEnvVar} environment variable`
+                : `Please specify a ${passwordFieldName} by passing it in to the constructor`;
+
         return `
         const ${usernameVar} = ${usernameExpression};
+        if (${usernameVar} == null) {
+            throw new Error("${usernameErrorMessage}");
+        }
+
         const ${passwordVar} = ${passwordExpression};
-        
-        if (${usernameVar} == null || ${passwordVar} == null) {
-            return { headers: {} };
+        if (${passwordVar} == null) {
+            throw new Error("${passwordErrorMessage}");
         }
         
         const authHeader = ${getTextOfTsNode(
@@ -193,16 +219,21 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeOptions(context: SdkContext): void {
+        const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
+        const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
+
         const usernameProperty: PropertySignatureStructure = {
             kind: StructureKind.PropertySignature,
             name: getPropertyKey(this.authScheme.username.camelCase.safeName),
-            hasQuestionToken: true,
+            hasQuestionToken: hasUsernameEnv,
             type: getTextOfTsNode(
                 context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                    ts.factory.createUnionTypeNode([
-                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                    ])
+                    hasUsernameEnv
+                        ? ts.factory.createUnionTypeNode([
+                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                          ])
+                        : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                 )
             ),
             docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
@@ -211,13 +242,15 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const passwordProperty: PropertySignatureStructure = {
             kind: StructureKind.PropertySignature,
             name: getPropertyKey(this.authScheme.password.camelCase.safeName),
-            hasQuestionToken: true,
+            hasQuestionToken: hasPasswordEnv,
             type: getTextOfTsNode(
                 context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                    ts.factory.createUnionTypeNode([
-                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                    ])
+                    hasPasswordEnv
+                        ? ts.factory.createUnionTypeNode([
+                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                          ])
+                        : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                 )
             ),
             docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined

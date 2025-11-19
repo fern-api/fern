@@ -1131,7 +1131,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 packageResolver: this.packageResolver
             })
         ) {
-            return this.oauthAuthScheme != null || this.bearerAuthScheme != null || this.basicAuthScheme != null;
+            return this.oauthAuthScheme != null || this.bearerAuthScheme != null;
         }
         return false;
     }
@@ -1404,29 +1404,36 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }))
             );
         } else if (this.isRoot && this.basicAuthScheme != null) {
+            const hasUsernameEnv = this.basicAuthScheme.usernameEnvVar != null;
+            const hasPasswordEnv = this.basicAuthScheme.passwordEnvVar != null;
+
             properties.push({
                 name: getPropertyKey(this.getBasicAuthUsernameOptionKey(this.basicAuthScheme)),
                 type: getTextOfTsNode(
                     context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        ts.factory.createUnionTypeNode([
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                        ])
+                        hasUsernameEnv
+                            ? ts.factory.createUnionTypeNode([
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                              ])
+                            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                     )
                 ),
-                hasQuestionToken: true
+                hasQuestionToken: hasUsernameEnv
             });
             properties.push({
                 name: getPropertyKey(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme)),
                 type: getTextOfTsNode(
                     context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        ts.factory.createUnionTypeNode([
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                        ])
+                        hasPasswordEnv
+                            ? ts.factory.createUnionTypeNode([
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                              ])
+                            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                     )
                 ),
-                hasQuestionToken: true
+                hasQuestionToken: hasPasswordEnv
             });
         }
 
