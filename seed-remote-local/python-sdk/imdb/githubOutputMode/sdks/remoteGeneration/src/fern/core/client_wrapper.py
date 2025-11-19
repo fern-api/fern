@@ -22,9 +22,10 @@ class BaseClientWrapper:
 
     def get_headers(self) -> typing.Dict[str, str]:
         headers: typing.Dict[str, str] = {
+            "User-Agent": "test-remote-local-sdk/7.7.7",
             "X-Fern-Language": "Python",
             "X-Fern-SDK-Name": "test-remote-local-sdk",
-            "X-Fern-SDK-Version": "0.0.17559",
+            "X-Fern-SDK-Version": "7.7.7",
             **(self.get_custom_headers() or {}),
         }
         token = self._get_token()

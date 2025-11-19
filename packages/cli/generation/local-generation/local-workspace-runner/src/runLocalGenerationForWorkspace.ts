@@ -226,6 +226,7 @@ export async function runLocalGenerationForWorkspace({
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
                     ir: intermediateRepresentation,
+                    whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
                     runner,
                     ai
                 });
@@ -303,11 +304,21 @@ async function postProcessGithubSelfHosted(
         context.logger.debug("Starting GitHub self-hosted flow in directory: " + absolutePathToLocalOutput);
         const repository = ClonedRepository.createAtPath(absolutePathToLocalOutput);
         const now = new Date();
-        const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace(/\..+/, "");
+        const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace("Z", "").replace(".", "_");
         const prBranch = `fern-bot/${formattedDate}`;
         if (selfhostedGithubConfig.mode === "pull-request") {
             context.logger.debug(`Checking out new branch ${prBranch}`);
             await repository.checkout(prBranch);
+        }
+
+        context.logger.debug("Checking for .fernignore file...");
+        const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
+        try {
+            await fs.access(fernignorePath);
+            context.logger.debug(".fernignore already exists");
+        } catch {
+            context.logger.debug("Creating .fernignore file...");
+            await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
         }
 
         context.logger.debug("Committing changes...");

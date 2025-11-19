@@ -3,6 +3,8 @@ import { runExeca } from "@fern-api/logging-execa";
 import path from "path";
 import readline from "readline";
 import {
+    DEFAULT_FERN_LOG_LEVEL,
+    DEFAULT_SDK_VERSION,
     ENV_VAR_FERN_TOKEN,
     ENV_VAR_GITHUB_TOKEN,
     FERN_GENERATE_COMMAND,
@@ -10,6 +12,7 @@ import {
     FLAG_GROUP,
     FLAG_LOCAL,
     FLAG_LOG_LEVEL,
+    FLAG_VERSION,
     GenerationMode,
     LOCAL_GROUP_NAME,
     MSG_GENERATION_COMPLETED_PREFIX,
@@ -86,7 +89,16 @@ export async function runGeneration(
 
     // Use debug level to capture all output (needed for extracting branch info)
     // but we won't forward all logs to stdout - only our own structured logs
-    const args = [FERN_GENERATE_COMMAND, FLAG_GROUP, group, FLAG_LOG_LEVEL, LogLevel.Debug, ...extraFlags];
+    const args = [
+        FERN_GENERATE_COMMAND,
+        FLAG_GROUP,
+        group,
+        FLAG_LOG_LEVEL,
+        DEFAULT_FERN_LOG_LEVEL,
+        FLAG_VERSION,
+        DEFAULT_SDK_VERSION,
+        ...extraFlags
+    ];
 
     logger.info(`${MSG_GENERATION_RUNNING_PREFIX} ${generationMode} generation...`);
     logger.debug(`  Command: ${fernExecutable} ${args.join(" ")}`);

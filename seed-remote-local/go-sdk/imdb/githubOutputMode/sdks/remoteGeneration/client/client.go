@@ -3,10 +3,10 @@
 package client
 
 import (
-	core "github.com/fern-api/test-remote-local-sdk/core"
-	imdb "github.com/fern-api/test-remote-local-sdk/imdb"
-	internal "github.com/fern-api/test-remote-local-sdk/internal"
-	option "github.com/fern-api/test-remote-local-sdk/option"
+	core "github.com/fern-api/empty/v7/core"
+	imdb "github.com/fern-api/empty/v7/imdb"
+	internal "github.com/fern-api/empty/v7/internal"
+	option "github.com/fern-api/empty/v7/option"
 )
 
 type Client struct {
