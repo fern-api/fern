@@ -1,6 +1,14 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
-import { ContainerType, HttpEndpoint, Literal, PathParameter, PrimitiveType, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
+import {
+    ContainerType,
+    HttpEndpoint,
+    Literal,
+    PathParameter,
+    PrimitiveType,
+    ServiceId,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { getEndpointRequest } from "../utils/getEndpointRequest";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType";
