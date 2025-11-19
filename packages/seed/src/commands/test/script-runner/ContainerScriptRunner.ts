@@ -108,7 +108,7 @@ export class ContainerScriptRunner extends ScriptRunner {
         const mkdirCommand = await loggingExeca(
             taskContext.logger,
             this.runner,
-            ["exec", containerId, "mkdir", `/${workDir}`],
+            ["exec", containerId, "mkdir", "-p", `/${workDir}/generated`],
             {
                 doNotPipeOutput: false,
                 reject: false
