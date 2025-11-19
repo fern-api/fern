@@ -22,7 +22,7 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && rm -rf ./dist",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",

@@ -9,10 +9,10 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../../packages/commons/github"
+      "path": "../commons/github"
     },
     {
-      "path": "../../packages/commons/fs-utils"
+      "path": "../commons/fs-utils"
     }
   ]
 }

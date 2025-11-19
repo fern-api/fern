@@ -31,4 +31,4 @@ from .patient import Patient  # noqa: E402, I001
 from .practitioner import Practitioner  # noqa: E402, I001
 from .resource_list import ResourceList  # noqa: E402, I001
 
-update_forward_refs(Script, Patient=Patient, Account=Account, Practitioner=Practitioner)
+update_forward_refs(Script, Patient=Patient, Practitioner=Practitioner, Account=Account)

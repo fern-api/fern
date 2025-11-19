@@ -9,10 +9,15 @@
     "test": "jest",
     "test:watch": "jest --watch"
   },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testMatch": ["**/__tests__/**/*.test.ts", "**/?(*.)+(spec|test).ts"]
+  },
   "dependencies": {
-    "@fern-fern/ir-sdk": "^61.7.0",
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/ir-utils": "workspace:*",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -22,10 +27,5 @@
     "jest": "^29.7.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.2.2"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "testMatch": ["**/__tests__/**/*.test.ts", "**/?(*.)+(spec|test).ts"]
   }
 }
