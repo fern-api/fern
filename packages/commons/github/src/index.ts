@@ -1,3 +1,4 @@
+export { ClonedRepository } from "./ClonedRepository";
 export { cloneRepository } from "./cloneRepository";
 export { createOrUpdatePullRequest } from "./createOrUpdatePullRequest";
 export { deleteBranch } from "./deleteBranch";

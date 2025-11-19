@@ -1,3 +1,33 @@
+- version: 3.17.1
+  changelogEntry:
+    - summary: |
+        Bump generator CLI version to publish new Docker image.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 3.17.0
+  changelogEntry:
+    - summary: |
+        Add InputStream-based method overloads for file upload endpoints. For each single-file upload endpoint, the generator now creates 4 additional overloads that accept InputStream + filename instead of File objects:
+        - method(InputStream stream, String filename)
+        - method(InputStream stream, String filename, MediaType mediaType)
+        - method(InputStream stream, String filename, RequestOptions requestOptions)
+        - method(InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions)
+
+        This enables streaming file uploads without requiring files to be written to disk first. The implementation uses the existing FileStream wrapper class and InputStreamRequestBody for OkHttp integration. Note: Okio automatically closes the stream after upload, but users should still use try-with-resources for proper resource management.
+      type: feat
+  createdAt: "2025-11-18"
+  irVersion: 61
+
+- version: 3.16.1
+  changelogEntry:
+    - summary: |
+        Fix OAuth client credentials token supplier to support custom properties and headers. OAuth token endpoints can now include custom headers (e.g., x-api-key) and custom body properties (e.g., entity_id) in addition to standard OAuth fields (client_id, client_secret, scopes). This enables authentication with non-standard OAuth implementations that require additional parameters.
+      type: fix
+  createdAt: "2025-11-18"
+  irVersion: 61
+
 - version: 3.16.0
   changelogEntry:
     - summary: |

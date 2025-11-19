@@ -15,7 +15,7 @@
 request := &fern.SearchRequest{
         Limit: 1,
         Id: "id",
-        Date: fern.MustParseDateTime(
+        Date: fern.MustParseDate(
             "2023-01-15",
         ),
         Deadline: fern.MustParseDateTime(

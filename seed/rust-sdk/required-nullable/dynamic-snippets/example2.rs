@@ -11,12 +11,14 @@ async fn main() {
         .update_foo(
             &"id".to_string(),
             &UpdateFooRequest {
-                x_idempotency_key: "X-Idempotency-Key".to_string(),
                 nullable_text: Some(Some("nullable_text".to_string())),
                 nullable_number: Some(Some(1.1)),
                 non_nullable_text: Some("non_nullable_text".to_string()),
             },
-            None,
+            Some(
+                RequestOptions::new()
+                    .additional_header("X-Idempotency-Key", "X-Idempotency-Key".to_string()),
+            ),
         )
         .await;
 }

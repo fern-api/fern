@@ -1,0 +1,13 @@
+types:
+  AIServicesSchema:
+    properties:
+      provider: ModelProvider
+      model: ModelName
+
+  ModelProvider:
+    enum:
+      - openai
+      - anthropic
+      - bedrock
+
+  ModelName: string

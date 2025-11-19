@@ -12,8 +12,8 @@ async fn main() {
         .test_camel_case_properties(
             &PaymentRequest {
                 payment_method: PaymentMethodUnion::TokenizeCard(TokenizeCard {
-                    method: "method".to_string(),
-                    card_number: "cardNumber".to_string(),
+                    method: "card".to_string(),
+                    card_number: "1234567890123456".to_string(),
                 }),
             },
             None,

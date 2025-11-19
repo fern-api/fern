@@ -23,6 +23,56 @@ The repo relies on git-lfs to handle large file storage, so you'll need to have 
 brew install git-lfs
 ```
 
+### Important: Avoid Huge Clones
+
+The Fern repository is a large monorepo with extensive test fixtures and generated code. To avoid downloading gigabytes of unnecessary files, we strongly recommend using **git sparse-checkout** when cloning the repository.
+
+#### Recommended Clone Method
+
+Instead of a regular `git clone`, use sparse checkout from the start:
+
+```sh
+# Clone with sparse checkout enabled
+git clone --filter=blob:none --sparse https://github.com/fern-api/fern.git
+cd fern
+
+# Configure sparse checkout to exclude large directories
+bash ./sparse-checkout.sh
+```
+
+This configuration:
+- Includes all root files and directories
+- Excludes most if not all of the large snapshot outputs used in integration tests
+
+If you need to reset your sparse checkout configuration later, you can run:
+```sh
+pnpm sparse-checkout
+```
+
+#### Already Cloned Without Sparse Checkout?
+
+If you've already cloned the repository without sparse checkout, you can configure it now to reduce the repository size:
+
+```sh
+# From the repository root
+pnpm sparse-checkout
+```
+
+#### Additional Performance Tips (Optional)
+
+For better performance with large repositories, you can also configure these git settings:
+
+```sh
+git config core.fsmonitor true
+git config core.untrackedcache true
+git config feature.manyFiles true
+```
+
+On macOS, installing [watchman](https://facebook.github.io/watchman/) can further improve file watching performance:
+```sh
+brew install watchman
+```
+
 Once you have cloned or forked the repository, run through the steps below.
 
 ### Step 1: Install dependencies

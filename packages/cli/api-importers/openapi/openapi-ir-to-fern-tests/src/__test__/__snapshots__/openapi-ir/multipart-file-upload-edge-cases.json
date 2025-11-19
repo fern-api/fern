@@ -1,0 +1,525 @@
+{
+  "title": "Multipart File Upload Edge Cases",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "uploadFile",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UploadFileRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "file",
+            "schema": {
+              "isOptional": false,
+              "isArray": false,
+              "type": "file"
+            },
+            "exploded": false
+          },
+          {
+            "key": "description",
+            "schema": {
+              "value": {
+                "generatedName": "UploadFileRequestDescription",
+                "value": {
+                  "generatedName": "UploadFileRequestDescription",
+                  "schema": {
+                    "type": "string"
+                  },
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            }
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "multipart"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "uploadFileResponseFileId",
+              "key": "fileId",
+              "schema": {
+                "generatedName": "UploadFileResponseFileId",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UploadFileResponseFileId",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "uploadFileResponseUrl",
+              "key": "url",
+              "schema": {
+                "generatedName": "UploadFileResponseUrl",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "UploadFileResponseUrl",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UploadFileResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/upload",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "fileId": {
+                  "value": {
+                    "value": "fileId",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "url": {
+                  "value": {
+                    "value": "url",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "uploadMultipleFiles",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UploadMultipleFilesRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "files",
+            "schema": {
+              "isOptional": false,
+              "isArray": true,
+              "type": "file"
+            },
+            "exploded": false
+          },
+          {
+            "key": "metadata",
+            "schema": {
+              "value": {
+                "generatedName": "UploadMultipleFilesRequestMetadata",
+                "value": {
+                  "properties": [
+                    {
+                      "key": "title",
+                      "schema": {
+                        "generatedName": "UploadMultipleFilesRequestMetadataTitle",
+                        "value": {
+                          "generatedName": "UploadMultipleFilesRequestMetadataTitle",
+                          "schema": {
+                            "type": "string"
+                          },
+                          "groupName": [],
+                          "type": "primitive"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "conflict": {},
+                      "generatedName": "uploadMultipleFilesRequestMetadataTitle"
+                    },
+                    {
+                      "key": "tags",
+                      "schema": {
+                        "generatedName": "UploadMultipleFilesRequestMetadataTags",
+                        "value": {
+                          "generatedName": "UploadMultipleFilesRequestMetadataTags",
+                          "value": {
+                            "generatedName": "UploadMultipleFilesRequestMetadataTagsItem",
+                            "schema": {
+                              "type": "string"
+                            },
+                            "groupName": [],
+                            "type": "primitive"
+                          },
+                          "groupName": [],
+                          "type": "array"
+                        },
+                        "groupName": [],
+                        "type": "optional"
+                      },
+                      "audiences": [],
+                      "conflict": {},
+                      "generatedName": "uploadMultipleFilesRequestMetadataTags"
+                    }
+                  ],
+                  "generatedName": "UploadMultipleFilesRequestMetadata",
+                  "allOf": [],
+                  "allOfPropertyConflicts": [],
+                  "groupName": [],
+                  "fullExamples": [],
+                  "additionalProperties": false,
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "object"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "type": "json"
+            }
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "multipart"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "uploadMultipleFilesResponseUploadedCount",
+              "key": "uploadedCount",
+              "schema": {
+                "generatedName": "UploadMultipleFilesResponseUploadedCount",
+                "value": {
+                  "schema": {
+                    "type": "int"
+                  },
+                  "generatedName": "UploadMultipleFilesResponseUploadedCount",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UploadMultipleFilesResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/upload-multiple",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "uploadedCount": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "uploadWithJson",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "UploadWithJsonRequest",
+      "request": {
+        "properties": [
+          {
+            "key": "file",
+            "schema": {
+              "isOptional": false,
+              "isArray": false,
+              "type": "file"
+            },
+            "exploded": false
+          },
+          {
+            "key": "data",
+            "schema": {
+              "value": {
+                "properties": [
+                  {
+                    "key": "name",
+                    "schema": {
+                      "generatedName": "UploadWithJsonRequestDataName",
+                      "value": {
+                        "generatedName": "UploadWithJsonRequestDataName",
+                        "schema": {
+                          "type": "string"
+                        },
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "conflict": {},
+                    "generatedName": "uploadWithJsonRequestDataName"
+                  },
+                  {
+                    "key": "size",
+                    "schema": {
+                      "generatedName": "UploadWithJsonRequestDataSize",
+                      "value": {
+                        "generatedName": "UploadWithJsonRequestDataSize",
+                        "schema": {
+                          "type": "int"
+                        },
+                        "groupName": [],
+                        "type": "primitive"
+                      },
+                      "groupName": [],
+                      "type": "optional"
+                    },
+                    "audiences": [],
+                    "conflict": {},
+                    "generatedName": "uploadWithJsonRequestDataSize"
+                  }
+                ],
+                "generatedName": "UploadWithJsonRequestData",
+                "allOf": [],
+                "allOfPropertyConflicts": [],
+                "groupName": [],
+                "fullExamples": [],
+                "additionalProperties": false,
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "object"
+              },
+              "type": "json"
+            }
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "multipart"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "uploadWithJsonResponseSuccess",
+              "key": "success",
+              "schema": {
+                "generatedName": "UploadWithJsonResponseSuccess",
+                "value": {
+                  "schema": {
+                    "type": "boolean"
+                  },
+                  "generatedName": "UploadWithJsonResponseSuccess",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "UploadWithJsonResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/upload-with-json",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "data": {
+                "properties": {},
+                "type": "object"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "success": {
+                  "value": {
+                    "value": true,
+                    "type": "boolean"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

@@ -13,11 +13,10 @@
 <dd>
 
 ```go
+request := &fern.JustFileRequest{}
 client.Service.JustFile(
         context.TODO(),
-        strings.NewReader(
-            "",
-        ),
+        request,
     )
 }
 ```
@@ -47,9 +46,6 @@ client.Service.JustFile(
 request := &fern.OptionalArgsRequest{}
 client.Service.OptionalArgs(
         context.TODO(),
-        strings.NewReader(
-            "",
-        ),
         request,
     )
 }

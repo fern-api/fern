@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
+    - summary: Bump generator CLI version to publish new Docker image.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 0.18.8
+
+- changelogEntry:
     - summary: Upgrade to IRv61.
       type: fix
   irVersion: 61

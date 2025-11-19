@@ -665,10 +665,12 @@ export class SdkGenerator {
                 this.context.logger.warn("Failed to generate reference.md, this is OK");
             }
 
-            try {
-                await this.generateContributing();
-            } catch (e) {
-                this.context.logger.warn("Failed to generate CONTRIBUTING.md, this is OK");
+            if (!this.config.whitelabel) {
+                try {
+                    await this.generateContributing();
+                } catch (e) {
+                    this.context.logger.warn("Failed to generate CONTRIBUTING.md, this is OK");
+                }
             }
         }
 

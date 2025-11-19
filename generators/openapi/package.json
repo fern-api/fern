@@ -50,7 +50,7 @@
     "@types/node": "18.15.3",
     "@types/url-join": "^4.0.3",
     "depcheck": "^1.4.7",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "lodash-es": "^4.17.21",
     "openapi-types": "^12.1.3",
     "tsup": "^8.5.0",

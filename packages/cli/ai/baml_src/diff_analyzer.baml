@@ -19,7 +19,7 @@ class AnalyzeCommitDiffResponse {
 }
 
 // Main function that analyzes SDK diffs
-function AnalyzeSdkDiff(request: AnalyzeCommitDiffRequest) -> AnalyzeCommitDiffResponse {
+function AnalyzeSdkDiff(diff: string @description("The git diff to analyze for generating a commit message")) -> AnalyzeCommitDiffResponse {
   client DefaultClient
 
   prompt #"
@@ -63,6 +63,12 @@ function AnalyzeSdkDiff(request: AnalyzeCommitDiffRequest) -> AnalyzeCommitDiffR
     in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
 
     Git Diff:
-    {diff}
+    ---
+    {{diff}}
+    ---
+
+    Remember again that YOU MUST return a structured JSON response with these two fields:
+    - message: A git commit message formatted like the example previously provided
+    - version_bump: One of: MAJOR, MINOR, PATCH, or NO_CHANGE
   "#
 }

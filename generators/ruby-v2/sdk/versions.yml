@@ -1,4 +1,20 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc37
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: chore
+      summary: |
+        Bump generator CLI version to publish new Docker image.
+  irVersion: 61
+
+- version: 1.0.0-rc36
+  createdAt: "2025-11-17"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Validate that all required (non-optional) fields are present for undiscriminated union members.
+  irVersion: 61
+
 - version: 1.0.0-rc35
   createdAt: "2025-11-17"
   changelogEntry:
