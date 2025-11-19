@@ -29,6 +29,17 @@ export function validateAngleBracketEscaping(entry: ChangelogEntry): string[] {
                             `Example: \`${unescapedBrackets[0]}\``
                     );
                 }
+
+                const doubleBacktickErrors = findDoubleBackticks(changelogItem.summary);
+
+                if (doubleBacktickErrors.length > 0) {
+                    const version = entry.version || "unknown";
+                    errors.push(
+                        `Version ${version}: Found double backticks in changelog summary. ` +
+                            `This breaks the docs parsing. Found: ${doubleBacktickErrors.map((p) => `"${p}"`).join(", ")}. ` +
+                            `Make sure to close backticks properly (use single backticks, not double).`
+                    );
+                }
             }
         }
     }
@@ -45,6 +56,26 @@ export function findUnescapedAngleBrackets(text: string): string[] {
 
     const anglePattern = /<[^>]+>/g;
     const matches = textWithoutBackticks.match(anglePattern);
+
+    if (matches) {
+        const uniquePatterns = [...new Set(matches)];
+        patterns.push(...uniquePatterns);
+    }
+
+    return patterns;
+}
+
+/**
+ * Finds instances of double backticks (`` or more consecutive backticks) in text.
+ * Double backticks can break MDX parsing in the docs.
+ *
+ * Returns an array of problematic patterns found.
+ */
+export function findDoubleBackticks(text: string): string[] {
+    const patterns: string[] = [];
+
+    const doubleBacktickPattern = /``+/g;
+    const matches = text.match(doubleBacktickPattern);
 
     if (matches) {
         const uniquePatterns = [...new Set(matches)];
