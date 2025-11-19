@@ -11,11 +11,13 @@ import { parseRepository } from "./parseRepository";
 export async function cloneRepository({
     githubRepository,
     installationToken,
-    targetDirectory
+    targetDirectory,
+    timeoutMs
 }: {
     githubRepository: string;
     installationToken: string | undefined;
     targetDirectory?: string;
+    timeoutMs?: number;
 }): Promise<ClonedRepository> {
     const repositoryReference = parseRepository(githubRepository);
     const cloneUrl =
@@ -23,7 +25,16 @@ export async function cloneRepository({
             ? repositoryReference.getAuthedCloneUrl(installationToken)
             : repositoryReference.cloneUrl;
     const clonePath = targetDirectory ?? (await tmp.dir()).path;
-    const git = simpleGit(clonePath);
+
+    const git = simpleGit(clonePath, {
+        timeout:
+            timeoutMs != null
+                ? {
+                      block: timeoutMs // Kill the process if no data is received for the specified time
+                  }
+                : undefined
+    });
+
     await git.clone(cloneUrl, ".");
 
     return new ClonedRepository({

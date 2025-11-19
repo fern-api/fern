@@ -90,7 +90,8 @@ export class LocalTestRunner extends TestRunner {
                 outputVersionOverride: outputVersion,
                 shouldGenerateDynamicSnippetTests,
                 skipUnstableDynamicSnippetTests: true,
-                inspect
+                inspect,
+                ai: undefined
             },
             commands,
             this.generator.workspaceConfig.test.local?.workingDirectory

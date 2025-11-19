@@ -1,7 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Fix IR generation to reject examples with null or undefined primitive values instead of creating malformed examples. When example values are missing for required primitive fields, the IR generator now throws an error to prevent downstream crashes in SDK generators.
+        Tweak SDK diffing AI prompt to work better with larger diffs.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.10.1
+
+- changelogEntry:
+    - summary: |
+        Add automatic semantic versioning to local generation with `--version AUTO --local` flags.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.10.0
+
+- changelogEntry:
+    - summary: |
+        Fix IR generation to skip invalid examples instead of throwing errors. When example values are null or undefined, the IR generator now filters them out instead of creating malformed examples or throwing errors.
       type: fix
   irVersion: 61
   createdAt: "2025-11-18"
