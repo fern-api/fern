@@ -75,14 +75,33 @@ export function findUnescapedAngleBrackets(text: string): string[] {
 export function findDoubleBackticks(text: string): string[] {
     const patterns: string[] = [];
 
-    const textWithoutCodeBlocks = text.replace(/```[\s\S]*?```/g, "");
+    const textWithoutFences = stripFencedBlocks(text);
+    const textWithoutInline = stripBalancedInlineCode(textWithoutFences);
 
     const doubleBacktickPattern = /(?<!`)``(?!`)/g;
-    const matches = textWithoutCodeBlocks.match(doubleBacktickPattern);
+    const matches = textWithoutInline.match(doubleBacktickPattern);
 
     if (matches) {
         patterns.push("``");
     }
 
     return patterns;
+}
+
+function stripFencedBlocks(text: string): string {
+    const tripleFencePattern = /(^|\r?\n)[ \t]*```[^\r\n]*\r?\n[\s\S]*?\r?\n[ \t]*```[ \t]*(?=\r?\n|$)/g;
+    return text.replace(tripleFencePattern, "$1");
+}
+
+function stripBalancedInlineCode(text: string): string {
+    const inlineCodePattern = /(`+)[\s\S]*?\1/g;
+
+    let previous: string;
+    let result = text;
+    do {
+        previous = result;
+        result = result.replace(inlineCodePattern, "");
+    } while (result !== previous);
+
+    return result;
 }
