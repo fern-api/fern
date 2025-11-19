@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { ruby } from "@fern-api/ruby-ast";
-import { HttpEndpoint, PathParameter, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
+import { ContainerType, HttpEndpoint, Literal, PathParameter, PrimitiveType, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { getEndpointRequest } from "../utils/getEndpointRequest";
 import { getEndpointReturnType } from "../utils/getEndpointReturnType";
@@ -70,6 +70,8 @@ export class HttpEndpointGenerator {
         });
 
         let requestStatements = this.generateRequestProcedure({ endpoint, sendRequestCodeBlock });
+
+        const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
 
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
@@ -164,7 +166,7 @@ export class HttpEndpointGenerator {
 
         return ruby.method({
             name: endpoint.name.snakeCase.safeName,
-            docstring: endpoint.docs,
+            docstring: enhancedDocstring,
             returnType,
             parameters: {
                 keyword: [
@@ -290,6 +292,120 @@ export class HttpEndpointGenerator {
                 break;
             default:
                 break;
+        }
+    }
+
+    private generateEnhancedDocstring({
+        endpoint,
+        request
+    }: {
+        endpoint: HttpEndpoint;
+        request: ReturnType<typeof getEndpointRequest>;
+    }): string {
+        const docParts: string[] = [];
+
+        if (endpoint.docs != null) {
+            docParts.push(endpoint.docs);
+        }
+
+        const optionTags: string[] = [];
+
+        for (const pathParam of endpoint.allPathParameters) {
+            const paramName = pathParam.name.snakeCase.safeName;
+            const typeString = this.typeReferenceToYardString(pathParam.valueType);
+            optionTags.push(`@option params [${typeString}] :${paramName}`);
+        }
+
+        for (const queryParam of endpoint.queryParameters) {
+            const paramName = queryParam.name.name.snakeCase.safeName;
+            const typeString = this.typeReferenceToYardString(queryParam.valueType);
+            optionTags.push(`@option params [${typeString}] :${paramName}`);
+        }
+
+        for (const headerParam of endpoint.headers) {
+            const paramName = headerParam.name.name.snakeCase.safeName;
+            const typeString = this.typeReferenceToYardString(headerParam.valueType);
+            optionTags.push(`@option params [${typeString}] :${paramName}`);
+        }
+
+        if (optionTags.length > 0) {
+            if (docParts.length > 0) {
+                docParts.push("");
+            }
+            docParts.push(...optionTags);
+        }
+
+        return docParts.join("\n");
+    }
+
+    private typeReferenceToYardString(typeReference: TypeReference): string {
+        switch (typeReference.type) {
+            case "container":
+                return this.containerTypeToYardString(typeReference.container);
+            case "named": {
+                const classRef = this.context.getReferenceToTypeId(typeReference.typeId);
+                return `${classRef.modules.join("::")}::${classRef.name}`;
+            }
+            case "primitive":
+                return this.primitiveTypeToYardString(typeReference.primitive);
+            case "unknown":
+                return "Hash{String => Object}";
+            default:
+                assertNever(typeReference);
+        }
+    }
+
+    private containerTypeToYardString(container: ContainerType): string {
+        switch (container.type) {
+            case "list":
+                return `Array<${this.typeReferenceToYardString(container.list)}>`;
+            case "map":
+                return `Hash{${this.typeReferenceToYardString(container.keyType)} => ${this.typeReferenceToYardString(container.valueType)}}`;
+            case "set":
+                return `Array<${this.typeReferenceToYardString(container.set)}>`;
+            case "optional":
+                return `${this.typeReferenceToYardString(container.optional)}, nil`;
+            case "nullable":
+                return `${this.typeReferenceToYardString(container.nullable)}, nil`;
+            case "literal":
+                return this.literalTypeToYardString(container.literal);
+            default:
+                assertNever(container);
+        }
+    }
+
+    private primitiveTypeToYardString(primitive: PrimitiveType): string {
+        switch (primitive.v1) {
+            case "INTEGER":
+            case "LONG":
+            case "UINT":
+            case "UINT_64":
+                return "Integer";
+            case "FLOAT":
+            case "DOUBLE":
+                return "Float";
+            case "BOOLEAN":
+                return "Boolean";
+            case "STRING":
+            case "DATE":
+            case "DATE_TIME":
+            case "UUID":
+            case "BASE_64":
+            case "BIG_INTEGER":
+                return "String";
+            default:
+                return "Object";
+        }
+    }
+
+    private literalTypeToYardString(literal: Literal): string {
+        switch (literal.type) {
+            case "boolean":
+                return "Boolean";
+            case "string":
+                return "String";
+            default:
+                assertNever(literal);
         }
     }
 }

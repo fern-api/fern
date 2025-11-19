@@ -38,6 +38,8 @@ module Seed
         end
       end
 
+      # @option params [Seed::Imdb::Types::MovieId] :movie_id
+      #
       # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
