@@ -48,7 +48,7 @@ export async function writeGeneratorsYml(
 
 export async function loadCustomConfig(
     generator: GeneratorNickname,
-    fixture: TestFixture,
+    fixture: string,
     outputFolder: string | undefined,
     fernRepoDirectory: string,
     logger: Logger
