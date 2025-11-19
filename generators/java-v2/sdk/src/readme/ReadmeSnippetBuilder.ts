@@ -120,6 +120,25 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 if (snippet) {
                     snippetsByFeatureId[featureId] = [snippet];
                 }
+            } else if (featureId === ReadmeSnippetBuilder.FILE_UPLOADS_FEATURE_ID) {
+                // Special case for File Uploads: find file upload endpoints if not explicitly configured
+                const configuredEndpointIds = this.getConfiguredEndpointIdsForFeature(featureId);
+                if (configuredEndpointIds == null) {
+                    // Find first file upload endpoint
+                    const fileUploadEndpoint = this.getFirstFileUploadEndpoint();
+                    if (fileUploadEndpoint != null) {
+                        const snippet = renderer(fileUploadEndpoint);
+                        if (snippet) {
+                            snippetsByFeatureId[featureId] = [snippet];
+                        }
+                    }
+                } else {
+                    snippetsByFeatureId[featureId] = this.renderSnippetsTemplateForFeature(
+                        featureId,
+                        renderer,
+                        predicate
+                    );
+                }
             } else {
                 snippetsByFeatureId[featureId] = this.renderSnippetsTemplateForFeature(featureId, renderer, predicate);
             }
@@ -871,6 +890,21 @@ UpdateRequest request = UpdateRequest.builder()
             return endpoint.endpoint.requestBody.properties.some((property) => property.type === "file");
         }
         return false;
+    }
+
+    private getFirstFileUploadEndpoint(): EndpointWithFilepath | undefined {
+        for (const service of Object.values(this.context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                const endpointWithFilepath: EndpointWithFilepath = {
+                    endpoint,
+                    fernFilepath: service.name.fernFilepath
+                };
+                if (this.hasFileUploadEndpoint(endpointWithFilepath)) {
+                    return endpointWithFilepath;
+                }
+            }
+        }
+        return undefined;
     }
 
     private renderWebSocketSnippet(_endpoint: EndpointWithFilepath): string {
