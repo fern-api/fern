@@ -221,7 +221,6 @@ allowedFailures:
   - literal
   - mixed-case:no-custom-config
   - mixed-case:default-values
-  - pagination-custom
   - request-parameters
   - reserved-keywords
   - streaming-parameter
