@@ -6,18 +6,25 @@
   createdAt: "2025-11-19"
   irVersion: 61
 
+- version: 3.31.4
+  changelogEntry:
+    - summary: Default to mock an endpoint once when using `msw` for wire tests.
+      type: fix
+  createdAt: "2025-11-18"
+  irVersion: 61
+
 - version: 3.31.3
   changelogEntry:
     - summary: Generate wire tests with `maxRetries` set to 0.
       type: fix
-  createdAt: "2025-11-19"
+  createdAt: "2025-11-18"
   irVersion: 61
 
 - version: 3.31.2
   changelogEntry:
     - summary: Bump generator CLI version to publish new Docker image.
       type: chore
-  createdAt: "2025-11-19"
+  createdAt: "2025-11-18"
   irVersion: 61
 
 - version: 3.31.1
