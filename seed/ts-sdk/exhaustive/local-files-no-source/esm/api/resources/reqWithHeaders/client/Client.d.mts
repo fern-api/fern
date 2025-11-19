@@ -1,18 +1,18 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.mjs";
 import * as core from "../../../../core/index.mjs";
 import type * as SeedExhaustive from "../../../index.mjs";
-export declare namespace ReqWithHeaders {
+export declare namespace ReqWithHeadersClient {
     interface Options extends BaseClientOptions {
     }
     interface RequestOptions extends BaseRequestOptions {
     }
 }
-export declare class ReqWithHeaders {
-    protected readonly _options: ReqWithHeaders.Options;
-    constructor(_options: ReqWithHeaders.Options);
+export declare class ReqWithHeadersClient {
+    protected readonly _options: ReqWithHeadersClient.Options;
+    constructor(options: ReqWithHeadersClient.Options);
     /**
      * @param {SeedExhaustive.ReqWithHeaders} request
-     * @param {ReqWithHeaders.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ReqWithHeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.reqWithHeaders.getWithCustomHeader({
@@ -21,7 +21,7 @@ export declare class ReqWithHeaders {
      *         body: "string"
      *     })
      */
-    getWithCustomHeader(request: SeedExhaustive.ReqWithHeaders, requestOptions?: ReqWithHeaders.RequestOptions): core.HttpResponsePromise<void>;
+    getWithCustomHeader(request: SeedExhaustive.ReqWithHeaders, requestOptions?: ReqWithHeadersClient.RequestOptions): core.HttpResponsePromise<void>;
     private __getWithCustomHeader;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

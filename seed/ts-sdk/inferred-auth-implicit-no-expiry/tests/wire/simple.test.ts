@@ -4,12 +4,13 @@ import { SeedInferredAuthImplicitNoExpiryClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 import { mockAuth } from "./mockAuth";
 
-describe("Simple", () => {
+describe("SimpleClient", () => {
     test("getSomething", async () => {
         const server = mockServerPool.createServer();
         mockAuth(server);
 
         const client = new SeedInferredAuthImplicitNoExpiryClient({
+            maxRetries: 0,
             xApiKey: "X-Api-Key",
             clientId: "client_id",
             clientSecret: "client_secret",

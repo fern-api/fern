@@ -9,7 +9,7 @@ import * as FernDefinition from "../../../index";
  */
 export interface ApiDefinitionSettingsSchema {
     /**
-     * Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true.
+     * Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to false.
      * Deprecated, use the `api.specs.[].settings.title-as-schema-name` key instead.
      */
     "use-title"?: boolean;
@@ -20,13 +20,13 @@ export interface ApiDefinitionSettingsSchema {
     unions?: FernDefinition.UnionSettingsSchema;
     /** What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1. */
     "message-naming"?: FernDefinition.MessageNamingSettingsSchema;
-    /** Preserves nullable schemas in API definition settings. Defaults to false, where nullable schemas are treated as optional. */
+    /** Preserves nullable schemas in API definition settings. Defaults to true, where nullable schemas are treated as optional. */
     "respect-nullable-schemas"?: boolean;
     /** Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false. */
     "only-include-referenced-schemas"?: boolean;
-    /** Whether to include path parameters within the generated in-lined request. Defaults to false. */
+    /** Whether to include path parameters within the generated in-lined request. Defaults to true. */
     "inline-path-parameters"?: boolean;
-    /** Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false. */
+    /** Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to true. */
     "idiomatic-request-names"?: boolean;
     /**
      * If true, the converter will wrap references to nullable schemas in optional.
@@ -55,4 +55,11 @@ export interface ApiDefinitionSettingsSchema {
      * Defaults to `always`.
      */
     "remove-discriminants-from-schemas"?: FernDefinition.RemoveDiscriminantsFromSchemas;
+    /**
+     * Controls the order of path parameters in generated method signatures.
+     * - `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})
+     * - `spec-order`: Use the order path parameters are defined in the spec
+     * Defaults to `url-order`.
+     */
+    "path-parameter-order"?: FernDefinition.PathParameterOrder;
 }

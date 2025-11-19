@@ -10,6 +10,7 @@ from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 if typing.TYPE_CHECKING:
     from .headers.client import AsyncHeadersClient, HeadersClient
     from .inlined_request.client import AsyncInlinedRequestClient, InlinedRequestClient
+    from .multipart_form.client import AsyncMultipartFormClient, MultipartFormClient
     from .path_param.client import AsyncPathParamClient, PathParamClient
     from .query_param.client import AsyncQueryParamClient, QueryParamClient
 
@@ -68,6 +69,7 @@ class SeedEnum:
         )
         self._headers: typing.Optional[HeadersClient] = None
         self._inlined_request: typing.Optional[InlinedRequestClient] = None
+        self._multipart_form: typing.Optional[MultipartFormClient] = None
         self._path_param: typing.Optional[PathParamClient] = None
         self._query_param: typing.Optional[QueryParamClient] = None
 
@@ -86,6 +88,14 @@ class SeedEnum:
 
             self._inlined_request = InlinedRequestClient(client_wrapper=self._client_wrapper)
         return self._inlined_request
+
+    @property
+    def multipart_form(self):
+        if self._multipart_form is None:
+            from .multipart_form.client import MultipartFormClient  # noqa: E402
+
+            self._multipart_form = MultipartFormClient(client_wrapper=self._client_wrapper)
+        return self._multipart_form
 
     @property
     def path_param(self):
@@ -158,6 +168,7 @@ class AsyncSeedEnum:
         )
         self._headers: typing.Optional[AsyncHeadersClient] = None
         self._inlined_request: typing.Optional[AsyncInlinedRequestClient] = None
+        self._multipart_form: typing.Optional[AsyncMultipartFormClient] = None
         self._path_param: typing.Optional[AsyncPathParamClient] = None
         self._query_param: typing.Optional[AsyncQueryParamClient] = None
 
@@ -176,6 +187,14 @@ class AsyncSeedEnum:
 
             self._inlined_request = AsyncInlinedRequestClient(client_wrapper=self._client_wrapper)
         return self._inlined_request
+
+    @property
+    def multipart_form(self):
+        if self._multipart_form is None:
+            from .multipart_form.client import AsyncMultipartFormClient  # noqa: E402
+
+            self._multipart_form = AsyncMultipartFormClient(client_wrapper=self._client_wrapper)
+        return self._multipart_form
 
     @property
     def path_param(self):

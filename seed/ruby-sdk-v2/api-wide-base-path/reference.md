@@ -1,6 +1,6 @@
 # Reference
 ## Service
-<details><summary><code>client.service.post(path_param, service_param, resource_param, endpoint_param) -> </code></summary>
+<details><summary><code>client.service.post(path_param, service_param, endpoint_param, resource_param) -> </code></summary>
 <dl>
 <dd>
 
@@ -44,7 +44,7 @@ client.service.post();
 <dl>
 <dd>
 
-**resource_param:** `String` 
+**endpoint_param:** `Integer` 
     
 </dd>
 </dl>
@@ -52,7 +52,7 @@ client.service.post();
 <dl>
 <dd>
 
-**endpoint_param:** `Integer` 
+**resource_param:** `String` 
     
 </dd>
 </dl>

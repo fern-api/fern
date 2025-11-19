@@ -101,4 +101,20 @@ impl UnionClient {
             )
             .await
     }
+
+    pub async fn test_camel_case_properties(
+        &self,
+        request: &PaymentRequest,
+        options: Option<RequestOptions>,
+    ) -> Result<String, ApiError> {
+        self.http_client
+            .execute_request(
+                Method::POST,
+                "/camel-case",
+                Some(serde_json::to_value(request).unwrap_or_default()),
+                None,
+                options,
+            )
+            .await
+    }
 }

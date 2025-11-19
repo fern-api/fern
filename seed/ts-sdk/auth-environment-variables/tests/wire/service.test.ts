@@ -3,10 +3,11 @@
 import { SeedAuthEnvironmentVariablesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("getWithApiKey", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedAuthEnvironmentVariablesClient({
+            maxRetries: 0,
             apiKey: "test",
             xAnotherHeader: "test",
             environment: server.baseUrl,
@@ -22,6 +23,7 @@ describe("Service", () => {
     test("getWithHeader", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedAuthEnvironmentVariablesClient({
+            maxRetries: 0,
             apiKey: "test",
             xAnotherHeader: "test",
             environment: server.baseUrl,

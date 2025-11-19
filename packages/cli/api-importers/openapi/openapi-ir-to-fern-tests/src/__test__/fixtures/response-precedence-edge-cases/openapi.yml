@@ -1,0 +1,160 @@
+openapi: 3.0.0
+info:
+  title: Response Precedence Edge Cases
+  version: 1.0.0
+
+paths:
+  /data:
+    get:
+      operationId: getData
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        default:
+          description: Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /export:
+    get:
+      operationId: exportData
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      type: object
+            text/csv:
+              schema:
+                type: string
+            application/xml:
+              schema:
+                type: string
+
+  /items:
+    get:
+      operationId: getItems
+      responses:
+        "200":
+          description: Success
+        "2XX":
+          description: Success range
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+        "4XX":
+          description: Client error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        "5XX":
+          description: Server error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /users:
+    get:
+      operationId: getUsers
+      responses:
+        "200":
+          $ref: "#/components/responses/UserListResponse"
+        "404":
+          $ref: "#/components/responses/NotFoundError"
+
+  /delete:
+    delete:
+      operationId: deleteItem
+      responses:
+        "204":
+          description: No content
+        "404":
+          description: Not found
+
+  /rate-limited:
+    get:
+      operationId: getRateLimited
+      responses:
+        "200":
+          description: Success
+          headers:
+            X-Rate-Limit:
+              schema:
+                type: integer
+              description: Rate limit
+            X-Rate-Limit-Remaining:
+              schema:
+                type: integer
+              description: Remaining requests
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: string
+
+components:
+  responses:
+    UserListResponse:
+      description: List of users
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+
+    NotFoundError:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              error:
+                type: string

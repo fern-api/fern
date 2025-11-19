@@ -46,6 +46,7 @@
     "@fern-api/dynamic-ir-sdk": "^59.0.0",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
+    "@fern-api/mock-utils": "workspace:*",
     "@fern-api/rust-base": "workspace:*",
     "@fern-api/rust-dynamic-snippets": "workspace:*",
     "@fern-api/rust-model": "workspace:*",

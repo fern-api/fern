@@ -23,6 +23,7 @@ export async function visitGeneratorsYamlAst(
         "spec-origin": noop,
         "async-api": noop,
         "api-settings": noop,
+        ai: noop,
         groups: async (groups) => {
             await visitGeneratorGroups({ groups, visitor, nodePath: ["groups"], cliVersion });
         }

@@ -14,9 +14,11 @@ async fn main() {
             &GetMetadataQueryRequest {
                 shallow: Some(true),
                 tag: vec![Some("tag".to_string())],
-                x_api_version: "X-API-Version".to_string(),
             },
-            None,
+            Some(
+                RequestOptions::new()
+                    .additional_header("X-API-Version", "X-API-Version".to_string()),
+            ),
         )
         .await;
 }

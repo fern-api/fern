@@ -7,7 +7,15 @@
     "useIgnoreFile": false
   },
   "files": {
-    "includes": ["**", "!!**/lib", "!!**/dist", "!!seed", "!!generators/typescript/asIs/biome.json"],
+    "includes": [
+      "**",
+      "!packages/cli/ai/src/baml_client/**",
+      "!!**/lib",
+      "!!**/dist",
+      "!!seed",
+      "!!generators/typescript/asIs/biome.json",
+      "!!seed-remote-local"
+    ],
     "ignoreUnknown": false,
     "maxSize": 80000000
   },

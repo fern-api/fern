@@ -42,7 +42,7 @@ for await (const item of response) {
 <dl>
 <dd>
 
-**requestOptions:** `Dummy.RequestOptions` 
+**requestOptions:** `DummyClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -93,7 +93,7 @@ await client.dummy.generate({
 <dl>
 <dd>
 
-**requestOptions:** `Dummy.RequestOptions` 
+**requestOptions:** `DummyClient.RequestOptions` 
     
 </dd>
 </dl>

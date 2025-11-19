@@ -3,10 +3,10 @@
 import { SeedNullableOptionalClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("NullableOptional", () => {
+describe("NullableOptionalClient", () => {
     test("getUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = {
             id: "id",
@@ -49,7 +49,7 @@ describe("NullableOptional", () => {
 
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             username: "username",
             email: "email",
@@ -125,7 +125,7 @@ describe("NullableOptional", () => {
 
     test("updateUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             username: "username",
             email: "email",
@@ -201,7 +201,7 @@ describe("NullableOptional", () => {
 
     test("listUsers", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -287,7 +287,7 @@ describe("NullableOptional", () => {
 
     test("searchUsers", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -373,7 +373,7 @@ describe("NullableOptional", () => {
 
     test("createComplexProfile", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             id: "id",
             nullableRole: "ADMIN",
@@ -743,7 +743,7 @@ describe("NullableOptional", () => {
 
     test("getComplexProfile", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = {
             id: "id",
@@ -936,7 +936,7 @@ describe("NullableOptional", () => {
 
     test("updateComplexProfile", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             nullableRole: "ADMIN",
             nullableStatus: "active",
@@ -1186,7 +1186,7 @@ describe("NullableOptional", () => {
 
     test("testDeserialization", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             requiredString: "requiredString",
             nullableString: "nullableString",
@@ -1400,7 +1400,7 @@ describe("NullableOptional", () => {
 
     test("filterByRole", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -1485,7 +1485,7 @@ describe("NullableOptional", () => {
 
     test("getNotificationSettings", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = {
             type: "email",
@@ -1512,7 +1512,7 @@ describe("NullableOptional", () => {
 
     test("updateTags", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             tags: ["tags", "tags"],
             categories: ["categories", "categories"],
@@ -1538,7 +1538,7 @@ describe("NullableOptional", () => {
 
     test("getSearchResults", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableOptionalClient({ environment: server.baseUrl });
+        const client = new SeedNullableOptionalClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             query: "query",
             filters: { filters: "filters" },

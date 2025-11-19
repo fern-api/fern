@@ -5,9 +5,9 @@
 import * as FernDefinition from "../../../index";
 
 export interface BaseApiSettingsSchema {
-    /** Preserves nullable schemas in API definition settings. Defaults to false, where nullable schemas are treated as optional. */
+    /** Preserves nullable schemas in API definition settings. Defaults to true, where nullable schemas are treated as optional. */
     "respect-nullable-schemas"?: boolean;
-    /** Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true. */
+    /** Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to false. */
     "title-as-schema-name"?: boolean;
     "optional-additional-properties"?: boolean;
     /** Whether to coerce single value enums to literals. Defaults to true. */
@@ -40,4 +40,11 @@ export interface BaseApiSettingsSchema {
      * Defaults to `always`.
      */
     "remove-discriminants-from-schemas"?: FernDefinition.RemoveDiscriminantsFromSchemas;
+    /**
+     * Controls the order of path parameters in generated method signatures.
+     * - `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})
+     * - `spec-order`: Use the order path parameters are defined in the spec
+     * Defaults to `url-order`.
+     */
+    "path-parameter-order"?: FernDefinition.PathParameterOrder;
 }

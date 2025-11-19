@@ -87,6 +87,16 @@
         }
       ]
     },
+    "ai": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ai.AIServicesSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "openapi": {
       "oneOf": [
         {
@@ -728,6 +738,13 @@
         "never"
       ]
     },
+    "generators.PathParameterOrder": {
+      "type": "string",
+      "enum": [
+        "url-order",
+        "spec-order"
+      ]
+    },
     "generators.APIDefinitionSettingsSchema": {
       "type": "object",
       "properties": {
@@ -835,6 +852,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
             },
             {
               "type": "null"
@@ -1668,6 +1695,16 @@
             }
           ]
         },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -1970,6 +2007,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
             },
             {
               "type": "null"
@@ -2373,6 +2420,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
             },
             {
               "type": "null"
@@ -3669,6 +3726,33 @@
       },
       "required": [
         "generators"
+      ],
+      "additionalProperties": false
+    },
+    "ai.ModelProvider": {
+      "type": "string",
+      "enum": [
+        "openai",
+        "anthropic",
+        "bedrock"
+      ]
+    },
+    "ai.ModelName": {
+      "type": "string"
+    },
+    "ai.AIServicesSchema": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "$ref": "#/definitions/ai.ModelProvider"
+        },
+        "model": {
+          "$ref": "#/definitions/ai.ModelName"
+        }
+      },
+      "required": [
+        "provider",
+        "model"
       ],
       "additionalProperties": false
     },

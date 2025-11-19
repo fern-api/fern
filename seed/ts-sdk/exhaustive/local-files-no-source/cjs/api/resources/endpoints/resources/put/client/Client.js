@@ -43,17 +43,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Put = void 0;
+exports.PutClient = void 0;
+const BaseClient_js_1 = require("../../../../../../BaseClient.js");
 const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
 const errors = __importStar(require("../../../../../../errors/index.js"));
-class Put {
-    constructor(_options) {
-        this._options = _options;
+class PutClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
      * @param {SeedExhaustive.endpoints.PutRequest} request
-     * @param {Put.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.put.add({
@@ -116,4 +117,4 @@ class Put {
         });
     }
 }
-exports.Put = Put;
+exports.PutClient = PutClient;

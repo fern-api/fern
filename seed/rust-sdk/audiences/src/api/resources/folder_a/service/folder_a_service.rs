@@ -24,8 +24,8 @@ impl ServiceClient {
                 "",
                 None,
                 QueryBuilder::new()
-                    .string("ids", request.ids.clone())
-                    .string("tags", request.tags.clone())
+                    .string_array("ids", request.ids.clone())
+                    .string_array("tags", request.tags.clone())
                     .build(),
                 options,
             )

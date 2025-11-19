@@ -1,0 +1,1054 @@
+{
+  "title": "Circular References Edge Cases",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "createNode",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateNodeRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateNodeRequest",
+          "schema": "Node",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateNodeResponse",
+          "schema": "Node",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/node",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "value": {
+                  "value": {
+                    "value": "value",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createAuthor",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateAuthorRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateAuthorRequest",
+          "schema": "Author",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateAuthorResponse",
+          "schema": "Author",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/author",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "books": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "title": {
+                          "value": {
+                            "value": "title",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "createTree",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "CreateTreeRequest",
+      "request": {
+        "schema": {
+          "generatedName": "CreateTreeRequest",
+          "schema": "TreeNode",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "CreateTreeResponse",
+          "schema": "TreeNode",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/tree",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "value": {
+                  "value": {
+                    "value": "value",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "Node": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "nodeId",
+            "key": "id",
+            "schema": {
+              "generatedName": "NodeId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "NodeId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "nodeValue",
+            "key": "value",
+            "schema": {
+              "generatedName": "NodeValue",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "NodeValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "nodeNext",
+            "key": "next",
+            "schema": {
+              "generatedName": "NodeNext",
+              "value": {
+                "generatedName": "NodeNext",
+                "schema": "Node",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Node",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Author": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "authorId",
+            "key": "id",
+            "schema": {
+              "generatedName": "AuthorId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AuthorId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "authorName",
+            "key": "name",
+            "schema": {
+              "generatedName": "AuthorName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "AuthorName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "authorBooks",
+            "key": "books",
+            "schema": {
+              "generatedName": "AuthorBooks",
+              "value": {
+                "value": {
+                  "generatedName": "AuthorBooksItem",
+                  "schema": "Book",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "AuthorBooks",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Author",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Book": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "bookId",
+            "key": "id",
+            "schema": {
+              "generatedName": "BookId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "BookId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "bookTitle",
+            "key": "title",
+            "schema": {
+              "generatedName": "BookTitle",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "BookTitle",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "bookAuthor",
+            "key": "author",
+            "schema": {
+              "generatedName": "BookAuthor",
+              "value": {
+                "generatedName": "BookAuthor",
+                "schema": "Author",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Book",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "TreeNode": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "treeNodeId",
+            "key": "id",
+            "schema": {
+              "generatedName": "TreeNodeId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "TreeNodeId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "treeNodeValue",
+            "key": "value",
+            "schema": {
+              "generatedName": "TreeNodeValue",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "TreeNodeValue",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "treeNodeParent",
+            "key": "parent",
+            "schema": {
+              "generatedName": "TreeNodeParent",
+              "value": {
+                "generatedName": "TreeNodeParent",
+                "schema": "TreeNode",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "treeNodeChildren",
+            "key": "children",
+            "schema": {
+              "generatedName": "TreeNodeChildren",
+              "value": {
+                "value": {
+                  "generatedName": "TreeNodeChildrenItem",
+                  "schema": "TreeNode",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "TreeNodeChildren",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "TreeNode",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Level1": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "level1Id",
+            "key": "id",
+            "schema": {
+              "generatedName": "Level1Id",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "Level1Id",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "level1Level2",
+            "key": "level2",
+            "schema": {
+              "generatedName": "Level1Level2",
+              "value": {
+                "generatedName": "Level1Level2",
+                "schema": "Level2",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Level1",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Level2": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "level2Id",
+            "key": "id",
+            "schema": {
+              "generatedName": "Level2Id",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "Level2Id",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "level2Level3",
+            "key": "level3",
+            "schema": {
+              "generatedName": "Level2Level3",
+              "value": {
+                "generatedName": "Level2Level3",
+                "schema": "Level3",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Level2",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Level3": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "level3Id",
+            "key": "id",
+            "schema": {
+              "generatedName": "Level3Id",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "Level3Id",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "level3Level4",
+            "key": "level4",
+            "schema": {
+              "generatedName": "Level3Level4",
+              "value": {
+                "generatedName": "Level3Level4",
+                "schema": "Level4",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Level3",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Level4": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "level4Id",
+            "key": "id",
+            "schema": {
+              "generatedName": "Level4Id",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "Level4Id",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "level4Level5",
+            "key": "level5",
+            "schema": {
+              "generatedName": "Level4Level5",
+              "value": {
+                "generatedName": "Level4Level5",
+                "schema": "Level5",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Level4",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Level5": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "level5Id",
+            "key": "id",
+            "schema": {
+              "generatedName": "Level5Id",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "Level5Id",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "level5Value",
+            "key": "value",
+            "schema": {
+              "generatedName": "Level5Value",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "Level5Value",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Level5",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "BaseEntity": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "baseEntityId",
+            "key": "id",
+            "schema": {
+              "generatedName": "BaseEntityId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "BaseEntityId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "baseEntityCreatedAt",
+            "key": "createdAt",
+            "schema": {
+              "generatedName": "BaseEntityCreatedAt",
+              "value": {
+                "schema": {
+                  "type": "datetime"
+                },
+                "generatedName": "BaseEntityCreatedAt",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "BaseEntity",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "Category": {
+        "allOf": [
+          {
+            "generatedName": "BaseEntity",
+            "schema": "BaseEntity",
+            "source": {
+              "file": "../openapi.yml",
+              "type": "openapi"
+            },
+            "type": "reference"
+          }
+        ],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "categoryName",
+            "key": "name",
+            "schema": {
+              "generatedName": "CategoryName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "CategoryName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "categoryParent",
+            "key": "parent",
+            "schema": {
+              "generatedName": "CategoryParent",
+              "value": {
+                "generatedName": "CategoryParent",
+                "schema": "Category",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "categorySubcategories",
+            "key": "subcategories",
+            "schema": {
+              "generatedName": "CategorySubcategories",
+              "value": {
+                "value": {
+                  "generatedName": "CategorySubcategoriesItem",
+                  "schema": "Category",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "CategorySubcategories",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Category",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

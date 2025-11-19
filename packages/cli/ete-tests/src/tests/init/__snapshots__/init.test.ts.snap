@@ -21,6 +21,7 @@ service:
   auth: false
   base-path: /movies
   endpoints:
+
     createMovie:
       docs: Add a movie to the database
       method: POST
@@ -54,6 +55,7 @@ service:
             body: tt1234
 
 types:
+
   MovieId:
     type: string
     docs: The unique identifier for a Movie in the database
@@ -72,6 +74,7 @@ types:
       rating: double
 
 errors:
+
   MovieDoesNotExistError:
     status-code: 404
     type: MovieId
@@ -353,6 +356,7 @@ service:
   auth: false
   base-path: /movies
   endpoints:
+
     createMovie:
       docs: Add a movie to the database
       method: POST
@@ -386,6 +390,7 @@ service:
             body: tt1234
 
 types:
+
   MovieId:
     type: string
     docs: The unique identifier for a Movie in the database
@@ -404,6 +409,7 @@ types:
       rating: double
 
 errors:
+
   MovieDoesNotExistError:
     status-code: 404
     type: MovieId
