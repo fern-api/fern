@@ -508,7 +508,9 @@ export function buildEnumTypeDeclaration(schema: EnumSchema, declarationDepth: n
     if (schema.default != null) {
         enumSchema.default = schema.default.value;
     }
-    enumSchema.inline = getInline(schema, declarationDepth);
+    if (schema.inline === true) {
+        enumSchema.inline = true;
+    }
     const uniqueEnumName = new Set<string>();
     const uniqueEnumSchema: RawSchemas.EnumSchema = {
         ...enumSchema,
