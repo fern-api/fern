@@ -8,8 +8,8 @@ export const never: () => Schema<never, never> = createIdentitySchemaCreator<nev
         errors: [
             {
                 path: breadcrumbsPrefix,
-                message: "Expected never"
-            }
-        ]
-    })
+                message: "Expected never",
+            },
+        ],
+    }),
 );

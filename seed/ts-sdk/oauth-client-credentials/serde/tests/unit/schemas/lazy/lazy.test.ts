@@ -1,5 +1,5 @@
 import { lazy, list, object, string } from "../../../../src/core/schemas/builders";
-import { Schema } from "../../../../src/core/schemas/Schema";
+import type { Schema } from "../../../../src/core/schemas/Schema";
 import { itSchemaIdentity } from "../utils/itSchema";
 
 describe("lazy", () => {
@@ -28,13 +28,13 @@ describe("lazy", () => {
         { foo: "hello" },
         {
             title: "passes opts through",
-            opts: { unrecognizedObjectKeys: "passthrough" }
-        }
+            opts: { unrecognizedObjectKeys: "passthrough" },
+        },
     );
 
     itSchemaIdentity(
         lazy(() => object({ foo: string() })),
-        { foo: "hello" }
+        { foo: "hello" },
     );
 
     // eslint-disable-next-line vi/expect-expect

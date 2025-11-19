@@ -31,7 +31,6 @@ describe("CustomAuthClient", () => {
     test("postWithCustomAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
-
         const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
         server
@@ -52,7 +51,6 @@ describe("CustomAuthClient", () => {
     test("postWithCustomAuth (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
-
         const rawRequestBody = { key: "value" };
         const rawResponseBody = { message: "message" };
         server
@@ -74,7 +72,6 @@ describe("CustomAuthClient", () => {
     test("postWithCustomAuth (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCustomAuthClient({ customAuthScheme: "test", environment: server.baseUrl });
-
         const rawRequestBody = { key: "value" };
 
         server.mockEndpoint().post("/custom-auth").jsonBody(rawRequestBody).respondWith().statusCode(400).build();

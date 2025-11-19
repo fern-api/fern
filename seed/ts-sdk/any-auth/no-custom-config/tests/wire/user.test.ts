@@ -2,12 +2,12 @@
 
 import { SeedAnyAuthClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
-import { mockAuth } from "./mockAuth";
+import { mockOAuth } from "./mockAuth";
 
-describe("User", () => {
+describe("UserClient", () => {
     test("get", async () => {
         const server = mockServerPool.createServer();
-        mockAuth(server);
+        mockOAuth(server);
 
         const client = new SeedAnyAuthClient({
             token: "test",
@@ -38,7 +38,7 @@ describe("User", () => {
 
     test("getAdmins", async () => {
         const server = mockServerPool.createServer();
-        mockAuth(server);
+        mockOAuth(server);
 
         const client = new SeedAnyAuthClient({
             token: "test",

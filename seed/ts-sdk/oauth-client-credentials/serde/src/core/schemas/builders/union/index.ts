@@ -5,6 +5,6 @@ export type {
     inferParsedUnion,
     inferRawDiscriminant,
     inferRawUnion,
-    UnionSubtypes
+    UnionSubtypes,
 } from "./types.js";
 export { union } from "./union.js";

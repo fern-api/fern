@@ -1,4 +1,4 @@
-import { HttpResponseResolver, passthrough } from "msw";
+import { type HttpResponseResolver, passthrough } from "msw";
 
 /**
  * Creates a request matcher that validates if request headers match specified criteria
@@ -7,7 +7,7 @@ import { HttpResponseResolver, passthrough } from "msw";
  */
 export function withHeaders(
     expectedHeaders: Record<string, string | RegExp | ((value: string) => boolean)>,
-    resolver: HttpResponseResolver
+    resolver: HttpResponseResolver,
 ): HttpResponseResolver {
     return (args) => {
         const { request } = args;
@@ -50,7 +50,7 @@ export function withHeaders(
 }
 
 function formatHeaderMismatches(
-    mismatches: Record<string, { actual: string | null; expected: string | RegExp | ((value: string) => boolean) }>
+    mismatches: Record<string, { actual: string | null; expected: string | RegExp | ((value: string) => boolean) }>,
 ): Record<string, { actual: string | null; expected: string }> {
     const formatted: Record<string, { actual: string | null; expected: string }> = {};
 
@@ -62,7 +62,7 @@ function formatHeaderMismatches(
                     ? expected.toString()
                     : typeof expected === "function"
                       ? "[Function]"
-                      : expected
+                      : expected,
         };
     }
 

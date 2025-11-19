@@ -31,7 +31,7 @@ export const SchemaType = {
     UNDISCRIMINATED_UNION: "undiscriminatedUnion",
     NULLABLE: "nullable",
     OPTIONAL: "optional",
-    OPTIONAL_NULLABLE: "optionalNullable"
+    OPTIONAL_NULLABLE: "optionalNullable",
 } as const;
 
 export type SchemaType = (typeof SchemaType)[keyof typeof SchemaType];

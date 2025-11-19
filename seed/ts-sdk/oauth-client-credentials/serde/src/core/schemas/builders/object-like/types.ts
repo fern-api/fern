@@ -8,6 +8,6 @@ export interface ObjectLikeUtils<Raw, Parsed> {
     withParsedProperties: <T extends Record<string, any>>(
         properties: {
             [K in keyof T]: T[K] | ((parsed: Parsed) => T[K]);
-        }
+        },
     ) => ObjectLikeSchema<Raw, Parsed & T>;
 }

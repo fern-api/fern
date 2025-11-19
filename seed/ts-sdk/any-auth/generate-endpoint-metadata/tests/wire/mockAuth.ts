@@ -2,10 +2,20 @@
 
 import type { MockServer } from "../mock-server/MockServer";
 
-export function mockAuth(server: MockServer) {
-    const rawResponseBody = {
-        ...{ access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" },
-        expires_in: 3600,
+export function mockOAuth(server: MockServer): void {
+    const rawRequestBody = {
+        client_id: "client_id",
+        client_secret: "client_secret",
+        audience: "https://api.example.com",
+        grant_type: "client_credentials",
     };
-    server.mockEndpoint().post("/token").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+    const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
+    server
+        .mockEndpoint()
+        .post("/token")
+        .jsonBody(rawRequestBody)
+        .respondWith()
+        .statusCode(200)
+        .jsonBody(rawResponseBody)
+        .build();
 }

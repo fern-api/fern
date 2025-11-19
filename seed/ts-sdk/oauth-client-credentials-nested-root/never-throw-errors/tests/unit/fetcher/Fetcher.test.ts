@@ -76,8 +76,6 @@ describe("Test fetcherImpl", () => {
         }
     });
 
-
-
     it("should receive file as stream", async () => {
         const url = "https://httpbin.org/post/file";
         const mockArgs: Fetcher.Args = {
@@ -260,5 +258,4 @@ describe("Test fetcherImpl", () => {
             expect(body.bodyUsed).toBe(true);
         }
     });
-
 });
