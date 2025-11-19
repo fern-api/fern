@@ -1,14 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Add `--container-runtime` flag to `seed test` command to explicitly specify docker or podman runtime.
-      type: feat
-  irVersion: 61
-  createdAt: "2025-11-19"
-  version: 1.11.0
-
-- changelogEntry:
-    - summary: |
         Support JSX titles in `<Code />` components.
       type: fix
   irVersion: 61
