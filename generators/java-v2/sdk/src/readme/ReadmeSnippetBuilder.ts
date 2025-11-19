@@ -20,6 +20,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static CUSTOM_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_HEADERS";
     private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
     private static WEBSOCKET_FEATURE_ID: FernGeneratorCli.FeatureId = "WEBSOCKET";
+    private static FILE_UPLOADS_FEATURE_ID: FernGeneratorCli.FeatureId = "FILE_UPLOADS";
     private static SNIPPET_PACKAGE_NAME = "com.example.usage";
     private static ELLIPSES = java.codeblock("...");
 
@@ -84,6 +85,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
             [ReadmeSnippetBuilder.CUSTOM_HEADERS_FEATURE_ID]: { renderer: this.renderCustomHeadersSnippet.bind(this) },
             [ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID]: { renderer: this.renderRawResponseSnippet.bind(this) },
+            [ReadmeSnippetBuilder.FILE_UPLOADS_FEATURE_ID]: {
+                renderer: this.renderFileUploadsSnippet.bind(this),
+                predicate: (endpoint: EndpointWithFilepath) => this.hasFileUploadEndpoint(endpoint)
+            },
             [ReadmeSnippetBuilder.WEBSOCKET_FEATURE_ID]: {
                 renderer: this.renderWebSocketSnippet.bind(this),
                 predicate: (_endpoint: EndpointWithFilepath) => this.hasWebSocketChannels()
@@ -483,6 +488,45 @@ UpdateRequest request = UpdateRequest.builder()
         return this.renderSnippet(snippet);
     }
 
+    private renderFileUploadsSnippet(endpoint: EndpointWithFilepath): string {
+        const endpointMethodInvocation = this.getMethodCall(endpoint, [
+            java.codeblock('new File("path/to/file.txt")'),
+            ReadmeSnippetBuilder.ELLIPSES
+        ]);
+
+        const clientAccess = this.getAccessFromRootClient(endpoint.fernFilepath);
+        const endpointMethodName = this.getEndpointMethodName(endpoint.endpoint);
+
+        const inputStreamUploadCall = java.invokeMethod({
+            on: clientAccess,
+            method: endpointMethodName,
+            arguments_: [java.codeblock('new FileInputStream("path/to/file.txt")'), java.codeblock('"file.txt"')]
+        });
+
+        const inputStreamWithMediaTypeCall = java.invokeMethod({
+            on: clientAccess,
+            method: endpointMethodName,
+            arguments_: [
+                java.codeblock('new FileInputStream("path/to/file.txt")'),
+                java.codeblock('"file.txt"'),
+                java.codeblock('MediaType.parse("application/octet-stream")')
+            ]
+        });
+
+        const snippet = java.codeblock((writer) => {
+            writer.writeLine("// Upload with File");
+            writer.writeNodeStatement(endpointMethodInvocation);
+            writer.newLine();
+            writer.writeLine("// Upload with InputStream");
+            writer.writeNodeStatement(inputStreamUploadCall);
+            writer.newLine();
+            writer.writeLine("// With custom MediaType");
+            writer.writeNodeStatement(inputStreamWithMediaTypeCall);
+        });
+
+        return this.renderSnippet(snippet);
+    }
+
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
         const clientClassReference = this.context.getRootClientClassReference();
         const clientInitialization = java.TypeLiteral.builder({
@@ -817,6 +861,16 @@ UpdateRequest request = UpdateRequest.builder()
 
     private hasWebSocketChannels(): boolean {
         return this.context.ir.websocketChannels != null && Object.keys(this.context.ir.websocketChannels).length > 0;
+    }
+
+    private hasFileUploadEndpoint(endpoint: EndpointWithFilepath): boolean {
+        if (endpoint.endpoint.requestBody == null) {
+            return false;
+        }
+        if (endpoint.endpoint.requestBody.type === "fileUpload") {
+            return endpoint.endpoint.requestBody.properties.some((property) => property.type === "file");
+        }
+        return false;
     }
 
     private renderWebSocketSnippet(_endpoint: EndpointWithFilepath): string {
