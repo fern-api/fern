@@ -4,7 +4,7 @@ pub use crate::prelude::*;
 pub struct SearchQueryRequest {
     pub limit: i64,
     pub id: String,
-    pub date: String,
+    pub date: NaiveDate,
     pub deadline: DateTime<Utc>,
     pub bytes: String,
     pub user: User,
@@ -16,7 +16,7 @@ pub struct SearchQueryRequest {
     pub optional_deadline: Option<DateTime<Utc>>,
     #[serde(rename = "keyValue")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub key_value: Option<HashMap<String, Option<String>>>,
+    pub key_value: Option<HashMap<String, String>>,
     #[serde(rename = "optionalString")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_string: Option<String>,

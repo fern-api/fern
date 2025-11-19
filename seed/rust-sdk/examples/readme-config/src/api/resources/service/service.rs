@@ -57,7 +57,7 @@ impl ServiceClient4 {
                 None,
                 QueryBuilder::new()
                     .bool("shallow", request.shallow.clone())
-                    .string("tag", request.tag.clone())
+                    .string_array("tag", request.tag.clone())
                     .build(),
                 options,
             )

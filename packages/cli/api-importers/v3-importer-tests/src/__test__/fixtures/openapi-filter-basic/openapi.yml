@@ -1,0 +1,59 @@
+openapi: 3.0.0
+info:
+  title: Filter Test
+  version: 1.0.0
+paths:
+  /companies:
+    post:
+      operationId: createCompany
+      summary: Create a company
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Company"
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Company"
+  /users:
+    get:
+      operationId: getUsers
+      summary: Get users (should be filtered out)
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+components:
+  schemas:
+    Company:
+      type: object
+      description: This schema is referenced by the included endpoint and should be kept
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    User:
+      type: object
+      description: This schema is only referenced by the filtered endpoint and should be pruned
+      required:
+        - id
+        - email
+      properties:
+        id:
+          type: integer
+        email:
+          type: string

@@ -109,36 +109,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "resourceParam",
-                                "camelCase": {
-                                    "unsafeName": "resourceParam",
-                                    "safeName": "resourceParam"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "resource_param",
-                                    "safeName": "resource_param"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "RESOURCE_PARAM",
-                                    "safeName": "RESOURCE_PARAM"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "ResourceParam",
-                                    "safeName": "ResourceParam"
-                                }
-                            },
-                            "wireValue": "resourceParam"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "endpointParam",
                                 "camelCase": {
                                     "unsafeName": "endpointParam",
@@ -162,6 +132,36 @@
                         "typeReference": {
                             "type": "primitive",
                             "value": "INTEGER"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "resourceParam",
+                                "camelCase": {
+                                    "unsafeName": "resourceParam",
+                                    "safeName": "resourceParam"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "resource_param",
+                                    "safeName": "resource_param"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "RESOURCE_PARAM",
+                                    "safeName": "RESOURCE_PARAM"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ResourceParam",
+                                    "safeName": "ResourceParam"
+                                }
+                            },
+                            "wireValue": "resourceParam"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
                         },
                         "propertyAccess": null,
                         "variable": null

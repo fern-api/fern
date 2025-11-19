@@ -5,6 +5,20 @@
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Request Types](#request-types)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+- [Contributing](#contributing)
+
 ## Installation
 
 Add this to your `Cargo.toml`:
@@ -41,14 +55,13 @@ async fn main() {
         .auth
         .get_token_with_client_credentials(
             &GetTokenRequest {
-                x_api_key: "X-Api-Key".to_string(),
                 client_id: "client_id".to_string(),
                 client_secret: "client_secret".to_string(),
                 audience: "https://api.example.com".to_string(),
                 grant_type: "client_credentials".to_string(),
                 scope: Some("scope".to_string()),
             },
-            None,
+            Some(RequestOptions::new().additional_header("X-Api-Key", "X-Api-Key".to_string())),
         )
         .await;
 }

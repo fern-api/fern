@@ -37,7 +37,7 @@ await client.organizations.getOrganization("organization_id");
 <dl>
 <dd>
 
-**requestOptions:** `Organizations.RequestOptions` 
+**requestOptions:** `OrganizationsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -89,7 +89,7 @@ await client.organizations.getOrganizationUser({
 <dl>
 <dd>
 
-**requestOptions:** `Organizations.RequestOptions` 
+**requestOptions:** `OrganizationsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -148,7 +148,7 @@ await client.organizations.searchOrganizations("organization_id", {
 <dl>
 <dd>
 
-**requestOptions:** `Organizations.RequestOptions` 
+**requestOptions:** `OrganizationsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -200,7 +200,7 @@ await client.user.getUser({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -252,7 +252,7 @@ await client.user.createUser({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -307,7 +307,7 @@ await client.user.updateUser({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -359,7 +359,7 @@ await client.user.searchUsers({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -418,6 +418,73 @@ await client.user.getUserMetadata({
 <dd>
 
 **request:** `SeedPathParameters.GetUserMetadataRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UserClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUserSpecifics</a>({ ...params }) -> SeedPathParameters.User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint with path parameters listed in different order than found in path
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.user.getUserSpecifics({
+    user_id: "user_id",
+    version: 1,
+    thought: "thought"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedPathParameters.GetUserSpecificsRequest` 
     
 </dd>
 </dl>

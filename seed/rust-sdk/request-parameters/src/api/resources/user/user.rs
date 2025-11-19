@@ -33,14 +33,14 @@ impl UserClient {
 
     pub async fn create_username_with_referenced_type(
         &self,
-        request: &CreateUsernameBody,
+        request: &CreateUsernameWithReferencedTypeRequest,
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
                 "/user/username-referenced",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(&request.body).unwrap_or_default()),
                 QueryBuilder::new()
                     .serialize("tags", Some(request.tags.clone()))
                     .build(),
@@ -89,9 +89,9 @@ impl UserClient {
                     .serialize("nestedUser", Some(request.nested_user.clone()))
                     .serialize("optionalUser", request.optional_user.clone())
                     .serialize("excludeUser", Some(request.exclude_user.clone()))
-                    .string("filter", request.filter.clone())
+                    .string_array("filter", request.filter.clone())
                     .int("longParam", request.long_param.clone())
-                    .string("bigIntParam", request.big_int_param.clone())
+                    .big_int("bigIntParam", request.big_int_param.clone())
                     .build(),
                 options,
             )

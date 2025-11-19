@@ -3,7 +3,7 @@
 import { SeedNullableClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Nullable", () => {
+describe("NullableClient", () => {
     test("getUsers", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedNullableClient({ environment: server.baseUrl });

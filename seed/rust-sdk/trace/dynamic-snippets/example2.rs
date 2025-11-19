@@ -16,7 +16,9 @@ async fn main() {
                 update_time: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
                     .unwrap()
                     .with_timezone(&Utc),
-                update_info: TestSubmissionUpdateInfo::Running { value: None },
+                update_info: TestSubmissionUpdateInfo::Running {
+                    value: Default::default(),
+                },
             },
             None,
         )

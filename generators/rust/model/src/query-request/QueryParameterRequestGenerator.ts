@@ -1,7 +1,14 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RustFile } from "@fern-api/rust-base";
 
-import { HttpEndpoint, IntermediateRepresentation, ObjectProperty, QueryParameter } from "@fern-fern/ir-sdk/api";
+import {
+    ContainerType,
+    HttpEndpoint,
+    IntermediateRepresentation,
+    ObjectProperty,
+    QueryParameter,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 
 import { RequestGenerator } from "../inlined-request-body/RequestGenerator";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
@@ -67,13 +74,21 @@ export class QueryParameterRequestGenerator {
 
     // Helper method to convert query parameters to object properties
     private convertQueryParametersToProperties(queryParams: QueryParameter[]): ObjectProperty[] {
-        return queryParams.map((queryParam) => ({
-            name: queryParam.name,
-            valueType: queryParam.valueType,
-            docs: queryParam.docs,
-            availability: queryParam.availability,
-            propertyAccess: undefined,
-            v2Examples: undefined
-        }));
+        return queryParams.map((queryParam) => {
+            // For allow-multiple query params, wrap the type in a list using proper IR constructors
+            let valueType = queryParam.valueType;
+            if (queryParam.allowMultiple) {
+                valueType = TypeReference.container(ContainerType.list(queryParam.valueType));
+            }
+
+            return {
+                name: queryParam.name,
+                valueType,
+                docs: queryParam.docs,
+                availability: queryParam.availability,
+                propertyAccess: undefined,
+                v2Examples: undefined
+            };
+        });
     }
 }

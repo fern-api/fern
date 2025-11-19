@@ -3,7 +3,7 @@
 import { SeedLiteralClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Reference", () => {
+describe("ReferenceClient", () => {
     test("send", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedLiteralClient({ environment: server.baseUrl });

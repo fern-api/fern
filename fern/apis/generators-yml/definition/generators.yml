@@ -1,4 +1,5 @@
 imports:
+  ai: ./ai.yml
   auth: ./fernDefinition/auth.yml
   file: ./fernDefinition/file.yml
   environments: ./fernDefinition/environments.yml
@@ -25,6 +26,7 @@ types:
         type: optional<map<string, group.GeneratorGroupSchema>>
       reviewers:
         type: optional<reviewers.ReviewersSchema>
+      ai: optional<ai.AIServicesSchema>
       openapi:
         type: optional<GeneratorsOpenAPISchema>
         availability: deprecated

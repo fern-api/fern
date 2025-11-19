@@ -9,12 +9,20 @@ public class SyncHttpEndpointMethodSpecsFactory implements HttpEndpointMethodSpe
             MethodSpec nonRequestOptionsMethodSpec,
             MethodSpec noRequestBodyMethodSpec,
             MethodSpec byteArrayMethodSpec,
-            MethodSpec nonRequestOptionsByteArrayMethodSpec) {
+            MethodSpec nonRequestOptionsByteArrayMethodSpec,
+            MethodSpec inputStreamMethodSpec,
+            MethodSpec inputStreamWithMediaTypeMethodSpec,
+            MethodSpec inputStreamWithRequestOptionsMethodSpec,
+            MethodSpec inputStreamWithMediaTypeAndRequestOptionsMethodSpec) {
         return new DefaultHttpEndpointMethodSpecs(
                 requestOptionsMethodSpec,
                 nonRequestOptionsMethodSpec,
                 noRequestBodyMethodSpec,
                 byteArrayMethodSpec,
-                nonRequestOptionsByteArrayMethodSpec);
+                nonRequestOptionsByteArrayMethodSpec,
+                inputStreamMethodSpec,
+                inputStreamWithMediaTypeMethodSpec,
+                inputStreamWithRequestOptionsMethodSpec,
+                inputStreamWithMediaTypeAndRequestOptionsMethodSpec);
     }
 }

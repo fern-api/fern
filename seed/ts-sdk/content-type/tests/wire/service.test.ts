@@ -3,7 +3,7 @@
 import { SeedContentTypesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("patch", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedContentTypesClient({ environment: server.baseUrl });

@@ -47,6 +47,18 @@ private func main() async throws {
 try await main()
 ```
 
+## Request Types
+
+The SDK exports all request types as Swift structs. Simply import the SDK module to access them:
+
+```swift
+import UndiscriminatedUnions
+
+let request = Requests.PaymentRequest(
+    ...
+)
+```
+
 ## Advanced
 
 ### Additional Headers

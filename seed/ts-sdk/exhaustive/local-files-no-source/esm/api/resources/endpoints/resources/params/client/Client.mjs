@@ -8,18 +8,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { normalizeClientOptions } from "../../../../../../BaseClient.mjs";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.mjs";
 import * as core from "../../../../../../core/index.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
-export class Params {
-    constructor(_options) {
-        this._options = _options;
+export class ParamsClient {
+    constructor(options) {
+        this._options = normalizeClientOptions(options);
     }
     /**
      * GET with path param
      *
      * @param {string} param
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithPath("param")
@@ -73,7 +74,7 @@ export class Params {
      * GET with path param
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithInlinePath({
@@ -130,7 +131,7 @@ export class Params {
      * GET with query param
      *
      * @param {SeedExhaustive.endpoints.GetWithQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithQuery({
@@ -191,7 +192,7 @@ export class Params {
      * GET with multiple of same query param
      *
      * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithAllowMultipleQuery({
@@ -263,7 +264,7 @@ export class Params {
      *
      * @param {string} param
      * @param {SeedExhaustive.endpoints.GetWithPathAndQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithPathAndQuery("param", {
@@ -322,7 +323,7 @@ export class Params {
      * GET with path and query params
      *
      * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.getWithInlinePathAndQuery({
@@ -383,7 +384,7 @@ export class Params {
      *
      * @param {string} param
      * @param {string} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.modifyWithPath("param", "string")
@@ -440,7 +441,7 @@ export class Params {
      * PUT to update with path param
      *
      * @param {SeedExhaustive.endpoints.ModifyResourceAtInlinedPath} request
-     * @param {Params.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.params.modifyWithInlinePath({

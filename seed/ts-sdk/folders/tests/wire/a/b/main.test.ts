@@ -3,7 +3,7 @@
 import { SeedApiClient } from "../../../../src/Client";
 import { mockServerPool } from "../../../mock-server/MockServerPool";
 
-describe("B", () => {
+describe("BClient", () => {
     test("foo", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ environment: server.baseUrl });

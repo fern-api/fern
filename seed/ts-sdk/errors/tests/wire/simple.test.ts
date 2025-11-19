@@ -4,7 +4,7 @@ import * as SeedErrors from "../../src/api/index";
 import { SeedErrorsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Simple", () => {
+describe("SimpleClient", () => {
     test("fooWithoutEndpointError (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedErrorsClient({ environment: server.baseUrl });

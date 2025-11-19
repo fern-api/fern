@@ -3,7 +3,7 @@
 import { SeedObjectsWithImportsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Optional", () => {
+describe("OptionalClient", () => {
     test("sendOptionalBody", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedObjectsWithImportsClient({ environment: server.baseUrl });

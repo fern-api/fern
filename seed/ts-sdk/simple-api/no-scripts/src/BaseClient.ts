@@ -2,6 +2,7 @@
 
 import * as environments from "./environments.js";
 import * as core from "./core/index.js";
+import { mergeHeaders } from "./core/headers.js";
 
 export interface BaseClientOptions {
     environment: core.Supplier<environments.SeedSimpleApiEnvironment | string>;
@@ -31,4 +32,19 @@ export interface BaseRequestOptions {
     queryParams?: Record<string, unknown>;
     /** Additional headers to include in the request. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
+}
+
+export function normalizeClientOptions<T extends BaseClientOptions>(
+    options: T
+): T {
+    const headers = mergeHeaders(
+        { "X-Fern-Language": "JavaScript", "X-Fern-SDK-Name": "@fern/simple-api", "X-Fern-SDK-Version": "0.0.1", "User-Agent": "@fern/simple-api/0.0.1", "X-Fern-Runtime": core.RUNTIME.type, "X-Fern-Runtime-Version": core.RUNTIME.version },
+        options?.headers
+    );
+
+    return {
+        ...options,
+        logging: core.logging.createLogger(options?.logging),
+        headers,
+    } as T;
 }

@@ -4,7 +4,7 @@ import * as SeedBasicAuth from "../../src/api/index";
 import { SeedBasicAuthClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("BasicAuth", () => {
+describe("BasicAuthClient", () => {
     test("getWithBasicAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthClient({ username: "test", password: "test", environment: server.baseUrl });

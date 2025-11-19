@@ -4,7 +4,7 @@ import * as SeedExhaustive from "../../api/index";
 import { SeedExhaustiveClient } from "../../Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("InlinedRequests", () => {
+describe("InlinedRequestsClient", () => {
     test("postWithObjectBodyandResponse (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });

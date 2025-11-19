@@ -4,7 +4,7 @@ import * as SeedBasicAuthEnvironmentVariables from "../../src/api/index";
 import { SeedBasicAuthEnvironmentVariablesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("BasicAuth", () => {
+describe("BasicAuthClient", () => {
     test("getWithBasicAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({

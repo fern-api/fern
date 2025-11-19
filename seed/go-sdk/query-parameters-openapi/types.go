@@ -32,19 +32,19 @@ var (
 type SearchRequest struct {
 	Limit            int                            `json:"-" url:"limit"`
 	Id               string                         `json:"-" url:"id"`
-	Date             string                         `json:"-" url:"date"`
+	Date             time.Time                      `json:"-" url:"date" format:"date"`
 	Deadline         time.Time                      `json:"-" url:"deadline"`
 	Bytes            string                         `json:"-" url:"bytes"`
 	User             *User                          `json:"-" url:"user"`
 	UserList         []*User                        `json:"-" url:"userList,omitempty"`
 	OptionalDeadline *time.Time                     `json:"-" url:"optionalDeadline,omitempty"`
-	KeyValue         map[string]*string             `json:"-" url:"keyValue,omitempty"`
+	KeyValue         map[string]string              `json:"-" url:"keyValue,omitempty"`
 	OptionalString   *string                        `json:"-" url:"optionalString,omitempty"`
 	NestedUser       *NestedUser                    `json:"-" url:"nestedUser,omitempty"`
 	OptionalUser     *User                          `json:"-" url:"optionalUser,omitempty"`
 	ExcludeUser      []*User                        `json:"-" url:"excludeUser,omitempty"`
 	Filter           []*string                      `json:"-" url:"filter,omitempty"`
-	Neighbor         *User                          `json:"-" url:"neighbor,omitempty"`
+	Neighbor         *SearchRequestNeighbor         `json:"-" url:"neighbor,omitempty"`
 	NeighborRequired *SearchRequestNeighborRequired `json:"-" url:"neighborRequired"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -74,7 +74,7 @@ func (s *SearchRequest) SetId(id string) {
 
 // SetDate sets the Date field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchRequest) SetDate(date string) {
+func (s *SearchRequest) SetDate(date time.Time) {
 	s.Date = date
 	s.require(searchRequestFieldDate)
 }
@@ -116,7 +116,7 @@ func (s *SearchRequest) SetOptionalDeadline(optionalDeadline *time.Time) {
 
 // SetKeyValue sets the KeyValue field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchRequest) SetKeyValue(keyValue map[string]*string) {
+func (s *SearchRequest) SetKeyValue(keyValue map[string]string) {
 	s.KeyValue = keyValue
 	s.require(searchRequestFieldKeyValue)
 }
@@ -158,7 +158,7 @@ func (s *SearchRequest) SetFilter(filter []*string) {
 
 // SetNeighbor sets the Neighbor field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchRequest) SetNeighbor(neighbor *User) {
+func (s *SearchRequest) SetNeighbor(neighbor *SearchRequestNeighbor) {
 	s.Neighbor = neighbor
 	s.require(searchRequestFieldNeighbor)
 }
@@ -262,6 +262,110 @@ func (n *NestedUser) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", n)
+}
+
+type SearchRequestNeighbor struct {
+	User       *User
+	NestedUser *NestedUser
+	String     string
+	Integer    int
+
+	typ string
+}
+
+func (s *SearchRequestNeighbor) GetUser() *User {
+	if s == nil {
+		return nil
+	}
+	return s.User
+}
+
+func (s *SearchRequestNeighbor) GetNestedUser() *NestedUser {
+	if s == nil {
+		return nil
+	}
+	return s.NestedUser
+}
+
+func (s *SearchRequestNeighbor) GetString() string {
+	if s == nil {
+		return ""
+	}
+	return s.String
+}
+
+func (s *SearchRequestNeighbor) GetInteger() int {
+	if s == nil {
+		return 0
+	}
+	return s.Integer
+}
+
+func (s *SearchRequestNeighbor) UnmarshalJSON(data []byte) error {
+	valueUser := new(User)
+	if err := json.Unmarshal(data, &valueUser); err == nil {
+		s.typ = "User"
+		s.User = valueUser
+		return nil
+	}
+	valueNestedUser := new(NestedUser)
+	if err := json.Unmarshal(data, &valueNestedUser); err == nil {
+		s.typ = "NestedUser"
+		s.NestedUser = valueNestedUser
+		return nil
+	}
+	var valueString string
+	if err := json.Unmarshal(data, &valueString); err == nil {
+		s.typ = "String"
+		s.String = valueString
+		return nil
+	}
+	var valueInteger int
+	if err := json.Unmarshal(data, &valueInteger); err == nil {
+		s.typ = "Integer"
+		s.Integer = valueInteger
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, s)
+}
+
+func (s SearchRequestNeighbor) MarshalJSON() ([]byte, error) {
+	if s.typ == "User" || s.User != nil {
+		return json.Marshal(s.User)
+	}
+	if s.typ == "NestedUser" || s.NestedUser != nil {
+		return json.Marshal(s.NestedUser)
+	}
+	if s.typ == "String" || s.String != "" {
+		return json.Marshal(s.String)
+	}
+	if s.typ == "Integer" || s.Integer != 0 {
+		return json.Marshal(s.Integer)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", s)
+}
+
+type SearchRequestNeighborVisitor interface {
+	VisitUser(*User) error
+	VisitNestedUser(*NestedUser) error
+	VisitString(string) error
+	VisitInteger(int) error
+}
+
+func (s *SearchRequestNeighbor) Accept(visitor SearchRequestNeighborVisitor) error {
+	if s.typ == "User" || s.User != nil {
+		return visitor.VisitUser(s.User)
+	}
+	if s.typ == "NestedUser" || s.NestedUser != nil {
+		return visitor.VisitNestedUser(s.NestedUser)
+	}
+	if s.typ == "String" || s.String != "" {
+		return visitor.VisitString(s.String)
+	}
+	if s.typ == "Integer" || s.Integer != 0 {
+		return visitor.VisitInteger(s.Integer)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", s)
 }
 
 type SearchRequestNeighborRequired struct {
