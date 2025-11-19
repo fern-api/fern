@@ -16,6 +16,6 @@ public final class PropertyBasedErrorTestExceptionHandler {
   @ExceptionHandler(PropertyBasedErrorTest.class)
   ResponseEntity<Object> handle(PropertyBasedErrorTest propertyBasedErrorTest) {
     ErrorBody body = new ErrorBody<>(PropertyBasedErrorTest.ERROR_NAME, propertyBasedErrorTest.getBody());
-    return new ResponseEntity<>(body, null, PropertyBasedErrorTest.STATUS_CODE);
+    return ResponseEntity.status(PropertyBasedErrorTest.STATUS_CODE).body(body);
   }
 }

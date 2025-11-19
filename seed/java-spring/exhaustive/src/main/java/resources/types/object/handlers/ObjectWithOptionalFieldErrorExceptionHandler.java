@@ -14,6 +14,6 @@ import resources.types.object.exceptions.ObjectWithOptionalFieldError;
 public final class ObjectWithOptionalFieldErrorExceptionHandler {
   @ExceptionHandler(ObjectWithOptionalFieldError.class)
   ResponseEntity<Object> handle(ObjectWithOptionalFieldError objectWithOptionalFieldError) {
-    return new ResponseEntity<>(objectWithOptionalFieldError.getBody(), null, ObjectWithOptionalFieldError.STATUS_CODE);
+    return ResponseEntity.status(ObjectWithOptionalFieldError.STATUS_CODE).body(objectWithOptionalFieldError.getBody());
   }
 }
