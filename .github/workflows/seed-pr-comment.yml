@@ -1,0 +1,226 @@
+name: Seed PR Comment Trigger
+
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+  statuses: write
+
+jobs:
+  parse-comment:
+    name: Parse Comment
+    runs-on: ubuntu-latest
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, 'seed run ')
+    outputs:
+      generator: ${{ steps.parse.outputs.generator }}
+      pr-number: ${{ steps.parse.outputs.pr-number }}
+      pr-sha: ${{ steps.parse.outputs.pr-sha }}
+    steps:
+      - name: Parse seed command
+        id: parse
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comment = context.payload.comment.body;
+            const match = comment.match(/^seed run (\S+)/);
+            
+            if (!match) {
+              core.setFailed('Invalid seed command format. Use: seed run <language>');
+              return;
+            }
+            
+            const language = match[1].toLowerCase();
+            
+            // Map language names to generator names
+            const languageMap = {
+              'python': 'python-sdk',
+              'python-sdk': 'python-sdk',
+              'typescript': 'ts-sdk',
+              'ts': 'ts-sdk',
+              'ts-sdk': 'ts-sdk',
+              'java': 'java-sdk',
+              'java-sdk': 'java-sdk',
+              'go': 'go-sdk',
+              'go-sdk': 'go-sdk',
+              'ruby': 'ruby-sdk',
+              'ruby-sdk': 'ruby-sdk',
+              'ruby-v2': 'ruby-sdk-v2',
+              'ruby-sdk-v2': 'ruby-sdk-v2',
+              'csharp': 'csharp-sdk',
+              'csharp-sdk': 'csharp-sdk',
+              'c#': 'csharp-sdk',
+              'php': 'php-sdk',
+              'php-sdk': 'php-sdk',
+              'swift': 'swift-sdk',
+              'swift-sdk': 'swift-sdk',
+              'rust': 'rust-sdk',
+              'rust-sdk': 'rust-sdk',
+              'pydantic': 'pydantic',
+              'fastapi': 'fastapi',
+              'express': 'ts-express',
+              'ts-express': 'ts-express',
+              'spring': 'java-spring',
+              'java-spring': 'java-spring',
+              'fiber': 'go-fiber',
+              'go-fiber': 'go-fiber',
+              'openapi': 'openapi',
+              'postman': 'postman',
+              'go-model': 'go-model',
+              'java-model': 'java-model',
+              'php-model': 'php-model',
+              'ruby-model': 'ruby-model',
+              'csharp-model': 'csharp-model',
+              'rust-model': 'rust-model',
+              'pydantic-v2': 'pydantic-v2'
+            };
+            
+            const generator = languageMap[language];
+            
+            if (!generator) {
+              const supportedLanguages = Object.keys(languageMap).sort().join(', ');
+              core.setFailed(`Unknown language: ${language}. Supported languages: ${supportedLanguages}`);
+              return;
+            }
+            
+            // Get PR details
+            const pr = await github.rest.pulls.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+            
+            core.setOutput('generator', generator);
+            core.setOutput('pr-number', context.issue.number);
+            core.setOutput('pr-sha', pr.data.head.sha);
+            
+            // Add a reaction to the comment to acknowledge
+            await github.rest.reactions.createForIssueComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: context.payload.comment.id,
+              content: 'rocket'
+            });
+
+  run-seed:
+    name: Run Seed Test
+    runs-on: ubuntu-latest
+    needs: parse-comment
+    timeout-minutes: 60
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.parse-comment.outputs.pr-sha }}
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.4.0
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Create check run
+        id: create-check
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const check = await github.rest.checks.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              name: 'Seed Test: ${{ needs.parse-comment.outputs.generator }}',
+              head_sha: '${{ needs.parse-comment.outputs.pr-sha }}',
+              status: 'in_progress',
+              started_at: new Date().toISOString(),
+              output: {
+                title: 'Running seed test for ${{ needs.parse-comment.outputs.generator }}',
+                summary: 'Seed test is running...'
+              }
+            });
+            core.setOutput('check-id', check.data.id);
+
+      - name: Run seed test
+        id: seed-test
+        run: |
+          set +e
+          pnpm seed:local test --generator ${{ needs.parse-comment.outputs.generator }} 2>&1 | tee seed-output.log
+          echo "exit-code=$?" >> $GITHUB_OUTPUT
+        continue-on-error: true
+
+      - name: Update check run with result
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            let output = '';
+            try {
+              output = fs.readFileSync('seed-output.log', 'utf8');
+            } catch (e) {
+              output = 'No output captured';
+            }
+            
+            // Truncate output if too long (GitHub has a limit)
+            const maxLength = 65000;
+            if (output.length > maxLength) {
+              output = output.substring(0, maxLength) + '\n\n... (output truncated)';
+            }
+            
+            const exitCode = '${{ steps.seed-test.outputs.exit-code }}';
+            const success = exitCode === '0';
+            
+            await github.rest.checks.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              check_run_id: '${{ steps.create-check.outputs.check-id }}',
+              status: 'completed',
+              conclusion: success ? 'success' : 'failure',
+              completed_at: new Date().toISOString(),
+              output: {
+                title: success ? 'Seed test passed ✓' : 'Seed test failed ✗',
+                summary: success 
+                  ? 'All seed tests passed for ${{ needs.parse-comment.outputs.generator }}'
+                  : 'Seed tests failed for ${{ needs.parse-comment.outputs.generator }}. See details below.',
+                text: '```\n' + output + '\n```'
+              }
+            });
+            
+            // Comment on PR with result
+            const commentBody = success
+              ? `✅ Seed test passed for \`${{ needs.parse-comment.outputs.generator }}\``
+              : `❌ Seed test failed for \`${{ needs.parse-comment.outputs.generator }}\`. Check the [workflow run](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}) for details.`;
+            
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: ${{ needs.parse-comment.outputs.pr-number }},
+              body: commentBody
+            });
+            
+            if (!success) {
+              core.setFailed('Seed test failed');
+            }
