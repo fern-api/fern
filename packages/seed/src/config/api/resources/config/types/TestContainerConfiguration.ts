@@ -4,7 +4,7 @@
 
 import * as FernSeedConfig from "../../../index";
 
-export interface TestDockerConfiguration {
+export interface TestContainerConfiguration {
     image: string;
     command?: FernSeedConfig.DockerCommand;
 }

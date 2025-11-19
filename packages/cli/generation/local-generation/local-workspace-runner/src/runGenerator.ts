@@ -10,18 +10,18 @@ import { mkdir, writeFile } from "fs/promises";
 import * as path from "path";
 import { join } from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
+import { ContainerExecutionEnvironment } from "./ContainerExecutionEnvironment";
 import {
     CODEGEN_OUTPUT_DIRECTORY_NAME,
-    DOCKER_CODEGEN_OUTPUT_DIRECTORY,
-    DOCKER_GENERATOR_CONFIG_PATH,
-    DOCKER_PATH_TO_IR,
-    DOCKER_PATH_TO_SNIPPET,
-    DOCKER_PATH_TO_SNIPPET_TEMPLATES,
-    DOCKER_SOURCES_DIRECTORY,
+    CONTAINER_CODEGEN_OUTPUT_DIRECTORY,
+    CONTAINER_GENERATOR_CONFIG_PATH,
+    CONTAINER_PATH_TO_IR,
+    CONTAINER_PATH_TO_SNIPPET,
+    CONTAINER_PATH_TO_SNIPPET_TEMPLATES,
+    CONTAINER_SOURCES_DIRECTORY,
     GENERATOR_CONFIG_FILENAME,
     IR_FILENAME
 } from "./constants";
-import { DockerExecutionEnvironment } from "./DockerExecutionEnvironment";
 import { ExecutionEnvironment } from "./ExecutionEnvironment";
 import { getGeneratorConfig, getLicensePathFromConfig } from "./getGeneratorConfig";
 import { getIntermediateRepresentation } from "./getIntermediateRepresentation";
@@ -155,19 +155,19 @@ export async function writeFilesToDiskAndRunGenerator({
 
     const environment =
         executionEnvironment ??
-        new DockerExecutionEnvironment({
-            dockerImage: `${generatorInvocation.name}:${generatorInvocation.version}`,
-            keepDocker
+        new ContainerExecutionEnvironment({
+            containerImage: `${generatorInvocation.name}:${generatorInvocation.version}`,
+            keepContainer: keepDocker
         });
 
-    const isDocker = environment instanceof DockerExecutionEnvironment;
-    const paths = isDocker
+    const isContainer = environment instanceof ContainerExecutionEnvironment;
+    const paths = isContainer
         ? ({
-              outputDirectory: AbsoluteFilePath.of(DOCKER_CODEGEN_OUTPUT_DIRECTORY),
-              irPath: AbsoluteFilePath.of(DOCKER_PATH_TO_IR),
-              configPath: AbsoluteFilePath.of(DOCKER_GENERATOR_CONFIG_PATH),
-              snippetPath: AbsoluteFilePath.of(DOCKER_PATH_TO_SNIPPET),
-              snippetTemplatePath: AbsoluteFilePath.of(DOCKER_PATH_TO_SNIPPET_TEMPLATES)
+              outputDirectory: AbsoluteFilePath.of(CONTAINER_CODEGEN_OUTPUT_DIRECTORY),
+              irPath: AbsoluteFilePath.of(CONTAINER_PATH_TO_IR),
+              configPath: AbsoluteFilePath.of(CONTAINER_GENERATOR_CONFIG_PATH),
+              snippetPath: AbsoluteFilePath.of(CONTAINER_PATH_TO_SNIPPET),
+              snippetTemplatePath: AbsoluteFilePath.of(CONTAINER_PATH_TO_SNIPPET_TEMPLATES)
           } as const)
         : ({
               outputDirectory: absolutePathToTmpOutputDirectory,
@@ -276,5 +276,5 @@ function getSourceConfig(workspace: FernWorkspace): SourceConfig {
 }
 
 function getDockerDestinationForSource(source: IdentifiableSource): string {
-    return `${DOCKER_SOURCES_DIRECTORY}/${source.id}`;
+    return `${CONTAINER_SOURCES_DIRECTORY}/${source.id}`;
 }

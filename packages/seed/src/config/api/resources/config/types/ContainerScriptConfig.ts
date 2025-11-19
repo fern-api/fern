@@ -4,6 +4,6 @@
 
 import * as FernSeedConfig from "../../../index";
 
-export interface DockerScriptConfig extends FernSeedConfig.Script {
-    docker: string;
+export interface ContainerScriptConfig extends FernSeedConfig.Script {
+    image: string;
 }

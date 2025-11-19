@@ -1,26 +1,45 @@
+import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { DockerScriptConfig } from "../../../config/api";
+import { ContainerScriptConfig } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
 import { ScriptRunner } from "./ScriptRunner";
 
-interface RunningScriptConfig extends DockerScriptConfig {
+interface RunningScriptConfig extends ContainerScriptConfig {
     containerId: string;
 }
 
 /**
- * Runs scripts on the generated code to verify the output using Docker containers.
+ * Runs scripts on the generated code to verify the output using container runtimes (Docker or Podman).
  */
-export class DockerScriptRunner extends ScriptRunner {
+export class ContainerScriptRunner extends ScriptRunner {
+    private readonly runner: ContainerRunner;
     private startContainersFn: Promise<void> | undefined;
     private scripts: RunningScriptConfig[] = [];
 
-    constructor(workspace: GeneratorWorkspace, skipScripts: boolean, context: TaskContext) {
+    constructor(workspace: GeneratorWorkspace, skipScripts: boolean, context: TaskContext, runner?: ContainerRunner) {
         super(workspace, skipScripts, context);
+
+        if (runner != null) {
+            this.runner = runner;
+            const hasScripts =
+                this.workspace.workspaceConfig.scripts != null && this.workspace.workspaceConfig.scripts.length > 0;
+
+            if (!hasScripts) {
+                throw new Error(
+                    `Generator ${this.workspace.workspaceName} does not have any scripts configured in seed.yml. ` +
+                        `Cannot use explicitly specified container runtime '${this.runner}' without scripts configuration.`
+                );
+            }
+        } else {
+            // Default to docker for backward compatibility (scripts don't have separate docker/podman configs)
+            this.runner = "docker";
+        }
+
         if (!skipScripts) {
             this.startContainersFn = this.initialize();
         }
@@ -56,7 +75,7 @@ export class DockerScriptRunner extends ScriptRunner {
 
     public async stop(): Promise<void> {
         for (const script of this.scripts) {
-            await loggingExeca(this.context.logger, "docker", ["kill", script.containerId], {
+            await loggingExeca(this.context.logger, this.runner, ["kill", script.containerId], {
                 doNotPipeOutput: false
             });
         }
@@ -77,7 +96,7 @@ export class DockerScriptRunner extends ScriptRunner {
         outputDir: AbsoluteFilePath;
         taskContext: TaskContext;
         containerId: string;
-        script: DockerScriptConfig;
+        script: ContainerScriptConfig;
     }): Promise<ScriptRunner.RunResponse> {
         taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${id}`);
 
@@ -88,8 +107,8 @@ export class DockerScriptRunner extends ScriptRunner {
         // Move scripts and generated files into the container
         const mkdirCommand = await loggingExeca(
             taskContext.logger,
-            "docker",
-            ["exec", containerId, "mkdir", `/${workDir}`],
+            this.runner,
+            ["exec", containerId, "mkdir", "-p", `/${workDir}/generated`],
             {
                 doNotPipeOutput: false,
                 reject: false
@@ -103,7 +122,7 @@ export class DockerScriptRunner extends ScriptRunner {
         }
         const copyScriptCommand = await loggingExeca(
             undefined,
-            "docker",
+            this.runner,
             ["cp", scriptFile.path, `${containerId}:/${workDir}/test.sh`],
             {
                 doNotPipeOutput: false,
@@ -118,7 +137,7 @@ export class DockerScriptRunner extends ScriptRunner {
         }
         const copyCommand = await loggingExeca(
             taskContext.logger,
-            "docker",
+            this.runner,
             ["cp", `${outputDir}/.`, `${containerId}:/${workDir}/generated/`],
             {
                 doNotPipeOutput: false,
@@ -135,7 +154,7 @@ export class DockerScriptRunner extends ScriptRunner {
         // Now actually run the test script
         const command = await loggingExeca(
             taskContext.logger,
-            "docker",
+            this.runner,
             ["exec", containerId, "/bin/sh", "-c", `chmod +x /${workDir}/test.sh && /${workDir}/test.sh`],
             {
                 doNotPipeOutput: false,
@@ -161,11 +180,11 @@ export class DockerScriptRunner extends ScriptRunner {
     private async startContainers(context: TaskContext): Promise<void> {
         const absoluteFilePathToFernCli = await this.buildFernCli(context);
         const cliVolumeBind = `${absoluteFilePathToFernCli}:/fern`;
-        // Start running a docker container for each script instance
+        // Start running a container for each script instance
         for (const script of this.workspace.workspaceConfig.scripts ?? []) {
             const startSeedCommand = await loggingExeca(
                 context.logger,
-                "docker",
+                this.runner,
                 [
                     "run",
                     "--privileged",
@@ -175,7 +194,7 @@ export class DockerScriptRunner extends ScriptRunner {
                     "-dit",
                     "-v",
                     cliVolumeBind,
-                    script.docker,
+                    script.image,
                     "/bin/sh"
                 ],
                 {
