@@ -4,7 +4,7 @@ import { SeedOauthClientCredentialsClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 import { mockAuth } from "../mockAuth";
 
-describe("Api", () => {
+describe("ApiClient", () => {
     test("getSomething", async () => {
         const server = mockServerPool.createServer();
         mockAuth(server);
