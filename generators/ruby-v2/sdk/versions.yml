@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc39
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add YARD documentation comments for method parameters in generated SDK code.
+        The generator now includes proper type references for `request_options` (e.g., `Seed::RequestOptions`) and `params` (e.g., `Seed::Imdb::Types::CreateMovieRequest`) instead of untyped hashes, improving IDE autocomplete and documentation clarity.
+  irVersion: 61
+
 - version: 1.0.0-rc38
   createdAt: "2025-11-19"
   changelogEntry:
