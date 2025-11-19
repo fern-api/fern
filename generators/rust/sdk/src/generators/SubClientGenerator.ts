@@ -982,12 +982,7 @@ export class SubClientGenerator {
     private getQueryBuilderMethod(queryParam: QueryParameter): string {
         const valueType = queryParam.valueType;
 
-        // Check for structured query parameter by name
-        if (queryParam.name.wireValue === "query" && this.isStringType(valueType)) {
-            return "structured_query";
-        }
-
-        // Handle allow-multiple query parameters (repeating query params like ?tag=a&tag=b)
+        // Handle allow-multiple query parameters first (repeating query params like ?tag=a&tag=b)
         // These have type Vec<Option<T>> and need special array methods
         // Note: The model generator wraps allowMultiple types in a list, so the actual type is Vec<Option<T>>
         // But the SDK generator sees the original valueType before wrapping
@@ -998,8 +993,13 @@ export class SubClientGenerator {
             if (["string", "int", "float", "bool"].includes(baseMethod)) {
                 return `${baseMethod}_array`;
             }
-            // Fall back to serialize for complex types
-            return "serialize";
+            // Use serialize_array for complex types (enums, named types, etc.) with allow-multiple
+            return "serialize_array";
+        }
+
+        // Check for structured query parameter by name (only for non-array queries)
+        if (queryParam.name.wireValue === "query" && this.isStringType(valueType)) {
+            return "structured_query";
         }
 
         // Map types to appropriate QueryBuilder methods
