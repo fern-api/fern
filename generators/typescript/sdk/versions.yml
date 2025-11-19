@@ -3,6 +3,9 @@
   changelogEntry:
     - summary: Add support for OAuth and inferred auth in generated wire tests.
       type: feat
+    - summary: |
+        Respect the `auth: false` at the endpoint level when generating the endpoint function.
+      type: feat
   createdAt: "2025-11-19"
   irVersion: 61
 
