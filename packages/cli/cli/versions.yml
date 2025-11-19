@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix OpenAPI importer to prevent depth-based inline for enums in request bodies. Enums now only respect explicit inline flags instead of being automatically inlined based on declaration depth.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.11.2
+
+- changelogEntry:
+    - summary: |
         Fix AutoVersioning to exclude Fern branding from commit messages and PR titles/descriptions when whitelabel config is present.
       type: fix
   irVersion: 61
