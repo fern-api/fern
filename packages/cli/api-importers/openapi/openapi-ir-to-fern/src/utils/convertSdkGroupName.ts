@@ -18,12 +18,14 @@ export function convertSdkGroupNameToFileWithoutExtension(groupName: SdkGroupNam
     const fileNames: string[] = [];
     for (const [index, group] of cleanedGroupName.entries()) {
         if (typeof group === "string") {
-            fileNames.push(camelCase(group));
+            const camelCased = camelCase(group);
+            fileNames.push(camelCased);
         } else if (typeof group === "object") {
             switch (group.type) {
                 case "namespace": {
                     if (index < cleanedGroupName.length - 1) {
-                        fileNames.push(camelCase(group.name));
+                        const camelCased = camelCase(group.name);
+                        fileNames.push(camelCased);
                     } else {
                         // For the last namespace, make it a true namespace (ie. a directory with it's contents in the root package marker)
                         fileNames.push(...[group.name, FERN_PACKAGE_MARKER_FILENAME_NO_EXTENSION]);

@@ -91,9 +91,8 @@ export abstract class AbstractOpenAPIV3ParserContext implements SchemaParserCont
 
     public resolveGroupName(groupName: SdkGroupName): SdkGroupName {
         if (this.namespace != null) {
-            return [{ type: "namespace", name: this.namespace }, ...groupName];
+            return [{ type: "namespace" as const, name: this.namespace }, ...groupName];
         }
-
         return groupName;
     }
 
