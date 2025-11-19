@@ -38,10 +38,7 @@
     "@fern-api/dynamic-ir-sdk": "^59.6.1",
     "@fern-api/path-utils": "workspace:*",
     "@types/node": "18.15.3",
-    "@yarnpkg/esbuild-plugin-pnp": "3.0.0-rc.15",
     "depcheck": "^1.4.7",
-    "esbuild": "^0.25.0",
-    "tsdown": "^0.15.3",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }
