@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.39.0
+  changelogEntry:
+    - summary: Add environment_class_name config option to customize the environment class name. Default remains {ClientName}Environment.
+      type: feat
+  createdAt: "2025-11-19"
+  irVersion: 61
+
 - version: 4.38.0
   changelogEntry:
     - summary: Add pytest-xdist for parallel test execution and upgrade CI Python version to 3.9 in generated SDKs.
