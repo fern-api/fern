@@ -285,6 +285,14 @@ function resolveAbsolutePathToLocalPreview(
 
     return absolutePathToPreview ? join(absolutePathToPreview, RelativeFilePath.of(subfolderName)) : undefined;
 }
+
+function parseCommitMessageForPR(commitMessage: string): { prTitle: string; prBody: string } {
+    const lines = commitMessage.split("\n");
+    const prTitle = lines[0]?.trim() || "SDK Generation";
+    const prBody = lines.slice(1).join("\n").trim() || "Automated SDK generation by Fern";
+    return { prTitle, prBody };
+}
+
 async function postProcessGithubSelfHosted(
     context: TaskContext,
     selfhostedGithubConfig: SelhostedGithubConfig,
@@ -324,12 +332,14 @@ async function postProcessGithubSelfHosted(
             const { owner, repo } = parsedRepo;
             const head = `${owner}:${prBranch}`;
 
+            const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
+
             try {
                 await octokit.pulls.create({
                     owner,
                     repo,
-                    title: "SDK Generation",
-                    body: "Automated SDK generation by Fern",
+                    title: prTitle,
+                    body: prBody,
                     head,
                     base: baseBranch,
                     draft: false
