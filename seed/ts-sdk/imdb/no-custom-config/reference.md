@@ -1,5 +1,5 @@
 # Reference
-## Imdb
+## imdb
 <details><summary><code>client.imdb.<a href="/src/api/resources/imdb/client/Client.ts">createMovie</a>({ ...params }) -> SeedApi.MovieId</code></summary>
 <dl>
 <dd>

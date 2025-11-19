@@ -11,42 +11,36 @@ export declare namespace EmptyRealtimeSocket {
 
     export type Response = never;
     type EventHandlers = {
-        open?: () => void;
-        message?: (message: Response) => void;
-        close?: (event: core.CloseEvent) => void;
-        error?: (error: Error) => void;
-    };
+            open?: () => void;
+            message?: (message: Response) => void;
+            close?: (event: core.CloseEvent) => void;
+            error?: (error: Error) => void;
+        };
 }
 
 export class EmptyRealtimeSocket {
     public readonly socket: core.ReconnectingWebSocket;
     protected readonly eventHandlers: EmptyRealtimeSocket.EventHandlers = {};
     private handleOpen: () => void = () => {
-        this.eventHandlers.open?.();
-    };
-    private handleMessage: (event: { data: string }) => void = (event) => {
-        const data = fromJson(event.data);
-
-        const parsedResponse = serializers.empty.EmptyRealtimeSocketResponse.parse(data, {
-            unrecognizedObjectKeys: "passthrough",
-            allowUnrecognizedUnionMembers: true,
-            allowUnrecognizedEnumValues: true,
-            skipValidation: true,
-            omitUndefined: true,
-        });
-        if (parsedResponse.ok) {
-            this.eventHandlers.message?.(parsedResponse.value);
-        } else {
-            this.eventHandlers.error?.(new Error("Received unknown message type"));
-        }
-    };
-    private handleClose: (event: core.CloseEvent) => void = (event) => {
-        this.eventHandlers.close?.(event);
-    };
-    private handleError: (event: core.ErrorEvent) => void = (event) => {
-        const message = event.message;
-        this.eventHandlers.error?.(new Error(message));
-    };
+                this.eventHandlers.open?.();
+            };
+    private handleMessage: (event: { data: string }) => void = event => {
+                const data = fromJson(event.data);
+            
+            const parsedResponse = serializers.empty.EmptyRealtimeSocketResponse.parse(data, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, omitUndefined: true });
+            if (parsedResponse.ok) {
+                this.eventHandlers.message?.(parsedResponse.value);
+            } else {
+                this.eventHandlers.error?.(new Error("Received unknown message type"));
+            }
+            };
+    private handleClose: (event: core.CloseEvent) => void = event => {
+                this.eventHandlers.close?.(event);
+            };
+    private handleError: (event: core.ErrorEvent) => void = event => {
+                const message = event.message;
+                this.eventHandlers.error?.(new Error(message));
+            };
 
     constructor(args: EmptyRealtimeSocket.Args) {
         this.socket = args.socket;
@@ -71,31 +65,28 @@ export class EmptyRealtimeSocket {
      * });
      * ```
      */
-    public on<T extends keyof EmptyRealtimeSocket.EventHandlers>(
-        event: T,
-        callback: EmptyRealtimeSocket.EventHandlers[T],
-    ): void {
+    public on<T extends keyof EmptyRealtimeSocket.EventHandlers>(event: T, callback: EmptyRealtimeSocket.EventHandlers[T]): void {
         this.eventHandlers[event] = callback;
     }
 
     /** Connect to the websocket and register event handlers. */
     public connect(): EmptyRealtimeSocket {
         this.socket.reconnect();
-
+        
         this.socket.addEventListener("open", this.handleOpen);
         this.socket.addEventListener("message", this.handleMessage);
         this.socket.addEventListener("close", this.handleClose);
         this.socket.addEventListener("error", this.handleError);
-
+        
         return this;
     }
 
     /** Close the websocket and unregister event handlers. */
     public close(): void {
         this.socket.close();
-
+        
         this.handleClose({ code: 1000 } as CloseEvent);
-
+        
         this.socket.removeEventListener("open", this.handleOpen);
         this.socket.removeEventListener("message", this.handleMessage);
         this.socket.removeEventListener("close", this.handleClose);
@@ -112,11 +103,24 @@ export class EmptyRealtimeSocket {
             this.socket.addEventListener("open", () => {
                 resolve(this.socket);
             });
-
+        
             this.socket.addEventListener("error", (event: unknown) => {
                 reject(event);
             });
         });
+    }
+
+    /** Asserts that the websocket is open. */
+    private assertSocketIsOpen(): void {
+        if (!this.socket) {
+            throw new Error("Socket is not connected.");
+        }
+
+        
+
+        if (this.socket.readyState !== core.ReconnectingWebSocket.OPEN) {
+            throw new Error("Socket is not open.");
+        }
     }
 
     /** Send a binary payload to the websocket. */

@@ -1,5 +1,5 @@
 # Reference
-## PropertyBasedError
+## propertyBasedError
 <details><summary><code>client.propertyBasedError.<a href="/src/api/resources/propertyBasedError/client/Client.ts">throwError</a>() -> string</code></summary>
 <dl>
 <dd>

@@ -2,22 +2,25 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedRequestParameters from "../../../index.js";
 import { toJson } from "../../../../core/json.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedRequestParameters from "../../../index.js";
 
 export declare namespace UserClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class UserClient {
     protected readonly _options: UserClient.Options;
 
     constructor(options: UserClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -33,27 +36,17 @@ export class UserClient {
      *         name: "test"
      *     })
      */
-    public createUsername(
-        request: SeedRequestParameters.CreateUsernameRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public createUsername(request: SeedRequestParameters.CreateUsernameRequest, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__createUsername(request, requestOptions));
     }
 
-    private async __createUsername(
-        request: SeedRequestParameters.CreateUsernameRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __createUsername(request: SeedRequestParameters.CreateUsernameRequest, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const { tags, ..._body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.tags = toJson(tags);
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        _queryParams["tags"] = toJson(tags);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/user/username",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/user/username"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -64,7 +57,7 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -74,26 +67,21 @@ export class UserClient {
             throw new errors.SeedRequestParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedRequestParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedRequestParametersTimeoutError(
-                    "Timeout exceeded when calling POST /user/username.",
-                );
-            case "unknown":
-                throw new errors.SeedRequestParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedRequestParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedRequestParametersTimeoutError("Timeout exceeded when calling POST /user/username.");
+            case "unknown": throw new errors.SeedRequestParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -111,27 +99,17 @@ export class UserClient {
      *         }
      *     })
      */
-    public createUsernameWithReferencedType(
-        request: SeedRequestParameters.CreateUsernameReferencedRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public createUsernameWithReferencedType(request: SeedRequestParameters.CreateUsernameReferencedRequest, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__createUsernameWithReferencedType(request, requestOptions));
     }
 
-    private async __createUsernameWithReferencedType(
-        request: SeedRequestParameters.CreateUsernameReferencedRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __createUsernameWithReferencedType(request: SeedRequestParameters.CreateUsernameReferencedRequest, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const { tags, body: _body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.tags = toJson(tags);
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        _queryParams["tags"] = toJson(tags);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/user/username-referenced",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/user/username-referenced"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -142,7 +120,7 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -152,26 +130,21 @@ export class UserClient {
             throw new errors.SeedRequestParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedRequestParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedRequestParametersTimeoutError(
-                    "Timeout exceeded when calling POST /user/username-referenced.",
-                );
-            case "unknown":
-                throw new errors.SeedRequestParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedRequestParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedRequestParametersTimeoutError("Timeout exceeded when calling POST /user/username-referenced.");
+            case "unknown": throw new errors.SeedRequestParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -182,24 +155,14 @@ export class UserClient {
      * @example
      *     await client.user.createUsernameOptional()
      */
-    public createUsernameOptional(
-        request?: SeedRequestParameters.CreateUsernameBodyOptionalProperties | null,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public createUsernameOptional(request?: SeedRequestParameters.CreateUsernameBodyOptionalProperties | null, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__createUsernameOptional(request, requestOptions));
     }
 
-    private async __createUsernameOptional(
-        request?: SeedRequestParameters.CreateUsernameBodyOptionalProperties | null,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __createUsernameOptional(request?: SeedRequestParameters.CreateUsernameBodyOptionalProperties | null, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/user/username-optional",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/user/username-optional"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -210,7 +173,7 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -220,26 +183,21 @@ export class UserClient {
             throw new errors.SeedRequestParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedRequestParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedRequestParametersTimeoutError(
-                    "Timeout exceeded when calling POST /user/username-optional.",
-                );
-            case "unknown":
-                throw new errors.SeedRequestParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedRequestParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedRequestParametersTimeoutError("Timeout exceeded when calling POST /user/username-optional.");
+            case "unknown": throw new errors.SeedRequestParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -290,87 +248,62 @@ export class UserClient {
      *         bigIntParam: BigInt("1000000")
      *     })
      */
-    public getUsername(
-        request: SeedRequestParameters.GetUsersRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedRequestParameters.User> {
+    public getUsername(request: SeedRequestParameters.GetUsersRequest, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedRequestParameters.User> {
         return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
     }
 
-    private async __getUsername(
-        request: SeedRequestParameters.GetUsersRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedRequestParameters.User>> {
-        const {
-            limit = 10,
-            id,
-            date,
-            deadline,
-            bytes,
-            user,
-            userList,
-            optionalDeadline,
-            keyValue,
-            optionalString,
-            nestedUser,
-            optionalUser,
-            excludeUser,
-            filter,
-            longParam = BigInt("9223372036854776000"),
-            bigIntParam = BigInt("18446744073709551615"),
-        } = request;
+    private async __getUsername(request: SeedRequestParameters.GetUsersRequest, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedRequestParameters.User>> {
+        const { limit = 10, id, date, deadline, bytes, user, userList, optionalDeadline, keyValue, optionalString, nestedUser, optionalUser, excludeUser, filter, longParam = BigInt("9223372036854776000"), bigIntParam = BigInt("18446744073709551615") } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
-            _queryParams.limit = limit.toString();
+            _queryParams["limit"] = limit.toString();
         }
 
-        _queryParams.id = id;
-        _queryParams.date = date;
-        _queryParams.deadline = deadline;
-        _queryParams.bytes = bytes;
-        _queryParams.user = user;
-        _queryParams.userList = toJson(userList);
+        _queryParams["id"] = id;
+        _queryParams["date"] = date;
+        _queryParams["deadline"] = deadline;
+        _queryParams["bytes"] = bytes;
+        _queryParams["user"] = user;
+        _queryParams["userList"] = toJson(userList);
         if (optionalDeadline != null) {
-            _queryParams.optionalDeadline = optionalDeadline;
+            _queryParams["optionalDeadline"] = optionalDeadline;
         }
 
-        _queryParams.keyValue = toJson(keyValue);
+        _queryParams["keyValue"] = toJson(keyValue);
         if (optionalString != null) {
-            _queryParams.optionalString = optionalString;
+            _queryParams["optionalString"] = optionalString;
         }
 
-        _queryParams.nestedUser = nestedUser;
+        _queryParams["nestedUser"] = nestedUser;
         if (optionalUser != null) {
-            _queryParams.optionalUser = optionalUser;
+            _queryParams["optionalUser"] = optionalUser;
         }
 
         if (Array.isArray(excludeUser)) {
-            _queryParams.excludeUser = excludeUser.map((item) => item);
-        } else {
-            _queryParams.excludeUser = excludeUser;
+            _queryParams["excludeUser"] = excludeUser.map(item => item);
+        }
+        else {
+            _queryParams["excludeUser"] = excludeUser;
         }
 
         if (Array.isArray(filter)) {
-            _queryParams.filter = filter.map((item) => item);
-        } else {
-            _queryParams.filter = filter;
+            _queryParams["filter"] = filter.map(item => item);
+        }
+        else {
+            _queryParams["filter"] = filter;
         }
 
         if (longParam != null) {
-            _queryParams.longParam = longParam.toString();
+            _queryParams["longParam"] = longParam.toString();
         }
 
         if (bigIntParam != null) {
-            _queryParams.bigIntParam = bigIntParam.toString();
+            _queryParams["bigIntParam"] = bigIntParam.toString();
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/user",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/user"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -378,7 +311,7 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedRequestParameters.User, rawResponse: _response.rawResponse };
@@ -388,24 +321,21 @@ export class UserClient {
             throw new errors.SeedRequestParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedRequestParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedRequestParametersTimeoutError("Timeout exceeded when calling GET /user.");
-            case "unknown":
-                throw new errors.SeedRequestParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedRequestParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedRequestParametersTimeoutError("Timeout exceeded when calling GET /user.");
+            case "unknown": throw new errors.SeedRequestParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedUndiscriminatedUnions from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedUndiscriminatedUnions from "../../../index.js";
 
 export declare namespace UnionClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class UnionClient {
     protected readonly _options: UnionClient.Options;
 
     constructor(options: UnionClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -27,22 +30,14 @@ export class UnionClient {
      * @example
      *     await client.union.get("string")
      */
-    public get(
-        request: SeedUndiscriminatedUnions.MyUnion,
-        requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.MyUnion> {
+    public get(request: SeedUndiscriminatedUnions.MyUnion, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<SeedUndiscriminatedUnions.MyUnion> {
         return core.HttpResponsePromise.fromPromise(this.__get(request, requestOptions));
     }
 
-    private async __get(
-        request: SeedUndiscriminatedUnions.MyUnion,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.MyUnion>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __get(request: SeedUndiscriminatedUnions.MyUnion, requestOptions?: UnionClient.RequestOptions): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.MyUnion>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+            url: await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -53,7 +48,7 @@ export class UnionClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedUndiscriminatedUnions.MyUnion, rawResponse: _response.rawResponse };
@@ -63,24 +58,21 @@ export class UnionClient {
             throw new errors.SeedUndiscriminatedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /.");
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /.");
+            case "unknown": throw new errors.SeedUndiscriminatedUnionsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -90,22 +82,14 @@ export class UnionClient {
      * @example
      *     await client.union.getMetadata()
      */
-    public getMetadata(
-        requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.Metadata> {
+    public getMetadata(requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<SeedUndiscriminatedUnions.Metadata> {
         return core.HttpResponsePromise.fromPromise(this.__getMetadata(requestOptions));
     }
 
-    private async __getMetadata(
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.Metadata>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __getMetadata(requestOptions?: UnionClient.RequestOptions): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.Metadata>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/metadata",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/metadata"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -113,7 +97,7 @@ export class UnionClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedUndiscriminatedUnions.Metadata, rawResponse: _response.rawResponse };
@@ -123,24 +107,21 @@ export class UnionClient {
             throw new errors.SeedUndiscriminatedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling GET /metadata.");
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling GET /metadata.");
+            case "unknown": throw new errors.SeedUndiscriminatedUnionsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -155,24 +136,14 @@ export class UnionClient {
      *         }
      *     })
      */
-    public updateMetadata(
-        request: SeedUndiscriminatedUnions.MetadataUnion,
-        requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<boolean> {
+    public updateMetadata(request: SeedUndiscriminatedUnions.MetadataUnion, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__updateMetadata(request, requestOptions));
     }
 
-    private async __updateMetadata(
-        request: SeedUndiscriminatedUnions.MetadataUnion,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<boolean>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __updateMetadata(request: SeedUndiscriminatedUnions.MetadataUnion, requestOptions?: UnionClient.RequestOptions): Promise<core.WithRawResponse<boolean>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/metadata",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/metadata"),
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
@@ -183,7 +154,7 @@ export class UnionClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
@@ -193,24 +164,21 @@ export class UnionClient {
             throw new errors.SeedUndiscriminatedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling PUT /metadata.");
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling PUT /metadata.");
+            case "unknown": throw new errors.SeedUndiscriminatedUnionsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -227,24 +195,14 @@ export class UnionClient {
      *         }
      *     })
      */
-    public call(
-        request: SeedUndiscriminatedUnions.Request,
-        requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<boolean> {
+    public call(request: SeedUndiscriminatedUnions.Request, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__call(request, requestOptions));
     }
 
-    private async __call(
-        request: SeedUndiscriminatedUnions.Request,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<boolean>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __call(request: SeedUndiscriminatedUnions.Request, requestOptions?: UnionClient.RequestOptions): Promise<core.WithRawResponse<boolean>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/call",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/call"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -255,7 +213,7 @@ export class UnionClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
@@ -265,24 +223,21 @@ export class UnionClient {
             throw new errors.SeedUndiscriminatedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /call.");
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /call.");
+            case "unknown": throw new errors.SeedUndiscriminatedUnionsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -293,24 +248,14 @@ export class UnionClient {
      * @example
      *     await client.union.duplicateTypesUnion("string")
      */
-    public duplicateTypesUnion(
-        request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
-        requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedUndiscriminatedUnions.UnionWithDuplicateTypes> {
+    public duplicateTypesUnion(request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<SeedUndiscriminatedUnions.UnionWithDuplicateTypes> {
         return core.HttpResponsePromise.fromPromise(this.__duplicateTypesUnion(request, requestOptions));
     }
 
-    private async __duplicateTypesUnion(
-        request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __duplicateTypesUnion(request: SeedUndiscriminatedUnions.UnionWithDuplicateTypes, requestOptions?: UnionClient.RequestOptions): Promise<core.WithRawResponse<SeedUndiscriminatedUnions.UnionWithDuplicateTypes>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/duplicate",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/duplicate"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -321,39 +266,31 @@ export class UnionClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedUndiscriminatedUnions.UnionWithDuplicateTypes,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedUndiscriminatedUnions.UnionWithDuplicateTypes, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedUndiscriminatedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError(
-                    "Timeout exceeded when calling POST /duplicate.",
-                );
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /duplicate.");
+            case "unknown": throw new errors.SeedUndiscriminatedUnionsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -364,24 +301,14 @@ export class UnionClient {
      * @example
      *     await client.union.nestedUnions("string")
      */
-    public nestedUnions(
-        request: SeedUndiscriminatedUnions.NestedUnionRoot,
-        requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<string> {
+    public nestedUnions(request: SeedUndiscriminatedUnions.NestedUnionRoot, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__nestedUnions(request, requestOptions));
     }
 
-    private async __nestedUnions(
-        request: SeedUndiscriminatedUnions.NestedUnionRoot,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __nestedUnions(request: SeedUndiscriminatedUnions.NestedUnionRoot, requestOptions?: UnionClient.RequestOptions): Promise<core.WithRawResponse<string>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/nested",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/nested"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -392,7 +319,7 @@ export class UnionClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -402,57 +329,44 @@ export class UnionClient {
             throw new errors.SeedUndiscriminatedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /nested.");
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /nested.");
+            case "unknown": throw new errors.SeedUndiscriminatedUnionsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
     /**
      * @param {SeedUndiscriminatedUnions.PaymentRequest} request
-     * @param {Union.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.union.testCamelCaseProperties({
      *         paymentMethod: {
-     *             method: "method",
-     *             cardNumber: "cardNumber"
+     *             method: "card",
+     *             cardNumber: "1234567890123456"
      *         }
      *     })
      */
-    public testCamelCaseProperties(
-        request: SeedUndiscriminatedUnions.PaymentRequest,
-        requestOptions?: Union.RequestOptions,
-    ): core.HttpResponsePromise<string> {
+    public testCamelCaseProperties(request: SeedUndiscriminatedUnions.PaymentRequest, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__testCamelCaseProperties(request, requestOptions));
     }
 
-    private async __testCamelCaseProperties(
-        request: SeedUndiscriminatedUnions.PaymentRequest,
-        requestOptions?: Union.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __testCamelCaseProperties(request: SeedUndiscriminatedUnions.PaymentRequest, requestOptions?: UnionClient.RequestOptions): Promise<core.WithRawResponse<string>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/camel-case",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/camel-case"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -463,7 +377,7 @@ export class UnionClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -473,26 +387,21 @@ export class UnionClient {
             throw new errors.SeedUndiscriminatedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUndiscriminatedUnionsTimeoutError(
-                    "Timeout exceeded when calling POST /camel-case.",
-                );
-            case "unknown":
-                throw new errors.SeedUndiscriminatedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedUndiscriminatedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /camel-case.");
+            case "unknown": throw new errors.SeedUndiscriminatedUnionsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

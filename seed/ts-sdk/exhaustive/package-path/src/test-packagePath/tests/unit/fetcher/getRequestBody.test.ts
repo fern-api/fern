@@ -16,26 +16,26 @@ describe("Test getRequestBody", () => {
             input: { key: "value" },
             type: "json",
             expected: '{"key":"value"}',
-            skipCondition: () => RUNTIME.type !== "node",
+            skipCondition: () => RUNTIME.type !== "node"
         },
         {
             description: "should stringify body if not FormData in browser environment",
             input: { key: "value" },
             type: "json",
             expected: '{"key":"value"}',
-            skipCondition: () => RUNTIME.type !== "browser",
+            skipCondition: () => RUNTIME.type !== "browser"
         },
         {
             description: "should return the Uint8Array",
             input: new Uint8Array([1, 2, 3]),
             type: "bytes",
-            expected: new Uint8Array([1, 2, 3]),
+            expected: new Uint8Array([1, 2, 3])
         },
         {
             description: "should serialize objects for form-urlencoded content type",
             input: { username: "johndoe", email: "john@example.com" },
             type: "form",
-            expected: "username=johndoe&email=john%40example.com",
+            expected: "username=johndoe&email=john%40example.com"
         },
         {
             description: "should serialize complex nested objects and arrays for form-urlencoded content type",
@@ -45,23 +45,23 @@ describe("Test getRequestBody", () => {
                         name: "John Doe",
                         settings: {
                             theme: "dark",
-                            notifications: true,
-                        },
+                            notifications: true
+                        }
                     },
                     tags: ["admin", "user"],
                     contacts: [
                         { type: "email", value: "john@example.com" },
-                        { type: "phone", value: "+1234567890" },
-                    ],
+                        { type: "phone", value: "+1234567890" }
+                    ]
                 },
                 filters: {
                     status: ["active", "pending"],
                     metadata: {
                         created: "2024-01-01",
-                        categories: ["electronics", "books"],
-                    },
+                        categories: ["electronics", "books"]
+                    }
                 },
-                preferences: ["notifications", "updates"],
+                preferences: ["notifications", "updates"]
             },
             type: "form",
             expected:
@@ -80,20 +80,20 @@ describe("Test getRequestBody", () => {
                 "filters%5Bmetadata%5D%5Bcategories%5D=electronics&" +
                 "filters%5Bmetadata%5D%5Bcategories%5D=books&" +
                 "preferences=notifications&" +
-                "preferences=updates",
+                "preferences=updates"
         },
         {
             description: "should return the input for pre-serialized form-urlencoded strings",
             input: "key=value&another=param",
             type: "other",
-            expected: "key=value&another=param",
+            expected: "key=value&another=param"
         },
         {
             description: "should JSON stringify objects",
             input: { key: "value" },
             type: "json",
-            expected: '{"key":"value"}',
-        },
+            expected: '{"key":"value"}'
+        }
     ];
 
     testCases.forEach(({ description, input, type, expected, skipCondition }) => {
@@ -104,7 +104,7 @@ describe("Test getRequestBody", () => {
 
             const result = await getRequestBody({
                 body: input,
-                type,
+                type
             });
 
             if (input instanceof Uint8Array) {
@@ -121,7 +121,7 @@ describe("Test getRequestBody", () => {
             formData.append("key", "value");
             const result = await getRequestBody({
                 body: formData,
-                type: "file",
+                type: "file"
             });
             expect(result).toBe(formData);
         }

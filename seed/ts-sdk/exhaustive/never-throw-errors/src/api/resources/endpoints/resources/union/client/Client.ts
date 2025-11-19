@@ -2,20 +2,23 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 
 export declare namespace UnionClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class UnionClient {
     protected readonly _options: UnionClient.Options;
 
     constructor(options: UnionClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -30,34 +33,14 @@ export class UnionClient {
      *         likesToWoof: true
      *     })
      */
-    public getAndReturnUnion(
-        request: SeedExhaustive.types.Animal,
-        requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedExhaustive.types.Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error>
-    > {
+    public getAndReturnUnion(request: SeedExhaustive.types.Animal, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedExhaustive.types.Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
     }
 
-    private async __getAndReturnUnion(
-        request: SeedExhaustive.types.Animal,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedExhaustive.types.Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error>
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnUnion(request: SeedExhaustive.types.Animal, requestOptions?: UnionClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedExhaustive.types.Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/union",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/union"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -68,28 +51,22 @@ export class UnionClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedExhaustive.types.Animal,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.union.getAndReturnUnion.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

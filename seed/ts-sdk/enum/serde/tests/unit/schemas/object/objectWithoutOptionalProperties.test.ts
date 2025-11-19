@@ -6,16 +6,16 @@ describe("objectWithoutOptionalProperties", () => {
         "all properties are required",
         objectWithoutOptionalProperties({
             foo: string(),
-            bar: stringLiteral("bar").optional(),
+            bar: stringLiteral("bar").optional()
         }),
         {
             raw: {
-                foo: "hello",
+                foo: "hello"
             },
             // @ts-expect-error
             parsed: {
-                foo: "hello",
-            },
-        },
+                foo: "hello"
+            }
+        }
     );
 });

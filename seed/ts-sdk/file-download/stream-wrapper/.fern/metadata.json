@@ -1,10 +1,10 @@
 {
-    "cliVersion": "DUMMY",
-    "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
-    "generatorConfig": {
-        "fileResponseType": "stream",
-        "streamType": "wrapper",
-        "testFramework": "jest"
-    }
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-typescript-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "fileResponseType": "stream",
+    "streamType": "wrapper",
+    "testFramework": "jest"
+  }
 }

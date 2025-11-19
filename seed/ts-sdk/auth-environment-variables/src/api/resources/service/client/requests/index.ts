@@ -1,1 +1,1 @@
-export type { HeaderAuthRequest } from "./HeaderAuthRequest.js";
+export { type HeaderAuthRequest } from "./HeaderAuthRequest.js";

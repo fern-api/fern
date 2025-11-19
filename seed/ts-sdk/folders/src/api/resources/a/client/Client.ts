@@ -2,11 +2,13 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
+import * as core from "../../../../core/index.js";
 import { BClient } from "../resources/b/client/Client.js";
 import { CClient } from "../resources/c/client/Client.js";
 
 export declare namespace AClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 }
 
 export class AClient {
@@ -15,6 +17,7 @@ export class AClient {
     protected _c: CClient | undefined;
 
     constructor(options: AClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 

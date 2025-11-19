@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as errors from "../../../../errors/index.js";
 import * as SeedBasicAuth from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import * as errors from "../../../../errors/index.js";
 
 export declare namespace BasicAuthClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class BasicAuthClient {
     protected readonly _options: BasicAuthClient.Options;
 
     constructor(options: BasicAuthClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -34,20 +37,10 @@ export class BasicAuthClient {
         return core.HttpResponsePromise.fromPromise(this.__getWithBasicAuth(requestOptions));
     }
 
-    private async __getWithBasicAuth(
-        requestOptions?: BasicAuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<boolean>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getWithBasicAuth(requestOptions?: BasicAuthClient.RequestOptions): Promise<core.WithRawResponse<boolean>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "basic-auth",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "basic-auth"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -55,7 +48,7 @@ export class BasicAuthClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
@@ -63,34 +56,26 @@ export class BasicAuthClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 401:
-                    throw new SeedBasicAuth.UnauthorizedRequest(
-                        _response.error.body as SeedBasicAuth.UnauthorizedRequestErrorBody,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedBasicAuthError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
+                case 401: throw new SeedBasicAuth.UnauthorizedRequest(_response.error.body as SeedBasicAuth.UnauthorizedRequestErrorBody, _response.rawResponse);
+                default: throw new errors.SeedBasicAuthError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse
+                });
             }
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedBasicAuthError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling GET /basic-auth.");
-            case "unknown":
-                throw new errors.SeedBasicAuthError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedBasicAuthError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling GET /basic-auth.");
+            case "unknown": throw new errors.SeedBasicAuthError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -108,28 +93,14 @@ export class BasicAuthClient {
      *         "key": "value"
      *     })
      */
-    public postWithBasicAuth(
-        request?: unknown,
-        requestOptions?: BasicAuthClient.RequestOptions,
-    ): core.HttpResponsePromise<boolean> {
+    public postWithBasicAuth(request?: unknown, requestOptions?: BasicAuthClient.RequestOptions): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__postWithBasicAuth(request, requestOptions));
     }
 
-    private async __postWithBasicAuth(
-        request?: unknown,
-        requestOptions?: BasicAuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<boolean>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __postWithBasicAuth(request?: unknown, requestOptions?: BasicAuthClient.RequestOptions): Promise<core.WithRawResponse<boolean>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "basic-auth",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "basic-auth"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -140,7 +111,7 @@ export class BasicAuthClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
@@ -148,43 +119,34 @@ export class BasicAuthClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 401:
-                    throw new SeedBasicAuth.UnauthorizedRequest(
-                        _response.error.body as SeedBasicAuth.UnauthorizedRequestErrorBody,
-                        _response.rawResponse,
-                    );
-                case 400:
-                    throw new SeedBasicAuth.BadRequest(_response.rawResponse);
-                default:
-                    throw new errors.SeedBasicAuthError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
+                case 401: throw new SeedBasicAuth.UnauthorizedRequest(_response.error.body as SeedBasicAuth.UnauthorizedRequestErrorBody, _response.rawResponse);
+                case 400: throw new SeedBasicAuth.BadRequest(_response.rawResponse);
+                default: throw new errors.SeedBasicAuthError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse
+                });
             }
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedBasicAuthError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling POST /basic-auth.");
-            case "unknown":
-                throw new errors.SeedBasicAuthError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedBasicAuthError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling POST /basic-auth.");
+            case "unknown": throw new errors.SeedBasicAuthError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {
         return core.BasicAuth.toAuthorizationHeader({
             username: await core.Supplier.get(this._options.username),
-            password: await core.Supplier.get(this._options.password),
+            password: await core.Supplier.get(this._options.password)
         });
     }
 }

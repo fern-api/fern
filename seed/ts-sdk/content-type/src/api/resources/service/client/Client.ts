@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedContentTypes from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedContentTypes from "../../../index.js";
 
 export declare namespace ServiceClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ServiceClient {
     protected readonly _options: ServiceClient.Options;
 
     constructor(options: ServiceClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -30,22 +33,14 @@ export class ServiceClient {
      *         require_auth: true
      *     })
      */
-    public patch(
-        request: SeedContentTypes.PatchProxyRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public patch(request: SeedContentTypes.PatchProxyRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__patch(request, requestOptions));
     }
 
-    private async __patch(
-        request: SeedContentTypes.PatchProxyRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __patch(request: SeedContentTypes.PatchProxyRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+            url: await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment),
             method: "PATCH",
             headers: _headers,
             contentType: "application/merge-patch+json",
@@ -56,7 +51,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -66,24 +61,21 @@ export class ServiceClient {
             throw new errors.SeedContentTypesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedContentTypesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /.");
-            case "unknown":
-                throw new errors.SeedContentTypesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedContentTypesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /.");
+            case "unknown": throw new errors.SeedContentTypesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -119,26 +111,14 @@ export class ServiceClient {
      *         }
      *     })
      */
-    public patchComplex(
-        id: string,
-        request: SeedContentTypes.PatchComplexRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public patchComplex(id: string, request: SeedContentTypes.PatchComplexRequest = {}, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__patchComplex(id, request, requestOptions));
     }
 
-    private async __patchComplex(
-        id: string,
-        request: SeedContentTypes.PatchComplexRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __patchComplex(id: string, request: SeedContentTypes.PatchComplexRequest = {}, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `complex/${core.url.encodePathParam(id)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `complex/${core.url.encodePathParam(id)}`),
             method: "PATCH",
             headers: _headers,
             contentType: "application/merge-patch+json",
@@ -149,7 +129,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -159,24 +139,21 @@ export class ServiceClient {
             throw new errors.SeedContentTypesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedContentTypesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /complex/{id}.");
-            case "unknown":
-                throw new errors.SeedContentTypesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedContentTypesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /complex/{id}.");
+            case "unknown": throw new errors.SeedContentTypesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -195,26 +172,14 @@ export class ServiceClient {
      *         active: true
      *     })
      */
-    public namedPatchWithMixed(
-        id: string,
-        request: SeedContentTypes.NamedMixedPatchRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public namedPatchWithMixed(id: string, request: SeedContentTypes.NamedMixedPatchRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__namedPatchWithMixed(id, request, requestOptions));
     }
 
-    private async __namedPatchWithMixed(
-        id: string,
-        request: SeedContentTypes.NamedMixedPatchRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __namedPatchWithMixed(id: string, request: SeedContentTypes.NamedMixedPatchRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `named-mixed/${core.url.encodePathParam(id)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `named-mixed/${core.url.encodePathParam(id)}`),
             method: "PATCH",
             headers: _headers,
             contentType: "application/merge-patch+json",
@@ -225,7 +190,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -235,24 +200,21 @@ export class ServiceClient {
             throw new errors.SeedContentTypesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedContentTypesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /named-mixed/{id}.");
-            case "unknown":
-                throw new errors.SeedContentTypesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedContentTypesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /named-mixed/{id}.");
+            case "unknown": throw new errors.SeedContentTypesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -274,24 +236,14 @@ export class ServiceClient {
      *         nullableString: "nullableString"
      *     })
      */
-    public optionalMergePatchTest(
-        request: SeedContentTypes.OptionalMergePatchRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public optionalMergePatchTest(request: SeedContentTypes.OptionalMergePatchRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__optionalMergePatchTest(request, requestOptions));
     }
 
-    private async __optionalMergePatchTest(
-        request: SeedContentTypes.OptionalMergePatchRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __optionalMergePatchTest(request: SeedContentTypes.OptionalMergePatchRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "optional-merge-patch-test",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "optional-merge-patch-test"),
             method: "PATCH",
             headers: _headers,
             contentType: "application/merge-patch+json",
@@ -302,7 +254,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -312,26 +264,21 @@ export class ServiceClient {
             throw new errors.SeedContentTypesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedContentTypesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedContentTypesTimeoutError(
-                    "Timeout exceeded when calling PATCH /optional-merge-patch-test.",
-                );
-            case "unknown":
-                throw new errors.SeedContentTypesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedContentTypesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /optional-merge-patch-test.");
+            case "unknown": throw new errors.SeedContentTypesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -348,26 +295,14 @@ export class ServiceClient {
      *         field2: 1
      *     })
      */
-    public regularPatch(
-        id: string,
-        request: SeedContentTypes.RegularPatchRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public regularPatch(id: string, request: SeedContentTypes.RegularPatchRequest = {}, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__regularPatch(id, request, requestOptions));
     }
 
-    private async __regularPatch(
-        id: string,
-        request: SeedContentTypes.RegularPatchRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __regularPatch(id: string, request: SeedContentTypes.RegularPatchRequest = {}, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `regular/${core.url.encodePathParam(id)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `regular/${core.url.encodePathParam(id)}`),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
@@ -378,7 +313,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -388,24 +323,21 @@ export class ServiceClient {
             throw new errors.SeedContentTypesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedContentTypesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /regular/{id}.");
-            case "unknown":
-                throw new errors.SeedContentTypesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedContentTypesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedContentTypesTimeoutError("Timeout exceeded when calling PATCH /regular/{id}.");
+            case "unknown": throw new errors.SeedContentTypesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

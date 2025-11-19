@@ -73,6 +73,7 @@ describe("Test getResponseBody", () => {
         }
     });
 
+
     it("should handle streaming response type", async () => {
         const encoder = new TextEncoder();
         const testData = "test stream data";
@@ -94,4 +95,5 @@ describe("Test getResponseBody", () => {
         const streamContent = decoder.decode(value);
         expect(streamContent).toBe(testData);
     });
+
 });

@@ -8,7 +8,7 @@ import type { BaseRecordSchema, RecordSchema } from "./types.js";
 
 export function record<RawKey extends string | number, RawValue, ParsedValue, ParsedKey extends string | number>(
     keySchema: Schema<RawKey, ParsedKey>,
-    valueSchema: Schema<RawValue, ParsedValue>,
+    valueSchema: Schema<RawValue, ParsedValue>
 ): RecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> {
     const baseSchema: BaseRecordSchema<RawKey, RawValue, ParsedKey, ParsedValue> = {
         parse: (raw, opts) => {
@@ -18,14 +18,14 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
                 transformKey: (key) =>
                     keySchema.parse(key, {
                         ...opts,
-                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`]
                     }),
                 transformValue: (value, key) =>
                     valueSchema.parse(value, {
                         ...opts,
-                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`],
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`]
                     }),
-                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix
             });
         },
         json: (parsed, opts) => {
@@ -35,22 +35,22 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
                 transformKey: (key) =>
                     keySchema.json(key, {
                         ...opts,
-                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`]
                     }),
                 transformValue: (value, key) =>
                     valueSchema.json(value, {
                         ...opts,
-                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`],
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`]
                     }),
-                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix
             });
         },
-        getType: () => SchemaType.RECORD,
+        getType: () => SchemaType.RECORD
     };
 
     return {
         ...maybeSkipValidation(baseSchema),
-        ...getSchemaUtils(baseSchema),
+        ...getSchemaUtils(baseSchema)
     };
 }
 
@@ -59,7 +59,7 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
     isKeyNumeric,
     transformKey,
     transformValue,
-    breadcrumbsPrefix = [],
+    breadcrumbsPrefix = []
 }: {
     value: unknown;
     isKeyNumeric: boolean;
@@ -73,9 +73,9 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
             errors: [
                 {
                     path: breadcrumbsPrefix,
-                    message: getErrorMessageForIncorrectType(value, "object"),
-                },
-            ],
+                    message: getErrorMessageForIncorrectType(value, "object")
+                }
+            ]
         };
     }
 
@@ -90,7 +90,7 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
             let key: string | number = stringKey;
             if (isKeyNumeric) {
                 const numberKey = stringKey.length > 0 ? Number(stringKey) : NaN;
-                if (!Number.isNaN(numberKey)) {
+                if (!isNaN(numberKey)) {
                     key = numberKey;
                 }
             }
@@ -103,8 +103,8 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
                     ok: true,
                     value: {
                         ...acc.value,
-                        [transformedKey.value]: transformedValue.value,
-                    },
+                        [transformedKey.value]: transformedValue.value
+                    }
                 };
             }
 
@@ -121,9 +121,9 @@ function validateAndTransformRecord<TransformedKey extends string | number, Tran
 
             return {
                 ok: false,
-                errors,
+                errors
             };
         },
-        { ok: true, value: {} as Record<TransformedKey, TransformedValue> },
+        { ok: true, value: {} as Record<TransformedKey, TransformedValue> }
     );
 }

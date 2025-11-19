@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedCrossPackageTypeNames from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedCrossPackageTypeNames from "../../../index.js";
 
 export declare namespace FooClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class FooClient {
     protected readonly _options: FooClient.Options;
 
     constructor(options: FooClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -31,28 +34,20 @@ export class FooClient {
      *         privateProperty: 1
      *     })
      */
-    public find(
-        request: SeedCrossPackageTypeNames.FindRequest = {},
-        requestOptions?: FooClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedCrossPackageTypeNames.ImportingType> {
+    public find(request: SeedCrossPackageTypeNames.FindRequest = {}, requestOptions?: FooClient.RequestOptions): core.HttpResponsePromise<SeedCrossPackageTypeNames.ImportingType> {
         return core.HttpResponsePromise.fromPromise(this.__find(request, requestOptions));
     }
 
-    private async __find(
-        request: SeedCrossPackageTypeNames.FindRequest = {},
-        requestOptions?: FooClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedCrossPackageTypeNames.ImportingType>> {
+    private async __find(request: SeedCrossPackageTypeNames.FindRequest = {}, requestOptions?: FooClient.RequestOptions): Promise<core.WithRawResponse<SeedCrossPackageTypeNames.ImportingType>> {
         const { optionalString, ..._body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (optionalString != null) {
-            _queryParams.optionalString = optionalString;
+            _queryParams["optionalString"] = optionalString;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+            url: await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -63,37 +58,31 @@ export class FooClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedCrossPackageTypeNames.ImportingType,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedCrossPackageTypeNames.ImportingType, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedCrossPackageTypeNamesError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedCrossPackageTypeNamesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedCrossPackageTypeNamesTimeoutError("Timeout exceeded when calling POST /.");
-            case "unknown":
-                throw new errors.SeedCrossPackageTypeNamesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedCrossPackageTypeNamesError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedCrossPackageTypeNamesTimeoutError("Timeout exceeded when calling POST /.");
+            case "unknown": throw new errors.SeedCrossPackageTypeNamesError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

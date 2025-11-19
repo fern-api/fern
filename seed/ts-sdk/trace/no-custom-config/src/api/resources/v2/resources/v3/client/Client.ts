@@ -2,10 +2,13 @@
 
 import type { BaseClientOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
+import * as environments from "../../../../../../environments.js";
+import * as core from "../../../../../../core/index.js";
 import { ProblemClient } from "../resources/problem/client/Client.js";
 
 export declare namespace V3Client {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 }
 
 export class V3Client {
@@ -13,6 +16,7 @@ export class V3Client {
     protected _problem: ProblemClient | undefined;
 
     constructor(options: V3Client.Options = {}) {
+
         this._options = normalizeClientOptions(options);
     }
 

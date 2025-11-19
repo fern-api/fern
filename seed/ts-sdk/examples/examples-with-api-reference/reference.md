@@ -49,7 +49,7 @@ await client.createType("primitive");
 </details>
 
 ## 
-## File Notification Service
+## file.notification.service
 <details><summary><code>client.file.notification.service.<a href="/src/api/resources/file/resources/notification/resources/service/client/Client.ts">getException</a>(notificationId) -> SeedExamples.Exception</code></summary>
 <dl>
 <dd>
@@ -99,7 +99,7 @@ await client.file.notification.service.getException("notification-hsy129x");
 </dl>
 </details>
 
-## File Service
+## file.service
 <details><summary><code>client.file.service.<a href="/src/api/resources/file/resources/service/client/Client.ts">getFile</a>(filename, { ...params }) -> SeedExamples.File_</code></summary>
 <dl>
 <dd>
@@ -173,7 +173,7 @@ await client.file.service.getFile("file.txt", {
 </dl>
 </details>
 
-## Health Service
+## health.service
 <details><summary><code>client.health.service.<a href="/src/api/resources/health/resources/service/client/Client.ts">check</a>(id) -> void</code></summary>
 <dl>
 <dd>
@@ -292,7 +292,7 @@ await client.health.service.ping();
 </dl>
 </details>
 
-## Service
+## service
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getMovie</a>(movieId) -> SeedExamples.Movie</code></summary>
 <dl>
 <dd>

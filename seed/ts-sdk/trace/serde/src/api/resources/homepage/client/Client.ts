@@ -2,23 +2,26 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
-import * as errors from "../../../../errors/index.js";
+import * as core from "../../../../core/index.js";
+import * as SeedTrace from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedTrace from "../../../index.js";
+import * as errors from "../../../../errors/index.js";
 
 export declare namespace HomepageClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class HomepageClient {
     protected readonly _options: HomepageClient.Options;
 
     constructor(options: HomepageClient.Options = {}) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -28,30 +31,14 @@ export class HomepageClient {
      * @example
      *     await client.homepage.getHomepageProblems()
      */
-    public getHomepageProblems(
-        requestOptions?: HomepageClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.ProblemId[]> {
+    public getHomepageProblems(requestOptions?: HomepageClient.RequestOptions): core.HttpResponsePromise<SeedTrace.ProblemId[]> {
         return core.HttpResponsePromise.fromPromise(this.__getHomepageProblems(requestOptions));
     }
 
-    private async __getHomepageProblems(
-        requestOptions?: HomepageClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.ProblemId[]>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __getHomepageProblems(requestOptions?: HomepageClient.RequestOptions): Promise<core.WithRawResponse<SeedTrace.ProblemId[]>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), "/homepage-problems"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -59,43 +46,31 @@ export class HomepageClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.homepage.getHomepageProblems.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedTraceError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /homepage-problems.");
-            case "unknown":
-                throw new errors.SeedTraceError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /homepage-problems.");
+            case "unknown": throw new errors.SeedTraceError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -106,46 +81,25 @@ export class HomepageClient {
      * @example
      *     await client.homepage.setHomepageProblems(["string", "string"])
      */
-    public setHomepageProblems(
-        request: SeedTrace.ProblemId[],
-        requestOptions?: HomepageClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public setHomepageProblems(request: SeedTrace.ProblemId[], requestOptions?: HomepageClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__setHomepageProblems(request, requestOptions));
     }
 
-    private async __setHomepageProblems(
-        request: SeedTrace.ProblemId[],
-        requestOptions?: HomepageClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __setHomepageProblems(request: SeedTrace.ProblemId[], requestOptions?: HomepageClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/homepage-problems",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), "/homepage-problems"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.homepage.setHomepageProblems.Request.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
+            body: serializers.homepage.setHomepageProblems.Request.jsonOrThrow(request, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -155,24 +109,21 @@ export class HomepageClient {
             throw new errors.SeedTraceError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedTraceError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling POST /homepage-problems.");
-            case "unknown":
-                throw new errors.SeedTraceError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedTraceError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling POST /homepage-problems.");
+            case "unknown": throw new errors.SeedTraceError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

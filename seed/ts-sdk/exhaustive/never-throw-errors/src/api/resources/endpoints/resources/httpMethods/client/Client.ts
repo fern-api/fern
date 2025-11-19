@@ -2,20 +2,23 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 
 export declare namespace HttpMethodsClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class HttpMethodsClient {
     protected readonly _options: HttpMethodsClient.Options;
 
     constructor(options: HttpMethodsClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -26,28 +29,14 @@ export class HttpMethodsClient {
      * @example
      *     await client.endpoints.httpMethods.testGet("id")
      */
-    public testGet(
-        id: string,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.httpMethods.testGet.Error>> {
+    public testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.httpMethods.testGet.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__testGet(id, requestOptions));
     }
 
-    private async __testGet(
-        id: string,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.httpMethods.testGet.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.httpMethods.testGet.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/http-methods/${core.url.encodePathParam(id)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -55,28 +44,22 @@ export class HttpMethodsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as string,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.httpMethods.testGet.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -88,40 +71,14 @@ export class HttpMethodsClient {
      *         string: "string"
      *     })
      */
-    public testPost(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.endpoints.httpMethods.testPost.Error
-        >
-    > {
+    public testPost(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedExhaustive.types.ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPost.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__testPost(request, requestOptions));
     }
 
-    private async __testPost(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithOptionalField,
-                SeedExhaustive.endpoints.httpMethods.testPost.Error
-            >
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __testPost(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedExhaustive.types.ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPost.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/http-methods",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/http-methods"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -132,28 +89,22 @@ export class HttpMethodsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.httpMethods.testPost.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -166,42 +117,14 @@ export class HttpMethodsClient {
      *         string: "string"
      *     })
      */
-    public testPut(
-        id: string,
-        request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.endpoints.httpMethods.testPut.Error
-        >
-    > {
+    public testPut(id: string, request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedExhaustive.types.ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPut.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__testPut(id, request, requestOptions));
     }
 
-    private async __testPut(
-        id: string,
-        request: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithOptionalField,
-                SeedExhaustive.endpoints.httpMethods.testPut.Error
-            >
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __testPut(id: string, request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedExhaustive.types.ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPut.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/http-methods/${core.url.encodePathParam(id)}`),
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
@@ -212,28 +135,22 @@ export class HttpMethodsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.httpMethods.testPut.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -260,42 +177,14 @@ export class HttpMethodsClient {
      *         bigint: "1000000"
      *     })
      */
-    public testPatch(
-        id: string,
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.endpoints.httpMethods.testPatch.Error
-        >
-    > {
+    public testPatch(id: string, request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedExhaustive.types.ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPatch.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__testPatch(id, request, requestOptions));
     }
 
-    private async __testPatch(
-        id: string,
-        request: SeedExhaustive.types.ObjectWithOptionalField,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithOptionalField,
-                SeedExhaustive.endpoints.httpMethods.testPatch.Error
-            >
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __testPatch(id: string, request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: HttpMethodsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedExhaustive.types.ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPatch.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/http-methods/${core.url.encodePathParam(id)}`),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
@@ -306,28 +195,22 @@ export class HttpMethodsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.httpMethods.testPatch.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -337,28 +220,14 @@ export class HttpMethodsClient {
      * @example
      *     await client.endpoints.httpMethods.testDelete("id")
      */
-    public testDelete(
-        id: string,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<boolean, SeedExhaustive.endpoints.httpMethods.testDelete.Error>> {
+    public testDelete(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<boolean, SeedExhaustive.endpoints.httpMethods.testDelete.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__testDelete(id, requestOptions));
     }
 
-    private async __testDelete(
-        id: string,
-        requestOptions?: HttpMethodsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<boolean, SeedExhaustive.endpoints.httpMethods.testDelete.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __testDelete(id: string, requestOptions?: HttpMethodsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<boolean, SeedExhaustive.endpoints.httpMethods.testDelete.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/http-methods/${core.url.encodePathParam(id)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/http-methods/${core.url.encodePathParam(id)}`),
             method: "DELETE",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -366,28 +235,22 @@ export class HttpMethodsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as boolean,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.httpMethods.testDelete.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

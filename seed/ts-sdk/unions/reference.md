@@ -1,5 +1,5 @@
 # Reference
-## Bigunion
+## bigunion
 <details><summary><code>client.bigunion.<a href="/src/api/resources/bigunion/client/Client.ts">get</a>(id) -> SeedUnions.BigUnion</code></summary>
 <dl>
 <dd>
@@ -165,7 +165,7 @@ await client.bigunion.updateMany([{
 </dl>
 </details>
 
-## Union
+## union
 <details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">get</a>(id) -> SeedUnions.Shape</code></summary>
 <dl>
 <dd>

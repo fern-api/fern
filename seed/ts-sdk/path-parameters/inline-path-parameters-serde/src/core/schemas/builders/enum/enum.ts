@@ -14,9 +14,9 @@ export function enum_<U extends string, E extends U[]>(values: E): Schema<E[numb
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(value, "string"),
-                        },
-                    ],
+                            message: getErrorMessageForIncorrectType(value, "string")
+                        }
+                    ]
                 };
             }
 
@@ -26,17 +26,17 @@ export function enum_<U extends string, E extends U[]>(values: E): Schema<E[numb
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(value, "enum"),
-                        },
-                    ],
+                            message: getErrorMessageForIncorrectType(value, "enum")
+                        }
+                    ]
                 };
             }
 
             return {
                 ok: true,
-                value: value as U,
+                value: value as U
             };
-        },
+        }
     );
 
     return schemaCreator();

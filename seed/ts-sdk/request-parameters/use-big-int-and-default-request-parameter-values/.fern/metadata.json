@@ -1,10 +1,10 @@
 {
-    "cliVersion": "DUMMY",
-    "generatorName": "fernapi/fern-typescript-sdk",
-    "generatorVersion": "latest",
-    "generatorConfig": {
-        "useDefaultRequestParameterValues": true,
-        "useBigInt": true,
-        "testFramework": "jest"
-    }
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-typescript-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "useDefaultRequestParameterValues": true,
+    "useBigInt": true,
+    "testFramework": "jest"
+  }
 }

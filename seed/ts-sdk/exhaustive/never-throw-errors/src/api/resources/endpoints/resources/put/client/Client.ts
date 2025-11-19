@@ -2,20 +2,23 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 
 export declare namespace PutClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class PutClient {
     protected readonly _options: PutClient.Options;
 
     constructor(options: PutClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -28,35 +31,15 @@ export class PutClient {
      *         id: "id"
      *     })
      */
-    public add(
-        request: SeedExhaustive.endpoints.PutRequest,
-        requestOptions?: PutClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedExhaustive.endpoints.PutResponse, SeedExhaustive.endpoints.put.add.Error>
-    > {
+    public add(request: SeedExhaustive.endpoints.PutRequest, requestOptions?: PutClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedExhaustive.endpoints.PutResponse, SeedExhaustive.endpoints.put.add.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__add(request, requestOptions));
     }
 
-    private async __add(
-        request: SeedExhaustive.endpoints.PutRequest,
-        requestOptions?: PutClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedExhaustive.endpoints.PutResponse, SeedExhaustive.endpoints.put.add.Error>
-        >
-    > {
+    private async __add(request: SeedExhaustive.endpoints.PutRequest, requestOptions?: PutClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedExhaustive.endpoints.PutResponse, SeedExhaustive.endpoints.put.add.Error>>> {
         const { id } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `${core.url.encodePathParam(id)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `${core.url.encodePathParam(id)}`),
             method: "PUT",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -64,28 +47,22 @@ export class PutClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedExhaustive.endpoints.PutResponse,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.put.add.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedLiteral from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedLiteral from "../../../index.js";
 
 export declare namespace QueryClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class QueryClient {
     protected readonly _options: QueryClient.Options;
 
     constructor(options: QueryClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -37,64 +40,37 @@ export class QueryClient {
      *         query: "What is the weather today"
      *     })
      */
-    public send(
-        request: SeedLiteral.SendLiteralsInQueryRequest,
-        requestOptions?: QueryClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+    public send(request: SeedLiteral.SendLiteralsInQueryRequest, requestOptions?: QueryClient.RequestOptions): core.HttpResponsePromise<SeedLiteral.SendResponse> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
-    private async __send(
-        request: SeedLiteral.SendLiteralsInQueryRequest,
-        requestOptions?: QueryClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
-        const {
-            prompt,
-            optional_prompt: optionalPrompt,
-            alias_prompt: aliasPrompt,
-            alias_optional_prompt: aliasOptionalPrompt,
-            query,
-            stream,
-            optional_stream: optionalStream,
-            alias_stream: aliasStream,
-            alias_optional_stream: aliasOptionalStream,
-        } = request;
+    private async __send(request: SeedLiteral.SendLiteralsInQueryRequest, requestOptions?: QueryClient.RequestOptions): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
+        const { prompt, "optional_prompt": optionalPrompt, "alias_prompt": aliasPrompt, "alias_optional_prompt": aliasOptionalPrompt, query, stream, "optional_stream": optionalStream, "alias_stream": aliasStream, "alias_optional_stream": aliasOptionalStream } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.prompt = prompt;
+        _queryParams["prompt"] = prompt;
         if (optionalPrompt != null) {
-            _queryParams.optional_prompt = optionalPrompt;
+            _queryParams["optional_prompt"] = optionalPrompt;
         }
 
-        _queryParams.alias_prompt = aliasPrompt;
+        _queryParams["alias_prompt"] = aliasPrompt;
         if (aliasOptionalPrompt != null) {
-            _queryParams.alias_optional_prompt = aliasOptionalPrompt;
+            _queryParams["alias_optional_prompt"] = aliasOptionalPrompt;
         }
 
-        _queryParams.query = query;
-        _queryParams.stream = stream.toString();
+        _queryParams["query"] = query;
+        _queryParams["stream"] = stream.toString();
         if (optionalStream != null) {
-            _queryParams.optional_stream = optionalStream.toString();
+            _queryParams["optional_stream"] = optionalStream.toString();
         }
 
-        _queryParams.alias_stream = aliasStream.toString();
+        _queryParams["alias_stream"] = aliasStream.toString();
         if (aliasOptionalStream != null) {
-            _queryParams.alias_optional_stream = aliasOptionalStream.toString();
+            _queryParams["alias_optional_stream"] = aliasOptionalStream.toString();
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-API-Version": requestOptions?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
-            }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.version ?? "02-02-2024", "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "query",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "query"),
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -102,7 +78,7 @@ export class QueryClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
@@ -112,24 +88,21 @@ export class QueryClient {
             throw new errors.SeedLiteralError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedLiteralError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedLiteralTimeoutError("Timeout exceeded when calling POST /query.");
-            case "unknown":
-                throw new errors.SeedLiteralError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedLiteralError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedLiteralTimeoutError("Timeout exceeded when calling POST /query.");
+            case "unknown": throw new errors.SeedLiteralError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

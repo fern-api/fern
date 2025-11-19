@@ -1,1 +1,1 @@
-export type { InlinedChildRequest } from "./InlinedChildRequest.js";
+export { type InlinedChildRequest } from "./InlinedChildRequest.js";

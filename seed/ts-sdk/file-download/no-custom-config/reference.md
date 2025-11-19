@@ -1,5 +1,5 @@
 # Reference
-## Service
+## service
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">simple</a>() -> void</code></summary>
 <dl>
 <dd>

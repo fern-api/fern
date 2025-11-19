@@ -1,5 +1,5 @@
 # Reference
-## User
+## user
 <details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createUsername</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>

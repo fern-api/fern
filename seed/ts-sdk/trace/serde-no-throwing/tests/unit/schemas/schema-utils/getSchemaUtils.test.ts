@@ -5,12 +5,12 @@ describe("getSchemaUtils", () => {
     describe("optional()", () => {
         itSchema("optional fields allow original schema", string().optional(), {
             raw: "hello",
-            parsed: "hello",
+            parsed: "hello"
         });
 
         itSchema("optional fields are not required", string().optional(), {
             raw: null,
-            parsed: undefined,
+            parsed: undefined
         });
     });
 
@@ -18,13 +18,13 @@ describe("getSchemaUtils", () => {
         itSchema(
             "transform and untransform run correctly",
             string().transform({
-                transform: (x) => `${x}X`,
-                untransform: (x) => (x as string).slice(0, -1),
+                transform: (x) => x + "X",
+                untransform: (x) => (x as string).slice(0, -1)
             }),
             {
                 raw: "hello",
-                parsed: "helloX",
-            },
+                parsed: "helloX"
+            }
         );
     });
 
@@ -56,10 +56,10 @@ describe("getSchemaUtils", () => {
         it("serializes undefined as null", async () => {
             const value = object({
                 a: string().optional(),
-                b: string().optional(),
+                b: string().optional()
             }).jsonOrThrow({
                 a: "hello",
-                b: undefined,
+                b: undefined
             });
             expect(value).toEqual({ a: "hello", b: null });
         });
@@ -67,15 +67,15 @@ describe("getSchemaUtils", () => {
         it("omits undefined values", async () => {
             const value = object({
                 a: string().optional(),
-                b: string().optional(),
+                b: string().optional()
             }).jsonOrThrow(
                 {
                     a: "hello",
-                    b: undefined,
+                    b: undefined
                 },
                 {
-                    omitUndefined: true,
-                },
+                    omitUndefined: true
+                }
             );
             expect(value).toEqual({ a: "hello" });
         });

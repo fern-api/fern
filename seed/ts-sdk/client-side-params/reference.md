@@ -1,5 +1,5 @@
 # Reference
-## Service
+## service
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">listResources</a>({ ...params }) -> SeedClientSideParams.Resource[]</code></summary>
 <dl>
 <dd>

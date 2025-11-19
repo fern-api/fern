@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
+import * as core from "../../../../core/index.js";
 import * as SeedTrace from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 
 export declare namespace ProblemClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ProblemClient {
     protected readonly _options: ProblemClient.Options;
 
     constructor(options: ProblemClient.Options = {}) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -101,74 +104,41 @@ export class ProblemClient {
      *         methodName: "methodName"
      *     })
      */
-    public createProblem(
-        request: SeedTrace.CreateProblemRequest,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedTrace.CreateProblemResponse, SeedTrace.problem.createProblem.Error>
-    > {
+    public createProblem(request: SeedTrace.CreateProblemRequest, requestOptions?: ProblemClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedTrace.CreateProblemResponse, SeedTrace.problem.createProblem.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__createProblem(request, requestOptions));
     }
 
-    private async __createProblem(
-        request: SeedTrace.CreateProblemRequest,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<SeedTrace.CreateProblemResponse, SeedTrace.problem.createProblem.Error>>
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __createProblem(request: SeedTrace.CreateProblemRequest, requestOptions?: ProblemClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.CreateProblemResponse, SeedTrace.problem.createProblem.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/problem-crud/create",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), "/problem-crud/create"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : this._options?.timeoutInSeconds != null ? (this._options?.timeoutInSeconds * 1000) : undefined,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedTrace.CreateProblemResponse,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedTrace.problem.createProblem.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -253,76 +223,41 @@ export class ProblemClient {
      *         methodName: "methodName"
      *     })
      */
-    public updateProblem(
-        problemId: SeedTrace.ProblemId,
-        request: SeedTrace.CreateProblemRequest,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedTrace.UpdateProblemResponse, SeedTrace.problem.updateProblem.Error>
-    > {
+    public updateProblem(problemId: SeedTrace.ProblemId, request: SeedTrace.CreateProblemRequest, requestOptions?: ProblemClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedTrace.UpdateProblemResponse, SeedTrace.problem.updateProblem.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__updateProblem(problemId, request, requestOptions));
     }
 
-    private async __updateProblem(
-        problemId: SeedTrace.ProblemId,
-        request: SeedTrace.CreateProblemRequest,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<SeedTrace.UpdateProblemResponse, SeedTrace.problem.updateProblem.Error>>
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __updateProblem(problemId: SeedTrace.ProblemId, request: SeedTrace.CreateProblemRequest, requestOptions?: ProblemClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.UpdateProblemResponse, SeedTrace.problem.updateProblem.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/update/${core.url.encodePathParam(problemId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), `/problem-crud/update/${core.url.encodePathParam(problemId)}`),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : this._options?.timeoutInSeconds != null ? (this._options?.timeoutInSeconds * 1000) : undefined,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedTrace.UpdateProblemResponse,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedTrace.problem.updateProblem.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -334,67 +269,38 @@ export class ProblemClient {
      * @example
      *     await client.problem.deleteProblem(SeedTrace.ProblemId("problemId"))
      */
-    public deleteProblem(
-        problemId: SeedTrace.ProblemId,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.problem.deleteProblem.Error>> {
+    public deleteProblem(problemId: SeedTrace.ProblemId, requestOptions?: ProblemClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.problem.deleteProblem.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__deleteProblem(problemId, requestOptions));
     }
 
-    private async __deleteProblem(
-        problemId: SeedTrace.ProblemId,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.problem.deleteProblem.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __deleteProblem(problemId: SeedTrace.ProblemId, requestOptions?: ProblemClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.problem.deleteProblem.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/problem-crud/delete/${core.url.encodePathParam(problemId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), `/problem-crud/delete/${core.url.encodePathParam(problemId)}`),
             method: "DELETE",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : this._options?.timeoutInSeconds != null ? (this._options?.timeoutInSeconds * 1000) : undefined,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: undefined,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedTrace.problem.deleteProblem.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -422,76 +328,41 @@ export class ProblemClient {
      *         methodName: "methodName"
      *     })
      */
-    public getDefaultStarterFiles(
-        request: SeedTrace.GetDefaultStarterFilesRequest,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedTrace.GetDefaultStarterFilesResponse, SeedTrace.problem.getDefaultStarterFiles.Error>
-    > {
+    public getDefaultStarterFiles(request: SeedTrace.GetDefaultStarterFilesRequest, requestOptions?: ProblemClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedTrace.GetDefaultStarterFilesResponse, SeedTrace.problem.getDefaultStarterFiles.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getDefaultStarterFiles(request, requestOptions));
     }
 
-    private async __getDefaultStarterFiles(
-        request: SeedTrace.GetDefaultStarterFilesRequest,
-        requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedTrace.GetDefaultStarterFilesResponse, SeedTrace.problem.getDefaultStarterFiles.Error>
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __getDefaultStarterFiles(request: SeedTrace.GetDefaultStarterFilesRequest, requestOptions?: ProblemClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedTrace.GetDefaultStarterFilesResponse, SeedTrace.problem.getDefaultStarterFiles.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/problem-crud/default-starter-files",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), "/problem-crud/default-starter-files"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: request,
-            timeoutMs:
-                requestOptions?.timeoutInSeconds != null
-                    ? requestOptions.timeoutInSeconds * 1000
-                    : this._options?.timeoutInSeconds != null
-                      ? this._options?.timeoutInSeconds * 1000
-                      : undefined,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? (requestOptions.timeoutInSeconds * 1000) : this._options?.timeoutInSeconds != null ? (this._options?.timeoutInSeconds * 1000) : undefined,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             withCredentials: true,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedTrace.GetDefaultStarterFilesResponse,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedTrace.problem.getDefaultStarterFiles.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

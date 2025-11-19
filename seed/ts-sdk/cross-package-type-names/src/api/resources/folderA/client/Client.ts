@@ -2,10 +2,12 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
+import * as core from "../../../../core/index.js";
 import { ServiceClient } from "../resources/service/client/Client.js";
 
 export declare namespace FolderAClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 }
 
 export class FolderAClient {
@@ -13,6 +15,7 @@ export class FolderAClient {
     protected _service: ServiceClient | undefined;
 
     constructor(options: FolderAClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 

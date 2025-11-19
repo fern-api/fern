@@ -1,5 +1,5 @@
 # Reference
-## V2
+## v2
 <details><summary><code>client.v2.<a href="/src/api/resources/v2/client/Client.ts">test</a>() -> void</code></summary>
 <dl>
 <dd>
@@ -41,7 +41,7 @@ await client.v2.test();
 </dl>
 </details>
 
-## Admin
+## admin
 <details><summary><code>client.admin.<a href="/src/api/resources/admin/client/Client.ts">updateTestSubmissionStatus</a>(submissionId, { ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -853,7 +853,7 @@ await client.admin.storeTracedWorkspaceV2("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
 </dl>
 </details>
 
-## Homepage
+## homepage
 <details><summary><code>client.homepage.<a href="/src/api/resources/homepage/client/Client.ts">getHomepageProblems</a>() -> SeedTrace.ProblemId[]</code></summary>
 <dl>
 <dd>
@@ -944,7 +944,7 @@ await client.homepage.setHomepageProblems(["string", "string"]);
 </dl>
 </details>
 
-## Migration
+## migration
 <details><summary><code>client.migration.<a href="/src/api/resources/migration/client/Client.ts">getAttemptedMigrations</a>({ ...params }) -> SeedTrace.Migration[]</code></summary>
 <dl>
 <dd>
@@ -996,7 +996,7 @@ await client.migration.getAttemptedMigrations({
 </dl>
 </details>
 
-## Playlist
+## playlist
 <details><summary><code>client.playlist.<a href="/src/api/resources/playlist/client/Client.ts">createPlaylist</a>(serviceParam, { ...params }) -> SeedTrace.Playlist</code></summary>
 <dl>
 <dd>
@@ -1376,7 +1376,7 @@ await client.playlist.deletePlaylist(1, "playlist_id");
 </dl>
 </details>
 
-## Problem
+## problem
 <details><summary><code>client.problem.<a href="/src/api/resources/problem/client/Client.ts">createProblem</a>({ ...params }) -> SeedTrace.CreateProblemResponse</code></summary>
 <dl>
 <dd>
@@ -1797,7 +1797,7 @@ await client.problem.getDefaultStarterFiles({
 </dl>
 </details>
 
-## Submission
+## submission
 <details><summary><code>client.submission.<a href="/src/api/resources/submission/client/Client.ts">createExecutionSession</a>(language) -> SeedTrace.ExecutionSessionResponse</code></summary>
 <dl>
 <dd>
@@ -2028,7 +2028,7 @@ await client.submission.getExecutionSessionsState();
 </dl>
 </details>
 
-## Sysprop
+## sysprop
 <details><summary><code>client.sysprop.<a href="/src/api/resources/sysprop/client/Client.ts">setNumWarmInstances</a>(language, numWarmInstances) -> void</code></summary>
 <dl>
 <dd>
@@ -2127,7 +2127,7 @@ await client.sysprop.getNumWarmInstances();
 </dl>
 </details>
 
-## V2 Problem
+## v2.problem
 <details><summary><code>client.v2.problem.<a href="/src/api/resources/v2/resources/problem/client/Client.ts">getLightweightProblems</a>() -> SeedTrace.LightweightProblemInfoV2[]</code></summary>
 <dl>
 <dd>
@@ -2372,7 +2372,7 @@ await client.v2.problem.getProblemVersion("problemId", 1);
 </dl>
 </details>
 
-## V2 V3 Problem
+## v2.v3.problem
 <details><summary><code>client.v2.v3.problem.<a href="/src/api/resources/v2/resources/v3/resources/problem/client/Client.ts">getLightweightProblems</a>() -> SeedTrace.LightweightProblemInfoV2[]</code></summary>
 <dl>
 <dd>

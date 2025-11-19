@@ -2,22 +2,25 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as errors from "../../../../errors/index.js";
+import * as SeedPathParameters from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedPathParameters from "../../../index.js";
+import * as errors from "../../../../errors/index.js";
 
 export declare namespace UserClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class UserClient {
     protected readonly _options: UserClient.Options;
 
     constructor(options: UserClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -30,25 +33,15 @@ export class UserClient {
      *         userId: "user_id"
      *     })
      */
-    public getUser(
-        request: SeedPathParameters.GetUsersRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedPathParameters.User> {
+    public getUser(request: SeedPathParameters.GetUsersRequest, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedPathParameters.User> {
         return core.HttpResponsePromise.fromPromise(this.__getUser(request, requestOptions));
     }
 
-    private async __getUser(
-        request: SeedPathParameters.GetUsersRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+    private async __getUser(request: SeedPathParameters.GetUsersRequest, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { userId } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -56,45 +49,31 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.User.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.User.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPathParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}.",
-                );
-            case "unknown":
-                throw new errors.SeedPathParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPathParametersTimeoutError("Timeout exceeded when calling GET /{tenant_id}/user/{user_id}.");
+            case "unknown": throw new errors.SeedPathParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -108,24 +87,14 @@ export class UserClient {
      *         tags: ["tags", "tags"]
      *     })
      */
-    public createUser(
-        request: SeedPathParameters.User,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedPathParameters.User> {
+    public createUser(request: SeedPathParameters.User, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedPathParameters.User> {
         return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
-    private async __createUser(
-        request: SeedPathParameters.User,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __createUser(request: SeedPathParameters.User, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/${core.url.encodePathParam(this._options.tenant_id)}/user/`),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -136,45 +105,31 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.User.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.User.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPathParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling POST /{tenant_id}/user/.",
-                );
-            case "unknown":
-                throw new errors.SeedPathParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPathParametersTimeoutError("Timeout exceeded when calling POST /{tenant_id}/user/.");
+            case "unknown": throw new errors.SeedPathParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -191,25 +146,15 @@ export class UserClient {
      *         }
      *     })
      */
-    public updateUser(
-        request: SeedPathParameters.UpdateUserRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedPathParameters.User> {
+    public updateUser(request: SeedPathParameters.UpdateUserRequest, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedPathParameters.User> {
         return core.HttpResponsePromise.fromPromise(this.__updateUser(request, requestOptions));
     }
 
-    private async __updateUser(
-        request: SeedPathParameters.UpdateUserRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+    private async __updateUser(request: SeedPathParameters.UpdateUserRequest, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { userId, body: _body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}`),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
@@ -220,45 +165,31 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.User.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.User.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPathParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling PATCH /{tenant_id}/user/{user_id}.",
-                );
-            case "unknown":
-                throw new errors.SeedPathParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPathParametersTimeoutError("Timeout exceeded when calling PATCH /{tenant_id}/user/{user_id}.");
+            case "unknown": throw new errors.SeedPathParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -272,30 +203,20 @@ export class UserClient {
      *         limit: 1
      *     })
      */
-    public searchUsers(
-        request: SeedPathParameters.SearchUsersRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedPathParameters.User[]> {
+    public searchUsers(request: SeedPathParameters.SearchUsersRequest, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedPathParameters.User[]> {
         return core.HttpResponsePromise.fromPromise(this.__searchUsers(request, requestOptions));
     }
 
-    private async __searchUsers(
-        request: SeedPathParameters.SearchUsersRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User[]>> {
+    private async __searchUsers(request: SeedPathParameters.SearchUsersRequest, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedPathParameters.User[]>> {
         const { userId, limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
-            _queryParams.limit = limit.toString();
+            _queryParams["limit"] = limit.toString();
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/search`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/search`),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -303,45 +224,31 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.user.searchUsers.Response.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.user.searchUsers.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPathParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}/search.",
-                );
-            case "unknown":
-                throw new errors.SeedPathParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPathParametersTimeoutError("Timeout exceeded when calling GET /{tenant_id}/user/{user_id}/search.");
+            case "unknown": throw new errors.SeedPathParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -357,25 +264,15 @@ export class UserClient {
      *         version: 1
      *     })
      */
-    public getUserMetadata(
-        request: SeedPathParameters.GetUserMetadataRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedPathParameters.User> {
+    public getUserMetadata(request: SeedPathParameters.GetUserMetadataRequest, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedPathParameters.User> {
         return core.HttpResponsePromise.fromPromise(this.__getUserMetadata(request, requestOptions));
     }
 
-    private async __getUserMetadata(
-        request: SeedPathParameters.GetUserMetadataRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+    private async __getUserMetadata(request: SeedPathParameters.GetUserMetadataRequest, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { userId, version } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/metadata/v${core.url.encodePathParam(version)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/metadata/v${core.url.encodePathParam(version)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -383,45 +280,31 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.User.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.User.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPathParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}/metadata/v/{version}.",
-                );
-            case "unknown":
-                throw new errors.SeedPathParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPathParametersTimeoutError("Timeout exceeded when calling GET /{tenant_id}/user/{user_id}/metadata/v/{version}.");
+            case "unknown": throw new errors.SeedPathParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -429,7 +312,7 @@ export class UserClient {
      * Test endpoint with path parameters listed in different order than found in path
      *
      * @param {SeedPathParameters.GetUserSpecificsRequest} request
-     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.user.getUserSpecifics({
@@ -438,25 +321,15 @@ export class UserClient {
      *         thought: "thought"
      *     })
      */
-    public getUserSpecifics(
-        request: SeedPathParameters.GetUserSpecificsRequest,
-        requestOptions?: User.RequestOptions,
-    ): core.HttpResponsePromise<SeedPathParameters.User> {
+    public getUserSpecifics(request: SeedPathParameters.GetUserSpecificsRequest, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedPathParameters.User> {
         return core.HttpResponsePromise.fromPromise(this.__getUserSpecifics(request, requestOptions));
     }
 
-    private async __getUserSpecifics(
-        request: SeedPathParameters.GetUserSpecificsRequest,
-        requestOptions?: User.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
+    private async __getUserSpecifics(request: SeedPathParameters.GetUserSpecificsRequest, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { userId, version, thought } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/specifics/${core.url.encodePathParam(version)}/${core.url.encodePathParam(thought)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/${core.url.encodePathParam(this._options.tenant_id)}/user/${core.url.encodePathParam(userId)}/specifics/${core.url.encodePathParam(version)}/${core.url.encodePathParam(thought)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -464,45 +337,31 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.User.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.User.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedPathParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPathParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPathParametersTimeoutError(
-                    "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}/specifics/{version}/{thought}.",
-                );
-            case "unknown":
-                throw new errors.SeedPathParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedPathParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPathParametersTimeoutError("Timeout exceeded when calling GET /{tenant_id}/user/{user_id}/specifics/{version}/{thought}.");
+            case "unknown": throw new errors.SeedPathParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

@@ -2,20 +2,23 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 
 export declare namespace UrlsClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class UrlsClient {
     protected readonly _options: UrlsClient.Options;
 
     constructor(options: UrlsClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -25,26 +28,14 @@ export class UrlsClient {
      * @example
      *     await client.endpoints.urls.withMixedCase()
      */
-    public withMixedCase(
-        requestOptions?: UrlsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.urls.withMixedCase.Error>> {
+    public withMixedCase(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.urls.withMixedCase.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__withMixedCase(requestOptions));
     }
 
-    private async __withMixedCase(
-        requestOptions?: UrlsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.withMixedCase.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __withMixedCase(requestOptions?: UrlsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.withMixedCase.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/urls/MixedCase",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/urls/MixedCase"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -52,28 +43,22 @@ export class UrlsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as string,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.urls.withMixedCase.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -82,26 +67,14 @@ export class UrlsClient {
      * @example
      *     await client.endpoints.urls.noEndingSlash()
      */
-    public noEndingSlash(
-        requestOptions?: UrlsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.urls.noEndingSlash.Error>> {
+    public noEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.urls.noEndingSlash.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__noEndingSlash(requestOptions));
     }
 
-    private async __noEndingSlash(
-        requestOptions?: UrlsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.noEndingSlash.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __noEndingSlash(requestOptions?: UrlsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.noEndingSlash.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/urls/no-ending-slash",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/urls/no-ending-slash"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -109,28 +82,22 @@ export class UrlsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as string,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.urls.noEndingSlash.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -139,26 +106,14 @@ export class UrlsClient {
      * @example
      *     await client.endpoints.urls.withEndingSlash()
      */
-    public withEndingSlash(
-        requestOptions?: UrlsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.urls.withEndingSlash.Error>> {
+    public withEndingSlash(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.urls.withEndingSlash.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__withEndingSlash(requestOptions));
     }
 
-    private async __withEndingSlash(
-        requestOptions?: UrlsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.withEndingSlash.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __withEndingSlash(requestOptions?: UrlsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.withEndingSlash.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/urls/with-ending-slash/",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/urls/with-ending-slash/"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -166,28 +121,22 @@ export class UrlsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as string,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.urls.withEndingSlash.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -196,26 +145,14 @@ export class UrlsClient {
      * @example
      *     await client.endpoints.urls.withUnderscores()
      */
-    public withUnderscores(
-        requestOptions?: UrlsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.urls.withUnderscores.Error>> {
+    public withUnderscores(requestOptions?: UrlsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.urls.withUnderscores.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__withUnderscores(requestOptions));
     }
 
-    private async __withUnderscores(
-        requestOptions?: UrlsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.withUnderscores.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __withUnderscores(requestOptions?: UrlsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.urls.withUnderscores.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/urls/with_underscores",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/urls/with_underscores"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -223,28 +160,22 @@ export class UrlsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as string,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.urls.withUnderscores.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

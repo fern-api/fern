@@ -1,1 +1,1 @@
-export type { GetMetadataRequest } from "./GetMetadataRequest.js";
+export { type GetMetadataRequest } from "./GetMetadataRequest.js";

@@ -2,20 +2,23 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 
 export declare namespace ParamsClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ParamsClient {
     protected readonly _options: ParamsClient.Options;
 
     constructor(options: ParamsClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -28,28 +31,14 @@ export class ParamsClient {
      * @example
      *     await client.endpoints.params.getWithPath("param")
      */
-    public getWithPath(
-        param: string,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithPath.Error>> {
+    public getWithPath(param: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithPath.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getWithPath(param, requestOptions));
     }
 
-    private async __getWithPath(
-        param: string,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithPath.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getWithPath(param: string, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithPath.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/params/path/${core.url.encodePathParam(param)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -57,28 +46,22 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as string,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.params.getWithPath.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -92,31 +75,15 @@ export class ParamsClient {
      *         param: "param"
      *     })
      */
-    public getWithInlinePath(
-        request: SeedExhaustive.endpoints.GetWithInlinePath,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithInlinePath.Error>> {
+    public getWithInlinePath(request: SeedExhaustive.endpoints.GetWithInlinePath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithInlinePath.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getWithInlinePath(request, requestOptions));
     }
 
-    private async __getWithInlinePath(
-        request: SeedExhaustive.endpoints.GetWithInlinePath,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithInlinePath.Error>>
-    > {
+    private async __getWithInlinePath(request: SeedExhaustive.endpoints.GetWithInlinePath, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithInlinePath.Error>>> {
         const { param } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/params/path/${core.url.encodePathParam(param)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -124,28 +91,22 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as string,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.params.getWithInlinePath.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -160,32 +121,18 @@ export class ParamsClient {
      *         number: 1
      *     })
      */
-    public getWithQuery(
-        request: SeedExhaustive.endpoints.GetWithQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithQuery.Error>> {
+    public getWithQuery(request: SeedExhaustive.endpoints.GetWithQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithQuery.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getWithQuery(request, requestOptions));
     }
 
-    private async __getWithQuery(
-        request: SeedExhaustive.endpoints.GetWithQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithQuery.Error>>> {
-        const { query, number: number_ } = request;
+    private async __getWithQuery(request: SeedExhaustive.endpoints.GetWithQuery, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithQuery.Error>>> {
+        const { query, "number": number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.query = query;
-        _queryParams.number = number_.toString();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        _queryParams["query"] = query;
+        _queryParams["number"] = number_.toString();
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/params",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/params"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -193,28 +140,22 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: undefined,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.params.getWithQuery.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -229,46 +170,30 @@ export class ParamsClient {
      *         number: 1
      *     })
      */
-    public getWithAllowMultipleQuery(
-        request: SeedExhaustive.endpoints.GetWithMultipleQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<void, SeedExhaustive.endpoints.params.getWithAllowMultipleQuery.Error>
-    > {
+    public getWithAllowMultipleQuery(request: SeedExhaustive.endpoints.GetWithMultipleQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithAllowMultipleQuery.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getWithAllowMultipleQuery(request, requestOptions));
     }
 
-    private async __getWithAllowMultipleQuery(
-        request: SeedExhaustive.endpoints.GetWithMultipleQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithAllowMultipleQuery.Error>>
-    > {
-        const { query, number: number_ } = request;
+    private async __getWithAllowMultipleQuery(request: SeedExhaustive.endpoints.GetWithMultipleQuery, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithAllowMultipleQuery.Error>>> {
+        const { query, "number": number_ } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(query)) {
-            _queryParams.query = query.map((item) => item);
-        } else {
-            _queryParams.query = query;
+            _queryParams["query"] = query.map(item => item);
+        }
+        else {
+            _queryParams["query"] = query;
         }
 
         if (Array.isArray(number_)) {
-            _queryParams.number = number_.map((item) => item.toString());
-        } else {
-            _queryParams.number = number_.toString();
+            _queryParams["number"] = number_.map(item => item.toString());
+        }
+        else {
+            _queryParams["number"] = number_.toString();
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/params",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/params"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -276,28 +201,22 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: undefined,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.params.getWithAllowMultipleQuery.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -312,35 +231,17 @@ export class ParamsClient {
      *         query: "query"
      *     })
      */
-    public getWithPathAndQuery(
-        param: string,
-        request: SeedExhaustive.endpoints.GetWithPathAndQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithPathAndQuery.Error>> {
+    public getWithPathAndQuery(param: string, request: SeedExhaustive.endpoints.GetWithPathAndQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithPathAndQuery.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getWithPathAndQuery(param, request, requestOptions));
     }
 
-    private async __getWithPathAndQuery(
-        param: string,
-        request: SeedExhaustive.endpoints.GetWithPathAndQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithPathAndQuery.Error>>
-    > {
+    private async __getWithPathAndQuery(param: string, request: SeedExhaustive.endpoints.GetWithPathAndQuery, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithPathAndQuery.Error>>> {
         const { query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.query = query;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        _queryParams["query"] = query;
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path-query/${core.url.encodePathParam(param)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/params/path-query/${core.url.encodePathParam(param)}`),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -348,28 +249,22 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: undefined,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.params.getWithPathAndQuery.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -384,35 +279,17 @@ export class ParamsClient {
      *         query: "query"
      *     })
      */
-    public getWithInlinePathAndQuery(
-        request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<void, SeedExhaustive.endpoints.params.getWithInlinePathAndQuery.Error>
-    > {
+    public getWithInlinePathAndQuery(request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithInlinePathAndQuery.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getWithInlinePathAndQuery(request, requestOptions));
     }
 
-    private async __getWithInlinePathAndQuery(
-        request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithInlinePathAndQuery.Error>>
-    > {
+    private async __getWithInlinePathAndQuery(request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithInlinePathAndQuery.Error>>> {
         const { param, query } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.query = query;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        _queryParams["query"] = query;
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path-query/${core.url.encodePathParam(param)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/params/path-query/${core.url.encodePathParam(param)}`),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -420,28 +297,22 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: undefined,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.params.getWithInlinePathAndQuery.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -454,30 +325,14 @@ export class ParamsClient {
      * @example
      *     await client.endpoints.params.modifyWithPath("param", "string")
      */
-    public modifyWithPath(
-        param: string,
-        request: string,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithPath.Error>> {
+    public modifyWithPath(param: string, request: string, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithPath.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__modifyWithPath(param, request, requestOptions));
     }
 
-    private async __modifyWithPath(
-        param: string,
-        request: string,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithPath.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __modifyWithPath(param: string, request: string, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithPath.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/params/path/${core.url.encodePathParam(param)}`),
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
@@ -488,28 +343,22 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as string,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.params.modifyWithPath.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -524,31 +373,15 @@ export class ParamsClient {
      *         body: "string"
      *     })
      */
-    public modifyWithInlinePath(
-        request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithInlinePath.Error>> {
+    public modifyWithInlinePath(request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath, requestOptions?: ParamsClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithInlinePath.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__modifyWithInlinePath(request, requestOptions));
     }
 
-    private async __modifyWithInlinePath(
-        request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
-        requestOptions?: ParamsClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithInlinePath.Error>>
-    > {
+    private async __modifyWithInlinePath(request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath, requestOptions?: ParamsClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithInlinePath.Error>>> {
         const { param, body: _body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/params/path/${core.url.encodePathParam(param)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/params/path/${core.url.encodePathParam(param)}`),
             method: "PUT",
             headers: _headers,
             contentType: "application/json",
@@ -559,28 +392,22 @@ export class ParamsClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as string,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.params.modifyWithInlinePath.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

@@ -1,6 +1,6 @@
-import { type HttpResponseResolver, passthrough } from "msw";
+import { HttpResponseResolver, passthrough } from "msw";
 
-import { toJson } from "../../core/json";
+import { toJson } from "../../typescript/src/test-packagePath/core/json";
 
 /**
  * Creates a request matcher that validates if the request form-urlencoded body exactly matches the expected object

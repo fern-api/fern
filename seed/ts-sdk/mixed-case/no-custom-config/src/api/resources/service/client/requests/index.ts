@@ -1,1 +1,1 @@
-export type { ListResourcesRequest } from "./ListResourcesRequest.js";
+export { type ListResourcesRequest } from "./ListResourcesRequest.js";

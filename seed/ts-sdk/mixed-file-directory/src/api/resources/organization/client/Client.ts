@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedMixedFileDirectory from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedMixedFileDirectory from "../../../index.js";
 
 export declare namespace OrganizationClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class OrganizationClient {
     protected readonly _options: OrganizationClient.Options;
 
     constructor(options: OrganizationClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -31,24 +34,14 @@ export class OrganizationClient {
      *         name: "name"
      *     })
      */
-    public create(
-        request: SeedMixedFileDirectory.CreateOrganizationRequest,
-        requestOptions?: OrganizationClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedFileDirectory.Organization> {
+    public create(request: SeedMixedFileDirectory.CreateOrganizationRequest, requestOptions?: OrganizationClient.RequestOptions): core.HttpResponsePromise<SeedMixedFileDirectory.Organization> {
         return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
     }
 
-    private async __create(
-        request: SeedMixedFileDirectory.CreateOrganizationRequest,
-        requestOptions?: OrganizationClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.Organization>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __create(request: SeedMixedFileDirectory.CreateOrganizationRequest, requestOptions?: OrganizationClient.RequestOptions): Promise<core.WithRawResponse<SeedMixedFileDirectory.Organization>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/organizations/",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/organizations/"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -59,7 +52,7 @@ export class OrganizationClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedMixedFileDirectory.Organization, rawResponse: _response.rawResponse };
@@ -69,26 +62,21 @@ export class OrganizationClient {
             throw new errors.SeedMixedFileDirectoryError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedMixedFileDirectoryError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedMixedFileDirectoryTimeoutError(
-                    "Timeout exceeded when calling POST /organizations/.",
-                );
-            case "unknown":
-                throw new errors.SeedMixedFileDirectoryError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedMixedFileDirectoryError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedMixedFileDirectoryTimeoutError("Timeout exceeded when calling POST /organizations/.");
+            case "unknown": throw new errors.SeedMixedFileDirectoryError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

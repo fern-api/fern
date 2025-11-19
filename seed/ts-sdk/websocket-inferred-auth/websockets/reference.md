@@ -1,5 +1,5 @@
 # Reference
-## Auth
+## auth
 <details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getTokenWithClientCredentials</a>({ ...params }) -> SeedWebsocketAuth.TokenResponse</code></summary>
 <dl>
 <dd>

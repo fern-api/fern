@@ -7,5 +7,7 @@ expect.addEqualityTesters([
         }
         // Return undefined to let Jest handle other comparisons normally
         return undefined;
-    },
+    }
 ]);
+
+export {};

@@ -1,5 +1,5 @@
 # Reference
-## Unknown
+## unknown
 <details><summary><code>client.unknown.<a href="/src/api/resources/unknown/client/Client.ts">post</a>({ ...params }) -> unknown[]</code></summary>
 <dl>
 <dd>

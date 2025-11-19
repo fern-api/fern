@@ -19,7 +19,7 @@ export const abortRawResponse: RawResponse = {
     status: 499,
     statusText: "Client Closed Request",
     type: "error",
-    url: "",
+    url: ""
 } as const;
 
 /**
@@ -31,7 +31,7 @@ export const unknownRawResponse: RawResponse = {
     status: 0,
     statusText: "Unknown Error",
     type: "error",
-    url: "",
+    url: ""
 } as const;
 
 /**
@@ -48,7 +48,7 @@ export function toRawResponse(response: Response): RawResponse {
         status: response.status,
         statusText: response.statusText,
         type: response.type,
-        url: response.url,
+        url: response.url
     };
 }
 

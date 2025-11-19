@@ -1,1 +1,1 @@
-export type { MultipartFormRequest } from "./MultipartFormRequest.js";
+export { type MultipartFormRequest } from "./MultipartFormRequest.js";

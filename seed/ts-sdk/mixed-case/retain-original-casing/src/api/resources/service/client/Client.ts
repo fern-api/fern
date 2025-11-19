@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedMixedCase from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedMixedCase from "../../../index.js";
 
 export declare namespace ServiceClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ServiceClient {
     protected readonly _options: ServiceClient.Options;
 
     constructor(options: ServiceClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -27,24 +30,14 @@ export class ServiceClient {
      * @example
      *     await client.service.getResource("rsc-xyz")
      */
-    public getResource(
-        ResourceID: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedCase.Resource> {
+    public getResource(ResourceID: string, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedMixedCase.Resource> {
         return core.HttpResponsePromise.fromPromise(this.__getResource(ResourceID, requestOptions));
     }
 
-    private async __getResource(
-        ResourceID: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedCase.Resource>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __getResource(ResourceID: string, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedMixedCase.Resource>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/resource/${core.url.encodePathParam(ResourceID)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/resource/${core.url.encodePathParam(ResourceID)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -52,7 +45,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedMixedCase.Resource, rawResponse: _response.rawResponse };
@@ -62,24 +55,21 @@ export class ServiceClient {
             throw new errors.SeedMixedCaseError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedMixedCaseError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource/{ResourceID}.");
-            case "unknown":
-                throw new errors.SeedMixedCaseError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedMixedCaseError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource/{ResourceID}.");
+            case "unknown": throw new errors.SeedMixedCaseError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -93,28 +83,18 @@ export class ServiceClient {
      *         beforeDate: "2023-01-01"
      *     })
      */
-    public listResources(
-        request: SeedMixedCase.ListResourcesRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedCase.Resource[]> {
+    public listResources(request: SeedMixedCase.ListResourcesRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedMixedCase.Resource[]> {
         return core.HttpResponsePromise.fromPromise(this.__listResources(request, requestOptions));
     }
 
-    private async __listResources(
-        request: SeedMixedCase.ListResourcesRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedCase.Resource[]>> {
-        const { page_limit: pageLimit, beforeDate } = request;
+    private async __listResources(request: SeedMixedCase.ListResourcesRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedMixedCase.Resource[]>> {
+        const { "page_limit": pageLimit, beforeDate } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.page_limit = pageLimit.toString();
-        _queryParams.beforeDate = beforeDate;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        _queryParams["page_limit"] = pageLimit.toString();
+        _queryParams["beforeDate"] = beforeDate;
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/resource",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/resource"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -122,7 +102,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedMixedCase.Resource[], rawResponse: _response.rawResponse };
@@ -132,24 +112,21 @@ export class ServiceClient {
             throw new errors.SeedMixedCaseError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedMixedCaseError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource.");
-            case "unknown":
-                throw new errors.SeedMixedCaseError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedMixedCaseError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedMixedCaseTimeoutError("Timeout exceeded when calling GET /resource.");
+            case "unknown": throw new errors.SeedMixedCaseError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

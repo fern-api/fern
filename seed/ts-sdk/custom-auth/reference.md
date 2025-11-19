@@ -1,5 +1,5 @@
 # Reference
-## CustomAuth
+## customAuth
 <details><summary><code>client.customAuth.<a href="/src/api/resources/customAuth/client/Client.ts">getWithCustomAuth</a>() -> boolean</code></summary>
 <dl>
 <dd>

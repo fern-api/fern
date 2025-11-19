@@ -1,2 +1,2 @@
-export type { GetOrganizationUserRequest } from "./GetOrganizationUserRequest.js";
-export type { SearchOrganizationsRequest } from "./SearchOrganizationsRequest.js";
+export { type GetOrganizationUserRequest } from "./GetOrganizationUserRequest.js";
+export { type SearchOrganizationsRequest } from "./SearchOrganizationsRequest.js";

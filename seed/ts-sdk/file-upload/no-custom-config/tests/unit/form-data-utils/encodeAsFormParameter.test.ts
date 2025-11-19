@@ -17,7 +17,7 @@ describe("encodeAsFormParameter", () => {
             const obj = { name: "John", age: 30 };
             expect(encodeAsFormParameter(obj)).toEqual({
                 name: "John",
-                age: "30",
+                age: "30"
             });
         });
 
@@ -32,7 +32,7 @@ describe("encodeAsFormParameter", () => {
             expect(encodeAsFormParameter(obj)).toEqual({
                 "items[0]": "a",
                 "items[1]": "b",
-                "items[2]": "c",
+                "items[2]": "c"
             });
         });
 
@@ -47,7 +47,7 @@ describe("encodeAsFormParameter", () => {
                 "mixed[0]": "string",
                 "mixed[1]": "42",
                 "mixed[2]": "true",
-                "mixed[3]": "false",
+                "mixed[3]": "false"
             });
         });
 
@@ -55,7 +55,7 @@ describe("encodeAsFormParameter", () => {
             const obj = { users: [{ name: "John" }, { name: "Jane" }] };
             expect(encodeAsFormParameter(obj)).toEqual({
                 "users[0][name]": "John",
-                "users[1][name]": "Jane",
+                "users[1][name]": "Jane"
             });
         });
 
@@ -65,7 +65,7 @@ describe("encodeAsFormParameter", () => {
                 "items[0]": "a",
                 "items[1]": "",
                 "items[2]": "c",
-                "items[4]": "e",
+                "items[4]": "e"
             });
         });
     });
@@ -75,7 +75,7 @@ describe("encodeAsFormParameter", () => {
             const obj = { user: { name: "John", age: 30 } };
             expect(encodeAsFormParameter(obj)).toEqual({
                 "user[name]": "John",
-                "user[age]": "30",
+                "user[age]": "30"
             });
         });
 
@@ -83,7 +83,7 @@ describe("encodeAsFormParameter", () => {
             const obj = { user: { profile: { name: "John", settings: { theme: "dark" } } } };
             expect(encodeAsFormParameter(obj)).toEqual({
                 "user[profile][name]": "John",
-                "user[profile][settings][theme]": "dark",
+                "user[profile][settings][theme]": "dark"
             });
         });
 
@@ -98,7 +98,7 @@ describe("encodeAsFormParameter", () => {
             const obj = { name: "John Doe", email: "john@example.com" };
             expect(encodeAsFormParameter(obj)).toEqual({
                 name: "John Doe",
-                email: "john@example.com",
+                email: "john@example.com"
             });
         });
 
@@ -106,18 +106,18 @@ describe("encodeAsFormParameter", () => {
             const obj = { "user name": "John", "email[primary]": "john@example.com" };
             expect(encodeAsFormParameter(obj)).toEqual({
                 "user name": "John",
-                "email[primary]": "john@example.com",
+                "email[primary]": "john@example.com"
             });
         });
 
         it("should handle values that contain special characters", () => {
             const obj = {
                 query: "search term with spaces",
-                filter: "category:electronics",
+                filter: "category:electronics"
             };
             expect(encodeAsFormParameter(obj)).toEqual({
                 query: "search term with spaces",
-                filter: "category:electronics",
+                filter: "category:electronics"
             });
         });
 
@@ -126,7 +126,7 @@ describe("encodeAsFormParameter", () => {
             // encodeAsFormParameter splits on these characters when parsing the stringified result
             const obj = {
                 message: "Hello & welcome",
-                equation: "x = y + z",
+                equation: "x = y + z"
             };
             // This demonstrates the limitation - ampersands and equals signs in values
             // will cause the parameter to be split incorrectly
@@ -146,19 +146,19 @@ describe("encodeAsFormParameter", () => {
                 file: {
                     name: "document.pdf",
                     size: 1024,
-                    type: "application/pdf",
+                    type: "application/pdf"
                 },
                 options: {
                     compress: true,
-                    quality: 0.8,
-                },
+                    quality: 0.8
+                }
             };
             expect(encodeAsFormParameter(metadata)).toEqual({
                 "file[name]": "document.pdf",
                 "file[size]": "1024",
                 "file[type]": "application/pdf",
                 "options[compress]": "true",
-                "options[quality]": "0.8",
+                "options[quality]": "0.8"
             });
         });
 
@@ -169,9 +169,9 @@ describe("encodeAsFormParameter", () => {
                     required: ["name", "email"],
                     patterns: {
                         email: "^[^@]+@[^@]+\\.[^@]+$",
-                        phone: "^\\+?[1-9]\\d{1,14}$",
-                    },
-                },
+                        phone: "^\\+?[1-9]\\d{1,14}$"
+                    }
+                }
             };
             expect(encodeAsFormParameter(formData)).toEqual({
                 "fields[0]": "name",
@@ -180,7 +180,7 @@ describe("encodeAsFormParameter", () => {
                 "validation[required][0]": "name",
                 "validation[required][1]": "email",
                 "validation[patterns][email]": "^[^@]+@[^@]+\\.[^@]+$",
-                "validation[patterns][phone]": "^\\+?[1-9]\\d{1,14}$",
+                "validation[patterns][phone]": "^\\+?[1-9]\\d{1,14}$"
             });
         });
 
@@ -190,11 +190,11 @@ describe("encodeAsFormParameter", () => {
                     status: ["active", "pending"],
                     category: {
                         type: "electronics",
-                        subcategories: ["phones", "laptops"],
-                    },
+                        subcategories: ["phones", "laptops"]
+                    }
                 },
                 sort: { field: "name", direction: "asc" },
-                pagination: { page: 1, limit: 20 },
+                pagination: { page: 1, limit: 20 }
             };
             expect(encodeAsFormParameter(searchParams)).toEqual({
                 "filters[status][0]": "active",
@@ -205,7 +205,7 @@ describe("encodeAsFormParameter", () => {
                 "sort[field]": "name",
                 "sort[direction]": "asc",
                 "pagination[page]": "1",
-                "pagination[limit]": "20",
+                "pagination[limit]": "20"
             });
         });
     });
@@ -215,7 +215,7 @@ describe("encodeAsFormParameter", () => {
             const obj = { enabled: true, disabled: false };
             expect(encodeAsFormParameter(obj)).toEqual({
                 enabled: "true",
-                disabled: "false",
+                disabled: "false"
             });
         });
 
@@ -223,7 +223,7 @@ describe("encodeAsFormParameter", () => {
             const obj = { name: "", description: "test" };
             expect(encodeAsFormParameter(obj)).toEqual({
                 name: "",
-                description: "test",
+                description: "test"
             });
         });
 
@@ -231,7 +231,7 @@ describe("encodeAsFormParameter", () => {
             const obj = { count: 0, price: 0.0 };
             expect(encodeAsFormParameter(obj)).toEqual({
                 count: "0",
-                price: "0",
+                price: "0"
             });
         });
 
@@ -239,7 +239,7 @@ describe("encodeAsFormParameter", () => {
             const obj = { "0": "zero", "1": "one" };
             expect(encodeAsFormParameter(obj)).toEqual({
                 "0": "zero",
-                "1": "one",
+                "1": "one"
             });
         });
 
@@ -248,7 +248,7 @@ describe("encodeAsFormParameter", () => {
             expect(encodeAsFormParameter(obj)).toEqual({
                 name: "John",
                 age: "",
-                active: "true",
+                active: "true"
             });
         });
     });
@@ -262,9 +262,9 @@ describe("encodeAsFormParameter", () => {
                     notifications: ["email", "push"],
                     settings: {
                         autoSave: true,
-                        timeout: 300,
-                    },
-                },
+                        timeout: 300
+                    }
+                }
             };
 
             const result = encodeAsFormParameter(formObject);
@@ -281,7 +281,7 @@ describe("encodeAsFormParameter", () => {
                 "preferences[notifications][0]": "email",
                 "preferences[notifications][1]": "push",
                 "preferences[settings][autoSave]": "true",
-                "preferences[settings][timeout]": "300",
+                "preferences[settings][timeout]": "300"
             });
         });
 
@@ -290,13 +290,13 @@ describe("encodeAsFormParameter", () => {
                 query: {
                     filters: [
                         { field: "status", operator: "eq", value: "active" },
-                        { field: "created", operator: "gte", value: "2023-01-01" },
+                        { field: "created", operator: "gte", value: "2023-01-01" }
                     ],
                     sort: [
                         { field: "name", direction: "asc" },
-                        { field: "created", direction: "desc" },
-                    ],
-                },
+                        { field: "created", direction: "desc" }
+                    ]
+                }
             };
 
             const result = encodeAsFormParameter(apiParams);
@@ -310,7 +310,7 @@ describe("encodeAsFormParameter", () => {
                 "query[sort][0][field]": "name",
                 "query[sort][0][direction]": "asc",
                 "query[sort][1][field]": "created",
-                "query[sort][1][direction]": "desc",
+                "query[sort][1][direction]": "desc"
             });
         });
     });

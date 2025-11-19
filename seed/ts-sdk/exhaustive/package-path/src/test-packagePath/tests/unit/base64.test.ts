@@ -39,7 +39,7 @@ describe("base64", () => {
             "test@example.com",
             "café",
             "username:password",
-            "user@domain.com:super$ecret123!",
+            "user@domain.com:super$ecret123!"
         ];
 
         testStrings.forEach((testString) => {

@@ -2,22 +2,25 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedEnum from "../../../index.js";
 import { toJson } from "../../../../core/json.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedEnum from "../../../index.js";
 
 export declare namespace QueryParamClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class QueryParamClient {
     protected readonly _options: QueryParamClient.Options;
 
     constructor(options: QueryParamClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -31,37 +34,26 @@ export class QueryParamClient {
      *         operandOrColor: "red"
      *     })
      */
-    public send(
-        request: SeedEnum.SendEnumAsQueryParamRequest,
-        requestOptions?: QueryParamClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public send(request: SeedEnum.SendEnumAsQueryParamRequest, requestOptions?: QueryParamClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
-    private async __send(
-        request: SeedEnum.SendEnumAsQueryParamRequest,
-        requestOptions?: QueryParamClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __send(request: SeedEnum.SendEnumAsQueryParamRequest, requestOptions?: QueryParamClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.operand = operand;
+        _queryParams["operand"] = operand;
         if (maybeOperand != null) {
-            _queryParams.maybeOperand = maybeOperand;
+            _queryParams["maybeOperand"] = maybeOperand;
         }
 
-        _queryParams.operandOrColor = typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor);
+        _queryParams["operandOrColor"] = typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor);
         if (maybeOperandOrColor != null) {
-            _queryParams.maybeOperandOrColor =
-                typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : toJson(maybeOperandOrColor);
+            _queryParams["maybeOperandOrColor"] = typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : toJson(maybeOperandOrColor);
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "query",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "query"),
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -69,7 +61,7 @@ export class QueryParamClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -79,24 +71,21 @@ export class QueryParamClient {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedEnumError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query.");
-            case "unknown":
-                throw new errors.SeedEnumError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedEnumError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query.");
+            case "unknown": throw new errors.SeedEnumError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -112,59 +101,48 @@ export class QueryParamClient {
      *         maybeOperandOrColor: "red"
      *     })
      */
-    public sendList(
-        request: SeedEnum.SendEnumListAsQueryParamRequest,
-        requestOptions?: QueryParamClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public sendList(request: SeedEnum.SendEnumListAsQueryParamRequest, requestOptions?: QueryParamClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__sendList(request, requestOptions));
     }
 
-    private async __sendList(
-        request: SeedEnum.SendEnumListAsQueryParamRequest,
-        requestOptions?: QueryParamClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __sendList(request: SeedEnum.SendEnumListAsQueryParamRequest, requestOptions?: QueryParamClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(operand)) {
-            _queryParams.operand = operand.map((item) => item);
-        } else {
-            _queryParams.operand = operand;
+            _queryParams["operand"] = operand.map(item => item);
+        }
+        else {
+            _queryParams["operand"] = operand;
         }
 
         if (maybeOperand != null) {
             if (Array.isArray(maybeOperand)) {
-                _queryParams.maybeOperand = maybeOperand.map((item) => item);
-            } else {
-                _queryParams.maybeOperand = maybeOperand;
+                _queryParams["maybeOperand"] = maybeOperand.map(item => item);
+            }
+            else {
+                _queryParams["maybeOperand"] = maybeOperand;
             }
         }
 
         if (Array.isArray(operandOrColor)) {
-            _queryParams.operandOrColor = operandOrColor.map((item) =>
-                typeof item === "string" ? item : toJson(item),
-            );
-        } else {
-            _queryParams.operandOrColor = typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor);
+            _queryParams["operandOrColor"] = operandOrColor.map(item => typeof item === "string" ? item : toJson(item));
+        }
+        else {
+            _queryParams["operandOrColor"] = typeof operandOrColor === "string" ? operandOrColor : toJson(operandOrColor);
         }
 
         if (maybeOperandOrColor != null) {
             if (Array.isArray(maybeOperandOrColor)) {
-                _queryParams.maybeOperandOrColor = maybeOperandOrColor.map((item) =>
-                    typeof item === "string" ? item : toJson(item),
-                );
-            } else {
-                _queryParams.maybeOperandOrColor =
-                    typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : toJson(maybeOperandOrColor);
+                _queryParams["maybeOperandOrColor"] = maybeOperandOrColor.map(item => typeof item === "string" ? item : toJson(item));
+            }
+            else {
+                _queryParams["maybeOperandOrColor"] = typeof maybeOperandOrColor === "string" ? maybeOperandOrColor : toJson(maybeOperandOrColor);
             }
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "query-list",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "query-list"),
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -172,7 +150,7 @@ export class QueryParamClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -182,24 +160,21 @@ export class QueryParamClient {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedEnumError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query-list.");
-            case "unknown":
-                throw new errors.SeedEnumError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedEnumError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /query-list.");
+            case "unknown": throw new errors.SeedEnumError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

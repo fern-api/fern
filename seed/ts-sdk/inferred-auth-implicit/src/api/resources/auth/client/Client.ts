@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedInferredAuthImplicit from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedInferredAuthImplicit from "../../../index.js";
 
 export declare namespace AuthClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class AuthClient {
     protected readonly _options: AuthClient.Options;
 
     constructor(options: AuthClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -32,70 +35,50 @@ export class AuthClient {
      *         scope: "scope"
      *     })
      */
-    public getTokenWithClientCredentials(
-        request: SeedInferredAuthImplicit.GetTokenRequest,
-        requestOptions?: AuthClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedInferredAuthImplicit.TokenResponse> {
+    public getTokenWithClientCredentials(request: SeedInferredAuthImplicit.GetTokenRequest, requestOptions?: AuthClient.RequestOptions): core.HttpResponsePromise<SeedInferredAuthImplicit.TokenResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getTokenWithClientCredentials(request, requestOptions));
     }
 
-    private async __getTokenWithClientCredentials(
-        request: SeedInferredAuthImplicit.GetTokenRequest,
-        requestOptions?: AuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedInferredAuthImplicit.TokenResponse>> {
+    private async __getTokenWithClientCredentials(request: SeedInferredAuthImplicit.GetTokenRequest, requestOptions?: AuthClient.RequestOptions): Promise<core.WithRawResponse<SeedInferredAuthImplicit.TokenResponse>> {
         const { "X-Api-Key": xApiKey, ..._body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/token",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/token"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: { ..._body, audience: "https://api.example.com", grant_type: "client_credentials" },
+            body: { ...(_body), audience: "https://api.example.com", grant_type: "client_credentials" },
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedInferredAuthImplicit.TokenResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedInferredAuthImplicit.TokenResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedInferredAuthImplicitError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedInferredAuthImplicitError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedInferredAuthImplicitTimeoutError("Timeout exceeded when calling POST /token.");
-            case "unknown":
-                throw new errors.SeedInferredAuthImplicitError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedInferredAuthImplicitError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedInferredAuthImplicitTimeoutError("Timeout exceeded when calling POST /token.");
+            case "unknown": throw new errors.SeedInferredAuthImplicitError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -112,72 +95,50 @@ export class AuthClient {
      *         scope: "scope"
      *     })
      */
-    public refreshToken(
-        request: SeedInferredAuthImplicit.RefreshTokenRequest,
-        requestOptions?: AuthClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedInferredAuthImplicit.TokenResponse> {
+    public refreshToken(request: SeedInferredAuthImplicit.RefreshTokenRequest, requestOptions?: AuthClient.RequestOptions): core.HttpResponsePromise<SeedInferredAuthImplicit.TokenResponse> {
         return core.HttpResponsePromise.fromPromise(this.__refreshToken(request, requestOptions));
     }
 
-    private async __refreshToken(
-        request: SeedInferredAuthImplicit.RefreshTokenRequest,
-        requestOptions?: AuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedInferredAuthImplicit.TokenResponse>> {
+    private async __refreshToken(request: SeedInferredAuthImplicit.RefreshTokenRequest, requestOptions?: AuthClient.RequestOptions): Promise<core.WithRawResponse<SeedInferredAuthImplicit.TokenResponse>> {
         const { "X-Api-Key": xApiKey, ..._body } = request;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-Api-Key": xApiKey }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/token/refresh",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/token/refresh"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: { ..._body, audience: "https://api.example.com", grant_type: "refresh_token" },
+            body: { ...(_body), audience: "https://api.example.com", grant_type: "refresh_token" },
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedInferredAuthImplicit.TokenResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedInferredAuthImplicit.TokenResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedInferredAuthImplicitError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedInferredAuthImplicitError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedInferredAuthImplicitTimeoutError(
-                    "Timeout exceeded when calling POST /token/refresh.",
-                );
-            case "unknown":
-                throw new errors.SeedInferredAuthImplicitError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedInferredAuthImplicitError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedInferredAuthImplicitTimeoutError("Timeout exceeded when calling POST /token/refresh.");
+            case "unknown": throw new errors.SeedInferredAuthImplicitError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

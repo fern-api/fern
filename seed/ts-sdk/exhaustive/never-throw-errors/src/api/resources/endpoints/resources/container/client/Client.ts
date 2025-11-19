@@ -2,20 +2,23 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 
 export declare namespace ContainerClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ContainerClient {
     protected readonly _options: ContainerClient.Options;
 
     constructor(options: ContainerClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -26,34 +29,14 @@ export class ContainerClient {
      * @example
      *     await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string"])
      */
-    public getAndReturnListOfPrimitives(
-        request: string[],
-        requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnListOfPrimitives.Error>
-    > {
+    public getAndReturnListOfPrimitives(request: string[], requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnListOfPrimitives.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfPrimitives(request, requestOptions));
     }
 
-    private async __getAndReturnListOfPrimitives(
-        request: string[],
-        requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnListOfPrimitives.Error>
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnListOfPrimitives(request: string[], requestOptions?: ContainerClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnListOfPrimitives.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/container/list-of-primitives",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/list-of-primitives"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -64,28 +47,22 @@ export class ContainerClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as string[],
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.container.getAndReturnListOfPrimitives.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -99,40 +76,14 @@ export class ContainerClient {
      *             string: "string"
      *         }])
      */
-    public getAndReturnListOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
-        requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithRequiredField[],
-            SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error
-        >
-    > {
+    public getAndReturnListOfObjects(request: SeedExhaustive.types.ObjectWithRequiredField[], requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedExhaustive.types.ObjectWithRequiredField[], SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfObjects(request, requestOptions));
     }
 
-    private async __getAndReturnListOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
-        requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithRequiredField[],
-                SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error
-            >
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnListOfObjects(request: SeedExhaustive.types.ObjectWithRequiredField[], requestOptions?: ContainerClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedExhaustive.types.ObjectWithRequiredField[], SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/container/list-of-objects",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/list-of-objects"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -143,28 +94,22 @@ export class ContainerClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -174,34 +119,14 @@ export class ContainerClient {
      * @example
      *     await client.endpoints.container.getAndReturnSetOfPrimitives(["string"])
      */
-    public getAndReturnSetOfPrimitives(
-        request: string[],
-        requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnSetOfPrimitives.Error>
-    > {
+    public getAndReturnSetOfPrimitives(request: string[], requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnSetOfPrimitives.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfPrimitives(request, requestOptions));
     }
 
-    private async __getAndReturnSetOfPrimitives(
-        request: string[],
-        requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnSetOfPrimitives.Error>
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnSetOfPrimitives(request: string[], requestOptions?: ContainerClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<string[], SeedExhaustive.endpoints.container.getAndReturnSetOfPrimitives.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/container/set-of-primitives",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/set-of-primitives"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -212,28 +137,22 @@ export class ContainerClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as string[],
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.container.getAndReturnSetOfPrimitives.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -245,40 +164,14 @@ export class ContainerClient {
      *             string: "string"
      *         }])
      */
-    public getAndReturnSetOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
-        requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithRequiredField[],
-            SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error
-        >
-    > {
+    public getAndReturnSetOfObjects(request: SeedExhaustive.types.ObjectWithRequiredField[], requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedExhaustive.types.ObjectWithRequiredField[], SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfObjects(request, requestOptions));
     }
 
-    private async __getAndReturnSetOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
-        requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithRequiredField[],
-                SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error
-            >
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnSetOfObjects(request: SeedExhaustive.types.ObjectWithRequiredField[], requestOptions?: ContainerClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedExhaustive.types.ObjectWithRequiredField[], SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/container/set-of-objects",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/set-of-objects"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -289,28 +182,22 @@ export class ContainerClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -322,34 +209,14 @@ export class ContainerClient {
      *         "string": "string"
      *     })
      */
-    public getAndReturnMapPrimToPrim(
-        request: Record<string, string>,
-        requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<Record<string, string>, SeedExhaustive.endpoints.container.getAndReturnMapPrimToPrim.Error>
-    > {
+    public getAndReturnMapPrimToPrim(request: Record<string, string>, requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<Record<string, string>, SeedExhaustive.endpoints.container.getAndReturnMapPrimToPrim.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapPrimToPrim(request, requestOptions));
     }
 
-    private async __getAndReturnMapPrimToPrim(
-        request: Record<string, string>,
-        requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<Record<string, string>, SeedExhaustive.endpoints.container.getAndReturnMapPrimToPrim.Error>
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnMapPrimToPrim(request: Record<string, string>, requestOptions?: ContainerClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<Record<string, string>, SeedExhaustive.endpoints.container.getAndReturnMapPrimToPrim.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/container/map-prim-to-prim",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/map-prim-to-prim"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -360,28 +227,22 @@ export class ContainerClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as Record<string, string>,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.container.getAndReturnMapPrimToPrim.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -395,40 +256,14 @@ export class ContainerClient {
      *         }
      *     })
      */
-    public getAndReturnMapOfPrimToObject(
-        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
-        requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<
-            Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
-            SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error
-        >
-    > {
+    public getAndReturnMapOfPrimToObject(request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>, requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<Record<string, SeedExhaustive.types.ObjectWithRequiredField>, SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapOfPrimToObject(request, requestOptions));
     }
 
-    private async __getAndReturnMapOfPrimToObject(
-        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
-        requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
-                SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error
-            >
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnMapOfPrimToObject(request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>, requestOptions?: ContainerClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<Record<string, SeedExhaustive.types.ObjectWithRequiredField>, SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/container/map-prim-to-object",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/map-prim-to-object"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -439,28 +274,22 @@ export class ContainerClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -472,40 +301,14 @@ export class ContainerClient {
      *         string: "string"
      *     })
      */
-    public getAndReturnOptional(
-        request?: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithRequiredField | undefined,
-            SeedExhaustive.endpoints.container.getAndReturnOptional.Error
-        >
-    > {
+    public getAndReturnOptional(request?: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<SeedExhaustive.types.ObjectWithRequiredField | undefined, SeedExhaustive.endpoints.container.getAndReturnOptional.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnOptional(request, requestOptions));
     }
 
-    private async __getAndReturnOptional(
-        request?: SeedExhaustive.types.ObjectWithRequiredField,
-        requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithRequiredField | undefined,
-                SeedExhaustive.endpoints.container.getAndReturnOptional.Error
-            >
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __getAndReturnOptional(request?: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: ContainerClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<SeedExhaustive.types.ObjectWithRequiredField | undefined, SeedExhaustive.endpoints.container.getAndReturnOptional.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/container/opt-objects",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/container/opt-objects"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -516,28 +319,22 @@ export class ContainerClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedExhaustive.endpoints.container.getAndReturnOptional.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

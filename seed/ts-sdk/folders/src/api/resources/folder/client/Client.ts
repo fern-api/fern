@@ -2,15 +2,17 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 import { ServiceClient } from "../resources/service/client/Client.js";
 
 export declare namespace FolderClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class FolderClient {
@@ -18,6 +20,7 @@ export class FolderClient {
     protected _service: ServiceClient | undefined;
 
     constructor(options: FolderClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -36,11 +39,9 @@ export class FolderClient {
     }
 
     private async __foo(requestOptions?: FolderClient.RequestOptions): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+            url: await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -48,7 +49,7 @@ export class FolderClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -58,24 +59,21 @@ export class FolderClient {
             throw new errors.SeedApiError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /.");
-            case "unknown":
-                throw new errors.SeedApiError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedApiError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /.");
+            case "unknown": throw new errors.SeedApiError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

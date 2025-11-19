@@ -6,7 +6,8 @@ import * as core from "../../../../core/index.js";
 import { RealtimeSocket } from "./Socket.js";
 
 export declare namespace RealtimeClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
     export interface ConnectArgs {
         sessionId: string;
@@ -25,6 +26,7 @@ export class RealtimeClient {
     protected readonly _options: RealtimeClient.Options;
 
     constructor(options: RealtimeClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -32,25 +34,15 @@ export class RealtimeClient {
         const { sessionId, model, temperature, headers, debug, reconnectAttempts } = args;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (model != null) {
-            _queryParams.model = model;
+            _queryParams["model"] = model;
         }
 
         if (temperature != null) {
-            _queryParams.temperature = temperature.toString();
+            _queryParams["temperature"] = temperature.toString();
         }
 
-        const _headers: Record<string, unknown> = { ...headers };
-        const socket = new core.ReconnectingWebSocket({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/realtime/${core.url.encodePathParam(sessionId)}`,
-            ),
-            protocols: [],
-            queryParameters: _queryParams,
-            headers: _headers,
-            options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
-        });
+        let _headers: Record<string, unknown> = { ...headers };
+        const socket = new core.ReconnectingWebSocket({ url: core.url.join(await core.Supplier.get(this._options["baseUrl"]) ?? await core.Supplier.get(this._options["environment"]), `/realtime/${core.url.encodePathParam(sessionId)}`), protocols: [], queryParameters: _queryParams, headers: _headers, options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 } });
         return new RealtimeSocket({ socket });
     }
 }

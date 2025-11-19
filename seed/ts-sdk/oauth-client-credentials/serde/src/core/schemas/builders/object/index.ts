@@ -1,7 +1,7 @@
 export { getObjectUtils, object } from "./object.js";
 export type {
     inferObjectWithoutOptionalPropertiesSchemaFromPropertySchemas,
-    inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas,
+    inferParsedObjectWithoutOptionalPropertiesFromPropertySchemas
 } from "./objectWithoutOptionalProperties.js";
 export { objectWithoutOptionalProperties } from "./objectWithoutOptionalProperties.js";
 export type { Property } from "./property.js";
@@ -18,5 +18,5 @@ export type {
     inferRawPropertySchema,
     ObjectSchema,
     ObjectUtils,
-    PropertySchemas,
+    PropertySchemas
 } from "./types.js";

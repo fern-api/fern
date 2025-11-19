@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedVersion from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedVersion from "../../../index.js";
 
 export declare namespace UserClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class UserClient {
     protected readonly _options: UserClient.Options;
 
     constructor(options: UserClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -27,28 +30,14 @@ export class UserClient {
      * @example
      *     await client.user.getUser("userId")
      */
-    public getUser(
-        userId: SeedVersion.UserId,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedVersion.User> {
+    public getUser(userId: SeedVersion.UserId, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedVersion.User> {
         return core.HttpResponsePromise.fromPromise(this.__getUser(userId, requestOptions));
     }
 
-    private async __getUser(
-        userId: SeedVersion.UserId,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedVersion.User>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }),
-            requestOptions?.headers,
-        );
+    private async __getUser(userId: SeedVersion.UserId, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedVersion.User>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/users/${core.url.encodePathParam(userId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/users/${core.url.encodePathParam(userId)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -56,7 +45,7 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedVersion.User, rawResponse: _response.rawResponse };
@@ -66,24 +55,21 @@ export class UserClient {
             throw new errors.SeedVersionError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedVersionError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedVersionTimeoutError("Timeout exceeded when calling GET /users/{userId}.");
-            case "unknown":
-                throw new errors.SeedVersionError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedVersionError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedVersionTimeoutError("Timeout exceeded when calling GET /users/{userId}.");
+            case "unknown": throw new errors.SeedVersionError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

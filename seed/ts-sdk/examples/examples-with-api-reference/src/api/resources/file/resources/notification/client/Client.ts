@@ -2,10 +2,13 @@
 
 import type { BaseClientOptions } from "../../../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../../../BaseClient.js";
+import * as environments from "../../../../../../environments.js";
+import * as core from "../../../../../../core/index.js";
 import { ServiceClient } from "../resources/service/client/Client.js";
 
 export declare namespace NotificationClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 }
 
 export class NotificationClient {
@@ -13,6 +16,7 @@ export class NotificationClient {
     protected _service: ServiceClient | undefined;
 
     constructor(options: NotificationClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 

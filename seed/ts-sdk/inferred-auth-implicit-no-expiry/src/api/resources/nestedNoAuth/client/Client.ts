@@ -2,10 +2,12 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
+import * as core from "../../../../core/index.js";
 import { ApiClient } from "../resources/api/client/Client.js";
 
 export declare namespace NestedNoAuthClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 }
 
 export class NestedNoAuthClient {
@@ -13,6 +15,7 @@ export class NestedNoAuthClient {
     protected _api: ApiClient | undefined;
 
     constructor(options: NestedNoAuthClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 

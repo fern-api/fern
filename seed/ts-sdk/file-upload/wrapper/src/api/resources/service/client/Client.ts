@@ -2,22 +2,26 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedFileUpload from "../../../index.js";
 import { toJson } from "../../../../core/json.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedFileUpload from "../../../index.js";
+import * as fs from "fs";
 
 export declare namespace ServiceClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ServiceClient {
     protected readonly _options: ServiceClient.Options;
 
     constructor(options: ServiceClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -25,17 +29,11 @@ export class ServiceClient {
      * @param {SeedFileUpload.MyRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public post(
-        request: SeedFileUpload.MyRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public post(request: SeedFileUpload.MyRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__post(request, requestOptions));
     }
 
-    private async __post(
-        request: SeedFileUpload.MyRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __post(request: SeedFileUpload.MyRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
         if (request.maybe_string != null) {
             _request.append("maybe_string", request.maybe_string);
@@ -96,15 +94,9 @@ export class ServiceClient {
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+            url: await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -115,7 +107,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -125,24 +117,21 @@ export class ServiceClient {
             throw new errors.SeedFileUploadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedFileUploadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /.");
-            case "unknown":
-                throw new errors.SeedFileUploadError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /.");
+            case "unknown": throw new errors.SeedFileUploadError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -156,31 +145,17 @@ export class ServiceClient {
      *         file: fs.createReadStream("/path/to/your/file")
      *     })
      */
-    public justFile(
-        request: SeedFileUpload.JustFileRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public justFile(request: SeedFileUpload.JustFileRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__justFile(request, requestOptions));
     }
 
-    private async __justFile(
-        request: SeedFileUpload.JustFileRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __justFile(request: SeedFileUpload.JustFileRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
         const _maybeEncodedRequest = await _request.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/just-file",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/just-file"),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -191,7 +166,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -201,24 +176,21 @@ export class ServiceClient {
             throw new errors.SeedFileUploadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedFileUploadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /just-file.");
-            case "unknown":
-                throw new errors.SeedFileUploadError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /just-file.");
+            case "unknown": throw new errors.SeedFileUploadError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -226,55 +198,43 @@ export class ServiceClient {
      * @param {SeedFileUpload.JustFileWithQueryParamsRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public justFileWithQueryParams(
-        request: SeedFileUpload.JustFileWithQueryParamsRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public justFileWithQueryParams(request: SeedFileUpload.JustFileWithQueryParamsRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__justFileWithQueryParams(request, requestOptions));
     }
 
-    private async __justFileWithQueryParams(
-        request: SeedFileUpload.JustFileWithQueryParamsRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __justFileWithQueryParams(request: SeedFileUpload.JustFileWithQueryParamsRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (request.maybeString != null) {
-            _queryParams.maybeString = request.maybeString;
+            _queryParams["maybeString"] = request.maybeString;
         }
 
-        _queryParams.integer = request.integer.toString();
+        _queryParams["integer"] = request.integer.toString();
         if (request.maybeInteger != null) {
-            _queryParams.maybeInteger = request.maybeInteger.toString();
+            _queryParams["maybeInteger"] = request.maybeInteger.toString();
         }
 
         if (Array.isArray(request.listOfStrings)) {
-            _queryParams.listOfStrings = request.listOfStrings.map((item) => item);
-        } else {
-            _queryParams.listOfStrings = request.listOfStrings;
+            _queryParams["listOfStrings"] = request.listOfStrings.map(item => item);
+        }
+        else {
+            _queryParams["listOfStrings"] = request.listOfStrings;
         }
 
         if (request.optionalListOfStrings != null) {
             if (Array.isArray(request.optionalListOfStrings)) {
-                _queryParams.optionalListOfStrings = request.optionalListOfStrings.map((item) => item);
-            } else {
-                _queryParams.optionalListOfStrings = request.optionalListOfStrings;
+                _queryParams["optionalListOfStrings"] = request.optionalListOfStrings.map(item => item);
+            }
+            else {
+                _queryParams["optionalListOfStrings"] = request.optionalListOfStrings;
             }
         }
 
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
         const _maybeEncodedRequest = await _request.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/just-file-with-query-params",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/just-file-with-query-params"),
             method: "POST",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -285,7 +245,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -295,26 +255,21 @@ export class ServiceClient {
             throw new errors.SeedFileUploadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedFileUploadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedFileUploadTimeoutError(
-                    "Timeout exceeded when calling POST /just-file-with-query-params.",
-                );
-            case "unknown":
-                throw new errors.SeedFileUploadError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /just-file-with-query-params.");
+            case "unknown": throw new errors.SeedFileUploadError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -322,17 +277,11 @@ export class ServiceClient {
      * @param {SeedFileUpload.WithContentTypeRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public withContentType(
-        request: SeedFileUpload.WithContentTypeRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public withContentType(request: SeedFileUpload.WithContentTypeRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__withContentType(request, requestOptions));
     }
 
-    private async __withContentType(
-        request: SeedFileUpload.WithContentTypeRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __withContentType(request: SeedFileUpload.WithContentTypeRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
         _request.append("foo", request.foo);
@@ -342,17 +291,9 @@ export class ServiceClient {
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/with-content-type",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/with-content-type"),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -363,7 +304,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -373,24 +314,21 @@ export class ServiceClient {
             throw new errors.SeedFileUploadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedFileUploadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /with-content-type.");
-            case "unknown":
-                throw new errors.SeedFileUploadError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /with-content-type.");
+            case "unknown": throw new errors.SeedFileUploadError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -398,39 +336,25 @@ export class ServiceClient {
      * @param {SeedFileUpload.WithFormEncodingRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public withFormEncoding(
-        request: SeedFileUpload.WithFormEncodingRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public withFormEncoding(request: SeedFileUpload.WithFormEncodingRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__withFormEncoding(request, requestOptions));
     }
 
-    private async __withFormEncoding(
-        request: SeedFileUpload.WithFormEncodingRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __withFormEncoding(request: SeedFileUpload.WithFormEncodingRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
-        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ foo: request.foo }))) {
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "foo": request.foo }))) {
             _request.append(key, value);
         }
 
-        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ bar: request.bar }))) {
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "bar": request.bar }))) {
             _request.append(key, value);
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/with-form-encoding",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/with-form-encoding"),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -441,7 +365,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -451,24 +375,21 @@ export class ServiceClient {
             throw new errors.SeedFileUploadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedFileUploadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /with-form-encoding.");
-            case "unknown":
-                throw new errors.SeedFileUploadError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /with-form-encoding.");
+            case "unknown": throw new errors.SeedFileUploadError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -476,27 +397,19 @@ export class ServiceClient {
      * @param {SeedFileUpload.MyOtherRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public withFormEncodedContainers(
-        request: SeedFileUpload.MyOtherRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public withFormEncodedContainers(request: SeedFileUpload.MyOtherRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__withFormEncodedContainers(request, requestOptions));
     }
 
-    private async __withFormEncodedContainers(
-        request: SeedFileUpload.MyOtherRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
+    private async __withFormEncodedContainers(request: SeedFileUpload.MyOtherRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();
         if (request.maybe_string != null) {
-            for (const [key, value] of Object.entries(
-                core.encodeAsFormParameter({ maybe_string: request.maybe_string }),
-            )) {
+            for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "maybe_string": request.maybe_string }))) {
                 _request.append(key, value);
             }
         }
 
-        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ integer: request.integer }))) {
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "integer": request.integer }))) {
             _request.append(key, value);
         }
 
@@ -516,83 +429,59 @@ export class ServiceClient {
         }
 
         if (request.maybe_integer != null) {
-            for (const [key, value] of Object.entries(
-                core.encodeAsFormParameter({ maybe_integer: request.maybe_integer }),
-            )) {
+            for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "maybe_integer": request.maybe_integer }))) {
                 _request.append(key, value);
             }
         }
 
         if (request.optional_list_of_strings != null) {
-            for (const [key, value] of Object.entries(
-                core.encodeAsFormParameter({ optional_list_of_strings: request.optional_list_of_strings }),
-            )) {
+            for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "optional_list_of_strings": request.optional_list_of_strings }))) {
                 _request.append(key, value);
             }
         }
 
-        for (const [key, value] of Object.entries(
-            core.encodeAsFormParameter({ list_of_objects: request.list_of_objects }),
-        )) {
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "list_of_objects": request.list_of_objects }))) {
             _request.append(key, value);
         }
 
         if (request.optional_metadata != null) {
-            for (const [key, value] of Object.entries(
-                core.encodeAsFormParameter({ optional_metadata: request.optional_metadata }),
-            )) {
+            for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "optional_metadata": request.optional_metadata }))) {
                 _request.append(key, value);
             }
         }
 
         if (request.optional_object_type != null) {
-            for (const [key, value] of Object.entries(
-                core.encodeAsFormParameter({ optional_object_type: request.optional_object_type }),
-            )) {
+            for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "optional_object_type": request.optional_object_type }))) {
                 _request.append(key, value);
             }
         }
 
         if (request.optional_id != null) {
-            for (const [key, value] of Object.entries(
-                core.encodeAsFormParameter({ optional_id: request.optional_id }),
-            )) {
+            for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "optional_id": request.optional_id }))) {
                 _request.append(key, value);
             }
         }
 
-        for (const [key, value] of Object.entries(
-            core.encodeAsFormParameter({ list_of_objects_with_optionals: request.list_of_objects_with_optionals }),
-        )) {
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "list_of_objects_with_optionals": request.list_of_objects_with_optionals }))) {
             _request.append(key, value);
         }
 
-        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ alias_object: request.alias_object }))) {
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "alias_object": request.alias_object }))) {
             _request.append(key, value);
         }
 
-        for (const [key, value] of Object.entries(
-            core.encodeAsFormParameter({ list_of_alias_object: request.list_of_alias_object }),
-        )) {
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "list_of_alias_object": request.list_of_alias_object }))) {
             _request.append(key, value);
         }
 
-        for (const [key, value] of Object.entries(
-            core.encodeAsFormParameter({ alias_list_of_object: request.alias_list_of_object }),
-        )) {
+        for (const [key, value] of Object.entries(core.encodeAsFormParameter({ "alias_list_of_object": request.alias_list_of_object }))) {
             _request.append(key, value);
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+            url: await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -603,7 +492,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -613,24 +502,21 @@ export class ServiceClient {
             throw new errors.SeedFileUploadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedFileUploadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /.");
-            case "unknown":
-                throw new errors.SeedFileUploadError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /.");
+            case "unknown": throw new errors.SeedFileUploadError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -642,17 +528,11 @@ export class ServiceClient {
      *     import { createReadStream } from "fs";
      *     await client.service.optionalArgs({})
      */
-    public optionalArgs(
-        request: SeedFileUpload.OptionalArgsRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<string> {
+    public optionalArgs(request: SeedFileUpload.OptionalArgsRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__optionalArgs(request, requestOptions));
     }
 
-    private async __optionalArgs(
-        request: SeedFileUpload.OptionalArgsRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
+    private async __optionalArgs(request: SeedFileUpload.OptionalArgsRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _request = await core.newFormData();
         if (request.image_file != null) {
             await _request.appendFile("image_file", request.image_file);
@@ -663,17 +543,9 @@ export class ServiceClient {
         }
 
         const _maybeEncodedRequest = await _request.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/optional-args",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/optional-args"),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -684,7 +556,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -694,24 +566,21 @@ export class ServiceClient {
             throw new errors.SeedFileUploadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedFileUploadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /optional-args.");
-            case "unknown":
-                throw new errors.SeedFileUploadError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /optional-args.");
+            case "unknown": throw new errors.SeedFileUploadError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -719,32 +588,18 @@ export class ServiceClient {
      * @param {SeedFileUpload.InlineTypeRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      */
-    public withInlineType(
-        request: SeedFileUpload.InlineTypeRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<string> {
+    public withInlineType(request: SeedFileUpload.InlineTypeRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__withInlineType(request, requestOptions));
     }
 
-    private async __withInlineType(
-        request: SeedFileUpload.InlineTypeRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
+    private async __withInlineType(request: SeedFileUpload.InlineTypeRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<string>> {
         const _request = await core.newFormData();
         await _request.appendFile("file", request.file);
         _request.append("request", toJson(request.request));
         const _maybeEncodedRequest = await _request.getRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ..._maybeEncodedRequest.headers }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...(_maybeEncodedRequest.headers) }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/inline-type",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/inline-type"),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -755,7 +610,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as string, rawResponse: _response.rawResponse };
@@ -765,24 +620,21 @@ export class ServiceClient {
             throw new errors.SeedFileUploadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedFileUploadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /inline-type.");
-            case "unknown":
-                throw new errors.SeedFileUploadError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /inline-type.");
+            case "unknown": throw new errors.SeedFileUploadError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -797,13 +649,9 @@ export class ServiceClient {
     }
 
     private async __simple(requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/snippet",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/snippet"),
             method: "POST",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -811,7 +659,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -821,24 +669,21 @@ export class ServiceClient {
             throw new errors.SeedFileUploadError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedFileUploadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /snippet.");
-            case "unknown":
-                throw new errors.SeedFileUploadError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedFileUploadTimeoutError("Timeout exceeded when calling POST /snippet.");
+            case "unknown": throw new errors.SeedFileUploadError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

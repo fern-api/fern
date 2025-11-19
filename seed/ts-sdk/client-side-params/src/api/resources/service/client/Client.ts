@@ -2,22 +2,25 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { toJson } from "../../../../core/json.js";
+import * as SeedClientSideParams from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedClientSideParams from "../../../index.js";
+import { toJson } from "../../../../core/json.js";
 
 export declare namespace ServiceClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ServiceClient {
     protected readonly _options: ServiceClient.Options;
 
     constructor(options: ServiceClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -38,43 +41,29 @@ export class ServiceClient {
      *         search: "search"
      *     })
      */
-    public listResources(
-        request: SeedClientSideParams.ListResourcesRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.Resource[]> {
+    public listResources(request: SeedClientSideParams.ListResourcesRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedClientSideParams.Resource[]> {
         return core.HttpResponsePromise.fromPromise(this.__listResources(request, requestOptions));
     }
 
-    private async __listResources(
-        request: SeedClientSideParams.ListResourcesRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Resource[]>> {
-        const { page, per_page: perPage, sort, order, include_totals: includeTotals, fields, search } = request;
+    private async __listResources(request: SeedClientSideParams.ListResourcesRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedClientSideParams.Resource[]>> {
+        const { page, "per_page": perPage, sort, order, "include_totals": includeTotals, fields, search } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.page = page.toString();
-        _queryParams.per_page = perPage.toString();
-        _queryParams.sort = sort;
-        _queryParams.order = order;
-        _queryParams.include_totals = includeTotals.toString();
+        _queryParams["page"] = page.toString();
+        _queryParams["per_page"] = perPage.toString();
+        _queryParams["sort"] = sort;
+        _queryParams["order"] = order;
+        _queryParams["include_totals"] = includeTotals.toString();
         if (fields != null) {
-            _queryParams.fields = fields;
+            _queryParams["fields"] = fields;
         }
 
         if (search != null) {
-            _queryParams.search = search;
+            _queryParams["search"] = search;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/api/resources",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/api/resources"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -82,7 +71,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedClientSideParams.Resource[], rawResponse: _response.rawResponse };
@@ -92,24 +81,21 @@ export class ServiceClient {
             throw new errors.SeedClientSideParamsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/resources.");
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedClientSideParamsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/resources.");
+            case "unknown": throw new errors.SeedClientSideParamsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -126,34 +112,18 @@ export class ServiceClient {
      *         format: "json"
      *     })
      */
-    public getResource(
-        resourceId: string,
-        request: SeedClientSideParams.GetResourceRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.Resource> {
+    public getResource(resourceId: string, request: SeedClientSideParams.GetResourceRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedClientSideParams.Resource> {
         return core.HttpResponsePromise.fromPromise(this.__getResource(resourceId, request, requestOptions));
     }
 
-    private async __getResource(
-        resourceId: string,
-        request: SeedClientSideParams.GetResourceRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Resource>> {
-        const { include_metadata: includeMetadata, format } = request;
+    private async __getResource(resourceId: string, request: SeedClientSideParams.GetResourceRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedClientSideParams.Resource>> {
+        const { "include_metadata": includeMetadata, format } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.include_metadata = includeMetadata.toString();
-        _queryParams.format = format;
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        _queryParams["include_metadata"] = includeMetadata.toString();
+        _queryParams["format"] = format;
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/api/resources/${core.url.encodePathParam(resourceId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/api/resources/${core.url.encodePathParam(resourceId)}`),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -161,7 +131,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedClientSideParams.Resource, rawResponse: _response.rawResponse };
@@ -171,26 +141,21 @@ export class ServiceClient {
             throw new errors.SeedClientSideParamsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling GET /api/resources/{resourceId}.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedClientSideParamsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/resources/{resourceId}.");
+            case "unknown": throw new errors.SeedClientSideParamsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -212,32 +177,18 @@ export class ServiceClient {
      *         }
      *     })
      */
-    public searchResources(
-        request: SeedClientSideParams.SearchResourcesRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.SearchResponse> {
+    public searchResources(request: SeedClientSideParams.SearchResourcesRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedClientSideParams.SearchResponse> {
         return core.HttpResponsePromise.fromPromise(this.__searchResources(request, requestOptions));
     }
 
-    private async __searchResources(
-        request: SeedClientSideParams.SearchResourcesRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.SearchResponse>> {
+    private async __searchResources(request: SeedClientSideParams.SearchResourcesRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedClientSideParams.SearchResponse>> {
         const { limit, offset, ..._body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.limit = limit.toString();
-        _queryParams.offset = offset.toString();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        _queryParams["limit"] = limit.toString();
+        _queryParams["offset"] = offset.toString();
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/api/resources/search",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/api/resources/search"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -248,7 +199,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedClientSideParams.SearchResponse, rawResponse: _response.rawResponse };
@@ -258,26 +209,21 @@ export class ServiceClient {
             throw new errors.SeedClientSideParamsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling POST /api/resources/search.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedClientSideParamsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling POST /api/resources/search.");
+            case "unknown": throw new errors.SeedClientSideParamsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -299,71 +245,48 @@ export class ServiceClient {
      *         fields: "fields"
      *     })
      */
-    public listUsers(
-        request: SeedClientSideParams.ListUsersRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.PaginatedUserResponse> {
+    public listUsers(request: SeedClientSideParams.ListUsersRequest = {}, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedClientSideParams.PaginatedUserResponse> {
         return core.HttpResponsePromise.fromPromise(this.__listUsers(request, requestOptions));
     }
 
-    private async __listUsers(
-        request: SeedClientSideParams.ListUsersRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.PaginatedUserResponse>> {
-        const {
-            page,
-            per_page: perPage,
-            include_totals: includeTotals,
-            sort,
-            connection,
-            q,
-            search_engine: searchEngine,
-            fields,
-        } = request;
+    private async __listUsers(request: SeedClientSideParams.ListUsersRequest = {}, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedClientSideParams.PaginatedUserResponse>> {
+        const { page, "per_page": perPage, "include_totals": includeTotals, sort, connection, q, "search_engine": searchEngine, fields } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (page != null) {
-            _queryParams.page = page.toString();
+            _queryParams["page"] = page.toString();
         }
 
         if (perPage != null) {
-            _queryParams.per_page = perPage.toString();
+            _queryParams["per_page"] = perPage.toString();
         }
 
         if (includeTotals != null) {
-            _queryParams.include_totals = includeTotals.toString();
+            _queryParams["include_totals"] = includeTotals.toString();
         }
 
         if (sort != null) {
-            _queryParams.sort = sort;
+            _queryParams["sort"] = sort;
         }
 
         if (connection != null) {
-            _queryParams.connection = connection;
+            _queryParams["connection"] = connection;
         }
 
         if (q != null) {
-            _queryParams.q = q;
+            _queryParams["q"] = q;
         }
 
         if (searchEngine != null) {
-            _queryParams.search_engine = searchEngine;
+            _queryParams["search_engine"] = searchEngine;
         }
 
         if (fields != null) {
-            _queryParams.fields = fields;
+            _queryParams["fields"] = fields;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/api/users",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/api/users"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -371,37 +294,31 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedClientSideParams.PaginatedUserResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedClientSideParams.PaginatedUserResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedClientSideParamsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/users.");
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedClientSideParamsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/users.");
+            case "unknown": throw new errors.SeedClientSideParamsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -418,40 +335,24 @@ export class ServiceClient {
      *         include_fields: true
      *     })
      */
-    public getUserById(
-        userId: string,
-        request: SeedClientSideParams.GetUserRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.User> {
+    public getUserById(userId: string, request: SeedClientSideParams.GetUserRequest = {}, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedClientSideParams.User> {
         return core.HttpResponsePromise.fromPromise(this.__getUserById(userId, request, requestOptions));
     }
 
-    private async __getUserById(
-        userId: string,
-        request: SeedClientSideParams.GetUserRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
-        const { fields, include_fields: includeFields } = request;
+    private async __getUserById(userId: string, request: SeedClientSideParams.GetUserRequest = {}, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
+        const { fields, "include_fields": includeFields } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (fields != null) {
-            _queryParams.fields = fields;
+            _queryParams["fields"] = fields;
         }
 
         if (includeFields != null) {
-            _queryParams.include_fields = includeFields.toString();
+            _queryParams["include_fields"] = includeFields.toString();
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/api/users/${core.url.encodePathParam(userId)}`),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -459,7 +360,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedClientSideParams.User, rawResponse: _response.rawResponse };
@@ -469,26 +370,21 @@ export class ServiceClient {
             throw new errors.SeedClientSideParamsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling GET /api/users/{userId}.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedClientSideParamsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/users/{userId}.");
+            case "unknown": throw new errors.SeedClientSideParamsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -519,28 +415,14 @@ export class ServiceClient {
      *         connection: "connection"
      *     })
      */
-    public createUser(
-        request: SeedClientSideParams.CreateUserRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.User> {
+    public createUser(request: SeedClientSideParams.CreateUserRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedClientSideParams.User> {
         return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
-    private async __createUser(
-        request: SeedClientSideParams.CreateUserRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __createUser(request: SeedClientSideParams.CreateUserRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/api/users",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/api/users"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -551,7 +433,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedClientSideParams.User, rawResponse: _response.rawResponse };
@@ -561,24 +443,21 @@ export class ServiceClient {
             throw new errors.SeedClientSideParamsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling POST /api/users.");
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedClientSideParamsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling POST /api/users.");
+            case "unknown": throw new errors.SeedClientSideParamsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -610,30 +489,14 @@ export class ServiceClient {
      *         blocked: true
      *     })
      */
-    public updateUser(
-        userId: string,
-        request: SeedClientSideParams.UpdateUserRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.User> {
+    public updateUser(userId: string, request: SeedClientSideParams.UpdateUserRequest, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedClientSideParams.User> {
         return core.HttpResponsePromise.fromPromise(this.__updateUser(userId, request, requestOptions));
     }
 
-    private async __updateUser(
-        userId: string,
-        request: SeedClientSideParams.UpdateUserRequest,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __updateUser(userId: string, request: SeedClientSideParams.UpdateUserRequest, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/api/users/${core.url.encodePathParam(userId)}`),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
@@ -644,7 +507,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedClientSideParams.User, rawResponse: _response.rawResponse };
@@ -654,26 +517,21 @@ export class ServiceClient {
             throw new errors.SeedClientSideParamsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling PATCH /api/users/{userId}.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedClientSideParamsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling PATCH /api/users/{userId}.");
+            case "unknown": throw new errors.SeedClientSideParamsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -690,21 +548,10 @@ export class ServiceClient {
         return core.HttpResponsePromise.fromPromise(this.__deleteUser(userId, requestOptions));
     }
 
-    private async __deleteUser(
-        userId: string,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+    private async __deleteUser(userId: string, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/api/users/${core.url.encodePathParam(userId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/api/users/${core.url.encodePathParam(userId)}`),
             method: "DELETE",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -712,7 +559,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -722,26 +569,21 @@ export class ServiceClient {
             throw new errors.SeedClientSideParamsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling DELETE /api/users/{userId}.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedClientSideParamsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling DELETE /api/users/{userId}.");
+            case "unknown": throw new errors.SeedClientSideParamsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -758,42 +600,28 @@ export class ServiceClient {
      *         fields: "fields"
      *     })
      */
-    public listConnections(
-        request: SeedClientSideParams.ListConnectionsRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.Connection[]> {
+    public listConnections(request: SeedClientSideParams.ListConnectionsRequest = {}, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedClientSideParams.Connection[]> {
         return core.HttpResponsePromise.fromPromise(this.__listConnections(request, requestOptions));
     }
 
-    private async __listConnections(
-        request: SeedClientSideParams.ListConnectionsRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Connection[]>> {
+    private async __listConnections(request: SeedClientSideParams.ListConnectionsRequest = {}, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedClientSideParams.Connection[]>> {
         const { strategy, name, fields } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (strategy != null) {
-            _queryParams.strategy = strategy;
+            _queryParams["strategy"] = strategy;
         }
 
         if (name != null) {
-            _queryParams.name = name;
+            _queryParams["name"] = name;
         }
 
         if (fields != null) {
-            _queryParams.fields = fields;
+            _queryParams["fields"] = fields;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/api/connections",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/api/connections"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -801,7 +629,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedClientSideParams.Connection[], rawResponse: _response.rawResponse };
@@ -811,26 +639,21 @@ export class ServiceClient {
             throw new errors.SeedClientSideParamsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling GET /api/connections.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedClientSideParamsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/connections.");
+            case "unknown": throw new errors.SeedClientSideParamsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -846,36 +669,20 @@ export class ServiceClient {
      *         fields: "fields"
      *     })
      */
-    public getConnection(
-        connectionId: string,
-        request: SeedClientSideParams.GetConnectionRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.Connection> {
+    public getConnection(connectionId: string, request: SeedClientSideParams.GetConnectionRequest = {}, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedClientSideParams.Connection> {
         return core.HttpResponsePromise.fromPromise(this.__getConnection(connectionId, request, requestOptions));
     }
 
-    private async __getConnection(
-        connectionId: string,
-        request: SeedClientSideParams.GetConnectionRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Connection>> {
+    private async __getConnection(connectionId: string, request: SeedClientSideParams.GetConnectionRequest = {}, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedClientSideParams.Connection>> {
         const { fields } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (fields != null) {
-            _queryParams.fields = fields;
+            _queryParams["fields"] = fields;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/api/connections/${core.url.encodePathParam(connectionId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/api/connections/${core.url.encodePathParam(connectionId)}`),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -883,7 +690,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedClientSideParams.Connection, rawResponse: _response.rawResponse };
@@ -893,26 +700,21 @@ export class ServiceClient {
             throw new errors.SeedClientSideParamsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling GET /api/connections/{connectionId}.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedClientSideParamsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/connections/{connectionId}.");
+            case "unknown": throw new errors.SeedClientSideParamsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -934,71 +736,48 @@ export class ServiceClient {
      *         app_type: ["app_type", "app_type"]
      *     })
      */
-    public listClients(
-        request: SeedClientSideParams.ListClientsRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.PaginatedClientResponse> {
+    public listClients(request: SeedClientSideParams.ListClientsRequest = {}, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedClientSideParams.PaginatedClientResponse> {
         return core.HttpResponsePromise.fromPromise(this.__listClients(request, requestOptions));
     }
 
-    private async __listClients(
-        request: SeedClientSideParams.ListClientsRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.PaginatedClientResponse>> {
-        const {
-            fields,
-            include_fields: includeFields,
-            page,
-            per_page: perPage,
-            include_totals: includeTotals,
-            is_global: isGlobal,
-            is_first_party: isFirstParty,
-            app_type: appType,
-        } = request;
+    private async __listClients(request: SeedClientSideParams.ListClientsRequest = {}, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedClientSideParams.PaginatedClientResponse>> {
+        const { fields, "include_fields": includeFields, page, "per_page": perPage, "include_totals": includeTotals, "is_global": isGlobal, "is_first_party": isFirstParty, "app_type": appType } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (fields != null) {
-            _queryParams.fields = fields;
+            _queryParams["fields"] = fields;
         }
 
         if (includeFields != null) {
-            _queryParams.include_fields = includeFields.toString();
+            _queryParams["include_fields"] = includeFields.toString();
         }
 
         if (page != null) {
-            _queryParams.page = page.toString();
+            _queryParams["page"] = page.toString();
         }
 
         if (perPage != null) {
-            _queryParams.per_page = perPage.toString();
+            _queryParams["per_page"] = perPage.toString();
         }
 
         if (includeTotals != null) {
-            _queryParams.include_totals = includeTotals.toString();
+            _queryParams["include_totals"] = includeTotals.toString();
         }
 
         if (isGlobal != null) {
-            _queryParams.is_global = isGlobal.toString();
+            _queryParams["is_global"] = isGlobal.toString();
         }
 
         if (isFirstParty != null) {
-            _queryParams.is_first_party = isFirstParty.toString();
+            _queryParams["is_first_party"] = isFirstParty.toString();
         }
 
         if (appType != null) {
-            _queryParams.app_type = toJson(appType);
+            _queryParams["app_type"] = toJson(appType);
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/api/clients",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/api/clients"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -1006,37 +785,31 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedClientSideParams.PaginatedClientResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as SeedClientSideParams.PaginatedClientResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedClientSideParamsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/clients.");
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedClientSideParamsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/clients.");
+            case "unknown": throw new errors.SeedClientSideParamsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -1053,40 +826,24 @@ export class ServiceClient {
      *         include_fields: true
      *     })
      */
-    public getClient(
-        clientId: string,
-        request: SeedClientSideParams.GetClientRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.Client> {
+    public getClient(clientId: string, request: SeedClientSideParams.GetClientRequest = {}, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<SeedClientSideParams.Client> {
         return core.HttpResponsePromise.fromPromise(this.__getClient(clientId, request, requestOptions));
     }
 
-    private async __getClient(
-        clientId: string,
-        request: SeedClientSideParams.GetClientRequest = {},
-        requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Client>> {
-        const { fields, include_fields: includeFields } = request;
+    private async __getClient(clientId: string, request: SeedClientSideParams.GetClientRequest = {}, requestOptions?: ServiceClient.RequestOptions): Promise<core.WithRawResponse<SeedClientSideParams.Client>> {
+        const { fields, "include_fields": includeFields } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (fields != null) {
-            _queryParams.fields = fields;
+            _queryParams["fields"] = fields;
         }
 
         if (includeFields != null) {
-            _queryParams.include_fields = includeFields.toString();
+            _queryParams["include_fields"] = includeFields.toString();
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/api/clients/${core.url.encodePathParam(clientId)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/api/clients/${core.url.encodePathParam(clientId)}`),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -1094,7 +851,7 @@ export class ServiceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedClientSideParams.Client, rawResponse: _response.rawResponse };
@@ -1104,26 +861,21 @@ export class ServiceClient {
             throw new errors.SeedClientSideParamsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling GET /api/clients/{clientId}.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedClientSideParamsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/clients/{clientId}.");
+            case "unknown": throw new errors.SeedClientSideParamsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

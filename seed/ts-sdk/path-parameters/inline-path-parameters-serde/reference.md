@@ -1,5 +1,5 @@
 # Reference
-## Organizations
+## organizations
 <details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">getOrganization</a>(organization_id) -> SeedPathParameters.Organization</code></summary>
 <dl>
 <dd>
@@ -160,7 +160,7 @@ await client.organizations.searchOrganizations("organization_id", {
 </dl>
 </details>
 
-## User
+## user
 <details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">getUser</a>({ ...params }) -> SeedPathParameters.User</code></summary>
 <dl>
 <dd>
@@ -492,7 +492,7 @@ await client.user.getUserSpecifics({
 <dl>
 <dd>
 
-**requestOptions:** `User.RequestOptions` 
+**requestOptions:** `UserClient.RequestOptions` 
     
 </dd>
 </dl>

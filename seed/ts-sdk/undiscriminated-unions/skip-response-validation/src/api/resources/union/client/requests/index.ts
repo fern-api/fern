@@ -1,1 +1,1 @@
-export type { PaymentRequest } from "./PaymentRequest.js";
+export { type PaymentRequest } from "./PaymentRequest.js";

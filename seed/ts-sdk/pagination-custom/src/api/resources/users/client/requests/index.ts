@@ -1,1 +1,1 @@
-export type { ListUsernamesRequestCustom } from "./ListUsernamesRequestCustom.js";
+export { type ListUsernamesRequestCustom } from "./ListUsernamesRequestCustom.js";

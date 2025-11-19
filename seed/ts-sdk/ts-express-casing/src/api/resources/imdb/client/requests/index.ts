@@ -1,1 +1,1 @@
-export type { CreateMovieRequest } from "./CreateMovieRequest.js";
+export { type CreateMovieRequest } from "./CreateMovieRequest.js";

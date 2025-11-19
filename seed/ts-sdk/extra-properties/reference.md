@@ -1,5 +1,5 @@
 # Reference
-## User
+## user
 <details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">createUser</a>({ ...params }) -> SeedExtraProperties.User</code></summary>
 <dl>
 <dd>

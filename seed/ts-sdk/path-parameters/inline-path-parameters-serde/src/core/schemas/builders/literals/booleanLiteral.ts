@@ -9,7 +9,7 @@ export function booleanLiteral<V extends boolean>(literal: V): Schema<V, V> {
             if (value === literal) {
                 return {
                     ok: true,
-                    value: literal,
+                    value: literal
                 };
             } else {
                 return {
@@ -17,12 +17,12 @@ export function booleanLiteral<V extends boolean>(literal: V): Schema<V, V> {
                     errors: [
                         {
                             path: breadcrumbsPrefix,
-                            message: getErrorMessageForIncorrectType(value, `${literal.toString()}`),
-                        },
-                    ],
+                            message: getErrorMessageForIncorrectType(value, `${literal.toString()}`)
+                        }
+                    ]
                 };
             }
-        },
+        }
     );
 
     return schemaCreator();

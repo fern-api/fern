@@ -1,3 +1,4 @@
+
 import { expect } from "vitest";
 
 interface CustomMatchers<R = unknown> {
@@ -52,37 +53,27 @@ expect.extend({
 
         if (pass) {
             return {
-                message: () =>
-                    `expected ${actualType} not to contain ${this.utils.printExpected(expectedHeaders)}`,
+                message: () => "expected " + actualType + " not to contain " + this.utils.printExpected(expectedHeaders),
                 pass: true,
             };
         } else {
             const messages: string[] = [];
 
             if (missingHeaders.length > 0) {
-                messages.push(`Missing headers: ${this.utils.printExpected(missingHeaders.join(", "))}`);
+                messages.push("Missing headers: " + this.utils.printExpected(missingHeaders.join(", ")));
             }
 
             if (mismatchedHeaders.length > 0) {
                 const mismatches = mismatchedHeaders.map(
                     ({ key, expected, actual }) =>
-                        key +
-                        ": expected " +
-                        this.utils.printExpected(expected) +
-                        " but got " +
-                        this.utils.printReceived(actual),
+                        key + ": expected " + this.utils.printExpected(expected) + " but got " + this.utils.printReceived(actual),
                 );
                 messages.push(mismatches.join("\n"));
             }
 
             return {
                 message: () =>
-                    "expected " +
-                    actualType +
-                    " to contain " +
-                    this.utils.printExpected(expectedHeaders) +
-                    "\n\n" +
-                    messages.join("\n"),
+                    "expected " + actualType + " to contain " + this.utils.printExpected(expectedHeaders) + "\n\n" + messages.join("\n"),
                 pass: false,
             };
         }

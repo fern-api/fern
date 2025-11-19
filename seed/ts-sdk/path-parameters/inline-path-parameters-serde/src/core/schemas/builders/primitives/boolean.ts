@@ -8,7 +8,7 @@ export const boolean: () => Schema<boolean, boolean> = createIdentitySchemaCreat
         if (typeof value === "boolean") {
             return {
                 ok: true,
-                value,
+                value
             };
         } else {
             return {
@@ -16,10 +16,10 @@ export const boolean: () => Schema<boolean, boolean> = createIdentitySchemaCreat
                 errors: [
                     {
                         path: breadcrumbsPrefix,
-                        message: getErrorMessageForIncorrectType(value, "boolean"),
-                    },
-                ],
+                        message: getErrorMessageForIncorrectType(value, "boolean")
+                    }
+                ]
             };
         }
-    },
+    }
 );

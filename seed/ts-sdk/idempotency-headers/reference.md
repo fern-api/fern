@@ -1,5 +1,5 @@
 # Reference
-## Payment
+## payment
 <details><summary><code>client.payment.<a href="/src/api/resources/payment/client/Client.ts">create</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>

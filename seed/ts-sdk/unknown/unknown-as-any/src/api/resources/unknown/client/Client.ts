@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedUnknownAsAny from "../../../index.js";
+import * as SeedUnknownAsAny from "../../../index.js";
 
 export declare namespace UnknownClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class UnknownClient {
     protected readonly _options: UnknownClient.Options;
 
     constructor(options: UnknownClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -33,15 +36,10 @@ export class UnknownClient {
         return core.HttpResponsePromise.fromPromise(this.__post(request, requestOptions));
     }
 
-    private async __post(
-        request?: any,
-        requestOptions?: UnknownClient.RequestOptions,
-    ): Promise<core.WithRawResponse<any[]>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __post(request?: any, requestOptions?: UnknownClient.RequestOptions): Promise<core.WithRawResponse<any[]>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+            url: await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -52,7 +50,7 @@ export class UnknownClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as any[], rawResponse: _response.rawResponse };
@@ -62,24 +60,21 @@ export class UnknownClient {
             throw new errors.SeedUnknownAsAnyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUnknownAsAnyError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUnknownAsAnyTimeoutError("Timeout exceeded when calling POST /.");
-            case "unknown":
-                throw new errors.SeedUnknownAsAnyError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedUnknownAsAnyError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedUnknownAsAnyTimeoutError("Timeout exceeded when calling POST /.");
+            case "unknown": throw new errors.SeedUnknownAsAnyError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -94,24 +89,14 @@ export class UnknownClient {
      *         }
      *     })
      */
-    public postObject(
-        request: SeedUnknownAsAny.MyObject,
-        requestOptions?: UnknownClient.RequestOptions,
-    ): core.HttpResponsePromise<any[]> {
+    public postObject(request: SeedUnknownAsAny.MyObject, requestOptions?: UnknownClient.RequestOptions): core.HttpResponsePromise<any[]> {
         return core.HttpResponsePromise.fromPromise(this.__postObject(request, requestOptions));
     }
 
-    private async __postObject(
-        request: SeedUnknownAsAny.MyObject,
-        requestOptions?: UnknownClient.RequestOptions,
-    ): Promise<core.WithRawResponse<any[]>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __postObject(request: SeedUnknownAsAny.MyObject, requestOptions?: UnknownClient.RequestOptions): Promise<core.WithRawResponse<any[]>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/with-object",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/with-object"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -122,7 +107,7 @@ export class UnknownClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as any[], rawResponse: _response.rawResponse };
@@ -132,24 +117,21 @@ export class UnknownClient {
             throw new errors.SeedUnknownAsAnyError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUnknownAsAnyError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUnknownAsAnyTimeoutError("Timeout exceeded when calling POST /with-object.");
-            case "unknown":
-                throw new errors.SeedUnknownAsAnyError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedUnknownAsAnyError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedUnknownAsAnyTimeoutError("Timeout exceeded when calling POST /with-object.");
+            case "unknown": throw new errors.SeedUnknownAsAnyError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

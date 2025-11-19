@@ -1,1 +1,1 @@
-export type { UploadFileRequest } from "./UploadFileRequest.js";
+export { type UploadFileRequest } from "./UploadFileRequest.js";

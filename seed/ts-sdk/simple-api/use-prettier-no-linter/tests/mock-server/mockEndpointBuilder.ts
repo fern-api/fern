@@ -140,7 +140,7 @@ class RequestBuilder implements MethodStage, RequestHeadersStage, RequestBodySta
     formUrlEncodedBody(body: unknown): ResponseStage {
         if (body === undefined) {
             throw new Error(
-                "Undefined is not valid for form-urlencoded. Do not call formUrlEncodedBody if you want an empty body.",
+                "Undefined is not valid for form-urlencoded. Do not call formUrlEncodedBody if you want an empty body."
             );
         }
         this.predicates.push((resolver) => withFormUrlEncoded(body, resolver));
@@ -170,7 +170,7 @@ class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, Respo
         method: HttpMethod,
         url: string,
         requestPredicates: ((resolver: HttpResponseResolver) => HttpResponseResolver)[],
-        options?: HttpHandlerBuilderOptions,
+        options?: HttpHandlerBuilderOptions
     ) {
         this.method = method;
         this.url = url;
@@ -205,7 +205,7 @@ class ResponseBuilder implements ResponseStatusStage, ResponseHeaderStage, Respo
         const responseResolver: HttpResponseResolver = () => {
             const response = new HttpResponse(this.responseBody, {
                 status: this.responseStatusCode,
-                headers: this.responseHeaders,
+                headers: this.responseHeaders
             });
             // if no Content-Type header is set, delete the default text content type that is set
             if (Object.keys(this.responseHeaders).some((key) => key.toLowerCase() === "content-type") === false) {

@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedEnum from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedEnum from "../../../index.js";
 
 export declare namespace InlinedRequestClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class InlinedRequestClient {
     protected readonly _options: InlinedRequestClient.Options;
 
     constructor(options: InlinedRequestClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -30,24 +33,14 @@ export class InlinedRequestClient {
      *         operandOrColor: "red"
      *     })
      */
-    public send(
-        request: SeedEnum.SendEnumInlinedRequest,
-        requestOptions?: InlinedRequestClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
+    public send(request: SeedEnum.SendEnumInlinedRequest, requestOptions?: InlinedRequestClient.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
-    private async __send(
-        request: SeedEnum.SendEnumInlinedRequest,
-        requestOptions?: InlinedRequestClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __send(request: SeedEnum.SendEnumInlinedRequest, requestOptions?: InlinedRequestClient.RequestOptions): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "inlined",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "inlined"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -58,7 +51,7 @@ export class InlinedRequestClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: undefined, rawResponse: _response.rawResponse };
@@ -68,24 +61,21 @@ export class InlinedRequestClient {
             throw new errors.SeedEnumError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedEnumError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /inlined.");
-            case "unknown":
-                throw new errors.SeedEnumError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedEnumError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedEnumTimeoutError("Timeout exceeded when calling POST /inlined.");
+            case "unknown": throw new errors.SeedEnumError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

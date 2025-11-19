@@ -1,5 +1,5 @@
 # Reference
-## Dummy
+## dummy
 <details><summary><code>client.dummy.<a href="/src/api/resources/dummy/client/Client.ts">generate</a>({ ...params }) -> core.Stream<SeedStreaming.StreamResponse></code></summary>
 <dl>
 <dd>

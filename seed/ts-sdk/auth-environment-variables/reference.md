@@ -1,5 +1,5 @@
 # Reference
-## Service
+## service
 <details><summary><code>client.service.<a href="/src/api/resources/service/client/Client.ts">getWithApiKey</a>() -> string</code></summary>
 <dl>
 <dd>

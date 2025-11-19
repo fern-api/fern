@@ -1,12 +1,12 @@
 /* eslint-disable vi/no-export */
-import type { Schema, SchemaOptions, ValidationError } from "../../../../src/core/schemas/Schema";
+import { Schema, SchemaOptions, ValidationError } from "../../../../src/core/schemas/Schema";
 
 export function itValidate<Raw, Parsed>(
     title: string,
     schema: Schema<Raw, Parsed>,
     input: unknown,
     errors: ValidationError[],
-    opts?: SchemaOptions,
+    opts?: SchemaOptions
 ): void {
     // eslint-disable-next-line vi/valid-title
     describe("parse()", () => {
@@ -22,7 +22,7 @@ export function itValidateParse<Raw, Parsed>(
     schema: Schema<Raw, Parsed>,
     raw: unknown,
     errors: ValidationError[],
-    opts?: SchemaOptions,
+    opts?: SchemaOptions
 ): void {
     describe("parse", () => {
         // eslint-disable-next-line vi/valid-title
@@ -41,7 +41,7 @@ export function itValidateJson<Raw, Parsed>(
     schema: Schema<Raw, Parsed>,
     parsed: unknown,
     errors: ValidationError[],
-    opts?: SchemaOptions,
+    opts?: SchemaOptions
 ): void {
     describe("json", () => {
         // eslint-disable-next-line vi/valid-title

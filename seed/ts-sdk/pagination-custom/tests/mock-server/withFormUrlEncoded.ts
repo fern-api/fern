@@ -1,4 +1,4 @@
-import { type HttpResponseResolver, passthrough } from "msw";
+import { HttpResponseResolver, passthrough } from "msw";
 
 import { toJson } from "../../src/core/json";
 

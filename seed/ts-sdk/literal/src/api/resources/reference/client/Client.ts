@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedLiteral from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedLiteral from "../../../index.js";
 
 export declare namespace ReferenceClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ReferenceClient {
     protected readonly _options: ReferenceClient.Options;
 
     constructor(options: ReferenceClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -39,31 +42,14 @@ export class ReferenceClient {
      *         }
      *     })
      */
-    public send(
-        request: SeedLiteral.SendRequest,
-        requestOptions?: ReferenceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+    public send(request: SeedLiteral.SendRequest, requestOptions?: ReferenceClient.RequestOptions): core.HttpResponsePromise<SeedLiteral.SendResponse> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
-    private async __send(
-        request: SeedLiteral.SendRequest,
-        requestOptions?: ReferenceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                "X-API-Version": requestOptions?.version ?? "02-02-2024",
-                "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString(),
-            }),
-            requestOptions?.headers,
-        );
+    private async __send(request: SeedLiteral.SendRequest, requestOptions?: ReferenceClient.RequestOptions): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.version ?? "02-02-2024", "X-API-Enable-Audit-Logging": (requestOptions?.auditLogging ?? true).toString() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "reference",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "reference"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -74,7 +60,7 @@ export class ReferenceClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
@@ -84,24 +70,21 @@ export class ReferenceClient {
             throw new errors.SeedLiteralError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedLiteralError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedLiteralTimeoutError("Timeout exceeded when calling POST /reference.");
-            case "unknown":
-                throw new errors.SeedLiteralError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedLiteralError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedLiteralTimeoutError("Timeout exceeded when calling POST /reference.");
+            case "unknown": throw new errors.SeedLiteralError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

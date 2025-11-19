@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedUnions from "../../../index.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedUnions from "../../../index.js";
 
 export declare namespace UnionClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class UnionClient {
     protected readonly _options: UnionClient.Options;
 
     constructor(options: UnionClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -31,17 +34,10 @@ export class UnionClient {
         return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
-    private async __get(
-        id: string,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUnions.Shape>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __get(id: string, requestOptions?: UnionClient.RequestOptions): Promise<core.WithRawResponse<SeedUnions.Shape>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/${core.url.encodePathParam(id)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/${core.url.encodePathParam(id)}`),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -49,7 +45,7 @@ export class UnionClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedUnions.Shape, rawResponse: _response.rawResponse };
@@ -59,24 +55,21 @@ export class UnionClient {
             throw new errors.SeedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling GET /{id}.");
-            case "unknown":
-                throw new errors.SeedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling GET /{id}.");
+            case "unknown": throw new errors.SeedUnionsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -92,22 +85,14 @@ export class UnionClient {
      *         radius: 1.1
      *     })
      */
-    public update(
-        request: SeedUnions.Shape,
-        requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<boolean> {
+    public update(request: SeedUnions.Shape, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__update(request, requestOptions));
     }
 
-    private async __update(
-        request: SeedUnions.Shape,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<boolean>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+    private async __update(request: SeedUnions.Shape, requestOptions?: UnionClient.RequestOptions): Promise<core.WithRawResponse<boolean>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url:
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                (await core.Supplier.get(this._options.environment)),
+            url: await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
@@ -118,7 +103,7 @@ export class UnionClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
@@ -128,24 +113,21 @@ export class UnionClient {
             throw new errors.SeedUnionsError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedUnionsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling PATCH /.");
-            case "unknown":
-                throw new errors.SeedUnionsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedUnionsError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedUnionsTimeoutError("Timeout exceeded when calling PATCH /.");
+            case "unknown": throw new errors.SeedUnionsError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

@@ -2,22 +2,25 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
-import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
-import * as serializers from "../../../../serialization/index.js";
+import * as core from "../../../../core/index.js";
 import * as SeedTrace from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import * as serializers from "../../../../serialization/index.js";
 
 export declare namespace SyspropClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class SyspropClient {
     protected readonly _options: SyspropClient.Options;
 
     constructor(options: SyspropClient.Options = {}) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -29,36 +32,14 @@ export class SyspropClient {
      * @example
      *     await client.sysprop.setNumWarmInstances("JAVA", 1)
      */
-    public setNumWarmInstances(
-        language: SeedTrace.Language,
-        numWarmInstances: number,
-        requestOptions?: SyspropClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__setNumWarmInstances(language, numWarmInstances, requestOptions),
-        );
+    public setNumWarmInstances(language: SeedTrace.Language, numWarmInstances: number, requestOptions?: SyspropClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>> {
+        return core.HttpResponsePromise.fromPromise(this.__setNumWarmInstances(language, numWarmInstances, requestOptions));
     }
 
-    private async __setNumWarmInstances(
-        language: SeedTrace.Language,
-        numWarmInstances: number,
-        requestOptions?: SyspropClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __setNumWarmInstances(language: SeedTrace.Language, numWarmInstances: number, requestOptions?: SyspropClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.sysprop.setNumWarmInstances.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                `/sysprop/num-warm-instances/${core.url.encodePathParam(serializers.Language.jsonOrThrow(language, { omitUndefined: true }))}/${core.url.encodePathParam(numWarmInstances)}`,
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), `/sysprop/num-warm-instances/${core.url.encodePathParam(serializers.Language.jsonOrThrow(language, { omitUndefined: true }))}/${core.url.encodePathParam(numWarmInstances)}`),
             method: "PUT",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -66,28 +47,22 @@ export class SyspropClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
                     body: undefined,
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedTrace.sysprop.setNumWarmInstances.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     /**
@@ -96,39 +71,14 @@ export class SyspropClient {
      * @example
      *     await client.sysprop.getNumWarmInstances()
      */
-    public getNumWarmInstances(
-        requestOptions?: SyspropClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<Record<SeedTrace.Language, number | undefined>, SeedTrace.sysprop.getNumWarmInstances.Error>
-    > {
+    public getNumWarmInstances(requestOptions?: SyspropClient.RequestOptions): core.HttpResponsePromise<core.APIResponse<Record<SeedTrace.Language, number | undefined>, SeedTrace.sysprop.getNumWarmInstances.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getNumWarmInstances(requestOptions));
     }
 
-    private async __getNumWarmInstances(
-        requestOptions?: SyspropClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<
-                Record<SeedTrace.Language, number | undefined>,
-                SeedTrace.sysprop.getNumWarmInstances.Error
-            >
-        >
-    > {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
-            }),
-            requestOptions?.headers,
-        );
+    private async __getNumWarmInstances(requestOptions?: SyspropClient.RequestOptions): Promise<core.WithRawResponse<core.APIResponse<Record<SeedTrace.Language, number | undefined>, SeedTrace.sysprop.getNumWarmInstances.Error>>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader(), "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.SeedTraceEnvironment.Prod,
-                "/sysprop/num-warm-instances",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? (await core.Supplier.get(this._options.environment) ?? environments.SeedTraceEnvironment.Prod), "/sysprop/num-warm-instances"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -136,34 +86,22 @@ export class SyspropClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: {
+            return { data: {
                     ok: true,
-                    body: serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        skipValidation: true,
-                        breadcrumbsPrefix: ["response"],
-                    }),
+                    body: serializers.sysprop.getNumWarmInstances.Response.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }),
                     headers: _response.headers,
-                    rawResponse: _response.rawResponse,
-                },
-                rawResponse: _response.rawResponse,
-            };
+                    rawResponse: _response.rawResponse
+                }, rawResponse: _response.rawResponse };
         }
 
-        return {
-            data: {
+        return { data: {
                 ok: false,
                 error: SeedTrace.sysprop.getNumWarmInstances.Error._unknown(_response.error),
-                rawResponse: _response.rawResponse,
-            },
-            rawResponse: _response.rawResponse,
-        };
+                rawResponse: _response.rawResponse
+            }, rawResponse: _response.rawResponse };
     }
 
     protected async _getAuthorizationHeader(): Promise<string | undefined> {

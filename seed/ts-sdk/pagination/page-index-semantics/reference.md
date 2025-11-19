@@ -77,7 +77,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Complex.RequestOptions` 
+**requestOptions:** `ComplexClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -89,7 +89,7 @@ const response = page.response;
 </dl>
 </details>
 
-## InlineUsers InlineUsers
+## inlineUsers.inlineUsers
 <details><summary><code>client.inlineUsers.inlineUsers.<a href="/src/api/resources/inlineUsers/resources/inlineUsers/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.ListUsersPaginationResponse.Data.Users.Item, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
@@ -149,7 +149,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsers.RequestOptions` 
+**requestOptions:** `InlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -214,7 +214,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsers.RequestOptions` 
+**requestOptions:** `InlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -283,7 +283,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsers.RequestOptions` 
+**requestOptions:** `InlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -354,7 +354,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsers.RequestOptions` 
+**requestOptions:** `InlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -425,7 +425,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsers.RequestOptions` 
+**requestOptions:** `InlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -494,7 +494,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsers.RequestOptions` 
+**requestOptions:** `InlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -563,7 +563,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsers.RequestOptions` 
+**requestOptions:** `InlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -632,7 +632,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsers.RequestOptions` 
+**requestOptions:** `InlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -697,7 +697,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsers.RequestOptions` 
+**requestOptions:** `InlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -762,7 +762,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsers.RequestOptions` 
+**requestOptions:** `InlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -827,7 +827,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsers.RequestOptions` 
+**requestOptions:** `InlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -892,7 +892,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `InlineUsers.RequestOptions` 
+**requestOptions:** `InlineUsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -904,7 +904,7 @@ const response = page.response;
 </dl>
 </details>
 
-## Users
+## users
 <details><summary><code>client.users.<a href="/src/api/resources/users/client/Client.ts">listWithCursorPagination</a>({ ...params }) -> core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse></code></summary>
 <dl>
 <dd>
@@ -964,7 +964,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1029,7 +1029,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1098,7 +1098,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1169,7 +1169,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1240,7 +1240,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1309,7 +1309,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1378,7 +1378,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1447,7 +1447,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1512,7 +1512,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1577,7 +1577,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1642,7 +1642,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1707,7 +1707,7 @@ const response = page.response;
 <dl>
 <dd>
 
-**requestOptions:** `Users.RequestOptions` 
+**requestOptions:** `UsersClient.RequestOptions` 
     
 </dd>
 </dl>

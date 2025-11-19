@@ -6,14 +6,14 @@ describe("enum", () => {
     itSchemaIdentity(enum_(["A", "B", "C"]), "A");
 
     itSchemaIdentity(enum_(["A", "B", "C"]), "D" as any, {
-        opts: { allowUnrecognizedEnumValues: true },
+        opts: { allowUnrecognizedEnumValues: true }
     });
 
     itValidate("invalid enum", enum_(["A", "B", "C"]), "D", [
         {
             message: 'Expected enum. Received "D".',
-            path: [],
-        },
+            path: []
+        }
     ]);
 
     itValidate(
@@ -23,8 +23,8 @@ describe("enum", () => {
         [
             {
                 message: "Expected string. Received list.",
-                path: [],
-            },
-        ],
+                path: []
+            }
+        ]
     );
 });

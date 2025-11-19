@@ -1,5 +1,5 @@
 # Reference
-## Auth
+## auth
 <details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">getToken</a>({ ...params }) -> SeedAnyAuth.TokenResponse</code></summary>
 <dl>
 <dd>
@@ -53,7 +53,7 @@ await client.auth.getToken({
 </dl>
 </details>
 
-## User
+## user
 <details><summary><code>client.user.<a href="/src/api/resources/user/client/Client.ts">get</a>() -> SeedAnyAuth.User[]</code></summary>
 <dl>
 <dd>

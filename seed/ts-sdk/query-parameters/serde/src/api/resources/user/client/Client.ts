@@ -2,23 +2,26 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import { toJson } from "../../../../core/json.js";
-import * as errors from "../../../../errors/index.js";
+import * as SeedQueryParameters from "../../../index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedQueryParameters from "../../../index.js";
+import { toJson } from "../../../../core/json.js";
+import { mergeHeaders } from "../../../../core/headers.js";
+import * as errors from "../../../../errors/index.js";
 
 export declare namespace UserClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class UserClient {
     protected readonly _options: UserClient.Options;
 
     constructor(options: UserClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -67,108 +70,51 @@ export class UserClient {
      *         filter: "filter"
      *     })
      */
-    public getUsername(
-        request: SeedQueryParameters.GetUsersRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedQueryParameters.User> {
+    public getUsername(request: SeedQueryParameters.GetUsersRequest, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedQueryParameters.User> {
         return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
     }
 
-    private async __getUsername(
-        request: SeedQueryParameters.GetUsersRequest,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedQueryParameters.User>> {
-        const {
-            limit,
-            id,
-            date,
-            deadline,
-            bytes,
-            user,
-            userList,
-            optionalDeadline,
-            keyValue,
-            optionalString,
-            nestedUser,
-            optionalUser,
-            excludeUser,
-            filter,
-        } = request;
+    private async __getUsername(request: SeedQueryParameters.GetUsersRequest, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedQueryParameters.User>> {
+        const { limit, id, date, deadline, bytes, user, userList, optionalDeadline, keyValue, optionalString, nestedUser, optionalUser, excludeUser, filter } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        _queryParams.limit = limit.toString();
-        _queryParams.id = id;
-        _queryParams.date = date;
-        _queryParams.deadline = deadline.toISOString();
-        _queryParams.bytes = bytes;
-        _queryParams.user = serializers.User.jsonOrThrow(user, {
-            unrecognizedObjectKeys: "passthrough",
-            allowUnrecognizedUnionMembers: true,
-            allowUnrecognizedEnumValues: true,
-            omitUndefined: true,
-            breadcrumbsPrefix: ["request", "user"],
-        });
-        _queryParams.userList = toJson(userList);
+        _queryParams["limit"] = limit.toString();
+        _queryParams["id"] = id;
+        _queryParams["date"] = date;
+        _queryParams["deadline"] = deadline.toISOString();
+        _queryParams["bytes"] = bytes;
+        _queryParams["user"] = serializers.User.jsonOrThrow(user, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, omitUndefined: true, breadcrumbsPrefix: ["request", "user"] });
+        _queryParams["userList"] = toJson(userList);
         if (optionalDeadline != null) {
-            _queryParams.optionalDeadline = optionalDeadline.toISOString();
+            _queryParams["optionalDeadline"] = optionalDeadline.toISOString();
         }
 
-        _queryParams.keyValue = toJson(keyValue);
+        _queryParams["keyValue"] = toJson(keyValue);
         if (optionalString != null) {
-            _queryParams.optionalString = optionalString;
+            _queryParams["optionalString"] = optionalString;
         }
 
-        _queryParams.nestedUser = serializers.NestedUser.jsonOrThrow(nestedUser, {
-            unrecognizedObjectKeys: "passthrough",
-            allowUnrecognizedUnionMembers: true,
-            allowUnrecognizedEnumValues: true,
-            omitUndefined: true,
-            breadcrumbsPrefix: ["request", "nestedUser"],
-        });
+        _queryParams["nestedUser"] = serializers.NestedUser.jsonOrThrow(nestedUser, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, omitUndefined: true, breadcrumbsPrefix: ["request", "nestedUser"] });
         if (optionalUser != null) {
-            _queryParams.optionalUser = serializers.User.jsonOrThrow(optionalUser, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                omitUndefined: true,
-                breadcrumbsPrefix: ["request", "optionalUser"],
-            });
+            _queryParams["optionalUser"] = serializers.User.jsonOrThrow(optionalUser, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, omitUndefined: true, breadcrumbsPrefix: ["request", "optionalUser"] });
         }
 
         if (Array.isArray(excludeUser)) {
-            _queryParams.excludeUser = await Promise.all(
-                excludeUser.map(async (item) =>
-                    serializers.User.jsonOrThrow(item, {
-                        unrecognizedObjectKeys: "passthrough",
-                        allowUnrecognizedUnionMembers: true,
-                        allowUnrecognizedEnumValues: true,
-                        omitUndefined: true,
-                        breadcrumbsPrefix: ["request", "excludeUser"],
-                    }),
-                ),
-            );
-        } else {
-            _queryParams.excludeUser = serializers.User.jsonOrThrow(excludeUser, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                omitUndefined: true,
-                breadcrumbsPrefix: ["request", "excludeUser"],
-            });
+            _queryParams["excludeUser"] = await Promise.all(excludeUser.map(async (item) => serializers.User.jsonOrThrow(item, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, omitUndefined: true, breadcrumbsPrefix: ["request", "excludeUser"] })));
+        }
+        else {
+            _queryParams["excludeUser"] = serializers.User.jsonOrThrow(excludeUser, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, omitUndefined: true, breadcrumbsPrefix: ["request", "excludeUser"] });
         }
 
         if (Array.isArray(filter)) {
-            _queryParams.filter = filter.map((item) => item);
-        } else {
-            _queryParams.filter = filter;
+            _queryParams["filter"] = filter.map(item => item);
+        }
+        else {
+            _queryParams["filter"] = filter;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/user",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/user"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -176,43 +122,31 @@ export class UserClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
-            return {
-                data: serializers.User.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
+            return { data: serializers.User.parseOrThrow(_response.body, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, breadcrumbsPrefix: ["response"] }), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
             throw new errors.SeedQueryParametersError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedQueryParametersError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedQueryParametersTimeoutError("Timeout exceeded when calling GET /user.");
-            case "unknown":
-                throw new errors.SeedQueryParametersError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedQueryParametersError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedQueryParametersTimeoutError("Timeout exceeded when calling GET /user.");
+            case "unknown": throw new errors.SeedQueryParametersError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 }

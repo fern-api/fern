@@ -101,7 +101,7 @@ export class NodePre18StreamWrapper implements StreamWrapper<Writable, Buffer> {
             },
             [Symbol.asyncIterator]() {
                 return this;
-            },
+            }
         };
     }
 }

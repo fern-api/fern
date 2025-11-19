@@ -5,7 +5,7 @@ interface QueryStringOptions {
 
 const defaultQsOptions: Required<QueryStringOptions> = {
     arrayFormat: "indices",
-    encode: true,
+    encode: true
 } as const;
 
 function encodeValue(value: unknown, shouldEncode: boolean): string {
@@ -68,7 +68,7 @@ export function toQueryString(obj: unknown, options?: QueryStringOptions): strin
 
     const parts = stringifyObject(obj as Record<string, unknown>, "", {
         ...defaultQsOptions,
-        ...options,
+        ...options
     });
     return parts.join("&");
 }

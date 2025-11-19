@@ -1,5 +1,5 @@
 # Reference
-## Nullable
+## nullable
 <details><summary><code>client.nullable.<a href="/src/api/resources/nullable/client/Client.ts">getUsers</a>({ ...params }) -> SeedNullable.User[]</code></summary>
 <dl>
 <dd>

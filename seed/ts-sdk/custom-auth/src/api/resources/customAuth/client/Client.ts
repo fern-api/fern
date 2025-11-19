@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
-import * as errors from "../../../../errors/index.js";
 import * as SeedCustomAuth from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import * as errors from "../../../../errors/index.js";
 
 export declare namespace CustomAuthClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class CustomAuthClient {
     protected readonly _options: CustomAuthClient.Options;
 
     constructor(options: CustomAuthClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -34,20 +37,10 @@ export class CustomAuthClient {
         return core.HttpResponsePromise.fromPromise(this.__getWithCustomAuth(requestOptions));
     }
 
-    private async __getWithCustomAuth(
-        requestOptions?: CustomAuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<boolean>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
-            requestOptions?.headers,
-        );
+    private async __getWithCustomAuth(requestOptions?: CustomAuthClient.RequestOptions): Promise<core.WithRawResponse<boolean>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...await this._getCustomAuthorizationHeaders() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "custom-auth",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "custom-auth"),
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
@@ -55,7 +48,7 @@ export class CustomAuthClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
@@ -63,34 +56,26 @@ export class CustomAuthClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 401:
-                    throw new SeedCustomAuth.UnauthorizedRequest(
-                        _response.error.body as SeedCustomAuth.UnauthorizedRequestErrorBody,
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.SeedCustomAuthError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
+                case 401: throw new SeedCustomAuth.UnauthorizedRequest(_response.error.body as SeedCustomAuth.UnauthorizedRequestErrorBody, _response.rawResponse);
+                default: throw new errors.SeedCustomAuthError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse
+                });
             }
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedCustomAuthError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling GET /custom-auth.");
-            case "unknown":
-                throw new errors.SeedCustomAuthError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedCustomAuthError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling GET /custom-auth.");
+            case "unknown": throw new errors.SeedCustomAuthError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 
@@ -108,28 +93,14 @@ export class CustomAuthClient {
      *         "key": "value"
      *     })
      */
-    public postWithCustomAuth(
-        request?: unknown,
-        requestOptions?: CustomAuthClient.RequestOptions,
-    ): core.HttpResponsePromise<boolean> {
+    public postWithCustomAuth(request?: unknown, requestOptions?: CustomAuthClient.RequestOptions): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__postWithCustomAuth(request, requestOptions));
     }
 
-    private async __postWithCustomAuth(
-        request?: unknown,
-        requestOptions?: CustomAuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<boolean>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
-            requestOptions?.headers,
-        );
+    private async __postWithCustomAuth(request?: unknown, requestOptions?: CustomAuthClient.RequestOptions): Promise<core.WithRawResponse<boolean>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ ...await this._getCustomAuthorizationHeaders() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "custom-auth",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "custom-auth"),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
@@ -140,7 +111,7 @@ export class CustomAuthClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as boolean, rawResponse: _response.rawResponse };
@@ -148,36 +119,27 @@ export class CustomAuthClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 401:
-                    throw new SeedCustomAuth.UnauthorizedRequest(
-                        _response.error.body as SeedCustomAuth.UnauthorizedRequestErrorBody,
-                        _response.rawResponse,
-                    );
-                case 400:
-                    throw new SeedCustomAuth.BadRequest(_response.rawResponse);
-                default:
-                    throw new errors.SeedCustomAuthError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
+                case 401: throw new SeedCustomAuth.UnauthorizedRequest(_response.error.body as SeedCustomAuth.UnauthorizedRequestErrorBody, _response.rawResponse);
+                case 400: throw new SeedCustomAuth.BadRequest(_response.rawResponse);
+                default: throw new errors.SeedCustomAuthError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.body,
+                    rawResponse: _response.rawResponse
+                });
             }
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedCustomAuthError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling POST /custom-auth.");
-            case "unknown":
-                throw new errors.SeedCustomAuthError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedCustomAuthError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedCustomAuthTimeoutError("Timeout exceeded when calling POST /custom-auth.");
+            case "unknown": throw new errors.SeedCustomAuthError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

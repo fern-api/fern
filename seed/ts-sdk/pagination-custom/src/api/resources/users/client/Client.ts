@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedPagination from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedPagination from "../../../index.js";
 
 export declare namespace UsersClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class UsersClient {
     protected readonly _options: UsersClient.Options;
 
     constructor(options: UsersClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -29,34 +32,20 @@ export class UsersClient {
      *         starting_after: "starting_after"
      *     })
      */
-    public listUsernamesCustom(
-        request: SeedPagination.ListUsernamesRequestCustom = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedPagination.UsernameCursor> {
+    public listUsernamesCustom(request: SeedPagination.ListUsernamesRequestCustom = {}, requestOptions?: UsersClient.RequestOptions): core.HttpResponsePromise<SeedPagination.UsernameCursor> {
         return core.HttpResponsePromise.fromPromise(this.__listUsernamesCustom(request, requestOptions));
     }
 
-    private async __listUsernamesCustom(
-        request: SeedPagination.ListUsernamesRequestCustom = {},
-        requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> {
-        const { starting_after: startingAfter } = request;
+    private async __listUsernamesCustom(request: SeedPagination.ListUsernamesRequestCustom = {}, requestOptions?: UsersClient.RequestOptions): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> {
+        const { "starting_after": startingAfter } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (startingAfter != null) {
-            _queryParams.starting_after = startingAfter;
+            _queryParams["starting_after"] = startingAfter;
         }
 
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                "/users",
-            ),
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), "/users"),
             method: "GET",
             headers: _headers,
             queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
@@ -64,7 +53,7 @@ export class UsersClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
-            logging: this._options.logging,
+            logging: this._options.logging
         });
         if (_response.ok) {
             return { data: _response.body as SeedPagination.UsernameCursor, rawResponse: _response.rawResponse };
@@ -74,24 +63,21 @@ export class UsersClient {
             throw new errors.SeedPaginationError({
                 statusCode: _response.error.statusCode,
                 body: _response.error.body,
-                rawResponse: _response.rawResponse,
+                rawResponse: _response.rawResponse
             });
         }
 
         switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedPaginationError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
-            case "unknown":
-                throw new errors.SeedPaginationError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
         }
     }
 

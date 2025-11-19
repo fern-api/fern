@@ -7,6 +7,27 @@
 
 The CustomName TypeScript library provides convenient access to the CustomName APIs from TypeScript.
 
+## Table of Contents
+
+- [Documentation](#documentation)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Base Readme Custom Section](#base-readme-custom-section)
+- [Override Section](#override-section)
+- [Generator Invocation Custom Section](#generator-invocation-custom-section)
+- [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Aborting Requests](#aborting-requests)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Logging](#logging)
+  - [Runtime Compatibility](#runtime-compatibility)
+
 ## Documentation
 
 API reference documentation is available [here](https://www.docs.fernapi.com).
@@ -65,7 +86,7 @@ await client.service.createMovie({
 });
 ```
 
-## Request And Response Types
+## Request and Response Types
 
 The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
 following namespace:

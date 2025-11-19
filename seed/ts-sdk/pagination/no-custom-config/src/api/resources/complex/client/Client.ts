@@ -2,21 +2,24 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import * as SeedPagination from "../../../index.js";
+import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedPagination from "../../../index.js";
 
 export declare namespace ComplexClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+    }
 
-    export interface RequestOptions extends BaseRequestOptions {}
+    export interface RequestOptions extends BaseRequestOptions {
+    }
 }
 
 export class ComplexClient {
     protected readonly _options: ComplexClient.Options;
 
     constructor(options: ComplexClient.Options) {
+
         this._options = normalizeClientOptions(options);
     }
 
@@ -38,86 +41,47 @@ export class ComplexClient {
      *         }
      *     })
      */
-    public async search(
-        index: string,
-        request: SeedPagination.SearchRequest,
-        requestOptions?: ComplexClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.SearchRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.PaginatedConversationResponse>> => {
-                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (await core.Supplier.get(this._options.environment)),
-                        `${core.url.encodePathParam(index)}/conversations/search`,
-                    ),
-                    method: "POST",
-                    headers: _headers,
-                    contentType: "application/json",
-                    queryParameters: requestOptions?.queryParams,
-                    requestType: "json",
-                    body: request,
-                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                    fetchFn: this._options?.fetch,
-                    logging: this._options.logging,
-                });
-                if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.PaginatedConversationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.SeedPaginationError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError(
-                            "Timeout exceeded when calling POST /{index}/conversations/search.",
-                        );
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
+    public async search(index: string, request: SeedPagination.SearchRequest, requestOptions?: ComplexClient.RequestOptions): Promise<core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse>> {
+        const list = core.HttpResponsePromise.interceptFunction(async (request: SeedPagination.SearchRequest): Promise<core.WithRawResponse<SeedPagination.PaginatedConversationResponse>> => { let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers); const _response = await core.fetcher({
+            url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `${core.url.encodePathParam(index)}/conversations/search`),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: request,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging
+        }); if (_response.ok) {
+            return { data: _response.body as SeedPagination.PaginatedConversationResponse, rawResponse: _response.rawResponse };
+        } if (_response.error.reason === "status-code") {
+            throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse
+            });
+        } switch (_response.error.reason) {
+            case "non-json": throw new errors.SeedPaginationError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.rawBody,
+                rawResponse: _response.rawResponse
+            });
+            case "timeout": throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /{index}/conversations/search.");
+            case "unknown": throw new errors.SeedPaginationError({
+                message: _response.error.errorMessage,
+                rawResponse: _response.rawResponse
+            });
+        } });
         const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.pages?.next?.starting_after != null &&
-                !(
-                    typeof response?.pages?.next?.starting_after === "string" &&
-                    response?.pages?.next?.starting_after === ""
-                ),
-            getItems: (response) => response?.conversations ?? [],
-            loadPage: (response) => {
-                return list(
-                    core.setObjectProperty(request, "pagination.starting_after", response?.pages?.next?.starting_after),
-                );
-            },
+            hasNextPage: response => response?.pages?.next?.starting_after != null && !(typeof response?.pages?.next?.starting_after === "string" && response?.pages?.next?.starting_after === ""),
+            getItems: response => response?.conversations ?? [],
+            loadPage: response => { return list(core.setObjectProperty(request, "pagination.starting_after", response?.pages?.next?.starting_after)); }
         });
     }
 

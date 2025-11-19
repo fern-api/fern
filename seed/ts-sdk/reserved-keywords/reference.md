@@ -1,5 +1,5 @@
 # Reference
-## Package
+## package
 <details><summary><code>client.package.<a href="/src/api/resources/package/client/Client.ts">test</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>

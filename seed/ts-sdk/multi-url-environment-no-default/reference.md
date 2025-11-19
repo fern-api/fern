@@ -1,5 +1,5 @@
 # Reference
-## Ec2
+## ec2
 <details><summary><code>client.ec2.<a href="/src/api/resources/ec2/client/Client.ts">bootInstance</a>({ ...params }) -> void</code></summary>
 <dl>
 <dd>
@@ -51,7 +51,7 @@ await client.ec2.bootInstance({
 </dl>
 </details>
 
-## S3
+## s3
 <details><summary><code>client.s3.<a href="/src/api/resources/s3/client/Client.ts">getPresignedUrl</a>({ ...params }) -> string</code></summary>
 <dl>
 <dd>
