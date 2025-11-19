@@ -39,9 +39,7 @@ class MetaTestGenerator:
         root_clients: List[str] = []
         for subpackage_id in self._ir.subpackages.keys():
             subpackage = self._ir.subpackages[subpackage_id]
-            if subpackage.has_endpoints_in_tree or (
-                subpackage.websocket is not None and self._context.custom_config.should_generate_websocket_clients
-            ):
+            if subpackage.has_endpoints_in_tree:
                 fern_filepath = subpackage.fern_filepath
                 client_property_name = self._get_client_property_name(fern_filepath)
 
