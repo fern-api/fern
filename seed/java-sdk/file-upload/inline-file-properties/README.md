@@ -18,6 +18,7 @@ The Seed Java library provides convenient access to the Seed APIs from Java.
   - [Timeouts](#timeouts)
   - [Custom Headers](#custom-headers)
   - [Access Raw Response Data](#access-raw-response-data)
+  - [File Uploads](#file-uploads)
 - [Contributing](#contributing)
 
 ## Installation
@@ -205,6 +206,22 @@ JustFileHttpResponse response = client.service().withRawResponse().justFile(...)
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));
+```
+
+### File Uploads
+
+The SDK supports file uploads using either File objects or InputStreams. Use InputStreams when you need to upload files
+without writing them to disk first, or when you want to specify a custom MediaType.
+
+```java
+// Upload with File
+client.service().post(new File("path/to/file.txt"), ...);
+
+// Upload with InputStream
+client.service().post(new FileInputStream("path/to/file.txt"), "file.txt");
+
+// With custom MediaType
+client.service().post(new FileInputStream("path/to/file.txt"), "file.txt", MediaType.parse("application/octet-stream"));
 ```
 
 ## Contributing

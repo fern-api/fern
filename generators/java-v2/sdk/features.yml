@@ -60,6 +60,12 @@ features:
       The `withRawResponse()` method returns a raw client that wraps all responses with `body()` and `headers()` methods.
       (A normal client's `response` is identical to a raw client's `response.body()`.)
 
+  - id: FILE_UPLOADS
+    advanced: true
+    description: |
+      The SDK supports file uploads using either File objects or InputStreams. Use InputStreams when you need to upload files
+      without writing them to disk first, or when you want to specify a custom MediaType.
+
   - id: WEBSOCKET
     description: |
       The SDK provides WebSocket support for real-time bidirectional communication. You can connect to a WebSocket,
