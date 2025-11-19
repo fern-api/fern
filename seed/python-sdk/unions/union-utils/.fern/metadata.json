@@ -1,0 +1,11 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "pydantic_config": {
+      "include_union_utils": true
+    },
+    "use_inheritance_for_extended_models": false
+  }
+}

@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from .......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .parameter import Parameter
 
@@ -49,8 +50,9 @@ class FunctionSignature_VoidThatTakesActualResult(UniversalBaseModel):
 
 from ......commons.variable_type import VariableType  # noqa: E402, I001
 
-FunctionSignature = typing.Union[
-    FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult
+FunctionSignature = typing_extensions.Annotated[
+    typing.Union[FunctionSignature_Void, FunctionSignature_NonVoid, FunctionSignature_VoidThatTakesActualResult],
+    pydantic.Field(discriminator="type"),
 ]
 update_forward_refs(FunctionSignature_Void)
 update_forward_refs(FunctionSignature_NonVoid)

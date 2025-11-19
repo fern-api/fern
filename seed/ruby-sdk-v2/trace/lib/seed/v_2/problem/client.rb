@@ -4,12 +4,18 @@ module Seed
   module V2
     module Problem
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::V2::Problem::Client]
         def initialize(client:)
           @client = client
         end
 
         # Returns lightweight versions of all problems
+        #
+        # @param request_options [Seed::RequestOptions]
+        #
+        # @param params [Hash[untyped, untyped]]
         #
         # @return [Array[Seed::V2::Problem::Types::LightweightProblemInfoV2]]
         def get_lightweight_problems(request_options: {}, **_params)
@@ -32,6 +38,10 @@ module Seed
 
         # Returns latest versions of all problems
         #
+        # @param request_options [Seed::RequestOptions]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Array[Seed::V2::Problem::Types::ProblemInfoV2]]
         def get_problems(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
@@ -53,12 +63,16 @@ module Seed
 
         # Returns latest version of a problem
         #
+        # @param request_options [Seed::RequestOptions]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::V2::Problem::Types::ProblemInfoV2]
         def get_latest_problem(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url] || Seed::Environment::PROD,
             method: "GET",
-            path: "/problems-v2/problem-info/#{params[:problemId]}"
+            path: "/problems-v2/problem-info/#{params[:problem_id]}"
           )
           begin
             _response = @client.send(_request)
@@ -76,12 +90,16 @@ module Seed
 
         # Returns requested version of a problem
         #
+        # @param request_options [Seed::RequestOptions]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::V2::Problem::Types::ProblemInfoV2]
         def get_problem_version(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url] || Seed::Environment::PROD,
             method: "GET",
-            path: "/problems-v2/problem-info/#{params[:problemId]}/version/#{params[:problemVersion]}"
+            path: "/problems-v2/problem-info/#{params[:problem_id]}/version/#{params[:problem_version]}"
           )
           begin
             _response = @client.send(_request)

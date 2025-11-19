@@ -1,5 +1,11 @@
 import { enableStackTracking } from "../utils";
-import { frames, StackTraceFrame, stacktrace, startTracking, trackingType } from "../utils/stacktrace";
+import {
+    getFramesForTaggedObject,
+    StackTraceFrame,
+    stacktrace,
+    startTracking,
+    trackingType
+} from "../utils/stacktrace";
 import { AbstractAstNode } from "./AbstractAstNode";
 import { CodeBlock } from "./CodeBlock";
 
@@ -14,6 +20,12 @@ export class AbstractWriter {
 
     /* The contents being written */
     public get buffer() {
+        if (enableStackTracking && this.nodeStackFrames.length > 0) {
+            // if we're emitting tracking comments, let's ensure we get the last little bit of info.
+            // by appending a newline to the buffer before returning it.
+            // (this can be useful when using toString() to get a node's content.)
+            this.writeInternal("\n");
+        }
         return this.lineBuffer.join("\n") + (this.lastCharacterIsNewline ? "\n" : "");
     }
 
@@ -78,8 +90,16 @@ export class AbstractWriter {
      * @param node
      */
     public writeNode(node: AbstractAstNode): void {
-        this.nodeStackFrames.push(...frames(node));
+        if (enableStackTracking) {
+            this.nodeStackFrames.push(...getFramesForTaggedObject(node));
+        }
         node.write(this);
+
+        // if we're using box or multiline comments, write a newline after every node so it emits a comment for the node
+        // since we're dumping a lot of data anyway, might as well be explicit about it.
+        if (enableStackTracking && trackingType !== "single") {
+            this.writeInternal("\n");
+        }
     }
 
     /**
@@ -190,8 +210,8 @@ export class AbstractWriter {
     }
 
     /* Only writes a newline if last line in the buffer is not a newline */
-    public writeLine(text = ""): void {
-        this.write(text);
+    public writeLine(...parts: (string | AbstractAstNode | undefined)[]): void {
+        this.write(...(parts.length === 0 ? [""] : parts));
         this.writeNewLineIfLastLineNot();
     }
 
@@ -322,7 +342,15 @@ export class AbstractWriter {
         return stack.map((each) => `${prefix ? `(${prefix}) ` : ""} ${each.fn} - ${each.path} : ${each.position}`);
     }
 
-    /** filters out frames that start with the name of the current class */
+    /**
+     * Filters out frames that start with the name of the current class
+     *
+     * This will filter out frames that start with the name of the current class that inherits from AbstractWriter.
+     *
+     * You can override this function to filter out more things.
+     * @param stack - The stack trace to filter
+     * @returns The filtered stack trace
+     */
     protected filterStack(stack: StackTraceFrame[]) {
         return stack.filter((each) => !each.fn.startsWith(`${this.constructor.name}.`));
     }
@@ -336,7 +364,7 @@ export class AbstractWriter {
             ...this.formatStack(this.filterStack(stacktrace({ maxFrames: 15, skip: 3 }))),
 
             // adds the stack frames of any AstNodes that have been written since the last tracking comment
-            ...new Set(this.formatStack(this.filterStack(this.nodeStackFrames), "node"))
+            ...this.formatStack(this.filterStack(this.nodeStackFrames), "node")
         ];
         // reset the ast node stack frames
         this.nodeStackFrames.length = 0;

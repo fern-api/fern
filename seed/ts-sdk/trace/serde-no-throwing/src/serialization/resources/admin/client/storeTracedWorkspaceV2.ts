@@ -3,13 +3,13 @@
 import type { TraceResponseV2 } from "../../../../api/resources/submission/types/TraceResponseV2.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { TraceResponseV2 as TraceResponseV2_SeedTrace } from "../../submission/types/TraceResponseV2.js";
+import { TraceResponseV2 as TraceResponseV2Type } from "../../submission/types/TraceResponseV2.js";
 
 export const Request: core.serialization.Schema<
     serializers.admin.storeTracedWorkspaceV2.Request.Raw,
     TraceResponseV2[]
-> = core.serialization.list(TraceResponseV2_SeedTrace);
+> = core.serialization.list(TraceResponseV2Type);
 
 export declare namespace Request {
-    export type Raw = TraceResponseV2_SeedTrace.Raw[];
+    export type Raw = TraceResponseV2Type.Raw[];
 }

@@ -22,33 +22,28 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && rm -rf ./dist ",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
     "dist:cli": "pnpm clean && pnpm compile && node build.mjs",
     "dockerTagLocal": "./docker/create_docker.sh local",
-    "dockerTagVersion": "./docker/create_docker.sh",
-    "test": "vitest --passWithNoTests --run",
-    "test:debug": "pnpm run test --inspect --no-file-parallelism",
-    "test:update": "vitest --passWithNoTests --run -u"
+    "dockerTagVersion": "./docker/create_docker.sh"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
-    "@fern-fern/ir-sdk": "61.6.0",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "@fern-typescript/abstract-generator-cli": "workspace:*",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/express-generator": "workspace:*",
     "@types/lodash-es": "^4.17.12",
-    "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
     "tsup": "^8.5.0",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9",
     "zod": "^3.22.3"
   }
 }

@@ -1,4 +1,5 @@
 imports:
+  ai: ./ai.yml
   auth: ./fernDefinition/auth.yml
   file: ./fernDefinition/file.yml
   environments: ./fernDefinition/environments.yml
@@ -25,6 +26,7 @@ types:
         type: optional<map<string, group.GeneratorGroupSchema>>
       reviewers:
         type: optional<reviewers.ReviewersSchema>
+      ai: optional<ai.AIServicesSchema>
       openapi:
         type: optional<GeneratorsOpenAPISchema>
         availability: deprecated
@@ -151,7 +153,7 @@ types:
       use-title:
         type: optional<boolean>
         docs: |
-          Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true.
+          Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to false.
           Deprecated, use the `api.specs.[].settings.title-as-schema-name` key instead.
         availability: deprecated
       unions:
@@ -165,16 +167,16 @@ types:
         docs: What version of message naming to use for AsyncAPI messages, this will grow over time. Defaults to v1.
       respect-nullable-schemas:
         type: optional<boolean>
-        docs: Preserves nullable schemas in API definition settings. Defaults to false, where nullable schemas are treated as optional.
+        docs: Preserves nullable schemas in API definition settings. Defaults to true, where nullable schemas are treated as optional.
       only-include-referenced-schemas:
         type: optional<boolean>
         docs: Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false.
       inline-path-parameters:
         type: optional<boolean>
-        docs: Whether to include path parameters within the generated in-lined request. Defaults to false.
+        docs: Whether to include path parameters within the generated in-lined request. Defaults to true.
       idiomatic-request-names:
         type: optional<boolean>
-        docs: Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to false.
+        docs: Whether to use idiomatic request names for endpoints (e.g. ListUsersRequest instead of UsersListRequest). Defaults to true.
       wrap-references-to-nullable-in-optional:
         type: optional<boolean>
         docs: |
@@ -197,6 +199,35 @@ types:
           - Add path segment if collision (e.g., "prod: https://api.com/foo" -> "foo")
           - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
         default: false
+      remove-discriminants-from-schemas:
+        type: optional<RemoveDiscriminantsFromSchemas>
+        docs: |
+          If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.
+          If `never`, keep discriminant properties in schemas when generating types.
+          Defaults to `always`.
+      path-parameter-order:
+        type: optional<PathParameterOrder>
+        docs: |
+          Controls the order of path parameters in generated method signatures.
+          - `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})
+          - `spec-order`: Use the order path parameters are defined in the spec
+          Defaults to `url-order`.
+
+  RemoveDiscriminantsFromSchemas:
+    docs: |
+      Whether to remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.
+    enum:
+      - always
+      - never
+
+  PathParameterOrder:
+    docs: |
+      Controls the order of path parameters in generated method signatures.
+    enum:
+      - name: urlOrder
+        value: url-order
+      - name: specOrder
+        value: spec-order
 
   UnionSettingsSchema:
     enum:
@@ -266,12 +297,23 @@ types:
 
   ## V2 API Configuration
   APIConfigurationV2Schema:
-    properties:
-      auth: optional<auth.ApiAuthSchema>
-      specs: APIConfigurationV2SpecsSchema
     extends:
       - file.WithHeadersSchema
       - environments.WithEnvironmentsSchema
+    properties:
+      auth: optional<auth.ApiAuthSchema>
+      specs: APIConfigurationV2SpecsSchema
+      settings: optional<APIConfigurationV2SettingsSchema>
+
+  APIConfigurationV2SettingsSchema:
+    extends:
+      - OpenAPISettingsSchema
+      - AsyncAPISettingsSchema
+    docs: |
+      Global default API import settings that apply to all specs in this API configuration.
+      Individual spec settings in specs[].settings will override these defaults.
+      Generator settings in groups.generators[].api.settings will override both.
+      Settings hierarchy (highest to lowest priority): generator > spec > api.
 
   APIConfigurationV2SpecsSchema:
     discriminated: false
@@ -283,10 +325,10 @@ types:
     properties:
       respect-nullable-schemas:
         type: optional<boolean>
-        docs: Preserves nullable schemas in API definition settings. Defaults to false, where nullable schemas are treated as optional.
+        docs: Preserves nullable schemas in API definition settings. Defaults to true, where nullable schemas are treated as optional.
       title-as-schema-name:
         type: optional<boolean>
-        docs: Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to true.
+        docs: Whether to use the titles of the schemas within an OpenAPI definition as the names of the types within Fern. Defaults to false.
       optional-additional-properties: optional<boolean>
       coerce-enums-to-literals:
         type: optional<boolean>
@@ -315,6 +357,20 @@ types:
           - Add path segment if collision (e.g., "prod: https://api.com/foo" -> "foo")
           - Add protocol if still collision (e.g., "prod: wss://api.com/foo" -> "foo_wss", only for non-HTTPS protocols)
         default: false
+      remove-discriminants-from-schemas:
+        type: optional<RemoveDiscriminantsFromSchemas>
+        docs: |
+          If `always`, remove discriminant properties from schemas when generating types, unless the schema is also used outside of a discriminated union.
+          If `never`, keep discriminant properties in schemas when generating types.
+          Defaults to `always`.
+      path-parameter-order:
+        type: optional<PathParameterOrder>
+        docs: |
+          Controls the order of path parameters in generated method signatures.
+          - `url-order`: Use the order path parameters appear in the URL path (e.g., /users/{userId}/posts/{postId})
+          - `spec-order`: Use the order path parameters are defined in the spec
+          Defaults to `url-order`.
+        default: url-order
 
   OpenAPISettingsSchema:
     extends:
@@ -325,7 +381,7 @@ types:
         docs: Whether to only include schemas referenced by endpoints in the generated SDK (i.e. a form of tree-shaking). Defaults to false.
       inline-path-parameters:
         type: optional<boolean>
-        docs: Whether to include path parameters within the generated in-lined request. Defaults to false.
+        docs: Whether to include path parameters within the generated in-lined request. Defaults to true.
       prefer-undiscriminated-unions-with-literals:
         type: optional<boolean>
         docs: Whether to prefer undiscriminated unions with literals. Defaults to false.
@@ -371,7 +427,7 @@ types:
       inline-all-of-schemas:
         type: optional<boolean>
         docs: |
-          Whether to inline allOf schemas. If false, allOf schemas will be 
+          Whether to inline allOf schemas. If false, allOf schemas will be
           extended in the code generation.
         default: false
       resolve-aliases:

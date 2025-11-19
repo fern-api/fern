@@ -37,7 +37,7 @@ await client.endpoints.container.getAndReturnListOfPrimitives(["string", "string
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -90,7 +90,7 @@ await client.endpoints.container.getAndReturnListOfObjects([{
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -139,7 +139,7 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -190,7 +190,7 @@ await client.endpoints.container.getAndReturnSetOfObjects([{
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -241,7 +241,7 @@ await client.endpoints.container.getAndReturnMapPrimToPrim({
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -294,7 +294,7 @@ await client.endpoints.container.getAndReturnMapOfPrimToObject({
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -345,7 +345,7 @@ await client.endpoints.container.getAndReturnOptional({
 <dl>
 <dd>
 
-**requestOptions:** `Container.RequestOptions` 
+**requestOptions:** `ContainerClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -411,7 +411,7 @@ await client.endpoints.contentType.postJsonPatchContentType({
 <dl>
 <dd>
 
-**requestOptions:** `ContentType.RequestOptions` 
+**requestOptions:** `ContentTypeClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -476,7 +476,7 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
 <dl>
 <dd>
 
-**requestOptions:** `ContentType.RequestOptions` 
+**requestOptions:** `ContentTypeClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -526,7 +526,7 @@ await client.endpoints.enum.getAndReturnEnum("SUNNY");
 <dl>
 <dd>
 
-**requestOptions:** `Enum.RequestOptions` 
+**requestOptions:** `EnumClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -576,7 +576,7 @@ await client.endpoints.httpMethods.testGet("id");
 <dl>
 <dd>
 
-**requestOptions:** `HttpMethods.RequestOptions` 
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -627,7 +627,7 @@ await client.endpoints.httpMethods.testPost({
 <dl>
 <dd>
 
-**requestOptions:** `HttpMethods.RequestOptions` 
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -686,7 +686,7 @@ await client.endpoints.httpMethods.testPut("id", {
 <dl>
 <dd>
 
-**requestOptions:** `HttpMethods.RequestOptions` 
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -759,7 +759,7 @@ await client.endpoints.httpMethods.testPatch("id", {
 <dl>
 <dd>
 
-**requestOptions:** `HttpMethods.RequestOptions` 
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -808,7 +808,7 @@ await client.endpoints.httpMethods.testDelete("id");
 <dl>
 <dd>
 
-**requestOptions:** `HttpMethods.RequestOptions` 
+**requestOptions:** `HttpMethodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -874,7 +874,7 @@ await client.endpoints.object.getAndReturnWithOptionalField({
 <dl>
 <dd>
 
-**requestOptions:** `Object_.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -925,7 +925,7 @@ await client.endpoints.object.getAndReturnWithRequiredField({
 <dl>
 <dd>
 
-**requestOptions:** `Object_.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -980,7 +980,7 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
 <dl>
 <dd>
 
-**requestOptions:** `Object_.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1048,7 +1048,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 <dl>
 <dd>
 
-**requestOptions:** `Object_.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1060,7 +1060,7 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string_, { ...params }) -> SeedExhaustive.NestedObjectWithRequiredField</code></summary>
+<details><summary><code>client.endpoints.object.<a href="/src/test-packagePath/api/resources/endpoints/resources/object/client/Client.ts">getAndReturnNestedWithRequiredField</a>(string, { ...params }) -> SeedExhaustive.NestedObjectWithRequiredField</code></summary>
 <dl>
 <dd>
 
@@ -1108,7 +1108,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 <dl>
 <dd>
 
-**string_:** `string` 
+**string:** `string` 
     
 </dd>
 </dl>
@@ -1124,7 +1124,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 <dl>
 <dd>
 
-**requestOptions:** `Object_.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1211,7 +1211,7 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
 <dl>
 <dd>
 
-**requestOptions:** `Object_.RequestOptions` 
+**requestOptions:** `ObjectClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1275,7 +1275,7 @@ await client.endpoints.params.getWithPath("param");
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1340,7 +1340,7 @@ await client.endpoints.params.getWithInlinePath({
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1406,7 +1406,7 @@ await client.endpoints.params.getWithQuery({
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1472,7 +1472,7 @@ await client.endpoints.params.getWithAllowMultipleQuery({
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1545,7 +1545,7 @@ await client.endpoints.params.getWithPathAndQuery("param", {
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1611,7 +1611,7 @@ await client.endpoints.params.getWithInlinePathAndQuery({
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1682,7 +1682,7 @@ await client.endpoints.params.modifyWithPath("param", "string");
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1748,7 +1748,7 @@ await client.endpoints.params.modifyWithInlinePath({
 <dl>
 <dd>
 
-**requestOptions:** `Params.RequestOptions` 
+**requestOptions:** `ParamsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1798,7 +1798,7 @@ await client.endpoints.primitive.getAndReturnString("string");
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1847,7 +1847,7 @@ await client.endpoints.primitive.getAndReturnInt(1);
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1896,7 +1896,7 @@ await client.endpoints.primitive.getAndReturnLong(1000000);
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1945,7 +1945,7 @@ await client.endpoints.primitive.getAndReturnDouble(1.1);
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1994,7 +1994,7 @@ await client.endpoints.primitive.getAndReturnBool(true);
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2043,7 +2043,7 @@ await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2092,7 +2092,7 @@ await client.endpoints.primitive.getAndReturnDate("2023-01-15");
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2141,7 +2141,7 @@ await client.endpoints.primitive.getAndReturnUuid("d5e9c84f-c2b2-4bf4-b4b0-7ffd7
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2190,7 +2190,7 @@ await client.endpoints.primitive.getAndReturnBase64("SGVsbG8gd29ybGQh");
 <dl>
 <dd>
 
-**requestOptions:** `Primitive.RequestOptions` 
+**requestOptions:** `PrimitiveClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2242,7 +2242,7 @@ await client.endpoints.put.add({
 <dl>
 <dd>
 
-**requestOptions:** `Put.RequestOptions` 
+**requestOptions:** `PutClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2296,7 +2296,7 @@ await client.endpoints.union.getAndReturnUnion({
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2338,7 +2338,7 @@ await client.endpoints.urls.withMixedCase();
 <dl>
 <dd>
 
-**requestOptions:** `Urls.RequestOptions` 
+**requestOptions:** `UrlsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2379,7 +2379,7 @@ await client.endpoints.urls.noEndingSlash();
 <dl>
 <dd>
 
-**requestOptions:** `Urls.RequestOptions` 
+**requestOptions:** `UrlsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2420,7 +2420,7 @@ await client.endpoints.urls.withEndingSlash();
 <dl>
 <dd>
 
-**requestOptions:** `Urls.RequestOptions` 
+**requestOptions:** `UrlsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2461,7 +2461,7 @@ await client.endpoints.urls.withUnderscores();
 <dl>
 <dd>
 
-**requestOptions:** `Urls.RequestOptions` 
+**requestOptions:** `UrlsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2545,7 +2545,7 @@ await client.inlinedRequests.postWithObjectBodyandResponse({
 <dl>
 <dd>
 
-**requestOptions:** `InlinedRequests.RequestOptions` 
+**requestOptions:** `InlinedRequestsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2611,7 +2611,7 @@ await client.noAuth.postWithNoAuth({
 <dl>
 <dd>
 
-**requestOptions:** `NoAuth.RequestOptions` 
+**requestOptions:** `NoAuthClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2653,7 +2653,7 @@ await client.noReqBody.getWithNoRequestBody();
 <dl>
 <dd>
 
-**requestOptions:** `NoReqBody.RequestOptions` 
+**requestOptions:** `NoReqBodyClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2694,7 +2694,7 @@ await client.noReqBody.postWithNoRequestBody();
 <dl>
 <dd>
 
-**requestOptions:** `NoReqBody.RequestOptions` 
+**requestOptions:** `NoReqBodyClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2748,7 +2748,7 @@ await client.reqWithHeaders.getWithCustomHeader({
 <dl>
 <dd>
 
-**requestOptions:** `ReqWithHeaders.RequestOptions` 
+**requestOptions:** `ReqWithHeadersClient.RequestOptions` 
     
 </dd>
 </dl>

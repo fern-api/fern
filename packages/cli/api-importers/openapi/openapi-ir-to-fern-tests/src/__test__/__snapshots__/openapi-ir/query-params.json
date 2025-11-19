@@ -196,7 +196,7 @@
               "type": "object"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -229,7 +229,7 @@
               "type": "enum"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -251,7 +251,7 @@
               "type": "primitive"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -270,16 +270,15 @@
                     "schema": {
                       "type": "int"
                     },
-                    "generatedName": "SearchRequestAfter",
+                    "generatedName": "SearchRequestAfterZero",
                     "groupName": [],
                     "type": "primitive"
                   },
                   {
                     "schema": {
-                      "format": "date",
-                      "type": "string"
+                      "type": "date"
                     },
-                    "generatedName": "SearchRequestAfter",
+                    "generatedName": "SearchRequestAfterOne",
                     "groupName": [],
                     "type": "primitive"
                   }
@@ -294,7 +293,7 @@
               "type": "oneOf"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -319,7 +318,7 @@
               "type": "array"
             },
             "groupName": [],
-            "type": "nullable"
+            "type": "optional"
           },
           "source": {
             "file": "../openapi.yml",
@@ -386,35 +385,7 @@
       "examples": [
         {
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "sort",
-              "value": {
-                "value": "asc",
-                "type": "enum"
-              }
-            },
-            {
-              "name": "limit",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            },
-            {
-              "name": "after",
-              "value": {
-                "value": {
-                  "value": 1,
-                  "type": "int"
-                },
-                "type": "primitive"
-              }
-            }
-          ],
+          "queryParameters": [],
           "headers": [],
           "response": {
             "value": {

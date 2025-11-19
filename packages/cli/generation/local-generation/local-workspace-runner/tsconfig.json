@@ -17,6 +17,18 @@
       "path": "../../../task-context"
     },
     {
+      "path": "../../../../../generators/swift/dynamic-snippets"
+    },
+    {
+      "path": "../../../../../generators/rust/dynamic-snippets"
+    },
+    {
+      "path": "../../../../../generators/ruby-v2/dynamic-snippets"
+    },
+    {
+      "path": "../../remote-generation/remote-workspace-runner"
+    },
+    {
       "path": "../../../../../generators/python-v2/dynamic-snippets"
     },
     {
@@ -41,7 +53,7 @@
       "path": "../../../../../generators/go-v2/dynamic-snippets"
     },
     {
-      "path": "../../../../../generators/ruby-v2/dynamic-snippets"
+      "path": "../../../../commons/github"
     },
     {
       "path": "../../../../commons/fs-utils"
@@ -56,31 +68,28 @@
       "path": "../../../../commons/core-utils"
     },
     {
+      "path": "../../../../core"
+    },
+    {
+      "path": "../../../configuration-loader"
+    },
+    {
       "path": "../../../configuration"
     },
     {
       "path": "../../../cli-source-resolver"
     },
     {
+      "path": "../../../ai"
+    },
+    {
       "path": "../../../../../generators/browser-compatible-base"
-    },
-    {
-      "path": "../../../workspace/commons"
-    },
-    {
-      "path": "../../../configuration-loader"
     },
     {
       "path": "../../../auth"
     },
     {
-      "path": "../../../../core"
-    },
-    {
-      "path": "../../../../../generators/swift/dynamic-snippets"
-    },
-    {
-      "path": "../../../../../generators/rust/dynamic-snippets"
+      "path": "../../../workspace/commons"
     }
   ]
 }

@@ -78,7 +78,7 @@ export function buildGlobalHeaders(context: OpenApiIrConverterContext): void {
         });
     }
 
-    if (context.detectGlobalHeaders) {
+    if (context.options.detectGlobalHeaders) {
         const globalHeaders: Record<string, HeaderWithCount> = {};
         for (const endpoint of context.ir.endpoints) {
             for (const header of endpoint.headers) {

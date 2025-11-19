@@ -3,12 +3,18 @@
 module Seed
   module CustomAuth
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::CustomAuth::Client]
       def initialize(client:)
         @client = client
       end
 
       # GET request with custom auth scheme
+      #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [bool]
       def get_with_custom_auth(request_options: {}, **_params)
@@ -30,6 +36,10 @@ module Seed
       end
 
       # POST request with custom auth scheme
+      #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [bool]
       def post_with_custom_auth(request_options: {}, **params)

@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ....commons.language import Language
 from .basic_test_case_template import BasicTestCaseTemplate
@@ -32,5 +33,7 @@ class CustomFiles_Custom(UniversalBaseModel):
     type: typing.Literal["custom"] = "custom"
 
 
-CustomFiles = typing.Union[CustomFiles_Basic, CustomFiles_Custom]
+CustomFiles = typing_extensions.Annotated[
+    typing.Union[CustomFiles_Basic, CustomFiles_Custom], pydantic.Field(discriminator="type")
+]
 update_forward_refs(CustomFiles_Basic)

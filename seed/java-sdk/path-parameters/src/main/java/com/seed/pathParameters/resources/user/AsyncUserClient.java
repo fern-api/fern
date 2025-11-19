@@ -5,6 +5,8 @@ package com.seed.pathParameters.resources.user;
 
 import com.seed.pathParameters.core.ClientOptions;
 import com.seed.pathParameters.core.RequestOptions;
+import com.seed.pathParameters.resources.user.requests.GetUserMetadataRequest;
+import com.seed.pathParameters.resources.user.requests.GetUserSpecificsRequest;
 import com.seed.pathParameters.resources.user.requests.GetUsersRequest;
 import com.seed.pathParameters.resources.user.requests.SearchUsersRequest;
 import com.seed.pathParameters.resources.user.requests.UpdateUserRequest;
@@ -68,5 +70,60 @@ public class AsyncUserClient {
     public CompletableFuture<List<User>> searchUsers(
             String userId, SearchUsersRequest request, RequestOptions requestOptions) {
         return this.rawClient.searchUsers(userId, request, requestOptions).thenApply(response -> response.body());
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
+    public CompletableFuture<User> getUserMetadata(String userId, int version) {
+        return this.rawClient.getUserMetadata(userId, version).thenApply(response -> response.body());
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
+    public CompletableFuture<User> getUserMetadata(String userId, int version, GetUserMetadataRequest request) {
+        return this.rawClient.getUserMetadata(userId, version, request).thenApply(response -> response.body());
+    }
+
+    /**
+     * Test endpoint with path parameter that has a text prefix (v{version})
+     */
+    public CompletableFuture<User> getUserMetadata(
+            String userId, int version, GetUserMetadataRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .getUserMetadata(userId, version, request, requestOptions)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public CompletableFuture<User> getUserSpecifics(String userId, int version, String thought) {
+        return this.rawClient.getUserSpecifics(userId, version, thought).thenApply(response -> response.body());
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public CompletableFuture<User> getUserSpecifics(
+            String userId, int version, String thought, GetUserSpecificsRequest request) {
+        return this.rawClient
+                .getUserSpecifics(userId, version, thought, request)
+                .thenApply(response -> response.body());
+    }
+
+    /**
+     * Test endpoint with path parameters listed in different order than found in path
+     */
+    public CompletableFuture<User> getUserSpecifics(
+            String userId,
+            int version,
+            String thought,
+            GetUserSpecificsRequest request,
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .getUserSpecifics(userId, version, thought, request, requestOptions)
+                .thenApply(response -> response.body());
     }
 }

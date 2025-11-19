@@ -7,7 +7,15 @@
     "useIgnoreFile": false
   },
   "files": {
-    "includes": ["**", "!!**/lib", "!!**/dist", "!!seed", "!!generators/typescript/asIs/biome.json"],
+    "includes": [
+      "**",
+      "!packages/cli/ai/src/baml_client/**",
+      "!!**/lib",
+      "!!**/dist",
+      "!!seed",
+      "!!generators/typescript/asIs/biome.json",
+      "!!seed-remote-local"
+    ],
     "ignoreUnknown": false,
     "maxSize": 80000000
   },
@@ -194,7 +202,9 @@
         "**/example-code.js",
         "generators/base/src/AbstractGeneratorCli.ts",
         "packages/cli/docs-resolver/src/__test__/fixtures/dry/fern/fibonacci.js",
-        "packages/cli/ete-tests/src/tests/generate/fixtures/docs/fern/js/custom.js"
+        "packages/cli/ete-tests/src/tests/generate/fixtures/docs/fern/js/custom.js",
+        "packages/generator-cli/src/**/*.ts",
+        "packages/commons/github/src/**/*.ts"
       ],
       "linter": {
         "rules": {
@@ -205,7 +215,10 @@
       }
     },
     {
-      "includes": ["packages/cli/init/src/__test__/initializeWithMintlify.test.ts"],
+      "includes": [
+        "packages/cli/init/src/__test__/initializeWithMintlify.test.ts",
+        "packages/generator-cli/src/**/*.ts"
+      ],
       "linter": {
         "rules": {
           "suspicious": {
@@ -217,7 +230,8 @@
     {
       "includes": [
         "packages/cli/docs-markdown-utils/src/__test__/parseImagePaths.test.ts",
-        "packages/cli/fern-definition/validator/src/rules/valid-oauth/__test__/valid-oauth.test.ts"
+        "packages/cli/fern-definition/validator/src/rules/valid-oauth/__test__/valid-oauth.test.ts",
+        "packages/generator-cli/src/__test__/testGenerateReadme.ts"
       ],
       "linter": {
         "rules": {
@@ -234,7 +248,9 @@
         "packages/cli/ete-tests/src/tests/protoc-gen-fern/protoc-gen-fern.test.ts",
         "packages/cli/ete-tests/src/tests/upgrade-generator/upgrade-generator.test.ts",
         "packages/cli/generation/ir-generator-tests/src/ir/__test__/breakingChangeDetector.test.ts",
-        "packages/cli/generation/ir-generator-tests/src/ir/__test__/generateIntermediateRepresentation.test.ts"
+        "packages/cli/generation/ir-generator-tests/src/ir/__test__/generateIntermediateRepresentation.test.ts",
+        "packages/generator-cli/src/__test__/pr.test.ts",
+        "packages/commons/github/src/__test__/getLatestTag.test.ts"
       ],
       "linter": {
         "rules": {
@@ -360,6 +376,7 @@
         "packages/cli/fern-definition/schema/src/schemas/**",
         "packages/cli/configuration/src/generators-yml/schemas/**",
         "packages/ir-sdk/**",
+        "packages/generator-cli/src/configuration/sdk/**",
         "packages/cli/configuration/src/docs-yml/schemas/**",
         "packages/cli/openapi-ir-sdk/**",
         "packages/seed/src/config/**",

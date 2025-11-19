@@ -1,6 +1,10 @@
 name: Publish @fern-api/csharp-dynamic-snippets
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - generators/csharp/dynamic-snippets/**
   workflow_dispatch:
     inputs:
       version:
@@ -19,7 +23,10 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    if: ${{ inputs.version != null }}
+    if: ${{ github.repository == 'fern-api/fern' && (github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, '[skip publish]')) }}
+    concurrency:
+      group: publish-csharp-dynamic-snippets
+      cancel-in-progress: true
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -31,6 +38,19 @@ jobs:
 
       - name: Update npm
         run: npm install -g npm@latest
+
+      - name: Determine version
+        id: ver
+        shell: bash
+        run: |
+          PKG="${{ env.PACKAGE_NAME }}"
+          if [ -n "${{ inputs.version }}" ]; then
+            NEW_VERSION="${{ inputs.version }}"
+          else
+            CURRENT=$(npm view "$PKG" version 2>/dev/null || echo "0.0.0")
+            NEW_VERSION=$(node -e "const v='$CURRENT'.split('.').map(Number); v[2]++; console.log(v.join('.'))")
+          fi
+          echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -52,7 +72,7 @@ jobs:
       - name: Publish @fern-api/csharp-dynamic-snippets
         run: |
           cd generators/csharp/dynamic-snippets
-          pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ inputs.version }}
+          pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ steps.ver.outputs.version }}
           cd dist
           npm publish --access public --tag latest
 
@@ -60,5 +80,5 @@ jobs:
         uses: ./.github/actions/update-fern-platform-dependency
         with:
           package-name: ${{ env.PACKAGE_NAME }}
-          version: ${{ inputs.version }}
+          version: ${{ steps.ver.outputs.version }}
           github-token: ${{ secrets.FERN_GITHUB_TOKEN }}

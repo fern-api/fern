@@ -37,10 +37,8 @@ service:
         - trainsRoot.InternalServerError
       examples:
         - query-parameters:
-            bicycles: true
             date: '2024-02-01T09:00:00Z'
             destination: b2e783e1-c824-4d63-b37a-d8d698862f1d
-            dogs: true
             origin: efdbb9d1-02c2-4bc3-afb7-6788d8782b1e
           response:
             body:

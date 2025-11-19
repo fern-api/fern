@@ -36,10 +36,10 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-api/typescript-base": "workspace:*",
-    "@fern-fern/ir-sdk": "61.6.0",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "decompress": "^4.2.1",
     "esutils": "^2.0.3",
-    "glob": "^11.0.0",
+    "glob": "^11.1.0",
     "immer": "^10.1.1",
     "lodash-es": "^4.17.21",
     "tmp-promise": "^3.0.3",
@@ -57,6 +57,6 @@
     "memfs": "^3.4.1",
     "package-json-type": "^1.0.3",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

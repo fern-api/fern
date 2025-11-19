@@ -4,6 +4,6 @@
   "private": true,
   "license": "MIT",
   "devDependencies": {
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

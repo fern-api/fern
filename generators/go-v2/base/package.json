@@ -27,7 +27,6 @@
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
     "dist:cli": "pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
-    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-go-model:latest ../../..",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
@@ -46,12 +45,12 @@
     "@fern-api/go-ast": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
-    "@fern-fern/ir-sdk": "^60.3.1",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "@types/node": "18.15.3",
     "dedent": "^1.5.1",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

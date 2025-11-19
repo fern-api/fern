@@ -50,7 +50,7 @@ export const Error = {
             case "PlaylistIdNotFoundError":
                 return visitor.playlistIdNotFoundError(value.content);
             default:
-                return visitor._other(value as any);
+                return visitor._other(value.content);
         }
     },
 } as const;

@@ -990,6 +990,7 @@
     },
     "pathParameters": []
   },
+  "apiPlayground": true,
   "subpackages": {
     "subpackage_chatCompletions": {
       "fernFilepath": {

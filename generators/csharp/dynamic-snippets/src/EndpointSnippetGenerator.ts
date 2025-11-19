@@ -3,9 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { ast, is, WithGeneration } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { camelCase, upperFirst } from "lodash-es";
-
 import { Config } from "./Config";
-
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { FilePropertyInfo } from "./context/FilePropertyMapper";
 
@@ -13,7 +11,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
     private context: DynamicSnippetsGeneratorContext;
 
     constructor({ context }: { context: DynamicSnippetsGeneratorContext }) {
-        super(context);
+        super(context.generation);
         this.context = context;
     }
 
@@ -98,7 +96,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
 
         // before we add the method, we're going to make the class aware of the root client namespace
         // which can help when finding out if we're going to have an ambiguous type of some kind.
-        class_.addNamespaceReference(this.types.RootClient.namespace);
+        class_.addNamespaceReference(this.Types.RootClient.namespace);
 
         class_.addMethod({
             name: "Do",
@@ -201,7 +199,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
             {
                 name: "clientOptions",
                 assignment: this.csharp.instantiateClass({
-                    classReference: this.types.ClientOptions,
+                    classReference: this.Types.ClientOptions,
                     arguments_: optionArgs.map((arg) => ({
                         name: arg.name,
                         assignment: arg.assignment
@@ -220,7 +218,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         environment: FernIr.dynamic.EnvironmentValues | undefined;
     }): NamedArgument[] {
         const baseUrlArg = this.getBaseUrlArg({ baseUrl, environment });
-        if (this.csharp.TypeLiteral.isNop(baseUrlArg)) {
+        if (is.Literal.nop(baseUrlArg)) {
             return [];
         }
         return [
@@ -237,13 +235,13 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }: {
         baseUrl: string | undefined;
         environment: FernIr.dynamic.EnvironmentValues | undefined;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         if (baseUrl != null && environment != null) {
             this.context.errors.add({
                 severity: Severity.Critical,
                 message: "Cannot specify both baseUrl and environment options"
             });
-            return this.csharp.TypeLiteral.nop();
+            return this.csharp.Literal.nop();
         }
         if (baseUrl != null) {
             if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
@@ -251,9 +249,9 @@ export class EndpointSnippetGenerator extends WithGeneration {
                     severity: Severity.Critical,
                     message: "The C# SDK doesn't support a baseUrl when multiple URL environments are configured"
                 });
-                return this.csharp.TypeLiteral.nop();
+                return this.csharp.Literal.nop();
             }
-            return this.csharp.TypeLiteral.string(baseUrl);
+            return this.csharp.Literal.string(baseUrl);
         }
         if (environment != null) {
             if (this.context.isSingleEnvironmentID(environment)) {
@@ -263,20 +261,20 @@ export class EndpointSnippetGenerator extends WithGeneration {
                         severity: Severity.Warning,
                         message: `Environment ${JSON.stringify(environment)} was not found`
                     });
-                    return this.csharp.TypeLiteral.nop();
+                    return this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.reference(classReference);
+                return this.csharp.Literal.reference(classReference);
             }
             if (this.context.isMultiEnvironmentValues(environment)) {
                 if (!this.context.validateMultiEnvironmentUrlValues(environment)) {
-                    return this.csharp.TypeLiteral.nop();
+                    return this.csharp.Literal.nop();
                 }
-                return this.csharp.TypeLiteral.reference(
+                return this.csharp.Literal.reference(
                     this.csharp.instantiateClass({
-                        classReference: this.types.Environments,
+                        classReference: this.Types.Environments,
                         arguments_: Object.entries(environment).map(([key, value]) => ({
                             name: upperFirst(camelCase(key)),
-                            assignment: this.context.dynamicTypeLiteralMapper.convert({
+                            assignment: this.context.dynamicLiteralMapper.convert({
                                 typeReference: {
                                     type: "primitive",
                                     value: "STRING"
@@ -289,7 +287,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 );
             }
         }
-        return this.csharp.TypeLiteral.nop();
+        return this.csharp.Literal.nop();
     }
 
     private getConstructorAuthArgs({
@@ -339,11 +337,11 @@ export class EndpointSnippetGenerator extends WithGeneration {
         return [
             {
                 name: this.context.getParameterName(auth.username),
-                assignment: this.csharp.TypeLiteral.string(values.username)
+                assignment: this.csharp.Literal.string(values.username)
             },
             {
                 name: this.context.getParameterName(auth.password),
-                assignment: this.csharp.TypeLiteral.string(values.password)
+                assignment: this.csharp.Literal.string(values.password)
             }
         ];
     }
@@ -358,7 +356,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         return [
             {
                 name: this.context.getParameterName(auth.token),
-                assignment: this.csharp.TypeLiteral.string(values.token)
+                assignment: this.csharp.Literal.string(values.token)
             }
         ];
     }
@@ -373,9 +371,10 @@ export class EndpointSnippetGenerator extends WithGeneration {
         return [
             {
                 name: this.context.getParameterName(auth.header.name.name),
-                assignment: this.context.dynamicTypeLiteralMapper.convert({
+                assignment: this.context.dynamicLiteralMapper.convert({
                     typeReference: auth.header.typeReference,
-                    value: values.value
+                    value: values.value,
+                    fallbackToDefault: auth.header.name.wireValue
                 })
             }
         ];
@@ -391,11 +390,11 @@ export class EndpointSnippetGenerator extends WithGeneration {
         return [
             {
                 name: this.context.getParameterName(auth.clientId),
-                assignment: this.csharp.TypeLiteral.string(values.clientId)
+                assignment: this.csharp.Literal.string(values.clientId)
             },
             {
                 name: this.context.getParameterName(auth.clientSecret),
-                assignment: this.csharp.TypeLiteral.string(values.clientSecret)
+                assignment: this.csharp.Literal.string(values.clientSecret)
             }
         ];
     }
@@ -426,12 +425,13 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }: {
         header: FernIr.dynamic.NamedParameter;
         value: unknown;
-    }): ast.TypeLiteral | undefined {
-        const typeLiteral = this.context.dynamicTypeLiteralMapper.convert({
+    }): ast.Literal | undefined {
+        const typeLiteral = this.context.dynamicLiteralMapper.convert({
             typeReference: header.typeReference,
-            value
+            value,
+            fallbackToDefault: header.name.wireValue
         });
-        if (this.csharp.TypeLiteral.isNop(typeLiteral)) {
+        if (is.Literal.nop(typeLiteral)) {
             // Literal header values (e.g. "X-API-Version") should not be included in the
             // client constructor.
             return undefined;
@@ -445,7 +445,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ast.TypeLiteral[] {
+    }): ast.Literal[] {
         switch (endpoint.request.type) {
             case "inlined":
                 return this.getMethodArgsForInlinedRequest({ request: endpoint.request, snippet });
@@ -462,8 +462,8 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }: {
         request: FernIr.dynamic.InlinedRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ast.TypeLiteral[] {
-        const args: ast.TypeLiteral[] = [];
+    }): ast.Literal[] {
+        const args: ast.Literal[] = [];
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameterFields: ast.ConstructorField[] = [];
@@ -532,7 +532,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
         pathParameterFields: ast.ConstructorField[];
         filePropertyInfo: FilePropertyInfo;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         this.context.errors.scope(Scope.QueryParameters);
         const queryParameters = this.context.associateQueryParametersByWireValue({
             parameters: request.queryParameters ?? [],
@@ -540,7 +540,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
         });
         const queryParameterFields = queryParameters.map((queryParameter) => ({
             name: this.context.getPropertyName(queryParameter.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
+            value: this.context.dynamicLiteralMapper.convert(queryParameter)
         }));
         this.context.errors.unscope();
 
@@ -551,7 +551,10 @@ export class EndpointSnippetGenerator extends WithGeneration {
         });
         const headerFields = headers.map((header) => ({
             name: this.context.getPropertyName(header.name.name),
-            value: this.context.dynamicTypeLiteralMapper.convert(header)
+            value: this.context.dynamicLiteralMapper.convert({
+                ...header,
+                fallbackToDefault: header.name.wireValue
+            })
         }));
         this.context.errors.unscope();
 
@@ -566,7 +569,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 : [];
         this.context.errors.unscope();
 
-        return this.csharp.TypeLiteral.class_({
+        return this.csharp.Literal.class_({
             reference: this.csharp.classReference({
                 origin: request.declaration,
                 namespace: this.context.getNamespace(request.declaration.fernFilepath)
@@ -612,7 +615,10 @@ export class EndpointSnippetGenerator extends WithGeneration {
         for (const parameter of bodyProperties) {
             fields.push({
                 name: this.context.getPropertyName(parameter.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                value: this.context.dynamicLiteralMapper.convert({
+                    ...parameter,
+                    fallbackToDefault: parameter.name.wireValue
+                })
             });
         }
 
@@ -636,22 +642,26 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }): ast.ConstructorField {
         return {
             name: this.context.getPropertyName(body.bodyKey),
-            value: this.getReferencedRequestBodyPropertyTypeLiteral({ body: body.bodyType, value })
+            value: this.getReferencedRequestBodyPropertyLiteral({ body: body.bodyType, value })
         };
     }
 
-    private getReferencedRequestBodyPropertyTypeLiteral({
+    private getReferencedRequestBodyPropertyLiteral({
         body,
         value
     }: {
         body: FernIr.dynamic.ReferencedRequestBodyType;
         value: unknown;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         switch (body.type) {
             case "bytes":
                 return this.getBytesBodyRequestArg({ value });
             case "typeReference":
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicLiteralMapper.convert({
+                    typeReference: body.value,
+                    value,
+                    fallbackToDefault: JSON.stringify(body.value)
+                });
             default:
                 assertNever(body);
         }
@@ -663,8 +673,8 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }: {
         request: FernIr.dynamic.BodyRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ast.TypeLiteral[] {
-        const args: ast.TypeLiteral[] = [];
+    }): ast.Literal[] {
+        const args: ast.Literal[] = [];
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
         if (pathParameters.length > 0) {
@@ -689,7 +699,7 @@ export class EndpointSnippetGenerator extends WithGeneration {
     }: {
         body: FernIr.dynamic.ReferencedRequestBodyType;
         value: unknown;
-    }): ast.TypeLiteral {
+    }): ast.Literal {
         switch (body.type) {
             case "bytes": {
                 return this.getBytesBodyRequestArg({ value });
@@ -698,15 +708,19 @@ export class EndpointSnippetGenerator extends WithGeneration {
                 // if the body type is optional, but not provided, then we should use null
                 // (the generated body arg parameter is currently required)
                 if (body.value.type === "optional" && value == undefined) {
-                    return this.csharp.TypeLiteral.null();
+                    return this.csharp.Literal.null();
                 }
-                return this.context.dynamicTypeLiteralMapper.convert({ typeReference: body.value, value });
+                return this.context.dynamicLiteralMapper.convert({
+                    typeReference: body.value,
+                    value,
+                    fallbackToDefault: JSON.stringify(body.value)
+                });
             default:
                 assertNever(body);
         }
     }
 
-    private getBytesBodyRequestArg({ value }: { value: unknown }): ast.TypeLiteral {
+    private getBytesBodyRequestArg({ value }: { value: unknown }): ast.Literal {
         let str = this.context.getValueAsString({ value });
         if (str == null) {
             this.context.errors.add({
@@ -717,12 +731,12 @@ export class EndpointSnippetGenerator extends WithGeneration {
             // if there is no value, then let's just use a random string
             str = "[bytes]";
         }
-        return this.csharp.TypeLiteral.reference(this.context.getMemoryStreamForString(str));
+        return this.csharp.Literal.reference(this.context.getMemoryStreamForString(str));
     }
 
     private getRootClientConstructorInvocation(arguments_: NamedArgument[]): ast.ClassInstantiation {
         return this.csharp.instantiateClass({
-            classReference: this.types.RootClient,
+            classReference: this.Types.RootClient,
             arguments_,
             forceUseConstructor: true,
             multiline: true
@@ -744,7 +758,10 @@ export class EndpointSnippetGenerator extends WithGeneration {
         for (const parameter of pathParameters) {
             args.push({
                 name: this.context.getPropertyName(parameter.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                value: this.context.dynamicLiteralMapper.convert({
+                    ...parameter,
+                    fallbackToDefault: parameter.name.wireValue
+                })
             });
         }
         return args;

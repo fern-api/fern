@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("SeedAliasExtendsClient", () => {
     test("extendedInlineRequestBody", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedAliasExtendsClientType({ environment: server.baseUrl });
+        const client = new SeedAliasExtendsClientType({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { child: "child", parent: "parent" };
 
         server

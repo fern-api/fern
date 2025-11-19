@@ -113,6 +113,29 @@ export interface StackTraceFrame {
     position: string;
 }
 
+const globalFunctionFilters = new Set<string>(["SdkGeneratorCLI", "runCli", "LoggerImpl", "Array.forEach"]);
+const globalFileFilters = new Set<string>(["stacktrace"]);
+
+/**
+ * Adds a function name to the global function filters for stack traces
+ * @param filter - The function name to add to the global function filters.
+ */
+export function addGlobalFunctionFilter(filter: string): void {
+    if (enableStackTracking) {
+        globalFunctionFilters.add(filter);
+    }
+}
+
+/**
+ * Adds a file path to the global file filters for stack traces.
+ * @param filter - The file path to add to the global file filters.
+ */
+export function addGlobalFileFilter(filter: string): void {
+    if (enableStackTracking) {
+        globalFileFilters.add(filter);
+    }
+}
+
 /**
  * Captures and parses the current call stack, returning an array of stack frames with filtering options.
  *
@@ -164,18 +187,8 @@ export function stacktrace({
     if (!enableStackTracking) {
         return [];
     }
-    filterFunctions = [
-        ...filterFunctions,
-        "SdkGeneratorCLI",
-        "runCli",
-        "Frames.trace",
-        "Frames.tag",
-        "at",
-        "stacktrace",
-        "LoggerImpl",
-        "Array.forEach",
-        "tag"
-    ];
+    filterFunctions = [...filterFunctions, ...globalFunctionFilters];
+    filterPaths = [...filterPaths, ...globalFileFilters];
     stopOn = [...stopOn, "runInteractiveTask"];
     let stop = false;
     return (
@@ -206,14 +219,17 @@ export function stacktrace({
                             fn = `${fn.substring(fn.indexOf(".") + 1)}()=> { ... }`;
                             break;
                     }
-                    return { fn, path, position: `${line}:${column}` } as StackTraceFrame;
+                    return {
+                        fn,
+                        path: formatFilename(path),
+                        position: `${line}:${column}`
+                    } as StackTraceFrame;
                 }
                 return undefined;
             })
             .filter(
                 (each) =>
                     each &&
-                    !["at", "stacktrace", "Frames.trace", "Frames.tag"].includes(each.fn) && // don't return the stack trace function itself
                     !filterFunctions.some((f) => each.fn.includes(f)) && // substring match for filter functions
                     !(filterNode && each.path?.startsWith("node:")) && // starts with node:
                     !(filterJs && each.path?.endsWith(".js")) && // ends with .js (meaning likely not a source file - no source map info)
@@ -278,7 +294,7 @@ export function at({
     formatFilename = (filename) => filename
 }: StackTraceOptions & { multiline?: boolean } = {}): string {
     return enableStackTracking
-        ? `${stacktrace({ maxFrames, skip, filterPaths, filterFunctions, stopOn, filterNode, filterJs })
+        ? `${stacktrace({ maxFrames, skip, filterPaths, filterFunctions, stopOn, filterNode, filterJs, formatFilename })
               .map((each) => `${multiline ? "\n    " : " > "}${each.fn} - ${each.path}:${each.position}`)
               .join("")}`
         : "";
@@ -335,7 +351,8 @@ export class StackTraces {
             filterFunctions: this.filterFunctions,
             stopOn: this.stopOn,
             filterNode: this.filterNode,
-            filterJs: this.filterJs
+            filterJs: this.filterJs,
+            formatFilename: this.formatFilename
         }).forEach((frame) => current.add(frame));
         this.tracking.set(obj, current);
     }
@@ -474,6 +491,6 @@ export function free(obj: object) {
  * @param obj - The object to get the stack trace frames for.
  * @returns The stack trace frames for the given object.
  */
-export function frames(obj: object): StackTraceFrame[] {
+export function getFramesForTaggedObject(obj: object): StackTraceFrame[] {
     return stackTraces?.frames(obj) ?? [];
 }

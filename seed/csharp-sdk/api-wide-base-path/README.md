@@ -5,6 +5,18 @@
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+- [Contributing](#contributing)
+
 ## Requirements
 
 This SDK requires:
@@ -27,7 +39,7 @@ Instantiate and use the client with the following:
 using SeedApiWideBasePath;
 
 var client = new SeedApiWideBasePathClient();
-await client.Service.PostAsync("pathParam", "serviceParam", "resourceParam", 1);
+await client.Service.PostAsync("pathParam", "serviceParam", 1, "resourceParam");
 ```
 
 ## Exception Handling

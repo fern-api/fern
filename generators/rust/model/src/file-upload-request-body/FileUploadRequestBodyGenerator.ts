@@ -13,8 +13,8 @@ import {
     QueryParameter,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-import { RequestGenerator } from "../inlined-request-body/RequestGenerator";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+import { FileUploadRequestGenerator } from "./FileUploadRequestGenerator";
 
 export class FileUploadRequestBodyGenerator {
     private readonly ir: IntermediateRepresentation;
@@ -58,26 +58,24 @@ export class FileUploadRequestBodyGenerator {
             // Get the unique type name (may have suffix if there's a collision)
             const uniqueRequestName = this.context.getFileUploadRequestTypeName(endpoint.id);
 
-            // Extract InlinedRequestBodyProperty from FileUploadRequestProperty union
-            const bodyProperties = this.extractBodyProperties(requestBody.properties);
+            // Extract all properties and separate files from body properties
+            const { allProperties, fileProperties, bodyProperties } = this.extractProperties(
+                requestBody.properties,
+                endpoint.queryParameters
+            );
 
-            // Add query parameters as properties for mixed endpoints
-            if (endpoint.queryParameters?.length > 0) {
-                const queryProperties = this.convertQueryParametersToProperties(endpoint.queryParameters);
-                bodyProperties.push(...queryProperties);
-            }
-
-            // Create RequestGenerator to generate the struct with unique type name
-            const objectGenerator = new RequestGenerator({
+            // Create FileUploadRequestGenerator to generate the struct with to_multipart() method
+            const generator = new FileUploadRequestGenerator({
                 name: uniqueRequestName,
-                properties: bodyProperties, // Now includes query params
-                extendedProperties: [],
+                properties: allProperties,
+                fileProperties,
+                bodyProperties,
                 docsContent: undefined,
                 context: this.context
             });
 
             // Generate the file content
-            const fileContents = objectGenerator.generateFileContents();
+            const fileContents = generator.generateFileContents();
 
             return new RustFile({
                 filename,
@@ -91,13 +89,21 @@ export class FileUploadRequestBodyGenerator {
         }
     }
 
-    // Extract InlinedRequestBodyProperty from FileUploadRequestProperty union
-    private extractBodyProperties(properties: FileUploadRequestProperty[]): InlinedRequestBodyProperty[] {
+    // Extract all properties and categorize them
+    private extractProperties(
+        properties: FileUploadRequestProperty[],
+        queryParameters?: QueryParameter[]
+    ): {
+        allProperties: InlinedRequestBodyProperty[];
+        fileProperties: Array<{ name: string; isArray: boolean; isOptional: boolean }>;
+        bodyProperties: InlinedRequestBodyProperty[];
+    } {
+        const allProperties: InlinedRequestBodyProperty[] = [];
+        const fileProperties: Array<{ name: string; isArray: boolean; isOptional: boolean }> = [];
         const bodyProperties: InlinedRequestBodyProperty[] = [];
 
         for (const property of properties) {
             // FileUploadRequestProperty is a union of file | bodyProperty
-            // We use _visit to handle both cases
             property._visit({
                 file: (fileProperty) => {
                     // For file properties, we need to visit the FileProperty to get the actual structure
@@ -110,7 +116,7 @@ export class FileUploadRequestBodyGenerator {
                             };
                             const fileType = TypeReference.primitive(primitiveType);
 
-                            bodyProperties.push({
+                            const prop: InlinedRequestBodyProperty = {
                                 name: fileSingle.key,
                                 valueType: fileSingle.isOptional
                                     ? TypeReference.container(ContainerType.optional(fileType))
@@ -119,6 +125,13 @@ export class FileUploadRequestBodyGenerator {
                                 availability: undefined,
                                 propertyAccess: undefined,
                                 v2Examples: undefined
+                            };
+
+                            allProperties.push(prop);
+                            fileProperties.push({
+                                name: fileSingle.key.name.originalName,
+                                isArray: false,
+                                isOptional: fileSingle.isOptional
                             });
                         },
                         fileArray: (fileArray) => {
@@ -130,7 +143,7 @@ export class FileUploadRequestBodyGenerator {
                             const fileType = TypeReference.primitive(primitiveType);
                             const listType = TypeReference.container(ContainerType.list(fileType));
 
-                            bodyProperties.push({
+                            const prop: InlinedRequestBodyProperty = {
                                 name: fileArray.key,
                                 valueType: fileArray.isOptional
                                     ? TypeReference.container(ContainerType.optional(listType))
@@ -139,6 +152,13 @@ export class FileUploadRequestBodyGenerator {
                                 availability: undefined,
                                 propertyAccess: undefined,
                                 v2Examples: undefined
+                            };
+
+                            allProperties.push(prop);
+                            fileProperties.push({
+                                name: fileArray.key.name.originalName,
+                                isArray: true,
+                                isOptional: fileArray.isOptional
                             });
                         },
                         _other: () => {
@@ -148,6 +168,7 @@ export class FileUploadRequestBodyGenerator {
                 },
                 bodyProperty: (bodyProperty) => {
                     // For body properties, use them directly as they are already InlinedRequestBodyProperty
+                    allProperties.push(bodyProperty);
                     bodyProperties.push(bodyProperty);
                 },
                 _other: () => {
@@ -156,18 +177,33 @@ export class FileUploadRequestBodyGenerator {
             });
         }
 
-        return bodyProperties;
+        // Add query parameters as properties for mixed endpoints
+        if (queryParameters && queryParameters.length > 0) {
+            const queryProps = this.convertQueryParametersToProperties(queryParameters);
+            allProperties.push(...queryProps);
+            bodyProperties.push(...queryProps);
+        }
+
+        return { allProperties, fileProperties, bodyProperties };
     }
 
     // Helper method to convert query parameters to object properties
     private convertQueryParametersToProperties(queryParams: QueryParameter[]): InlinedRequestBodyProperty[] {
-        return queryParams.map((queryParam) => ({
-            name: queryParam.name,
-            valueType: queryParam.valueType,
-            docs: queryParam.docs,
-            availability: queryParam.availability,
-            propertyAccess: undefined,
-            v2Examples: undefined
-        }));
+        return queryParams.map((queryParam) => {
+            // For allow-multiple query params, wrap the type in a list using proper IR constructors
+            let valueType = queryParam.valueType;
+            if (queryParam.allowMultiple) {
+                valueType = TypeReference.container(ContainerType.list(queryParam.valueType));
+            }
+
+            return {
+                name: queryParam.name,
+                valueType,
+                docs: queryParam.docs,
+                availability: queryParam.availability,
+                propertyAccess: undefined,
+                v2Examples: undefined
+            };
+        });
     }
 }

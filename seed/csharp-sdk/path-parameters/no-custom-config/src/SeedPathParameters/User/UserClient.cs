@@ -236,4 +236,124 @@ public partial class UserClient
             );
         }
     }
+
+    /// <summary>
+    /// Test endpoint with path parameter that has a text prefix (v{version})
+    /// </summary>
+    /// <example><code>
+    /// await client.User.GetUserMetadataAsync(
+    ///     new GetUserMetadataRequest
+    ///     {
+    ///         TenantId = "tenant_id",
+    ///         UserId = "user_id",
+    ///         Version = 1,
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<User> GetUserMetadataAsync(
+        GetUserMetadataRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/{0}/user/{1}/metadata/v{2}",
+                        ValueConvert.ToPathParameterString(request.TenantId),
+                        ValueConvert.ToPathParameterString(request.UserId),
+                        ValueConvert.ToPathParameterString(request.Version)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<User>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedPathParametersException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedPathParametersApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
+    /// <summary>
+    /// Test endpoint with path parameters listed in different order than found in path
+    /// </summary>
+    /// <example><code>
+    /// await client.User.GetUserSpecificsAsync(
+    ///     new GetUserSpecificsRequest
+    ///     {
+    ///         TenantId = "tenant_id",
+    ///         UserId = "user_id",
+    ///         Version = 1,
+    ///         Thought = "thought",
+    ///     }
+    /// );
+    /// </code></example>
+    public async Task<User> GetUserSpecificsAsync(
+        GetUserSpecificsRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = string.Format(
+                        "/{0}/user/{1}/specifics/{2}/{3}",
+                        ValueConvert.ToPathParameterString(request.TenantId),
+                        ValueConvert.ToPathParameterString(request.UserId),
+                        ValueConvert.ToPathParameterString(request.Version),
+                        ValueConvert.ToPathParameterString(request.Thought)
+                    ),
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<User>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedPathParametersException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedPathParametersApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
 }

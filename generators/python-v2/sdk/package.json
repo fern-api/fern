@@ -22,7 +22,7 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
@@ -32,6 +32,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
+    "podmanTagLatest": "pnpm dist:cli && podman build -f ./Dockerfile -t fernapi/fern-python-sdk:latest ../../..",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
@@ -44,12 +45,12 @@
     "@fern-api/python-base": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
-    "@fern-fern/ir-sdk": "60.3.0",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9",
+    "vitest": "^4.0.8",
     "zod": "^3.22.4"
   }
 }

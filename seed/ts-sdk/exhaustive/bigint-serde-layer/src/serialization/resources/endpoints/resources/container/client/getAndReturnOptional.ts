@@ -3,22 +3,22 @@
 import type { ObjectWithRequiredField } from "../../../../../../api/resources/types/resources/object/types/ObjectWithRequiredField.js";
 import type * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { ObjectWithRequiredField as ObjectWithRequiredField_SeedExhaustive } from "../../../../types/resources/object/types/ObjectWithRequiredField.js";
+import { ObjectWithRequiredField as ObjectWithRequiredFieldType } from "../../../../types/resources/object/types/ObjectWithRequiredField.js";
 
 export const Request: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnOptional.Request.Raw,
     ObjectWithRequiredField | undefined
-> = ObjectWithRequiredField_SeedExhaustive.optional();
+> = ObjectWithRequiredFieldType.optional();
 
 export declare namespace Request {
-    export type Raw = ObjectWithRequiredField_SeedExhaustive.Raw | null | undefined;
+    export type Raw = ObjectWithRequiredFieldType.Raw | null | undefined;
 }
 
 export const Response: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnOptional.Response.Raw,
     ObjectWithRequiredField | undefined
-> = ObjectWithRequiredField_SeedExhaustive.optional();
+> = ObjectWithRequiredFieldType.optional();
 
 export declare namespace Response {
-    export type Raw = ObjectWithRequiredField_SeedExhaustive.Raw | null | undefined;
+    export type Raw = ObjectWithRequiredFieldType.Raw | null | undefined;
 }

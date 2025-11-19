@@ -14,6 +14,6 @@ import resources.types.union.exceptions.ErrorWithUnionBody;
 public final class ErrorWithUnionBodyExceptionHandler {
   @ExceptionHandler(ErrorWithUnionBody.class)
   ResponseEntity<Object> handle(ErrorWithUnionBody errorWithUnionBody) {
-    return new ResponseEntity<>(errorWithUnionBody.getBody(), null, ErrorWithUnionBody.STATUS_CODE);
+    return ResponseEntity.status(ErrorWithUnionBody.STATUS_CODE).body(errorWithUnionBody.getBody());
   }
 }

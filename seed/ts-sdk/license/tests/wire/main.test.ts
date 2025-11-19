@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("SeedLicenseClient", () => {
     test("get", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedLicenseClientType({ environment: server.baseUrl });
+        const client = new SeedLicenseClientType({ maxRetries: 0, environment: server.baseUrl });
 
         server.mockEndpoint().get("/").respondWith().statusCode(200).build();
 

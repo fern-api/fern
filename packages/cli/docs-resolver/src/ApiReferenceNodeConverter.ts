@@ -129,6 +129,7 @@ export class ApiReferenceNodeConverter {
             pointsTo,
             noindex: undefined,
             playground: this.#convertPlaygroundSettings(this.apiSection.playground),
+            postmanCollectionUrl: this.apiSection.postman,
             authed: undefined,
             viewers: this.apiSection.viewers,
             orphaned: this.apiSection.orphaned,
@@ -155,7 +156,8 @@ export class ApiReferenceNodeConverter {
                         type: "link",
                         title: link.text,
                         icon: this.resolveIconFileId(link.icon),
-                        url: FernNavigation.Url(link.url)
+                        url: FernNavigation.Url(link.url),
+                        target: link.target
                     }),
                     page: (page) => this.#toPageNode(page, parentSlug, parentAvailability),
                     package: (pkg) => this.#convertPackage(pkg, parentSlug, parentAvailability),
@@ -485,7 +487,11 @@ export class ApiReferenceNodeConverter {
                     slug: endpointSlug.get(),
                     icon: this.resolveIconFileId(endpointItem.icon),
                     hidden: this.hideChildren || endpointItem.hidden,
-                    playground: this.#convertPlaygroundSettings(endpointItem.playground),
+                    playground: this.#convertPlaygroundSettings(
+                        endpoint.includeInApiExplorer === false
+                            ? { ...endpointItem.playground, hidden: true }
+                            : endpointItem.playground
+                    ),
                     authed: undefined,
                     viewers: endpointItem.viewers,
                     orphaned: endpointItem.orphaned,

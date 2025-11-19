@@ -118,7 +118,10 @@ where
     /// Returns `ApiError::SseParseError` if:
     /// - Response Content-Type is not `text/event-stream`
     /// - SSE stream cannot be created from response
-    pub(crate) async fn new(response: Response, terminator: Option<String>) -> Result<Self, ApiError> {
+    pub(crate) async fn new(
+        response: Response,
+        terminator: Option<String>,
+    ) -> Result<Self, ApiError> {
         // Validate Content-Type header (case-insensitive, handles parameters)
         let content_type = response
             .headers()
@@ -127,11 +130,7 @@ where
             .unwrap_or("");
 
         // Extract main content type (before ';' parameter separator) and compare case-insensitively
-        let content_type_main = content_type
-            .split(';')
-            .next()
-            .unwrap_or("")
-            .trim();
+        let content_type_main = content_type.split(';').next().unwrap_or("").trim();
 
         if !content_type_main.eq_ignore_ascii_case("text/event-stream") {
             return Err(ApiError::SseParseError(format!(
@@ -197,7 +196,6 @@ where
     type Item = Result<T, ApiError>;
 
     fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
-        use futures::StreamExt;
         let this = self.project();
         match this.inner.poll_next(cx) {
             Poll::Ready(Some(Ok(event))) => {
@@ -241,7 +239,6 @@ where
     type Item = Result<SseEvent<T>, ApiError>;
 
     fn poll_next(self: Pin<&mut Self>, cx: &mut Context<'_>) -> Poll<Option<Self::Item>> {
-        use futures::StreamExt;
         let this = self.project();
 
         // Access the inner stream's fields through pin projection

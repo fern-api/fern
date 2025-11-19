@@ -23,6 +23,12 @@ test:
       - cd generators/java
       - ./gradlew :model:distTar
       - docker build -f model/Dockerfile -t fernapi/fern-java-model:latest model/
+  podman:
+    image: fernapi/fern-java-model:latest
+    command:
+      - cd generators/java
+      - ./gradlew :model:distTar
+      - podman build -f model/Dockerfile -t fernapi/fern-java-model:latest model/
   local:
     workingDirectory: generators/java
     buildCommand:
@@ -36,7 +42,7 @@ language: java
 generatorType: Model
 defaultOutputMode: github
 scripts:
-  - docker: fernapi/java-seed
+  - image: fernapi/java-seed
     commands:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava
 fixtures:
@@ -47,6 +53,8 @@ fixtures:
     - customConfig:
         disable-required-property-builder-checks: true
       outputFolder: disable-required-property-builder-checks
+    - customConfig: null
+      outputFolder: no-custom-config
 allowedFailures:
   - trace
   - alias-extends

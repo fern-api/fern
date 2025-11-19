@@ -19,6 +19,10 @@ exports[`Method > type definitions > writes type definition for method with unty
 exports[`Method > writes method with all parameter types 1`] = `
 "# @option one [untyped]
 #
+# @param two [untyped]
+#
+# @param four [untyped]
+#
 # @return [untyped]
 def fizzbuzz(one, two:, *three, **four, &five); end
 "
@@ -34,7 +38,9 @@ def bizbuzz; end
 `;
 
 exports[`Method > writes method with double splat parameter 1`] = `
-"# @return [untyped]
+"# @param one [untyped]
+#
+# @return [untyped]
 def fizzbuzz(**one); end
 "
 `;
@@ -46,7 +52,10 @@ def fizzbuzz; end
 `;
 
 exports[`Method > writes method with keyword parameters 1`] = `
-"# @return [untyped]
+"# @param one [untyped]
+# @param two [untyped]
+#
+# @return [untyped]
 def fizzbuzz(one:, two:); end
 "
 `;
@@ -54,6 +63,10 @@ def fizzbuzz(one:, two:); end
 exports[`Method > writes method with mix of positional and keyword parameters 1`] = `
 "# @option one [untyped]
 # @option two [untyped]
+#
+# @param three [untyped]
+#
+# @param four [untyped]
 #
 # @return [untyped]
 def fizzbuzz(one, two, three:, four:); end
@@ -64,6 +77,12 @@ exports[`Method > writes method with mix of positional, keyword, and double-spla
 "# @option one [untyped]
 # @option two [untyped]
 #
+# @param three [untyped]
+#
+# @param four [untyped]
+#
+# @param double_splatted [untyped]
+#
 # @return [untyped]
 def fizzbuzz(one, two, three:, four:, **double_splatted); end
 "
@@ -73,6 +92,10 @@ exports[`Method > writes method with mix of positional, keyword, and single-spla
 "# @option one [untyped]
 # @option two [untyped]
 #
+# @param three [untyped]
+#
+# @param four [untyped]
+#
 # @return [untyped]
 def fizzbuzz(one, two, three:, four:, *splatted); end
 "
@@ -81,6 +104,10 @@ def fizzbuzz(one, two, three:, four:, *splatted); end
 exports[`Method > writes method with mix of positional, keyword, and yield parameters 1`] = `
 "# @option one [untyped]
 # @option two [untyped]
+#
+# @param three [untyped]
+#
+# @param four [untyped]
 #
 # @return [untyped]
 def fizzbuzz(one, two, three:, four:, &block); end

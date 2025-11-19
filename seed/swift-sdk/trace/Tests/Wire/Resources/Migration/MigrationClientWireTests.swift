@@ -4,7 +4,7 @@ import Trace
 
 @Suite("MigrationClient Wire Tests") struct MigrationClientWireTests {
     @Test func getAttemptedMigrations1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -36,7 +36,7 @@ import Trace
                 status: .running
             )
         ]
-        let response = try await client.migration.getAttemptedMigrations()
+        let response = try await client.migration.getAttemptedMigrations(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

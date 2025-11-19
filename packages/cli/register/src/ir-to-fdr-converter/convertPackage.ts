@@ -172,6 +172,7 @@ function convertService(
             availability: convertIrAvailability(irEndpoint.availability ?? irService.availability),
             auth: irEndpoint.auth,
             authV2: convertEndpointSecurity(irEndpoint.security),
+            multiAuth: convertMultiAuth(irEndpoint.security),
             description: irEndpoint.docs ?? undefined,
             method: convertHttpMethod(irEndpoint.method),
             defaultEnvironment:
@@ -193,7 +194,8 @@ function convertService(
                                   description: pathParameter.docs ?? undefined,
                                   key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
                                   type: convertTypeReference(pathParameter.valueType),
-                                  availability: undefined
+                                  availability: undefined,
+                                  explode: undefined
                               })
                           ),
                           parts: [...convertHttpPath(irEndpoint.basePath), ...convertHttpPath(irEndpoint.path)]
@@ -208,7 +210,8 @@ function convertService(
                                   description: pathParameter.docs ?? undefined,
                                   key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
                                   type: convertTypeReference(pathParameter.valueType),
-                                  availability: undefined
+                                  availability: undefined,
+                                  explode: undefined
                               })
                           ),
                           parts: [
@@ -222,7 +225,8 @@ function convertService(
                     description: queryParameter.docs ?? undefined,
                     key: queryParameter.name.wireValue,
                     type: convertTypeReference(queryParameter.valueType),
-                    availability: convertIrAvailability(queryParameter.availability)
+                    availability: convertIrAvailability(queryParameter.availability),
+                    explode: undefined
                 })
             ),
             headers: [...irService.headers, ...irEndpoint.headers].map(
@@ -255,7 +259,8 @@ function convertService(
                     return { type: "grpc", methodName: irEndpoint.id, methodType: protoSource.methodType };
                 },
                 _other: () => undefined
-            })
+            }),
+            includeInApiExplorer: irEndpoint.apiPlayground
         };
         endpoints.push(endpoint);
     }
@@ -345,7 +350,8 @@ function convertWebSocketChannel(
                     description: pathParameter.docs ?? undefined,
                     key: FdrCjsSdk.PropertyKey(pathParameter.name.originalName),
                     type: convertTypeReference(pathParameter.valueType),
-                    availability: undefined
+                    availability: undefined,
+                    explode: undefined
                 })
             ),
             parts: convertHttpPath(channel.path)
@@ -363,7 +369,8 @@ function convertWebSocketChannel(
                 description: queryParameter.docs ?? undefined,
                 key: queryParameter.name.wireValue,
                 type: convertTypeReference(queryParameter.valueType),
-                availability: convertIrAvailability(queryParameter.availability)
+                availability: convertIrAvailability(queryParameter.availability),
+                explode: undefined
             })
         ),
         messages: channel.messages.map(
@@ -394,6 +401,22 @@ function convertEndpointSecurity(
     const authSchemeKeys = new Set(security.flatMap((item) => Object.keys(item)));
 
     return Array.from(authSchemeKeys).map((key) => FdrCjsSdk.AuthSchemeId(key));
+}
+
+function convertMultiAuth(
+    security: Ir.http.HttpEndpointSecurityItem[] | undefined
+): FdrCjsSdk.MultipleAuthType[] | undefined {
+    if (security == null) {
+        return undefined;
+    }
+
+    if (security.length === 0) {
+        return [];
+    }
+
+    return security.map((securityItem) => ({
+        schemes: Object.keys(securityItem).map((key) => FdrCjsSdk.AuthSchemeId(key))
+    }));
 }
 
 export function convertIrAvailability(availability: Ir.Availability | undefined): FdrCjsSdk.Availability | undefined {

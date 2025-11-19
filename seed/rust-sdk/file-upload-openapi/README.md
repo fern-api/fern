@@ -5,6 +5,19 @@
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+- [Contributing](#contributing)
+
 ## Installation
 
 Add this to your `Cargo.toml`:
@@ -41,7 +54,7 @@ async fn main() {
         .file_upload_example
         .upload_file(
             &UploadFileRequest {
-                file: todo!("Missing file value"),
+                file: std::fs::read("path/to/file").expect("Failed to read file"),
                 name: "name".to_string(),
             },
             None,

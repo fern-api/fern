@@ -2,20 +2,20 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import * as core from "../../../../core/index.mjs";
 import type { ObjectWithOptionalField } from "../../types/resources/object/types/ObjectWithOptionalField.mjs";
 import type { PostWithObjectBody } from "./requests/PostWithObjectBody.mjs";
-export declare namespace InlinedRequests {
+export declare namespace InlinedRequestsClient {
     interface Options extends BaseClientOptions {
     }
     interface RequestOptions extends BaseRequestOptions {
     }
 }
-export declare class InlinedRequests {
-    protected readonly _options: InlinedRequests.Options;
-    constructor(_options: InlinedRequests.Options);
+export declare class InlinedRequestsClient {
+    protected readonly _options: InlinedRequestsClient.Options;
+    constructor(options: InlinedRequestsClient.Options);
     /**
      * POST with custom object in request body, response is an object
      *
      * @param {PostWithObjectBody} request
-     * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BadRequestBody}
      *
@@ -42,7 +42,6 @@ export declare class InlinedRequests {
      *         }
      *     })
      */
-    postWithObjectBodyandResponse(request: PostWithObjectBody, requestOptions?: InlinedRequests.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
+    postWithObjectBodyandResponse(request: PostWithObjectBody, requestOptions?: InlinedRequestsClient.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
     private __postWithObjectBodyandResponse;
-    protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

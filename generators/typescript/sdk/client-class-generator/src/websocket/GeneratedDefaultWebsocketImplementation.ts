@@ -1,17 +1,23 @@
-import { SetRequired } from "@fern-api/core-utils";
-import {
+import type { SetRequired } from "@fern-api/core-utils";
+import type {
     IntermediateRepresentation,
     NameAndWireValue,
+    PathParameter,
     QueryParameter,
     WebSocketChannel,
     WebSocketChannelId
 } from "@fern-fern/ir-sdk/api";
-import { getPropertyKey, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
-import { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts";
 import {
-    ClassDeclarationStructure,
-    InterfaceDeclarationStructure,
-    ModuleDeclarationStructure,
+    getParameterNameForPropertyPathParameterName,
+    getPropertyKey,
+    getTextOfTsNode,
+    type PackageId
+} from "@fern-typescript/commons";
+import type { ChannelSignature, GeneratedWebsocketImplementation, SdkContext } from "@fern-typescript/contexts";
+import {
+    type ClassDeclarationStructure,
+    type InterfaceDeclarationStructure,
+    type ModuleDeclarationStructure,
     Scope,
     StructureKind,
     ts
@@ -32,6 +38,7 @@ export declare namespace GeneratedDefaultWebsocketImplementation {
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 
@@ -55,7 +62,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
     private readonly includeSerdeLayer: boolean;
     private readonly retainOriginalCasing: boolean;
     private readonly omitUndefined: boolean;
-    channel: WebSocketChannel;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+    public readonly channel: WebSocketChannel;
 
     constructor({
         intermediateRepresentation,
@@ -67,7 +75,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         requireDefaultEnvironment,
         includeSerdeLayer,
         retainOriginalCasing,
-        omitUndefined
+        omitUndefined,
+        parameterNaming
     }: GeneratedDefaultWebsocketImplementation.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -79,6 +88,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
+        this.parameterNaming = parameterNaming;
     }
 
     public getSignature(context: SdkContext): ChannelSignature {
@@ -156,7 +166,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             properties: [
                 ...(this.channel.pathParameters ?? []).map((pathParameter) => {
                     return {
-                        name: getPropertyKey(pathParameter.name.originalName),
+                        name: getPropertyKey(this.getPropertyNameOfPathParameter(pathParameter).propertyName),
                         type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
                         hasQuestionToken: false
                     };
@@ -217,17 +227,33 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
     private generateConnectMethodStatements(context: SdkContext): ts.Statement[] {
         const bindingElements: ts.BindingElement[] = [];
+        const usedNames = new Set<string>();
+        const pathParameterLocalNames = new Map<string, string>();
+
+        const getNonConflictingName = (name: string) => {
+            while (usedNames.has(name)) {
+                name = `${name}_`;
+            }
+            usedNames.add(name);
+            return name;
+        };
 
         // Add path parameters binding
         for (const pathParameter of [
             ...this.intermediateRepresentation.pathParameters,
             ...this.channel.pathParameters
         ]) {
+            const propertyNames = this.getPropertyNameOfPathParameter(pathParameter);
+            const localVarName = getNonConflictingName(propertyNames.safeName);
+            pathParameterLocalNames.set(pathParameter.name.originalName, localVarName);
+
             bindingElements.push(
                 ts.factory.createBindingElement(
                     undefined,
-                    undefined,
-                    ts.factory.createIdentifier(pathParameter.name.originalName)
+                    localVarName !== propertyNames.propertyName
+                        ? ts.factory.createIdentifier(propertyNames.propertyName)
+                        : undefined,
+                    ts.factory.createIdentifier(localVarName)
                 )
             );
         }
@@ -325,7 +351,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             );
             mergeHeaders.push(ts.factory.createIdentifier("_authRequest.headers"));
         } else {
-            const getAuthHeaderValue = this.generatedSdkClientClass.getAuthorizationHeaderValue();
+            const getAuthHeaderValue = this.generatedSdkClientClass.getAuthorizationHeaderValue({ context });
             mergeOnlyDefinedHeaders.push(
                 ...(getAuthHeaderValue
                     ? [ts.factory.createPropertyAssignment("Authorization", getAuthHeaderValue)]
@@ -411,7 +437,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                             ts.factory.createIdentifier("socket"),
                             undefined,
                             undefined,
-                            this.getReferenceToWebsocket(context)
+                            this.getReferenceToWebsocket(context, pathParameterLocalNames)
                         )
                     ],
                     ts.NodeFlags.Const
@@ -427,8 +453,9 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         ];
     }
 
-    private getReferenceToWebsocket(context: SdkContext): ts.Expression {
+    private getReferenceToWebsocket(context: SdkContext, pathParameterLocalNames: Map<string, string>): ts.Expression {
         const baseUrl = this.getBaseUrl(this.channel, context);
+
         const url = buildUrl({
             endpoint: {
                 allPathParameters: [...this.intermediateRepresentation.pathParameters, ...this.channel.pathParameters],
@@ -441,9 +468,18 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
             omitUndefined: this.omitUndefined,
+            parameterNaming: this.parameterNaming,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
-                return ts.factory.createIdentifier(`args.${pathParameter.name.camelCase.safeName}`);
-            }
+                const localVarName = pathParameterLocalNames.get(pathParameter.name.originalName);
+                if (localVarName == null) {
+                    throw new Error(
+                        `Could not find local variable name for path parameter: ${pathParameter.name.originalName}`
+                    );
+                }
+                return ts.factory.createIdentifier(localVarName);
+            },
+            // For websockets, we always inline path parameters since we manually destructure them
+            forceInlinePathParameters: true
         });
 
         if (url == null) {
@@ -594,6 +630,21 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             safeName: name.name.camelCase.safeName,
             propertyName:
                 this.includeSerdeLayer && !this.retainOriginalCasing ? name.name.camelCase.unsafeName : name.wireValue
+        };
+    }
+
+    public getPropertyNameOfPathParameter(pathParameter: PathParameter): {
+        safeName: string;
+        propertyName: string;
+    } {
+        return {
+            safeName: pathParameter.name.camelCase.safeName,
+            propertyName: getParameterNameForPropertyPathParameterName({
+                pathParameterName: pathParameter.name,
+                retainOriginalCasing: this.retainOriginalCasing,
+                includeSerdeLayer: this.includeSerdeLayer,
+                parameterNaming: this.parameterNaming
+            })
         };
     }
 }

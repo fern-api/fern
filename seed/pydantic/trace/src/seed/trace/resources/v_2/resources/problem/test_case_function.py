@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .assert_correctness_check import AssertCorrectnessCheck
 from .function_implementation_for_multiple_languages import FunctionImplementationForMultipleLanguages
@@ -38,6 +39,8 @@ class TestCaseFunction_Custom(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-TestCaseFunction = typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom]
+TestCaseFunction = typing_extensions.Annotated[
+    typing.Union[TestCaseFunction_WithActualResult, TestCaseFunction_Custom], pydantic.Field(discriminator="type")
+]
 update_forward_refs(TestCaseFunction_WithActualResult)
 update_forward_refs(TestCaseFunction_Custom)

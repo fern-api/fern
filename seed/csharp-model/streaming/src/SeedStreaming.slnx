@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedStreaming.Test/SeedStreaming.Test.csproj" />
+  <Project Path="SeedStreaming/SeedStreaming.csproj" />
+</Solution>

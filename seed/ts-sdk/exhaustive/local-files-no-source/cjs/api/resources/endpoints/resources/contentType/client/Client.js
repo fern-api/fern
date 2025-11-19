@@ -43,17 +43,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ContentType = void 0;
+exports.ContentTypeClient = void 0;
+const BaseClient_js_1 = require("../../../../../../BaseClient.js");
 const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
 const errors = __importStar(require("../../../../../../errors/index.js"));
-class ContentType {
-    constructor(_options) {
-        this._options = _options;
+class ContentTypeClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
      * @param {ObjectWithOptionalField} request
-     * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.contentType.postJsonPatchContentType({
@@ -93,6 +94,7 @@ class ContentType {
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                logging: this._options.logging,
             });
             if (_response.ok) {
                 return { data: undefined, rawResponse: _response.rawResponse };
@@ -123,7 +125,7 @@ class ContentType {
     }
     /**
      * @param {ObjectWithOptionalField} request
-     * @param {ContentType.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
@@ -163,6 +165,7 @@ class ContentType {
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                logging: this._options.logging,
             });
             if (_response.ok) {
                 return { data: undefined, rawResponse: _response.rawResponse };
@@ -201,4 +204,4 @@ class ContentType {
         });
     }
 }
-exports.ContentType = ContentType;
+exports.ContentTypeClient = ContentTypeClient;

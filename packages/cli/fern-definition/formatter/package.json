@@ -38,14 +38,13 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "chalk": "^5.3.0",
-    "prettier2": "npm:prettier@^2.7.1"
+    "yaml": "^2.4.5"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
     "@types/node": "18.15.3",
-    "@types/prettier2": "npm:@types/prettier@^2.7.3",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

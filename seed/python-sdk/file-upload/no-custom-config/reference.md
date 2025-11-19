@@ -100,7 +100,7 @@ typing.Optional[core.File]` — See core.File for more documentation
 <dl>
 <dd>
 
-**request:** `typing.Optional[typing.Optional[typing.Any]]` 
+**request:** `typing.Optional[typing.Any]` 
     
 </dd>
 </dl>

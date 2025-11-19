@@ -3,11 +3,17 @@
 module Seed
   module Complex
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Complex::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Complex::Types::SearchRequest]
+      #
       # @return [Seed::Complex::Types::PaginatedConversationResponse]
       def search(request_options: {}, **params)
         Seed::Internal::CursorItemIterator.new(

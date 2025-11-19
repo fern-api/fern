@@ -3,10 +3,10 @@
 import { SeedExhaustiveClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("ContentType", () => {
+describe("ContentTypeClient", () => {
     test("postJsonPatchContentType", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             string: "string",
             integer: 1,
@@ -47,7 +47,7 @@ describe("ContentType", () => {
 
     test("postJsonPatchContentWithCharsetType", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             string: "string",
             integer: 1,

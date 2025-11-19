@@ -8,15 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { normalizeClientOptions } from "../../../../../../BaseClient.mjs";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.mjs";
 import * as core from "../../../../../../core/index.mjs";
 import * as errors from "../../../../../../errors/index.mjs";
-export class Urls {
-    constructor(_options) {
-        this._options = _options;
+export class UrlsClient {
+    constructor(options) {
+        this._options = normalizeClientOptions(options);
     }
     /**
-     * @param {Urls.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.urls.withMixedCase()
@@ -37,6 +38,7 @@ export class Urls {
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                logging: this._options.logging,
             });
             if (_response.ok) {
                 return { data: _response.body, rawResponse: _response.rawResponse };
@@ -66,7 +68,7 @@ export class Urls {
         });
     }
     /**
-     * @param {Urls.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.urls.noEndingSlash()
@@ -87,6 +89,7 @@ export class Urls {
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                logging: this._options.logging,
             });
             if (_response.ok) {
                 return { data: _response.body, rawResponse: _response.rawResponse };
@@ -116,7 +119,7 @@ export class Urls {
         });
     }
     /**
-     * @param {Urls.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.urls.withEndingSlash()
@@ -137,6 +140,7 @@ export class Urls {
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                logging: this._options.logging,
             });
             if (_response.ok) {
                 return { data: _response.body, rawResponse: _response.rawResponse };
@@ -166,7 +170,7 @@ export class Urls {
         });
     }
     /**
-     * @param {Urls.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UrlsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.urls.withUnderscores()
@@ -187,6 +191,7 @@ export class Urls {
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                logging: this._options.logging,
             });
             if (_response.ok) {
                 return { data: _response.body, rawResponse: _response.rawResponse };

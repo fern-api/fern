@@ -3,18 +3,27 @@
 module Seed
   module Auth
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Auth::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Auth::Types::GetTokenRequest]
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token(request_options: {}, **params)
+        _body_prop_names = %i[client_id client_secret audience grant_type scope]
+        _body_bag = params.slice(*_body_prop_names)
+
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/token",
-          body: params
+          body: Seed::Auth::Types::GetTokenRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)

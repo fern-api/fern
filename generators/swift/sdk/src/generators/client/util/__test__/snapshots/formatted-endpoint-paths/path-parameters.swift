@@ -8,3 +8,5 @@
 "/\(tenantID)/user"
 "/\(tenantID)/user/\(userID)"
 "/\(tenantID)/user/\(userID)/search"
+"/\(tenantID)/user/\(userID)/metadata/v\(version)"
+"/\(tenantID)/user/\(userID)/specifics/\(version)/\(thought)"

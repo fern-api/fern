@@ -1,11 +1,11 @@
-import type { Cat as Cat_SeedExhaustive } from "./Cat.js";
-import type { Dog as Dog_SeedExhaustive } from "./Dog.js";
+import type { Cat as CatType } from "./Cat.js";
+import type { Dog as DogType } from "./Dog.js";
 export type Animal = Animal.Dog | Animal.Cat;
 export declare namespace Animal {
-    interface Dog extends Dog_SeedExhaustive {
+    interface Dog extends DogType {
         animal: "dog";
     }
-    interface Cat extends Cat_SeedExhaustive {
+    interface Cat extends CatType {
         animal: "cat";
     }
 }

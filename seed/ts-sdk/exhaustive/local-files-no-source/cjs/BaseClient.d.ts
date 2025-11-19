@@ -1,4 +1,4 @@
-import type * as core from "./core/index.js";
+import * as core from "./core/index.js";
 export interface BaseClientOptions {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
@@ -12,6 +12,8 @@ export interface BaseClientOptions {
     maxRetries?: number;
     /** Provide a custom fetch implementation. Useful for platforms that don't have a built-in fetch or need a custom implementation. */
     fetch?: typeof fetch;
+    /** Configure logging for the client. */
+    logging?: core.logging.LogConfig | core.logging.Logger;
 }
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */
@@ -25,3 +27,4 @@ export interface BaseRequestOptions {
     /** Additional headers to include in the request. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
 }
+export declare function normalizeClientOptions<T extends BaseClientOptions>(options: T): T;

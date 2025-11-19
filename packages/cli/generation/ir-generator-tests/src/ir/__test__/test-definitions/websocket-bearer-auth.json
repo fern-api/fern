@@ -1312,7 +1312,7 @@
                 "head": "/realtime/",
                 "parts": [
                     {
-                        "pathParameter": "id",
+                        "pathParameter": "session_id",
                         "tail": ""
                     }
                 ]
@@ -1343,22 +1343,22 @@
             "pathParameters": [
                 {
                     "name": {
-                        "originalName": "id",
+                        "originalName": "session_id",
                         "camelCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
+                            "unsafeName": "sessionID",
+                            "safeName": "sessionID"
                         },
                         "snakeCase": {
-                            "unsafeName": "id",
-                            "safeName": "id"
+                            "unsafeName": "session_id",
+                            "safeName": "session_id"
                         },
                         "screamingSnakeCase": {
-                            "unsafeName": "ID",
-                            "safeName": "ID"
+                            "unsafeName": "SESSION_ID",
+                            "safeName": "SESSION_ID"
                         },
                         "pascalCase": {
-                            "unsafeName": "ID",
-                            "safeName": "ID"
+                            "unsafeName": "SessionID",
+                            "safeName": "SessionID"
                         }
                     },
                     "valueType": {
@@ -2066,22 +2066,22 @@
                     "pathParameters": [
                         {
                             "name": {
-                                "originalName": "id",
+                                "originalName": "session_id",
                                 "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
+                                    "unsafeName": "sessionID",
+                                    "safeName": "sessionID"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
+                                    "unsafeName": "session_id",
+                                    "safeName": "session_id"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "SESSION_ID",
+                                    "safeName": "SESSION_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "SessionID",
+                                    "safeName": "SessionID"
                                 }
                             },
                             "value": {
@@ -3367,22 +3367,22 @@
                     "pathParameters": [
                         {
                             "name": {
-                                "originalName": "id",
+                                "originalName": "session_id",
                                 "camelCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
+                                    "unsafeName": "sessionID",
+                                    "safeName": "sessionID"
                                 },
                                 "snakeCase": {
-                                    "unsafeName": "id",
-                                    "safeName": "id"
+                                    "unsafeName": "session_id",
+                                    "safeName": "session_id"
                                 },
                                 "screamingSnakeCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "SESSION_ID",
+                                    "safeName": "SESSION_ID"
                                 },
                                 "pascalCase": {
-                                    "unsafeName": "ID",
-                                    "safeName": "ID"
+                                    "unsafeName": "SessionID",
+                                    "safeName": "SessionID"
                                 }
                             },
                             "value": {
@@ -3391,11 +3391,11 @@
                                     "primitive": {
                                         "type": "string",
                                         "string": {
-                                            "original": "id"
+                                            "original": "session_id"
                                         }
                                     }
                                 },
-                                "jsonExample": "id"
+                                "jsonExample": "session_id"
                             }
                         }
                     ],
@@ -3981,7 +3981,7 @@
                             }
                         }
                     ],
-                    "url": "/realtime/id",
+                    "url": "/realtime/session_id",
                     "docs": null
                 }
             ],
@@ -4919,6 +4919,7 @@
     },
     "audiences": null,
     "generationMetadata": null,
+    "apiPlayground": true,
     "subpackages": {
         "subpackage_realtime": {
             "name": {

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedVersion.Test/SeedVersion.Test.csproj" />
+  <Project Path="SeedVersion/SeedVersion.csproj" />
+</Solution>

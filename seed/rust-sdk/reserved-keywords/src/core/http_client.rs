@@ -148,6 +148,74 @@ impl HttpClient {
         self.parse_response(response).await
     }
 
+    /// Execute a multipart/form-data request with the given method, path, and options
+    ///
+    /// This method is used for file uploads using reqwest's built-in multipart support.
+    /// Note: Multipart requests are not retried because they cannot be cloned.
+    ///
+    /// # Example
+    /// ```no_run
+    /// let form = reqwest::multipart::Form::new()
+    ///     .part("file", reqwest::multipart::Part::bytes(vec![1, 2, 3]));
+    ///
+    /// let response: MyResponse = client.execute_multipart_request(
+    ///     Method::POST,
+    ///     "/upload",
+    ///     form,
+    ///     None,
+    ///     None,
+    /// ).await?;
+    /// ```
+    #[cfg(feature = "multipart")]
+    pub async fn execute_multipart_request<T>(
+        &self,
+        method: Method,
+        path: &str,
+        form: reqwest::multipart::Form,
+        query_params: Option<Vec<(String, String)>>,
+        options: Option<RequestOptions>,
+    ) -> Result<T, ApiError>
+    where
+        T: DeserializeOwned,
+    {
+        let url = join_url(&self.config.base_url, path);
+        let mut request = self.client.request(method, &url);
+
+        // Apply query parameters if provided
+        if let Some(params) = query_params {
+            request = request.query(&params);
+        }
+
+        // Apply additional query parameters from options
+        if let Some(opts) = &options {
+            if !opts.additional_query_params.is_empty() {
+                request = request.query(&opts.additional_query_params);
+            }
+        }
+
+        // Use reqwest's built-in multipart support
+        request = request.multipart(form);
+
+        // Build the request
+        let mut req = request.build().map_err(|e| ApiError::Network(e))?;
+
+        // Apply authentication and headers
+        self.apply_auth_headers(&mut req, &options)?;
+        self.apply_custom_headers(&mut req, &options)?;
+
+        // Execute directly without retries (multipart requests cannot be cloned)
+        let response = self.client.execute(req).await.map_err(ApiError::Network)?;
+
+        // Check response status
+        if !response.status().is_success() {
+            let status_code = response.status().as_u16();
+            let body = response.text().await.ok();
+            return Err(ApiError::from_response(status_code, body.as_deref()));
+        }
+
+        self.parse_response(response).await
+    }
+
     fn apply_auth_headers(
         &self,
         request: &mut Request,
@@ -252,7 +320,6 @@ impl HttpClient {
         let text = response.text().await.map_err(ApiError::Network)?;
         serde_json::from_str(&text).map_err(ApiError::Serialization)
     }
-
 
     /// Execute a request and return a streaming response (for large file downloads)
     ///
@@ -384,6 +451,7 @@ impl HttpClient {
     ///     println!("Received: {:?}", chunk);
     /// }
     /// ```
+    #[cfg(feature = "sse")]
     pub async fn execute_sse_request<T>(
         &self,
         method: Method,
@@ -432,9 +500,7 @@ impl HttpClient {
         );
         req.headers_mut().insert(
             "Cache-Control",
-            "no-store"
-                .parse()
-                .map_err(|_| ApiError::InvalidHeader)?,
+            "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
         );
 
         // Execute with retries

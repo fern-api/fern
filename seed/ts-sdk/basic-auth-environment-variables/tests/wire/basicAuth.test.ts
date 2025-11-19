@@ -5,10 +5,11 @@ import { UnauthorizedRequest } from "../../src/api/resources/errors/errors/Unaut
 import { SeedBasicAuthEnvironmentVariablesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("BasicAuth", () => {
+describe("BasicAuthClient", () => {
     test("getWithBasicAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
+            maxRetries: 0,
             username: "test",
             accessToken: "test",
             environment: server.baseUrl,
@@ -24,6 +25,7 @@ describe("BasicAuth", () => {
     test("getWithBasicAuth (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
+            maxRetries: 0,
             username: "test",
             accessToken: "test",
             environment: server.baseUrl,
@@ -40,6 +42,7 @@ describe("BasicAuth", () => {
     test("postWithBasicAuth (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
+            maxRetries: 0,
             username: "test",
             accessToken: "test",
             environment: server.baseUrl,
@@ -64,6 +67,7 @@ describe("BasicAuth", () => {
     test("postWithBasicAuth (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
+            maxRetries: 0,
             username: "test",
             accessToken: "test",
             environment: server.baseUrl,
@@ -89,6 +93,7 @@ describe("BasicAuth", () => {
     test("postWithBasicAuth (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedBasicAuthEnvironmentVariablesClient({
+            maxRetries: 0,
             username: "test",
             accessToken: "test",
             environment: server.baseUrl,

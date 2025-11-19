@@ -3,6 +3,8 @@
 module Seed
   module Health
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Health::Client]
       def initialize(client:)
         @client = client

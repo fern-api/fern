@@ -245,7 +245,7 @@ func do() {
             Id: uuid.MustParse(
                 "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             ),
-            Date: pleaseinhere.MustParseDateTime(
+            Date: pleaseinhere.MustParseDate(
                 "2023-01-15",
             ),
             Datetime: pleaseinhere.MustParseDateTime(

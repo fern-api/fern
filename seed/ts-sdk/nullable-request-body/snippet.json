@@ -1,0 +1,16 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/optional-request-body/{path_param}",
+                "method": "POST",
+                "identifier_override": "endpoint_testGroup.test_method_name"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedApiClient } from \"@fern/nullable-request-body\";\n\nconst client = new SeedApiClient({ environment: \"YOUR_BASE_URL\" });\nawait client.testGroup.testMethodName({\n    path_param: \"path_param\",\n    body: {}\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

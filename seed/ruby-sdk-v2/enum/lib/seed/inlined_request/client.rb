@@ -3,18 +3,27 @@
 module Seed
   module InlinedRequest
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::InlinedRequest::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::InlinedRequest::Types::SendEnumInlinedRequest]
+      #
       # @return [untyped]
       def send_(request_options: {}, **params)
+        _body_prop_names = %i[operand maybe_operand operand_or_color maybe_operand_or_color]
+        _body_bag = params.slice(*_body_prop_names)
+
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "inlined",
-          body: params
+          body: Seed::InlinedRequest::Types::SendEnumInlinedRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)

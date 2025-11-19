@@ -3,18 +3,27 @@
 module Seed
   module Payment
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Payment::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Payment::Types::CreatePaymentRequest]
+      #
       # @return [String]
       def create(request_options: {}, **params)
+        _body_prop_names = %i[amount currency]
+        _body_bag = params.slice(*_body_prop_names)
+
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/payment",
-          body: params
+          body: Seed::Payment::Types::CreatePaymentRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)
@@ -28,12 +37,16 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def delete(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/payment/#{params[:paymentId]}"
+          path: "/payment/#{params[:payment_id]}"
         )
         begin
           _response = @client.send(_request)

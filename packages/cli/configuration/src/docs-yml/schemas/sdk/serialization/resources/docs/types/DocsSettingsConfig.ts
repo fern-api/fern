@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { HttpSnippetsConfig } from "./HttpSnippetsConfig";
+import { Language } from "./Language";
 
 export const DocsSettingsConfig: core.serialization.ObjectSchema<
     serializers.DocsSettingsConfig.Raw,
@@ -29,6 +30,7 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
         core.serialization.boolean().optional(),
     ),
     disableAnalytics: core.serialization.property("disable-analytics", core.serialization.boolean().optional()),
+    language: Language.optional(),
 });
 
 export declare namespace DocsSettingsConfig {
@@ -42,5 +44,6 @@ export declare namespace DocsSettingsConfig {
         "use-javascript-as-typescript"?: boolean | null;
         "disable-explorer-proxy"?: boolean | null;
         "disable-analytics"?: boolean | null;
+        language?: Language.Raw | null;
     }
 }

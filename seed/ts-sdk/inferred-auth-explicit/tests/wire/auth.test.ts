@@ -2,11 +2,15 @@
 
 import { SeedInferredAuthExplicitClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
+import { mockInferredAuthScheme } from "./mockAuth";
 
-describe("Auth", () => {
+describe("AuthClient", () => {
     test("getTokenWithClientCredentials", async () => {
         const server = mockServerPool.createServer();
+        mockInferredAuthScheme(server);
+
         const client = new SeedInferredAuthExplicitClient({
+            maxRetries: 0,
             xApiKey: "X-Api-Key",
             clientId: "client_id",
             clientSecret: "client_secret",
@@ -46,7 +50,10 @@ describe("Auth", () => {
 
     test("refreshToken", async () => {
         const server = mockServerPool.createServer();
+        mockInferredAuthScheme(server);
+
         const client = new SeedInferredAuthExplicitClient({
+            maxRetries: 0,
             xApiKey: "X-Api-Key",
             clientId: "client_id",
             clientSecret: "client_secret",

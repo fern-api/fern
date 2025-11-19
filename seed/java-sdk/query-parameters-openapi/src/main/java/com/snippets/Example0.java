@@ -3,6 +3,7 @@ package com.snippets;
 import com.seed.api.SeedApiClient;
 import com.seed.api.requests.SearchRequest;
 import com.seed.api.types.NestedUser;
+import com.seed.api.types.SearchRequestNeighbor;
 import com.seed.api.types.SearchRequestNeighborRequired;
 import com.seed.api.types.User;
 import java.time.OffsetDateTime;
@@ -18,13 +19,17 @@ public class Example0 {
         client.search(SearchRequest.builder()
                 .limit(1)
                 .id("id")
-                .date("date")
+                .date("2023-01-15")
                 .deadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
                 .bytes("bytes")
                 .user(User.builder()
                         .name("name")
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
                         .build())
+                .neighborRequired(SearchRequestNeighborRequired.of(User.builder()
+                        .name("name")
+                        .tags(Optional.of(Arrays.asList("tags", "tags")))
+                        .build()))
                 .userList(Arrays.asList(Optional.of(User.builder()
                         .name("name")
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
@@ -34,14 +39,10 @@ public class Example0 {
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
                         .build())))
                 .filter(Arrays.asList(Optional.of("filter")))
-                .neighborRequired(SearchRequestNeighborRequired.of(User.builder()
-                        .name("name")
-                        .tags(Optional.of(Arrays.asList("tags", "tags")))
-                        .build()))
                 .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
-                .keyValue(new HashMap<String, Optional<String>>() {
+                .keyValue(new HashMap<String, String>() {
                     {
-                        put("keyValue", Optional.of("keyValue"));
+                        put("keyValue", "keyValue");
                     }
                 })
                 .optionalString("optionalString")
@@ -56,10 +57,10 @@ public class Example0 {
                         .name("name")
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
                         .build())
-                .neighbor(User.builder()
+                .neighbor(SearchRequestNeighbor.of(User.builder()
                         .name("name")
                         .tags(Optional.of(Arrays.asList("tags", "tags")))
-                        .build())
+                        .build()))
                 .build());
     }
 }

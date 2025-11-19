@@ -136,7 +136,6 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
             } else if (generatedWrappedRequest.requestBodyGetter().get() instanceof InlinedRequestBodyGetters) {
                 InlinedRequestBodyGetters inlinedRequestBodyGetter = ((InlinedRequestBodyGetters)
                         generatedWrappedRequest.requestBodyGetter().get());
-                // Serialize the request object directly instead of manually building a properties map.
                 initializeRequestBody(
                         generatedObjectMapper,
                         requestParameterName,
@@ -192,13 +191,14 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.add(";\n");
         requestBodyCodeBlock.unindent();
         for (EnrichedObjectProperty header : generatedWrappedRequest.headerParams()) {
+            String headerName = header.objectProperty().getName().getName().getOriginalName();
             if (typeNameIsOptional(header.poetTypeName())) {
                 requestBodyCodeBlock
                         .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, header.getterProperty())
                         .addStatement(
                                 "$L.addHeader($S, $L)",
                                 AbstractEndpointWriter.REQUEST_BUILDER_NAME,
-                                header.wireKey().get(),
+                                headerName,
                                 PoetTypeNameStringifier.stringify(
                                         CodeBlock.of("$L.$N().get()", "request", header.getterProperty())
                                                 .toString(),
@@ -208,7 +208,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                 requestBodyCodeBlock.addStatement(
                         "$L.addHeader($S, $L)",
                         AbstractEndpointWriter.REQUEST_BUILDER_NAME,
-                        header.wireKey().get(),
+                        headerName,
                         PoetTypeNameStringifier.stringify(
                                 CodeBlock.of("$L.$N()", "request", header.getterProperty())
                                         .toString(),

@@ -5,6 +5,19 @@
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Forward Compatible Enums](#forward-compatible-enums)
+- [Contributing](#contributing)
+
 ## Requirements
 
 This SDK requires:
@@ -27,7 +40,7 @@ Instantiate and use the client with the following:
 using SeedFileUpload;
 
 var client = new SeedFileUploadClient();
-await client.Service.SimpleAsync();
+await client.Service.JustFileAsync(new JustFileRequest());
 ```
 
 ## Exception Handling
@@ -39,7 +52,7 @@ will be thrown.
 using SeedFileUpload;
 
 try {
-    var response = await client.Service.SimpleAsync(...);
+    var response = await client.Service.JustFileAsync(...);
 } catch (SeedFileUploadApiException e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
@@ -63,7 +76,7 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `MaxRetries` request option to configure this behavior.
 
 ```csharp
-var response = await client.Service.SimpleAsync(
+var response = await client.Service.JustFileAsync(
     ...,
     new RequestOptions {
         MaxRetries: 0 // Override MaxRetries at the request level
@@ -76,7 +89,7 @@ var response = await client.Service.SimpleAsync(
 The SDK defaults to a 30 second timeout. Use the `Timeout` option to configure this behavior.
 
 ```csharp
-var response = await client.Service.SimpleAsync(
+var response = await client.Service.JustFileAsync(
     ...,
     new RequestOptions {
         Timeout: TimeSpan.FromSeconds(3) // Override timeout to 3s

@@ -24,7 +24,7 @@ export abstract class EndpointRequest extends WithGeneration {
         protected readonly sdkRequest: SdkRequest,
         protected readonly endpoint: HttpEndpoint
     ) {
-        super(context);
+        super(context.generation);
     }
 
     public getParameterName(): string {

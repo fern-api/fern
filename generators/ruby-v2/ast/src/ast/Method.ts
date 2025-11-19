@@ -95,8 +95,39 @@ export class Method extends AstNode {
             writer.newLine();
         }
 
-        if (this.returnType != null) {
+        for (const keywordParameter of this.keywordParameters) {
             if (this.positionalParameters.length > 0 || this.docstring) {
+                writer.writeLine("#");
+            }
+            writer.write(`# @param ${keywordParameter.name} [`);
+            keywordParameter.type.writeTypeDefinition(writer);
+            writer.write("]");
+            if (keywordParameter.docs) {
+                writer.write(` ${keywordParameter.docs}`);
+            }
+            writer.newLine();
+        }
+
+        if (this.keywordSplatParameter != null) {
+            if (this.positionalParameters.length > 0 || this.keywordParameters.length > 0 || this.docstring) {
+                writer.writeLine("#");
+            }
+            writer.write(`# @param ${this.keywordSplatParameter.name} [`);
+            this.keywordSplatParameter.type.writeTypeDefinition(writer);
+            writer.write("]");
+            if (this.keywordSplatParameter.docs) {
+                writer.write(` ${this.keywordSplatParameter.docs}`);
+            }
+            writer.newLine();
+        }
+
+        if (this.returnType != null) {
+            if (
+                this.positionalParameters.length > 0 ||
+                this.keywordParameters.length > 0 ||
+                this.keywordSplatParameter != null ||
+                this.docstring
+            ) {
                 writer.writeLine("#");
             }
             writer.write(`# @return [`);

@@ -1,4 +1,4 @@
-irVersion: v59
+irVersion: v61
 displayName: Ruby SDK
 language: ruby
 generatorType: SDK
@@ -18,6 +18,9 @@ test:
   docker:
     image: fernapi/fern-ruby-sdk-v2:latest
     command: pnpm --filter @fern-api/ruby-sdk dockerTagLatest
+  podman:
+    image: fernapi/fern-ruby-sdk-v2:latest
+    command: pnpm --filter @fern-api/ruby-sdk podmanTagLatest
 
 publish:
   preBuildCommands:
@@ -28,7 +31,7 @@ publish:
     context: .
 
 scripts:
-  - docker: ruby:3.3
+  - image: ruby:3.3
     commands:
       - bundle install
       - bundle exec rake test
@@ -64,7 +67,9 @@ fixtures:
             - method: POST
               path: /movie
 
-allowedFailures: []
+allowedFailures:
+  - nullable-request-body
+
 features:
   requestOptions: true
   idempotency: false

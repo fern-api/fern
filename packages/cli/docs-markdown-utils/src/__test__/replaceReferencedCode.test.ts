@@ -1,5 +1,6 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { createMockTaskContext } from "@fern-api/task-context";
+import { vi } from "vitest";
 
 import { replaceReferencedCode } from "../replaceReferencedCode";
 
@@ -108,6 +109,226 @@ describe("replaceReferencedCode", () => {
             \`\`\`ts title={"test.ts"} maxLines={20} focus={1-18}
             test2 content
             with multiple lines
+            \`\`\`
+
+        `);
+    });
+
+    it("should replace code from external URLs", async () => {
+        const markdown = `
+            <Code src="https://example.com/snippets/test.py" />
+            <Code src="https://raw.githubusercontent.com/user/repo/main/example.ts" />
+        `;
+
+        const originalFetch = globalThis.fetch;
+        globalThis.fetch = vi.fn((url: string) => {
+            if (url === "https://example.com/snippets/test.py") {
+                return Promise.resolve({
+                    ok: true,
+                    text: async () => "print('hello from URL')"
+                } as Response);
+            }
+            if (url === "https://raw.githubusercontent.com/user/repo/main/example.ts") {
+                return Promise.resolve({
+                    ok: true,
+                    text: async () => "console.log('from GitHub');\nconsole.log('line 2');"
+                } as Response);
+            }
+            return Promise.reject(new Error(`Unexpected URL: ${url}`));
+        }) as typeof fetch;
+
+        try {
+            const result = await replaceReferencedCode({
+                markdown,
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile,
+                context
+            });
+
+            expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            print('hello from URL')
+            \`\`\`
+
+            \`\`\`ts title={"example.ts"}
+            console.log('from GitHub');
+            console.log('line 2');
+            \`\`\`
+
+        `);
+        } finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
+
+    it("should handle URL fetch failures gracefully", async () => {
+        const markdown = `
+            <Code src="https://example.com/not-found.py" />
+        `;
+
+        const originalFetch = globalThis.fetch;
+        globalThis.fetch = vi.fn(() => {
+            return Promise.resolve({
+                ok: false,
+                status: 404
+            } as Response);
+        }) as typeof fetch;
+
+        try {
+            const result = await replaceReferencedCode({
+                markdown,
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile,
+                context
+            });
+
+            expect(result).toBe(markdown);
+        } finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
+
+    it("should override language when language property is present", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" language="python" />
+            <Code language="typescript" src="../snippets/test.ts" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "test content";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.ts")) {
+                    return "test2 content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`python title={"test.py"}
+            test content
+            \`\`\`
+
+            \`\`\`typescript title={"test.ts"}
+            test2 content
+            \`\`\`
+
+        `);
+    });
+
+    it("should override title when title property is present", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" title="Custom Title" />
+            <Code title="Another Title" src="../snippets/test.ts" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "test content";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.ts")) {
+                    return "test2 content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"Custom Title"}
+            test content
+            \`\`\`
+
+            \`\`\`ts title={"Another Title"}
+            test2 content
+            \`\`\`
+
+        `);
+    });
+
+    it("should override both language and title when both properties are present", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" language="python" title="My Python Code" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`python title={"My Python Code"}
+            test content
+            \`\`\`
+
+        `);
+    });
+
+    it("should add other properties as-is to metastring", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" language="python" title="Example" maxLines={10} showLineNumbers={true} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`python title={"Example"} maxLines={10} showLineNumbers={true}
+            test content
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle title with curly brace syntax without adding extra quotes", async () => {
+        const markdown = `
+            <Code src="./example.js" title={"Hello"} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/example.js")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`js title={"Hello"}
+            test content
             \`\`\`
 
         `);

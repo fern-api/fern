@@ -4,7 +4,6 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
 import { TypeDeclaration } from "@fern-fern/ir-sdk/api";
 
-import { ModelCustomConfigSchema } from "../ModelCustomConfig";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 import TestInput = TestClass.TestInput;
@@ -16,11 +15,7 @@ export declare namespace TestClass {
     }
 }
 
-export class ObjectSerializationTestGenerator extends FileGenerator<
-    CSharpFile,
-    ModelCustomConfigSchema,
-    ModelGeneratorContext
-> {
+export class ObjectSerializationTestGenerator extends FileGenerator<CSharpFile> {
     private classBeingTested: ast.ClassReference;
     private testClass: ast.TestClass;
 
@@ -51,9 +46,9 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                     writer.write("var deserializedObject = ");
                     writer.writeNodeStatement(
                         this.csharp.invokeMethod({
-                            on: this.types.JsonUtils,
+                            on: this.Types.JsonUtils,
                             method: "Deserialize",
-                            generics: [this.csharp.Type.reference(this.classBeingTested)],
+                            generics: [this.classBeingTested],
                             arguments_: [this.csharp.codeblock("json")]
                         })
                     );
@@ -74,7 +69,7 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                     writer.write("var actualElement = ");
                     writer.writeNodeStatement(
                         this.csharp.invokeMethod({
-                            on: this.types.JsonUtils,
+                            on: this.Types.JsonUtils,
                             method: "SerializeToElement",
                             arguments_: [this.csharp.codeblock("actualObj")]
                         })
@@ -82,9 +77,9 @@ export class ObjectSerializationTestGenerator extends FileGenerator<
                     writer.write("var expectedElement = ");
                     writer.writeNodeStatement(
                         this.csharp.invokeMethod({
-                            on: this.types.JsonUtils,
+                            on: this.Types.JsonUtils,
                             method: "Deserialize",
-                            generics: [this.csharp.Type.reference(this.extern.System.Text.Json.JsonElement)],
+                            generics: [this.System.Text.Json.JsonElement],
                             arguments_: [this.csharp.codeblock("expectedJson")]
                         })
                     );

@@ -5,7 +5,9 @@
 import * as FernDocsConfig from "../../../index";
 
 export interface ThemeConfig {
-    sidebar: FernDocsConfig.SidebarThemeConfig;
-    body: FernDocsConfig.BodyThemeConfig;
-    tabs: FernDocsConfig.TabsThemeConfig;
+    sidebar?: FernDocsConfig.SidebarThemeConfig;
+    body?: FernDocsConfig.BodyThemeConfig;
+    tabs?: FernDocsConfig.TabsThemeConfig;
+    pageActions?: FernDocsConfig.PageActionsThemeConfig;
+    footerNav?: FernDocsConfig.FooterNavThemeConfig;
 }

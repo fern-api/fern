@@ -24,6 +24,7 @@ export const BaseJavaCustomConfigSchema = z.object({
     "enable-wire-tests": z.boolean().default(false),
     "collapse-optional-nullable": z.boolean().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
+    "custom-pager-name": z.string().optional(),
 
     // Deprecated.
     "wrapped-aliases": z.boolean().optional()

@@ -3,10 +3,10 @@
 import { SeedExhaustiveClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Object_", () => {
+describe("ObjectClient", () => {
     test("getAndReturnWithOptionalField", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             string: "string",
             integer: 1,
@@ -84,7 +84,7 @@ describe("Object_", () => {
 
     test("getAndReturnWithRequiredField", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
         server
@@ -106,7 +106,7 @@ describe("Object_", () => {
 
     test("getAndReturnWithMapOfMap", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = { map: { map: { map: "map" } } };
         const rawResponseBody = { map: { map: { map: "map" } } };
         server
@@ -136,7 +136,7 @@ describe("Object_", () => {
 
     test("getAndReturnNestedWithOptionalField", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             string: "string",
             NestedObject: {
@@ -226,7 +226,7 @@ describe("Object_", () => {
 
     test("getAndReturnNestedWithRequiredField", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             string: "string",
             NestedObject: {
@@ -316,7 +316,7 @@ describe("Object_", () => {
 
     test("getAndReturnNestedWithRequiredFieldAsList", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = [
             {
                 string: "string",

@@ -1,4 +1,4 @@
-irVersion: v58
+irVersion: v61
 displayName: Ruby SDK
 image: fernapi/fern-ruby-sdk
 changelogLocation: ../../generators/ruby-v2/sdk/versions.yml
@@ -15,6 +15,10 @@ publish:
   preBuildCommands:
     - pnpm --filter @fern-api/ruby-sdk dist:cli
   docker:
+    file: ./generators/ruby-v2/sdk/Dockerfile
+    image: fernapi/fern-ruby-sdk
+    context: .
+  podman:
     file: ./generators/ruby-v2/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk
     context: .
@@ -99,8 +103,10 @@ allowedFailures:
   - multi-url-environment-no-default
   - multiple-request-bodies
   - no-environment
+  - no-retries
   - nullable
   - nullable-optional
+  - nullable-request-body
   - oauth-client-credentials
   - oauth-client-credentials-custom
   - oauth-client-credentials-default
@@ -137,6 +143,8 @@ allowedFailures:
   - undiscriminated-unions
   - undiscriminated-union-with-response-property
   - unions
+  # Java-specific fixture for LocalDate support
+  - unions-with-local-date
   - unknown
   - url-form-encoded
   - validation
@@ -165,6 +173,6 @@ features:
   whitelabel: false
   apiReferenceGeneration: false
 scripts:
-  - docker: ruby:2.7
+  - image: ruby:2.7
     commands:
       - bundle install && bundle exec rake test

@@ -65,9 +65,9 @@ public class SeedClientSideParamsApiException extends SeedClientSideParamsExcept
         return this.headers;
     }
 
-    @java.lang.Override
+    @Override
     public String toString() {
         return "SeedClientSideParamsApiException{" + "message: " + getMessage() + ", statusCode: " + statusCode
-                + ", body: " + body + "}";
+                + ", body: " + ObjectMappers.stringify(body) + "}";
     }
 }

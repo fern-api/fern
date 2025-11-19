@@ -5,6 +5,7 @@ import com.fern.ir.model.errors.ErrorDeclaration;
 import com.fern.ir.model.http.HttpService;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
+import com.fern.ir.model.websocket.WebSocketChannel;
 import com.fern.java.AbstractNonModelPoetClassNameFactory;
 import com.fern.java.ICustomConfig;
 import com.fern.java.utils.CasingUtils;
@@ -14,8 +15,28 @@ import java.util.Optional;
 
 public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassNameFactory {
 
+    private final Optional<String> customPagerName;
+
     public ClientPoetClassNameFactory(List<String> packagePrefixTokens, ICustomConfig.PackageLayout packageLayout) {
+        this(packagePrefixTokens, packageLayout, Optional.empty());
+    }
+
+    public ClientPoetClassNameFactory(
+            List<String> packagePrefixTokens,
+            ICustomConfig.PackageLayout packageLayout,
+            Optional<String> customPagerName) {
         super(packagePrefixTokens, packageLayout);
+        this.customPagerName = customPagerName;
+    }
+
+    public ClassName getCustomPaginationClassName() {
+        String className = customPagerName.orElse("CustomPager");
+        return getPaginationClassName(className);
+    }
+
+    public ClassName getAsyncCustomPaginationClassName() {
+        String className = "Async" + customPagerName.orElse("CustomPager");
+        return getPaginationClassName(className);
     }
 
     public ClassName getErrorClassName(ErrorDeclaration errorDeclaration) {
@@ -61,9 +82,40 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         return ClassName.get(getCorePackage(), "MediaTypes");
     }
 
+    public ClassName getOkhttp3MediaTypeClassName() {
+        return ClassName.get("okhttp3", "MediaType");
+    }
+
+    public ClassName getOkhttp3MultipartBodyClassName() {
+        return ClassName.get("okhttp3", "MultipartBody");
+    }
+
+    public ClassName getOkhttp3RequestBodyClassName() {
+        return ClassName.get("okhttp3", "RequestBody");
+    }
+
     public ClassName getClientClassName(Subpackage subpackage) {
         String packageName = getResourcesPackage(Optional.of(subpackage.getFernFilepath()), Optional.empty());
         return ClassName.get(packageName, getClientName(subpackage.getFernFilepath()));
+    }
+
+    public ClassName getWebSocketClientClassName(WebSocketChannel websocketChannel, Optional<Subpackage> subpackage) {
+        // If subpackage is provided, generate path including subpackage name
+        if (subpackage.isPresent()) {
+            FernFilepath fernFilepath = subpackage.get().getFernFilepath();
+            // Build the package path: resources.<subpackage>.websocket
+            String resourcesPackage = getResourcesPackage(Optional.of(fernFilepath), Optional.empty());
+            String websocketPackage = resourcesPackage + ".websocket";
+            return ClassName.get(
+                    websocketPackage,
+                    websocketChannel.getName().get().getPascalCase().getSafeName() + "WebSocketClient");
+        } else {
+            // For root package, just use websocket subpackage
+            String packageName = getResourcesPackage(Optional.empty(), Optional.of("websocket"));
+            return ClassName.get(
+                    packageName,
+                    websocketChannel.getName().get().getPascalCase().getSafeName() + "WebSocketClient");
+        }
     }
 
     public ClassName getRequestWrapperBodyClassName(HttpService httpService, SdkRequestWrapper sdkRequestWrapper) {

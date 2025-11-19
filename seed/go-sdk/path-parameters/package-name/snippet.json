@@ -68,6 +68,17 @@
         },
         {
             "id": {
+                "path": "/{tenant_id}/user/{user_id}/metadata/v/{version}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUserMetadata"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.GetUserMetadata(\n\tcontext.TODO(),\n\t\u0026pathparametersgo.GetUserMetadataRequest{\n\t\tTenantId: \"tenant_id\",\n\t\tUserId:   \"user_id\",\n\t\tVersion:  1,\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/{tenant_id}/user/{user_id}/search",
                 "method": "GET",
                 "identifier_override": "endpoint_user.searchUsers"
@@ -75,6 +86,17 @@
             "snippet": {
                 "type": "go",
                 "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.SearchUsers(\n\tcontext.TODO(),\n\t\u0026pathparametersgo.SearchUsersRequest{\n\t\tTenantId: \"tenant_id\",\n\t\tUserId:   \"user_id\",\n\t\tLimit: pathparametersgo.Int(\n\t\t\t1,\n\t\t),\n\t},\n)\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}/specifics/{version}/{thought}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.getUserSpecifics"
+            },
+            "snippet": {
+                "type": "go",
+                "client": "import (\n\tcontext \"context\"\n\tpathparametersgo \"github.com/fern-api/path-parameters-go\"\n\tpathparametersgoclient \"github.com/fern-api/path-parameters-go/client\"\n)\n\nclient := pathparametersgoclient.NewClient()\nresponse, err := client.User.GetUserSpecifics(\n\tcontext.TODO(),\n\t\u0026pathparametersgo.GetUserSpecificsRequest{\n\t\tTenantId: \"tenant_id\",\n\t\tUserId:   \"user_id\",\n\t\tVersion:  1,\n\t\tThought:  \"thought\",\n\t},\n)\n"
             }
         }
     ]

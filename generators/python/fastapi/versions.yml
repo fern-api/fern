@@ -1,5 +1,54 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.12.0
+  changelogEntry:
+    - summary: Add pytest-xdist for parallel test execution and upgrade CI Python version to 3.9 in generated SDKs.
+      type: feat
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 1.11.4
+  changelogEntry:
+    - summary: Bump generator CLI version to publish new Docker image.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 1.11.3
+  changelogEntry:
+    - summary: Fix circular reference issue for recursive types and unions.
+      type: fix
+  createdAt: "2025-11-14"
+  irVersion: 61
+
+- version: 1.11.2
+  changelogEntry:
+    - summary: Resolve PydanticUserError for mutually recursive models in Pydantic v2.
+      type: fix
+  createdAt: "2025-11-12"
+  irVersion: 61
+
+- version: 1.11.1
+  changelogEntry:
+    - summary: Add back F401-ignored imports for circular references.
+      type: fix
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 1.11.0
+  changelogEntry:
+    - summary: Add automatic discriminated union support using Pydantic's Field(discriminator=...) to improve serialization performance. Benchmarks show a 2x speedup by eliminating sequential variant attempts and enabling O(1) variant selection.
+      type: feat
+  createdAt: "2025-11-10"
+  irVersion: 61
+
+- version: 1.10.3
+  changelogEntry:
+    - summary: Upgrade to IRv61
+      type: chore
+  createdAt: "2025-11-04"
+  irVersion: 61
+
 - version: 1.10.2
   changelogEntry:
     - summary: Fix wrapped alias validators to work correctly with frozen RootModel in Pydantic v2.

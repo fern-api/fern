@@ -30,6 +30,7 @@ export declare namespace GeneratedFileDownloadEndpointImplementation {
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
         generateEndpointMetadata: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 
@@ -46,6 +47,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
     private readonly streamType: "wrapper" | "web";
     private readonly fileResponseType: "stream" | "binary-response";
     private readonly generateEndpointMetadata: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
     constructor({
         endpoint,
@@ -59,7 +61,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         omitUndefined,
         streamType,
         fileResponseType,
-        generateEndpointMetadata
+        generateEndpointMetadata,
+        parameterNaming
     }: GeneratedFileDownloadEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -73,6 +76,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         this.streamType = streamType;
         this.fileResponseType = fileResponseType;
         this.generateEndpointMetadata = generateEndpointMetadata;
+        this.parameterNaming = parameterNaming;
     }
     public isPaginated(context: SdkContext): boolean {
         return false;
@@ -186,7 +190,8 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             omitUndefined: this.omitUndefined,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
                 return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
-            }
+            },
+            parameterNaming: this.parameterNaming
         });
 
         if (url != null) {
@@ -220,6 +225,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                 )
             }),
             fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
+            logging: this.generatedSdkClientClass.getReferenceToLogger(context),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             responseType: (() => {
                 switch (this.fileResponseType) {

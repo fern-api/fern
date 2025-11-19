@@ -41,6 +41,8 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     linter: z.optional(z.enum(["biome", "oxlint", "none"])),
     formatter: z.optional(z.enum(["prettier", "biome", "oxfmt"])),
     enableForwardCompatibleEnums: z.optional(z.boolean()),
+    parameterNaming: z.optional(z.enum(["originalName", "wireValue", "camelCase", "snakeCase", "default"])),
+    generateSubpackageExports: z.optional(z.boolean()),
 
     // relevant to dynamic snippets
     allowExtraFields: z.optional(z.boolean()),
@@ -54,6 +56,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     retainOriginalCasing: z.optional(z.boolean()),
     useBigInt: z.optional(z.boolean()),
     useBrandedStringAliases: z.optional(z.boolean()),
+    offsetSemantics: z.optional(z.enum(["item-index", "page-index"])),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),
@@ -65,7 +68,10 @@ export const TypescriptCustomConfigSchema = z.strictObject({
 
     // deprecated
     timeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
-    includeApiReference: z.optional(z.boolean())
+    includeApiReference: z.optional(z.boolean()),
+
+    // internal - license name extracted from custom license file
+    _fernLicenseName: z.optional(z.string())
 });
 
 export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;

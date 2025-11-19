@@ -33,9 +33,9 @@
   },
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fdr-sdk": "0.140.3-473ba2d2c",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "0.139.37-f5b57f86e",
     "@fern-fern/fiddle-sdk": "0.0.656",
     "node-fetch": "2",
     "qs": "6.12.1",
@@ -50,6 +50,6 @@
     "@types/readable-stream": "^4.0.22",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

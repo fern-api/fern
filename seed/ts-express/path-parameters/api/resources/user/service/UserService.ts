@@ -65,6 +65,41 @@ export interface UserServiceMethods {
         },
         next: express.NextFunction,
     ): void | Promise<void>;
+    getUserMetadata(
+        req: express.Request<
+            {
+                user_id: string;
+                version: number;
+            },
+            SeedPathParameters.User,
+            never,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedPathParameters.User) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
+    getUserSpecifics(
+        req: express.Request<
+            {
+                user_id: string;
+                version: number;
+                thought: string;
+            },
+            SeedPathParameters.User,
+            never,
+            never
+        >,
+        res: {
+            send: (responseBody: SeedPathParameters.User) => Promise<void>;
+            cookie: (cookie: string, value: string, options?: express.CookieOptions) => void;
+            locals: any;
+        },
+        next: express.NextFunction,
+    ): void | Promise<void>;
 }
 
 export class UserService {
@@ -222,6 +257,62 @@ export class UserService {
                 if (error instanceof errors.SeedPathParametersError) {
                     console.warn(
                         `Endpoint 'searchUsers' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/:user_id/metadata/v:version", async (req, res, next) => {
+            try {
+                await this.methods.getUserMetadata(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedPathParametersError) {
+                    console.warn(
+                        `Endpoint 'getUserMetadata' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
+                    );
+                    await error.send(res);
+                } else {
+                    res.status(500).json("Internal Server Error");
+                }
+                next(error);
+            }
+        });
+        this.router.get("/:user_id/specifics/:version/:thought", async (req, res, next) => {
+            try {
+                await this.methods.getUserSpecifics(
+                    req as any,
+                    {
+                        send: async (responseBody) => {
+                            res.json(serializers.User.jsonOrThrow(responseBody, { unrecognizedObjectKeys: "strip" }));
+                        },
+                        cookie: res.cookie.bind(res),
+                        locals: res.locals,
+                    },
+                    next,
+                );
+                if (!res.writableEnded) {
+                    next();
+                }
+            } catch (error) {
+                if (error instanceof errors.SeedPathParametersError) {
+                    console.warn(
+                        `Endpoint 'getUserSpecifics' unexpectedly threw ${error.constructor.name}. If this was intentional, please add ${error.constructor.name} to the endpoint's errors list in your Fern Definition.`,
                     );
                     await error.send(res);
                 } else {

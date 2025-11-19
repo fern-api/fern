@@ -7,6 +7,7 @@ public class Example1
     public async Task Do() {
         var client = new SeedAuthEnvironmentVariablesClient(
             apiKey: "<value>",
+            xAnotherHeader: "<X-Another-Header>",
             clientOptions: new ClientOptions {
                 BaseUrl = "https://api.fern.com"
             }

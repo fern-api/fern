@@ -1,10 +1,9 @@
+import { fail } from "node:assert";
 import { Arguments } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { ast, WithGeneration, Writer } from "@fern-api/csharp-codegen";
-
 import { FernIr } from "@fern-fern/ir-sdk";
 import { HttpEndpoint, HttpMethod } from "@fern-fern/ir-sdk/api";
-
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { EndpointRequest } from "../request/EndpointRequest";
 import { getContentTypeFromRequestBody } from "../utils/getContentTypeFromRequestBody";
@@ -65,7 +64,7 @@ export declare namespace RawClient {
  */
 export class RawClient extends WithGeneration {
     public constructor(private readonly context: SdkGeneratorContext) {
-        super(context);
+        super(context.generation);
     }
 
     /**
@@ -190,7 +189,7 @@ export class RawClient extends WithGeneration {
 
             case "urlencoded":
                 return {
-                    requestReference: this.types.FormRequest.new({ arguments_: args })
+                    requestReference: this.Types.FormRequest.new({ arguments_: args })
                 };
 
             case "json":
@@ -198,7 +197,7 @@ export class RawClient extends WithGeneration {
                 return {
                     requestReference: this.csharp.instantiateClass({
                         arguments_: args,
-                        classReference: this.types.JsonRequest
+                        classReference: this.Types.JsonRequest
                     })
                 };
         }
@@ -252,64 +251,24 @@ export class RawClient extends WithGeneration {
         csharpType: ast.Type;
         encoding?: FernIr.FileUploadBodyPropertyEncoding;
     }): string {
-        csharpType = csharpType.underlyingTypeIfOptional() ?? csharpType;
-        const isCollection = csharpType.isCollection();
         if (encoding != null) {
             switch (encoding) {
                 case "exploded":
-                    return isCollection ? "AddExplodedFormEncodedParts" : "AddExplodedFormEncodedPart";
+                    return csharpType.asNonOptional().isCollection
+                        ? "AddExplodedFormEncodedParts"
+                        : "AddExplodedFormEncodedPart";
                 case "form":
-                    return isCollection ? "AddFormEncodedParts" : "AddFormEncodedPart";
+                    return csharpType.asNonOptional().isCollection ? "AddFormEncodedParts" : "AddFormEncodedPart";
                 case "json":
-                    return isCollection ? "AddJsonParts" : "AddJsonPart";
+                    return csharpType.asNonOptional().isCollection ? "AddJsonParts" : "AddJsonPart";
                 default:
                     assertNever(encoding);
             }
         } else {
-            csharpType = csharpType.getCollectionItemType() ?? csharpType;
-            csharpType = csharpType.underlyingTypeIfOptional() ?? csharpType;
-            switch (csharpType.type) {
-                case "fileParam":
-                    return isCollection ? "AddFileParameterParts" : "AddFileParameterPart";
-                case "oneOf":
-                case "oneOfBase":
-                    // TODO: handle this in @ .NET runtime to detect whether struct/string/enum/string enum which should become string part,
-                    // or anything else which should become json part.
-                    return isCollection ? "AddJsonParts" : "AddJsonPart";
-                case "int":
-                case "long":
-                case "uint":
-                case "ulong":
-                case "boolean":
-                case "bool":
-                case "float":
-                case "double":
-                case "dateOnly":
-                case "dateTime":
-                case "stringEnum":
-                case "string":
-                case "uuid":
-                    return isCollection ? "AddStringParts" : "AddStringPart";
-                case "object":
-                case "listType":
-                case "list":
-                case "set":
-                case "map":
-                case "array":
-                case "idictionary":
-                case "reference":
-                case "coreReference":
-                case "keyValuePair":
-                    return isCollection ? "AddJsonParts" : "AddJsonPart";
-                case "optional":
-                case "systemType":
-                case "action":
-                case "func":
-                case "byte[]":
-                    throw new Error(`Internal error; cannot add ${csharpType.type} to multipart form`);
-                default:
-                    throw new Error(`Internal error; unknown type ${csharpType.type}`);
-            }
+            return (
+                csharpType.multipartMethodName ??
+                fail(`Type ${csharpType.fullyQualifiedName} does not support adding to a multipart form`)
+            );
         }
     }
 
@@ -367,8 +326,7 @@ export class RawClient extends WithGeneration {
                 break;
             case "PATCH":
                 return this.csharp.codeblock((writer) => {
-                    writer.writeNode(this.csharp.coreClassReference({ name: "HttpMethodExtensions" }));
-                    writer.write(".Patch");
+                    writer.write(this.Types.HttpMethodExtensions, ".Patch");
                 });
             case "GET":
                 method = "Get";
@@ -383,7 +341,7 @@ export class RawClient extends WithGeneration {
                 assertNever(irMethod);
         }
         return this.csharp.codeblock((writer) => {
-            writer.writeNode(this.extern.System.Net.Http.HttpMethod);
+            writer.writeNode(this.System.Net.Http.HttpMethod);
             writer.write(`.${method}`);
         });
     }
@@ -415,7 +373,7 @@ export class RawClient extends WithGeneration {
             }
             formatParams.push(
                 this.csharp.codeblock((writer) => {
-                    writer.writeNode(this.types.ValueConvert);
+                    writer.writeNode(this.Types.ValueConvert);
                     writer.write(`.ToPathParameterString(${reference})`);
                 })
             );

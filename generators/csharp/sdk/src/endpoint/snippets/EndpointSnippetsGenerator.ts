@@ -23,7 +23,7 @@ export class EndpointSnippetsGenerator extends WithGeneration {
     private readonly snippetsCache: Map<string, EndpointSnippets> = new Map();
 
     constructor({ context }: { context: SdkGeneratorContext }) {
-        super(context);
+        super(context.generation);
         this.context = context;
         this.grpcEndpointGenerator = new GrpcEndpointGenerator({ context });
         this.httpEndpointGenerator = new HttpEndpointGenerator({ context });

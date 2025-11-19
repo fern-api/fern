@@ -1,4 +1,4 @@
-irVersion: v60
+irVersion: v61
 displayName: Java SDK
 changelogLocation: ../../generators/java/sdk/versions.yml
 image: fernapi/fern-java-sdk
@@ -27,6 +27,15 @@ test:
       - cd ../../
       - pnpm --filter @fern-api/java-sdk dist:cli
       - docker build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
+  podman:
+    image: fernapi/fern-java-sdk:latest
+    context: .
+    command:
+      - cd generators/java
+      - ./gradlew :sdk:distTar
+      - cd ../../
+      - pnpm --filter @fern-api/java-sdk dist:cli
+      - podman build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
   local:
     workingDirectory: generators/java
     buildCommand:
@@ -155,9 +164,18 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: default
+  pagination-custom:
+    - customConfig:
+        custom-pager-name: "FernCustomPaginator"
+      outputFolder: default
   unions:
     - customConfig:
         enable-wire-tests: true
+      outputFolder: default
+  unions-with-local-date:
+    - customConfig:
+        use-local-date-for-dates: true
+        package-prefix: com.seed.unions
       outputFolder: default
   accept-header:
     - outputFolder: accept-header
@@ -261,12 +279,19 @@ fixtures:
     - customConfig:
         collapse-optional-nullable: true
       outputFolder: collapse-optional-nullable
+  optional:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: wire-tests
+  streaming:
+    - customConfig:
+        enable-wire-tests: true
+      outputFolder: streaming
 scripts:
-  - docker: fernapi/java-seed
+  - image: fernapi/java-seed
     commands:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
 allowedFailures:
-  - api-wide-base-path
   - alias-extends
   - bytes-download
   - bytes-upload
@@ -309,11 +334,8 @@ allowedFailures:
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
-  - package-yml
   - pagination-custom
-  - path-parameters
   - query-parameters
-  - streaming
 
   - java-pagination-deep-cursor-path:wire-tests
 
@@ -326,3 +348,7 @@ allowedFailures:
   - file-upload:wrapped-aliases
   - file-upload:inline-file-properties
   - file-upload-openapi
+
+  # Optional wire tests have snippet generation bug with optional(nullable(T))
+  # Snippet generator doesn't wrap value in Optional.of() for optional request bodies
+  - optional:wire-tests

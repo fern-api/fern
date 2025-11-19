@@ -51,8 +51,8 @@ public class RawHeadersClient {
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json")
                 .addHeader("Accept", "application/json");
-        _requestBuilder.addHeader("X-Endpoint-Version", request.getEndpointVersion());
-        _requestBuilder.addHeader("X-Async", request.getAsync().toString());
+        _requestBuilder.addHeader("endpointVersion", request.getEndpointVersion());
+        _requestBuilder.addHeader("async", request.getAsync().toString());
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

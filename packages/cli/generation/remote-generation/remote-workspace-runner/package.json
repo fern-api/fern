@@ -39,6 +39,7 @@
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-resolver": "workspace:*",
     "@fern-api/fai-sdk": "0.0.6-2ee1b7e28",
+    "@fern-api/fdr-sdk": "0.140.3-473ba2d2c",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-migrations": "workspace:*",
@@ -49,14 +50,13 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/venus-api-sdk": "0.17.3-3-gf696595",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-api/fdr-sdk": "0.139.37-f5b57f86e",
     "@fern-fern/fiddle-sdk": "0.0.656",
     "axios": "^1.12.0",
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",
     "form-data": "4.0.4",
     "image-size": "^1.2.1",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "lodash-es": "^4.17.21",
     "mime-types": "^2.1.35",
     "tar": "^6.2.1",
@@ -76,6 +76,6 @@
     "@types/url-join": "^4.0.3",
     "depcheck": "^1.4.7",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

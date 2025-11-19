@@ -3,6 +3,7 @@
 import type { PostSubmitRequest } from "./api/client/requests/PostSubmitRequest.js";
 import type { PostSubmitResponse } from "./api/types/PostSubmitResponse.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+import { normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
@@ -16,21 +17,8 @@ export declare namespace SeedApiClient {
 export class SeedApiClient {
     protected readonly _options: SeedApiClient.Options;
 
-    constructor(_options: SeedApiClient.Options) {
-        this._options = {
-            ..._options,
-            headers: mergeHeaders(
-                {
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/url-form-encoded",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/url-form-encoded/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                _options?.headers,
-            ),
-        };
+    constructor(options: SeedApiClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**
@@ -71,6 +59,7 @@ export class SeedApiClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as PostSubmitResponse, rawResponse: _response.rawResponse };

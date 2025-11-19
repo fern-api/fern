@@ -11,6 +11,7 @@
     <PackageProjectUrl>https://github.com/bearer-token-environment-variable/fern</PackageProjectUrl>
     <PolySharpIncludeRuntimeSupportedAttributes>true</PolySharpIncludeRuntimeSupportedAttributes>
   </PropertyGroup>
+
   <PropertyGroup>
     <UsePortableDateOnly>false</UsePortableDateOnly>
   </PropertyGroup>
@@ -42,14 +43,17 @@
     <PackageReference Include="System.Net.Http" Version="[4.3.4,)" />
     <PackageReference Include="System.Text.RegularExpressions" Version="[4.3.1,)" />
   </ItemGroup>
+
   <ItemGroup>
     <None Include="..\..\README.md" Pack="true" PackagePath="" />
   </ItemGroup>
+
   <ItemGroup>
     <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleTo">
       <_Parameter1>SeedBearerTokenEnvironmentVariable.Test</_Parameter1>
     </AssemblyAttribute>
   </ItemGroup>
+
   <Import
     Project="SeedBearerTokenEnvironmentVariable.Custom.props"
     Condition="Exists('SeedBearerTokenEnvironmentVariable.Custom.props')"

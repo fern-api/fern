@@ -25,6 +25,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static readonly REQUEST_AND_RESPONSE_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId =
         "REQUEST_AND_RESPONSE_TYPES";
+    private static readonly SUBPACKAGE_EXPORTS_FEATURE_ID: FernGeneratorCli.FeatureId = "SUBPACKAGE_EXPORTS";
     private static readonly RUNTIME_COMPATIBILITY_FEATURE_ID: FernGeneratorCli.FeatureId = "RUNTIME_COMPATIBILITY";
     private static readonly PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
     private static readonly RAW_RESPONSES_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
@@ -34,9 +35,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     public static readonly BINARY_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "BINARY_RESPONSE";
     public static readonly FILE_UPLOAD_REQUEST_FEATURE_ID: FernGeneratorCli.FeatureId = "FILE_UPLOADS";
     public static readonly STREAMING_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "STREAMING_RESPONSE";
+    public static readonly LOGGING_FEATURE_ID: FernGeneratorCli.FeatureId = "LOGGING";
 
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
+    private readonly generateSubpackageExports: boolean;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
@@ -49,16 +52,19 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     constructor({
         context,
         endpointSnippets,
-        fileResponseType
+        fileResponseType,
+        generateSubpackageExports
     }: {
         context: SdkContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
+        generateSubpackageExports: boolean;
     }) {
         super({ endpointSnippets });
         this.context = context;
         this.fileResponseType = fileResponseType;
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.generateSubpackageExports = generateSubpackageExports;
 
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
@@ -88,6 +94,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[ReadmeSnippetBuilder.ADDITIONAL_HEADERS_FEATURE_ID] = this.buildAdditionalHeadersSnippets();
         snippets[ReadmeSnippetBuilder.ADDITIONAL_QUERY_STRING_PARAMETERS_FEATURE_ID] =
             this.buildAdditionalQueryStringParametersSnippets();
+        snippets[ReadmeSnippetBuilder.LOGGING_FEATURE_ID] = this.buildLoggingSnippets();
 
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
@@ -96,6 +103,11 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         const requestAndResponseTypesSnippets = this.buildRequestAndResponseTypesSnippets();
         if (requestAndResponseTypesSnippets != null) {
             snippets[ReadmeSnippetBuilder.REQUEST_AND_RESPONSE_TYPES_FEATURE_ID] = requestAndResponseTypesSnippets;
+        }
+
+        const subpackageExportsSnippets = this.buildSubpackageExportsSnippets();
+        if (subpackageExportsSnippets != null) {
+            snippets[ReadmeSnippetBuilder.SUBPACKAGE_EXPORTS_FEATURE_ID] = subpackageExportsSnippets;
         }
 
         return snippets;
@@ -196,6 +208,38 @@ import { ${this.context.namespaceExport} } from "${this.rootPackageName}";
 const request: ${requestTypeName} = {
     ...
 };
+`
+            )
+        ];
+    }
+
+    private buildSubpackageExportsSnippets(): string[] | undefined {
+        if (!this.generateSubpackageExports) {
+            return undefined;
+        }
+
+        const firstSubpackageWithClient = Object.values(this.context.ir.subpackages).find(
+            (subpackage) => subpackage.hasEndpointsInTree
+        );
+
+        if (firstSubpackageWithClient == null) {
+            return undefined;
+        }
+
+        const pathSegments = firstSubpackageWithClient.fernFilepath.packagePath.map((name) => name.camelCase.safeName);
+        const subpackageName = firstSubpackageWithClient.name.camelCase.safeName;
+        if (pathSegments.length === 0 || pathSegments[pathSegments.length - 1] !== subpackageName) {
+            pathSegments.push(subpackageName);
+        }
+        const importPath = pathSegments.join("/");
+        const clientName = `${firstSubpackageWithClient.name.pascalCase.unsafeName}Client`;
+
+        return [
+            this.writeCode(
+                code`
+import { ${clientName} } from '${this.rootPackageName}/${importPath}';
+
+const client = new ${clientName}({...});
 `
             )
         ];
@@ -400,6 +444,25 @@ controller.abort(); // aborts the request
 `
             )
         );
+    }
+
+    private buildLoggingSnippets(): string[] {
+        return [
+            this.writeCode(
+                code`
+import { ${this.rootClientConstructorName}, logging } from "${this.rootPackageName}";
+
+const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
+    ...
+    logging: {
+        level: logging.LogLevel.Debug, // defaults to logging.LogLevel.Info
+        logger: new logging.ConsoleLogger(), // defaults to ConsoleLogger
+        silent: false, // defaults to true, set to false to enable logging
+    }
+});
+`
+            )
+        ];
     }
 
     private buildRuntimeCompatibilitySnippets(): string[] {

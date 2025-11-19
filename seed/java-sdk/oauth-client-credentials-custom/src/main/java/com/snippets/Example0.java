@@ -17,8 +17,6 @@ public class Example0 {
                         .csr("csr")
                         .scp("scp")
                         .entityId("entity_id")
-                        .audience("https://api.example.com")
-                        .grantType("client_credentials")
                         .scope("scope")
                         .build());
     }

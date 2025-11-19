@@ -3,11 +3,11 @@
 import { mockServerPool } from "../mock-server/MockServerPool";
 import { SeedSimpleApiClient } from "../../src/Client";
 
-describe("User", () => {
+describe("UserClient", () => {
     
     test("get", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedSimpleApiClient({ "token" : "test" , "environment" : server.baseUrl });
+        const client = new SeedSimpleApiClient({ "maxRetries" : 0 , "token" : "test" , "environment" : server.baseUrl });
         
         const rawResponseBody = { "id" : "id" , "name" : "name" , "email" : "email" };
         server

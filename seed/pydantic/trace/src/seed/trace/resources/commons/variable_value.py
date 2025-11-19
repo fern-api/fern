@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .binary_tree_node_value import BinaryTreeNodeValue
 from .doubly_linked_list_node_value import DoublyLinkedListNodeValue
@@ -104,18 +105,21 @@ class VariableValue_NullValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-VariableValue = typing.Union[
-    VariableValue_IntegerValue,
-    VariableValue_BooleanValue,
-    VariableValue_DoubleValue,
-    VariableValue_StringValue,
-    VariableValue_CharValue,
-    VariableValue_MapValue,
-    VariableValue_ListValue,
-    VariableValue_BinaryTreeValue,
-    VariableValue_SinglyLinkedListValue,
-    VariableValue_DoublyLinkedListValue,
-    VariableValue_NullValue,
+VariableValue = typing_extensions.Annotated[
+    typing.Union[
+        VariableValue_IntegerValue,
+        VariableValue_BooleanValue,
+        VariableValue_DoubleValue,
+        VariableValue_StringValue,
+        VariableValue_CharValue,
+        VariableValue_MapValue,
+        VariableValue_ListValue,
+        VariableValue_BinaryTreeValue,
+        VariableValue_SinglyLinkedListValue,
+        VariableValue_DoublyLinkedListValue,
+        VariableValue_NullValue,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
 from .key_value_pair import KeyValuePair  # noqa: E402, I001
 

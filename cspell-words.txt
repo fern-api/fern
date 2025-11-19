@@ -178,6 +178,7 @@ esnext
 esutils
 etag
 Etag
+ETARGET
 ethbtc
 ethdai
 etheur
@@ -421,6 +422,7 @@ noreferrer
 noreqbody
 Nort
 Nort's
+notarget
 npmjs
 ntropy
 nuint
@@ -485,6 +487,7 @@ perserv
 Phila
 phpstan
 phpunit
+pino
 pirsch
 Pirsch
 pjpeg
@@ -576,6 +579,7 @@ Shiki
 shivammathur
 shouldnt
 shrek
+slnx
 slugified
 Slugified
 sniffio
@@ -616,6 +620,7 @@ trevorblades
 trippable
 trivago
 tsconfg
+tsgolint
 tsup
 ttlock
 TVOS

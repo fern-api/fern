@@ -7,6 +7,7 @@ import com.seed._enum.core.ClientOptions;
 import com.seed._enum.core.Suppliers;
 import com.seed._enum.resources.headers.HeadersClient;
 import com.seed._enum.resources.inlinedrequest.InlinedRequestClient;
+import com.seed._enum.resources.multipartform.MultipartFormClient;
 import com.seed._enum.resources.pathparam.PathParamClient;
 import com.seed._enum.resources.queryparam.QueryParamClient;
 import java.util.function.Supplier;
@@ -18,6 +19,8 @@ public class SeedEnumClient {
 
     protected final Supplier<InlinedRequestClient> inlinedRequestClient;
 
+    protected final Supplier<MultipartFormClient> multipartFormClient;
+
     protected final Supplier<PathParamClient> pathParamClient;
 
     protected final Supplier<QueryParamClient> queryParamClient;
@@ -26,6 +29,7 @@ public class SeedEnumClient {
         this.clientOptions = clientOptions;
         this.headersClient = Suppliers.memoize(() -> new HeadersClient(clientOptions));
         this.inlinedRequestClient = Suppliers.memoize(() -> new InlinedRequestClient(clientOptions));
+        this.multipartFormClient = Suppliers.memoize(() -> new MultipartFormClient(clientOptions));
         this.pathParamClient = Suppliers.memoize(() -> new PathParamClient(clientOptions));
         this.queryParamClient = Suppliers.memoize(() -> new QueryParamClient(clientOptions));
     }
@@ -36,6 +40,10 @@ public class SeedEnumClient {
 
     public InlinedRequestClient inlinedRequest() {
         return this.inlinedRequestClient.get();
+    }
+
+    public MultipartFormClient multipartForm() {
+        return this.multipartFormClient.get();
     }
 
     public PathParamClient pathParam() {

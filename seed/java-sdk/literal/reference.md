@@ -16,8 +16,6 @@
 client.headers().send(
     SendLiteralsInHeadersRequest
         .builder()
-        .endpointVersion("02-12-2024")
-        .async(true)
         .query("What is the weather today")
         .build()
 );
@@ -80,7 +78,7 @@ client.headers().send(
 client.inlined().send(
     SendLiteralsInlinedRequest
         .builder()
-        .prompt("You are a helpful assistant")
+        .query("What is the weather today")
         .aliasedContext("You're super wise")
         .objectWithLiteral(
             ATopLevelLiteral
@@ -88,13 +86,10 @@ client.inlined().send(
                 .nestedLiteral(
                     ANestedLiteral
                         .builder()
-                        .myLiteral("How super cool")
                         .build()
                 )
                 .build()
         )
-        .stream(false)
-        .query("What is the weather today")
         .temperature(10.1)
         .context("You're super wise")
         .maybeContext("You're super wise")
@@ -240,11 +235,9 @@ client.path().send("123");
 client.query().send(
     SendLiteralsInQueryRequest
         .builder()
-        .prompt("You are a helpful assistant")
         .aliasPrompt("You are a helpful assistant")
-        .stream(false)
-        .aliasStream(false)
         .query("What is the weather today")
+        .aliasStream(false)
         .optionalPrompt("You are a helpful assistant")
         .aliasOptionalPrompt("You are a helpful assistant")
         .optionalStream(false)
@@ -358,8 +351,6 @@ client.query().send(
 client.reference().send(
     SendRequest
         .builder()
-        .prompt("You are a helpful assistant")
-        .stream(false)
         .context("You're super wise")
         .query("What is the weather today")
         .containerObject(
@@ -369,8 +360,6 @@ client.reference().send(
                     Arrays.asList(
                         NestedObjectWithLiterals
                             .builder()
-                            .literal1("literal1")
-                            .literal2("literal2")
                             .strProp("strProp")
                             .build()
                     )

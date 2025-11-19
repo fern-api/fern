@@ -4,10 +4,10 @@ import { PropertyBasedErrorTest } from "../../src/api/resources/errors/errors/Pr
 import { SeedErrorPropertyClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("PropertyBasedError", () => {
+describe("PropertyBasedErrorClient", () => {
     test("ThrowError (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorPropertyClient({ environment: server.baseUrl });
+        const client = new SeedErrorPropertyClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = "string";
         server
@@ -24,7 +24,7 @@ describe("PropertyBasedError", () => {
 
     test("ThrowError (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorPropertyClient({ environment: server.baseUrl });
+        const client = new SeedErrorPropertyClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { message: "message" };
         server

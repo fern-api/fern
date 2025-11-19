@@ -45,3 +45,26 @@ service:
         query-parameters:
           limit: optional<integer>
       response: list<User>
+
+    getUserMetadata:
+      path: "/{user_id}/metadata/v{version}"
+      method: GET
+      docs: Test endpoint with path parameter that has a text prefix (v{version})
+      request:
+        name: GetUserMetadataRequest
+        path-parameters:
+          user_id: string
+          version: integer
+      response: User
+
+    getUserSpecifics:
+      path: "/{user_id}/specifics/{version}/{thought}"
+      method: GET
+      docs: Test endpoint with path parameters listed in different order than found in path
+      request:
+        name: GetUserSpecificsRequest
+        path-parameters:
+          thought: string
+          user_id: string
+          version: integer
+      response: User

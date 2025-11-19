@@ -8,19 +8,20 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.mjs";
+import { normalizeClientOptions } from "../../../../BaseClient.mjs";
+import { mergeHeaders } from "../../../../core/headers.mjs";
 import * as core from "../../../../core/index.mjs";
 import * as errors from "../../../../errors/index.mjs";
 import { BadRequestBody } from "../../generalErrors/errors/BadRequestBody.mjs";
-export class InlinedRequests {
-    constructor(_options) {
-        this._options = _options;
+export class InlinedRequestsClient {
+    constructor(options) {
+        this._options = normalizeClientOptions(options);
     }
     /**
      * POST with custom object in request body, response is an object
      *
      * @param {PostWithObjectBody} request
-     * @param {InlinedRequests.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link BadRequestBody}
      *
@@ -53,7 +54,7 @@ export class InlinedRequests {
     __postWithObjectBodyandResponse(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, mergeOnlyDefinedHeaders({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _headers = mergeHeaders((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/req-bodies/object"),
                 method: "POST",
@@ -66,6 +67,7 @@ export class InlinedRequests {
                 maxRetries: (_f = requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.maxRetries) !== null && _f !== void 0 ? _f : (_g = this._options) === null || _g === void 0 ? void 0 : _g.maxRetries,
                 abortSignal: requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.abortSignal,
                 fetchFn: (_h = this._options) === null || _h === void 0 ? void 0 : _h.fetch,
+                logging: this._options.logging,
             });
             if (_response.ok) {
                 return { data: _response.body, rawResponse: _response.rawResponse };
@@ -97,15 +99,6 @@ export class InlinedRequests {
                         rawResponse: _response.rawResponse,
                     });
             }
-        });
-    }
-    _getAuthorizationHeader() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const bearer = yield core.Supplier.get(this._options.token);
-            if (bearer != null) {
-                return `Bearer ${bearer}`;
-            }
-            return undefined;
         });
     }
 }

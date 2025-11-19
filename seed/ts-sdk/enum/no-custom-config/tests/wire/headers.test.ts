@@ -3,10 +3,10 @@
 import { SeedEnumClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Headers", () => {
+describe("HeadersClient", () => {
     test("send", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedEnumClient({ environment: server.baseUrl });
+        const client = new SeedEnumClient({ maxRetries: 0, environment: server.baseUrl });
 
         server
             .mockEndpoint()

@@ -1,8 +1,8 @@
+import { fail } from "node:assert";
 import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
-import { ast } from "@fern-api/csharp-codegen";
+import { ast, Writer } from "@fern-api/csharp-codegen";
 import { ExampleGenerator, generateField, generateFieldForFileProperty } from "@fern-api/fern-csharp-model";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-
 import {
     ContainerType,
     ExampleEndpointCall,
@@ -12,8 +12,6 @@ import {
     ServiceId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
 export declare namespace WrappedRequestGenerator {
@@ -26,7 +24,7 @@ export declare namespace WrappedRequestGenerator {
 }
 
 /** Represents the request JSON object */
-export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
+export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkGeneratorContext> {
     private classReference: ast.ClassReference;
     private wrapper: SdkRequestWrapper;
     private serviceId: ServiceId;
@@ -49,11 +47,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             partial: false,
             access: ast.Access.Public,
             type: ast.Class.ClassType.Record,
-            annotations: [this.extern.System.Serializable]
+            annotations: [this.System.Serializable]
         });
 
-        const service = this.context.getHttpServiceOrThrow(this.serviceId);
-        const isProtoRequest = this.context.endpointUsesGrpcTransport(service, this.endpoint);
+        const service = this.context.getHttpService(this.serviceId);
+        const isProtoRequest = this.context.endpointUsesGrpcTransport(
+            service ?? fail(`Service with id ${this.serviceId} not found`),
+            this.endpoint
+        );
         const protobufProperties: { propertyName: string; typeReference: TypeReference }[] = [];
 
         if (this.context.includePathParametersInWrappedRequest({ endpoint: this.endpoint, wrapper: this.wrapper })) {
@@ -69,15 +70,18 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     initializer: this.context.getLiteralInitializerFromTypeReference({
                         typeReference: pathParameter.valueType
                     }),
-                    annotations: [this.extern.System.Text.Json.Serialization.JsonIgnore]
+                    annotations: [this.System.Text.Json.Serialization.JsonIgnore]
                 });
             }
         }
 
         for (const query of this.endpoint.queryParameters) {
             const type = query.allowMultiple
-                ? this.csharp.Type.list(
-                      this.context.csharpTypeMapper.convert({ reference: query.valueType, unboxOptionals: true })
+                ? this.Collection.list(
+                      this.context.csharpTypeMapper.convert({
+                          reference: query.valueType,
+                          unboxOptionals: true
+                      })
                   )
                 : this.context.csharpTypeMapper.convert({ reference: query.valueType });
             const field = class_.addField({
@@ -91,7 +95,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 initializer: this.context.getLiteralInitializerFromTypeReference({
                     typeReference: query.valueType
                 }),
-                annotations: [this.extern.System.Text.Json.Serialization.JsonIgnore]
+                annotations: [this.System.Text.Json.Serialization.JsonIgnore]
             });
 
             if (isProtoRequest) {
@@ -103,7 +107,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 });
             }
         }
-        for (const header of [...service.headers, ...this.endpoint.headers]) {
+        for (const header of [...(service?.headers ?? []), ...this.endpoint.headers]) {
             class_.addField({
                 origin: header,
                 type: this.context.csharpTypeMapper.convert({ reference: header.valueType }),
@@ -115,14 +119,14 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                 initializer: this.context.getLiteralInitializerFromTypeReference({
                     typeReference: header.valueType
                 }),
-                annotations: [this.extern.System.Text.Json.Serialization.JsonIgnore]
+                annotations: [this.System.Text.Json.Serialization.JsonIgnore]
             });
         }
 
         this.endpoint.requestBody?._visit({
             reference: (reference) => {
                 const type = this.context.csharpTypeMapper.convert({ reference: reference.requestBodyType });
-                const useRequired = !type.isOptional();
+                const useRequired = !type.isOptional;
                 class_.addField({
                     origin: this.wrapper.bodyKey,
                     type,
@@ -131,7 +135,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
                     set: true,
                     summary: reference.docs,
                     useRequired,
-                    annotations: [this.extern.System.Text.Json.Serialization.JsonIgnore]
+                    annotations: [this.System.Text.Json.Serialization.JsonIgnore]
                 });
             },
             inlinedRequestBody: (request) => {
@@ -183,7 +187,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             if (protobufService != null) {
                 const protobufClassReference = this.csharp.classReference({
                     name: this.classReference.name,
-                    namespace: this.context.protobufResolver.getNamespaceFromProtobufFileOrThrow(protobufService.file),
+                    namespace: this.context.protobufResolver.getNamespaceFromProtobufFile(protobufService.file),
                     namespaceAlias: "Proto"
                 });
                 this.context.csharpProtobufTypeMapper.toProtoMethod(class_, {
@@ -199,7 +203,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             directory: this.getDirectory(),
             allNamespaceSegments: this.context.getAllNamespaceSegments(),
             allTypeClassReferences: this.context.getAllTypeClassReferences(),
-            namespace: this.namespaces.root,
+            namespace: this.generation.namespaces.root,
             generation: this.generation
         });
     }
@@ -236,7 +240,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             });
             const value = isSingleQueryParameter
                 ? singleValueSnippet
-                : this.csharp.codeblock((writer) =>
+                : this.csharp.codeblock((writer: Writer) =>
                       writer.writeNode(
                           this.csharp.list({
                               entries: [singleValueSnippet]
@@ -293,7 +297,7 @@ export class WrappedRequestGenerator extends FileGenerator<CSharpFile, SdkCustom
             arguments_: args,
             multiline: true
         });
-        return this.csharp.codeblock((writer) => writer.writeNode(instantiateClass));
+        return this.csharp.codeblock((writer: Writer) => writer.writeNode(instantiateClass));
     }
 
     protected getFilepath(): RelativeFilePath {

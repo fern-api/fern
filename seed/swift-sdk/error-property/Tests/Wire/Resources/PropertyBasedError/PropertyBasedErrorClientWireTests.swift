@@ -4,7 +4,7 @@ import ErrorProperty
 
 @Suite("PropertyBasedErrorClient Wire Tests") struct PropertyBasedErrorClientWireTests {
     @Test func throwError1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -17,7 +17,7 @@ import ErrorProperty
             urlSession: stub.urlSession
         )
         let expectedResponse = "string"
-        let response = try await client.propertyBasedError.throwError()
+        let response = try await client.propertyBasedError.throwError(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

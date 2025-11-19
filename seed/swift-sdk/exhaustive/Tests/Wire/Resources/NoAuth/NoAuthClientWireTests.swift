@@ -4,7 +4,7 @@ import Exhaustive
 
 @Suite("NoAuthClient Wire Tests") struct NoAuthClientWireTests {
     @Test func postWithNoAuth1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -18,9 +18,12 @@ import Exhaustive
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.noAuth.postWithNoAuth(request: .object([
-            "key": .string("value")
-        ]))
+        let response = try await client.noAuth.postWithNoAuth(
+            request: .object([
+                "key": .string("value")
+            ]),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

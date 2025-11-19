@@ -4,11 +4,17 @@ module Seed
   module Endpoints
     module Union
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::Endpoints::Union::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Seed::RequestOptions]
+        #
+        # @param params [Seed::Types::Union::Types::Animal]
+        #
         # @return [Seed::Types::Union::Types::Animal]
         def get_and_return_union(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(

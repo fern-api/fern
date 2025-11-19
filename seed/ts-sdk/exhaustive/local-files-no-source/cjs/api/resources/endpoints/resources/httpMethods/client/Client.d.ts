@@ -2,51 +2,51 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import * as core from "../../../../../../core/index.js";
 import type { ObjectWithOptionalField } from "../../../../types/resources/object/types/ObjectWithOptionalField.js";
 import type { ObjectWithRequiredField } from "../../../../types/resources/object/types/ObjectWithRequiredField.js";
-export declare namespace HttpMethods {
+export declare namespace HttpMethodsClient {
     interface Options extends BaseClientOptions {
     }
     interface RequestOptions extends BaseRequestOptions {
     }
 }
-export declare class HttpMethods {
-    protected readonly _options: HttpMethods.Options;
-    constructor(_options: HttpMethods.Options);
+export declare class HttpMethodsClient {
+    protected readonly _options: HttpMethodsClient.Options;
+    constructor(options: HttpMethodsClient.Options);
     /**
      * @param {string} id
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testGet("id")
      */
-    testGet(id: string, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<string>;
+    testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __testGet;
     /**
      * @param {ObjectWithRequiredField} request
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testPost({
      *         string: "string"
      *     })
      */
-    testPost(request: ObjectWithRequiredField, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
+    testPost(request: ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
     private __testPost;
     /**
      * @param {string} id
      * @param {ObjectWithRequiredField} request
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testPut("id", {
      *         string: "string"
      *     })
      */
-    testPut(id: string, request: ObjectWithRequiredField, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
+    testPut(id: string, request: ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
     private __testPut;
     /**
      * @param {string} id
      * @param {ObjectWithOptionalField} request
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testPatch("id", {
@@ -67,16 +67,16 @@ export declare class HttpMethods {
      *         bigint: "1000000"
      *     })
      */
-    testPatch(id: string, request: ObjectWithOptionalField, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
+    testPatch(id: string, request: ObjectWithOptionalField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
     private __testPatch;
     /**
      * @param {string} id
-     * @param {HttpMethods.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.httpMethods.testDelete("id")
      */
-    testDelete(id: string, requestOptions?: HttpMethods.RequestOptions): core.HttpResponsePromise<boolean>;
+    testDelete(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<boolean>;
     private __testDelete;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

@@ -3,7 +3,7 @@ import { java } from "@fern-api/java-ast";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { EndpointId, FeatureId, FernFilepath, HttpEndpoint } from "@fern-fern/ir-sdk/api";
+import { EndpointId, FeatureId, FernFilepath, HttpEndpoint, WebSocketChannel } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
@@ -19,6 +19,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static BASE_URL_FEATURE_ID: FernGeneratorCli.FeatureId = "BASE_URL";
     private static CUSTOM_HEADERS_FEATURE_ID: FernGeneratorCli.FeatureId = "CUSTOM_HEADERS";
     private static RAW_RESPONSE_FEATURE_ID: FernGeneratorCli.FeatureId = "ACCESS_RAW_RESPONSE_DATA";
+    private static WEBSOCKET_FEATURE_ID: FernGeneratorCli.FeatureId = "WEBSOCKET";
     private static SNIPPET_PACKAGE_NAME = "com.example.usage";
     private static ELLIPSES = java.codeblock("...");
 
@@ -39,7 +40,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         super({ endpointSnippets });
         this.context = context;
 
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.isPaginationEnabled =
+            (context.config.generatePaginatedClients ?? false) || context.ir.sdkConfig.hasPaginatedEndpoints;
         this.endpointsById = this.buildEndpointsById();
         this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
         this.defaultEndpointId = this.getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets);
@@ -83,6 +85,10 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             [FernGeneratorCli.StructuredFeatureId.Timeouts]: { renderer: this.renderTimeoutsSnippet.bind(this) },
             [ReadmeSnippetBuilder.CUSTOM_HEADERS_FEATURE_ID]: { renderer: this.renderCustomHeadersSnippet.bind(this) },
             [ReadmeSnippetBuilder.RAW_RESPONSE_FEATURE_ID]: { renderer: this.renderRawResponseSnippet.bind(this) },
+            [ReadmeSnippetBuilder.WEBSOCKET_FEATURE_ID]: {
+                renderer: this.renderWebSocketSnippet.bind(this),
+                predicate: (_endpoint: EndpointWithFilepath) => this.hasWebSocketChannels()
+            },
             ...(this.isPaginationEnabled
                 ? {
                       [FernGeneratorCli.StructuredFeatureId.Pagination]: {
@@ -104,7 +110,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         }
 
         for (const [featureId, { renderer, predicate }] of Object.entries(templatedSnippetsConfig)) {
-            snippetsByFeatureId[featureId] = this.renderSnippetsTemplateForFeature(featureId, renderer, predicate);
+            // Special case for WebSocket feature: render even without HTTP endpoints
+            if (featureId === ReadmeSnippetBuilder.WEBSOCKET_FEATURE_ID && this.hasWebSocketChannels()) {
+                const snippet = this.renderWebSocketSnippet({} as EndpointWithFilepath);
+                if (snippet) {
+                    snippetsByFeatureId[featureId] = [snippet];
+                }
+            } else {
+                snippetsByFeatureId[featureId] = this.renderSnippetsTemplateForFeature(featureId, renderer, predicate);
+            }
         }
 
         return snippetsByFeatureId;
@@ -478,6 +492,33 @@ UpdateRequest request = UpdateRequest.builder()
         });
 
         const returnTypeClassReference = this.context.getReturnTypeForEndpoint(endpoint.endpoint);
+
+        // Check if this is custom pagination
+        const isCustomPagination = endpoint.endpoint.pagination?.type === "custom";
+
+        if (isCustomPagination) {
+            // For custom pagination, show bidirectional navigation
+            const customPagerClassName = this.context.customConfig?.["custom-pager-name"] ?? "CustomPager";
+
+            const snippet = java.codeblock((writer) => {
+                writer.write(`${customPagerClassName}<Item> page = client.listItems();`);
+                writer.newLine();
+                writer.newLine();
+                writer.writeLine("// Navigate forward through pages");
+                writer.controlFlow("while", java.codeblock("page.hasNext()"));
+                writer.writeLine("page = page.nextPage();");
+                writer.endControlFlow();
+                writer.newLine();
+                writer.writeLine("// Navigate backward through pages");
+                writer.controlFlow("if", java.codeblock("page.hasPrevious()"));
+                writer.writeLine("page = page.previousPage();");
+                writer.endControlFlow();
+            });
+
+            return this.renderSnippet(snippet);
+        }
+
+        // Standard pagination (cursor/offset)
         const paginationClassReference = java.Type.generic(this.context.getPaginationClassReference(), [
             returnTypeClassReference
         ]);
@@ -800,5 +841,188 @@ UpdateRequest request = UpdateRequest.builder()
 
     private capitalizeFirstLetter(str: string): string {
         return str.charAt(0).toUpperCase() + str.slice(1);
+    }
+
+    private hasWebSocketChannels(): boolean {
+        return this.context.ir.websocketChannels != null && Object.keys(this.context.ir.websocketChannels).length > 0;
+    }
+
+    private renderWebSocketSnippet(_endpoint: EndpointWithFilepath): string {
+        // Find first WebSocket channel by checking subpackages and root package
+        let channel: WebSocketChannel | null = null;
+        let fernFilepath: FernFilepath | null = null;
+
+        // Check root package first
+        if (this.context.ir.rootPackage.websocket != null && this.context.ir.websocketChannels != null) {
+            const foundChannel = this.context.ir.websocketChannels[this.context.ir.rootPackage.websocket];
+            if (foundChannel) {
+                channel = foundChannel;
+                fernFilepath = this.context.ir.rootPackage.fernFilepath;
+            }
+        }
+
+        // If not found, check subpackages
+        if (!channel && this.context.ir.subpackages) {
+            for (const subpackage of Object.values(this.context.ir.subpackages)) {
+                if (subpackage.websocket != null && this.context.ir.websocketChannels != null) {
+                    const foundChannel = this.context.ir.websocketChannels[subpackage.websocket];
+                    if (foundChannel) {
+                        channel = foundChannel;
+                        fernFilepath = subpackage.fernFilepath;
+                        break;
+                    }
+                }
+            }
+        }
+
+        if (!channel || !fernFilepath) {
+            return "";
+        }
+
+        // Get access path to WebSocket client from root client
+        const clientAccessParts = fernFilepath.allParts.map(
+            (part: { camelCase: { safeName: string } }) => part.camelCase.safeName + "()"
+        );
+        const wsClientAccess =
+            clientAccessParts.length > 0
+                ? `${ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME}.${clientAccessParts.join(".")}`
+                : ReadmeSnippetBuilder.CLIENT_VARIABLE_NAME;
+
+        // Build client initialization with auth if needed
+        const clientClassReference = this.context.getRootClientClassReference();
+        const builderParameters: Array<{ name: string; value: java.TypeLiteral }> = [];
+
+        // Add auth parameters if auth is configured
+        if (this.context.ir.auth.schemes.length > 0) {
+            const authScheme = this.context.ir.auth.schemes[0];
+            if (authScheme?.type === "bearer") {
+                const tokenName = authScheme.token?.camelCase?.unsafeName ?? "token";
+                builderParameters.push({
+                    name: tokenName,
+                    value: java.TypeLiteral.string("<token>")
+                });
+            } else if (authScheme?.type === "basic") {
+                builderParameters.push({
+                    name: "username",
+                    value: java.TypeLiteral.string("<username>")
+                });
+                builderParameters.push({
+                    name: "password",
+                    value: java.TypeLiteral.string("<password>")
+                });
+            } else if (authScheme?.type === "header") {
+                const headerName = authScheme.name.name?.camelCase?.unsafeName ?? "apiKey";
+                builderParameters.push({
+                    name: headerName,
+                    value: java.TypeLiteral.string("<api-key>")
+                });
+            }
+        }
+
+        // Add environment variables if any
+        if (this.context.ir.variables != null && this.context.ir.variables.length > 0) {
+            for (const variable of this.context.ir.variables) {
+                const variableName = variable.name.camelCase.unsafeName;
+                builderParameters.push({
+                    name: variableName,
+                    value: java.TypeLiteral.string(`YOUR_${variable.name.screamingSnakeCase.unsafeName}`)
+                });
+            }
+        }
+
+        const clientBuilder = java.TypeLiteral.builder({
+            classReference: clientClassReference,
+            parameters: builderParameters
+        });
+
+        // Find first send and receive messages from examples if available
+        let firstSendMessageName: string | undefined;
+        let firstReceiveMessageName: string | undefined;
+
+        // Use IR examples if available (prefer user-specified, fallback to autogenerated)
+        const examples =
+            channel.examples.length > 0
+                ? channel.examples
+                : channel.v2Examples?.userSpecifiedExamples
+                  ? Object.values(channel.v2Examples.userSpecifiedExamples)
+                  : channel.v2Examples?.autogeneratedExamples
+                    ? Object.values(channel.v2Examples.autogeneratedExamples)
+                    : [];
+
+        if (examples.length > 0 && examples[0]) {
+            const exampleMessages = examples[0].messages;
+            if (exampleMessages) {
+                for (const message of exampleMessages) {
+                    const messageId = message.type;
+                    const messageDefinition = channel.messages.find((m) => m.type === messageId);
+                    if (messageDefinition) {
+                        if (messageDefinition.origin === "client" && !firstSendMessageName) {
+                            firstSendMessageName = this.capitalizeFirstLetter(
+                                messageDefinition.displayName || messageId
+                            );
+                        } else if (messageDefinition.origin === "server" && !firstReceiveMessageName) {
+                            firstReceiveMessageName = this.capitalizeFirstLetter(
+                                messageDefinition.displayName || messageId
+                            );
+                        }
+                    }
+                    if (firstSendMessageName && firstReceiveMessageName) {
+                        break;
+                    }
+                }
+            }
+        }
+
+        // Fallback: scan all messages if examples don't have both types
+        if (!firstSendMessageName || !firstReceiveMessageName) {
+            for (const message of channel.messages) {
+                if (message.origin === "client" && !firstSendMessageName) {
+                    firstSendMessageName = this.capitalizeFirstLetter(message.displayName || message.type);
+                } else if (message.origin === "server" && !firstReceiveMessageName) {
+                    firstReceiveMessageName = this.capitalizeFirstLetter(message.displayName || message.type);
+                }
+                if (firstSendMessageName && firstReceiveMessageName) {
+                    break;
+                }
+            }
+        }
+
+        const snippet = java.codeblock((writer) => {
+            writer.writeNode(clientClassReference);
+            writer.write(" client = ");
+            writer.writeNodeStatement(clientBuilder);
+            writer.newLine();
+            writer.writeLine("// Connect to the WebSocket");
+            writer.writeLine(`var ws = ${wsClientAccess};`);
+            writer.writeLine("ws.connect().join();");
+            writer.newLine();
+
+            if (firstReceiveMessageName) {
+                writer.writeLine("// Register message handlers to receive server messages");
+                writer.writeLine(`ws.on${firstReceiveMessageName}(message -> {`);
+                writer.indent();
+                writer.writeLine('System.out.println("Received: " + message);');
+                writer.dedent();
+                writer.writeLine("});");
+                writer.newLine();
+            }
+
+            if (firstSendMessageName) {
+                writer.writeLine("// Send messages to the server");
+                writer.writeNodeStatement(
+                    java.invokeMethod({
+                        on: java.codeblock("ws"),
+                        method: `send${firstSendMessageName}`,
+                        arguments_: [ReadmeSnippetBuilder.ELLIPSES]
+                    })
+                );
+                writer.newLine();
+            }
+
+            writer.writeLine("// Close the connection when done");
+            writer.writeLine("ws.disconnect();");
+        });
+
+        return this.renderSnippet(snippet);
     }
 }

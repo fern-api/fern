@@ -1,8 +1,63 @@
 import { getResponseBody } from "../../../src/core/fetcher/getResponseBody";
+
 import { chooseStreamWrapper } from "../../../src/core/fetcher/stream-wrappers/chooseStreamWrapper";
+
 import { RUNTIME } from "../../../src/core/runtime";
 
 describe("Test getResponseBody", () => {
+    interface SimpleTestCase {
+        description: string;
+        responseData: string | Record<string, any>;
+        responseType?: "blob" | "sse" | "streaming" | "text";
+        expected: any;
+        skipCondition?: () => boolean;
+    }
+
+    const simpleTestCases: SimpleTestCase[] = [
+        {
+            description: "should handle text response type",
+            responseData: "test text",
+            responseType: "text",
+            expected: "test text",
+        },
+        {
+            description: "should handle JSON response",
+            responseData: { key: "value" },
+            expected: { key: "value" },
+        },
+        {
+            description: "should handle empty response",
+            responseData: "",
+            expected: undefined,
+        },
+        {
+            description: "should handle non-JSON response",
+            responseData: "invalid json",
+            expected: {
+                ok: false,
+                error: {
+                    reason: "non-json",
+                    statusCode: 200,
+                    rawBody: "invalid json",
+                },
+            },
+        },
+    ];
+
+    simpleTestCases.forEach(({ description, responseData, responseType, expected, skipCondition }) => {
+        it(description, async () => {
+            if (skipCondition?.()) {
+                return;
+            }
+
+            const mockResponse = new Response(
+                typeof responseData === "string" ? responseData : JSON.stringify(responseData),
+            );
+            const result = await getResponseBody(mockResponse, responseType);
+            expect(result).toEqual(expected);
+        });
+    });
+
     it("should handle blob response type", async () => {
         const mockBlob = new Blob(["test"], { type: "text/plain" });
         const mockResponse = new Response(mockBlob);
@@ -28,37 +83,5 @@ describe("Test getResponseBody", () => {
             // need to reinstantiate string as a result of locked state in Readable Stream after registration with Response
             expect(JSON.stringify(result)).toBe(JSON.stringify(await chooseStreamWrapper(new ReadableStream())));
         }
-    });
-
-    it("should handle text response type", async () => {
-        const mockResponse = new Response("test text");
-        const result = await getResponseBody(mockResponse, "text");
-        expect(result).toBe("test text");
-    });
-
-    it("should handle JSON response", async () => {
-        const mockJson = { key: "value" };
-        const mockResponse = new Response(JSON.stringify(mockJson));
-        const result = await getResponseBody(mockResponse);
-        expect(result).toEqual(mockJson);
-    });
-
-    it("should handle empty response", async () => {
-        const mockResponse = new Response("");
-        const result = await getResponseBody(mockResponse);
-        expect(result).toBeUndefined();
-    });
-
-    it("should handle non-JSON response", async () => {
-        const mockResponse = new Response("invalid json");
-        const result = await getResponseBody(mockResponse);
-        expect(result).toEqual({
-            ok: false,
-            error: {
-                reason: "non-json",
-                statusCode: 200,
-                rawBody: "invalid json",
-            },
-        });
     });
 });

@@ -56,7 +56,13 @@ export async function getIntermediateRepresentation({
             version,
             packageName,
             context,
-            sourceResolver: new SourceResolverImpl(context, workspace)
+            sourceResolver: new SourceResolverImpl(context, workspace),
+            generationMetadata: {
+                cliVersion: workspace.cliVersion,
+                generatorName: generatorInvocation.name,
+                generatorVersion: generatorInvocation.version,
+                generatorConfig: generatorInvocation.config
+            }
         });
     if (sourceConfig != null) {
         intermediateRepresentation.sourceConfig = sourceConfig;

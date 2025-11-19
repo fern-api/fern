@@ -3,24 +3,34 @@
 module Seed
   module User
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::User::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::User::Types::CreateUsernameRequest]
+      #
       # @return [untyped]
       def create_username(request_options: {}, **params)
+        _body_prop_names = %i[username password name]
+        _body_bag = params.slice(*_body_prop_names)
+
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
         _query_param_names = %i[tags]
-        _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        _query = {}
+        _query["tags"] = params[:tags] if params.key?(:tags)
+        params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/user/username",
           query: _query,
-          body: params
+          body: Seed::User::Types::CreateUsernameRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)
@@ -34,11 +44,16 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::User::Types::CreateUsernameBody]
+      #
       # @return [untyped]
       def create_username_with_referenced_type(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
         _query_param_names = %i[tags]
-        _query = params.slice(*_query_param_names)
+        _query = {}
+        _query["tags"] = params[:tags] if params.key?(:tags)
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
@@ -46,7 +61,7 @@ module Seed
           method: "POST",
           path: "/user/username-referenced",
           query: _query,
-          body: params
+          body: Seed::User::Types::CreateUsernameBody.new(params).to_h
         )
         begin
           _response = @client.send(_request)
@@ -60,6 +75,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def create_username_optional(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -80,12 +99,32 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::User::Types::User]
       def get_username(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[limit id date deadline bytes user userList optionalDeadline keyValue optionalString
-                                nestedUser optionalUser excludeUser filter longParam bigIntParam]
-        _query = params.slice(*_query_param_names)
+        _query_param_names = %i[limit id date deadline bytes user user_list optional_deadline key_value optional_string
+                                nested_user optional_user exclude_user filter long_param big_int_param]
+        _query = {}
+        _query["limit"] = params[:limit] if params.key?(:limit)
+        _query["id"] = params[:id] if params.key?(:id)
+        _query["date"] = params[:date] if params.key?(:date)
+        _query["deadline"] = params[:deadline] if params.key?(:deadline)
+        _query["bytes"] = params[:bytes] if params.key?(:bytes)
+        _query["user"] = params[:user] if params.key?(:user)
+        _query["userList"] = params[:user_list] if params.key?(:user_list)
+        _query["optionalDeadline"] = params[:optional_deadline] if params.key?(:optional_deadline)
+        _query["keyValue"] = params[:key_value] if params.key?(:key_value)
+        _query["optionalString"] = params[:optional_string] if params.key?(:optional_string)
+        _query["nestedUser"] = params[:nested_user] if params.key?(:nested_user)
+        _query["optionalUser"] = params[:optional_user] if params.key?(:optional_user)
+        _query["excludeUser"] = params[:exclude_user] if params.key?(:exclude_user)
+        _query["filter"] = params[:filter] if params.key?(:filter)
+        _query["longParam"] = params[:long_param] if params.key?(:long_param)
+        _query["bigIntParam"] = params[:big_int_param] if params.key?(:big_int_param)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(

@@ -114,6 +114,15 @@
         }
       ]
     },
+    "docs.Target": {
+      "type": "string",
+      "enum": [
+        "_blank",
+        "_self",
+        "_parent",
+        "_top"
+      ]
+    },
     "docs.ChangelogFolderRelativePath": {
       "type": "string"
     },
@@ -197,6 +206,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Target"
             },
             {
               "type": "null"
@@ -1048,6 +1067,16 @@
               "type": "null"
             }
           ]
+        },
+        "target": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.Target"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1163,6 +1192,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.SnippetsConfiguration"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "postman": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"

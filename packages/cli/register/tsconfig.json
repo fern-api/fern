@@ -9,13 +9,10 @@
   "include": ["./src/**/*"],
   "references": [
     {
-      "path": "../workspace/loader"
-    },
-    {
       "path": "../task-context"
     },
     {
-      "path": "../project-loader"
+      "path": "../api-importers/openapi-pruner"
     },
     {
       "path": "../workspace/lazy-fern-workspace"
@@ -49,6 +46,9 @@
     },
     {
       "path": "../workspace/commons"
+    },
+    {
+      "path": "../workspace/loader"
     }
   ]
 }

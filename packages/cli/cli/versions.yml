@@ -1,6 +1,590 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix AutoVersioning to exclude Fern branding from commit messages and PR titles/descriptions when whitelabel config is present.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.11.1
+
+- changelogEntry:
+    - summary: |
+        Use commit message for auto versioning PR title and description. When auto versioning is successful, the first line of the commit message becomes the PR title and the rest becomes the PR body.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.11.0
+
+- changelogEntry:
+    - summary: |
+        Fix whitelabel behavior for local generation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.10.3
+
+- changelogEntry:
+    - summary: |
+        Support JSX titles in `<Code />` components.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.10.2
+
+- changelogEntry:
+    - summary: |
+        Tweak SDK diffing AI prompt to work better with larger diffs.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.10.1
+
+- changelogEntry:
+    - summary: |
+        Add automatic semantic versioning to local generation with `--version AUTO --local` flags.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.10.0
+
+- changelogEntry:
+    - summary: |
+        Fix issue where x-fern-explorer was not hiding routes from the API Explorer
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.9.2
+
+- changelogEntry:
+    - summary: |
+        Fix issue where `<Code />` components were not able to be added during `fern docs dev` mode.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.9.1
+
+- changelogEntry:
+    - summary: |
+        Add external configuration to tsup build to prevent dev-only dependencies (prettier, vitest, typescript, tsup, depcheck, @types/*) from being accidentally bundled. 
+        This ensures the CLI bundle only includes runtime dependencies and enables metafile generation for bundle analysis.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.9.0
+
+- changelogEntry:
+    - summary: |
+        Fix issue where local generation for github output mode wasn't producing README.md files
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.8.1
+
+- changelogEntry:
+    - summary: |
+        Add `fern sdk-diff` command to analyze the differences between two SDKs and generate a commit message and version bump.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.8.0
+
+- changelogEntry:
+    - summary: |
+        Replace prettier2 with yaml package in `fern format` command to reduce CLI bundle size by ~4.3 MB (11.4% reduction from 38 MB to 33.67 MB). 
+        YAML formatting output may have minor differences (e.g., extra blank lines after section headers like `types:` and `errors:`).
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.7.0
+
+- changelogEntry:
+    - summary: |
+        Add `fern self-update` command to update the globally installed Fern CLI. 
+        The command detects how the CLI was installed (npm, pnpm, yarn, bun, or brew) and runs the appropriate update command. 
+        Supports updating to a specific version (e.g., `fern self-update 0.85.0`) or the latest version (e.g., `fern self-update`). 
+        Includes `--dry-run` flag to preview the update command without executing it.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.6.0
+
+- changelogEntry:
+    - summary: |
+        Add `fern downgrade <version>` command to set the CLI version in fern.config.json. This allows users to pin their project to a specific CLI version without running migrations.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.5.0
+
+- changelogEntry:
+    - summary: |
+        Enable local generation with preview mode by removing incompatibility restriction and migrating github
+        operations handling from generator-cli to fern-cli.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.4.0
+
+- changelogEntry:
+    - summary: |
+        Fix duplicate upgrade messages when one CLI version reruns another. The parent process now properly suppresses its upgrade nudge so only a single message is shown.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.3.1
+
+- changelogEntry:
+    - summary: |
+        Made `fern upgrade` safer by running migrations before updating `fern.config.json`. If migrations fail, your config stays unchanged.
+      type: fix
+    - summary: |
+        Added `--from` flag to `fern upgrade` to manually specify the version to migrate from when needed.
+      type: feat
+    - summary: |
+        Improved `fern upgrade` reliability by automatically detecting and recovering from faulty CLI upgrades. When upgrading from a problematic CLI version, Fern now retrieves the correct previous version from git history to ensure migrations run properly.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.3.0
+
+- changelogEntry:
+    - summary: |
+        Make sure `fern upgrade` with `--rc` follows the same migration logic as non-rc upgrades.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.3.0-rc2
+
+- changelogEntry:
+    - summary: |
+        Make sure `fern upgrade` with `--rc` follows the same migration logic as non-rc upgrades.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.3.0-rc1
+
+- changelogEntry:
+    - summary: |
+        Made `fern upgrade` safer by running migrations before updating `fern.config.json`. If migrations fail, your config stays unchanged.
+      type: fix
+    - summary: |
+        Added `--from` flag to `fern upgrade` to manually specify the version to migrate from when needed.
+      type: feat
+    - summary: |
+        Improved `fern upgrade` reliability by automatically detecting and recovering from faulty CLI upgrades. When upgrading from a problematic CLI version, Fern now retrieves the correct previous version from git history to ensure migrations run properly.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-17"
+  version: 1.3.0-rc0
+
+- changelogEntry:
+    - summary: |
+        Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays `generating AI examples for {API name} - X/Y` to track progress without creating terminal noise.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-14"
+  version: 1.2.0
+
+- changelogEntry:
+    - summary: |
+        Add `path-parameter-order`, which configures how path parameters are ordered in generated code.
+        If set to `url-order` (the default), path parameters are ordered in the same order as they appear in the URL.
+        If set to `spec-order`, path parameters are ordered in the same order as they are listed in the spec.
+
+        Can be configured as follows in `generators.yml`:
+        ```yaml
+        api:
+          settings:
+            path-parameter-order: url-order
+        ```
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 1.1.0
+
+- changelogEntry:
+    - summary: |
+        Ensure 1.0.0 settings migration runs for users upgrading from pre-1.0.0 versions. This addresses a previous off-by-one error in migration selection that could cause the 1.0.0 migration to be skipped.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-14"
+  version: 1.0.5
+
+- changelogEntry:
+    - summary: |
+        Fix CLI migration selection to include the target version's migrations during `fern upgrade`. Previously, an off-by-one error excluded the target version (e.g., 1.0.0), causing its migration not to run. Users who upgraded to 1.0.0 should upgrade to 1.0.4 and run `fern upgrade` again to apply the 1.0.0 migration.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-14"
+  version: 1.0.4
+
+- changelogEntry:
+    - summary: |
+        Specify the target of links throughout the docs navigation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-14"
+  version: 1.0.3
+
+- changelogEntry:
+    - summary: |
+        Display OpenAPI validation warnings when using the --warnings flag with fern check. Previously, warnings were counted but not shown; now they are logged with location details when --warnings is specified.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 1.0.2
+
+- changelogEntry:
+    - summary: |
+        Update OpenAPI operation converter to use `x-fern-explorer` extension instead of `x-fern-explorer-enabled` for setting `apiPlayground` property in the IR. Operations now check for the `x-fern-explorer` boolean value to determine API playground availability.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 1.0.1
+
+- changelogEntry:
+    - summary: |
+        Change defaults for OpenAPI and AsyncAPI parsing settings:
+          - `title-as-schema-name`: `false` (was `true`)
+          - `respect-nullable-schemas`: `true` (was `false`)
+          - `inline-path-parameters`: `true` (was `false`)
+          - `idiomatic-request-names`: `true` (was `false`)
+          - `type-dates-as-strings`: `true` (was `false`)
+          - `wrap-references-to-nullable-in-optional`: `false` (was `true`)
+          - `coerce-optional-schemas-to-nullable`: `false` (was `true`)
+          - `object-query-parameters`: `true` (was `false`)
+        The CLI will automatically upgrade your _generators.yml_ to explicitly set the old defaults to preserve
+        existing behavior. New users will get the new defaults.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 1.0.0
+
+- changelogEntry:
+    - summary: |
+        Refactor how settings from specs are parsed and applied in the CLI.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.2
+
+- changelogEntry:
+    - summary: |
+        Match endpoints to AI overrides examples.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.1
+
+- changelogEntry:
+    - summary: |
+        Add batching support for AI example enhancement. The CLI now processes up to 10 endpoints at once with a single pruned OpenAPI spec, improving performance. Non-OpenAPI specs are automatically skipped.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.121.0
+
+- changelogEntry:
+    - summary: |
+        Support adding arbitrary metadata to `<Code />` components. Title and language are set by default, but can be overridden with `title` and `language` props.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.120.1
+
+- changelogEntry:
+    - summary: |
+        Rename OpenAPI extensions: x-fern-playground → x-fern-explorer and x-fern-playground-enabled → x-fern-explorer-enabled. The old extension keys are no longer recognized.
+      type: break
+  irVersion: 61
+  createdAt: "2025-11-13"
+  version: 0.120.0
+
+- changelogEntry:
+    - summary: |
+        Add x-fern-playground extension to OpenAPI importer to control API playground visibility. Defaults to true.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.119.1
+
+- changelogEntry:
+    - summary: |
+        Add global `settings` flag to `generators.yml` configuration.
+        Overrideable by `api.specs[].settings` (which is itself overrideable by `group.generators[].settings` as before).
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.119.0
+
+- changelogEntry:
+    - summary: |
+        Add support for external URLs in `<Code src="...">` tags in docs markdown. Code snippets can now reference external URLs (e.g., raw.githubusercontent.com) to fetch code content dynamically.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.118.0
+
+- changelogEntry:
+    - summary: |
+        Add support for hidden versions.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-12"
+  version: 0.117.0
+
+- changelogEntry:
+    - summary: |
+        Retrieve package name from module.path configuration for Go SDK generator to support local generation workflows
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.116.1
+
+- changelogEntry:
+    - summary: |
+        Add support for a minimal footer navigation theme.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.116.0
+
+- changelogEntry:
+    - summary: |
+        Do not upload _snippet-templates.json_ files to FDR.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.6
+
+- changelogEntry:
+    - summary: |
+        Fix PyPI credentials to use standard environment variable names (PYPI_USERNAME, PYPI_PASSWORD) and correct package version propagation for local generation
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.5
+
+- changelogEntry:
+    - summary: |
+        Improve error message for unknown API definitions in docs.yml.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.4
+
+- changelogEntry:
+    - summary: |
+        Fix name deconfliction for subtypes of an undiscriminated union (especially when one is an enum).
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.3
+
+- changelogEntry:
+    - summary: |
+        Fix gRPC source resolution to log warnings instead of throwing errors when protobuf sources cannot be resolved, matching OpenAPI behavior.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.2
+
+- changelogEntry:
+    - summary: |
+        Update markdown variable replacement to use double curly braces for variable interpolation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.115.1
+
+- changelogEntry:
+    - summary: |
+        Add support for multiAuth field in FDR endpoint definitions to represent OpenAPI security with OR-of-AND semantics.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-11"
+  version: 0.115.0
+
+- changelogEntry:
+    - summary: |
+        Add new `remove-discriminants-from-schemas` setting for OpenAPI/AsyncAPI imports in generators.yml.
+
+        If `"always"`, discriminant properties are removed from schemas when generating types, unless the schema is also used outside of a discriminated union.
+        If `"never"`, schemas are left untouched.
+        Defaults to `"always"`.
+      type: feat
+    - summary: |
+        Do not remove discriminant properties from schemas when generating types if the schema is also used outside of a discriminated union.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.114.0
+
+- changelogEntry:
+    - summary: |
+        Make individual theme options optional in docs.yml.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.113.1
+
+- changelogEntry:
+    - summary: |
+        Add support for page actions theme in docs.yml.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.113.0
+
+- changelogEntry:
+    - summary: |
+        - Gracefully circuit-break from recursive examples
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.112.2
+
+- changelogEntry:
+    - summary: |
+        Fix OpenAPI importer to correctly handle `oneOf[Type, null]` and `anyOf[Type, null]` patterns for non-required properties. These properties are now properly represented as `optional(nullable(T))` in the IR, ensuring autogenerated examples omit the field instead of generating `{}`. This preserves tri-state semantics (absent, null, present) for both collapsed `Optional<T>` and non-collapsed `OptionalNullable<T>` modes.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-10"
+  version: 0.112.1
+
+- changelogEntry:
+    - summary: |
+        Markdown snippets now support passing parameters to the markdown file.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-08"
+  version: 0.112.0
+
+- changelogEntry:
+    - summary: |
+        OpenAPI importer now converts request bodies to referenced requests when body parameter names overlap with query parameter names. This ensures proper type generation and avoids naming conflicts in generated SDKs.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-08"
+  version: 0.111.0
+
+- changelogEntry:
+    - summary: |
+        CLI will send the correct IR version to latest Ruby generator.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-07"
+  version: 0.110.1
+
+- changelogEntry:
+    - summary: |
+        Add support for file hashing when running `fern generate --docs`. This allows for more efficient file uploads to the docs site by only uploading files that have changed since the last generation.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-07"
+  version: 0.110.0
+
+- changelogEntry:
+    - summary: |
+        Fix TypeScript SDK generator's local GitHub generation to match remote generation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-06"
+  version: 0.109.1
+
+- changelogEntry:
+    - summary: |
+        Add support for binary primitive type in Conjure parser. Binary types are now converted to string with format: binary in Fern definitions, resolving "Cannot find declaration of type: binary" errors when importing Conjure files.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-06"
+  version: 0.109.0
+
+- changelogEntry:
+    - summary: |
+        Add position-based sorting for folder navigation in docs.yml. Pages can now control their order using a `position` field in frontmatter. Pages with position values sort first (ascending), then pages without position sort alphabetically.
+
+        Example:
+        ```markdown
+        ---
+        position: 1
+        ---
+        # Getting Started
+        ```
+      type: feat
+    - summary: |
+        Fix hot-reload in `fern docs dev` to detect frontmatter position changes. Previously, changing position values required restarting the dev server. Now position changes, file additions, and file deletions trigger automatic navigation rebuilds.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.108.0
+
+- changelogEntry:
+    - summary: |
+        Fix AsyncAPI v3 message parsing where channel messages were not being included in generated WebSocket clients. Messages defined in AsyncAPI v3 specs are now correctly resolved and included in the SDK.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.11
+
+- changelogEntry:
+    - summary: |
+        Update migration logic to support new generator versions with ir v61.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.10
+
+- changelogEntry:
+    - summary: |
+        Implement variant ranking in anyOf/oneOf example generation to prefer variants that use provided examples without coercion over variants that require coercion or generate fallback examples. When a schema has anyOf: [number, string] with examples: ["2500"], the string variant is now preferred since it can use the provided example as-is, rather than the number variant which would coerce it to a number.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.108.0
+
+- changelogEntry:
+    - summary: |
+        Improve anyOf/oneOf example generation to prefer variants with examples and use schema-level examples when available. This addresses cases where unions with multiple types were generating fallback examples instead of using provided examples.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.8
+
+- changelogEntry:
+    - summary: |
+        Add support for x-fern-playground-enabled extension in OpenAPI v3 to control whether endpoints are shown in the API playground. The extension value is parsed and stored in the IR's HttpEndpoint.apiPlayground field.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.8
+
+- changelogEntry:
+    - summary: |
+        Enables parsing of the language setting in docs.
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-03"
+  version: 0.107.7
+
+- changelogEntry:
+    - summary: |
+        Silence validation logs in fern docs dev unless there is a validation error
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-05"
+  version: 0.107.6
+
+- changelogEntry:
+    - summary: |
+        Perform fern docs dev validation in the background instead of foreground
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-04"
+  version: 0.107.5
+
+- changelogEntry:
+    - summary: |
         Fix the dereferencing of message $refs in the operations section of AsyncAPI specs.
       type: fix
   irVersion: 61

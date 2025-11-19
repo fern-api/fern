@@ -3,16 +3,16 @@ import {
     FernGeneratorExec,
     Options
 } from "@fern-api/browser-compatible-base-generator";
-import { ast, BaseCsharpCustomConfigSchema, Generation } from "@fern-api/csharp-codegen";
+import { ast, CsharpConfigSchema, Generation } from "@fern-api/csharp-codegen";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { DynamicTypeLiteralMapper } from "./DynamicTypeLiteralMapper";
+import { DynamicLiteralMapper } from "./DynamicLiteralMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
 import { FilePropertyMapper } from "./FilePropertyMapper";
 
 export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGeneratorContext {
     public ir: FernIr.dynamic.DynamicIntermediateRepresentation;
     public dynamicTypeMapper: DynamicTypeMapper;
-    public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
+    public dynamicLiteralMapper: DynamicLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
 
     public readonly generation: Generation;
@@ -23,9 +23,6 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public get registry() {
         return this.generation.registry;
     }
-    public get extern() {
-        return this.generation.extern;
-    }
     public get settings() {
         return this.generation.settings;
     }
@@ -35,26 +32,41 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public get names() {
         return this.generation.names;
     }
-    public get types() {
-        return this.generation.types;
-    }
     public get model() {
         return this.generation.model;
+    }
+    public get format() {
+        return this.generation.format;
     }
     public get csharp() {
         return this.generation.csharp;
     }
+    public get Types() {
+        return this.generation.Types;
+    }
     public get System() {
-        return this.extern.System;
+        return this.generation.extern.System;
     }
     public get NUnit() {
-        return this.extern.NUnit;
+        return this.generation.extern.NUnit;
     }
     public get OneOf() {
-        return this.extern.OneOf;
+        return this.generation.extern.OneOf;
     }
     public get Google() {
-        return this.extern.Google;
+        return this.generation.extern.Google;
+    }
+    public get WireMock() {
+        return this.generation.extern.WireMock;
+    }
+    public get Primitive() {
+        return this.generation.Primitive;
+    }
+    public get Value() {
+        return this.generation.Value;
+    }
+    public get Collection() {
+        return this.generation.Collection;
     }
 
     constructor({
@@ -76,14 +88,12 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             new Generation(
                 ir,
                 config.workspaceName,
-                config.customConfig != null
-                    ? (config.customConfig as BaseCsharpCustomConfigSchema)
-                    : ({} as BaseCsharpCustomConfigSchema),
+                config.customConfig != null ? (config.customConfig as CsharpConfigSchema) : ({} as CsharpConfigSchema),
                 config
             );
 
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
-        this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
+        this.dynamicLiteralMapper = new DynamicLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
     }
 
@@ -96,10 +106,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         });
     }
 
-    public getFileParameterForString(str: string): ast.TypeLiteral {
-        return this.csharp.TypeLiteral.reference(
+    public getFileParameterForString(str: string): ast.Literal {
+        return this.csharp.Literal.reference(
             this.csharp.instantiateClass({
-                classReference: this.types.FileParameter,
+                classReference: this.Types.FileParameter,
                 arguments_: [],
                 properties: [
                     {
@@ -113,13 +123,12 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getMemoryStreamForString(str: string): ast.ClassInstantiation {
-        return this.csharp.instantiateClass({
-            classReference: this.extern.System.IO.MemoryStream,
+        return this.System.IO.MemoryStream.new({
             arguments_: [
                 this.csharp.invokeMethod({
-                    on: this.extern.System.Text.Encoding_UTF8,
+                    on: this.System.Text.Encoding_UTF8,
                     method: "GetBytes",
-                    arguments_: [this.csharp.TypeLiteral.string(str)]
+                    arguments_: [this.csharp.Literal.string(str)]
                 })
             ]
         });
@@ -157,7 +166,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     private getEnvironmentClassReferenceForEnumName(name: FernIr.Name): ast.ClassReference {
         return this.csharp.classReference({
-            name: `${this.generation.types.Environments.name}.${this.getClassName(name)}`,
+            name: `${this.generation.Types.Environments.name}.${this.getClassName(name)}`,
             namespace: this.namespaces.root
         });
     }
@@ -169,13 +178,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public precalculate(requests: Partial<FernIr.dynamic.EndpointSnippetRequest>[]): void {
         this.generation.initialize();
-        this.extern.System.Collections.Generic.KeyValuePair();
-        this.extern.System.Collections.Generic.IEnumerable();
-        this.extern.System.Collections.Generic.IAsyncEnumerable();
-        this.extern.System.Collections.Generic.HashSet();
-        this.extern.System.Collections.Generic.List();
-        this.extern.System.Collections.Generic.Dictionary();
-        this.extern.System.Threading.Tasks.Task();
+        this.System.Collections.Generic.KeyValuePair();
+        this.System.Collections.Generic.IEnumerable();
+        this.System.Collections.Generic.IAsyncEnumerable();
+        this.System.Collections.Generic.HashSet();
+        this.System.Collections.Generic.List();
+        this.System.Collections.Generic.Dictionary();
+        this.System.Threading.Tasks.Task();
 
         // generate the names for the model types
         Object.entries(this.ir.types)
@@ -214,8 +223,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
             }
         }
 
-        this.generation.types.ClientOptions;
-        this.generation.types.RootClient;
+        this.generation.Types.ClientOptions;
+        this.generation.Types.RootClient;
 
         // after generating the names for everything, freeze the class references
         this.csharp.freezeClassReferences();

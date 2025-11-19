@@ -11,6 +11,7 @@ import {
     ResponseProperty,
     ServiceId
 } from "@fern-fern/ir-sdk/api";
+import { fail } from "assert";
 import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
@@ -110,7 +111,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         parameters.push(this.getRequestOptionsParameter({ endpoint }));
         parameters.push(
             this.csharp.parameter({
-                type: this.csharp.Type.reference(this.extern.System.Threading.CancellationToken),
+                type: this.System.Threading.CancellationToken,
                 name: this.names.parameters.cancellationToken,
                 initializer: "default"
             })
@@ -229,14 +230,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                 writer.popScope();
                 writer.popScope();
-                writer.write("catch (", this.extern.System.Text.Json.JsonException, ")");
+                writer.write("catch (", this.System.Text.Json.JsonException, ")");
                 writer.pushScope();
                 writer.writeLine("// unable to map error response, throwing generic error");
                 writer.popScope();
             }
             writer.write(
                 "throw new ",
-                this.types.BaseApiException,
+                this.Types.BaseApiException,
                 `($"Error with status code {${this.names.variables.response}.StatusCode}", ${this.names.variables.response}.StatusCode, `
             );
             writer.writeTextStatement(`${this.names.variables.responseBody})`);
@@ -254,12 +255,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         writer.write("throw new ");
         writer.writeNode(this.context.getExceptionClassReference(fullError.name));
         writer.write("(");
-        writer.writeNode(this.types.JsonUtils);
+        writer.writeNode(this.Types.JsonUtils);
         writer.write(".Deserialize<");
         writer.writeNode(
             fullError.type != null
                 ? this.context.csharpTypeMapper.convert({ reference: fullError.type })
-                : this.csharp.Type.object
+                : this.Primitive.object
         );
         writer.writeTextStatement(`>(${this.names.variables.responseBody}))`);
     }
@@ -292,7 +293,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.writeTextStatement(`string? line`);
                     writer.write(`using var reader = `);
                     writer.write(
-                        context.System.IO.StreamReader.instantiate({
+                        context.System.IO.StreamReader.new({
                             arguments_: [
                                 context.csharp.codeblock(
                                     `await ${names.variables.response}.Raw.Content.ReadAsStreamAsync()`
@@ -312,10 +313,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     jsonString: string,
                     yieldResult: boolean
                 ) {
-                    if (is.Type.oneOf(payloadType)) {
+                    if (is.OneOf.OneOf(payloadType)) {
                         // we have to tear this apart and figure out which one to deserialize
                         // based on the union type?
-                        for (const each of payloadType.oneOfTypes()) {
+                        for (const each of payloadType.generics) {
                             writer.pushScope();
                             writer.write(
                                 `if(`,
@@ -339,7 +340,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         return;
                     }
 
-                    writer.writeStatement(payloadType.toOptionalIfNotAlready(), `result`);
+                    writer.writeStatement(payloadType.asOptional(), `result`);
                     writer.writeLine("try");
                     writer.pushScope();
 
@@ -367,8 +368,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         const payloadType = context.csharpTypeMapper.convert({ reference: jsonChunk.payload });
                         deserializeJsonChunk(
                             payloadType,
-                            context.generation.types.JsonUtils,
-                            context.generation.types.BaseException,
+                            context.generation.Types.JsonUtils,
+                            context.generation.Types.BaseException,
                             "line",
                             true
                         );
@@ -411,8 +412,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                         deserializeJsonChunk(
                             payloadType,
-                            context.generation.types.JsonUtils,
-                            context.generation.types.BaseException,
+                            context.generation.Types.JsonUtils,
+                            context.generation.Types.BaseException,
                             "item.Data",
                             true
                         );
@@ -456,7 +457,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.pushScope();
 
                     writer.write("return ");
-                    writer.writeNode(this.types.JsonUtils);
+                    writer.writeNode(this.Types.JsonUtils);
                     writer.write(".Deserialize<");
                     writer.writeNode(astType);
                     // todo: Maybe remove ! below and handle potential null. Requires introspecting type to know if its
@@ -465,12 +466,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     writer.popScope();
 
                     writer.write("catch (");
-                    writer.writeNode(this.extern.System.Text.Json.JsonException);
+                    writer.writeNode(this.System.Text.Json.JsonException);
                     writer.writeLine(" e)");
                     writer.pushScope();
 
                     writer.write("throw new ");
-                    writer.writeNode(this.types.BaseException);
+                    writer.writeNode(this.Types.BaseException);
                     writer.writeTextStatement('("Failed to deserialize response", e)');
                     writer.popScope();
 
@@ -517,7 +518,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         parameters.push(requestOptionsParam);
         parameters.push(
             this.csharp.parameter({
-                type: this.csharp.Type.reference(this.extern.System.Threading.CancellationToken),
+                type: this.System.Threading.CancellationToken,
                 name: this.names.parameters.cancellationToken,
                 initializer: "default"
             })
@@ -599,7 +600,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpointSignatureInfo: EndpointSignatureInfo;
         pagination: OffsetPagination;
         requestParameter?: ast.Parameter;
-        requestOptionsType: ast.Type | ast.TypeParameter;
+        requestOptionsType: ast.Type;
         unpagedEndpointResponseType: ast.Type;
         itemType: ast.Type;
         writer: Writer;
@@ -610,14 +611,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             throw new Error("Request parameter is required for pagination");
         }
 
-        if (requestParameter.type.isOptional()) {
+        if (requestParameter.type.isOptional) {
             writer.writeLine("if (request is not null)");
             writer.pushScope();
         }
 
         writer.writeLine("request = request with { };");
 
-        if (requestParameter.type.isOptional()) {
+        if (requestParameter.type.isOptional) {
             writer.popScope();
         }
 
@@ -629,8 +630,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             ? this.context.csharpTypeMapper.convert({
                   reference: pagination.step?.property.valueType
               })
-            : this.csharp.Type.object;
-        const offsetPagerClassReference = this.types.OffsetPager({
+            : this.Primitive.object;
+        const offsetPagerClassReference = this.Types.OffsetPager({
             requestType: requestParameter.type,
             requestOptionsType,
             responseType: unpagedEndpointResponseType,
@@ -638,16 +639,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             stepType,
             itemType
         });
-        const responseType = is.Type.reference(unpagedEndpointResponseType)
-            ? (unpagedEndpointResponseType.value as ast.ClassReference)
-            : (null as unknown as ast.ClassReference);
-
-        const requestType =
-            requestParameter.type instanceof ast.Type
-                ? is.Type.reference(requestParameter.type)
-                    ? (requestParameter.type.value as ast.ClassReference)
-                    : (null as unknown as ast.ClassReference)
-                : (null as unknown as ast.ClassReference);
 
         writer.write("var pager = ");
         writer.writeNodeStatement(
@@ -662,7 +653,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         requestParameter,
                         endpoint
                     }),
-                    this.csharp.codeblock(`request => ${this.dotAccess(requestType, "request", pagination.page)} ?? 0`),
+                    this.csharp.codeblock(
+                        `request => ${this.dotAccess(requestParameter.type, "request", pagination.page)} ?? 0`
+                    ),
                     this.csharp.codeblock((writer) => {
                         writer.writeLine("(request, offset) =>");
                         writer.pushScope();
@@ -670,27 +663,27 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         if (pagination.page.propertyPath && pagination.page.propertyPath.length > 0) {
                             writer.writeStatement(
                                 "request.",
-                                this.getDotAccess(responseType, pagination.page, false).code,
+                                this.getDotAccess(unpagedEndpointResponseType, pagination.page, false).code,
                                 " ??= new ()"
                             );
                         }
 
                         writer.writeTextStatement(
-                            `${this.dotAccess(requestType, "request", pagination.page, false)} = offset`
+                            `${this.dotAccess(requestParameter.type, "request", pagination.page, false)} = offset`
                         );
                         writer.popScope();
                     }),
                     this.csharp.codeblock(
                         pagination.step
-                            ? `request => ${this.dotAccess(requestType, "request", pagination.step)} ?? 0`
+                            ? `request => ${this.dotAccess(requestParameter.type, "request", pagination.step)} ?? 0`
                             : "null"
                     ),
                     this.csharp.codeblock(
-                        `response => ${this.dotAccess(responseType, "response", pagination.results)}?.ToList()`
+                        `response => ${this.dotAccess(requestParameter.type, "response", pagination.results)}?.ToList()`
                     ),
                     this.csharp.codeblock(
                         pagination.hasNextPage
-                            ? `response => ${this.dotAccess(responseType, "response", pagination.hasNextPage)}`
+                            ? `response => ${this.dotAccess(requestParameter.type, "response", pagination.hasNextPage)}`
                             : "null"
                     ),
                     this.csharp.codeblock(this.names.parameters.cancellationToken)
@@ -744,9 +737,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpointSignatureInfo: EndpointSignatureInfo;
         pagination: CursorPagination;
         requestParameter?: ast.Parameter;
-        requestOptionsType: ast.Type | ast.TypeParameter;
-        unpagedEndpointResponseType: ast.Type | ast.TypeParameter;
-        itemType: ast.Type | ast.TypeParameter;
+        requestOptionsType: ast.Type;
+        unpagedEndpointResponseType: ast.Type;
+        itemType: ast.Type;
         writer: Writer;
         optionsParamName: string;
         endpoint: HttpEndpoint;
@@ -763,26 +756,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const cursorType = this.context.csharpTypeMapper.convert({
             reference: pagination.next.property.valueType
         });
-        const cursorPagerClassReference = this.types.CursorPager({
+        const cursorPagerClassReference = this.Types.CursorPager({
             requestType: requestParameter.type,
             requestOptionsType,
             responseType: unpagedEndpointResponseType,
             cursorType,
             itemType
         });
-        const responseType =
-            unpagedEndpointResponseType instanceof ast.TypeParameter
-                ? (null as unknown as ast.ClassReference)
-                : is.Type.reference(unpagedEndpointResponseType)
-                  ? (unpagedEndpointResponseType.value as ast.ClassReference)
-                  : (null as unknown as ast.ClassReference);
-
-        const requestType =
-            requestParameter.type instanceof ast.Type
-                ? is.Type.reference(requestParameter.type)
-                    ? (requestParameter.type.value as ast.ClassReference)
-                    : (null as unknown as ast.ClassReference)
-                : (null as unknown as ast.ClassReference);
 
         writer.write("var pager = ");
         writer.writeNodeStatement(
@@ -805,7 +785,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         writer.writeLine("(request, cursor) =>");
                         writer.pushScope();
                         if (pagination.page.propertyPath && pagination.page.propertyPath.length > 0) {
-                            const { code, enclosingType } = this.getDotAccess(requestType, pagination.page, false);
+                            const { code, enclosingType } = this.getDotAccess(
+                                requestParameter.type,
+                                pagination.page,
+                                false
+                            );
                             writer.writeStatement(
                                 "request.",
                                 code,
@@ -821,21 +805,23 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                                         .filter((each) => each.needsIntialization)
                                         .map((each) => ({
                                             name: each.name,
-                                            value: each.type.getDefaultValue()
+                                            value: each.type.defaultValue
                                         }))
                                 })
                             );
                         }
                         writer.writeTextStatement(
-                            `${this.dotAccess(requestType, "request", pagination.page, false)} = cursor`
+                            `${this.dotAccess(requestParameter.type, "request", pagination.page, false)} = cursor`
                         );
                         writer.popScope();
                     }),
                     // GetNextCursor
-                    this.csharp.codeblock(`response => ${this.dotAccess(responseType, "response", pagination.next)}`),
+                    this.csharp.codeblock(
+                        `response => ${this.dotAccess(unpagedEndpointResponseType, "response", pagination.next)}`
+                    ),
                     // GetItems
                     this.csharp.codeblock(
-                        `response => ${this.dotAccess(responseType, "response", pagination.results)}?.ToList()`
+                        `response => ${this.dotAccess(unpagedEndpointResponseType, "response", pagination.results)}?.ToList()`
                     ),
                     // CancellationToken
                     this.csharp.codeblock(this.names.parameters.cancellationToken)
@@ -944,10 +930,15 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private getDotAccess(
-        enclosingType: ast.ClassReference,
+        encType: ast.Type,
         { property, propertyPath }: RequestProperty | ResponseProperty,
         allowOptional: boolean = true
     ): { code: string; enclosingType: ast.ClassReference } {
+        encType = encType.asNonOptional();
+        let enclosingType = is.ClassReference(encType)
+            ? encType
+            : fail(`Expected ClassReference, got ${encType.fullyQualifiedName}`);
+
         if (!propertyPath || propertyPath.length === 0) {
             return { code: this.csharp.getPropertyName(enclosingType, property), enclosingType };
         }
@@ -961,12 +952,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
                     // get the type of the current property
                     let typeOfValue = this.context.csharpTypeMapper.convert({ reference: val.type });
-                    optional = allowOptional && is.Type.optional(typeOfValue) ? "?" : "";
-                    typeOfValue = typeOfValue.unwrapIfOptional();
+                    optional = allowOptional && is.Optional(typeOfValue) ? "?" : "";
+                    typeOfValue = typeOfValue.asNonOptional();
 
                     // find the classRef for that type
-                    if (is.Type.reference(typeOfValue)) {
-                        enclosingType = typeOfValue.value;
+                    if (is.ClassReference(typeOfValue)) {
+                        enclosingType = typeOfValue;
                     }
                     // return the property name
                     return `${propertyName}${optional}`;
@@ -977,47 +968,21 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     }
 
     private dotAccess(
-        enclosingType: ast.ClassReference,
+        encType: ast.Type,
         variableName: string,
         property: RequestProperty | ResponseProperty,
         allowOptional: boolean = true
     ): string {
+        encType = encType.asNonOptional();
+        let enclosingType = is.ClassReference(encType)
+            ? encType
+            : fail(`Expected ClassReference, got ${encType.fullyQualifiedName}`);
+
         if (!property.propertyPath || property.propertyPath.length === 0) {
             return `${variableName}.${this.csharp.getPropertyName(enclosingType, property.property)}`;
         }
         const dotAccess = this.getDotAccess(enclosingType, property, allowOptional);
         return `${variableName}.${dotAccess.code}.${this.csharp.getPropertyName(dotAccess.enclosingType, property.property)}`;
-    }
-
-    private dotAccess2(
-        enclosingType: ast.ClassReference,
-        variableName: string,
-        { property, propertyPath }: RequestProperty | ResponseProperty,
-        allowOptional: boolean = true
-    ): string {
-        if (!propertyPath || propertyPath.length === 0) {
-            return `${variableName}.${this.csharp.getPropertyName(enclosingType, property)}`;
-        }
-        let optional = "";
-
-        return `${variableName}.${propertyPath
-            .map((val) => {
-                // get the property name for the current property
-                const propertyName = this.csharp.getPropertyName(enclosingType, val);
-
-                // get the type of the current property
-                let typeOfValue = this.context.csharpTypeMapper.convert({ reference: val.type });
-                optional = allowOptional && is.Type.optional(typeOfValue) ? "?" : "";
-                typeOfValue = typeOfValue.unwrapIfOptional();
-
-                // find the classRef for that type
-                if (is.Type.reference(typeOfValue)) {
-                    enclosingType = typeOfValue.value;
-                }
-                // return the property name
-                return `${propertyName}${optional}`;
-            })
-            .join(".")}.${this.csharp.getPropertyName(enclosingType, property)}`;
     }
 
     public override generateEndpointSnippet({
@@ -1131,7 +1096,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         additionalEndParameters?: ast.CodeBlock[];
         getResult?: boolean;
     }): ast.MethodInvocation | undefined {
-        const service = this.context.getHttpServiceOrThrow(serviceId);
+        const service = this.context.getHttpService(serviceId) ?? fail(`Service with id ${serviceId} not found`);
         const serviceFilePath = service.name.fernFilepath;
         const args = this.getNonEndpointArguments({ endpoint, example, parseDatetimes });
         const endpointRequestSnippet = this.getEndpointRequestSnippet(example, endpoint, serviceId, parseDatetimes);
@@ -1163,13 +1128,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const name = this.getRequestOptionsParamNameForEndpoint({ endpoint });
         if (endpoint.idempotent) {
             return this.csharp.parameter({
-                type: this.csharp.Type.optional(this.csharp.Type.reference(this.types.IdempotentRequestOptions)),
+                type: this.Types.IdempotentRequestOptions.asOptional(),
                 name,
                 initializer: "null"
             });
         } else {
             return this.csharp.parameter({
-                type: this.csharp.Type.optional(this.csharp.Type.reference(this.types.RequestOptions)),
+                type: this.Types.RequestOptions.asOptional(),
                 name,
                 initializer: "null"
             });

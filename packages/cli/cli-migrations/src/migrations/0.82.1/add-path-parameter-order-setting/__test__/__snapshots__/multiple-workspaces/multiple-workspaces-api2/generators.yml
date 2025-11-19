@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
+api:
+  specs:
+    - openapi: ./openapi.yml
+      settings:
+        title-as-schema-name: false
+    - openapi: ./openapi2.yml
+  settings:
+    path-parameter-order: spec-order
+groups: {}

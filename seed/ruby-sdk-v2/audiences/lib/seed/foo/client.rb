@@ -3,24 +3,34 @@
 module Seed
   module Foo
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Foo::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Foo::Types::FindRequest]
+      #
       # @return [Seed::Foo::Types::ImportingType]
       def find(request_options: {}, **params)
+        _body_prop_names = %i[public_property private_property]
+        _body_bag = params.slice(*_body_prop_names)
+
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[optionalString]
-        _query = params.slice(*_query_param_names)
-        params = params.except(*_query_param_names)
+        _query_param_names = %i[optional_string]
+        _query = {}
+        _query["optionalString"] = params[:optional_string] if params.key?(:optional_string)
+        params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "",
           query: _query,
-          body: params
+          body: Seed::Foo::Types::FindRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)

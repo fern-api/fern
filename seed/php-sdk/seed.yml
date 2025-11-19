@@ -1,4 +1,4 @@
-irVersion: v59
+irVersion: v61
 displayName: PHP SDK
 image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
@@ -13,6 +13,9 @@ test:
   docker:
     image: fernapi/fern-php-sdk:latest
     command: pnpm --filter @fern-api/php-sdk dockerTagLatest
+  podman:
+    image: fernapi/fern-php-sdk:latest
+    command: pnpm --filter @fern-api/php-sdk podmanTagLatest
   local:
     workingDirectory: generators/php
     buildCommand:
@@ -137,7 +140,7 @@ fixtures:
             analyze: echo skip
             hello: echo hello
 scripts:
-  - docker: composer:2.7.9
+  - image: composer:2.7.9
     commands:
       - composer install
       - composer build
@@ -176,6 +179,8 @@ allowedFailures:
   # Fix union dynamic snippets (i.e. BigUnion).
   - unions:no-custom-config
   - unions:property-accessors
+  # Java-specific fixture for LocalDate support
+  - unions-with-local-date
   # unknown
   - file-upload
   - http-head

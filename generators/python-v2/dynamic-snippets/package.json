@@ -45,9 +45,8 @@
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
-    "string.prototype.replaceall": "^1.0.10",
     "tsup": "^8.5.0",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

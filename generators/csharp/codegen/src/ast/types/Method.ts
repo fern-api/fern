@@ -1,5 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { type Generation } from "../../context/generation-info";
+import { is } from "../../utils/type-guards";
 import { MemberNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { Access } from "../language/Access";
@@ -8,8 +9,7 @@ import { CodeBlock } from "../language/CodeBlock";
 import { Parameter } from "../language/Parameter";
 import { XmlDocBlock } from "../language/XmlDocBlock";
 import { ClassReference } from "./ClassReference";
-import { Type } from "./Type";
-import { TypeParameter } from "./TypeParameter";
+import { Type } from "./IType";
 
 export enum MethodType {
     INSTANCE,
@@ -20,7 +20,7 @@ export class Method extends MemberNode {
     public readonly name: string;
     public readonly isAsync: boolean;
     public readonly access: Access | undefined;
-    public readonly return: ClassReference | Type | TypeParameter | undefined;
+    public readonly return: Type | undefined;
     public readonly noBody: boolean;
     public readonly body: CodeBlock | undefined;
     private readonly bodyType: Method.BodyType;
@@ -30,7 +30,7 @@ export class Method extends MemberNode {
     public readonly reference: ClassReference | undefined;
     public readonly override: boolean;
     private readonly parameters: Parameter[];
-    private readonly typeParameters: TypeParameter[];
+    private readonly typeParameters: Type[];
     private readonly annotations: Annotation[];
     private readonly interfaceReference?: ClassReference;
 
@@ -80,7 +80,7 @@ export class Method extends MemberNode {
     }
 
     public get isAsyncEnumerable(): boolean {
-        return this.return?.isAsyncEnumerable ?? false;
+        return is.AsyncEnumerable(this.return);
     }
 
     public addParameter(parameterArgs: Parameter.Args): Parameter;
@@ -115,14 +115,14 @@ export class Method extends MemberNode {
         }
         if (this.return == null) {
             if (this.isAsync) {
-                writer.writeNode(this.extern.System.Threading.Tasks.Task());
+                writer.writeNode(this.System.Threading.Tasks.Task());
                 writer.write(" ");
             } else {
                 writer.write("void ");
             }
         } else {
             if (this.isAsync && !this.isAsyncEnumerable) {
-                writer.writeNode(this.extern.System.Threading.Tasks.Task(this.return));
+                writer.writeNode(this.System.Threading.Tasks.Task(this.return));
             } else {
                 this.return.write(writer);
             }
@@ -193,11 +193,11 @@ export namespace Method {
         /* Whether the method is sync or async. Defaults to false. */
         isAsync?: boolean;
         /* The return type of the method */
-        return_?: ClassReference | Type | TypeParameter;
+        return_?: ClassReference | Type;
         /* The name of the method */
         name: string;
         /* The parameters of the method */
-        typeParameters?: TypeParameter[];
+        typeParameters?: Type[];
         /* The parameters of the method */
         parameters?: Parameter[];
         /* If true, no method body will be written. This is for interface methods. */

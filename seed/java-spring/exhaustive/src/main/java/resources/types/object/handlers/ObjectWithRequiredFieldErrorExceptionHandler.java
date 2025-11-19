@@ -14,6 +14,6 @@ import resources.types.object.exceptions.ObjectWithRequiredFieldError;
 public final class ObjectWithRequiredFieldErrorExceptionHandler {
   @ExceptionHandler(ObjectWithRequiredFieldError.class)
   ResponseEntity<Object> handle(ObjectWithRequiredFieldError objectWithRequiredFieldError) {
-    return new ResponseEntity<>(objectWithRequiredFieldError.getBody(), null, ObjectWithRequiredFieldError.STATUS_CODE);
+    return ResponseEntity.status(ObjectWithRequiredFieldError.STATUS_CODE).body(objectWithRequiredFieldError.getBody());
   }
 }

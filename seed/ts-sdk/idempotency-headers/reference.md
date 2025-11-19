@@ -40,7 +40,7 @@ await client.payment.create({
 <dl>
 <dd>
 
-**requestOptions:** `Payment.IdempotentRequestOptions` 
+**requestOptions:** `PaymentClient.IdempotentRequestOptions` 
     
 </dd>
 </dl>
@@ -89,7 +89,7 @@ await client.payment.delete("paymentId");
 <dl>
 <dd>
 
-**requestOptions:** `Payment.RequestOptions` 
+**requestOptions:** `PaymentClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -3,5 +3,6 @@
  */
 
 export interface GtmConfig {
+    /** Your Google Tag Manager container ID. Must start with "GTM-". */
     containerId: string;
 }

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedUndiscriminatedUnions.Test/SeedUndiscriminatedUnions.Test.csproj" />
+  <Project Path="SeedUndiscriminatedUnions/SeedUndiscriminatedUnions.csproj" />
+</Solution>

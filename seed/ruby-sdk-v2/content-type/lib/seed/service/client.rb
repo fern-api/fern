@@ -3,18 +3,27 @@
 module Seed
   module Service
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Service::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Service::Types::PatchProxyRequest]
+      #
       # @return [untyped]
       def patch(request_options: {}, **params)
+        _body_prop_names = %i[application require_auth]
+        _body_bag = params.slice(*_body_prop_names)
+
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "",
-          body: params
+          body: Seed::Service::Types::PatchProxyRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)
@@ -33,15 +42,22 @@ module Seed
       # - optional<T> fields (can be present or absent, but not null)
       # - optional<nullable<T>> fields (can be present, absent, or null)
       #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Service::Types::PatchComplexRequest]
+      #
       # @return [untyped]
       def patch_complex(request_options: {}, **params)
-        _path_param_names = ["id"]
+        _path_param_names = %i[id]
+        _body = params.except(*_path_param_names)
+        _body_prop_names = %i[name age active metadata tags email nickname bio profile_image_url settings]
+        _body_bag = _body.slice(*_body_prop_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "complex/#{params[:id]}",
-          body: params.except(*_path_param_names)
+          body: Seed::Service::Types::PatchComplexRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)
@@ -58,15 +74,22 @@ module Seed
       # Named request with mixed optional/nullable fields and merge-patch content type.
       # This should trigger the NPE issue when optional fields aren't initialized.
       #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Service::Types::NamedMixedPatchRequest]
+      #
       # @return [untyped]
       def named_patch_with_mixed(request_options: {}, **params)
-        _path_param_names = ["id"]
+        _path_param_names = %i[id]
+        _body = params.except(*_path_param_names)
+        _body_prop_names = %i[app_id instructions active]
+        _body_bag = _body.slice(*_body_prop_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "named-mixed/#{params[:id]}",
-          body: params.except(*_path_param_names)
+          body: Seed::Service::Types::NamedMixedPatchRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)
@@ -85,13 +108,20 @@ module Seed
       # 1. Not NPE when fields are not provided (tests initialization)
       # 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
       #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Service::Types::OptionalMergePatchRequest]
+      #
       # @return [untyped]
       def optional_merge_patch_test(request_options: {}, **params)
+        _body_prop_names = %i[required_field optional_string optional_integer optional_boolean nullable_string]
+        _body_bag = params.slice(*_body_prop_names)
+
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "optional-merge-patch-test",
-          body: params
+          body: Seed::Service::Types::OptionalMergePatchRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)
@@ -107,15 +137,22 @@ module Seed
 
       # Regular PATCH endpoint without merge-patch semantics
       #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Service::Types::RegularPatchRequest]
+      #
       # @return [untyped]
       def regular_patch(request_options: {}, **params)
-        _path_param_names = ["id"]
+        _path_param_names = %i[id]
+        _body = params.except(*_path_param_names)
+        _body_prop_names = %i[field_1 field_2]
+        _body_bag = _body.slice(*_body_prop_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "regular/#{params[:id]}",
-          body: params.except(*_path_param_names)
+          body: Seed::Service::Types::RegularPatchRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)

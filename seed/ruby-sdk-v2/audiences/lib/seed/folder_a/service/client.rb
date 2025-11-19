@@ -4,16 +4,24 @@ module Seed
   module FolderA
     module Service
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::FolderA::Service::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Seed::RequestOptions]
+        #
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::FolderA::Service::Types::Response]
         def get_direct_thread(request_options: {}, **params)
           params = Seed::Internal::Types::Utils.symbolize_keys(params)
           _query_param_names = %i[ids tags]
-          _query = params.slice(*_query_param_names)
+          _query = {}
+          _query["ids"] = params[:ids] if params.key?(:ids)
+          _query["tags"] = params[:tags] if params.key?(:tags)
           params.except(*_query_param_names)
 
           _request = Seed::Internal::JSON::Request.new(

@@ -3,11 +3,11 @@
 import type { ProblemId } from "../../../../api/resources/commons/types/ProblemId.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ProblemId as ProblemId_SeedTrace } from "../../commons/types/ProblemId.js";
+import { ProblemId as ProblemIdType } from "../../commons/types/ProblemId.js";
 
 export const Response: core.serialization.Schema<serializers.homepage.getHomepageProblems.Response.Raw, ProblemId[]> =
-    core.serialization.list(ProblemId_SeedTrace);
+    core.serialization.list(ProblemIdType);
 
 export declare namespace Response {
-    export type Raw = ProblemId_SeedTrace.Raw[];
+    export type Raw = ProblemIdType.Raw[];
 }

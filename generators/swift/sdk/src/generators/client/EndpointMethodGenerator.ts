@@ -438,7 +438,10 @@ export class EndpointMethodGenerator {
         if (typeReference.variant.type === "nullable") {
             return this.inferQueryParamCaseName(typeReference.nonNullable());
         }
-        if (this.referencer.resolvesToTheSwiftType(typeReference, "String")) {
+        if (
+            this.referencer.resolvesToTheSwiftType(typeReference, "String") ||
+            this.referencer.resolvesToAnEnumWithRawValues(typeReference)
+        ) {
             return "string";
         }
         if (this.referencer.resolvesToTheSwiftType(typeReference, "Bool")) {

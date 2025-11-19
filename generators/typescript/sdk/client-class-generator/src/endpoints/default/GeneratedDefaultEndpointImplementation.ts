@@ -27,6 +27,7 @@ export declare namespace GeneratedDefaultEndpointImplementation {
         retainOriginalCasing: boolean;
         omitUndefined: boolean;
         generateEndpointMetadata: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 
@@ -43,6 +44,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
     private readonly retainOriginalCasing: boolean;
     private readonly omitUndefined: boolean;
     private readonly generateEndpointMetadata: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
     constructor({
         endpoint,
@@ -54,7 +56,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         includeSerdeLayer,
         retainOriginalCasing,
         omitUndefined,
-        generateEndpointMetadata
+        generateEndpointMetadata,
+        parameterNaming
     }: GeneratedDefaultEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -66,6 +69,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         this.retainOriginalCasing = retainOriginalCasing;
         this.omitUndefined = omitUndefined;
         this.generateEndpointMetadata = generateEndpointMetadata;
+        this.parameterNaming = parameterNaming;
     }
 
     public isPaginated(context: SdkContext): boolean {
@@ -471,7 +475,8 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             omitUndefined: this.omitUndefined,
             getReferenceToPathParameterVariableFromRequest: (pathParameter) => {
                 return this.request.getReferenceToPathParameter(pathParameter.name.originalName, context);
-            }
+            },
+            parameterNaming: this.parameterNaming
         });
         if (url != null) {
             return context.coreUtilities.urlUtils.join._invoke([baseUrl, url]);
@@ -504,7 +509,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 )
             }),
             fetchFn: this.generatedSdkClientClass.getReferenceToFetch(),
-
+            logging: this.generatedSdkClientClass.getReferenceToLogger(context),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             endpointMetadata: this.generateEndpointMetadata
                 ? this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()

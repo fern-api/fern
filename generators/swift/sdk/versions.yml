@@ -1,5 +1,69 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.24.1
+  changelogEntry:
+    - type: chore
+      summary: |
+        Bump generator CLI version to publish new Docker image.
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 0.24.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Added support for cyclical type detection, rejecting infinite cycles and boxing legal recursive properties with `Indirect<...>`.
+  createdAt: "2025-11-18"
+  irVersion: 61
+
+- version: 0.23.4
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed a bug where discriminated union variant properties that collided with the discriminant property were incorrectly included in the generated struct.
+  createdAt: "2025-11-16"
+  irVersion: 61
+
+- version: 0.23.3
+  changelogEntry:
+    - type: fix
+      summary: |
+        All static files within the SDK now use fully qualified type references.
+  createdAt: "2025-11-07"
+  irVersion: 61
+
+- version: 0.23.2
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed a bug where query parameters with string enum types were incorrectly omitted from the request URL.
+  createdAt: "2025-11-07"
+  irVersion: 61
+
+- version: 0.23.1
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fixed a bug where query parameters with empty values were not omitted from the request URL.
+  createdAt: "2025-11-07"
+  irVersion: 61
+
+- version: 0.23.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Added support for automatic retries with exponential backoff respecting the `Retry-After` and `X-RateLimit-Reset` response headers.
+  createdAt: "2025-11-07"
+  irVersion: 61
+
+- version: 0.22.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Added Generation Metadata file to output.
+  createdAt: "2025-11-04"
+  irVersion: 61
+
 - version: 0.21.0
   changelogEntry:
     - type: feat

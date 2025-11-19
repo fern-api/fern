@@ -32,6 +32,7 @@
     "format:check": "prettier --check --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
     "lint:eslint": "eslint --max-warnings 0 . --ignore-pattern=../../../.eslintignore",
     "lint:eslint:fix": "yarn lint:eslint --fix",
+    "podmanTagLatest": "pnpm dist:cli && podman build -f ./Dockerfile -t fernapi/fern-csharp-sdk:latest ../../..",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
@@ -49,14 +50,13 @@
     "@fern-api/logger": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
-    "@fern-fern/ir-sdk": "^61.6.0",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "@types/node": "18.15.3",
     "@types/url-join": "4.0.1",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",
     "typescript": "5.9.3",
     "url-join": "^5.0.0",
-    "vitest": "^2.1.9",
-    "zod": "^3.22.3"
+    "vitest": "^4.0.8"
   }
 }

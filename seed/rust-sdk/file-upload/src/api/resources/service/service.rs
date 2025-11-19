@@ -19,10 +19,10 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_multipart_request(
                 Method::POST,
                 "",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                request.clone().to_multipart(),
                 None,
                 options,
             )
@@ -35,10 +35,10 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_multipart_request(
                 Method::POST,
                 "/just-file",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                request.clone().to_multipart(),
                 None,
                 options,
             )
@@ -51,16 +51,16 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_multipart_request(
                 Method::POST,
                 "/just-file-with-query-params",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                request.clone().to_multipart(),
                 QueryBuilder::new()
                     .string("maybeString", request.maybe_string.clone())
                     .int("integer", request.integer.clone())
                     .int("maybeInteger", request.maybe_integer.clone())
-                    .string("listOfStrings", request.list_of_strings.clone())
-                    .string(
+                    .string_array("listOfStrings", request.list_of_strings.clone())
+                    .string_array(
                         "optionalListOfStrings",
                         request.optional_list_of_strings.clone(),
                     )
@@ -76,10 +76,10 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_multipart_request(
                 Method::POST,
                 "/with-content-type",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                request.clone().to_multipart(),
                 None,
                 options,
             )
@@ -92,10 +92,10 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_multipart_request(
                 Method::POST,
                 "/with-form-encoding",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                request.clone().to_multipart(),
                 None,
                 options,
             )
@@ -108,10 +108,10 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<(), ApiError> {
         self.http_client
-            .execute_request(
+            .execute_multipart_request(
                 Method::POST,
                 "",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                request.clone().to_multipart(),
                 None,
                 options,
             )
@@ -124,10 +124,10 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_multipart_request(
                 Method::POST,
                 "/optional-args",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                request.clone().to_multipart(),
                 None,
                 options,
             )
@@ -140,10 +140,10 @@ impl ServiceClient {
         options: Option<RequestOptions>,
     ) -> Result<String, ApiError> {
         self.http_client
-            .execute_request(
+            .execute_multipart_request(
                 Method::POST,
                 "/inline-type",
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                request.clone().to_multipart(),
                 None,
                 options,
             )

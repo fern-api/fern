@@ -15,7 +15,6 @@ import {
 } from "@fern-fern/fiddle-sdk/api";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { EnvironmentVariable } from "@fern-fern/generator-exec-sdk/api";
-import * as fs from "fs";
 import * as path from "path";
 
 const DEFAULT_OUTPUT_VERSION = "0.0.1";
@@ -92,6 +91,7 @@ export declare namespace getGeneratorConfig {
         writeUnitTests: boolean;
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
+        whiteLabel?: boolean;
         paths: {
             snippetPath: AbsoluteFilePath | undefined;
             snippetTemplatePath: AbsoluteFilePath | undefined;
@@ -140,8 +140,9 @@ function getGithubPublishConfig(
                   FernGeneratorExec.GithubPublishInfo.pypi({
                       registryUrl: value.registryUrl,
                       packageName: value.packageName,
-                      usernameEnvironmentVariable: EnvironmentVariable(value.credentials?.username ?? ""),
-                      passwordEnvironmentVariable: EnvironmentVariable(value.credentials?.password ?? "")
+                      usernameEnvironmentVariable: EnvironmentVariable("PYPI_USERNAME"),
+                      passwordEnvironmentVariable: EnvironmentVariable("PYPI_PASSWORD"),
+                      pypiMetadata: value.pypiMetadata
                   }),
               rubygems: (value) =>
                   FernGeneratorExec.GithubPublishInfo.rubygems({
@@ -183,55 +184,10 @@ export function getGeneratorConfig({
     writeUnitTests,
     generateOauthClients,
     generatePaginatedClients,
+    whiteLabel,
     paths
 }: getGeneratorConfig.Args): FernGeneratorExec.GeneratorConfig {
-    let enhancedCustomConfig = customConfig;
     const licenseInfo = extractLicenseInfo(generatorInvocation, absolutePathToFernConfig);
-
-    if (licenseInfo != null && licenseInfo.type === "custom") {
-        let licenseName: string | undefined;
-        if (
-            generatorInvocation.raw?.github != null &&
-            typeof generatorInvocation.raw.github === "object" &&
-            "license" in generatorInvocation.raw.github
-        ) {
-            const githubConfig = generatorInvocation.raw.github as { license?: string | { custom: string } };
-            if (
-                githubConfig.license != null &&
-                typeof githubConfig.license === "object" &&
-                "custom" in githubConfig.license
-            ) {
-                const licensePath = githubConfig.license.custom;
-
-                try {
-                    // Use the directory of fern.config.json as base for relative paths
-                    const baseDir = absolutePathToFernConfig ? path.dirname(absolutePathToFernConfig) : process.cwd();
-
-                    const absoluteLicensePath = path.isAbsolute(licensePath)
-                        ? licensePath
-                        : path.resolve(baseDir, licensePath);
-                    const content = fs.readFileSync(absoluteLicensePath, "utf-8");
-
-                    let firstLine = content.split("\n").find((line) => line.trim().length > 0) || "Custom License";
-
-                    firstLine = firstLine.trim().replace(/^#+\s*/, "");
-
-                    firstLine = firstLine.replace(/[.:;]+$/, "").trim();
-
-                    licenseName = firstLine;
-                } catch (error) {
-                    // Silently fall back to no license name
-                }
-            }
-        }
-
-        if (licenseName != null) {
-            enhancedCustomConfig = {
-                ...(customConfig as Record<string, unknown>),
-                _fernLicenseName: licenseName
-            };
-        }
-    }
     const { snippetPath, snippetTemplatePath, irPath, outputDirectory } = paths;
     const output = generatorInvocation.outputMode._visit<FernGeneratorExec.GeneratorOutputConfig>({
         publish: (value) => {
@@ -310,12 +266,12 @@ export function getGeneratorConfig({
         irFilepath: irPath,
         output,
         publish: undefined,
-        customConfig: enhancedCustomConfig,
+        customConfig: customConfig,
         workspaceName,
         organization,
         environment: FernGeneratorExec.GeneratorEnvironment.local(),
         dryRun: false,
-        whitelabel: false,
+        whitelabel: whiteLabel ?? false,
         writeUnitTests,
         generateOauthClients,
         generatePaginatedClients,

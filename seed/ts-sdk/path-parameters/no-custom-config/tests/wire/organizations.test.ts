@@ -3,10 +3,14 @@
 import { SeedPathParametersClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Organizations", () => {
+describe("OrganizationsClient", () => {
     test("getOrganization", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({ tenantId: "tenant_id", environment: server.baseUrl });
+        const client = new SeedPathParametersClient({
+            maxRetries: 0,
+            tenant_id: "tenant_id",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server
@@ -26,7 +30,11 @@ describe("Organizations", () => {
 
     test("getOrganizationUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({ tenantId: "tenant_id", environment: server.baseUrl });
+        const client = new SeedPathParametersClient({
+            maxRetries: 0,
+            tenant_id: "tenant_id",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server
@@ -49,7 +57,11 @@ describe("Organizations", () => {
 
     test("searchOrganizations", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({ tenantId: "tenant_id", environment: server.baseUrl });
+        const client = new SeedPathParametersClient({
+            maxRetries: 0,
+            tenant_id: "tenant_id",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = [
             { name: "name", tags: ["tags", "tags"] },

@@ -2,15 +2,10 @@ import { CSharpFile, FileGenerator } from "@fern-api/csharp-base";
 import { ast, is } from "@fern-api/csharp-codegen";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 
-import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { BaseOptionsGenerator } from "./BaseOptionsGenerator";
 
-export class IdempotentRequestOptionsGenerator extends FileGenerator<
-    CSharpFile,
-    SdkCustomConfigSchema,
-    SdkGeneratorContext
-> {
+export class IdempotentRequestOptionsGenerator extends FileGenerator<CSharpFile> {
     private baseOptionsGenerator: BaseOptionsGenerator;
 
     constructor(context: SdkGeneratorContext, baseOptionsGenerator: BaseOptionsGenerator) {
@@ -21,37 +16,37 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
 
     public doGenerate(): CSharpFile {
         const class_ = this.csharp.class_({
-            reference: this.types.IdempotentRequestOptions,
+            reference: this.Types.IdempotentRequestOptions,
             partial: true,
             access: ast.Access.Public,
-            interfaceReferences: [this.types.IdempotentRequestOptionsInterface],
-            annotations: [this.extern.System.Serializable]
+            interfaceReferences: [this.Types.IdempotentRequestOptionsInterface],
+            annotations: [this.System.Serializable]
         });
         this.baseOptionsGenerator.getRequestOptionFields(class_);
         this.context.getIdempotencyFields(class_);
         class_.addMethod({
             name: "GetIdempotencyHeaders",
             parameters: [],
-            return_: this.csharp.Type.reference(this.types.Headers),
-            interfaceReference: this.types.IdempotentRequestOptionsInterface,
+            return_: this.Types.Headers,
+            interfaceReference: this.Types.IdempotentRequestOptionsInterface,
             type: ast.MethodType.INSTANCE,
             body: this.csharp.codeblock((writer) => {
                 writer.write(
                     "return new ",
-                    this.types.Headers,
+                    this.Types.Headers,
                     "(new ",
-                    this.extern.System.Collections.Generic.Dictionary(this.csharp.Type.string, this.csharp.Type.string),
+                    this.System.Collections.Generic.Dictionary(this.Primitive.string, this.Primitive.string),
                     "()"
                 );
                 writer.writeLine();
                 writer.pushScope();
                 for (const header of this.context.getIdempotencyHeaders()) {
                     const type = this.context.csharpTypeMapper.convert({ reference: header.valueType });
-                    const isString = is.Type.string(type.unwrapIfOptional());
+                    const isString = is.Primitive.string(type.asNonOptional());
                     const toString = isString ? "" : ".ToString()";
                     // In header values, we only accept simple types, so we can assume that none are nullable (apart from string),
                     // unless the type is optional
-                    const nullConditionalOperator = !isString && type.isOptional() ? "?" : "";
+                    const nullConditionalOperator = !isString && type.isOptional ? "?" : "";
                     writer.writeLine(
                         `["${header.name.wireValue}"] = ${header.name.name.pascalCase.safeName}${nullConditionalOperator}${toString},`
                     );
@@ -73,7 +68,7 @@ export class IdempotentRequestOptionsGenerator extends FileGenerator<
     protected getFilepath(): RelativeFilePath {
         return join(
             this.constants.folders.publicCoreFiles,
-            RelativeFilePath.of(`${this.types.IdempotentRequestOptions.name}.cs`)
+            RelativeFilePath.of(`${this.Types.IdempotentRequestOptions.name}.cs`)
         );
     }
 }

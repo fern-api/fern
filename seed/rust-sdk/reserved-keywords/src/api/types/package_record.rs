@@ -4,5 +4,5 @@ pub use crate::prelude::*;
 pub struct Record {
     pub foo: HashMap<String, String>,
     #[serde(rename = "3d")]
-    pub 3_d: i64,
+    pub _3_d: i64,
 }

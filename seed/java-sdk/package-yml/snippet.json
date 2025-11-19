@@ -9,8 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\nimport com.seed.packageYml.types.EchoRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .build();\n\n        client.echo(\n            \"id-ksfd9c1\",\n            EchoRequest\n                .builder()\n                .name(\"Hello world!\")\n                .size(20)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\nimport com.seed.packageYml.types.EchoRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .build();\n\n        client.echo(\n            \"id-ksfd9c1\",\n            EchoRequest\n                .builder()\n                .name(\"Hello world!\")\n                .size(20)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\nimport com.seed.packageYml.types.EchoRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .id(\"id-ksfd9c1\")\n            .build();\n\n        client.echo(\n            EchoRequest\n                .builder()\n                .name(\"Hello world!\")\n                .size(20)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\nimport com.seed.packageYml.types.EchoRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .id(\"id-ksfd9c1\")\n            .build();\n\n        client.echo(\n            EchoRequest\n                .builder()\n                .name(\"Hello world!\")\n                .size(20)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -22,8 +22,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\nimport com.seed.packageYml.types.EchoRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .build();\n\n        client.echo(\n            \"id\",\n            EchoRequest\n                .builder()\n                .name(\"name\")\n                .size(1)\n                .build()\n        );\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\nimport com.seed.packageYml.types.EchoRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .build();\n\n        client.echo(\n            \"id\",\n            EchoRequest\n                .builder()\n                .name(\"name\")\n                .size(1)\n                .build()\n        );\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\nimport com.seed.packageYml.types.EchoRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .id(\"id\")\n            .build();\n\n        client.echo(\n            EchoRequest\n                .builder()\n                .name(\"name\")\n                .size(1)\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\nimport com.seed.packageYml.types.EchoRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .id(\"id\")\n            .build();\n\n        client.echo(\n            EchoRequest\n                .builder()\n                .name(\"name\")\n                .size(1)\n                .build()\n        );\n    }\n}\n"
             }
         },
         {
@@ -35,8 +35,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .build();\n\n        client.service().nop(\"id-a2ijs82\", \"id-219xca8\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .build();\n\n        client.service().nop(\"id-a2ijs82\", \"id-219xca8\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .id(\"id-a2ijs82\")\n            .build();\n\n        client.service().nop(\"id-219xca8\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .id(\"id-a2ijs82\")\n            .build();\n\n        client.service().nop(\"id-219xca8\");\n    }\n}\n"
             }
         },
         {
@@ -48,8 +48,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .build();\n\n        client.service().nop(\"id\", \"nestedId\");\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .build();\n\n        client.service().nop(\"id\", \"nestedId\");\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .id(\"id\")\n            .build();\n\n        client.service().nop(\"nestedId\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.packageYml.SeedPackageYmlClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedPackageYmlClient client = SeedPackageYmlClient\n            .builder()\n            .id(\"id\")\n            .build();\n\n        client.service().nop(\"nestedId\");\n    }\n}\n"
             }
         }
     ],

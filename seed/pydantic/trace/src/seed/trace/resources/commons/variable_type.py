@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 
 
@@ -122,17 +123,20 @@ class VariableType_DoublyLinkedListType(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-VariableType = typing.Union[
-    VariableType_IntegerType,
-    VariableType_DoubleType,
-    VariableType_BooleanType,
-    VariableType_StringType,
-    VariableType_CharType,
-    VariableType_ListType,
-    VariableType_MapType,
-    VariableType_BinaryTreeType,
-    VariableType_SinglyLinkedListType,
-    VariableType_DoublyLinkedListType,
+VariableType = typing_extensions.Annotated[
+    typing.Union[
+        VariableType_IntegerType,
+        VariableType_DoubleType,
+        VariableType_BooleanType,
+        VariableType_StringType,
+        VariableType_CharType,
+        VariableType_ListType,
+        VariableType_MapType,
+        VariableType_BinaryTreeType,
+        VariableType_SinglyLinkedListType,
+        VariableType_DoublyLinkedListType,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
 update_forward_refs(VariableType_ListType)
 update_forward_refs(VariableType_MapType)

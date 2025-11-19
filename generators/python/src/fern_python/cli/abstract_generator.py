@@ -61,6 +61,19 @@ class AbstractGenerator(ABC):
             publish=lambda _: None,
             github=lambda github_output_mode: github_output_mode,
         )
+        # For self-hosted mode, populate installation_token from IR publish_config if available
+        if ir.self_hosted:
+            if maybe_github_output_mode is not None:
+                if maybe_github_output_mode.installation_token is None:
+                    if ir.publish_config is not None:
+                        ir_publish_config = ir.publish_config.get_as_union()
+                        if ir_publish_config.type == "github":
+                            if ir_publish_config.token is not None:
+                                # Create new instance with updated installation_token (Pydantic models are frozen)
+                                maybe_github_output_mode = maybe_github_output_mode.model_copy(
+                                    update={"installation_token": ir_publish_config.token}
+                                )
+
         python_version = "^3.8"
         if generator_config.custom_config is not None and "pyproject_python_version" in generator_config.custom_config:
             python_version = generator_config.custom_config.get("pyproject_python_version")
@@ -102,6 +115,7 @@ class AbstractGenerator(ABC):
             exclude_types_from_init_exports=exclude_types_from_init_exports,
             lazy_imports=self.should_use_lazy_imports(generator_config=generator_config),
             recursion_limit=recursion_limit,
+            generator_exec_wrapper=generator_exec_wrapper,
         ) as project:
             self.run(
                 generator_exec_wrapper=generator_exec_wrapper,
@@ -284,6 +298,7 @@ class AbstractGenerator(ABC):
         workflow_yaml = """name: ci
 on: [push]
 jobs:
+  compile:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -291,6 +306,8 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
+          python-version: 3.9
+      - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
@@ -305,7 +322,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -317,12 +334,12 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: fern test --command "poetry run pytest -rP -n auto ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest -rP .
+        run: poetry run pytest -rP -n auto .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -344,7 +361,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -374,7 +391,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -390,7 +407,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -402,12 +419,12 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: fern test --command "poetry run pytest -rP -n auto ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest -rP .
+        run: poetry run pytest -rP -n auto .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -428,7 +445,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1

@@ -5,11 +5,17 @@
 import * as FernDocsConfig from "../../../index";
 
 export interface DocsInstance {
+    /** The URL where your Fern documentation is deployed. Must contain the suffix `docs.buildwithfern.com`. */
     url: string;
+    /** The custom domain where your documentation is hosted. Learn more about setting up a custom domain. */
     customDomain?: FernDocsConfig.CustomDomain;
     /** This config option is no longer used. Please reach out to the Fern Team if you want to enable private docs. */
     private?: boolean;
-    /** If `edit-this-page` is set, Fern will add an "Edit this page" link to the bottom of each page that links to the given GitHub repository. */
+    /** If specified, adds an "Edit this page" link to the bottom of each page that links to the given public GitHub repository. */
     editThisPage?: FernDocsConfig.EditThisPageConfig;
+    /**
+     * Specify which audiences this instance serves (e.g., internal developers, beta testers, public customers).
+     * You can use audiences to control which versions and products appear in each documentation instance, enabling you to create separate sites for different user groups. Content is included when its audience tag matches the instance audience. Content without an audience tag is included by default.
+     */
     audiences?: FernDocsConfig.Audience;
 }

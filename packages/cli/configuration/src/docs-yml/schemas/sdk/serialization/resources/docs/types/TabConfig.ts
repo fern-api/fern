@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { Target } from "./Target";
 import { ChangelogFolderRelativePath } from "./ChangelogFolderRelativePath";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
@@ -18,6 +19,7 @@ export const TabConfig: core.serialization.ObjectSchema<serializers.TabConfig.Ra
             skipSlug: core.serialization.property("skip-slug", core.serialization.boolean().optional()),
             hidden: core.serialization.boolean().optional(),
             href: core.serialization.string().optional(),
+            target: Target.optional(),
             changelog: ChangelogFolderRelativePath.optional(),
         })
         .extend(WithPermissions)
@@ -31,6 +33,7 @@ export declare namespace TabConfig {
         "skip-slug"?: boolean | null;
         hidden?: boolean | null;
         href?: string | null;
+        target?: Target.Raw | null;
         changelog?: ChangelogFolderRelativePath.Raw | null;
     }
 }

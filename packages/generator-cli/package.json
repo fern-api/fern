@@ -1,0 +1,42 @@
+{
+  "name": "@fern-api/generator-cli",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern"
+  },
+  "type": "module",
+  "main": "dist/api.cjs",
+  "source": "src/index.ts",
+  "types": "dist/api.d.cts",
+  "bin": {
+    "generator-cli": "dist/cli.cjs"
+  },
+  "files": ["dist"],
+  "scripts": {
+    "clean": "rm -rf ./dist && tsc --build --clean",
+    "compile": "tsup && pnpm compile:api:dts && echo '#!/usr/bin/env node' | cat - dist/cli.cjs > dist/tmp && mv dist/tmp dist/cli.cjs",
+    "compile:api:dts": "tsup ./src/api.ts --format cjs --dts --dts-only",
+    "depcheck": "depcheck",
+    "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
+    "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
+  },
+  "devDependencies": {
+    "@fern-api/configs": "workspace:*",
+    "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/github": "workspace:*",
+    "@octokit/rest": "^20.1.2",
+    "@types/jest": "^29.5.11",
+    "@types/node": "^22.0.0",
+    "@types/yargs": "^17.0.32",
+    "depcheck": "^1.4.7",
+    "es-toolkit": "^1.32.0",
+    "esbuild": "^0.25.0",
+    "execa": "^9.5.1",
+    "tmp-promise": "^3.0.3",
+    "tsup": "^8.5.0",
+    "typescript": "5.9.3",
+    "vitest": "^4.0.8",
+    "yargs": "^17.4.1"
+  }
+}

@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("SeedApiClient", () => {
     test("getAccount", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClientType({ environment: server.baseUrl });
+        const client = new SeedApiClientType({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = {
             resource_type: "Account",

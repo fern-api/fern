@@ -1,16 +1,17 @@
 // Language constructs
 
+export { Block } from "./code/Block";
 // Code constructs
 export { ClassInstantiation } from "./code/ClassInstantiation";
 export { Dictionary } from "./code/Dictionary";
 export { EnumInstantiation } from "./code/EnumInstantiation";
 export { PrimitiveInstantiation as InstantiatedPrimitive } from "./code/InstantiatedPrimitive";
 export { List } from "./code/List";
+export { type ConstructorField, type DictionaryEntry, Literal } from "./code/Literal";
 export { MethodInvocation } from "./code/MethodInvocation";
 export { ReadOnlyMemory } from "./code/ReadOnlymemory";
 export { Set } from "./code/Set";
 export { String_ } from "./code/String_";
-export { type ConstructorField, type DictionaryEntry, TypeLiteral } from "./code/TypeLiteral";
 // Core utilities
 export { AstNode, MemberNode, Node } from "./core/AstNode";
 export { Writer } from "./core/Writer";
@@ -28,11 +29,10 @@ export { XmlDocBlock } from "./language/XmlDocBlock";
 // Type definitions
 export { Class } from "./types/Class";
 export { ClassReference } from "./types/ClassReference";
-export { CoreClassReference } from "./types/CoreClassReference";
 export { Enum } from "./types/Enum";
 export { Field } from "./types/Field";
 export { Interface } from "./types/Interface";
+export { type Type } from "./types/IType";
 export { Method, MethodType } from "./types/Method";
 export { TestClass } from "./types/TestClass";
-export { convertReadOnlyPrimitiveTypes, Type } from "./types/Type";
-export { TypeParameter } from "./types/TypeParameter";
+export { convertReadOnlyPrimitiveTypes } from "./types/Type";

@@ -96,7 +96,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 name: createMethodName,
                 parameters: [],
                 access: ast.Access.Public,
-                return_: context.csharp.Type.reference(websocketApiClassReference),
+                return_: websocketApiClassReference,
                 body: context.csharp.codeblock((writer) => {
                     writer.write("return ");
                     writer.writeNodeStatement(
@@ -118,11 +118,11 @@ export class WebSocketClientGenerator extends WithGeneration {
             parameters: [
                 context.csharp.parameter({
                     name: "options",
-                    type: context.csharp.Type.reference(optionsClassReference)
+                    type: optionsClassReference
                 })
             ],
             access: ast.Access.Public,
-            return_: context.csharp.Type.reference(websocketApiClassReference),
+            return_: websocketApiClassReference,
             body: context.csharp.codeblock((writer) => {
                 writer.write("return ");
                 writer.writeNodeStatement(
@@ -143,7 +143,7 @@ export class WebSocketClientGenerator extends WithGeneration {
      * @param websocketChannel - The WebSocket channel definition to generate code for
      */
     constructor({ context, subpackage, websocketChannel }: WebSocketClientGenerator.Args) {
-        super(context);
+        super(context.generation);
         this.context = context;
         this.subpackage = subpackage;
         this.websocketChannel = websocketChannel;
@@ -158,7 +158,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         });
         this.optionsParameter = this.csharp.parameter({
             name: "options",
-            type: this.csharp.Type.reference(this.optionsClassReference)
+            type: this.optionsClassReference
         });
         const channelPath = websocketChannel.path.head;
 
@@ -245,8 +245,8 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Internal,
             type: ast.MethodType.STATIC,
             name: "getBaseUrl",
-            parameters: [this.csharp.parameter({ name: "environment", type: this.csharp.Type.string })],
-            return_: this.csharp.Type.string,
+            parameters: [this.csharp.parameter({ name: "environment", type: this.Primitive.string })],
+            return_: this.Primitive.string,
             body: this.csharp.codeblock((writer) => {
                 writer.write("switch(environment) {");
                 for (const { environment, name } of this.environments) {
@@ -279,7 +279,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 origin: environmentsClass.explicit(name),
                 get: true,
                 set: true,
-                type: this.csharp.Type.string,
+                type: this.Primitive.string,
                 initializer: this.csharp.codeblock((writer) => writer.write(`"${url}"`))
             });
         }
@@ -300,7 +300,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             reference: this.optionsClassReference,
             doc: this.csharp.xmlDocBlockOf({ summary: "Options for the API client" }),
             access: ast.Access.Public,
-            parentClassReference: this.types.AsyncApiOptions
+            parentClassReference: this.Types.AsyncApiOptions
         });
         this.settings.temporaryWebsocketEnvironments;
 
@@ -310,7 +310,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             origin: optionsClass.explicit("BaseUrl"),
             access: ast.Access.Public,
             override: true,
-            type: this.csharp.Type.string,
+            type: this.Primitive.string,
             summary: "The Websocket URL for the API connection.",
             get: true,
             set: true,
@@ -336,7 +336,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             optionsClass.addField({
                 origin: optionsClass.explicit("Environment"),
                 access: ast.Access.Public,
-                type: this.csharp.Type.string,
+                type: this.Primitive.string,
                 summary: "The Environment for the API connection.",
                 get: true,
                 set: true,
@@ -362,7 +362,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 summary: queryParameter.docs ?? "",
                 get: true,
                 set: true,
-                useRequired: !type.isOptional()
+                useRequired: !type.isOptional
             });
         }
 
@@ -375,7 +375,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                 summary: pathParameter.docs ?? "",
                 get: true,
                 set: true,
-                useRequired: !type.isOptional()
+                useRequired: !type.isOptional
             });
         }
 
@@ -392,10 +392,10 @@ export class WebSocketClientGenerator extends WithGeneration {
     private static hasRequiredOptions(websocketChannel: WebSocketChannel, context: SdkGeneratorContext) {
         return (
             websocketChannel.pathParameters.some(
-                (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional()
+                (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional
             ) ||
             websocketChannel.queryParameters.some(
-                (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional()
+                (p) => !context.csharpTypeMapper.convert({ reference: p.valueType }).isOptional
             )
         );
     }
@@ -521,7 +521,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Protected,
             override: true,
             name: "CreateUri",
-            return_: this.extern.System.Uri,
+            return_: this.System.Uri,
             parameters: [],
             doc: this.csharp.xmlDocBlockOf({
                 summary: "Creates the Uri for the websocket connection from the BaseUrl and parameters"
@@ -531,7 +531,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
                 writer.write("var uri = ");
                 writer.writeNode(
-                    this.extern.System.UriBuilder.instantiate({
+                    this.System.UriBuilder.new({
                         arguments_: [this.csharp.codeblock((writer) => writer.write("BaseUrl"))]
                     })
                 );
@@ -542,7 +542,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     writer.write("Query = ");
                     writer.writeNode(
                         this.csharp.instantiateClass({
-                            classReference: this.types.QueryBuilder,
+                            classReference: this.Types.QueryBuilder,
                             arguments_: []
                         })
                     );
@@ -616,7 +616,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             parameters: [
                 this.csharp.parameter({
                     name: "options",
-                    type: this.extern.System.Net.WebSockets.ClientWebSocketOptions
+                    type: this.System.Net.WebSockets.ClientWebSocketOptions
                 })
             ],
             body: this.csharp.codeblock((writer) => {
@@ -650,19 +650,19 @@ export class WebSocketClientGenerator extends WithGeneration {
                     const type = this.context.csharpTypeMapper.convert({ reference: each.body.bodyType });
 
                     // if the result is a oneof, we will expand it into multiple
-                    if (is.Type.oneOf(type)) {
-                        for (const oneOfType of type.oneOfTypes()) {
+                    if (is.OneOf.OneOf(type)) {
+                        for (const oneOfType of type.generics) {
                             result.push({
                                 type: oneOfType,
-                                eventType: this.types.AsyncEvent(oneOfType),
-                                name: is.Type.reference(oneOfType) ? oneOfType.value.name : undefined
+                                eventType: this.Types.AsyncEvent(oneOfType),
+                                name: is.ClassReference(oneOfType) ? oneOfType.name : undefined
                             });
                         }
                     } else {
                         // otherwise it's just a single type here
                         result.push({
                             type,
-                            eventType: this.types.AsyncEvent(type),
+                            eventType: this.Types.AsyncEvent(type),
                             name:
                                 reference._visit({
                                     container: () => undefined,
@@ -694,12 +694,12 @@ export class WebSocketClientGenerator extends WithGeneration {
 
                     // if the body type is just a string, this is probably a binary message...
                     if (bodyType.type === "primitive" && bodyType.primitive.v2?.type === "string") {
-                        type = this.csharp.Type.binary;
+                        type = this.Value.binary;
                     }
                     return {
                         reference: each.body.bodyType,
                         type,
-                        eventType: this.types.AsyncEvent(type),
+                        eventType: this.Types.AsyncEvent(type),
                         name:
                             bodyType._visit({
                                 container: () => undefined,
@@ -736,15 +736,15 @@ export class WebSocketClientGenerator extends WithGeneration {
             parameters: [
                 this.csharp.parameter({
                     name: "stream",
-                    type: this.extern.System.IO.Stream
+                    type: this.System.IO.Stream
                 })
             ],
             body: this.csharp.codeblock((writer) => {
                 // deserialize the json message
                 writer.write(`var json = await `);
-                writer.writeNode(this.extern.System.Text.Json.JsonSerializer);
+                writer.writeNode(this.System.Text.Json.JsonSerializer);
                 writer.write(`.DeserializeAsync<`);
-                writer.writeNode(this.extern.System.Text.Json.JsonDocument);
+                writer.writeNode(this.System.Text.Json.JsonDocument);
                 writer.writeTextStatement(`>(stream)`);
                 writer.writeLine(`if(json == null)`);
                 writer.pushScope();
@@ -765,7 +765,7 @@ export class WebSocketClientGenerator extends WithGeneration {
                     writer.pushScope();
                     writer.write(
                         `if(`,
-                        this.types.JsonUtils,
+                        this.Types.JsonUtils,
                         `.TryDeserialize(json`,
                         `, out `,
                         event.name,
@@ -837,7 +837,7 @@ export class WebSocketClientGenerator extends WithGeneration {
 
                 body: this.csharp.codeblock((writer) => {
                     writer.writeLine(`await SendInstant(`);
-                    writer.writeNode(this.types.JsonUtils);
+                    writer.writeNode(this.Types.JsonUtils);
                     writer.writeTextStatement(`.Serialize(message)).ConfigureAwait(false)`);
                 })
             });
@@ -873,7 +873,7 @@ export class WebSocketClientGenerator extends WithGeneration {
         cls.addField({
             origin: cls.explicit("Environment"),
             access: ast.Access.Public,
-            type: this.csharp.Type.string,
+            type: this.Primitive.string,
             summary: "The Environment for the API connection.",
             accessors: {
                 get: (writer) => {
@@ -907,7 +907,7 @@ export class WebSocketClientGenerator extends WithGeneration {
             access: ast.Access.Public,
             partial: true,
             doc: this.websocketChannel.docs ? { summary: this.websocketChannel.docs } : undefined,
-            parentClassReference: this.types.AsyncApi(this.optionsClassReference)
+            parentClassReference: this.Types.AsyncApi(this.optionsClassReference)
         });
 
         if (!WebSocketClientGenerator.hasRequiredOptions(this.websocketChannel, this.context)) {

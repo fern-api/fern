@@ -87,6 +87,16 @@
         }
       ]
     },
+    "ai": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ai.AIServicesSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "openapi": {
       "oneOf": [
         {
@@ -721,6 +731,20 @@
         "v2"
       ]
     },
+    "generators.RemoveDiscriminantsFromSchemas": {
+      "type": "string",
+      "enum": [
+        "always",
+        "never"
+      ]
+    },
+    "generators.PathParameterOrder": {
+      "type": "string",
+      "enum": [
+        "url-order",
+        "spec-order"
+      ]
+    },
     "generators.APIDefinitionSettingsSchema": {
       "type": "object",
       "properties": {
@@ -818,6 +842,26 @@
           "oneOf": [
             {
               "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remove-discriminants-from-schemas": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
             },
             {
               "type": "null"
@@ -1641,6 +1685,26 @@
             }
           ]
         },
+        "remove-discriminants-from-schemas": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "only-include-referenced-schemas": {
           "oneOf": [
             {
@@ -1939,6 +2003,26 @@
             }
           ]
         },
+        "remove-discriminants-from-schemas": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "message-naming": {
           "oneOf": [
             {
@@ -2089,6 +2173,282 @@
         }
       ]
     },
+    "generators.APIConfigurationV2SettingsSchema": {
+      "type": "object",
+      "properties": {
+        "only-include-referenced-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline-path-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "prefer-undiscriminated-unions-with-literals": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "object-query-parameters": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-readonly-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-forward-compatible-enums": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "use-bytes-for-binary-response": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "default-form-parameter-encoding": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.FormParameterEncoding"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "filter": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIFilterSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "example-generation": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.OpenAPIExampleGenerationSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "additional-properties-defaults-to": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "type-dates-as-strings": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "preserve-single-schema-oneof": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "inline-all-of-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "resolve-aliases": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.ResolveAliases"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group-multi-api-environments": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "respect-nullable-schemas": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "title-as-schema-name": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "optional-additional-properties": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-enums-to-literals": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "idiomatic-request-names": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "wrap-references-to-nullable-in-optional": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coerce-optional-schemas-to-nullable": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "group-environments-by-host": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "remove-discriminants-from-schemas": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.RemoveDiscriminantsFromSchemas"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "path-parameter-order": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.PathParameterOrder"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "message-naming": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.MessageNamingSettingsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
     "generators.APIConfigurationV2Schema": {
       "type": "object",
       "properties": {
@@ -2150,6 +2510,16 @@
         },
         "specs": {
           "$ref": "#/definitions/generators.APIConfigurationV2SpecsSchema"
+        },
+        "settings": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.APIConfigurationV2SettingsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -3356,6 +3726,33 @@
       },
       "required": [
         "generators"
+      ],
+      "additionalProperties": false
+    },
+    "ai.ModelProvider": {
+      "type": "string",
+      "enum": [
+        "openai",
+        "anthropic",
+        "bedrock"
+      ]
+    },
+    "ai.ModelName": {
+      "type": "string"
+    },
+    "ai.AIServicesSchema": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "$ref": "#/definitions/ai.ModelProvider"
+        },
+        "model": {
+          "$ref": "#/definitions/ai.ModelName"
+        }
+      },
+      "required": [
+        "provider",
+        "model"
       ],
       "additionalProperties": false
     },

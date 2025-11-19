@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("SeedApiClient", () => {
     test("submitFormData", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClientType({ environment: server.baseUrl });
+        const client = new SeedApiClientType({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { username: "johndoe", email: "john@example.com" };
         const rawResponseBody = { status: "success", message: "Data received successfully." };
         server

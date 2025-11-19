@@ -89,6 +89,44 @@
               "description": null,
               "body": "",
               "_postman_previewlanguage": "json"
+            },
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/:endpointParam",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ":endpointParam"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "endpointParam",
+                      "description": null,
+                      "value": "endpointParam"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "",
+              "_postman_previewlanguage": "json"
             }
           ]
         }

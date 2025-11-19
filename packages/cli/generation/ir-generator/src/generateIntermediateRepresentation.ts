@@ -5,6 +5,7 @@ import { noop, visitObject } from "@fern-api/core-utils";
 import { isGeneric } from "@fern-api/fern-definition-schema";
 import {
     dynamic,
+    FernIr,
     HttpEndpoint,
     IntermediateRepresentation,
     PathParameterLocation,
@@ -50,6 +51,7 @@ import { TypeResolverImpl } from "./resolvers/TypeResolver";
 import { VariableResolverImpl } from "./resolvers/VariableResolver";
 import { convertToFernFilepath } from "./utils/convertToFernFilepath";
 import { getAudienceForEnvironment } from "./utils/getEnvironmentsByAudience";
+import { getIrGenerationSettings } from "./utils/getIrGenerationSettings";
 import { parseErrorName } from "./utils/parseErrorName";
 
 export declare namespace generateIntermediateRepresentation {
@@ -75,6 +77,7 @@ export declare namespace generateIntermediateRepresentation {
         fdrApiDefinitionId?: string;
         disableDynamicExamples?: boolean;
         dynamicGeneratorConfig?: dynamic.GeneratorConfig;
+        generationMetadata?: FernIr.GenerationMetadata;
     }
 }
 
@@ -91,8 +94,11 @@ export function generateIntermediateRepresentation({
     fdrApiDefinitionId,
     sourceResolver,
     disableDynamicExamples,
-    dynamicGeneratorConfig
+    dynamicGeneratorConfig,
+    generationMetadata
 }: generateIntermediateRepresentation.Args): IntermediateRepresentation {
+    const irSettings = getIrGenerationSettings({ workspace });
+
     const casingsGenerator = constructCasingsGenerator({ generationLanguage, keywords, smartCasing });
 
     const irGraph = new IrGraph(audiences);
@@ -190,7 +196,8 @@ export function generateIntermediateRepresentation({
         publishConfig: undefined,
         dynamic: undefined,
         audiences: workspace.definition.rootApiFile.contents.audiences,
-        generationMetadata: undefined
+        generationMetadata: generationMetadata,
+        apiPlayground: true
     };
 
     const packageTreeGenerator = new PackageTreeGenerator();
@@ -294,7 +301,8 @@ export function generateIntermediateRepresentation({
                     globalErrors,
                     variableResolver,
                     workspace,
-                    auth: intermediateRepresentation.auth
+                    auth: intermediateRepresentation.auth,
+                    irSettings: irSettings
                 });
 
                 const serviceId = IdGenerator.generateServiceId(convertedHttpService.name);

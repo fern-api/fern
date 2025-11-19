@@ -3,18 +3,27 @@
 module Seed
   module Ec2
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Ec2::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Ec2::Types::BootInstanceRequest]
+      #
       # @return [untyped]
       def boot_instance(request_options: {}, **params)
+        _body_prop_names = %i[size]
+        _body_bag = params.slice(*_body_prop_names)
+
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PRODUCTION,
           method: "POST",
           path: "/ec2/boot",
-          body: params
+          body: Seed::Ec2::Types::BootInstanceRequest.new(_body_bag).to_h
         )
         begin
           _response = @client.send(_request)

@@ -22,12 +22,13 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
     "dist:cli": "pnpm compile && tsup ./src/cli.ts --sourcemap && cp -R ../base/src/asIs dist",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-swift-model:latest ../../..",
+    "podmanTagLatest": "pnpm dist:cli && podman build -f ./Dockerfile -t fernapi/fern-swift-model:latest ../../..",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "test": "vitest --passWithNoTests --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
@@ -36,7 +37,7 @@
   "dependencies": {
     "@fern-api/base-generator": "workspace:*",
     "@fern-api/swift-base": "workspace:*",
-    "@fern-fern/ir-sdk": "^59.7.0",
+    "@fern-fern/ir-sdk": "^61.7.0",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
@@ -50,7 +51,7 @@
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",
     "typescript": "5.9.2",
-    "vitest": "^2.1.9",
+    "vitest": "^4.0.8",
     "zod": "^3.22.3"
   }
 }

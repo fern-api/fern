@@ -3,11 +3,13 @@ import { type Generation } from "../../context/generation-info";
 import { type Origin } from "../../context/model-navigator";
 import { type TypeScope } from "../../context/name-registry";
 import { type ClassInstantiation } from "../code/ClassInstantiation";
+import { Literal } from "../code/Literal";
 import { Node } from "../core/AstNode";
 import type { Writer } from "../core/Writer";
 import { type Field } from "./Field";
-import { Type } from "./Type";
-import { TypeParameter } from "./TypeParameter";
+import { Type } from "./IType";
+import { Optional } from "./Type";
+
 export declare namespace ClassReference {
     interface Identity {
         /* The name of the C# class */
@@ -22,11 +24,37 @@ export declare namespace ClassReference {
         /* The namespace alias for C# class */
         namespaceAlias?: string;
         /* Any generics used in the class reference */
-        generics?: (Type | TypeParameter | ClassReference)[];
+        generics?: Type[];
         /* Whether or not the class reference should be fully-qualified */
         fullyQualified?: boolean;
         /* force global:: qualifier */
         global?: boolean;
+        /* Whether or not the class reference is a collection */
+        isCollection?: boolean;
+
+        /**
+         * The multipart form method name used when this type is added to a multipart/form-data request.
+         * For example, primitives use "AddStringPart", while objects use "AddJsonPart".
+         *
+         * If this is null, then the type does not support adding to a multipart form.
+         * If this is undefined, then the type supports adding to a multipart form, and the default method name is used.
+         */
+        multipartMethodName?: string | null;
+        /**
+         * The multipart form method name used when a collection of this type is added to a multipart/form-data request.
+         * For example, primitives use "AddStringParts", while objects use "AddJsonParts".
+         *
+         * If this is null, then the type does not support adding to a multipart form.
+         * If this is undefined, then the type supports adding to a multipart form, and the default method name is used.
+         */
+        multipartMethodNameForCollection?: string | null;
+
+        /**
+         * Whether or not the class reference is a reference type.
+         * If this is undefined, then the type is indeterminate.
+         * (interpreted as false, in a lot of cases, but sometimes it's used to see if it's a class reference)
+         */
+        isReferenceType?: boolean;
     }
 
     interface CreationArgs extends Args {
@@ -35,16 +63,20 @@ export declare namespace ClassReference {
     }
 }
 
-export class ClassReference extends Node {
+export class ClassReference extends Node implements Type {
     public readonly name: string;
     public readonly namespace: string;
     public readonly namespaceAlias: string | undefined;
     public readonly enclosingType: ClassReference | undefined;
-    public readonly generics: (Type | TypeParameter | ClassReference)[];
+    public readonly generics: Type[];
     public readonly fullyQualified: boolean;
     public readonly global: boolean;
     public readonly fullyQualifiedName: string;
+    public readonly isCollection: boolean;
     private readonly namespaceSegments: string[];
+    public readonly isReferenceType: boolean | undefined;
+    public readonly multipartMethodName: string | null;
+    public readonly multipartMethodNameForCollection: string | null;
 
     constructor(
         {
@@ -56,7 +88,11 @@ export class ClassReference extends Node {
             fullyQualified,
             global,
             fullyQualifiedName,
-            origin
+            origin,
+            isCollection,
+            multipartMethodName,
+            multipartMethodNameForCollection,
+            isReferenceType
         }: ClassReference.CreationArgs,
         readonly scope: TypeScope,
         generation: Generation
@@ -70,11 +106,18 @@ export class ClassReference extends Node {
         this.fullyQualified = fullyQualified ?? false;
         this.global = global ?? false;
         this.namespaceSegments = this.namespace.split(".");
+        this.isCollection = isCollection ?? false;
         if (enclosingType != null) {
-            this.fullyQualifiedName = `${enclosingType.fullyQualifiedName}.${name}`;
+            this.fullyQualifiedName = enclosingType.fullyQualifiedName
+                ? `${enclosingType.fullyQualifiedName}.${name}`
+                : name;
         } else {
-            this.fullyQualifiedName = fullyQualifiedName;
+            this.fullyQualifiedName = fullyQualifiedName ? fullyQualifiedName : name;
         }
+        this.multipartMethodName = multipartMethodName === undefined ? "AddJsonPart" : multipartMethodName;
+        this.multipartMethodNameForCollection =
+            multipartMethodNameForCollection === undefined ? "AddJsonParts" : multipartMethodNameForCollection;
+        this.isReferenceType = isReferenceType;
     }
 
     public write(writer: Writer): void {
@@ -111,6 +154,10 @@ export class ClassReference extends Node {
         // the fully qualified name of the type (with global:: qualifier if it necessary)
         const fqName = `${shouldGlobal ? "global::" : ""}${this.fullyQualifiedName}`;
 
+        if (!this.namespace) {
+            writer.write(this.name);
+            return;
+        }
         if (this.namespaceAlias != null) {
             const alias = writer.addNamespaceAlias(this.namespaceAlias, this.resolveNamespace());
             writer.write(`${alias}.${this.scopedName}`);
@@ -119,7 +166,6 @@ export class ClassReference extends Node {
                 writer.write(this.scopedName);
             } else {
                 if (this.fullyQualified) {
-                    // explicitly express namespaces
                     writer.write(fqName);
                 } else {
                     // if the class needs to be partially qualified, or we're skipping imports,
@@ -340,16 +386,6 @@ export class ClassReference extends Node {
         return this.registry.resolveNamespace(this.namespace);
     }
 
-    /** returns true if this class reference is the IAsyncEnumerable class */
-    public get isAsyncEnumerable() {
-        return this.name === "IAsyncEnumerable" && this.namespace === "System.Collections.Generic";
-    }
-
-    /** returns this class reference as a type reference */
-    public asTypeRef(): Type {
-        return this.csharp.Type.reference(this);
-    }
-
     /** returns this class reference as a fully qualified class reference */
     public asFullyQualified() {
         return this.csharp.classReferenceInternal({
@@ -359,14 +395,8 @@ export class ClassReference extends Node {
     }
 
     /** returns a class instantiation node for this class reference */
-    public instantiate(args: Omit<ClassInstantiation.Args, "classReference">) {
-        return this.csharp.instantiateClass({
-            ...args,
-            classReference: this
-        });
-    }
-
-    public new(args: Omit<ClassInstantiation.Args, "classReference">) {
+    public new(args?: Omit<ClassInstantiation.Args, "classReference">) {
+        args = args ?? { arguments_: [] };
         return this.csharp.instantiateClass({
             ...args,
             classReference: this
@@ -392,5 +422,24 @@ export class ClassReference extends Node {
 
     public registerMethod(name: string, origin?: Origin): string {
         return name;
+    }
+
+    public get isOptional(): boolean {
+        return false;
+    }
+
+    public asOptional(): Type {
+        return new Optional(this, this.generation);
+    }
+
+    public asNonOptional(): Type {
+        return this;
+    }
+    public get defaultValue(): Literal {
+        return this.csharp.Literal.null();
+    }
+    /** returns true if this class reference is the IAsyncEnumerable class */
+    public get isAsyncEnumerable() {
+        return this.name === "IAsyncEnumerable" && this.namespace === "System.Collections.Generic";
     }
 }

@@ -7,18 +7,19 @@ import {
     AnonymousFunction,
     AstNode,
     Set as AstSet,
+    Block,
     Class,
     ClassInstantiation,
     ClassReference,
     CodeBlock,
     ConstructorField,
-    CoreClassReference,
     Dictionary,
     DictionaryEntry,
     Enum,
     EnumInstantiation,
     Interface,
     List,
+    Literal,
     MethodInvocation,
     Or,
     Parameter,
@@ -28,15 +29,12 @@ import {
     Switch,
     Ternary,
     TestClass,
-    Type,
-    TypeLiteral,
-    TypeParameter,
     XmlDocBlock
 } from "./ast";
+import { Type } from "./ast/types/IType";
 import { Generation } from "./context/generation-info";
 import { IrNode, Origin } from "./context/model-navigator";
 import { NameRegistry } from "./context/name-registry";
-import { lazy } from "./utils/lazy";
 
 interface ClassRefArgsWithNamespace extends ClassReference.Args {
     namespace: string;
@@ -197,9 +195,9 @@ export class CSharp {
         // there isn't anything registered that looks like the one we want.
         // we're going to complain, but give them the expected name for now.
         // when we have the order of creation sorted all out, this should be an error.
-        this.generation.logger.warn(
-            `NOTE: getPropertyName: ${enclosingType.fullyQualifiedName} using unregistered property ${expectedName}`
-        );
+        // this.generation.logger.warn(
+        //   `NOTE: getPropertyName: ${enclosingType.fullyQualifiedName} using unregistered property ${expectedName}`
+        // );
         return expectedName;
     }
 
@@ -258,16 +256,6 @@ export class CSharp {
     }
 
     /**
-     * Creates a reference to a core C# class (built-in types like string, int, etc.).
-     *
-     * @param args - Configuration for the core class reference
-     * @returns A CoreClassReference object representing the C# core type
-     */
-    public coreClassReference(args: CoreClassReference.Args): CoreClassReference {
-        return new CoreClassReference(args, this.generation);
-    }
-
-    /**
      * Creates a C# code block containing multiple statements.
      *
      * @param arg - Configuration for the code block including statements
@@ -275,6 +263,10 @@ export class CSharp {
      */
     public codeblock(arg: CodeBlock.Arg): CodeBlock {
         return new CodeBlock(arg, this.generation);
+    }
+
+    public code(): Block {
+        return new Block({}, this.generation);
     }
 
     /**
@@ -295,19 +287,6 @@ export class CSharp {
      */
     public parameter(args: Parameter.Args): Parameter {
         return new Parameter(args, this.generation);
-    }
-
-    /**
-     * Creates a C# generic type parameter.
-     *
-     * @param args - Either a string name or TypeParameter.Args configuration
-     * @returns A TypeParameter object representing the C# generic type parameter
-     */
-    public typeParameter(args: string | TypeParameter.Args): TypeParameter {
-        if (typeof args === "string") {
-            args = { name: args };
-        }
-        return new TypeParameter(args, this.generation);
     }
 
     /**
@@ -640,334 +619,20 @@ export class CSharp {
     };
 
     /**
-     * Factory methods for creating C# type definitions.
-     * These methods create Type objects that represent C# type declarations
-     * including primitive types, collections, and custom types.
-     */
-    public Type = lazy({
-        /**
-         * Creates a string type.
-         *
-         * @returns A Type object representing the C# string type
-         */
-        string: () => {
-            return new Type.String(this.generation);
-        },
-
-        /**
-         * Creates a string type.
-         *
-         * @returns A Type object representing the C# string type
-         */
-        binary: () => {
-            return new Type.Binary(this.generation);
-        },
-
-        /**
-         * Creates a boolean type.
-         *
-         * @returns A Type object representing the C# bool type
-         */
-        boolean: () => {
-            return new Type.Boolean(this.generation);
-        },
-
-        /**
-         * Creates an integer type.
-         *
-         * @returns A Type object representing the C# int type
-         */
-        integer: () => {
-            return new Type.Integer(this.generation);
-        },
-
-        /**
-         * Creates a long type.
-         *
-         * @returns A Type object representing the C# long type
-         */
-        long: () => {
-            return new Type.Long(this.generation);
-        },
-
-        /**
-         * Creates an unsigned integer type.
-         *
-         * @returns A Type object representing the C# uint type
-         */
-        uint: () => {
-            return new Type.Uint(this.generation);
-        },
-
-        /**
-         * Creates an unsigned long type.
-         *
-         * @returns A Type object representing the C# ulong type
-         */
-        ulong: () => {
-            return new Type.ULong(this.generation);
-        },
-
-        /**
-         * Creates a float type.
-         *
-         * @returns A Type object representing the C# float type
-         */
-        float: () => {
-            return new Type.Float(this.generation);
-        },
-
-        /**
-         * Creates a double type.
-         *
-         * @returns A Type object representing the C# double type
-         */
-        double: () => {
-            return new Type.Double(this.generation);
-        },
-
-        /**
-         * Creates a DateOnly type.
-         *
-         * @returns A Type object representing the C# DateOnly type
-         */
-        dateOnly: () => {
-            return new Type.DateOnly(this.generation);
-        },
-
-        /**
-         * Creates a DateTime type.
-         *
-         * @returns A Type object representing the C# DateTime type
-         */
-        dateTime: () => {
-            return new Type.DateTime(this.generation);
-        },
-
-        /**
-         * Creates a Guid type.
-         *
-         * @returns A Type object representing the C# Guid type
-         */
-        uuid: () => {
-            return new Type.Uuid(this.generation);
-        },
-
-        /**
-         * Creates an object type.
-         *
-         * @returns A Type object representing the C# object type
-         */
-        object: () => {
-            return new Type.Object(this.generation);
-        },
-
-        /**
-         * Creates an array type.
-         *
-         * @param value - The element type of the array
-         * @returns A Type object representing the C# array type
-         */
-        array: (value: Type) => {
-            return new Type.Array(value, this.generation);
-        },
-
-        /**
-         * Creates a list type.
-         *
-         * @param value - The element type of the list
-         * @returns A Type object representing the C# List<T> type
-         */
-        listType: (value: Type) => {
-            return new Type.ListType(value, this.generation);
-        },
-
-        /**
-         * Creates a generic list type.
-         *
-         * @param value - The element type of the list
-         * @returns A Type object representing the C# List<T> type
-         */
-        list: (value: Type) => {
-            return new Type.List(value, this.generation);
-        },
-
-        /**
-         * Creates a set type.
-         *
-         * @param value - The element type of the set
-         * @returns A Type object representing the C# HashSet<T> type
-         */
-        set: (value: Type) => {
-            return new Type.Set(value, this.generation);
-        },
-
-        /**
-         * Creates a map/dictionary type.
-         *
-         * @param keyType - The key type of the map
-         * @param valueType - The value type of the map
-         * @param options - Optional configuration for the map
-         * @returns A Type object representing the C# Dictionary<TKey, TValue> type
-         */
-        map: (keyType: Type, valueType: Type, options?: { dontSimplify?: boolean }) => {
-            return new Type.Map(keyType, valueType, this.generation, options);
-        },
-
-        /**
-         * Creates an IDictionary type.
-         *
-         * @param keyType - The key type of the dictionary
-         * @param valueType - The value type of the dictionary
-         * @param options - Optional configuration for the dictionary
-         * @returns A Type object representing the C# IDictionary<TKey, TValue> type
-         */
-        idictionary: (keyType: Type, valueType: Type | ClassReference, options?: { dontSimplify?: boolean }) => {
-            return new Type.IDictionary(
-                keyType,
-                valueType instanceof ClassReference ? this.Type.reference(valueType) : valueType,
-                this.generation,
-                options
-            );
-        },
-
-        /**
-         * Creates a KeyValuePair type.
-         *
-         * @param keyType - The key type of the pair
-         * @param valueType - The value type of the pair
-         * @returns A Type object representing the C# KeyValuePair<TKey, TValue> type
-         */
-        keyValuePair: (keyType: Type, valueType: Type) => {
-            return new Type.KeyValuePair(keyType, valueType, this.generation);
-        },
-
-        /**
-         * Creates a nullable/optional type.
-         *
-         * @param value - The underlying type to make optional
-         * @returns A Type object representing the C# nullable type (T?)
-         */
-        optional: (value: Type) => {
-            if (value instanceof Type.Optional) {
-                // Avoids double optional.
-                return value;
-            }
-            return new Type.Optional(value, this.generation);
-        },
-
-        /**
-         * Creates a reference to a custom class type.
-         *
-         * @param value - The class reference
-         * @returns A Type object representing the custom class type
-         */
-        reference: (value: ClassReference) => {
-            return new Type.Reference(value, this.generation);
-        },
-
-        /**
-         * Creates a reference to a core C# class type.
-         *
-         * @param value - The core class reference
-         * @returns A Type object representing the core class type
-         */
-        coreClass: (value: CoreClassReference) => {
-            return new Type.CoreReference(value, this.generation);
-        },
-
-        /**
-         * Creates a OneOf union type.
-         *
-         * @param memberValues - Array of possible types in the union
-         * @returns A Type object representing the OneOf<T1, T2, ...> type
-         */
-        oneOf: (memberValues: Type[]) => {
-            return new Type.OneOf(memberValues, this.generation);
-        },
-
-        /**
-         * Creates a OneOfBase union type.
-         *
-         * @param memberValues - Array of possible types in the union
-         * @returns A Type object representing the OneOfBase<T1, T2, ...> type
-         */
-        oneOfBase: (memberValues: Type[]) => {
-            return new Type.OneOfBase(memberValues, this.generation);
-        },
-
-        /**
-         * Creates a string enum type.
-         *
-         * @param value - The class reference for the string enum
-         * @returns A Type object representing the string enum type
-         */
-        stringEnum: (value: ClassReference) => {
-            return new Type.StringEnum(value, this.generation);
-        },
-
-        /**
-         * Creates an Action delegate type.
-         *
-         * @param typeParameters - Array of type parameters for the Action
-         * @returns A Type object representing the C# Action<T1, T2, ...> type
-         */
-        action: ({ typeParameters }: { typeParameters: (Type | TypeParameter)[] }) => {
-            return new Type.Action(typeParameters, this.generation);
-        },
-
-        /**
-         * Creates a Func delegate type.
-         *
-         * @param typeParameters - Array of type parameters for the Func
-         * @param returnType - The return type of the Func
-         * @returns A Type object representing the C# Func<T1, T2, ..., TResult> type
-         */
-        func: ({
-            typeParameters,
-            returnType
-        }: {
-            typeParameters: (Type | TypeParameter)[];
-            returnType: Type | TypeParameter;
-        }) => {
-            return new Type.Func(typeParameters, returnType, this.generation);
-        },
-
-        /**
-         * Creates a generic C# type placeholder.
-         *
-         * @returns A Type object representing a generic C# type
-         */
-        systemType: () => {
-            return new Type.SystemType(this.generation);
-        },
-
-        /**
-         * Creates a file parameter type.
-         *
-         * @param classReference - The class reference for the file parameter
-         * @returns A Type object representing a file parameter type
-         */
-        fileParam: (classReference: ClassReference) => {
-            return new Type.FileParameter(classReference, this.generation);
-        }
-    });
-
-    /**
      * Factory methods for creating C# type literals.
-     * These methods create TypeLiteral objects that represent literal values
+     * These methods create Literal objects that represent literal values
      * and object initializers in the generated C# code.
      */
-    public TypeLiteral = {
+    public Literal = {
         /**
          * Creates a class literal with constructor field initialization.
          *
          * @param reference - The class reference
          * @param fields - Array of constructor fields to initialize
-         * @returns A TypeLiteral object representing the class initialization
+         * @returns A Literal object representing the class initialization
          */
         class_: ({ reference, fields }: { reference: ClassReference; fields: ConstructorField[] }) => {
-            return new TypeLiteral({ type: "class", reference, fields }, this.generation);
+            return new Literal.Class_(reference, fields, this.generation);
         },
 
         /**
@@ -976,7 +641,7 @@ export class CSharp {
          * @param keyType - The type of dictionary keys
          * @param valueType - The type of dictionary values
          * @param entries - Array of dictionary entries
-         * @returns A TypeLiteral object representing the dictionary initialization
+         * @returns A Literal object representing the dictionary initialization
          */
         dictionary: ({
             keyType,
@@ -987,7 +652,7 @@ export class CSharp {
             valueType: Type;
             entries: DictionaryEntry[];
         }) => {
-            return new TypeLiteral({ type: "dictionary", keyType, valueType, entries }, this.generation);
+            return new Literal.Dictionary(keyType, valueType, entries, this.generation);
         },
 
         /**
@@ -995,10 +660,10 @@ export class CSharp {
          *
          * @param valueType - The type of list elements
          * @param values - Array of literal values
-         * @returns A TypeLiteral object representing the list initialization
+         * @returns A Literal object representing the list initialization
          */
-        list: ({ valueType, values }: { valueType: Type; values: TypeLiteral[] }) => {
-            return new TypeLiteral({ type: "list", valueType, values }, this.generation);
+        list: ({ valueType, values }: { valueType: Type; values: Literal[] }) => {
+            return new Literal.List(valueType, values, this.generation);
         },
 
         /**
@@ -1006,180 +671,158 @@ export class CSharp {
          *
          * @param valueType - The type of set elements
          * @param values - Array of literal values
-         * @returns A TypeLiteral object representing the set initialization
+         * @returns A Literal object representing the set initialization
          */
-        set: ({ valueType, values }: { valueType: Type; values: TypeLiteral[] }) => {
-            return new TypeLiteral({ type: "set", valueType, values }, this.generation);
+        set: ({ valueType, values }: { valueType: Type; values: Literal[] }) => {
+            return new Literal.Set(valueType, values, this.generation);
         },
 
         /**
          * Creates a boolean literal.
          *
          * @param value - The boolean value
-         * @returns A TypeLiteral object representing the boolean literal
+         * @returns A Literal object representing the boolean literal
          */
         boolean: (value: boolean) => {
-            return new TypeLiteral({ type: "boolean", value }, this.generation);
+            return new Literal.Boolean(value, this.generation);
         },
 
         /**
          * Creates a float literal.
          *
          * @param value - The float value
-         * @returns A TypeLiteral object representing the float literal
+         * @returns A Literal object representing the float literal
          */
         float: (value: number) => {
-            return new TypeLiteral({ type: "float", value }, this.generation);
+            return new Literal.Float(value, this.generation);
         },
 
         /**
          * Creates a date literal.
          *
          * @param value - The date value as a string
-         * @returns A TypeLiteral object representing the date literal
+         * @returns A Literal object representing the date literal
          */
         date: (value: string) => {
-            return new TypeLiteral({ type: "date", value }, this.generation);
+            return new Literal.Date(value, this.generation);
         },
 
         /**
          * Creates a DateTime literal.
          *
          * @param value - The DateTime value as a string
-         * @returns A TypeLiteral object representing the DateTime literal
+         * @returns A Literal object representing the DateTime literal
          */
         datetime: (value: string) => {
-            return new TypeLiteral({ type: "datetime", value }, this.generation);
+            return new Literal.DateTime(value, this.generation);
         },
 
         /**
          * Creates a decimal literal.
          *
          * @param value - The decimal value
-         * @returns A TypeLiteral object representing the decimal literal
+         * @returns A Literal object representing the decimal literal
          */
         decimal: (value: number) => {
-            return new TypeLiteral({ type: "decimal", value }, this.generation);
+            return new Literal.Decimal(value, this.generation);
         },
 
         /**
          * Creates a double literal.
          *
          * @param value - The double value
-         * @returns A TypeLiteral object representing the double literal
+         * @returns A Literal object representing the double literal
          */
         double: (value: number) => {
-            return new TypeLiteral({ type: "double", value }, this.generation);
+            return new Literal.Double(value, this.generation);
         },
 
         /**
          * Creates an integer literal.
          *
          * @param value - The integer value
-         * @returns A TypeLiteral object representing the integer literal
+         * @returns A Literal object representing the integer literal
          */
         integer: (value: number) => {
-            return new TypeLiteral({ type: "integer", value }, this.generation);
+            return new Literal.Integer(value, this.generation);
         },
 
         /**
          * Creates a long literal.
          *
          * @param value - The long value
-         * @returns A TypeLiteral object representing the long literal
+         * @returns A Literal object representing the long literal
          */
         long: (value: number) => {
-            return new TypeLiteral({ type: "long", value }, this.generation);
+            return new Literal.Long(value, this.generation);
         },
 
         /**
          * Creates an unsigned integer literal.
          *
          * @param value - The unsigned integer value
-         * @returns A TypeLiteral object representing the uint literal
+         * @returns A Literal object representing the uint literal
          */
         uint: (value: number) => {
-            return new TypeLiteral({ type: "uint", value }, this.generation);
+            return new Literal.Uint(value, this.generation);
         },
 
         /**
          * Creates an unsigned long literal.
          *
          * @param value - The unsigned long value
-         * @returns A TypeLiteral object representing the ulong literal
+         * @returns A Literal object representing the ulong literal
          */
         ulong: (value: number) => {
-            return new TypeLiteral({ type: "ulong", value }, this.generation);
+            return new Literal.Ulong(value, this.generation);
         },
 
         /**
          * Creates a reference literal.
          *
          * @param value - The AST node reference
-         * @returns A TypeLiteral object representing the reference literal
+         * @returns A Literal object representing the reference literal
          */
         reference: (value: AstNode) => {
-            return new TypeLiteral(
-                {
-                    type: "reference",
-                    value
-                },
-                this.generation
-            );
+            return new Literal.Reference(value, this.generation);
         },
 
         /**
          * Creates a string literal.
          *
          * @param value - The string value
-         * @returns A TypeLiteral object representing the string literal
+         * @returns A Literal object representing the string literal
          */
         string: (value: string) => {
-            return new TypeLiteral(
-                {
-                    type: "string",
-                    value
-                },
-                this.generation
-            );
+            return new Literal.String(value, this.generation);
         },
 
         /**
          * Creates a null literal.
          *
-         * @returns A TypeLiteral object representing the null literal
+         * @returns A Literal object representing the null literal
          */
         null: () => {
-            return new TypeLiteral({ type: "null" }, this.generation);
+            return new Literal.Null(this.generation);
         },
 
         /**
          * Creates a no-operation literal (placeholder).
          *
-         * @returns A TypeLiteral object representing a no-operation literal
+         * @returns A Literal object representing a no-operation literal
          */
         nop: () => {
-            return new TypeLiteral({ type: "nop" }, this.generation);
+            return new Literal.Nop(this.generation);
         },
 
         /**
          * Creates an unknown type literal.
          *
          * @param value - The unknown value
-         * @returns A TypeLiteral object representing the unknown literal
+         * @returns A Literal object representing the unknown literal
          */
         unknown: (value: unknown) => {
-            return new TypeLiteral({ type: "unknown", value }, this.generation);
-        },
-
-        /**
-         * Checks if a TypeLiteral is a no-operation literal.
-         *
-         * @param typeLiteral - The TypeLiteral to check
-         * @returns True if the TypeLiteral is a no-operation literal
-         */
-        isNop: (typeLiteral: TypeLiteral) => {
-            return typeLiteral.internalType.type === "nop";
+            return new Literal.Unknown(value, this.generation);
         }
     };
 

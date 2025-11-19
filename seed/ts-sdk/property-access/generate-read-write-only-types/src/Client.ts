@@ -2,6 +2,7 @@
 
 import type { User } from "./api/types/User.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+import { normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
@@ -15,21 +16,8 @@ export declare namespace SeedPropertyAccessClient {
 export class SeedPropertyAccessClient {
     protected readonly _options: SeedPropertyAccessClient.Options;
 
-    constructor(_options: SeedPropertyAccessClient.Options) {
-        this._options = {
-            ..._options,
-            headers: mergeHeaders(
-                {
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/property-access",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/property-access/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                _options?.headers,
-            ),
-        };
+    constructor(options: SeedPropertyAccessClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**
@@ -74,6 +62,7 @@ export class SeedPropertyAccessClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as User, rawResponse: _response.rawResponse };

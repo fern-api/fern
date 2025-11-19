@@ -3,6 +3,7 @@
 import type { UnionListResponse } from "./api/types/UnionListResponse.js";
 import type { UnionResponse } from "./api/types/UnionResponse.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+import { normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
@@ -16,21 +17,8 @@ export declare namespace SeedUndiscriminatedUnionWithResponsePropertyClient {
 export class SeedUndiscriminatedUnionWithResponsePropertyClient {
     protected readonly _options: SeedUndiscriminatedUnionWithResponsePropertyClient.Options;
 
-    constructor(_options: SeedUndiscriminatedUnionWithResponsePropertyClient.Options) {
-        this._options = {
-            ..._options,
-            headers: mergeHeaders(
-                {
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/undiscriminated-union-with-response-property",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/undiscriminated-union-with-response-property/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                _options?.headers,
-            ),
-        };
+    constructor(options: SeedUndiscriminatedUnionWithResponsePropertyClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**
@@ -62,6 +50,7 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as UnionResponse, rawResponse: _response.rawResponse };
@@ -123,6 +112,7 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as UnionListResponse, rawResponse: _response.rawResponse };

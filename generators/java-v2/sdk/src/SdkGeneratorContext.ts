@@ -1,7 +1,7 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { java } from "@fern-api/java-ast";
-import { AbstractJavaGeneratorContext, JavaProject } from "@fern-api/java-base";
+import { AbstractJavaGeneratorContext } from "@fern-api/java-base";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import {
     ExampleEndpointCall,
@@ -23,7 +23,6 @@ import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 
 export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomConfigSchema> {
     public readonly generatorAgent: JavaGeneratorAgent;
-    public readonly project: JavaProject;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
     private paginationPackageCache?: string;
 
@@ -34,7 +33,6 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(ir, config, customConfig, generatorNotificationService);
-        this.project = new JavaProject({ context: this });
         this.snippetGenerator = new EndpointSnippetsGenerator({ context: this });
         this.generatorAgent = new JavaGeneratorAgent({
             logger: this.logger,
@@ -46,12 +44,28 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     public getReturnTypeForEndpoint(httpEndpoint: HttpEndpoint): java.Type {
         if (httpEndpoint.pagination != null) {
+            if (httpEndpoint.pagination.type === "custom") {
+                const responseBody = httpEndpoint.response?.body;
+                if (responseBody && responseBody.type === "json") {
+                    const responseType = this.javaTypeMapper.convert({
+                        reference: responseBody.value.responseBodyType
+                    });
+                    return java.Type.generic(
+                        java.classReference({
+                            name: this.getPaginationClassName(httpEndpoint.pagination),
+                            packageName: this.getPaginationPackageName()
+                        }),
+                        [responseType]
+                    );
+                }
+            }
+
             const itemType = this.getPaginationItemType(httpEndpoint.pagination);
 
             if (itemType) {
                 return java.Type.generic(
                     java.classReference({
-                        name: this.getPaginationClassName(),
+                        name: this.getPaginationClassName(httpEndpoint.pagination),
                         packageName: this.getPaginationPackageName()
                     }),
                     [itemType]
@@ -117,9 +131,9 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return this.getResourcesPackage(fernFilePath, TYPES_DIRECTORY);
     }
 
-    public getPaginationClassReference(): java.ClassReference {
+    public getPaginationClassReference(paginationType?: Pagination): java.ClassReference {
         return java.classReference({
-            name: this.getPaginationClassName(),
+            name: this.getPaginationClassName(paginationType),
             packageName: this.getPaginationPackageName()
         });
     }
@@ -202,7 +216,10 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return false;
     }
 
-    public getPaginationClassName(): string {
+    public getPaginationClassName(paginationType?: Pagination): string {
+        if (paginationType?.type === "custom") {
+            return this.customConfig?.["custom-pager-name"] ?? "CustomPager";
+        }
         return "SyncPagingIterable";
     }
 
@@ -367,6 +384,8 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
             if (resultsProperty?.property?.valueType) {
                 return this.extractPaginationItemType(resultsProperty.property.valueType);
             }
+        } else if (pagination.type === "custom") {
+            return undefined;
         }
         return undefined;
     }

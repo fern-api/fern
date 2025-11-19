@@ -20,6 +20,7 @@ export const VersionConfig: core.serialization.ObjectSchema<
         slug: core.serialization.string().optional(),
         availability: VersionAvailability.optional(),
         audiences: Audience.optional(),
+        hidden: core.serialization.boolean().optional(),
     })
     .extend(WithPermissions)
     .extend(WithFeatureFlags);
@@ -31,5 +32,6 @@ export declare namespace VersionConfig {
         slug?: string | null;
         availability?: VersionAvailability.Raw | null;
         audiences?: Audience.Raw | null;
+        hidden?: boolean | null;
     }
 }

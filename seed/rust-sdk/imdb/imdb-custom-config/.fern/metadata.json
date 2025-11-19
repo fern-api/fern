@@ -1,0 +1,15 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-rust-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "crateName": "custom_imdb_sdk",
+    "crateVersion": "2.1.0",
+    "clientClassName": "CustomImdbClient",
+    "extraDependencies": {
+      "serde_derive": "1.0",
+      "tokio-util": "0.7"
+    },
+    "enableWireTests": true
+  }
+}

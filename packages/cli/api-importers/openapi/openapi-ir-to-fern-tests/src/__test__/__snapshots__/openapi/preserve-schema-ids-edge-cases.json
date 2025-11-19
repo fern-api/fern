@@ -1,0 +1,161 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createUser": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "id": "id",
+                    "name": "name",
+                  },
+                  "response": {
+                    "body": {
+                      "address": {
+                        "city": "city",
+                        "country": "country",
+                        "street": "street",
+                      },
+                      "email": "email",
+                      "id": "id",
+                      "name": "name",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/user",
+              "request": {
+                "body": "UserProfile",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "UserProfile",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "Address": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "city": "string",
+              "country": "string",
+              "street": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "UserProfile": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "address": "optional<Address>",
+              "email": {
+                "type": "optional<string>",
+                "validation": {
+                  "format": "email",
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "pattern": undefined,
+                },
+              },
+              "id": "string",
+              "name": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createUser:
+      path: /user
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: UserProfile
+        content-type: application/json
+      response:
+        docs: Success
+        type: UserProfile
+        status-code: 200
+      examples:
+        - request:
+            id: id
+            name: name
+          response:
+            body:
+              id: id
+              name: name
+              email: email
+              address:
+                street: street
+                city: city
+                country: country
+  source:
+    openapi: ../openapi.yml
+types:
+  UserProfile:
+    properties:
+      id: string
+      name: string
+      email:
+        type: optional<string>
+        validation:
+          format: email
+      address: optional<Address>
+    source:
+      openapi: ../openapi.yml
+  Address:
+    properties:
+      street: optional<string>
+      city: string
+      country: string
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Preserve Schema IDs Edge Cases",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Preserve Schema IDs Edge Cases
+",
+  },
+}

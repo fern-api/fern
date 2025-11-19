@@ -1,4 +1,5 @@
 using SeedFileUpload;
+using System.Text;
 
 namespace Usage;
 
@@ -12,7 +13,11 @@ public class Example0
         );
 
         await client.Service.JustFileAsync(
-            new JustFileRequest()
+            new JustFileRequest {
+                File = new FileParameter(){
+                    Stream = new MemoryStream(Encoding.UTF8.GetBytes("[bytes]"))
+                }
+            }
         );
     }
 

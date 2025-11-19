@@ -10,7 +10,31 @@
             },
             "snippet": {
                 "type": "csharp",
-                "client": "using SeedObjectsWithImports;\nusing System.Collections.Generic;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalBodyAsync(\n    new Dictionary<string, object?>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
+                "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalBodyAsync(\n    new Dictionary<string, object?>()\n    {\n        {\n            \"string\",\n            new Dictionary<object, object?>() { { \"key\", \"value\" } }\n        },\n    }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/send-optional-typed-body",
+                "method": "POST",
+                "identifier_override": "endpoint_optional.sendOptionalTypedBody"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalTypedBodyAsync(\n    new SendOptionalBodyRequest { Message = \"message\" }\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/deploy/{actionId}/versions/{id}",
+                "method": "POST",
+                "identifier_override": "endpoint_optional.sendOptionalNullableWithAllOptionalProperties"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedObjectsWithImports;\n\nvar client = new SeedObjectsWithImportsClient();\nawait client.Optional.SendOptionalNullableWithAllOptionalPropertiesAsync(\n    \"actionId\",\n    \"id\",\n    new DeployParams { UpdateDraft = true }\n);\n"
             }
         }
     ]

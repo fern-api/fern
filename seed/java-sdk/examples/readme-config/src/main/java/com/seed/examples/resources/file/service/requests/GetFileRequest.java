@@ -5,10 +5,9 @@ package com.seed.examples.resources.file.service.requests;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.examples.core.ObjectMappers;
 import java.util.HashMap;
@@ -28,7 +27,7 @@ public final class GetFileRequest {
         this.additionalProperties = additionalProperties;
     }
 
-    @JsonProperty("X-File-API-Version")
+    @JsonIgnore
     public String getXFileApiVersion() {
         return xFileApiVersion;
     }
@@ -88,7 +87,6 @@ public final class GetFileRequest {
         }
 
         @java.lang.Override
-        @JsonSetter("X-File-API-Version")
         public _FinalStage xFileApiVersion(@NotNull String xFileApiVersion) {
             this.xFileApiVersion = Objects.requireNonNull(xFileApiVersion, "xFileApiVersion must not be null");
             return this;

@@ -3,6 +3,8 @@
 module Seed
   module Playlist
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Playlist::Client]
       def initialize(client:)
         @client = client
@@ -10,21 +12,28 @@ module Seed
 
       # Create a new playlist
       #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Playlist::Types::PlaylistCreateRequest]
+      #
       # @return [Seed::Playlist::Types::Playlist]
       def create_playlist(request_options: {}, **params)
-        _path_param_names = ["serviceParam"]
+        _path_param_names = %i[service_param]
+        _body = params.except(*_path_param_names)
 
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[datetime optionalDatetime]
-        _query = params.slice(*_query_param_names)
+        _query_param_names = %i[datetime optional_datetime]
+        _query = {}
+        _query["datetime"] = params[:datetime] if params.key?(:datetime)
+        _query["optionalDatetime"] = params[:optional_datetime] if params.key?(:optional_datetime)
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
-          path: "/v2/playlist/#{params[:serviceParam]}/create",
+          path: "/v2/playlist/#{params[:service_param]}/create",
           query: _query,
-          body: params.except(*_path_param_names)
+          body: Seed::Playlist::Types::PlaylistCreateRequest.new(_body).to_h
         )
         begin
           _response = @client.send(_request)
@@ -42,17 +51,26 @@ module Seed
 
       # Returns the user's playlists
       #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Array[Seed::Playlist::Types::Playlist]]
       def get_playlists(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[limit otherField multiLineDocs optionalMultipleField multipleField]
-        _query = params.slice(*_query_param_names)
+        _query_param_names = %i[limit other_field multi_line_docs optional_multiple_field multiple_field]
+        _query = {}
+        _query["limit"] = params[:limit] if params.key?(:limit)
+        _query["otherField"] = params[:other_field] if params.key?(:other_field)
+        _query["multiLineDocs"] = params[:multi_line_docs] if params.key?(:multi_line_docs)
+        _query["optionalMultipleField"] = params[:optional_multiple_field] if params.key?(:optional_multiple_field)
+        _query["multipleField"] = params[:multiple_field] if params.key?(:multiple_field)
         params = params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
-          path: "/v2/playlist/#{params[:serviceParam]}/all",
+          path: "/v2/playlist/#{params[:service_param]}/all",
           query: _query
         )
         begin
@@ -69,12 +87,16 @@ module Seed
 
       # Returns a playlist
       #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Playlist::Types::Playlist]
       def get_playlist(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
-          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}"
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}"
         )
         begin
           _response = @client.send(_request)
@@ -92,12 +114,16 @@ module Seed
 
       # Updates a playlist
       #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Playlist::Types::Playlist | nil]
       def update_playlist(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "PUT",
-          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}",
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}",
           body: params
         )
         begin
@@ -114,12 +140,16 @@ module Seed
 
       # Deletes a playlist
       #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def delete_playlist(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "DELETE",
-          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlist_id]}"
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}"
         )
         begin
           _response = @client.send(_request)

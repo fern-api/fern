@@ -336,7 +336,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         return endpoint.name.snakeCase.safeName;
     }
 
-    private getDefaultEnvironmentId(): FernIr.EnvironmentId | undefined {
+    private getDefaultEnvironmentId(): FernIr.dynamic.EnvironmentId | undefined {
         if (this.context.ir.environments == null) {
             return undefined;
         }

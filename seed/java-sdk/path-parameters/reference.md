@@ -13,7 +13,7 @@
 <dd>
 
 ```java
-client.organizations().getOrganization("tenant_id", "organization_id");
+client.organizations().getOrganization("organization_id");
 ```
 </dd>
 </dl>
@@ -62,7 +62,6 @@ client.organizations().getOrganization("tenant_id", "organization_id");
 
 ```java
 client.organizations().getOrganizationUser(
-    "tenant_id",
     "organization_id",
     "user_id",
     GetOrganizationUserRequest
@@ -125,7 +124,6 @@ client.organizations().getOrganizationUser(
 
 ```java
 client.organizations().searchOrganizations(
-    "tenant_id",
     "organization_id",
     SearchOrganizationsRequest
         .builder()
@@ -189,7 +187,6 @@ client.organizations().searchOrganizations(
 
 ```java
 client.user().getUser(
-    "tenant_id",
     "user_id",
     GetUsersRequest
         .builder()
@@ -243,7 +240,6 @@ client.user().getUser(
 
 ```java
 client.user().createUser(
-    "tenant_id",
     User
         .builder()
         .name("name")
@@ -300,7 +296,6 @@ client.user().createUser(
 
 ```java
 client.user().updateUser(
-    "tenant_id",
     "user_id",
     UpdateUserRequest
         .builder()
@@ -371,7 +366,6 @@ client.user().updateUser(
 
 ```java
 client.user().searchUsers(
-    "tenant_id",
     "user_id",
     SearchUsersRequest
         .builder()
@@ -409,6 +403,167 @@ client.user().searchUsers(
 <dd>
 
 **limit:** `Optional<Integer>` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.getUserMetadata(tenantId, userId, version) -> User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint with path parameter that has a text prefix (v{version})
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.user().getUserMetadata(
+    "user_id",
+    1,
+    GetUserMetadataRequest
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `Integer` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.user.getUserSpecifics(tenantId, userId, version, thought) -> User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint with path parameters listed in different order than found in path
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.user().getUserSpecifics(
+    "user_id",
+    1,
+    "thought",
+    GetUserSpecificsRequest
+        .builder()
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thought:** `String` 
     
 </dd>
 </dl>

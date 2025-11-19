@@ -4,7 +4,7 @@ import Examples
 
 @Suite("HealthServiceClient Wire Tests") struct HealthServiceClientWireTests {
     @Test func ping1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -18,12 +18,12 @@ import Examples
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.health.service.ping()
+        let response = try await client.health.service.ping(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 
     @Test func ping2() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -37,7 +37,7 @@ import Examples
             urlSession: stub.urlSession
         )
         let expectedResponse = true
-        let response = try await client.health.service.ping()
+        let response = try await client.health.service.ping(requestOptions: RequestOptions(additionalHeaders: stub.headers))
         try #require(response == expectedResponse)
     }
 }

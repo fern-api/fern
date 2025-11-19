@@ -107,3 +107,47 @@ func (c *Client) SearchUsers(
 	}
 	return response.Body, nil
 }
+
+// Test endpoint with path parameter that has a text prefix (v{version})
+func (c *Client) GetUserMetadata(
+	ctx context.Context,
+	tenantId string,
+	userId string,
+	version int,
+	opts ...option.RequestOption,
+) (*fern.User, error) {
+	response, err := c.WithRawResponse.GetUserMetadata(
+		ctx,
+		tenantId,
+		userId,
+		version,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Test endpoint with path parameters listed in different order than found in path
+func (c *Client) GetUserSpecifics(
+	ctx context.Context,
+	tenantId string,
+	userId string,
+	version int,
+	thought string,
+	opts ...option.RequestOption,
+) (*fern.User, error) {
+	response, err := c.WithRawResponse.GetUserSpecifics(
+		ctx,
+		tenantId,
+		userId,
+		version,
+		thought,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}

@@ -10,7 +10,7 @@ import type { User } from "../../types/User.js";
  *     {
  *         limit: 1,
  *         id: "id",
- *         date: "date",
+ *         date: "2023-01-15",
  *         deadline: "2024-01-15T09:30:00Z",
  *         bytes: "bytes",
  *         user: {
@@ -61,7 +61,7 @@ export interface SearchRequest {
     user: User;
     userList?: User | User[];
     optionalDeadline?: string;
-    keyValue?: Record<string, string | undefined>;
+    keyValue?: Record<string, string>;
     optionalString?: string;
     nestedUser?: NestedUser;
     optionalUser?: User;

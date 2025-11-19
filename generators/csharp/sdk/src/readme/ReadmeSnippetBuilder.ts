@@ -46,7 +46,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             this.context.ir.readmeConfig?.defaultEndpoint != null
                 ? this.context.ir.readmeConfig.defaultEndpoint
                 : this.getDefaultEndpointId();
-        this.requestOptionsName = this.types.RequestOptions.name;
+        this.requestOptionsName = this.Types.RequestOptions.name;
     }
     protected get generation() {
         return this.context.generation;
@@ -57,9 +57,6 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     protected get registry() {
         return this.generation.registry;
     }
-    protected get extern() {
-        return this.generation.extern;
-    }
     protected get settings() {
         return this.generation.settings;
     }
@@ -69,26 +66,42 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     protected get names() {
         return this.generation.names;
     }
-    protected get types() {
-        return this.generation.types;
-    }
     protected get model() {
         return this.generation.model;
+    }
+    protected get format() {
+        return this.generation.format;
     }
     protected get csharp() {
         return this.generation.csharp;
     }
+    protected get Types() {
+        return this.generation.Types;
+    }
+
     protected get System() {
-        return this.extern.System;
+        return this.generation.extern.System;
     }
     protected get NUnit() {
-        return this.extern.NUnit;
+        return this.generation.extern.NUnit;
     }
     protected get OneOf() {
-        return this.extern.OneOf;
+        return this.generation.extern.OneOf;
     }
     protected get Google() {
-        return this.extern.Google;
+        return this.generation.extern.Google;
+    }
+    protected get WireMock() {
+        return this.generation.extern.WireMock;
+    }
+    protected get Primitive() {
+        return this.generation.Primitive;
+    }
+    protected get Value() {
+        return this.generation.Value;
+    }
+    protected get Collection() {
+        return this.generation.Collection;
     }
 
     public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
@@ -153,7 +166,7 @@ using ${this.namespaces.root};
 
 try {
     var response = await ${this.getMethodCall(exceptionHandlingEndpoint)}(...);
-} catch (${this.types.BaseApiException.name} e) {
+} catch (${this.Types.BaseApiException.name} e) {
     System.Console.WriteLine(e.Body);
     System.Console.WriteLine(e.StatusCode);
 }

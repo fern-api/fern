@@ -59,7 +59,7 @@ import { GeneratedThrowingEndpointResponse } from "./endpoints/default/endpoint-
 import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/GeneratedDefaultEndpointImplementation";
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
-import { getLiteralValueForHeader, isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
+import { isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
@@ -92,9 +92,10 @@ export declare namespace GeneratedSdkClientClassImpl {
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
         formDataSupport: "Node16" | "Node18";
-        omitFernHeaders: boolean;
         useDefaultRequestParameterValues: boolean;
         generateEndpointMetadata: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        offsetSemantics: "item-index" | "page-index";
     }
 }
 
@@ -109,6 +110,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly ENVIRONMENT_OPTION_PROPERTY_NAME = "environment";
     public static readonly OPTIONS_INTERFACE_NAME = "Options";
     public static readonly OPTIONS_PRIVATE_MEMBER = "_options";
+    private static readonly OPTIONS_PARAMETER_NAME = "options";
     public static readonly AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
     public static readonly CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
     public static readonly METADATA_FOR_TOKEN_SUPPLIER_VAR = "_metadata";
@@ -129,6 +131,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly npmPackage: NpmPackage | undefined;
     private readonly packageId: PackageId;
     private readonly retainOriginalCasing: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly inlineFileProperties: boolean;
     private readonly includeSerdeLayer: boolean;
     private readonly omitUndefined: boolean;
@@ -143,11 +146,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private inferredAuthScheme: InferredAuthScheme | undefined;
     private authProvider: AuthProviderInstance | undefined;
     private readonly authHeaders: HeaderAuthScheme[];
-    private readonly service: HttpService | undefined;
-    private readonly omitFernHeaders: boolean;
-    private readonly useDefaultRequestParameterValues: boolean;
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
+    private readonly offsetSemantics: "item-index" | "page-index";
 
     constructor({
         isRoot,
@@ -175,9 +176,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         streamType,
         fileResponseType,
         formDataSupport,
-        omitFernHeaders,
-        useDefaultRequestParameterValues,
-        generateEndpointMetadata
+        generateEndpointMetadata,
+        parameterNaming,
+        offsetSemantics
     }: GeneratedSdkClientClassImpl.Init) {
         importsManager.reserveLocal(serviceClassName);
 
@@ -199,15 +200,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.importsManager = importsManager;
         this.exportsManager = exportsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
-        this.omitFernHeaders = omitFernHeaders;
-        this.useDefaultRequestParameterValues = useDefaultRequestParameterValues;
         this.generateEndpointMetadata = generateEndpointMetadata;
+        this.parameterNaming = parameterNaming;
+        this.offsetSemantics = offsetSemantics;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
 
         const service = packageResolver.getServiceDeclaration(packageId);
-        this.service = service;
 
         this.anyEndpointWithAuth = anyEndpointWithAuth({ packageId, packageResolver });
 
@@ -261,7 +261,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             includeContentHeadersOnResponse: includeContentHeadersOnFileDownloadResponse,
                             clientClass: this,
                             streamType,
-                            fileResponseType
+                            fileResponseType,
+                            offsetSemantics: this.offsetSemantics
                         });
                     }
                 };
@@ -281,7 +282,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         includeSerdeLayer,
                         retainOriginalCasing: this.retainOriginalCasing,
                         omitUndefined: this.omitUndefined,
-                        generateEndpointMetadata: this.generateEndpointMetadata
+                        generateEndpointMetadata: this.generateEndpointMetadata,
+                        parameterNaming
                     });
                 };
 
@@ -305,7 +307,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             omitUndefined: this.omitUndefined,
                             streamType,
                             fileResponseType,
-                            generateEndpointMetadata: this.generateEndpointMetadata
+                            generateEndpointMetadata: this.generateEndpointMetadata,
+                            parameterNaming
                         }),
                     json: (jsonResponse) =>
                         getDefaultEndpointImplementation({
@@ -326,7 +329,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             retainOriginalCasing: this.retainOriginalCasing,
                             omitUndefined: this.omitUndefined,
                             streamType,
-                            generateEndpointMetadata: this.generateEndpointMetadata
+                            generateEndpointMetadata: this.generateEndpointMetadata,
+                            parameterNaming
                         }),
                     streamParameter: (streamParameter) =>
                         // TODO(amckinney): For now we just generate the stream variant of the endpoint.
@@ -345,7 +349,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             retainOriginalCasing: this.retainOriginalCasing,
                             omitUndefined: this.omitUndefined,
                             streamType,
-                            generateEndpointMetadata: this.generateEndpointMetadata
+                            generateEndpointMetadata: this.generateEndpointMetadata,
+                            parameterNaming
                         }),
                     text: (textResponse) => {
                         return getDefaultEndpointImplementation({
@@ -367,7 +372,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             omitUndefined: this.omitUndefined,
                             streamType,
                             fileResponseType,
-                            generateEndpointMetadata: this.generateEndpointMetadata
+                            generateEndpointMetadata: this.generateEndpointMetadata,
+                            parameterNaming
                         });
                     },
                     _other: () => {
@@ -388,7 +394,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 generatedSdkClientClass: this,
                 includeSerdeLayer: this.includeSerdeLayer,
                 retainOriginalCasing: this.retainOriginalCasing,
-                omitUndefined: this.omitUndefined
+                omitUndefined: this.omitUndefined,
+                parameterNaming
             });
         } else {
             this.generatedWebsocketImplementation = undefined;
@@ -460,12 +467,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 requestBody,
                 generatedSdkClientClass: this,
                 retainOriginalCasing: this.retainOriginalCasing,
-                exportsManager: this.exportsManager
+                exportsManager: this.exportsManager,
+                parameterNaming: this.parameterNaming
             });
         }
         if (requestBody?.type === "fileUpload") {
             return new GeneratedFileUploadEndpointRequest({
-                importsManager: this.importsManager,
                 ir: this.intermediateRepresentation,
                 packageId,
                 service,
@@ -477,7 +484,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 includeSerdeLayer: this.includeSerdeLayer,
                 allowExtraFields: this.allowExtraFields,
                 omitUndefined: this.omitUndefined,
-                formDataSupport: this.formDataSupport
+                formDataSupport: this.formDataSupport,
+                parameterNaming: this.parameterNaming
             });
         } else {
             return new GeneratedDefaultEndpointRequest({
@@ -489,7 +497,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 requestBody,
                 generatedSdkClientClass: this,
                 retainOriginalCasing: this.retainOriginalCasing,
-                exportsManager: this.exportsManager
+                parameterNaming: this.parameterNaming
             });
         }
     }
@@ -718,7 +726,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ];
             const parameters = [
                 {
-                    name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                    name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createQualifiedName(
@@ -773,7 +781,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}: this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}
             `;
             const statements = code`
-                ${this.getHeadersStatements(context)}
+                ${this.getCtorOptionsStatements(context)}
                 ${readClientId}
 
                 ${readClientSecret}
@@ -794,7 +802,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         } else if (this.isRoot && this.authProvider && this.anyEndpointWithAuth) {
             const parameters = [
                 {
-                    name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                    name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createQualifiedName(
@@ -811,7 +819,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
             ];
             const statements = code`
-                ${this.getHeadersStatements(context)}
+                ${this.getCtorOptionsStatements(context)}
                 ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = ${getTextOfTsNode(
                     this.authProvider.instantiate({
                         context,
@@ -847,7 +855,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         } else if (!this.isRoot && this.authProvider && this.anyEndpointWithAuth) {
             const parameters = [
                 {
-                    name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                    name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
                     type: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createQualifiedName(
@@ -864,8 +872,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
             ];
             const statements = code`
-                ${this.getHeadersStatements(context)}
-                ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = _options.${AuthProviderInstance.OPTIONS_PROPERTY_NAME};
+                ${this.getCtorOptionsStatements(context)}
+                ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = options.${AuthProviderInstance.OPTIONS_PROPERTY_NAME};
             `;
             serviceClass.ctors.push({
                 parameters,
@@ -873,10 +881,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         } else {
             serviceClass.ctors.push({
-                statements: this.getHeadersStatements(context).toString({ dprintOptions: { indentWidth: 4 } }),
+                statements: this.getCtorOptionsStatements(context).toString({ dprintOptions: { indentWidth: 4 } }),
                 parameters: [
                     {
-                        name: GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER,
+                        name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
                         type: getTextOfTsNode(
                             ts.factory.createTypeReferenceNode(
                                 ts.factory.createQualifiedName(
@@ -1015,7 +1023,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
+        if (this.shouldGenerateAuthorizationHeaderHelperMethod({ context })) {
             const returnsMaybeAuth =
                 !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
                 this.basicAuthScheme != null ||
@@ -1078,32 +1086,28 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         context.sourceFile.addClass(serviceClass);
     }
 
-    private getHeadersStatements(context: SdkContext): Code {
-        const rootHeaders = this.isRoot ? this.getRootHeaders(context) : [];
-        const shouldGenerateRootHeaders = this.isRoot && rootHeaders.length > 0;
-        if (shouldGenerateRootHeaders) {
-            context.importsManager.addImportFromRoot("core/headers", {
-                namedImports: ["mergeHeaders"]
-            });
-            return code`this._options = {
-                    ..._options,
-                    headers: mergeHeaders(${getTextOfTsNode(
-                        ts.factory.createObjectLiteralExpression(
-                            rootHeaders.map(({ header, value }) =>
-                                ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
-                            )
-                        )
-                    )}, _options?.headers),
-                };`;
-        }
-        return code`this._options = _options;`;
+    private getCtorOptionsStatements(context: SdkContext): Code {
+        context.importsManager.addImportFromRoot("BaseClient", {
+            namedImports: ["normalizeClientOptions"]
+        });
+
+        return code`this._options = normalizeClientOptions(options);`;
     }
 
-    public shouldGenerateAuthorizationHeaderHelperMethod(): boolean {
+    public shouldGenerateAuthorizationHeaderHelperMethod({ context }: { context: SdkContext }): boolean {
         if (this.generatedEndpointImplementations.length === 0 && this.generatedWebsocketImplementation == null) {
             return false;
         }
-        return this.oauthAuthScheme != null || this.bearerAuthScheme != null || this.basicAuthScheme != null;
+        if (
+            anyEndpointsNeedAuth({
+                context,
+                packageId: this.packageId,
+                packageResolver: this.packageResolver
+            })
+        ) {
+            return this.oauthAuthScheme != null || this.bearerAuthScheme != null || this.basicAuthScheme != null;
+        }
+        return false;
     }
 
     public shouldGenerateCustomAuthorizationHeaderHelperMethod(): boolean {
@@ -1153,8 +1157,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
     }
 
-    public getAuthorizationHeaderValue(): ts.Expression | undefined {
-        if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
+    public getAuthorizationHeaderValue({ context }: { context: SdkContext }): ts.Expression | undefined {
+        if (this.shouldGenerateAuthorizationHeaderHelperMethod({ context })) {
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
@@ -1185,136 +1189,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         } else {
             return undefined;
         }
-    }
-
-    private getRootHeaders(context: SdkContext): GeneratedHeader[] {
-        const headers: GeneratedHeader[] = [
-            ...this.intermediateRepresentation.headers
-                // auth headers are handled separately
-                .filter((header) => !this.isAuthorizationHeader(header))
-                .map((header) => {
-                    const headerName = this.getOptionKeyForHeader(header);
-                    const literalValue = getLiteralValueForHeader(header, context);
-
-                    let value: ts.Expression;
-                    if (literalValue != null) {
-                        if (typeof literalValue === "boolean") {
-                            const booleanLiteral = literalValue ? ts.factory.createTrue() : ts.factory.createFalse();
-                            value = ts.factory.createCallExpression(
-                                ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createParenthesizedExpression(
-                                        ts.factory.createBinaryExpression(
-                                            ts.factory.createPropertyAccessChain(
-                                                ts.factory.createIdentifier(
-                                                    GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-                                                ),
-                                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                                ts.factory.createIdentifier(headerName)
-                                            ),
-                                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                            booleanLiteral
-                                        )
-                                    ),
-                                    ts.factory.createIdentifier("toString")
-                                ),
-                                undefined,
-                                []
-                            );
-                        } else {
-                            value = ts.factory.createBinaryExpression(
-                                ts.factory.createPropertyAccessChain(
-                                    ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
-                                    ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                    ts.factory.createIdentifier(headerName)
-                                ),
-                                ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                                ts.factory.createStringLiteral(literalValue.toString())
-                            );
-                        }
-                    } else {
-                        value = ts.factory.createPropertyAccessChain(
-                            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            ts.factory.createIdentifier(this.getOptionKeyForHeader(header))
-                        );
-                    }
-
-                    return {
-                        header: header.name.wireValue,
-                        value
-                    };
-                })
-        ];
-
-        const includeFernHeaders = !this.omitFernHeaders;
-        if (includeFernHeaders) {
-            headers.push({
-                header: this.intermediateRepresentation.sdkConfig.platformHeaders.language,
-                value: ts.factory.createStringLiteral("JavaScript")
-            });
-
-            if (this.npmPackage != null) {
-                headers.push(
-                    {
-                        header: this.intermediateRepresentation.sdkConfig.platformHeaders.sdkName,
-                        value: ts.factory.createStringLiteral(this.npmPackage.packageName)
-                    },
-                    {
-                        header: this.intermediateRepresentation.sdkConfig.platformHeaders.sdkVersion,
-                        value: ts.factory.createStringLiteral(this.npmPackage.version)
-                    }
-                );
-            }
-
-            if (context.ir.sdkConfig.platformHeaders.userAgent != null) {
-                headers.push({
-                    header: context.ir.sdkConfig.platformHeaders.userAgent.header,
-                    value: ts.factory.createStringLiteral(context.ir.sdkConfig.platformHeaders.userAgent.value)
-                });
-            }
-
-            const generatedVersion = context.versionContext.getGeneratedVersion();
-            if (generatedVersion != null) {
-                const header = generatedVersion.getHeader();
-                const headerName = this.getOptionKeyForHeader(header);
-                const defaultVersion = generatedVersion.getDefaultVersion();
-
-                let value: ts.Expression;
-                if (defaultVersion != null) {
-                    value = ts.factory.createBinaryExpression(
-                        ts.factory.createPropertyAccessChain(
-                            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
-                            ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                            ts.factory.createIdentifier(headerName)
-                        ),
-                        ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                        ts.factory.createStringLiteral(defaultVersion)
-                    );
-                } else {
-                    value = ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier(GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER),
-                        ts.factory.createIdentifier(headerName)
-                    );
-                }
-                headers.push({
-                    header: header.name.wireValue,
-                    value
-                });
-            }
-
-            headers.push(
-                {
-                    header: "X-Fern-Runtime",
-                    value: context.coreUtilities.runtime.type._getReferenceTo()
-                },
-                {
-                    header: "X-Fern-Runtime-Version",
-                    value: context.coreUtilities.runtime.version._getReferenceTo()
-                }
-            );
-        }
-
-        return headers;
     }
 
     /*******************
@@ -1656,6 +1530,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
             ts.factory.createIdentifier("fetch")
         );
+    }
+
+    public getReferenceToLogger(_context: SdkContext): ts.Expression {
+        return this.getReferenceToOption("logging");
     }
 
     public getReferenceToOptions(): ts.Expression {
@@ -2279,7 +2157,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return this.getReferenceToOption(
             getParameterNameForRootPathParameter({
                 pathParameter,
-                retainOriginalCasing: this.retainOriginalCasing
+                retainOriginalCasing: this.retainOriginalCasing,
+                parameterNaming: this.parameterNaming
             })
         );
     }
@@ -2336,6 +2215,33 @@ function anyEndpointWithAuth({
                 packageResolver
             });
         })
+    ) {
+        return true;
+    }
+
+    return false;
+}
+
+function anyEndpointsNeedAuth({
+    context,
+    packageId,
+    packageResolver
+}: {
+    context: SdkContext;
+    packageId: PackageId;
+    packageResolver: PackageResolver;
+}): boolean {
+    const websocketChannel = packageResolver.getWebSocketChannelDeclaration(packageId);
+    if (websocketChannel?.auth) {
+        return true;
+    }
+
+    const service = packageResolver.getServiceDeclaration(packageId);
+    if (
+        service &&
+        service.endpoints
+            .filter((endpoint) => !context.authProvider.isAuthEndpoint(endpoint))
+            .some((endpoint) => endpoint.auth)
     ) {
         return true;
     }

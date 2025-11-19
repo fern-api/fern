@@ -1,34 +1,34 @@
 import Foundation
 
 /// A type that can represent any JSON value.
-public enum JSONValue: Codable, Hashable, Sendable {
-    case string(String)
-    case number(Double)
-    case bool(Bool)
+public enum JSONValue: Swift.Codable, Swift.Hashable, Swift.Sendable {
+    case string(Swift.String)
+    case number(Swift.Double)
+    case bool(Swift.Bool)
     case null
     case array([JSONValue])
-    case object([String: JSONValue])
+    case object([Swift.String: JSONValue])
 
-    public init(from decoder: Decoder) throws {
+    public init(from decoder: Swift.Decoder) throws {
         let container = try decoder.singleValueContainer()
 
         if container.decodeNil() {
             self = .null
-        } else if let bool = try? container.decode(Bool.self) {
+        } else if let bool = try? container.decode(Swift.Bool.self) {
             self = .bool(bool)
-        } else if let int = try? container.decode(Int.self) {
-            self = .number(Double(int))
-        } else if let double = try? container.decode(Double.self) {
+        } else if let int = try? container.decode(Swift.Int.self) {
+            self = .number(Swift.Double(int))
+        } else if let double = try? container.decode(Swift.Double.self) {
             self = .number(double)
-        } else if let string = try? container.decode(String.self) {
+        } else if let string = try? container.decode(Swift.String.self) {
             self = .string(string)
         } else if let array = try? container.decode([JSONValue].self) {
             self = .array(array)
-        } else if let object = try? container.decode([String: JSONValue].self) {
+        } else if let object = try? container.decode([Swift.String: JSONValue].self) {
             self = .object(object)
         } else {
-            throw DecodingError.dataCorrupted(
-                DecodingError.Context(
+            throw Swift.DecodingError.dataCorrupted(
+                Swift.DecodingError.Context(
                     codingPath: decoder.codingPath,
                     debugDescription: "Unable to decode JSONValue"
                 )
@@ -36,7 +36,7 @@ public enum JSONValue: Codable, Hashable, Sendable {
         }
     }
 
-    public func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Swift.Encoder) throws {
         var container = encoder.singleValueContainer()
 
         switch self {

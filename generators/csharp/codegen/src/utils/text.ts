@@ -1,3 +1,5 @@
+import { is } from "./type-guards";
+
 /**
  * Capitalizes the first character of a string.
  *
@@ -66,4 +68,71 @@ export function camelCase(str: string): string {
             return `${word.charAt(0).toUpperCase()}${word.slice(1)}`;
         })
         .join("");
+}
+
+/**
+ * Hashes a string to a number.
+ * @param input - The input string to hash
+ * @returns A number generated from the input string
+ *
+ * @example
+ * ```ts
+ * hash("hello") // returns 1000000
+ * hash("WORLD") // returns 1000000
+ * hash("") // returns 0
+ * ```
+ */
+export function hash(input: string): number {
+    let hash = 0;
+    for (const char of input) {
+        hash = (hash << 5) - hash + char.charCodeAt(0);
+    }
+    return hash;
+}
+
+/**
+ * Generates a deterministic unique id from a string.
+ * @param input - The input string to generate a unique id for
+ * @returns A unique id generated from the input string
+ *
+ * @example
+ * ```ts
+ * uniqueId("hello") // returns "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+ * uniqueId("WORLD") // returns "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+ * uniqueId("") // returns "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx"
+ * ```
+ */
+export function uniqueId(input: string): string {
+    // create a unique guid without using thecrypto library.
+    // Seeded pseudo-random number generator
+    function iterate(seed: number): number {
+        const x = Math.sin(seed++) * 10000;
+        return x - Math.floor(x);
+    }
+
+    let seed = hash(input);
+
+    // Generate UUID v4 format using seeded random
+    return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+        const r = (iterate(seed++) * 16) | 0;
+        const v = c === "x" ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+    });
+}
+/**
+ * This normalized date strings to ISO 8601 format so that they can be matched in wire tests.
+ *
+ * This can be used as a replacer function for JSON.stringify.
+ *
+ * @example
+ * ```ts
+ * JSON.stringify({ a: "2025-01-01T00:00:00.000" }, normalizeDates, 2);
+ * ```
+ */
+export function normalizeDates(key: string, value: unknown): unknown {
+    return is.isIsoDateTimeString(value) // reformat date time to ISO 8601 format
+        ? new Date(value).toISOString()
+        : is.isIsoDateString(value) // reformat date to ISO 8601 format
+          ? new Date(value).toISOString().slice(0, 10)
+          : value; // return value as is
 }

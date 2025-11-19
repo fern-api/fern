@@ -12,6 +12,7 @@
   },
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
+    "sparse-checkout": "./scripts/sparse-checkout.sh",
     "clean": "turbo clean",
     "compile": "turbo compile",
     "compile:debug": "turbo compile:debug",
@@ -26,15 +27,15 @@
     "lint:style:fix": "pnpm lint:style --fix",
     "lint:spelling": "cspell **",
     "lint:versions-yml": "ajv validate -s fern-versions-yml.schema.json -d \"**/versions.yml\" --strict=false",
-    "format": "biome format --fix",
-    "format:fix": "biome format --fix",
+    "format": "biome format --write",
+    "format:fix": "biome format --write",
     "format:check": "biome format",
     "format:yaml:fix": "prettier --write \"**/*.{yml,yaml}\" --cache",
     "format:yaml:check": "prettier --check \"**/*.{yml,yaml}\" --cache",
     "format:package-json": "sort-package-json \"generators/**/package.json\" \"packages/**/package.json\" --ignore \"**/dist\" --ignore \"**lib\" --ignore \"**/node_modules\"",
     "check:biome": "biome check",
     "check": "biome check",
-    "check:fix": "biome check --fix",
+    "check:fix": "biome check --write",
     "depcheck": "turbo depcheck --continue=always",
     "codegen:local": "pnpm fern:local generate",
     "fern": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/prod/cli.cjs",
@@ -44,6 +45,7 @@
     "fern:build:unminified": "cross-env POSTHOG_API_KEY=\"\" pnpm --filter @fern-api/cli dist:cli:prod:unminified && echo 'Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs'",
     "fern-dev:build": "pnpm --filter @fern-api/cli dist:cli:dev && echo 'Run node --enable-source-maps packages/cli/cli/dist/dev/cli.cjs'",
     "fern-local:build": "pnpm --filter @fern-api/cli dist:cli:local && echo 'Run node --enable-source-maps packages/cli/cli/dist/local/cli.cjs'",
+    "generator-cli:generate": "pnpm fern generate --api generator-cli --local && pnpm turbo --filter=@fern-api/generator-cli compile",
     "seed:build": "pnpm --filter @fern-api/seed-cli dist:cli && echo 'Run node --enable-source-maps packages/seed/dist/cli.cjs'",
     "publish": "pnpm -r publish --access public --no-git-checks --loglevel=verbose",
     "jsonschema": "pnpm definition-yml:jsonschema && pnpm api-yml:jsonschema && pnpm package-yml:jsonschema && pnpm docs-yml:jsonschema && pnpm generators-yml:jsonschema && pnpm versions-yml:jsonschema && pnpm products-yml:jsonschema",
@@ -97,7 +99,7 @@
     "tsx": "^4.20.3",
     "turbo": "^2.5.5",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   },
   "resolutions": {
     "@babel/traverse": "7.23.2",
@@ -124,7 +126,7 @@
       "node-fetch@2.x>whatwg-url": "^14.0.0",
       "qs": "6.13.0",
       "url-join": "^4.0.1",
-      "@fern-api/fdr-sdk": "0.139.41-9a38b8587",
+      "@fern-api/fdr-sdk": "0.140.3-473ba2d2c",
       "es-toolkit": "^1.39.10",
       "ts-essentials": "^10.1.1",
       "form-data": "^4.0.4"

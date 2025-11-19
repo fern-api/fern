@@ -4,6 +4,7 @@ import type { GetFooRequest } from "./api/client/requests/GetFooRequest.js";
 import type { UpdateFooRequest } from "./api/client/requests/UpdateFooRequest.js";
 import type { Foo } from "./api/types/Foo.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
+import { normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
@@ -17,21 +18,8 @@ export declare namespace SeedApiClient {
 export class SeedApiClient {
     protected readonly _options: SeedApiClient.Options;
 
-    constructor(_options: SeedApiClient.Options) {
-        this._options = {
-            ..._options,
-            headers: mergeHeaders(
-                {
-                    "X-Fern-Language": "JavaScript",
-                    "X-Fern-SDK-Name": "@fern/required-nullable",
-                    "X-Fern-SDK-Version": "0.0.1",
-                    "User-Agent": "@fern/required-nullable/0.0.1",
-                    "X-Fern-Runtime": core.RUNTIME.type,
-                    "X-Fern-Runtime-Version": core.RUNTIME.version,
-                },
-                _options?.headers,
-            ),
-        };
+    constructor(options: SeedApiClient.Options) {
+        this._options = normalizeClientOptions(options);
     }
 
     /**
@@ -89,6 +77,7 @@ export class SeedApiClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as Foo, rawResponse: _response.rawResponse };
@@ -167,6 +156,7 @@ export class SeedApiClient {
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
             fetchFn: this._options?.fetch,
+            logging: this._options.logging,
         });
         if (_response.ok) {
             return { data: _response.body as Foo, rawResponse: _response.rawResponse };

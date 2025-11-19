@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .exception_v_2 import ExceptionV2
 
@@ -38,5 +39,7 @@ class TestCaseGrade_NonHidden(UniversalBaseModel):
 
 from ..commons.variable_value import VariableValue  # noqa: E402, I001
 
-TestCaseGrade = typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden]
+TestCaseGrade = typing_extensions.Annotated[
+    typing.Union[TestCaseGrade_Hidden, TestCaseGrade_NonHidden], pydantic.Field(discriminator="type")
+]
 update_forward_refs(TestCaseGrade_NonHidden)

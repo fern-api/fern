@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("SeedPropertyAccessClient", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPropertyAccessClientType({ environment: server.baseUrl });
+        const client = new SeedPropertyAccessClientType({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             id: "id",
             email: "email",

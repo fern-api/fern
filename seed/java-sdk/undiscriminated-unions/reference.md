@@ -255,3 +255,56 @@ client.union().nestedUnions(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.union.testCamelCaseProperties(request) -> String</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```java
+client.union().testCamelCaseProperties(
+    PaymentRequest
+        .builder()
+        .paymentMethod(
+            PaymentMethodUnion.of(
+                TokenizeCard
+                    .builder()
+                    .method("card")
+                    .cardNumber("1234567890123456")
+                    .build()
+            )
+        )
+        .build()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**paymentMethod:** `PaymentMethodUnion` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

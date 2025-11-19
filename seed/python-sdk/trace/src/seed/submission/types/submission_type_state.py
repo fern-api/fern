@@ -45,5 +45,7 @@ class SubmissionTypeState_Workspace(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-SubmissionTypeState = typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace]
+SubmissionTypeState = typing_extensions.Annotated[
+    typing.Union[SubmissionTypeState_Test, SubmissionTypeState_Workspace], pydantic.Field(discriminator="type")
+]
 update_forward_refs(SubmissionTypeState_Test)

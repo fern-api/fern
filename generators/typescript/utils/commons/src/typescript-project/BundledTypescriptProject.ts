@@ -227,9 +227,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 ...this.dependencies[DependencyType.PROD],
                 ...this.extraDependencies
             };
-            if (Object.keys(dependencies).length > 0) {
-                draft.dependencies = dependencies;
-            }
+            draft.dependencies = dependencies;
             const peerDependencies = {
                 ...this.dependencies[DependencyType.PEER],
                 ...this.extraPeerDependencies

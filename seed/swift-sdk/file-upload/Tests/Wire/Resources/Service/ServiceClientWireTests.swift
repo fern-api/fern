@@ -4,7 +4,7 @@ import FileUpload
 
 @Suite("ServiceClient Wire Tests") struct ServiceClientWireTests {
     @Test func optionalArgs1() async throws -> Void {
-        let stub = WireStub()
+        let stub = HTTPStub()
         stub.setResponse(
             body: Data(
                 """
@@ -17,7 +17,10 @@ import FileUpload
             urlSession: stub.urlSession
         )
         let expectedResponse = "Foo"
-        let response = try await client.service.optionalArgs(request: .init(imageFile: .init(data: Data("".utf8))))
+        let response = try await client.service.optionalArgs(
+            request: .init(imageFile: .init(data: Data("".utf8))),
+            requestOptions: RequestOptions(additionalHeaders: stub.headers)
+        )
         try #require(response == expectedResponse)
     }
 }

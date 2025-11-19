@@ -11,20 +11,22 @@ documentation = "https://docs.rs/seed_query_parameters"
 doctest = false
 
 [dependencies]
+bytes = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+futures = "0.3"
+num-bigint = { version = "0.4", features = ["serde"] }
+ordered-float = { version = "4.5", features = ["serde"] }
+percent-encoding = "2.3"
+reqwest = { version = "0.12", features = ["json", "stream"], default-features = false }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-reqwest = { version = "0.12", features = ["json", "stream"] }
-reqwest-sse = "0.1"
-tokio = { version = "1.0", features = ["full"] }
-futures = "0.3"
-bytes = "1.0"
 thiserror = "1.0"
-chrono = { version = "0.4", features = ["serde"] }
+tokio = { version = "1.0", features = ["full"] }
 uuid = { version = "1.0", features = ["serde"] }
-num-bigint = { version = "0.4", features = ["serde"] }
-percent-encoding = "2.3"
-ordered-float = { version = "4.5", features = ["serde"] }
-pin-project = "1.1"
 
 [dev-dependencies]
 tokio-test = "0.4"
+
+[features]
+multipart = []
+sse = []

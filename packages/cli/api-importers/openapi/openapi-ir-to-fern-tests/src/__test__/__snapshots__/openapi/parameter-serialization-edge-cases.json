@@ -1,0 +1,364 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "filter": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {},
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/filter",
+              "request": {
+                "name": "FilterRequest",
+                "query-parameters": {
+                  "categories": {
+                    "allow-multiple": true,
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getComplex": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {},
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/complex",
+              "request": {
+                "name": "GetComplexRequest",
+                "query-parameters": {
+                  "filter": "optional<GetComplexRequestFilter>",
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getData": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {},
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/data",
+              "request": {
+                "headers": {
+                  "X-Custom-Headers": {
+                    "name": "customHeaders",
+                    "type": "optional<list<string>>",
+                  },
+                },
+                "name": "GetDataRequest",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getFile": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "path": "path",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/files/{path}",
+              "request": {
+                "name": "GetFileRequest",
+                "path-parameters": {
+                  "path": "string",
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getItemById": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "id": "id",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/items/{id}",
+              "request": {
+                "name": "GetItemByIdRequest",
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getItems": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {},
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/items",
+              "request": {
+                "name": "GetItemsRequest",
+                "query-parameters": {
+                  "tags": {
+                    "allow-multiple": true,
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getSession": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {},
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/session",
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "getUserPost": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "path-parameters": {
+                    "postId": "postId",
+                    "userId": "userId",
+                  },
+                },
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/users/{userId}/posts/{postId}",
+              "request": {
+                "name": "GetUserPostRequest",
+                "path-parameters": {
+                  "postId": "string",
+                  "userId": "string",
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "search": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {},
+              ],
+              "method": "GET",
+              "pagination": undefined,
+              "path": "/search",
+              "request": {
+                "name": "SearchRequest",
+                "query-parameters": {
+                  "keywords": {
+                    "allow-multiple": true,
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "GetComplexRequestFilter": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "active": "optional<boolean>",
+              "age": "optional<integer>",
+              "name": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    getItems:
+      path: /items
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetItemsRequest
+        query-parameters:
+          tags:
+            type: optional<string>
+            allow-multiple: true
+      examples:
+        - {}
+    search:
+      path: /search
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: SearchRequest
+        query-parameters:
+          keywords:
+            type: optional<string>
+            allow-multiple: true
+      examples:
+        - {}
+    filter:
+      path: /filter
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: FilterRequest
+        query-parameters:
+          categories:
+            type: optional<string>
+            allow-multiple: true
+      examples:
+        - {}
+    getItemById:
+      path: /items/{id}
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetItemByIdRequest
+        path-parameters:
+          id: string
+      examples:
+        - path-parameters:
+            id: id
+    getData:
+      path: /data
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetDataRequest
+        headers:
+          X-Custom-Headers:
+            type: optional<list<string>>
+            name: customHeaders
+      examples:
+        - {}
+    getComplex:
+      path: /complex
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetComplexRequest
+        query-parameters:
+          filter: optional<GetComplexRequestFilter>
+      examples:
+        - {}
+    getFile:
+      path: /files/{path}
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetFileRequest
+        path-parameters:
+          path: string
+      examples:
+        - path-parameters:
+            path: path
+    getSession:
+      path: /session
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      examples:
+        - {}
+    getUserPost:
+      path: /users/{userId}/posts/{postId}
+      method: GET
+      source:
+        openapi: ../openapi.yml
+      request:
+        name: GetUserPostRequest
+        path-parameters:
+          userId: string
+          postId: string
+      examples:
+        - path-parameters:
+            userId: userId
+            postId: postId
+  source:
+    openapi: ../openapi.yml
+types:
+  GetComplexRequestFilter:
+    properties:
+      name: optional<string>
+      age: optional<integer>
+      active: optional<boolean>
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Parameter Serialization Edge Cases",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Parameter Serialization Edge Cases
+",
+  },
+}

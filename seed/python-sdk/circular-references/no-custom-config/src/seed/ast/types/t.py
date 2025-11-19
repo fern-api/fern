@@ -21,6 +21,7 @@ class T(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .u import U  # noqa: E402, I001
 from .tor_u import TorU  # noqa: E402, I001
 
-update_forward_refs(T)
+update_forward_refs(T, U=U)

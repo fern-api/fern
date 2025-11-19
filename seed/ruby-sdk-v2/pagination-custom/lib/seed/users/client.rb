@@ -3,16 +3,23 @@
 module Seed
   module Users
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Users::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Types::UsernameCursor]
       def list_usernames_custom(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
         _query_param_names = %i[starting_after]
-        _query = params.slice(*_query_param_names)
+        _query = {}
+        _query["starting_after"] = params[:starting_after] if params.key?(:starting_after)
         params.except(*_query_param_names)
 
         _request = Seed::Internal::JSON::Request.new(

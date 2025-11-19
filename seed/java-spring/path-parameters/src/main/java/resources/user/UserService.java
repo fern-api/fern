@@ -47,4 +47,18 @@ public interface UserService {
   )
   List<User> searchUsers(@PathVariable("user_id") String userId,
       @RequestParam("limit") Optional<Integer> limit);
+
+  @GetMapping(
+      value = "/{user_id}/metadata/v{version}",
+      produces = "application/json"
+  )
+  User getUserMetadata(@PathVariable("user_id") String userId,
+      @PathVariable("version") Integer version);
+
+  @GetMapping(
+      value = "/{user_id}/specifics/{version}/{thought}",
+      produces = "application/json"
+  )
+  User getUserSpecifics(@PathVariable("user_id") String userId,
+      @PathVariable("version") Integer version, @PathVariable("thought") String thought);
 }

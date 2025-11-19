@@ -24,6 +24,7 @@ export declare namespace RequestWrapperContextImpl {
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
         isForSnippet: boolean;
+        parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
 
@@ -42,6 +43,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
     private readonly isForSnippet: boolean;
+    private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
     constructor({
         requestWrapperGenerator,
@@ -57,7 +59,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         enableInlineTypes,
         formDataSupport,
         flattenRequestParameters,
-        isForSnippet
+        isForSnippet,
+        parameterNaming
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
@@ -73,6 +76,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
         this.isForSnippet = isForSnippet;
+        this.parameterNaming = parameterNaming;
     }
 
     public shouldInlinePathParameters(sdkRequest: SdkRequest | undefined | null): boolean {
@@ -121,7 +125,8 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             enableInlineTypes: this.enableInlineTypes,
             shouldInlinePathParameters: this.shouldInlinePathParameters(endpoint.sdkRequest),
             formDataSupport: this.formDataSupport,
-            flattenRequestParameters: this.flattenRequestParameters
+            flattenRequestParameters: this.flattenRequestParameters,
+            parameterNaming: this.parameterNaming
         });
     }
 

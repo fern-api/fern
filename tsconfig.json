@@ -290,6 +290,9 @@
       "path": "./packages/commons/core-utils"
     },
     {
+      "path": "./packages/commons/github"
+    },
+    {
       "path": "./generators/csharp/formatter"
     },
     {
@@ -489,6 +492,12 @@
     },
     {
       "path": "./generators/swift/dynamic-snippets"
+    },
+    {
+      "path": "./packages/cli/api-importers/openapi-pruner"
+    },
+    {
+      "path": "./packages/cli/ai"
     }
   ]
 }

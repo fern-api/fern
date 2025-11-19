@@ -41,9 +41,9 @@
     "@fern-fern/legacy-docs-config": "0.0.58",
     "chalk": "^5.3.0",
     "find-up": "^6.3.0",
-    "glob": "^11.0.0",
+    "glob": "^11.1.0",
     "inquirer": "^9.2.23",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "yaml": "^2.4.5",
     "zod": "^3.22.3"
   },
@@ -55,6 +55,6 @@
     "depcheck": "^1.4.7",
     "tmp-promise": "^3.0.3",
     "typescript": "5.9.3",
-    "vitest": "^2.1.9"
+    "vitest": "^4.0.8"
   }
 }

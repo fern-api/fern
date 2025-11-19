@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ..v_2.resources.problem.test_case_id import TestCaseId
 from .error_info import ErrorInfo
@@ -165,18 +166,21 @@ class CodeExecutionUpdate_Finished(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
-CodeExecutionUpdate = typing.Union[
-    CodeExecutionUpdate_BuildingExecutor,
-    CodeExecutionUpdate_Running,
-    CodeExecutionUpdate_Errored,
-    CodeExecutionUpdate_Stopped,
-    CodeExecutionUpdate_Graded,
-    CodeExecutionUpdate_GradedV2,
-    CodeExecutionUpdate_WorkspaceRan,
-    CodeExecutionUpdate_Recording,
-    CodeExecutionUpdate_Recorded,
-    CodeExecutionUpdate_InvalidRequest,
-    CodeExecutionUpdate_Finished,
+CodeExecutionUpdate = typing_extensions.Annotated[
+    typing.Union[
+        CodeExecutionUpdate_BuildingExecutor,
+        CodeExecutionUpdate_Running,
+        CodeExecutionUpdate_Errored,
+        CodeExecutionUpdate_Stopped,
+        CodeExecutionUpdate_Graded,
+        CodeExecutionUpdate_GradedV2,
+        CodeExecutionUpdate_WorkspaceRan,
+        CodeExecutionUpdate_Recording,
+        CodeExecutionUpdate_Recorded,
+        CodeExecutionUpdate_InvalidRequest,
+        CodeExecutionUpdate_Finished,
+    ],
+    pydantic.Field(discriminator="type"),
 ]
 update_forward_refs(CodeExecutionUpdate_Graded)
 update_forward_refs(CodeExecutionUpdate_GradedV2)

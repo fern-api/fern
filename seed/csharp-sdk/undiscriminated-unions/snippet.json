@@ -72,6 +72,18 @@
                 "type": "csharp",
                 "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.NestedUnionsAsync(\"string\");\n"
             }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/camel-case",
+                "method": "POST",
+                "identifier_override": "endpoint_union.testCamelCaseProperties"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUndiscriminatedUnions;\n\nvar client = new SeedUndiscriminatedUnionsClient();\nawait client.Union.TestCamelCasePropertiesAsync(\n    new PaymentRequest\n    {\n        PaymentMethod = new TokenizeCard { Method = \"card\", CardNumber = \"1234567890123456\" },\n    }\n);\n"
+            }
         }
     ]
 }

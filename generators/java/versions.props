@@ -8,18 +8,18 @@ org.immutables:* = 2.8.8
 org.apache.commons:commons-lang3 = 3.12.0
 
 # fern
-# Package is still named irV60 but version 61.4.0 contains IR v61
-com.fern.fern:irV60 = 61.4.0
+# Package is still named irV60 but version 61.7.0 contains IR v61
+com.fern.fern:irV60 = 61.7.0
 com.fern.fern:generator-exec-client = 0.0.806
 
 # testing
 org.junit.jupiter:* = 5.5.0
 org.assertj:* = 3.19.0
-org.mockito:* = 3.11.2
+org.mockito:* = 4.11.0
 io.github.origin-energy:java-snapshot-* = 3.3.2
 
 # jackson
-com.fasterxml.jackson.*:jackson-* = 2.17.2
+com.fasterxml.jackson.*:jackson-* = 2.18.2
 
 # errorprone
 com.google.errorprone:error_prone_* = 2.12.1
@@ -32,13 +32,13 @@ com.google.guava:guava = 31.1-jre
 # jersey
 
 # spring
-org.springframework:spring-web = 5.3.19
+org.springframework:spring-web = 6.1.14
 
 # slf4j
 org.slf4j:slf4j-api = 1.7.36
 
 # okhttp
-com.squareup.okhttp3:okhttp = 4.12.0
+com.squareup.okhttp3:okhttp = 5.2.1
 
 # misc
 com.palantir.common:streams = 2.0.0

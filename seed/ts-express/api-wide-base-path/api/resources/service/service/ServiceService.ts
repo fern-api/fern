@@ -8,8 +8,8 @@ export interface ServiceServiceMethods {
         req: express.Request<
             {
                 serviceParam: string;
-                resourceParam: string;
                 endpointParam: number;
+                resourceParam: string;
             },
             never,
             never,

@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("SeedApiClient", () => {
     test("search", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClientType({ environment: server.baseUrl });
+        const client = new SeedApiClientType({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { results: ["results", "results"] };
         server.mockEndpoint().get("/user/getUsername").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -14,7 +14,7 @@ describe("SeedApiClient", () => {
         const response = await client.search({
             limit: 1,
             id: "id",
-            date: "date",
+            date: "2023-01-15",
             deadline: "2024-01-15T09:30:00Z",
             bytes: "bytes",
             user: {

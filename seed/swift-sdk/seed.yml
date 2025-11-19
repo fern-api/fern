@@ -1,5 +1,5 @@
 displayName: Swift SDK
-irVersion: v59
+irVersion: v61
 image: fernapi/fern-swift-sdk
 changelogLocation: ../../generators/swift/sdk/versions.yml
 
@@ -15,6 +15,9 @@ test:
   docker:
     image: fernapi/fern-swift-sdk:latest
     command: pnpm --filter @fern-api/swift-sdk dockerTagLatest
+  podman:
+    image: fernapi/fern-swift-sdk:latest
+    command: pnpm --filter @fern-api/swift-sdk podmanTagLatest
   local:
     workingDirectory: generators/swift
     buildCommand:
@@ -27,11 +30,8 @@ defaultOutputMode: github
 defaultCustomConfig: {}
 
 scripts:
-  - docker: swift:6.1.2
+  - image: swift:6.1.2
     commands:
-      # On Linux, URLSession/URLRequest require explicit FoundationNetworking import
-      # The Swift generator only outputs "import Foundation" but Linux needs both imports
-      - find . -name "*.swift" -exec sed -i '1s/^import Foundation$/import Foundation\nimport FoundationNetworking/' {} \;
       - swift build -c release --build-tests
       - swift test
 
@@ -109,8 +109,6 @@ allowedFailures:
   - api-wide-base-path
   - audiences
   - auth-environment-variables
-  - circular-references
-  - circular-references-advanced
   - client-side-params:with-custom-config
   - client-side-params:no-custom-config
   - cross-package-type-names
@@ -134,6 +132,7 @@ allowedFailures:
   - nullable:nullable-as-optional
   - nullable-optional:no-custom-config
   - nullable-optional:nullable-as-optional
+  - nullable-request-body
   - oauth-client-credentials-custom
   - oauth-client-credentials-with-variables
   - pagination:no-custom-config
@@ -147,12 +146,13 @@ allowedFailures:
   - required-nullable:nullable-as-optional
   - reserved-keywords
   - response-property
-  - simple-fhir
   - streaming
   - streaming-parameter
   - trace
   - undiscriminated-unions
   - unions
+  # Java-specific fixture for LocalDate support
+  - unions-with-local-date
   - variables
   - websocket-inferred-auth
   # Intermediate failures

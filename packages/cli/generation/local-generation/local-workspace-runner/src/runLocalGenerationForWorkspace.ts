@@ -1,23 +1,28 @@
+import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
 import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
 import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { ClonedRepository, cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr, PublishTarget } from "@fern-api/ir-sdk";
+import { getDynamicGeneratorConfig } from "@fern-api/remote-workspace-runner";
 import { TaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
 import {
     AbstractAPIWorkspace,
     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
 } from "@fern-api/workspace-loader";
+import { Octokit } from "@octokit/rest";
 import chalk from "chalk";
+import * as fs from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
-
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
+import { isAutoVersion } from "./VersionUtils";
 
 export async function runLocalGenerationForWorkspace({
     token,
@@ -28,7 +33,9 @@ export async function runLocalGenerationForWorkspace({
     keepDocker,
     inspect,
     context,
-    runner
+    absolutePathToPreview,
+    runner,
+    ai
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -37,8 +44,10 @@ export async function runLocalGenerationForWorkspace({
     version: string | undefined;
     keepDocker: boolean;
     context: TaskContext;
+    absolutePathToPreview: AbsoluteFilePath | undefined;
     runner: ContainerRunner | undefined;
     inspect: boolean;
+    ai: generatorsYml.AiServicesSchema | undefined;
 }): Promise<void> {
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
@@ -53,6 +62,15 @@ export async function runLocalGenerationForWorkspace({
                     getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
                 );
 
+                const dynamicGeneratorConfig = getDynamicGeneratorConfig({
+                    apiName: fernWorkspace.definition.rootApiFile.contents.name,
+                    organization: projectConfig.organization,
+                    generatorInvocation: generatorInvocation
+                });
+
+                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
+                version = version ?? (await computeSemanticVersion({ packageName, generatorInvocation }));
+
                 const intermediateRepresentation = generateIntermediateRepresentation({
                     workspace: fernWorkspace,
                     audiences: generatorGroup.audiences,
@@ -64,10 +82,17 @@ export async function runLocalGenerationForWorkspace({
                         disabled: generatorInvocation.disableExamples
                     },
                     readme: generatorInvocation.readme,
-                    version: version,
-                    packageName: generatorsYml.getPackageName({ generatorInvocation }),
+                    version: version ?? (await computeSemanticVersion({ packageName, generatorInvocation })),
+                    packageName,
                     context,
-                    sourceResolver: new SourceResolverImpl(context, fernWorkspace)
+                    sourceResolver: new SourceResolverImpl(context, fernWorkspace),
+                    dynamicGeneratorConfig,
+                    generationMetadata: {
+                        cliVersion: workspace.cliVersion,
+                        generatorName: generatorInvocation.name,
+                        generatorVersion: generatorInvocation.version,
+                        generatorConfig: generatorInvocation.config
+                    }
                 });
 
                 const venus = createVenusService({ token: token?.value });
@@ -92,9 +117,6 @@ export async function runLocalGenerationForWorkspace({
                 }
 
                 if (organization.ok) {
-                    if (organization.body.selfHostedSdKs) {
-                        intermediateRepresentation.selfHosted = true;
-                    }
                     if (organization.body.isWhitelabled) {
                         if (intermediateRepresentation.readmeConfig == null) {
                             intermediateRepresentation.readmeConfig = emptyReadmeConfig;
@@ -104,10 +126,6 @@ export async function runLocalGenerationForWorkspace({
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
-
-                // grabs generator.yml > config > package_name
-                const packageName = getPackageNameFromGeneratorConfig(generatorInvocation);
-
                 const publishConfig = getPublishConfig({
                     generatorInvocation,
                     org: organization.ok ? organization.body : undefined,
@@ -119,28 +137,74 @@ export async function runLocalGenerationForWorkspace({
                     intermediateRepresentation.publishConfig = publishConfig;
                 }
 
-                const absolutePathToLocalOutput =
-                    generatorInvocation.absolutePathToLocalOutput ??
-                    join(
-                        workspace.absoluteFilePath,
-                        RelativeFilePath.of("sdks"),
-                        RelativeFilePath.of(generatorInvocation.language ?? generatorInvocation.name)
-                    );
+                const absolutePathToPreviewForGenerator = resolveAbsolutePathToLocalPreview(
+                    absolutePathToPreview,
+                    generatorInvocation
+                );
 
-                const absolutePathToLocalSnippetJSON =
-                    generatorInvocation.raw?.snippets?.path != null
-                        ? AbsoluteFilePath.of(
-                              join(
-                                  workspace.absoluteFilePath,
-                                  RelativeFilePath.of(generatorInvocation.raw.snippets.path)
-                              )
-                          )
-                        : undefined;
+                const absolutePathToLocalOutput =
+                    absolutePathToPreviewForGenerator ??
+                    generatorInvocation.absolutePathToLocalOutput ??
+                    AbsoluteFilePath.of(await tmp.dir().then((dir) => dir.path));
+
+                const selfhostedGithubConfig = getSelfhostedGithubConfig(
+                    generatorInvocation,
+                    absolutePathToPreviewForGenerator != null
+                );
+
+                // Validate that automatic versioning requires self-hosted GitHub configuration
+                if (version != null && isAutoVersion(version)) {
+                    if (selfhostedGithubConfig == null) {
+                        context.failAndThrow(
+                            `Automatic versioning (--version AUTO) requires a self-hosted GitHub repository configuration. ` +
+                                `Regular GitHub repositories are not supported because auto versioning needs to push changes back to the repository. ` +
+                                `Please configure your generator with self-hosted GitHub output in generators.yml. ` +
+                                `Example:\n` +
+                                `generators:\n` +
+                                `  - name: fernapi/fern-typescript-sdk\n` +
+                                `    version: latest\n` +
+                                `    github:\n` +
+                                `      uri: your-org/your-sdk-repo\n` +
+                                `      token: \${GITHUB_TOKEN}\n` +
+                                `      mode: pull-request\n`
+                        );
+                    }
+                }
+
+                if (selfhostedGithubConfig != null) {
+                    await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
+                    await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
+
+                    try {
+                        const repo = await cloneRepository({
+                            githubRepository: selfhostedGithubConfig.uri,
+                            installationToken: selfhostedGithubConfig.token,
+                            targetDirectory: absolutePathToLocalOutput,
+                            timeoutMs: 1000 // 10 seconds timeout for credential/network issues
+                        });
+                    } catch (error) {
+                        interactiveTaskContext.failAndThrow(
+                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${error instanceof Error ? error.message : String(error)}`
+                        );
+                    }
+                }
+
+                let absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined = undefined;
+                if (generatorInvocation.raw?.snippets?.path != null) {
+                    absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
+                        join(workspace.absoluteFilePath, RelativeFilePath.of(generatorInvocation.raw.snippets.path))
+                    );
+                }
+                if (absolutePathToLocalSnippetJSON == null && selfhostedGithubConfig != null) {
+                    absolutePathToLocalSnippetJSON = AbsoluteFilePath.of(
+                        (await getWorkspaceTempDir()).path + "/snippet.json"
+                    );
+                }
 
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
-                await writeFilesToDiskAndRunGenerator({
+                const { shouldCommit, autoVersioningCommitMessage } = await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
                     absolutePathToFernConfig: projectConfig._absolutePath,
                     workspace: fernWorkspace,
@@ -154,7 +218,7 @@ export async function runLocalGenerationForWorkspace({
                     keepDocker,
                     context: interactiveTaskContext,
                     irVersionOverride: generatorInvocation.irVersionOverride,
-                    outputVersionOverride: undefined,
+                    outputVersionOverride: version,
                     writeUnitTests: organization.ok ? (organization?.body.snippetUnitTestsEnabled ?? false) : false,
                     generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
                     generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
@@ -162,10 +226,21 @@ export async function runLocalGenerationForWorkspace({
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
                     ir: intermediateRepresentation,
-                    runner
+                    whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
+                    runner,
+                    ai
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
+
+                if (selfhostedGithubConfig != null && shouldCommit) {
+                    await postProcessGithubSelfHosted(
+                        interactiveTaskContext,
+                        selfhostedGithubConfig,
+                        absolutePathToLocalOutput,
+                        autoVersioningCommitMessage
+                    );
+                }
             });
         })
     );
@@ -176,9 +251,122 @@ export async function runLocalGenerationForWorkspace({
 }
 
 function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocation): string | undefined {
-    return typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null
-        ? (generatorInvocation.raw.config as { package_name?: string }).package_name
-        : undefined;
+    // Check output.package-name for npm/PyPI/etc.
+    if (typeof generatorInvocation.raw?.output === "object" && generatorInvocation.raw?.output !== null) {
+        const packageName = (generatorInvocation.raw.output as { ["package-name"]?: string })["package-name"];
+        if (packageName != null) {
+            return packageName;
+        }
+    }
+
+    // Check config.package_name if output.package-name is not set
+    if (typeof generatorInvocation.raw?.config === "object" && generatorInvocation.raw?.config !== null) {
+        const packageName = (generatorInvocation.raw.config as { package_name?: string }).package_name;
+        if (packageName != null) {
+            return packageName;
+        }
+
+        // go-sdk generator uses module.path to set the package name
+        const modulePath = (generatorInvocation.raw.config as { module?: { path?: string } }).module?.path;
+        if (modulePath != null) {
+            return modulePath;
+        }
+    }
+    return undefined;
+}
+function resolveAbsolutePathToLocalPreview(
+    absolutePathToPreview: AbsoluteFilePath | undefined,
+    generatorInvocation: GeneratorInvocation
+): AbsoluteFilePath | undefined {
+    if (absolutePathToPreview == null) {
+        return undefined;
+    }
+    const generatorName = generatorInvocation.name.split("/").pop() ?? "sdk";
+    const subfolderName = generatorName.replace(/[^a-zA-Z0-9-_]/g, "_");
+
+    return absolutePathToPreview ? join(absolutePathToPreview, RelativeFilePath.of(subfolderName)) : undefined;
+}
+
+function parseCommitMessageForPR(commitMessage: string): { prTitle: string; prBody: string } {
+    const lines = commitMessage.split("\n");
+    const prTitle = lines[0]?.trim() || "SDK Generation";
+    const prBody = lines.slice(1).join("\n").trim() || "Automated SDK generation by Fern";
+    return { prTitle, prBody };
+}
+
+async function postProcessGithubSelfHosted(
+    context: TaskContext,
+    selfhostedGithubConfig: SelhostedGithubConfig,
+    absolutePathToLocalOutput: AbsoluteFilePath,
+    commitMessage?: string
+): Promise<void> {
+    try {
+        context.logger.debug("Starting GitHub self-hosted flow in directory: " + absolutePathToLocalOutput);
+        const repository = ClonedRepository.createAtPath(absolutePathToLocalOutput);
+        const now = new Date();
+        const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace("Z", "").replace(".", "_");
+        const prBranch = `fern-bot/${formattedDate}`;
+        if (selfhostedGithubConfig.mode === "pull-request") {
+            context.logger.debug(`Checking out new branch ${prBranch}`);
+            await repository.checkout(prBranch);
+        }
+
+        context.logger.debug("Checking for .fernignore file...");
+        const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
+        try {
+            await fs.access(fernignorePath);
+            context.logger.debug(".fernignore already exists");
+        } catch {
+            context.logger.debug("Creating .fernignore file...");
+            await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
+        }
+
+        context.logger.debug("Committing changes...");
+        const finalCommitMessage = commitMessage ?? "SDK Generation";
+        await repository.commitAllChanges(finalCommitMessage);
+        context.logger.debug(`Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`);
+
+        if (!selfhostedGithubConfig.previewMode) {
+            await repository.push();
+            const pushedBranch = await repository.getCurrentBranch();
+            context.logger.info(`Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`);
+        }
+
+        if (selfhostedGithubConfig.mode === "pull-request") {
+            const baseBranch = await repository.getDefaultBranch();
+
+            const octokit = new Octokit({
+                auth: selfhostedGithubConfig.token
+            });
+            // Use octokit directly to create the pull request
+            const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
+            const { owner, repo } = parsedRepo;
+            const head = `${owner}:${prBranch}`;
+
+            const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
+
+            try {
+                await octokit.pulls.create({
+                    owner,
+                    repo,
+                    title: prTitle,
+                    body: prBody,
+                    head,
+                    base: baseBranch,
+                    draft: false
+                });
+
+                context.logger.info(`Created pull request ${head} -> ${baseBranch} on ${selfhostedGithubConfig.uri}`);
+            } catch (error) {
+                const message = error instanceof Error ? error.message : String(error);
+                if (message.includes("A pull request already exists for")) {
+                    context.failWithoutThrowing(`A pull request already exists for ${head}`);
+                }
+            }
+        }
+    } catch (error) {
+        context.failAndThrow(`Error during GitHub self-hosted flow: ${String(error)}`);
+    }
 }
 
 export async function getWorkspaceTempDir(): Promise<tmp.DirectoryResult> {
@@ -384,3 +572,20 @@ const emptyReadmeConfig: FernIr.ReadmeConfig = {
     features: undefined,
     exampleStyle: undefined
 };
+
+interface SelhostedGithubConfig extends generatorsYml.GithubSelfhostedSchema {
+    previewMode: boolean;
+}
+
+function getSelfhostedGithubConfig(
+    generatorInvocation: generatorsYml.GeneratorInvocation,
+    previewMode: boolean
+): SelhostedGithubConfig | undefined {
+    if (generatorInvocation.raw?.github != null && isGithubSelfhosted(generatorInvocation.raw.github)) {
+        return {
+            ...generatorInvocation.raw.github,
+            previewMode
+        };
+    }
+    return undefined;
+}

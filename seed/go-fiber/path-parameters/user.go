@@ -12,6 +12,12 @@ import (
 type GetUsersRequest struct {
 }
 
+type GetUserMetadataRequest struct {
+}
+
+type GetUserSpecificsRequest struct {
+}
+
 type SearchUsersRequest struct {
 	Limit *int `query:"limit"`
 }

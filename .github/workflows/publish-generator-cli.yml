@@ -1,0 +1,121 @@
+name: Publish Generator CLI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/generator-cli/versions.yml"
+
+env:
+  PACKAGE_NAME: "@fern-api/generator-cli"
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+  FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.FERN_GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
+
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
+jobs:
+  check-version:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get_version.outputs.version }}
+      has_new_version: ${{ steps.get_version.outputs.has_new_version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Get version
+        id: get_version
+        run: |
+          # Build seed CLI
+          pnpm seed:build
+
+          # Get previous version from git history if it exists
+          previous_commit=$(git log -n 2 --pretty=format:"%h" -- packages/generator-cli/versions.yml | tail -n 1)
+
+          if [ -n "${previous_commit}" ] && git show ${previous_commit}:packages/generator-cli/versions.yml > /tmp/previous_versions.yml 2>/dev/null; then
+            # Compare with previous version
+            result=$(node --enable-source-maps packages/seed/dist/cli.cjs latest versions-yml \
+              --path packages/generator-cli/versions.yml \
+              --previous-path /tmp/previous_versions.yml \
+              --format json)
+            rm -f /tmp/previous_versions.yml
+          else
+            # No previous version, just get latest
+            result=$(node --enable-source-maps packages/seed/dist/cli.cjs latest versions-yml \
+              --path packages/generator-cli/versions.yml \
+              --format json)
+          fi
+
+          # Parse and output results
+          version=$(echo "$result" | jq -r '.version')
+          has_new=$(echo "$result" | jq -r '.has_new_version')
+
+          echo "Version: ${version}"
+          echo "Has new version: ${has_new}"
+
+          echo "has_new_version=${has_new}" >> $GITHUB_OUTPUT
+          echo "version=${version}" >> $GITHUB_OUTPUT
+
+  publish-cli:
+    needs: check-version
+    if: needs.check-version.outputs.has_new_version == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - name: 🧪 Build and test
+        env:
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        run: pnpm turbo compile test --filter=${{ env.PACKAGE_NAME }}
+
+      - name: Setup Node for npm publish
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          registry-url: https://registry.npmjs.org
+          scope: "@fern-api"
+
+      - name: Publish generator-cli
+        env:
+          NODE_AUTH_TOKEN: ${{ env.NPM_TOKEN }}
+          NEW_VERSION: ${{ needs.check-version.outputs.version }}
+        run: |
+          cd packages/generator-cli
+          mv package.json package.json.tmp
+          version_replace="s/0.0.0/${NEW_VERSION}/"
+          cat package.json.tmp| sed "${version_replace}" > package.json
+          rm -rf package.json.tmp
+          npm publish --access public --tag latest
+
+  publish-sdks:
+    needs: check-version
+    if: needs.check-version.outputs.has_new_version == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 📥 Install Fern
+        run: npm install -g fern-api
+
+      - name: Publish generator-cli
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+          NEW_VERSION: ${{ needs.check-version.outputs.version }}
+        run: |
+          fern generate --api generator-cli --version "${NEW_VERSION}" --group sdk

@@ -36,6 +36,13 @@ import {
 import { getEnumNameFromEnumValue } from "./convertEnumTypeDeclaration";
 import { getPropertyAccess, getPropertyName } from "./convertObjectTypeDeclaration";
 
+const MAX_EXAMPLE_RECURSION_DEPTH = 128;
+
+interface RecursionContext {
+    depth: number;
+    seenTypeIds: Set<string>;
+}
+
 export function convertTypeExample({
     typeName,
     typeDeclaration,
@@ -44,7 +51,8 @@ export function convertTypeExample({
     exampleResolver,
     fileContainingType,
     fileContainingExample,
-    workspace
+    workspace,
+    recursionContext
 }: {
     typeName: DeclaredTypeName;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
@@ -54,6 +62,7 @@ export function convertTypeExample({
     fileContainingType: FernFileContext;
     fileContainingExample: FernFileContext;
     workspace: FernWorkspace;
+    recursionContext?: RecursionContext;
 }): ExampleTypeShape {
     return visitRawTypeDeclaration<ExampleTypeShape>(typeDeclaration, {
         alias: (rawAlias) => {
@@ -65,7 +74,8 @@ export function convertTypeExample({
                     fileContainingExample,
                     typeResolver,
                     exampleResolver,
-                    workspace
+                    workspace,
+                    recursionContext
                 })
             });
         },
@@ -78,7 +88,8 @@ export function convertTypeExample({
                 fileContainingExample,
                 typeResolver,
                 exampleResolver,
-                workspace
+                workspace,
+                recursionContext
             });
         },
         discriminatedUnion: (rawUnion) => {
@@ -124,7 +135,8 @@ export function convertTypeExample({
                             fileContainingExample,
                             typeResolver,
                             exampleResolver,
-                            workspace
+                            workspace,
+                            recursionContext
                         })
                     };
                 })
@@ -166,7 +178,8 @@ export function convertTypeExample({
                                 fileContainingExample,
                                 typeResolver,
                                 exampleResolver,
-                                workspace
+                                workspace,
+                                recursionContext
                             }),
                             propertyAccess: getPropertyAccess({ property }),
                             originalTypeDeclaration: typeName
@@ -189,9 +202,9 @@ export function convertTypeExample({
                     typeResolver,
                     exampleResolver,
                     example,
-                    discriminant,
                     discriminantValueForExample,
-                    workspace
+                    workspace,
+                    recursionContext
                 }),
                 baseProperties,
                 extendProperties
@@ -234,7 +247,8 @@ export function convertTypeExample({
                             fileContainingExample,
                             typeResolver,
                             exampleResolver,
-                            workspace
+                            workspace,
+                            recursionContext
                         })
                     });
                 }
@@ -255,7 +269,8 @@ export function convertTypeReferenceExample({
     fileContainingRawTypeReference,
     typeResolver,
     exampleResolver,
-    workspace
+    workspace,
+    recursionContext
 }: {
     example: RawSchemas.ExampleTypeReferenceSchema;
     fileContainingExample: FernFileContext;
@@ -264,7 +279,10 @@ export function convertTypeReferenceExample({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
+    recursionContext?: RecursionContext;
 }): ExampleTypeReference {
+    const ctx = recursionContext ?? { depth: 0, seenTypeIds: new Set() };
+
     const { resolvedExample, file: fileContainingResolvedExample } = exampleResolver.resolveExampleOrThrow({
         example,
         file: fileContainingExample
@@ -289,6 +307,7 @@ export function convertTypeReferenceExample({
                 if (!isPlainObject(resolvedExample)) {
                     throw new Error("Example is not an object");
                 }
+                const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.map({
                         map: Object.entries(resolvedExample).map(([key, value]) => ({
@@ -299,7 +318,8 @@ export function convertTypeReferenceExample({
                                 fileContainingRawTypeReference,
                                 typeResolver,
                                 exampleResolver,
-                                workspace
+                                workspace,
+                                recursionContext: nextContext
                             }),
                             value: convertTypeReferenceExample({
                                 example: value,
@@ -308,7 +328,8 @@ export function convertTypeReferenceExample({
                                 fileContainingRawTypeReference,
                                 typeResolver,
                                 exampleResolver,
-                                workspace
+                                workspace,
+                                recursionContext: nextContext
                             })
                         })),
                         keyType: fileContainingRawTypeReference.parseTypeReference(keyType),
@@ -320,6 +341,7 @@ export function convertTypeReferenceExample({
                 if (!Array.isArray(resolvedExample)) {
                     throw new Error("Example is not a list");
                 }
+                const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.list({
                         list: resolvedExample.map((exampleItem) =>
@@ -330,7 +352,8 @@ export function convertTypeReferenceExample({
                                 fileContainingRawTypeReference,
                                 typeResolver,
                                 exampleResolver,
-                                workspace
+                                workspace,
+                                recursionContext: nextContext
                             })
                         ),
                         itemType: fileContainingRawTypeReference.parseTypeReference(itemType)
@@ -341,6 +364,7 @@ export function convertTypeReferenceExample({
                 if (!Array.isArray(resolvedExample)) {
                     throw new Error("Example is not a list");
                 }
+                const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.set({
                         set: resolvedExample.map((exampleItem) =>
@@ -351,7 +375,8 @@ export function convertTypeReferenceExample({
                                 fileContainingRawTypeReference,
                                 typeResolver,
                                 exampleResolver,
-                                workspace
+                                workspace,
+                                recursionContext: nextContext
                             })
                         ),
                         itemType: fileContainingRawTypeReference.parseTypeReference(itemType)
@@ -359,6 +384,7 @@ export function convertTypeReferenceExample({
                 );
             },
             optional: (itemType) => {
+                const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.optional({
                         optional:
@@ -370,7 +396,8 @@ export function convertTypeReferenceExample({
                                       fileContainingRawTypeReference,
                                       typeResolver,
                                       exampleResolver,
-                                      workspace
+                                      workspace,
+                                      recursionContext: nextContext
                                   })
                                 : undefined,
                         valueType: fileContainingRawTypeReference.parseTypeReference(itemType)
@@ -378,6 +405,7 @@ export function convertTypeReferenceExample({
                 );
             },
             nullable: (itemType) => {
+                const nextContext: RecursionContext = { depth: ctx.depth + 1, seenTypeIds: ctx.seenTypeIds };
                 return ExampleTypeReferenceShape.container(
                     ExampleContainer.nullable({
                         nullable:
@@ -389,7 +417,8 @@ export function convertTypeReferenceExample({
                                       fileContainingRawTypeReference,
                                       typeResolver,
                                       exampleResolver,
-                                      workspace
+                                      workspace,
+                                      recursionContext: nextContext
                                   })
                                 : undefined,
                         valueType: fileContainingRawTypeReference.parseTypeReference(itemType)
@@ -429,6 +458,16 @@ export function convertTypeReferenceExample({
                     name: parsedReferenceToNamedType.name,
                     displayName: parsedReferenceToNamedType.displayName
                 };
+
+                if (ctx.depth > MAX_EXAMPLE_RECURSION_DEPTH || ctx.seenTypeIds.has(parsedReferenceToNamedType.typeId)) {
+                    return ExampleTypeReferenceShape.unknown(jsonExample);
+                }
+
+                const nextContext: RecursionContext = {
+                    depth: ctx.depth + 1,
+                    seenTypeIds: new Set(ctx.seenTypeIds).add(parsedReferenceToNamedType.typeId)
+                };
+
                 return ExampleTypeReferenceShape.named({
                     typeName,
                     shape: convertTypeExample({
@@ -439,7 +478,8 @@ export function convertTypeReferenceExample({
                         example: resolvedExample,
                         typeResolver,
                         exampleResolver,
-                        workspace
+                        workspace,
+                        recursionContext: nextContext
                     })
                 });
             },
@@ -615,7 +655,8 @@ function convertObject({
     fileContainingExample,
     typeResolver,
     exampleResolver,
-    workspace
+    workspace,
+    recursionContext
 }: {
     typeName: DeclaredTypeName;
     rawObject: RawSchemas.ObjectSchema;
@@ -625,6 +666,7 @@ function convertObject({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     workspace: FernWorkspace;
+    recursionContext?: RecursionContext;
 }): ExampleTypeShape.Object_ {
     if (!isPlainObject(example)) {
         throw new Error(`Example is not an object. Got: ${JSON.stringify(example)}`);
@@ -662,7 +704,8 @@ function convertObject({
                           fileContainingRawTypeReference: originalTypeDeclaration.file,
                           typeResolver,
                           exampleResolver,
-                          workspace
+                          workspace,
+                          recursionContext
                       });
                       return {
                           name: fileContainingExample.casingsGenerator.generateNameAndWireValue({
@@ -771,9 +814,9 @@ function convertSingleUnionType({
     typeResolver,
     exampleResolver,
     example,
-    discriminant,
     discriminantValueForExample,
-    workspace
+    workspace,
+    recursionContext
 }: {
     rawValueType: string | undefined;
     rawSingleUnionType: RawSchemas.SingleUnionTypeSchema;
@@ -782,9 +825,9 @@ function convertSingleUnionType({
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
     example: RawSchemas.ExampleTypeValueSchema;
-    discriminant: string;
     discriminantValueForExample: string;
     workspace: FernWorkspace;
+    recursionContext?: RecursionContext;
 }): ExampleSingleUnionType {
     const wireDiscriminantValue = fileContainingExample.casingsGenerator.generateNameAndWireValue({
         name: getSingleUnionTypeName({ unionKey: discriminantValueForExample, rawSingleUnionType }).name,
@@ -820,7 +863,8 @@ function convertSingleUnionType({
                         exampleResolver,
                         fileContainingRawTypeReference: fileContainingType,
                         fileContainingExample,
-                        workspace
+                        workspace,
+                        recursionContext
                     })
                 )
             };
@@ -829,7 +873,6 @@ function convertSingleUnionType({
             if (!isPlainObject(example)) {
                 throw new Error("Example is not an object");
             }
-            const { [discriminant]: _discriminantValue, ...nonDiscriminantPropertiesFromExample } = example;
             let rawDeclaration = typeResolver.getDeclarationOfNamedTypeOrThrow({
                 referenceToNamedType: rawValueType,
                 file: fileContainingType
@@ -858,13 +901,14 @@ function convertSingleUnionType({
                     typeId: IdGenerator.generateTypeId(typeName),
                     object: convertObject({
                         rawObject: rawDeclaration.declaration,
-                        example: nonDiscriminantPropertiesFromExample,
+                        example,
                         fileContainingType: rawDeclaration.file,
                         fileContainingExample,
                         typeResolver,
                         exampleResolver,
                         typeName,
-                        workspace
+                        workspace,
+                        recursionContext
                     })
                 })
             };

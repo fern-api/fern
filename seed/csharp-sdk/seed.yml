@@ -9,7 +9,7 @@ buildScripts:
       - dotnet tool restore
   compileScript:
     commands:
-      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true .
+      - dotnet build src -c Release .
   testScript:
     commands:
       - dotnet test src
@@ -25,6 +25,9 @@ test:
   docker:
     image: fernapi/fern-csharp-sdk:latest
     command: pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest
+  podman:
+    image: fernapi/fern-csharp-sdk:latest
+    command: pnpm --filter @fern-api/fern-csharp-sdk podmanTagLatest
   local:
     workingDirectory: generators/csharp
     buildCommand:
@@ -36,13 +39,29 @@ generatorType: SDK
 defaultOutputMode: github
 defaultCustomConfig: {}
 scripts:
-  - docker: fernapi/csharp-seed
+  - image: fernapi/csharp-seed
     commands:
-      - dotnet restore src
-      - dotnet build src -c Release /p:ContinuousIntegrationBuild=true --no-restore
-      - dotnet build src/*.DynamicSnippets
-      - dotnet test src --filter "FullyQualifiedName~SeedApi.Test.Core" --no-restore
-      # - dotnet test src
+      # Check for .NET 10
+      # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`
+      # otherwise install .NET 10 
+      - 'command -v dotnet >/dev/null 2>&1 && ver=$(dotnet --version) && major=$(echo "$ver" | cut -d. -f1) && [ "$major" -ge 10 ] || { echo "ERROR: .NET SDK 10+ required (found ${ver:-not found})"; false; }'
+
+      # add the dynamic snippets project to the solution
+      - dotnet sln src add src/*DynamicSnippets/*.csproj 
+      
+      # build it all
+      - dotnet build src -c Release
+      
+      # something changed in seed so that fixtures are getting created with the correct namespace (not just 'SeedApi')
+      # but that actually disabled the tests from running (because the pattern matching didn't find any)
+      # and it turns out that `dotnet test` doesn't return an error if the filter fails to match anything
+      # so this line ensures that if it doesn't find any tests, it will signal an error.
+      - dotnet test src  --filter "(FullyQualifiedName~Test.Core | FullyQualifiedName~Test_.Core)" --no-restore | tee /tmp/out && ! grep -q "No test matches the given testcase filter" /tmp/out
+      
+      # Than being the case however, the filter actually makes it so that all the generated tests don't get run 
+      # so that should be fixed so that `dotnet test src` can be run instead of the filtered version of it.
+      # - dotnet test src 
+      
 
 fixtures:
   pagination:
@@ -197,8 +216,9 @@ fixtures:
         experimental-readonly-constants: true
         experimental-enable-websockets: true
       outputFolder: with-websockets
+  csharp-xml-entities:
+    - customConfig: null
+      outputFolder: no-custom-config
 allowedFailures:
   - oauth-client-credentials-custom
-  - file-upload
-  - auth-environment-variables # TODO: Add global headers to ExampleEndpointCall.
  

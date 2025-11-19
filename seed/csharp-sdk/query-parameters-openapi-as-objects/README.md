@@ -5,6 +5,18 @@
 
 The Seed C# library provides convenient access to the Seed APIs from C#.
 
+## Table of Contents
+
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Exception Handling](#exception-handling)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+- [Contributing](#contributing)
+
 ## Requirements
 
 This SDK requires:
@@ -32,7 +44,7 @@ await client.SearchAsync(
     {
         Limit = 1,
         Id = "id",
-        Date = "date",
+        Date = new DateOnly(2023, 1, 15),
         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
         Bytes = "bytes",
         User = new User
@@ -49,7 +61,7 @@ await client.SearchAsync(
             },
         ],
         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-        KeyValue = new Dictionary<string, string?>() { { "keyValue", "keyValue" } },
+        KeyValue = new Dictionary<string, string>() { { "keyValue", "keyValue" } },
         OptionalString = "optionalString",
         NestedUser = new NestedUser
         {
