@@ -22,7 +22,7 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && tsc --build --clean",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "depcheck": "depcheck",
     "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && node build.mjs",
