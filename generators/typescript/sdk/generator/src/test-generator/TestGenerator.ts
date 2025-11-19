@@ -665,7 +665,9 @@ export function mockAuth(server: MockServer) {
             isRoot: true
         });
 
-        const baseOptions: Record<string, Code> = {};
+        const baseOptions: Record<string, Code> = {
+            maxRetries: code`0`
+        };
 
         // Add variables to baseOptions
         this.ir.variables.forEach((variable) => {
