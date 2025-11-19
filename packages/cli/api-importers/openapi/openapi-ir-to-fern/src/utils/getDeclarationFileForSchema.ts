@@ -8,13 +8,6 @@ import { convertSdkGroupNameToFile } from "./convertSdkGroupName";
 const PACKAGE_MARKER_RELATIVE_FILEPATH = RelativeFilePath.of(FERN_PACKAGE_MARKER_FILENAME);
 
 export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
-    const schemaName =
-        "generatedName" in schema
-            ? schema.generatedName
-            : "nameOverride" in schema && schema.nameOverride
-              ? schema.nameOverride
-              : schema.type;
-
     switch (schema.type) {
         case "object":
         case "primitive":
@@ -24,18 +17,16 @@ export function getDeclarationFileForSchema(schema: Schema): RelativeFilePath {
         case "reference":
         case "literal":
         case "optional":
-        case "nullable": {
+        case "nullable":
             return getDeclarationFileFromGroupName({
                 namespace: schema.namespace,
                 groupName: schema.groupName
             });
-        }
-        case "oneOf": {
+        case "oneOf":
             return getDeclarationFileFromGroupName({
                 namespace: schema.value.namespace,
                 groupName: schema.value.groupName
             });
-        }
         case "unknown":
             return PACKAGE_MARKER_RELATIVE_FILEPATH;
         default:

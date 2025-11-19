@@ -27,7 +27,6 @@ import { OpenApiIrConverterContext } from "./OpenApiIrConverterContext";
 import { convertAvailability } from "./utils/convertAvailability";
 import { convertSdkGroupNameToFile } from "./utils/convertSdkGroupName";
 import { convertToEncodingSchema } from "./utils/convertToEncodingSchema";
-import { getDeclarationFileForSchema } from "./utils/getDeclarationFileForSchema";
 import { getGroupNameForSchema } from "./utils/getGroupNameForSchema";
 import {
     getDefaultFromTypeReference,
@@ -113,18 +112,14 @@ export function buildTypeReference({
                 namespace,
                 declarationDepth
             });
-        case "enum": {
-            // For enums, use the enum's own groupName to determine declaration file
-            // instead of inheriting from the referencing context
-            const enumDeclarationFile = getDeclarationFileForSchema(schema);
+        case "enum":
             return buildEnumTypeReference({
                 schema,
                 fileContainingReference,
                 context,
-                declarationFile: enumDeclarationFile,
+                declarationFile,
                 declarationDepth
             });
-        }
         case "literal":
             schema.value;
             return buildLiteralTypeReference(schema);
