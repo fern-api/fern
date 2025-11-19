@@ -121,8 +121,8 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                         }
                     ],
                     statements: [
-                        `this.${USERNAME_FIELD_NAME} = options.${USERNAME_FIELD_NAME};`,
-                        `this.${PASSWORD_FIELD_NAME} = options.${PASSWORD_FIELD_NAME};`
+                        `this.${USERNAME_FIELD_NAME} = options.${this.authScheme.username.camelCase.safeName};`,
+                        `this.${PASSWORD_FIELD_NAME} = options.${this.authScheme.password.camelCase.safeName};`
                     ]
                 }
             ]
