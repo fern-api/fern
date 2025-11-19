@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.16.4
+  changelogEntry:
+    - summary: |
+        Reasonable default for empty request bodies in wiremock json mappings.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 60
+
 - version: 1.16.3
   changelogEntry:
     - summary: |
