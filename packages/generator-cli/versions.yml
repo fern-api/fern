@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Treat Table of Contents as a core block type to prevent duplicate sections in generated READMEs.
+      type: fix
+  createdAt: "2025-11-19"
+  version: 0.4.5
+
+- changelogEntry:
+    - summary: |
         Test publish new rc release.
       type: chore
   createdAt: "2025-11-12"

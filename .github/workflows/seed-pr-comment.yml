@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [opened, reopened]
   issue_comment:
-    types: [edited]
+    types: [created, edited]
 
 permissions:
   contents: write
@@ -46,7 +46,7 @@ jobs:
             const body = `${marker}
             ## 🌱 Seed Test Selector
 
-            Select languages to run seed tests for by checking the boxes below, then save your edit:
+            Select languages to run seed tests for:
 
             - [ ] Python
             - [ ] TypeScript
@@ -61,7 +61,7 @@ jobs:
             - [ ] Postman
 
             ---
-            *Check the boxes you want to test, then click "Update comment". Tests will run automatically and snapshots will be committed to this PR.*`;
+            **How to use:** Click the ⋯ menu above → "Edit" → check the boxes you want → click "Update comment". Tests will run automatically and snapshots will be committed to this PR.`;
 
             await github.rest.issues.createComment({
               owner: context.repo.owner,
@@ -78,8 +78,7 @@ jobs:
     timeout-minutes: 120
     if: |
       github.event_name == 'issue_comment' &&
-      github.event.issue.pull_request &&
-      contains(github.event.comment.body, '<!-- seed-selector -->')
+      github.event.issue.pull_request
     steps:
       - name: Parse checked languages
         id: parse
@@ -89,6 +88,25 @@ jobs:
             const commentBody = context.payload.comment.body;
             const commentId = context.payload.comment.id;
             const prNumber = context.issue.number;
+            const marker = '<!-- seed-selector -->';
+            
+            // Validate this is the seed selector comment
+            if (!commentBody.includes(marker)) {
+              console.log('Comment does not contain seed-selector marker, skipping');
+              return;
+            }
+            
+            // Only process comments originally authored by the github-actions bot
+            if (context.payload.comment.user?.login !== 'github-actions[bot]') {
+              console.log('Comment not originally authored by github-actions bot, skipping');
+              return;
+            }
+            
+            // Skip if the edit was made by the bot itself (to prevent loops when we update status)
+            if (context.payload.sender?.login === 'github-actions[bot]') {
+              console.log('Edit made by bot (likely our own status update), skipping to prevent loops');
+              return;
+            }
 
             // Language to generators mapping
             const languageMap = {
@@ -265,12 +283,12 @@ jobs:
               const body = `${marker}
               ## 🌱 Seed Test Selector
               
-              Select languages to run seed tests for by checking the boxes below, then save your edit:
+              Select languages to run seed tests for:
               
               ${checkboxes}
               
               ---
-              *Check the boxes you want to test, then click "Update comment". Tests will run automatically and snapshots will be committed to this PR.*`;
+              **How to use:** Click the ⋯ menu above → "Edit" → check the boxes you want → click "Update comment". Tests will run automatically and snapshots will be committed to this PR.`;
               
               await github.rest.issues.updateComment({
                 owner: context.repo.owner,
