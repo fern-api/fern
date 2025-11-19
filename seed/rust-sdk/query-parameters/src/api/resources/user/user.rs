@@ -36,7 +36,7 @@ impl UserClient {
                     .string("optionalString", request.optional_string.clone())
                     .serialize("nestedUser", Some(request.nested_user.clone()))
                     .serialize("optionalUser", request.optional_user.clone())
-                    .serialize("excludeUser", Some(request.exclude_user.clone()))
+                    .serialize_array("excludeUser", request.exclude_user.clone())
                     .string_array("filter", request.filter.clone())
                     .build(),
                 options,
