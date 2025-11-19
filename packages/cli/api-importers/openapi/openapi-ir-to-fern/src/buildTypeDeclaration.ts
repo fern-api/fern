@@ -767,12 +767,6 @@ function convertPropertyTypeReferenceToTypeDefinition({
  * @returns `true` if the declaration should be inlined, `undefined` otherwise.
  */
 function getInline(schema: WithInline, declarationDepth: number): boolean | undefined {
-    const schemaName =
-        "generatedName" in schema
-            ? schema.generatedName
-            : "nameOverride" in schema && schema.nameOverride
-              ? schema.nameOverride
-              : "unknown";
     if (schema.inline === true) {
         return true;
     }
