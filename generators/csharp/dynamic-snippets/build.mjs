@@ -1,9 +1,13 @@
-const { NodeModulesPolyfillPlugin } = require('@esbuild-plugins/node-modules-polyfill');
-const { NodeGlobalsPolyfillPlugin } = require('@esbuild-plugins/node-globals-polyfill');
-const packageJson = require("./package.json");
-const tsup = require('tsdown');
-const { writeFile, mkdir } = require("fs/promises");
-const path = require("path");
+import { writeFile, mkdir } from "fs/promises";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+import tsup from "tsdown";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const packageJson = JSON.parse(await readFile(new URL("./package.json", import.meta.url), "utf-8"));
+
 
 main();
 
@@ -11,17 +15,10 @@ async function main() {
     const config = {
         entry: ['src/**/*.ts', '!src/__test__'],
         target: "es2017",
+        platform: "node",
         minify: true,
         dts: true,
         sourcemap: true,
-        esbuildPlugins: [
-            NodeModulesPolyfillPlugin(),
-            NodeGlobalsPolyfillPlugin({
-                process: true,
-                buffer: true,
-                util: true
-            })
-        ],
         tsconfig: "./build.tsconfig.json"
     };
 
@@ -39,8 +36,8 @@ async function main() {
         clean: false,
     });
 
-    await mkdir(path.join(__dirname, "dist"), { recursive: true });
-    process.chdir(path.join(__dirname, "dist"));
+    await mkdir(join(__dirname, "dist"), { recursive: true });
+    process.chdir(join(__dirname, "dist"));
 
     await writeFile(
         "package.json",

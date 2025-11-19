@@ -1,5 +1,11 @@
-const packageJson = require("./package.json");
-const tsup = require('tsdown');
+import { fileURLToPath } from "url";
+import tsup from "tsdown";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const packageJson = JSON.parse(await readFile(new URL("./package.json", import.meta.url), "utf-8"));
+
 
 main();
 

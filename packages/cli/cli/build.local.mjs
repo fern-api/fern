@@ -1,8 +1,14 @@
-const packageJson = require("./package.json");
-const aiPackageJson = require("../ai/package.json");
-const tsup = require('tsdown');
-const { writeFile } = require("fs/promises");
-const path = require("path");
+import { writeFile } from "fs/promises";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+import tsup from "tsdown";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const packageJson = JSON.parse(await readFile(new URL("./package.json", import.meta.url), "utf-8"));
+const aiPackageJson = JSON.parse(await readFile(new URL("../ai/package.json", import.meta.url), "utf-8"));
+
 
 main();
 
@@ -35,7 +41,7 @@ async function main() {
         },
     }); 
 
-    process.chdir(path.join(__dirname, "dist/local"));
+    process.chdir(join(__dirname, "dist/local"));
     
     // write cli's package.json
     await writeFile(
