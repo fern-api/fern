@@ -2,7 +2,7 @@
 
 import type { MockServer } from "../mock-server/MockServer";
 
-export function mockAuth(server: MockServer): void {
+export function mockOAuthScheme(server: MockServer): void {
     const rawResponseBody = { access_token: "access_token", expires_in: 1, refresh_token: "refresh_token" };
     server.mockEndpoint().post("/token").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 }

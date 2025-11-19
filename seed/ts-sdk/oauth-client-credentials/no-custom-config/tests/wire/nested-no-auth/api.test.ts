@@ -2,10 +2,13 @@
 
 import { SeedOauthClientCredentialsClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
+import { mockOAuthScheme } from "../mockAuth";
 
 describe("ApiClient", () => {
     test("getSomething", async () => {
         const server = mockServerPool.createServer();
+        mockOAuthScheme(server);
+
         const client = new SeedOauthClientCredentialsClient({
             clientId: "my_oauth_app_123",
             clientSecret: "sk_live_abcdef123456789",

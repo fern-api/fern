@@ -436,39 +436,38 @@ describe("test", () => {
             this.relativeTestPath
         );
 
-        const mockFunctions: Code[] = [];
+        // Generate mock functions for each inferred and OAuth auth scheme
+        const mockFunctions = this.ir.auth.schemes
+            .map((scheme) => {
+                if (scheme.type === "inferred") {
+                    const endpointId = scheme.tokenEndpoint.endpoint.endpointId;
+                    const serviceId = scheme.tokenEndpoint.endpoint.serviceId;
 
-        // Generate mock function for inferred auth scheme
-        const inferredAuthScheme = this.ir.auth.schemes.find((s) => s.type === "inferred");
-        if (inferredAuthScheme) {
-            const endpointId = inferredAuthScheme.tokenEndpoint.endpoint.endpointId;
-            const serviceId = inferredAuthScheme.tokenEndpoint.endpoint.serviceId;
+                    const service = this.ir.services[serviceId];
+                    if (!service) {
+                        throw new Error("Service not found");
+                    }
 
-            const service = this.ir.services[serviceId];
-            if (!service) {
-                throw new Error("Service not found");
-            }
+                    const endpoint = service.endpoints.find((e) => e.id === endpointId);
+                    if (!endpoint) {
+                        throw new Error("Endpoint not found");
+                    }
 
-            const endpoint = service.endpoints.find((e) => e.id === endpointId);
-            if (!endpoint) {
-                throw new Error("Endpoint not found");
-            }
+                    const successfulExamples = getExampleEndpointCalls(endpoint).filter(
+                        (example) => example.response.type === "ok"
+                    );
+                    const example = successfulExamples[0];
+                    if (example && example.response.type === "ok") {
+                        const rawRequestBody = this.getRequestExample(example.request);
+                        const rawResponseBody = this.getResponseExample(example.response);
+                        const responseStatusCode = getExampleResponseStatusCode({
+                            response: example.response,
+                            ir: this.ir
+                        });
+                        const mockBodyMethod = this.getMockBodyMethod(endpoint);
+                        const functionName = `mock${upperFirst(camelCase(scheme.key))}`;
 
-            const successfulExamples = getExampleEndpointCalls(endpoint).filter(
-                (example) => example.response.type === "ok"
-            );
-            const example = successfulExamples[0];
-            if (example && example.response.type === "ok") {
-                const rawRequestBody = this.getRequestExample(example.request);
-                const rawResponseBody = this.getResponseExample(example.response);
-                const responseStatusCode = getExampleResponseStatusCode({
-                    response: example.response,
-                    ir: this.ir
-                });
-                const mockBodyMethod = this.getMockBodyMethod(endpoint);
-                const functionName = `mock${upperFirst(camelCase(inferredAuthScheme.key))}`;
-
-                mockFunctions.push(code`
+                        return code`
 export function ${functionName}(server: MockServer): void {
     ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
@@ -493,42 +492,38 @@ export function ${functionName}(server: MockServer): void {
                 : ""
         }.build();
 }
-`);
-            }
-        }
+`;
+                    }
+                } else if (scheme.type === "oauth" && this.canMockOAuth()) {
+                    const oauthConfig = scheme.configuration;
+                    if (oauthConfig.type === "clientCredentials") {
+                        const tokenEndpoint = oauthConfig.tokenEndpoint;
+                        const endpointId = tokenEndpoint.endpointReference.endpointId;
+                        const serviceId = tokenEndpoint.endpointReference.serviceId;
 
-        // Generate mock function for OAuth scheme
-        const oauthScheme = this.ir.auth.schemes.find((s) => s.type === "oauth");
-        if (oauthScheme && this.canMockOAuth()) {
-            const oauthConfig = oauthScheme.configuration;
-            if (oauthConfig.type === "clientCredentials") {
-                const tokenEndpoint = oauthConfig.tokenEndpoint;
-                const endpointId = tokenEndpoint.endpointReference.endpointId;
-                const serviceId = tokenEndpoint.endpointReference.serviceId;
+                        const service = this.ir.services[serviceId];
+                        if (!service) {
+                            throw new Error("Service not found");
+                        }
 
-                const service = this.ir.services[serviceId];
-                if (!service) {
-                    throw new Error("Service not found");
-                }
+                        const endpoint = service.endpoints.find((e) => e.id === endpointId);
+                        if (!endpoint) {
+                            throw new Error("Endpoint not found");
+                        }
 
-                const endpoint = service.endpoints.find((e) => e.id === endpointId);
-                if (!endpoint) {
-                    throw new Error("Endpoint not found");
-                }
+                        const successfulExamples = getExampleEndpointCalls(endpoint).filter(
+                            (example) => example.response.type === "ok"
+                        );
+                        const example = successfulExamples[0];
+                        if (example && example.response.type === "ok") {
+                            const rawResponseBody = this.getResponseExample(example.response);
+                            const responseStatusCode = getExampleResponseStatusCode({
+                                response: example.response,
+                                ir: this.ir
+                            });
+                            const functionName = `mock${upperFirst(camelCase(scheme.key))}`;
 
-                const successfulExamples = getExampleEndpointCalls(endpoint).filter(
-                    (example) => example.response.type === "ok"
-                );
-                const example = successfulExamples[0];
-                if (example && example.response.type === "ok") {
-                    const rawResponseBody = this.getResponseExample(example.response);
-                    const responseStatusCode = getExampleResponseStatusCode({
-                        response: example.response,
-                        ir: this.ir
-                    });
-                    const functionName = `mock${upperFirst(camelCase(oauthScheme.key))}`;
-
-                    mockFunctions.push(code`
+                            return code`
 export function ${functionName}(server: MockServer): void {
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
@@ -547,10 +542,13 @@ export function ${functionName}(server: MockServer): void {
                 : ""
         }.build();
 }
-`);
+`;
+                        }
+                    }
                 }
-            }
-        }
+                return undefined;
+            })
+            .filter((fn): fn is Code => fn != null);
 
         if (mockFunctions.length === 0) {
             return undefined;
@@ -1129,12 +1127,6 @@ describe("${serviceName}", () => {
             }
         }
 
-        let warmUpSnippet: Code | undefined;
-        if (matchesOAuthTokenEndpoint && mockAuthSnippet) {
-            warmUpSnippet = code`await ${getTextOfTsNode(generatedExample.endpointInvocation)};
-        `;
-        }
-
         const expectedName =
             endpoint.pagination !== undefined
                 ? context.type.generateGetterForResponsePropertyAsString({
@@ -1183,7 +1175,6 @@ describe("${serviceName}", () => {
     test("${testName}", async () => {
         const server = mockServerPool.createServer();${mockAuthSnippet ? mockAuthSnippet : ""}
         const client = new ${getTextOfTsNode(importStatement.getEntityName())}(${literalOf(options)});
-        ${warmUpSnippet ? warmUpSnippet : ""}
         ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
         ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
         server

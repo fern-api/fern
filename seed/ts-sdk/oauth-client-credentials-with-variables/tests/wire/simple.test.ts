@@ -2,12 +2,12 @@
 
 import { SeedOauthClientCredentialsWithVariablesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
-import { mockAuth } from "./mockAuth";
+import { mockOAuthScheme } from "./mockAuth";
 
-describe("Simple", () => {
+describe("SimpleClient", () => {
     test("getSomething", async () => {
         const server = mockServerPool.createServer();
-        mockAuth(server);
+        mockOAuthScheme(server);
 
         const client = new SeedOauthClientCredentialsWithVariablesClient({
             rootVariable: "rootVariable",

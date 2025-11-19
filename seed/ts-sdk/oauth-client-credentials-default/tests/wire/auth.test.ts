@@ -2,23 +2,18 @@
 
 import { SeedOauthClientCredentialsDefaultClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
-import { mockAuth } from "./mockAuth";
+import { mockOAuthScheme } from "./mockAuth";
 
-describe("Auth", () => {
+describe("AuthClient", () => {
     test("getToken", async () => {
         const server = mockServerPool.createServer();
-        mockAuth(server);
+        mockOAuthScheme(server);
 
         const client = new SeedOauthClientCredentialsDefaultClient({
             clientId: "client_id",
             clientSecret: "client_secret",
             environment: server.baseUrl,
         });
-        await await client.auth.getToken({
-            client_id: "client_id",
-            client_secret: "client_secret",
-        });
-
         const rawRequestBody = {
             client_id: "client_id",
             client_secret: "client_secret",

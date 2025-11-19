@@ -2,26 +2,18 @@
 
 import { SeedOauthClientCredentialsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
-import { mockAuth } from "./mockAuth";
+import { mockOAuthScheme } from "./mockAuth";
 
-describe("Auth", () => {
+describe("AuthClient", () => {
     test("getTokenWithClientCredentials", async () => {
         const server = mockServerPool.createServer();
-        mockAuth(server);
+        mockOAuthScheme(server);
 
         const client = new SeedOauthClientCredentialsClient({
             clientId: "cid",
             clientSecret: "csr",
             environment: server.baseUrl,
         });
-        await await client.auth.getTokenWithClientCredentials({
-            cid: "cid",
-            csr: "csr",
-            scp: "scp",
-            entity_id: "entity_id",
-            scope: "scope",
-        });
-
         const rawRequestBody = {
             cid: "cid",
             csr: "csr",
@@ -57,20 +49,13 @@ describe("Auth", () => {
 
     test("refreshToken", async () => {
         const server = mockServerPool.createServer();
-        mockAuth(server);
+        mockOAuthScheme(server);
 
         const client = new SeedOauthClientCredentialsClient({
             clientId: "cid",
             clientSecret: "csr",
             environment: server.baseUrl,
         });
-        await await client.auth.refreshToken({
-            client_id: "client_id",
-            client_secret: "client_secret",
-            refresh_token: "refresh_token",
-            scope: "scope",
-        });
-
         const rawRequestBody = {
             client_id: "client_id",
             client_secret: "client_secret",

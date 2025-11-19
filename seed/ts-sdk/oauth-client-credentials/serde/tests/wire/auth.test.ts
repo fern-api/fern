@@ -2,16 +2,18 @@
 
 import { SeedOauthClientCredentialsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
+import { mockOAuthScheme } from "./mockAuth";
 
 describe("AuthClient", () => {
     test("getTokenWithClientCredentials", async () => {
         const server = mockServerPool.createServer();
+        mockOAuthScheme(server);
+
         const client = new SeedOauthClientCredentialsClient({
             clientId: "my_oauth_app_123",
             clientSecret: "sk_live_abcdef123456789",
             environment: server.baseUrl,
         });
-
         const rawRequestBody = {
             client_id: "my_oauth_app_123",
             client_secret: "sk_live_abcdef123456789",
@@ -43,12 +45,13 @@ describe("AuthClient", () => {
 
     test("refreshToken", async () => {
         const server = mockServerPool.createServer();
+        mockOAuthScheme(server);
+
         const client = new SeedOauthClientCredentialsClient({
             clientId: "my_oauth_app_123",
             clientSecret: "sk_live_abcdef123456789",
             environment: server.baseUrl,
         });
-
         const rawRequestBody = {
             client_id: "my_oauth_app_123",
             client_secret: "sk_live_abcdef123456789",

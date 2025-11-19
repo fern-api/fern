@@ -2,12 +2,12 @@
 
 import { SeedInferredAuthImplicitNoExpiryClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
-import { mockAuth } from "./mockAuth";
+import { mockInferredAuthScheme } from "./mockAuth";
 
 describe("AuthClient", () => {
     test("getTokenWithClientCredentials", async () => {
         const server = mockServerPool.createServer();
-        mockAuth(server);
+        mockInferredAuthScheme(server);
 
         const client = new SeedInferredAuthImplicitNoExpiryClient({
             xApiKey: "X-Api-Key",
@@ -16,7 +16,6 @@ describe("AuthClient", () => {
             scope: "scope",
             environment: server.baseUrl,
         });
-
         const rawRequestBody = {
             client_id: "client_id",
             client_secret: "client_secret",
@@ -49,7 +48,7 @@ describe("AuthClient", () => {
 
     test("refreshToken", async () => {
         const server = mockServerPool.createServer();
-        mockAuth(server);
+        mockInferredAuthScheme(server);
 
         const client = new SeedInferredAuthImplicitNoExpiryClient({
             xApiKey: "X-Api-Key",
@@ -58,7 +57,6 @@ describe("AuthClient", () => {
             scope: "scope",
             environment: server.baseUrl,
         });
-
         const rawRequestBody = {
             client_id: "client_id",
             client_secret: "client_secret",
