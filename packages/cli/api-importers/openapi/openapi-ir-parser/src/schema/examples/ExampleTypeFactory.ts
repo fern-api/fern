@@ -194,6 +194,8 @@ export class ExampleTypeFactory {
 
                         unionVariants.push(...Object.entries(schema.value.schemas));
 
+                        let selectedVariant: [string, SchemaWithExample] | null = null;
+
                         for (const unionVariant of unionVariants) {
                             if (
                                 exampleDiscriminant != null &&
@@ -205,6 +207,7 @@ export class ExampleTypeFactory {
                                 result[schema.value.discriminantProperty] = FullExample.primitive(
                                     PrimitiveExample.string(exampleDiscriminant)
                                 );
+                                selectedVariant = unionVariant;
                                 break;
                             } else {
                                 const example = this.buildExampleHelper({
@@ -221,8 +224,27 @@ export class ExampleTypeFactory {
                                     result[schema.value.discriminantProperty] = FullExample.primitive(
                                         PrimitiveExample.string(unionVariant[0])
                                     );
+                                    selectedVariant = unionVariant;
                                     break;
                                 }
+                            }
+                        }
+
+                        // If no variants have been selected choose the first available one
+                        const firstVariant = Object.entries(schema.value.schemas)[0];
+                        if (selectedVariant === null && firstVariant) {
+                            // Select the first available variant as a fallback
+                            selectedVariant = firstVariant;
+
+                            // Set the discriminant property to the first variant
+                            result[schema.value.discriminantProperty] = FullExample.primitive(
+                                PrimitiveExample.string(firstVariant[0])
+                            );
+
+                            // Try to get properties for this variant if it's an object
+                            if (firstVariant[1].type === "object") {
+                                allProperties = this.getAllProperties(firstVariant[1]);
+                                requiredProperties = this.getAllRequiredProperties(firstVariant[1]);
                             }
                         }
 
