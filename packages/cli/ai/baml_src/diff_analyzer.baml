@@ -66,5 +66,9 @@ function AnalyzeSdkDiff(diff: string @description("The git diff to analyze for g
     ---
     {{diff}}
     ---
+
+    Remember again that YOU MUST return a structured JSON response with these two fields:
+    - message: A git commit message formatted like the example previously provided
+    - version_bump: One of: MAJOR, MINOR, PATCH, or NO_CHANGE
   "#
 }
