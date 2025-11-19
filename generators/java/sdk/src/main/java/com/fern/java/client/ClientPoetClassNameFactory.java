@@ -62,6 +62,18 @@ public final class ClientPoetClassNameFactory extends AbstractNonModelPoetClassN
         return ClassName.get(getCorePackage(), "MediaTypes");
     }
 
+    public ClassName getOkhttp3MediaTypeClassName() {
+        return ClassName.get("okhttp3", "MediaType");
+    }
+
+    public ClassName getOkhttp3MultipartBodyClassName() {
+        return ClassName.get("okhttp3", "MultipartBody");
+    }
+
+    public ClassName getOkhttp3RequestBodyClassName() {
+        return ClassName.get("okhttp3", "RequestBody");
+    }
+
     public ClassName getClientClassName(Subpackage subpackage) {
         String packageName = getResourcesPackage(Optional.of(subpackage.getFernFilepath()), Optional.empty());
         return ClassName.get(packageName, getClientName(subpackage.getFernFilepath()));

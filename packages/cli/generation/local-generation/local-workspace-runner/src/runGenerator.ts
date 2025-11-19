@@ -73,7 +73,8 @@ export async function writeFilesToDiskAndRunGenerator({
     executionEnvironment,
     runner,
     whiteLabel,
-    ir
+    ir,
+    ai
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -98,7 +99,13 @@ export async function writeFilesToDiskAndRunGenerator({
     runner: ContainerRunner | undefined;
     whiteLabel?: boolean;
     ir: IntermediateRepresentation;
-}): Promise<{ ir: IntermediateRepresentation; generatorConfig: FernGeneratorExec.GeneratorConfig }> {
+    ai: generatorsYml.AiServicesSchema | undefined;
+}): Promise<{
+    ir: IntermediateRepresentation;
+    generatorConfig: FernGeneratorExec.GeneratorConfig;
+    shouldCommit: boolean;
+    autoVersioningCommitMessage?: string;
+}> {
     const { latest, migrated } = await getIntermediateRepresentation({
         workspace,
         audiences,
@@ -214,13 +221,16 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToLocalSnippetJSON,
         absolutePathToLocalSnippetTemplateJSON,
         absolutePathToTmpSnippetJSON,
-        absolutePathToTmpSnippetTemplatesJSON
+        absolutePathToTmpSnippetTemplatesJSON,
+        version,
+        ai
     });
-    await taskHandler.copyGeneratedFiles();
+    const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 
     return {
         ir: latest,
-        generatorConfig: config
+        generatorConfig: config,
+        ...generatedFilesResult
     };
 }
 
