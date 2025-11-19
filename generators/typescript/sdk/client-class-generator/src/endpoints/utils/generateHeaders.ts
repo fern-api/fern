@@ -70,8 +70,8 @@ export function generateHeaders({
 
     const elements: GeneratedHeader[] = [];
 
-    const authorizationHeaderValue = generatedSdkClientClass.getAuthorizationHeaderValue();
-    if (authorizationHeaderValue != null) {
+    const authorizationHeaderValue = generatedSdkClientClass.getAuthorizationHeaderValue({ context });
+    if (authorizationHeaderValue != null && endpoint.auth && !context.authProvider.isAuthEndpoint(endpoint)) {
         elements.push({
             header: "Authorization",
             value: authorizationHeaderValue
