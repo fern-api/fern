@@ -87,7 +87,7 @@
         "circular-references-advanced",
         "optional",
         "websocket-inferred-auth",
-        "pagination-custom",
+        "pagination-custom:.",
         "file-upload",
         "server-sent-event-examples",
         "pagination",
