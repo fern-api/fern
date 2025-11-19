@@ -10,7 +10,7 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -35,9 +35,9 @@ module Seed
         end
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Types::Types::Movie]
       #
       # @return [String]
       def create_movie(request_options: {}, **params)
@@ -61,7 +61,7 @@ module Seed
         end
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -94,9 +94,9 @@ module Seed
         end
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Types::Types::BigEntity]
       #
       # @return [Seed::Types::Types::Response]
       def create_big_entity(request_options: {}, **params)
@@ -120,7 +120,7 @@ module Seed
         end
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #

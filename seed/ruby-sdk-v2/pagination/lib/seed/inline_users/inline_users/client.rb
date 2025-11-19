@@ -11,7 +11,7 @@ module Seed
           @client = client
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -53,7 +53,7 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -92,9 +92,9 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
-        # @param params [Hash[untyped, untyped]]
+        # @param params [Seed::InlineUsers::InlineUsers::Types::ListUsersBodyCursorPaginationRequest]
         #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
         def list_with_body_cursor_pagination(request_options: {}, **params)
@@ -128,7 +128,7 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -171,7 +171,7 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -214,9 +214,9 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
-        # @param params [Hash[untyped, untyped]]
+        # @param params [Seed::InlineUsers::InlineUsers::Types::ListUsersBodyOffsetPaginationRequest]
         #
         # @return [Seed::InlineUsers::InlineUsers::Types::ListUsersPaginationResponse]
         def list_with_body_offset_pagination(request_options: {}, **params)
@@ -251,7 +251,7 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -293,7 +293,7 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -335,7 +335,7 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -374,7 +374,7 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -413,7 +413,7 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -452,7 +452,7 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #

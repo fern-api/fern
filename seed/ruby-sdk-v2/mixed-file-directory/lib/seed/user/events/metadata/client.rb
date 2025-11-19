@@ -14,7 +14,7 @@ module Seed
 
           # Get event metadata.
           #
-          # @param request_options [Hash[untyped, untyped]]
+          # @param request_options [Seed::RequestOptions]
           #
           # @param params [Hash[untyped, untyped]]
           #

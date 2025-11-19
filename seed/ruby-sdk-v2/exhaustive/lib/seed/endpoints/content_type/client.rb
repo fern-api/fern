@@ -11,9 +11,9 @@ module Seed
           @client = client
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
-        # @param params [Hash[untyped, untyped]]
+        # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
         #
         # @return [untyped]
         def post_json_patch_content_type(request_options: {}, **params)
@@ -35,9 +35,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
-        # @param params [Hash[untyped, untyped]]
+        # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
         #
         # @return [untyped]
         def post_json_patch_content_with_charset_type(request_options: {}, **params)

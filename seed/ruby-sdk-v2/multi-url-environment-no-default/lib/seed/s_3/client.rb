@@ -10,9 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::S3::Types::GetPresignedUrlRequest]
       #
       # @return [String]
       def get_presigned_url(request_options: {}, **params)

@@ -10,7 +10,7 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -34,9 +34,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Unknown::Types::MyObject]
       #
       # @return [Array[Hash[String, Object]]]
       def post_object(request_options: {}, **params)

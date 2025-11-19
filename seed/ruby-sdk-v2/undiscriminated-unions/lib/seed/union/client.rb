@@ -10,9 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Union::Types::MyUnion]
       #
       # @return [Seed::Union::Types::MyUnion]
       def get(request_options: {}, **params)
@@ -36,7 +36,7 @@ module Seed
         end
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -61,9 +61,9 @@ module Seed
         end
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Union::Types::MetadataUnion]
       #
       # @return [bool]
       def update_metadata(request_options: {}, **params)
@@ -85,9 +85,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Union::Types::Request]
       #
       # @return [bool]
       def call(request_options: {}, **params)
@@ -109,9 +109,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Union::Types::UnionWithDuplicateTypes]
       #
       # @return [Seed::Union::Types::UnionWithDuplicateTypes]
       def duplicate_types_union(request_options: {}, **params)
@@ -135,9 +135,9 @@ module Seed
         end
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Union::Types::NestedUnionRoot]
       #
       # @return [String]
       def nested_unions(request_options: {}, **params)
@@ -159,9 +159,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Union::Types::PaymentRequest]
       #
       # @return [String]
       def test_camel_case_properties(request_options: {}, **params)

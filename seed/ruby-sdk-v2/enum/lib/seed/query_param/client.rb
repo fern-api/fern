@@ -10,7 +10,7 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -43,7 +43,7 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #

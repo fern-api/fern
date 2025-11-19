@@ -13,7 +13,7 @@ module Seed
       # Retrieve a user.
       # This endpoint is used to retrieve a user.
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -39,9 +39,9 @@ module Seed
       # Create a new user.
       # This endpoint is used to create a new user.
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::User::Types::CreateUserRequest]
       #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)

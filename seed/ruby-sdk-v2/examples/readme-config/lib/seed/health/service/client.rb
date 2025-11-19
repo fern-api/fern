@@ -13,7 +13,7 @@ module Seed
 
         # This endpoint checks the health of a resource.
         #
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -38,7 +38,7 @@ module Seed
 
         # This endpoint checks the health of the service.
         #
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #

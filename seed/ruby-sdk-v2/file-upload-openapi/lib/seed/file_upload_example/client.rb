@@ -12,9 +12,9 @@ module Seed
 
       # Upload a file to the database
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [void]
       #
       # @return [String]
       def upload_file(request_options: {}, **params)

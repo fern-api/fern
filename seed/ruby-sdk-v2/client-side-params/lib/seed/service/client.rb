@@ -12,7 +12,7 @@ module Seed
 
       # List resources with pagination
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -50,7 +50,7 @@ module Seed
 
       # Get a single resource
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -85,9 +85,9 @@ module Seed
 
       # Search resources with complex parameters
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Service::Types::SearchResourcesRequest]
       #
       # @return [Seed::Types::Types::SearchResponse]
       def search_resources(request_options: {}, **params)
@@ -124,7 +124,7 @@ module Seed
 
       # List or search for users
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -165,7 +165,7 @@ module Seed
 
       # Get a user by ID
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -200,9 +200,9 @@ module Seed
 
       # Create a new user
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Types::Types::CreateUserRequest]
       #
       # @return [Seed::Types::Types::User]
       def create_user(request_options: {}, **params)
@@ -228,9 +228,9 @@ module Seed
 
       # Update a user
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Types::Types::UpdateUserRequest]
       #
       # @return [Seed::Types::Types::User]
       def update_user(request_options: {}, **params)
@@ -256,7 +256,7 @@ module Seed
 
       # Delete a user
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -281,7 +281,7 @@ module Seed
 
       # List all connections
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -315,7 +315,7 @@ module Seed
 
       # Get a connection by ID
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -349,7 +349,7 @@ module Seed
 
       # List all clients/applications
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -390,7 +390,7 @@ module Seed
 
       # Get a client by ID
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #

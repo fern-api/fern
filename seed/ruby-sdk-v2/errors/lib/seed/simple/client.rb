@@ -10,9 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Simple::Types::FooRequest]
       #
       # @return [Seed::Simple::Types::FooResponse]
       def foo_without_endpoint_error(request_options: {}, **params)
@@ -36,9 +36,9 @@ module Seed
         end
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Simple::Types::FooRequest]
       #
       # @return [Seed::Simple::Types::FooResponse]
       def foo(request_options: {}, **params)
@@ -62,9 +62,9 @@ module Seed
         end
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Simple::Types::FooRequest]
       #
       # @return [Seed::Simple::Types::FooResponse]
       def foo_with_examples(request_options: {}, **params)

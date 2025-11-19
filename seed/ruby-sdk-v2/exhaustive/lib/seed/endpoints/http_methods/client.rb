@@ -11,7 +11,7 @@ module Seed
           @client = client
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -34,9 +34,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
-        # @param params [Hash[untyped, untyped]]
+        # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_post(request_options: {}, **params)
@@ -60,9 +60,9 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
-        # @param params [Hash[untyped, untyped]]
+        # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_put(request_options: {}, **params)
@@ -86,9 +86,9 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
-        # @param params [Hash[untyped, untyped]]
+        # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_patch(request_options: {}, **params)
@@ -112,7 +112,7 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #

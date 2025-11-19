@@ -10,9 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Service::Types::PatchProxyRequest]
       #
       # @return [untyped]
       def patch(request_options: {}, **params)
@@ -42,9 +42,9 @@ module Seed
       # - optional<T> fields (can be present or absent, but not null)
       # - optional<nullable<T>> fields (can be present, absent, or null)
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Service::Types::PatchComplexRequest]
       #
       # @return [untyped]
       def patch_complex(request_options: {}, **params)
@@ -74,9 +74,9 @@ module Seed
       # Named request with mixed optional/nullable fields and merge-patch content type.
       # This should trigger the NPE issue when optional fields aren't initialized.
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Service::Types::NamedMixedPatchRequest]
       #
       # @return [untyped]
       def named_patch_with_mixed(request_options: {}, **params)
@@ -108,9 +108,9 @@ module Seed
       # 1. Not NPE when fields are not provided (tests initialization)
       # 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Service::Types::OptionalMergePatchRequest]
       #
       # @return [untyped]
       def optional_merge_patch_test(request_options: {}, **params)
@@ -137,9 +137,9 @@ module Seed
 
       # Regular PATCH endpoint without merge-patch semantics
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Service::Types::RegularPatchRequest]
       #
       # @return [untyped]
       def regular_patch(request_options: {}, **params)

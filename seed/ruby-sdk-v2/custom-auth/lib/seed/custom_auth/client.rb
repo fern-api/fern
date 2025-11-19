@@ -12,7 +12,7 @@ module Seed
 
       # GET request with custom auth scheme
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -37,7 +37,7 @@ module Seed
 
       # POST request with custom auth scheme
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #

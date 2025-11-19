@@ -12,9 +12,9 @@ module Seed
 
       # Create a new playlist
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Playlist::Types::PlaylistCreateRequest]
       #
       # @return [Seed::Playlist::Types::Playlist]
       def create_playlist(request_options: {}, **params)
@@ -51,7 +51,7 @@ module Seed
 
       # Returns the user's playlists
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -87,7 +87,7 @@ module Seed
 
       # Returns a playlist
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -114,7 +114,7 @@ module Seed
 
       # Updates a playlist
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #
@@ -140,7 +140,7 @@ module Seed
 
       # Deletes a playlist
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #

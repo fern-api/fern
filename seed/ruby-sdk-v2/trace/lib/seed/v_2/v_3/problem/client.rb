@@ -14,7 +14,7 @@ module Seed
 
           # Returns lightweight versions of all problems
           #
-          # @param request_options [Hash[untyped, untyped]]
+          # @param request_options [Seed::RequestOptions]
           #
           # @param params [Hash[untyped, untyped]]
           #
@@ -39,7 +39,7 @@ module Seed
 
           # Returns latest versions of all problems
           #
-          # @param request_options [Hash[untyped, untyped]]
+          # @param request_options [Seed::RequestOptions]
           #
           # @param params [Hash[untyped, untyped]]
           #
@@ -64,7 +64,7 @@ module Seed
 
           # Returns latest version of a problem
           #
-          # @param request_options [Hash[untyped, untyped]]
+          # @param request_options [Seed::RequestOptions]
           #
           # @param params [Hash[untyped, untyped]]
           #
@@ -91,7 +91,7 @@ module Seed
 
           # Returns requested version of a problem
           #
-          # @param request_options [Hash[untyped, untyped]]
+          # @param request_options [Seed::RequestOptions]
           #
           # @param params [Hash[untyped, untyped]]
           #

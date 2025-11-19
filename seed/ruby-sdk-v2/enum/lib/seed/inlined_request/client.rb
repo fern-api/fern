@@ -10,9 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::InlinedRequest::Types::SendEnumInlinedRequest]
       #
       # @return [untyped]
       def send_(request_options: {}, **params)

@@ -12,9 +12,9 @@ module Seed
 
       # Create a new organization.
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Organization::Types::CreateOrganizationRequest]
       #
       # @return [Seed::Organization::Types::Organization]
       def create(request_options: {}, **params)

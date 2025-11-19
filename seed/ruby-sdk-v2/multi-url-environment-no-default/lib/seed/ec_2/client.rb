@@ -10,9 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::Ec2::Types::BootInstanceRequest]
       #
       # @return [untyped]
       def boot_instance(request_options: {}, **params)

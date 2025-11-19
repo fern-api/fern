@@ -11,9 +11,9 @@ module Seed
           @client = client
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
-        # @param params [Hash[untyped, untyped]]
+        # @param params [Seed::Types::Enum::Types::WeatherReport]
         #
         # @return [Seed::Types::Enum::Types::WeatherReport]
         def get_and_return_enum(request_options: {}, **params)

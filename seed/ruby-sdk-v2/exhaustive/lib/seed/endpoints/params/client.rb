@@ -13,7 +13,7 @@ module Seed
 
         # GET with path param
         #
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -38,7 +38,7 @@ module Seed
 
         # GET with path param
         #
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -63,7 +63,7 @@ module Seed
 
         # GET with query param
         #
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -96,7 +96,7 @@ module Seed
 
         # GET with multiple of same query param
         #
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -129,7 +129,7 @@ module Seed
 
         # GET with path and query params
         #
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -161,7 +161,7 @@ module Seed
 
         # GET with path and query params
         #
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -193,7 +193,7 @@ module Seed
 
         # PUT to update with path param
         #
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #
@@ -219,7 +219,7 @@ module Seed
 
         # PUT to update with path param
         #
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Seed::RequestOptions]
         #
         # @param params [Hash[untyped, untyped]]
         #

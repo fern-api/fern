@@ -12,7 +12,7 @@ module Seed
 
       # GET request that always throws an error
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
       # @param params [Hash[untyped, untyped]]
       #

@@ -12,9 +12,9 @@ module Seed
 
       # POST with custom object in request body, response is an object
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Seed::RequestOptions]
       #
-      # @param params [Hash[untyped, untyped]]
+      # @param params [Seed::InlinedRequests::Types::PostWithObjectBody]
       #
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
       def post_with_object_bodyand_response(request_options: {}, **params)
