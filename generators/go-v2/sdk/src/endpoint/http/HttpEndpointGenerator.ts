@@ -231,7 +231,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             let baseResponseType: go.Type;
             switch (responseBody.type) {
                 case "json":
-                    baseResponseType = this.context.goTypeMapper.convert({ reference: responseBody.value.responseBodyType });
+                    baseResponseType = this.context.goTypeMapper.convert({
+                        reference: responseBody.value.responseBodyType
+                    });
                     break;
                 case "fileDownload":
                 case "text":
