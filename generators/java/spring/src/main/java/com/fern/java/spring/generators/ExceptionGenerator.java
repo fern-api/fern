@@ -165,17 +165,14 @@ public final class ExceptionGenerator extends AbstractFileGenerator {
         public Void visitStatusCode() {
             if (errorDeclaration.getType().isPresent()) {
                 handleMethod.addStatement(
-                        "return new $T<>($L.getBody(), null, $T.$L)",
+                        "return $T.status($T.$L).body($L.getBody())",
                         ResponseEntity.class,
-                        controllerAdviceParameter.name,
                         className,
-                        statusCodeFieldSpec.name);
+                        statusCodeFieldSpec.name,
+                        controllerAdviceParameter.name);
             } else {
                 handleMethod.addStatement(
-                        "return new $T<>(null, null, $T.$L)",
-                        ResponseEntity.class,
-                        className,
-                        statusCodeFieldSpec.name);
+                        "return $T.status($T.$L).build()", ResponseEntity.class, className, statusCodeFieldSpec.name);
             }
             return null;
         }
@@ -194,7 +191,7 @@ public final class ExceptionGenerator extends AbstractFileGenerator {
                         errorNameField,
                         controllerAdviceParameter.name);
                 handleMethod.addStatement(
-                        "return new $T<>(body, null, $T.$L)",
+                        "return $T.status($T.$L).body(body)",
                         ResponseEntity.class,
                         className,
                         statusCodeFieldSpec.name);
@@ -206,7 +203,7 @@ public final class ExceptionGenerator extends AbstractFileGenerator {
                         className,
                         errorNameField);
                 handleMethod.addStatement(
-                        "return new $T<>(body, null, $T.$L)",
+                        "return $T.status($T.$L).body(body)",
                         ResponseEntity.class,
                         className,
                         statusCodeFieldSpec.name);

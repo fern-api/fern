@@ -6,7 +6,7 @@ import { mockServerPool } from "../../mock-server/MockServerPool";
 describe("ParamsClient", () => {
     test("getWithPath", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
         server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -17,7 +17,7 @@ describe("ParamsClient", () => {
 
     test("getWithInlinePath", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
         server.mockEndpoint().get("/params/path/param").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -30,7 +30,7 @@ describe("ParamsClient", () => {
 
     test("getWithQuery", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().get("/params").respondWith().statusCode(200).build();
 
@@ -43,7 +43,7 @@ describe("ParamsClient", () => {
 
     test("getWithAllowMultipleQuery", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().get("/params").respondWith().statusCode(200).build();
 
@@ -56,7 +56,7 @@ describe("ParamsClient", () => {
 
     test("getWithPathAndQuery", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().get("/params/path-query/param").respondWith().statusCode(200).build();
 
@@ -68,7 +68,7 @@ describe("ParamsClient", () => {
 
     test("getWithInlinePathAndQuery", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().get("/params/path-query/param").respondWith().statusCode(200).build();
 
@@ -81,7 +81,7 @@ describe("ParamsClient", () => {
 
     test("modifyWithPath", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
         server
@@ -99,7 +99,7 @@ describe("ParamsClient", () => {
 
     test("modifyWithInlinePath", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "string";
         const rawResponseBody = "string";
         server

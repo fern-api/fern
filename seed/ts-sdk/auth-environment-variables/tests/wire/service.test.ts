@@ -7,6 +7,7 @@ describe("ServiceClient", () => {
     test("getWithApiKey", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedAuthEnvironmentVariablesClient({
+            maxRetries: 0,
             apiKey: "test",
             xAnotherHeader: "test",
             environment: server.baseUrl,
@@ -22,6 +23,7 @@ describe("ServiceClient", () => {
     test("getWithHeader", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedAuthEnvironmentVariablesClient({
+            maxRetries: 0,
             apiKey: "test",
             xAnotherHeader: "test",
             environment: server.baseUrl,

@@ -14,6 +14,6 @@ import resources.errors.exceptions.BadRequest;
 public final class BadRequestExceptionHandler {
   @ExceptionHandler(BadRequest.class)
   ResponseEntity<Object> handle(BadRequest badRequest) {
-    return new ResponseEntity<>(null, null, BadRequest.STATUS_CODE);
+    return ResponseEntity.status(BadRequest.STATUS_CODE).build();
   }
 }

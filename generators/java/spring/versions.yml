@@ -1,6 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Generate Java 17 and Spring 6 compatible code.
+      type: break
+  createdAt: "2025-11-19"
+  irVersion: 61
+  version: 2.0.0-rc0
+
+- changelogEntry:
+    - summary: |
+        Bump generator CLI version to publish new Docker image.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+  version: 1.8.5
+
+- changelogEntry:
+    - summary: |
         Upgrade to irV61
       type: internal
   createdAt: "2025-11-04"

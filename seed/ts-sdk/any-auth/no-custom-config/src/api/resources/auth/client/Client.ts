@@ -45,10 +45,7 @@ export class AuthClient {
     ): Promise<core.WithRawResponse<SeedAnyAuth.TokenResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                ...(await this._getCustomAuthorizationHeaders()),
-            }),
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -96,15 +93,6 @@ export class AuthClient {
                     rawResponse: _response.rawResponse,
                 });
         }
-    }
-
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer = await core.Supplier.get(this._options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
     }
 
     protected async _getCustomAuthorizationHeaders(): Promise<Record<string, string | undefined>> {
