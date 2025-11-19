@@ -58,7 +58,8 @@ function AnalyzeSdkDiff(diff: string @description("The git diff to analyze for g
     - For PATCH: describe the fix or improvement
     - For NO_CHANGE: use type "chore" and state that no functional changes were made
     - Be specific and action-oriented
-    - Always end with the "🌿 Generated with Fern" footer
+    - Always end with the "🌿 Generated with Fern" footer (this may be removed for whitelabel customers)
+    - Do not use "Fern regeneration" in commit messages - use "SDK regeneration" instead
     - NEVER include the literal version "505.503.4455" in the commit message - if you see this placeholder
     in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
 

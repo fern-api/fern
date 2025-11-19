@@ -25,6 +25,7 @@ export declare namespace LocalTaskHandler {
         absolutePathToTmpSnippetTemplatesJSON: AbsoluteFilePath | undefined;
         version: string | undefined;
         ai: AiServicesSchema | undefined;
+        isWhitelabel: boolean;
     }
 }
 
@@ -38,6 +39,7 @@ export class LocalTaskHandler {
     private absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined;
     private version: string | undefined;
     private ai: AiServicesSchema | undefined;
+    private isWhitelabel: boolean;
 
     constructor({
         context,
@@ -48,7 +50,8 @@ export class LocalTaskHandler {
         absolutePathToLocalSnippetJSON,
         absolutePathToTmpSnippetTemplatesJSON,
         version,
-        ai
+        ai,
+        isWhitelabel
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -59,6 +62,7 @@ export class LocalTaskHandler {
         this.absolutePathToTmpSnippetTemplatesJSON = absolutePathToTmpSnippetTemplatesJSON;
         this.version = version;
         this.ai = ai;
+        this.isWhitelabel = isWhitelabel;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
@@ -156,16 +160,21 @@ export class LocalTaskHandler {
 
                 this.context.logger.info(`Version bump: ${analysis.version_bump}, new version: ${newVersion}`);
 
+                const commitMessage = this.isWhitelabel ? this.removeFernBranding(analysis.message) : analysis.message;
+
                 return {
                     version: newVersion,
-                    commitMessage: analysis.message
+                    commitMessage
                 };
             } catch (aiError) {
                 this.context.logger.warn(`AI analysis failed, falling back to PATCH increment: ${aiError}`);
                 const newVersion = this.incrementVersion(previousVersion, VersionBump.PATCH);
+                const fallbackMessage = this.isWhitelabel
+                    ? "SDK regeneration\n\nUnable to analyze changes with AI, incrementing PATCH version."
+                    : "SDK regeneration\n\nUnable to analyze changes with AI, incrementing PATCH version.\n\n🌿 Generated with Fern";
                 return {
                     version: newVersion,
-                    commitMessage: "SDK regeneration\n\nUnable to analyze changes with AI, incrementing PATCH version."
+                    commitMessage: fallbackMessage
                 };
             }
         } catch (error) {
@@ -241,6 +250,15 @@ export class LocalTaskHandler {
 
         this.context.logger.debug(`Using AI service: ${this.ai.provider} with model ${this.ai.model}`);
         return configureBamlClient(this.ai);
+    }
+
+    private removeFernBranding(message: string): string {
+        let cleaned = message;
+        cleaned = cleaned.replace(/🌿 Generated with Fern\s*/gi, "");
+        cleaned = cleaned.replace(/Generated with Fern\s*/gi, "");
+        cleaned = cleaned.replace(/Fern regeneration\s*/gi, "SDK regeneration");
+        cleaned = cleaned.trim();
+        return cleaned;
     }
 
     private async isFernIgnorePresent(): Promise<boolean> {
