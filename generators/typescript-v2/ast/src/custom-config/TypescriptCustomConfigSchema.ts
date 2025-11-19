@@ -43,6 +43,8 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     enableForwardCompatibleEnums: z.optional(z.boolean()),
     parameterNaming: z.optional(z.enum(["originalName", "wireValue", "camelCase", "snakeCase", "default"])),
     generateSubpackageExports: z.optional(z.boolean()),
+    clientClassName: z.optional(z.string()),
+    exportedClientClassName: z.optional(z.string()),
 
     // relevant to dynamic snippets
     allowExtraFields: z.optional(z.boolean()),

@@ -39,6 +39,14 @@ export class SdkClientClassDeclarationReferencer extends AbstractSdkClientClassD
         }
     }
 
+    public getClientClassName(packageId: PackageId): string {
+        if (packageId.isRoot) {
+            return this.rootClientClassDeclarationReferencer.getClientClassName();
+        } else {
+            return this.subpackageClientClassDeclarationReferencer.getExportedName(packageId.subpackageId);
+        }
+    }
+
     public getReferenceToClient(args: DeclarationReferencer.getReferenceTo.Options<PackageId>): Reference {
         if (args.name.isRoot) {
             return this.rootClientClassDeclarationReferencer.getReferenceToClient({

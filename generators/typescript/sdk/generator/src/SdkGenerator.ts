@@ -160,6 +160,8 @@ export declare namespace SdkGenerator {
         formatter: "prettier" | "biome" | "oxfmt";
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
+        clientClassName: string | undefined;
+        exportedClientClassName: string | undefined;
     }
 }
 
@@ -331,7 +333,9 @@ export class SdkGenerator {
         this.sdkClientClassDeclarationReferencer = new SdkClientClassDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver
+            packageResolver: this.packageResolver,
+            clientClassName: config.clientClassName,
+            exportedClientClassName: config.exportedClientClassName
         });
         this.endpointErrorUnionDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: apiDirectory,

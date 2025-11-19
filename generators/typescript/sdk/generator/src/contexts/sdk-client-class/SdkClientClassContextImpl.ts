@@ -47,7 +47,7 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
             isRoot: packageId.isRoot,
             importsManager: this.importsManager,
             packageId,
-            serviceClassName: this.sdkClientClassDeclarationReferencer.getExportedName(packageId)
+            serviceClassName: this.sdkClientClassDeclarationReferencer.getClientClassName(packageId)
         });
     }
 
