@@ -123,7 +123,7 @@ class MetaTestGenerator:
             writer.write_line("try:")
             writer.write("    client = _t.cast(_t.Any, ")
             writer.write_node(AST.Expression(self._generated_root_client.sync_client.class_reference))
-            writer.write(')(base_url="https://api.example.com")')
+            writer.write(")()")
             writer.write_newline_if_last_line_not()
             writer.write_line("except Exception:")
             writer.write_line("    return")
