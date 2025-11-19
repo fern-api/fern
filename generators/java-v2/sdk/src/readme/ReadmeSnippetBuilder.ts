@@ -867,7 +867,7 @@ UpdateRequest request = UpdateRequest.builder()
         if (endpoint.endpoint.requestBody == null) {
             return false;
         }
-        if (endpoint.endpoint.requestBody.type === "fileUpload") {
+        if (endpoint.endpoint.requestBody.type === "fileUpload" && "properties" in endpoint.endpoint.requestBody) {
             return endpoint.endpoint.requestBody.properties.some((property) => property.type === "file");
         }
         return false;
