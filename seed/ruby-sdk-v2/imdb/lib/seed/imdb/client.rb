@@ -13,7 +13,6 @@ module Seed
       # Add a movie to the database using the movies/* /... path.
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Imdb::Types::CreateMovieRequest]
       #
       # @return [String]
@@ -41,7 +40,6 @@ module Seed
       # @option params [Seed::Imdb::Types::MovieId] :movie_id
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Imdb::Types::Movie]

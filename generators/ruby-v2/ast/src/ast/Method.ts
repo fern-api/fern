@@ -85,10 +85,16 @@ export class Method extends AstNode {
             new Comment({ docs: this.docstring }).write(writer);
         }
 
+        const hasAnyParameters =
+            this.positionalParameters.length > 0 ||
+            this.keywordParameters.length > 0 ||
+            this.keywordSplatParameter != null;
+
+        if (this.docstring && hasAnyParameters) {
+            writer.writeLine("#");
+        }
+
         for (const positionalParameter of this.positionalParameters) {
-            if (this.docstring) {
-                writer.writeLine("#");
-            }
             writer.write(`# @option ${positionalParameter.name} [`);
             positionalParameter.type.writeTypeDefinition(writer);
             writer.write("]");
@@ -96,9 +102,6 @@ export class Method extends AstNode {
         }
 
         for (const keywordParameter of this.keywordParameters) {
-            if (this.positionalParameters.length > 0 || this.docstring) {
-                writer.writeLine("#");
-            }
             writer.write(`# @param ${keywordParameter.name} [`);
             keywordParameter.type.writeTypeDefinition(writer);
             writer.write("]");
@@ -109,9 +112,6 @@ export class Method extends AstNode {
         }
 
         if (this.keywordSplatParameter != null) {
-            if (this.positionalParameters.length > 0 || this.keywordParameters.length > 0 || this.docstring) {
-                writer.writeLine("#");
-            }
             writer.write(`# @param ${this.keywordSplatParameter.name} [`);
             this.keywordSplatParameter.type.writeTypeDefinition(writer);
             writer.write("]");
@@ -122,12 +122,7 @@ export class Method extends AstNode {
         }
 
         if (this.returnType != null) {
-            if (
-                this.positionalParameters.length > 0 ||
-                this.keywordParameters.length > 0 ||
-                this.keywordSplatParameter != null ||
-                this.docstring
-            ) {
+            if (hasAnyParameters || this.docstring) {
                 writer.writeLine("#");
             }
             writer.write(`# @return [`);
