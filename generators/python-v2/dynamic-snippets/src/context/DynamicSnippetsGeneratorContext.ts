@@ -195,16 +195,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     public getDefaultEnvironmentId(): string | undefined {
-        if (this.ir.environments == null) {
-            return undefined;
-        }
-        const environments = this.ir.environments.environments;
-        if (environments.type === "singleBaseUrl") {
-            return environments.defaultEnvironment;
-        } else if (environments.type === "multipleBaseUrls") {
-            return environments.defaultEnvironment;
-        }
-        return undefined;
+        return this.ir.environments?.defaultEnvironment;
     }
 
     private cleanOrganizationName(): string {
