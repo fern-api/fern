@@ -64,6 +64,6 @@ export class DynamicSnippetsPythonTestGenerator {
     }
 
     private getTestFilePath({ outputDir, idx }: { outputDir: AbsoluteFilePath; idx: number }): AbsoluteFilePath {
-        return join(outputDir, RelativeFilePath.of(`dynamic_snippets/example${idx}.py`));
+        return join(outputDir, RelativeFilePath.of(`dynamic-snippets/example${idx}/snippet.py`));
     }
 }

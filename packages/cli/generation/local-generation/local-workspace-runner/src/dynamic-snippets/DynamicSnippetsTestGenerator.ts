@@ -46,7 +46,7 @@ export class DynamicSnippetsTestGenerator {
 
         // TODO: Re-enable dynamic snippet tests when example generation is resolved.
         typescript: { generator: DynamicSnippetsTypeScriptTestGenerator, unstable: true },
-        python: { generator: DynamicSnippetsPythonTestGenerator, unstable: true },
+        python: { generator: DynamicSnippetsPythonTestGenerator },
         ruby: { generator: DynamicSnippetsRubyTestGenerator },
         rust: { generator: DynamicSnippetsRustTestGenerator },
         swift: { generator: DynamicSnippetsSwiftTestGenerator }
