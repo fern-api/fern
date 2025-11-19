@@ -50,7 +50,7 @@ import {
     ts
 } from "ts-morph";
 import { Code, code } from "ts-poet";
-import { AuthProviderInstance, InferredAuthProviderInstance } from "./auth-provider";
+import { AuthProviderInstance, BasicAuthProviderInstance, InferredAuthProviderInstance } from "./auth-provider";
 import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
 import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest";
@@ -421,6 +421,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             AuthScheme._visit(authScheme, {
                 basic: (basicAuthScheme) => {
                     this.basicAuthScheme = basicAuthScheme;
+                    this.authProvider = new BasicAuthProviderInstance();
                 },
                 bearer: (bearerAuthScheme) => {
                     this.bearerAuthScheme = bearerAuthScheme;
@@ -813,33 +814,63 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             : undefined
                 }
             ];
-            const statements = code`
-                ${this.getCtorOptionsStatements(context)}
-                ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = ${getTextOfTsNode(
-                    this.authProvider.instantiate({
-                        context,
-                        params: [
+            const authProviderParams =
+                this.inferredAuthScheme != null
+                    ? [
+                          ts.factory.createObjectLiteralExpression(
+                              [
+                                  ts.factory.createPropertyAssignment(
+                                      ts.factory.createIdentifier("client"),
+                                      ts.factory.createThis()
+                                  ),
+                                  ts.factory.createPropertyAssignment(
+                                      ts.factory.createIdentifier("authTokenParameters"),
+                                      ts.factory.createObjectLiteralExpression(
+                                          [
+                                              ts.factory.createSpreadAssignment(
+                                                  ts.factory.createIdentifier("this._options")
+                                              )
+                                          ],
+                                          false
+                                      )
+                                  )
+                              ],
+                              true
+                          )
+                      ]
+                    : this.basicAuthScheme != null
+                      ? [
                             ts.factory.createObjectLiteralExpression(
                                 [
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier("client"),
-                                        ts.factory.createThis()
+                                        ts.factory.createIdentifier("username"),
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier("this._options"),
+                                            ts.factory.createIdentifier(
+                                                this.getBasicAuthUsernameOptionKey(this.basicAuthScheme)
+                                            )
+                                        )
                                     ),
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier("authTokenParameters"),
-                                        ts.factory.createObjectLiteralExpression(
-                                            [
-                                                ts.factory.createSpreadAssignment(
-                                                    ts.factory.createIdentifier("this._options")
-                                                )
-                                            ],
-                                            false
+                                        ts.factory.createIdentifier("password"),
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier("this._options"),
+                                            ts.factory.createIdentifier(
+                                                this.getBasicAuthPasswordOptionKey(this.basicAuthScheme)
+                                            )
                                         )
                                     )
                                 ],
                                 true
                             )
                         ]
+                      : [];
+            const statements = code`
+                ${this.getCtorOptionsStatements(context)}
+                ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = ${getTextOfTsNode(
+                    this.authProvider.instantiate({
+                        context,
+                        params: authProviderParams
                     })
                 )};
             `;
@@ -1372,6 +1403,31 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     hasQuestionToken: param.isOptional
                 }))
             );
+        } else if (this.isRoot && this.basicAuthScheme != null) {
+            properties.push({
+                name: getPropertyKey(this.getBasicAuthUsernameOptionKey(this.basicAuthScheme)),
+                type: getTextOfTsNode(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        ts.factory.createUnionTypeNode([
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                        ])
+                    )
+                ),
+                hasQuestionToken: true
+            });
+            properties.push({
+                name: getPropertyKey(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme)),
+                type: getTextOfTsNode(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        ts.factory.createUnionTypeNode([
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                        ])
+                    )
+                ),
+                hasQuestionToken: true
+            });
         }
 
         if (
