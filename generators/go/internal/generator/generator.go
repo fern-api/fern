@@ -576,6 +576,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, newPointerFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newQueryFile(g.coordinator))
 		files = append(files, newQueryTestFile(g.coordinator))
+		if g.config.CustomPagerName != "" {
+			files = append(files, newCustomPaginationFile(g.coordinator))
+		}
 		if needsFileUploadHelpers(ir) {
 			files = append(files, newMultipartFile(g.coordinator))
 			files = append(files, newMultipartTestFile(g.coordinator))
@@ -1263,6 +1266,14 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/optional_test.go",
 		[]byte(optionalTestFile),
+	)
+}
+
+func newCustomPaginationFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/custom_pagination.go",
+		[]byte(customPaginationFile),
 	)
 }
 

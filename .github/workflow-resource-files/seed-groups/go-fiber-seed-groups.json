@@ -108,7 +108,7 @@
         "websocket-bearer-auth",
         "plain-text",
         "streaming-parameter",
-        "pagination-custom:.",
+        "pagination-custom",
         "multi-url-environment"
       ],
       "groupTotalTimeSeconds": 397

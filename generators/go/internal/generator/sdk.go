@@ -65,6 +65,9 @@ var (
 
 	//go:embed sdk/internal/query_test.go
 	queryTestFile string
+
+	//go:embed sdk/core/custom_pagination.go
+	customPaginationFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
