@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.31.5
+  changelogEntry:
+    - summary: Include subpackage exports in generated README.md if `generateSubpackageExports` is enabled.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+
 - version: 3.31.2
   changelogEntry:
     - summary: |
