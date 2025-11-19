@@ -187,6 +187,26 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return true;
     }
 
+    public hasMultipleBaseUrlEnvironments(): boolean {
+        if (this.ir.environments == null) {
+            return false;
+        }
+        return this.ir.environments.environments.type === "multipleBaseUrls";
+    }
+
+    public getDefaultEnvironmentId(): string | undefined {
+        if (this.ir.environments == null) {
+            return undefined;
+        }
+        const environments = this.ir.environments.environments;
+        if (environments.type === "singleBaseUrl") {
+            return environments.defaultEnvironment;
+        } else if (environments.type === "multipleBaseUrls") {
+            return environments.defaultEnvironment;
+        }
+        return undefined;
+    }
+
     private cleanOrganizationName(): string {
         return this.config.organization.replace(/[^a-zA-Z0-9]/g, "_");
     }
