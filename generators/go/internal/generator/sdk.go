@@ -1658,6 +1658,8 @@ func (f *fileWriter) getPaginationInfo(
 			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
 			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
 		}, nil
+	case "custom":
+		return nil, nil
 	default:
 		return nil, fmt.Errorf("%s pagination is not supported yet", t)
 	}
