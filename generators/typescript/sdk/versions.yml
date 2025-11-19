@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.31.2
+  changelogEntry:
+    - summary: |
+        Generate wire tests with `maxRetries` set to 0.
+      type: fix
+  createdAt: "2025-11-18"
+  irVersion: 61
+
 - version: 3.31.1
   changelogEntry:
     - summary: |

@@ -311,8 +311,8 @@ await client.union.nestedUnions("string");
 ```typescript
 await client.union.testCamelCaseProperties({
     paymentMethod: {
-        method: "method",
-        cardNumber: "cardNumber"
+        method: "card",
+        cardNumber: "1234567890123456"
     }
 });
 
@@ -338,7 +338,7 @@ await client.union.testCamelCaseProperties({
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -7,6 +7,7 @@ describe("AuthClient", () => {
     test("getTokenWithClientCredentials", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedInferredAuthImplicitClient({
+            maxRetries: 0,
             xApiKey: "X-Api-Key",
             clientId: "client_id",
             clientSecret: "client_secret",
@@ -47,6 +48,7 @@ describe("AuthClient", () => {
     test("refreshToken", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedInferredAuthImplicitClient({
+            maxRetries: 0,
             xApiKey: "X-Api-Key",
             clientId: "client_id",
             clientSecret: "client_secret",

@@ -7,7 +7,12 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("PlaylistClient", () => {
     test("createPlaylist", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", problems: ["problems", "problems"] };
         const rawResponseBody = {
             playlist_id: "playlist_id",
@@ -47,7 +52,12 @@ describe("PlaylistClient", () => {
 
     test("getPlaylists", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = [
             { playlist_id: "playlist_id", "owner-id": "owner-id", name: "name", problems: ["problems", "problems"] },
@@ -85,7 +95,12 @@ describe("PlaylistClient", () => {
 
     test("getPlaylist", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = {
             playlist_id: "playlist_id",
@@ -117,7 +132,12 @@ describe("PlaylistClient", () => {
 
     test("updatePlaylist", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", problems: ["problems", "problems"] };
         const rawResponseBody = {
             playlist_id: "playlist_id",
@@ -153,7 +173,12 @@ describe("PlaylistClient", () => {
 
     test("deletePlaylist", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
 
         server.mockEndpoint().delete("/v2/playlist/1/playlist_id").respondWith().statusCode(200).build();
 
