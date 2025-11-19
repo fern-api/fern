@@ -27,8 +27,8 @@ impl NullableClient2 {
                     .string_array("usernames", request.usernames.clone())
                     .string("avatar", request.avatar.clone())
                     .bool_array("activated", request.activated.clone())
-                    .string_array("tags", request.tags.clone())
-                    .bool("extra", request.extra.clone())
+                    .serialize_array("tags", request.tags.clone())
+                    .serialize("extra", request.extra.clone())
                     .build(),
                 options,
             )
