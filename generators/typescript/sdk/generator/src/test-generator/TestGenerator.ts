@@ -475,23 +475,23 @@ export function ${functionName}(server: MockServer): void {
     server
         .mockEndpoint()
         .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
-                    return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-                })}${example.endpointHeaders.map((h) => {
-                    return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+        })}${example.endpointHeaders.map((h) => {
+            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-                })}${
-                    rawRequestBody
-                        ? code`.${mockBodyMethod}(rawRequestBody)
+        })}${
+            rawRequestBody
+                ? code`.${mockBodyMethod}(rawRequestBody)
             `
-                        : ""
-                }.respondWith()
+                : ""
+        }.respondWith()
         .statusCode(${responseStatusCode})${
-                    rawResponseBody
-                        ? code`.jsonBody(rawResponseBody)
+            rawResponseBody
+                ? code`.jsonBody(rawResponseBody)
             `
-                        : ""
-                }.build();
+                : ""
+        }.build();
 }
 `);
             }
@@ -534,18 +534,18 @@ export function ${functionName}(server: MockServer): void {
     server
         .mockEndpoint()
         .${endpoint.method.toLowerCase()}("${example.url}")${example.serviceHeaders.map((h) => {
-                        return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-                    })}${example.endpointHeaders.map((h) => {
-                        return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
+        })}${example.endpointHeaders.map((h) => {
+            return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-                    })}.respondWith()
+        })}.respondWith()
         .statusCode(${responseStatusCode})${
-                        rawResponseBody
-                            ? code`.jsonBody(rawResponseBody)
+            rawResponseBody
+                ? code`.jsonBody(rawResponseBody)
             `
-                            : ""
-                    }.build();
+                : ""
+        }.build();
 }
 `);
                 }
@@ -1109,7 +1109,7 @@ describe("${serviceName}", () => {
         if (this.shouldBuildMockAuthFile({ context })) {
             const oauthScheme = this.ir.auth.schemes.find((s) => s.type === "oauth");
             const inferredAuthScheme = this.ir.auth.schemes.find((s) => s.type === "inferred");
-            
+
             let mockFunctionName: string | undefined;
             if (oauthScheme && this.canMockOAuth()) {
                 mockFunctionName = `mock${upperFirst(camelCase(oauthScheme.key))}`;
