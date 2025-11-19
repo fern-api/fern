@@ -527,6 +527,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             // We'll need to add an opt-in feature flag to resolve this gap.
             return false;
         }
+        const pagination = this.getPagination(endpoint);
+        if (pagination?.type === "custom") {
+            return false;
+        }
         return this.isPaginationEndpoint(endpoint);
     }
 
