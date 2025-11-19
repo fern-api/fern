@@ -516,15 +516,22 @@ export function ${functionName}(server: MockServer): void {
                         );
                         const example = successfulExamples[0];
                         if (example && example.response.type === "ok") {
+                            const rawRequestBody = this.getMinimalOAuthRequestBody({
+                                example: example.request,
+                                tokenEndpoint,
+                                context
+                            });
                             const rawResponseBody = this.getResponseExample(example.response);
                             const responseStatusCode = getExampleResponseStatusCode({
                                 response: example.response,
                                 ir: this.ir
                             });
+                            const mockBodyMethod = this.getMockBodyMethod(endpoint);
                             const functionName = `mock${upperFirst(camelCase(scheme.key))}`;
 
                             return code`
 export function ${functionName}(server: MockServer): void {
+    ${rawRequestBody ? code`const rawRequestBody = ${rawRequestBody};` : ""}
     ${rawResponseBody ? code`const rawResponseBody = ${rawResponseBody};` : ""}
     server
         .mockEndpoint()
@@ -534,7 +541,12 @@ export function ${functionName}(server: MockServer): void {
         })}${example.endpointHeaders.map((h) => {
             return code`.header("${h.name.wireValue}", "${h.value.jsonExample}")
                 `;
-        })}.respondWith()
+        })}${
+            rawRequestBody
+                ? code`.${mockBodyMethod}(rawRequestBody)
+            `
+                : ""
+        }.respondWith()
         .statusCode(${responseStatusCode})${
             rawResponseBody
                 ? code`.jsonBody(rawResponseBody)
@@ -761,7 +773,12 @@ export function ${functionName}(server: MockServer): void {
 
                 value.properties.forEach((p) => {
                     const wireValue = p.name.wireValue;
-                    if (wireValue === clientIdPropertyName || wireValue === clientSecretPropertyName) {
+                    if (
+                        wireValue === clientIdPropertyName ||
+                        wireValue === clientSecretPropertyName ||
+                        wireValue === "audience" ||
+                        wireValue === "grant_type"
+                    ) {
                         minimalProperties[wireValue] = this.createRawJsonExample({
                             example: p.value,
                             isForRequest: true,
