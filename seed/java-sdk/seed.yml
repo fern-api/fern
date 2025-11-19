@@ -155,6 +155,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: default
+  pagination-custom:
+    - customConfig:
+        custom-pager-name: "FernCustomPaginator"
+      outputFolder: default
   unions:
     - customConfig:
         enable-wire-tests: true
