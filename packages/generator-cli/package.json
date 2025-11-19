@@ -15,7 +15,7 @@
   "files": ["dist"],
   "scripts": {
     "clean": "rm -rf ./dist && tsc --build --clean",
-    "compile": "tsdown && pnpm compile:api:dts && echo '#!/usr/bin/env node' | cat - dist/cli.cjs > dist/tmp && mv dist/tmp dist/cli.cjs",
+    "compile": "pnpm compile:api:dts && tsdown --no-clean && printf '#!/usr/bin/env node\n' | cat - dist/cli.cjs > dist/tmp && mv dist/tmp dist/cli.cjs",
     "compile:api:dts": "tsdown ./src/api.ts --format cjs --dts --dts-only",
     "depcheck": "depcheck",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
