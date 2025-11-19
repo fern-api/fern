@@ -1223,9 +1223,10 @@ export class SdkGenerator {
             if (service.endpoints.length === 0) {
                 return;
             }
-            const lastPart = service.name.fernFilepath.allParts[service.name.fernFilepath.allParts.length - 1];
             let serviceReference = this.referenceConfigBuilder.addSection({
-                title: service.displayName ?? (lastPart != null ? lastPart.camelCase.unsafeName : "")
+                title:
+                    service.displayName ??
+                    service.name.fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join(".")
             });
 
             const exportedFilepath = this.sdkClientClassDeclarationReferencer.getExportedFilepath(packageId);
