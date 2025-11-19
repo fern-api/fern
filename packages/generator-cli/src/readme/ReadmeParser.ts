@@ -43,7 +43,7 @@ export class ReadmeParser {
     }
 
     private isCoreBlock(blockId: string): boolean {
-        return blockId === "TABLE_OF_CONTENTS";
+        return blockId === "TABLE_OF_CONTENTS" || blockId === "CONTENTS";
     }
 }
 
