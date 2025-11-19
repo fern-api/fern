@@ -307,4 +307,30 @@ describe("replaceReferencedCode", () => {
 
         `);
     });
+
+    it("should handle title with curly brace syntax without adding extra quotes", async () => {
+        const markdown = `
+            <Code src="./example.js" title={"Hello"} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/example.js")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`js title={"Hello"}
+            test content
+            \`\`\`
+
+        `);
+    });
 });
