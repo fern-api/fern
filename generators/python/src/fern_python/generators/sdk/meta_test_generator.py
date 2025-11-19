@@ -1,6 +1,6 @@
 from typing import Dict, List, Set
 
-from fern_python.codegen import AST, Project, SourceFile
+from fern_python.codegen import AST, Project
 from fern_python.codegen.filepath import Filepath
 from fern_python.generator_exec_wrapper.generator_exec_wrapper import GeneratorExecWrapper
 from fern_python.generators.sdk.client_generator.generated_root_client import GeneratedRootClient
@@ -27,7 +27,7 @@ class MetaTestGenerator:
 
     def generate(self) -> None:
         subpackage_clients = self._collect_subpackage_clients()
-        
+
         if not subpackage_clients:
             return
 
@@ -35,7 +35,7 @@ class MetaTestGenerator:
 
     def _collect_subpackage_clients(self) -> Dict[str, List[str]]:
         subpackage_clients: Dict[str, List[str]] = {}
-        
+
         root_clients: List[str] = []
         for subpackage_id in self._ir.subpackages.keys():
             subpackage = self._ir.subpackages[subpackage_id]
@@ -44,41 +44,43 @@ class MetaTestGenerator:
             ):
                 fern_filepath = subpackage.fern_filepath
                 client_property_name = self._get_client_property_name(fern_filepath)
-                
-                if len(fern_filepath.package_path) == 0 and (fern_filepath.file is None or fern_filepath.file.snake_case.safe_name == ""):
+
+                if len(fern_filepath.package_path) == 0 and (
+                    fern_filepath.file is None or fern_filepath.file.snake_case.safe_name == ""
+                ):
                     root_clients.append(client_property_name)
                 else:
                     parent_path = self._get_parent_path(fern_filepath)
                     if parent_path not in subpackage_clients:
                         subpackage_clients[parent_path] = []
                     subpackage_clients[parent_path].append(client_property_name)
-        
+
         if root_clients:
             subpackage_clients[""] = root_clients
-        
+
         return subpackage_clients
 
     def _get_client_property_name(self, fern_filepath: ir_types.FernFilepath) -> str:
         components = fern_filepath.package_path.copy()
         if fern_filepath.file is not None:
             components += [fern_filepath.file]
-        
+
         if len(components) == 0:
             return ""
-        
+
         if len(components) == 1:
             return components[0].snake_case.safe_name
-        
+
         return components[-1].snake_case.safe_name
 
     def _get_parent_path(self, fern_filepath: ir_types.FernFilepath) -> str:
         components = fern_filepath.package_path.copy()
         if fern_filepath.file is not None:
             components += [fern_filepath.file]
-        
+
         if len(components) <= 1:
             return ""
-        
+
         return ".".join([component.snake_case.safe_name for component in components[:-1]])
 
     def _generate_client_test(self, subpackage_clients: Dict[str, List[str]]) -> None:
@@ -98,14 +100,14 @@ class MetaTestGenerator:
         )
 
         root_clients = subpackage_clients.get("", [])
-        
+
         test_function = self._create_test_function(
             root_clients=root_clients,
             subpackage_clients=subpackage_clients,
         )
-        
+
         source_file.add_expression(AST.Expression(test_function))
-        
+
         self._project.write_source_file(
             source_file=source_file,
             filepath=filepath,
@@ -128,15 +130,15 @@ class MetaTestGenerator:
                 )
             )
             writer.write_newline_if_last_line_not()
-            
+
             all_client_paths = self._get_all_client_paths(root_clients, subpackage_clients)
-            
+
             for client_path in sorted(all_client_paths):
                 if client_path:
                     writer.write_line(f"assert client.{client_path} is not None")
-            
+
             non_callable_attrs = [
-                f'attr for attr in dir(client) if not attr.startswith("_") and not callable(getattr(client, attr, None))'
+                'attr for attr in dir(client) if not attr.startswith("_") and not callable(getattr(client, attr, None))'
             ]
             writer.write_line(f"services = {{{non_callable_attrs[0]}}}")
             writer.write_line(f"assert len(services) == {len(root_clients)}")
@@ -157,11 +159,11 @@ class MetaTestGenerator:
         subpackage_clients: Dict[str, List[str]],
     ) -> Set[str]:
         all_paths: Set[str] = set()
-        
+
         for client in root_clients:
             all_paths.add(client)
             self._collect_nested_paths(client, subpackage_clients, all_paths)
-        
+
         return all_paths
 
     def _collect_nested_paths(
