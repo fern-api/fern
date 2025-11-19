@@ -2633,6 +2633,7 @@ func (f *fileWriter) endpointFromIR(
 		}
 		signatureReturnValues = fmt.Sprintf("(*core.%s[%s], error)", customPagerName, responseType)
 		errorReturnValues = "nil, err"
+		responseInitializerFormat = ""
 	}
 
 	return &endpoint{

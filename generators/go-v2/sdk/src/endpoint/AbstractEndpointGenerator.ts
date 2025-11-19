@@ -57,7 +57,7 @@ export abstract class AbstractEndpointGenerator {
             request,
             requestParameter,
             allParameters,
-            returnType: getEndpointReturnType({ context: this.context, endpoint }),
+            returnType: this.context.getReturnTypeForEndpoint(endpoint),
             pageReturnType: getEndpointPageReturnType({ context: this.context, endpoint }),
             rawReturnTypeReference: getRawEndpointReturnTypeReference({ context: this.context, endpoint }),
             returnZeroValue: getEndpointReturnZeroValue({ context: this.context, endpoint })

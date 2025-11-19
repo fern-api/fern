@@ -287,7 +287,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             );
             writer.newLine();
             const customPagerName = this.context.customConfig.customPagerName ?? "CustomPager";
-            writer.write(`pager := &${customPagerName}[`);
+            writer.write(`pager := &core.${customPagerName}[`);
             writer.writeNode(baseResponseType);
             writer.write("]{CustomPager: base}");
             writer.newLine();
