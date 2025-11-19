@@ -160,7 +160,7 @@ export class LocalTaskHandler {
 
                 this.context.logger.info(`Version bump: ${analysis.version_bump}, new version: ${newVersion}`);
 
-                const commitMessage = this.isWhitelabel ? this.removeFernBranding(analysis.message) : analysis.message;
+                const commitMessage = this.isWhitelabel ? analysis.message : this.addFernBranding(analysis.message);
 
                 return {
                     version: newVersion,
@@ -252,13 +252,9 @@ export class LocalTaskHandler {
         return configureBamlClient(this.ai);
     }
 
-    private removeFernBranding(message: string): string {
-        let cleaned = message;
-        cleaned = cleaned.replace(/🌿 Generated with Fern\s*/gi, "");
-        cleaned = cleaned.replace(/Generated with Fern\s*/gi, "");
-        cleaned = cleaned.replace(/Fern regeneration\s*/gi, "SDK regeneration");
-        cleaned = cleaned.trim();
-        return cleaned;
+    private addFernBranding(message: string): string {
+        const trimmed = message.trim();
+        return `${trimmed}\n\n🌿 Generated with Fern`;
     }
 
     private async isFernIgnorePresent(): Promise<boolean> {
