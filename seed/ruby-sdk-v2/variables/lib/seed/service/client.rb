@@ -13,7 +13,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/#{params[:endpointParam]}"
+          path: "/#{params[:endpoint_param]}"
         )
         begin
           _response = @client.send(_request)

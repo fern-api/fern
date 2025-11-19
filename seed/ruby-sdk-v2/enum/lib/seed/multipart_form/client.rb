@@ -18,22 +18,22 @@ module Seed
             value: params[:color]
           )
         end
-        if params[:maybeColor]
+        if params[:maybe_color]
           body.add(
             name: "maybeColor",
-            value: params[:maybeColor]
+            value: params[:maybe_color]
           )
         end
-        if params[:colorList]
+        if params[:color_list]
           body.add(
             name: "colorList",
-            value: params[:colorList]
+            value: params[:color_list]
           )
         end
-        if params[:maybeColorList]
+        if params[:maybe_color_list]
           body.add(
             name: "maybeColorList",
-            value: params[:maybeColorList]
+            value: params[:maybe_color_list]
           )
         end
 
