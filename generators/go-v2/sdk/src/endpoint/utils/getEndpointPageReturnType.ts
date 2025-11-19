@@ -20,6 +20,10 @@ export function getEndpointPageReturnType({
     const pagination = context.getPagination(endpoint);
     if (pagination != null && !context.isPaginationWithRequestBodyEndpoint(endpoint)) {
         const responseType = getResponseBodyType({ context, body: response.body });
+        // Check if this is custom pagination
+        if (pagination.type === "custom" && context.customConfig.customPagerName != null) {
+            return getCustomPagerReturnType({ context, endpoint, pagination });
+        }
         return getCorePageReturnType({ context, pagination, responseType });
     }
     return getResponseBodyType({ context, body: response.body });
@@ -57,4 +61,26 @@ function getPaginationValueType({
         return context.goTypeMapper.convert({ reference: iterableType });
     }
     return context.goTypeMapper.convert({ reference: pagination.results.property.valueType });
+}
+
+function getCustomPagerReturnType({
+    context,
+    endpoint,
+    pagination
+}: {
+    context: SdkGeneratorContext;
+    endpoint: HttpEndpoint;
+    pagination: Pagination;
+}): go.Type {
+    const responseBodyType = getResponseBodyType({ context, body: endpoint.response!.body! });
+    const customPagerName = context.customConfig.customPagerName ?? "CustomPager";
+    return go.Type.pointer(
+        go.Type.reference(
+            go.typeReference({
+                name: customPagerName,
+                importPath: context.getCoreImportPath(),
+                generics: [responseBodyType]
+            })
+        )
+    );
 }

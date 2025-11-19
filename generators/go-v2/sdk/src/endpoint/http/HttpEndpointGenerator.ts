@@ -819,7 +819,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getResponseInitialization({ endpoint }: { endpoint: HttpEndpoint }): go.CodeBlock | undefined {
         const responseBody = endpoint.response?.body;
-        if (responseBody == null || this.context.isEnabledPaginationEndpoint(endpoint)) {
+        const pagination = this.context.getPagination(endpoint);
+        const isCustomPagination = pagination?.type === "custom" && this.context.customConfig.customPagerName != null;
+        if (responseBody == null || this.context.isEnabledPaginationEndpoint(endpoint) || isCustomPagination) {
             return undefined;
         }
         switch (responseBody.type) {
