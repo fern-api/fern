@@ -29,7 +29,8 @@ export class ContainerTestRunner extends TestRunner {
                 );
             }
         } else {
-            this.runner = args.generator.workspaceConfig.test.podman != null ? "podman" : "docker";
+            // Default to docker for backward compatibility
+            this.runner = "docker";
         }
     }
 
