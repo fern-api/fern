@@ -170,11 +170,13 @@ export class HttpEndpointGenerator {
                 keyword: [
                     ruby.parameters.keyword({
                         name: "request_options",
+                        type: ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped()),
                         initializer: ruby.TypeLiteral.hash([])
                     })
                 ],
                 keywordSplat: ruby.parameters.keywordSplat({
-                    name: PARAMS_VN
+                    name: PARAMS_VN,
+                    type: ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped())
                 })
             },
             statements

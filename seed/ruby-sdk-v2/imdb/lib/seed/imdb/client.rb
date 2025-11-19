@@ -3,12 +3,18 @@
 module Seed
   module Imdb
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Imdb::Client]
       def initialize(client:)
         @client = client
       end
 
       # Add a movie to the database using the movies/* /... path.
+      #
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [String]
       def create_movie(request_options: {}, **params)
@@ -32,6 +38,10 @@ module Seed
         end
       end
 
+      # @param request_options [Hash[untyped, untyped]]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Imdb::Types::Movie]
       def get_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
