@@ -383,7 +383,7 @@ export class UserClient {
      * Test endpoint with path parameters listed in different order than found in path
      *
      * @param {SeedPathParameters.GetUserSpecificsRequest} request
-     * @param {User.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.user.getUserSpecifics({
@@ -394,14 +394,14 @@ export class UserClient {
      */
     public getUserSpecifics(
         request: SeedPathParameters.GetUserSpecificsRequest,
-        requestOptions?: User.RequestOptions,
+        requestOptions?: UserClient.RequestOptions,
     ): core.HttpResponsePromise<SeedPathParameters.User> {
         return core.HttpResponsePromise.fromPromise(this.__getUserSpecifics(request, requestOptions));
     }
 
     private async __getUserSpecifics(
         request: SeedPathParameters.GetUserSpecificsRequest,
-        requestOptions?: User.RequestOptions,
+        requestOptions?: UserClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedPathParameters.User>> {
         const { user_id: userId, version, thought } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
