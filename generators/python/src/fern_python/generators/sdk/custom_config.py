@@ -64,6 +64,8 @@ class SDKCustomConfig(pydantic.BaseModel):
 
     follow_redirects_by_default: Optional[bool] = True
 
+    environment_class_name: Optional[str] = None
+
     # Feature flag that removes the usage of request objects, and instead
     # parameters in function signatures where possible.
     inline_request_params: bool = True

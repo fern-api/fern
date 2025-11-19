@@ -30,6 +30,7 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
     public static final String GET_URL = "getUrl";
 
     private static final String URL_FIELD_NAME = "url";
+    private static final String DEFAULT_ENVIRONMENT_CLASS_NAME = "Environment";
 
     private final Optional<EnvironmentsConfig> maybeEnvironmentsConfig;
 
@@ -37,8 +38,19 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
     private boolean optionsPresent = false;
 
     public EnvironmentGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
-        super(generatorContext.getPoetClassNameFactory().getCoreClassName("Environment"), generatorContext);
+        super(
+                generatorContext.getPoetClassNameFactory().getCoreClassName(getEnvironmentClassName(generatorContext)),
+                generatorContext);
         this.maybeEnvironmentsConfig = generatorContext.getIr().getEnvironments();
+    }
+
+    private static String getEnvironmentClassName(AbstractGeneratorContext<?, ?> generatorContext) {
+        if (generatorContext.getCustomConfig() instanceof com.fern.java.client.JavaSdkCustomConfig) {
+            com.fern.java.client.JavaSdkCustomConfig customConfig =
+                    (com.fern.java.client.JavaSdkCustomConfig) generatorContext.getCustomConfig();
+            return customConfig.environmentClassName().orElse(DEFAULT_ENVIRONMENT_CLASS_NAME);
+        }
+        return DEFAULT_ENVIRONMENT_CLASS_NAME;
     }
 
     @Override
