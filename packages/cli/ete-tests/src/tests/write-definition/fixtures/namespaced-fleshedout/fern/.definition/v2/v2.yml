@@ -24,7 +24,6 @@ types:
       - CONTEXTUAL
       - STRICT
       - NONE
-    inline: true
     source:
       openapi: openapi/cohere-v2.yaml
 service:

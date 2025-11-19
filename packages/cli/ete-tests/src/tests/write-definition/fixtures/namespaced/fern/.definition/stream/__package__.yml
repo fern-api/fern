@@ -57,14 +57,12 @@ types:
       - trade
       - cancel
       - initial
-    inline: true
     source:
       openapi: asyncapi/sample.yml
   EventsItemSide:
     enum:
       - bid
       - side
-    inline: true
     source:
       openapi: asyncapi/sample.yml
   EventsItemType:
@@ -73,7 +71,6 @@ types:
       - change
       - name: AuctionBlockTrade
         value: auction, block_trade
-    inline: true
     source:
       openapi: asyncapi/sample.yml
   Heartbeat:

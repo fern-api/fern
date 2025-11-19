@@ -688,14 +688,12 @@ service:
       - trade
       - cancel
       - initial
-    inline: true
     source:
       openapi: asyncapi/sample.yml
   EventsItemSide:
     enum:
       - bid
       - side
-    inline: true
     source:
       openapi: asyncapi/sample.yml
   EventsItemType:
@@ -704,7 +702,6 @@ service:
       - change
       - name: AuctionBlockTrade
         value: auction, block_trade
-    inline: true
     source:
       openapi: asyncapi/sample.yml
   Heartbeat:
@@ -923,7 +920,6 @@ channel:
       - nok
       - sek
       - try
-    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   BookingPaymentSource:
@@ -981,7 +977,6 @@ channel:
     enum:
       - individual
       - company
-    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   BookingPaymentSourceCard:
@@ -1025,7 +1020,6 @@ channel:
       - pending
       - succeeded
       - failed
-    inline: true
     source:
       openapi: openapi/trains/openapi.yml
   LinksBooking:
@@ -1930,7 +1924,6 @@ name: api
       - 'OFF'
       - AUTO
       - AUTO_PRESERVE_ORDER
-    inline: true
     source:
       openapi: openapi/cohere.yaml
   ChatRequestSafetyMode:
@@ -1956,7 +1949,6 @@ name: api
       - CONTEXTUAL
       - STRICT
       - NONE
-    inline: true
     source:
       openapi: openapi/cohere.yaml
   ClientClosedRequestErrorBody:
@@ -2550,7 +2542,6 @@ types:
       - CONTEXTUAL
       - STRICT
       - NONE
-    inline: true
     source:
       openapi: openapi/cohere-v2.yaml
 service:

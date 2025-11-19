@@ -39,7 +39,6 @@ types:
       - 'OFF'
       - AUTO
       - AUTO_PRESERVE_ORDER
-    inline: true
     source:
       openapi: openapi/cohere.yaml
   ChatRequestSafetyMode:
@@ -65,7 +64,6 @@ types:
       - CONTEXTUAL
       - STRICT
       - NONE
-    inline: true
     source:
       openapi: openapi/cohere.yaml
   ClientClosedRequestErrorBody:
