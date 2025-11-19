@@ -361,6 +361,12 @@ class SdkGenerator(AbstractGenerator):
                 ir=ir,
             )
 
+        self._generate_verify_types_test(
+            context=context,
+            ir=ir,
+            project=project,
+        )
+
     def postrun(self, *, generator_exec_wrapper: GeneratorExecWrapper) -> None:
         # Finally, run the python-v2 generator.
         pythonv2 = PythonV2Generator(
@@ -658,6 +664,99 @@ __version__ = metadata.version("{project._project_config.package_name}")
         ir: ir_types.IntermediateRepresentation,
     ) -> None:
         snippet_test_factory.tests(ir, snippet_writer)
+
+    def _generate_verify_types_test(
+        self,
+        context: SdkGeneratorContext,
+        ir: ir_types.IntermediateRepresentation,
+        project: Project,
+    ) -> None:
+        """Generate a test that verifies all types can be imported and instantiated."""
+        if len(ir.types) == 0:
+            return
+
+        type_info_list = []
+        for type_declaration in ir.types.values():
+            filepath = context.pydantic_generator_context.get_filepath_for_type_id(
+                type_id=type_declaration.name.type_id, as_request=False
+            )
+            class_name = context.pydantic_generator_context.get_class_name_for_type_id(
+                type_id=type_declaration.name.type_id, as_request=False
+            )
+            module_path = context.get_module_path_in_project(filepath.to_module().path)
+            module_str = ".".join(module_path)
+            type_info_list.append((module_str, class_name))
+
+        type_info_list.sort()
+
+        test_content = self._build_verify_types_test_content(type_info_list)
+
+        test_filepath = os.path.join(
+            context.generator_config.output.path,
+            "tests",
+            "meta",
+            "test_verify_types.py",
+        )
+        project.add_file(test_filepath, test_content)
+
+    def _build_verify_types_test_content(self, type_info_list: list) -> str:
+        """Build the content of the verify types test file."""
+        type_params = ",\n        ".join([f'("{module}", "{class_name}")' for module, class_name in type_info_list])
+
+        return f'''"""
+Test that verifies all types in the SDK can be imported and instantiated.
+
+This test runs each type import/instantiation in a subprocess to avoid import cache issues.
+It allows Pydantic ValidationError (expected when instantiating without required fields)
+but catches other errors like circular imports, missing dependencies, etc.
+"""
+import subprocess
+import sys
+
+import pytest
+
+
+@pytest.mark.parametrize(
+    "module_name,class_name",
+    [
+        {type_params}
+    ],
+)
+def test_type_can_be_imported_and_instantiated(module_name: str, class_name: str) -> None:
+    """Test that a type can be imported and instantiated in a subprocess."""
+    test_code = f"""
+import sys
+from pydantic import ValidationError as PydanticValidationError
+
+try:
+    from {{module_name}} import {{class_name}}
+
+    try:
+        {{class_name}}()
+    except PydanticValidationError:
+        pass
+    except TypeError:
+        pass
+
+except ImportError as e:
+    print("ImportError: " + str(e), file=sys.stderr)
+    sys.exit(1)
+except BaseException as e:
+    print(type(e).__name__ + ": " + str(e), file=sys.stderr)
+    sys.exit(1)
+
+sys.exit(0)
+"""
+
+    result = subprocess.run(
+        [sys.executable, "-c", test_code],
+        capture_output=True,
+        text=True,
+        timeout=30,
+    )
+
+    assert result.returncode == 0, f"Failed to import/instantiate {{module_name}}.{{class_name}}: {{result.stderr}}"
+'''
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)
