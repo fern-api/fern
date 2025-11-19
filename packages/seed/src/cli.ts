@@ -3,6 +3,7 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin } from "@fern-api/login";
 import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
+import { minimatch } from "minimatch";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
@@ -139,6 +140,9 @@ function addTestCommand(cli: Argv) {
                 // If no fixtures passed in, use all available fixtures (without output folders)
                 if (argv.fixture == null) {
                     argv.fixture = await getAvailableFixtures(generator, false);
+                } else {
+                    const availableFixturesForGlobbing = await getAvailableFixtures(generator, false);
+                    argv.fixture = expandFixtureGlobs(argv.fixture, availableFixturesForGlobbing);
                 }
 
                 // Get both formats of fixtures and check if the fixtures passed in are of one of the two formats allowed
@@ -563,6 +567,28 @@ async function getAvailableFixtures(generator: GeneratorWorkspace, withOutputFol
 
     // Don't include subfolders, return the original fixtures
     return availableFixtures;
+}
+
+function expandFixtureGlobs(fixturePatterns: string[], availableFixtures: string[]): string[] {
+    const expandedFixtures = new Set<string>();
+
+    for (const pattern of fixturePatterns) {
+        if (pattern.includes("*") || pattern.includes("?") || pattern.includes("[")) {
+            const matches = availableFixtures.filter((fixture) => minimatch(fixture, pattern));
+            if (matches.length === 0) {
+                throw new Error(
+                    `Glob pattern "${pattern}" did not match any fixtures. Available fixtures: ${availableFixtures.join(", ")}`
+                );
+            }
+            for (const match of matches) {
+                expandedFixtures.add(match);
+            }
+        } else {
+            expandedFixtures.add(pattern);
+        }
+    }
+
+    return Array.from(expandedFixtures);
 }
 
 function addPublishCommands(cli: Argv) {
