@@ -3,11 +3,17 @@
 module Seed
   module User
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::User::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::User::Types::User]
       def get_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

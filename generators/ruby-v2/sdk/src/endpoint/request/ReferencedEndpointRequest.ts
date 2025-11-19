@@ -23,7 +23,11 @@ export class ReferencedEndpointRequest extends EndpointRequest {
     }
 
     public getParameterType(): ruby.Type {
-        return ruby.Type.void();
+        if (this.requestBodyShape.type === "named") {
+            const classRef = this.context.getReferenceToTypeId(this.requestBodyShape.typeId);
+            return ruby.Type.class_({ name: classRef.name, modules: classRef.modules });
+        }
+        return ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped());
     }
 
     public getQueryParameterCodeBlock(): QueryParameterCodeBlock | undefined {

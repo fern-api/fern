@@ -3,12 +3,18 @@
 module Seed
   module Problem
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Problem::Client]
       def initialize(client:)
         @client = client
       end
 
       # Creates a problem
+      #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Problem::Types::CreateProblemRequest]
       #
       # @return [Seed::Problem::Types::CreateProblemResponse]
       def create_problem(request_options: {}, **params)
@@ -34,6 +40,10 @@ module Seed
 
       # Updates a problem
       #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Problem::Types::CreateProblemRequest]
+      #
       # @return [Seed::Problem::Types::UpdateProblemResponse]
       def update_problem(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -58,6 +68,10 @@ module Seed
 
       # Soft deletes a problem
       #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def delete_problem(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -78,6 +92,10 @@ module Seed
       end
 
       # Returns default starter files for problem
+      #
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Problem::Types::GetDefaultStarterFilesRequest]
       #
       # @return [Seed::Problem::Types::GetDefaultStarterFilesResponse]
       def get_default_starter_files(request_options: {}, **params)

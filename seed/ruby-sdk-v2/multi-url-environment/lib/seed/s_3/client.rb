@@ -3,11 +3,17 @@
 module Seed
   module S3
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::S3::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::S3::Types::GetPresignedUrlRequest]
+      #
       # @return [String]
       def get_presigned_url(request_options: {}, **params)
         _body_prop_names = %i[s_3_key]

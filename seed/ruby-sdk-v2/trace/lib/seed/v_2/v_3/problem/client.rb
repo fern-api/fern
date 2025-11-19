@@ -5,12 +5,18 @@ module Seed
     module V3
       module Problem
         class Client
+          # @param client [Seed::Internal::Http::RawClient]
+          #
           # @return [Seed::V2::V3::Problem::Client]
           def initialize(client:)
             @client = client
           end
 
           # Returns lightweight versions of all problems
+          #
+          # @param request_options [Seed::RequestOptions]
+          #
+          # @param params [Hash[untyped, untyped]]
           #
           # @return [Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]]
           def get_lightweight_problems(request_options: {}, **_params)
@@ -33,6 +39,10 @@ module Seed
 
           # Returns latest versions of all problems
           #
+          # @param request_options [Seed::RequestOptions]
+          #
+          # @param params [Hash[untyped, untyped]]
+          #
           # @return [Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]]
           def get_problems(request_options: {}, **_params)
             _request = Seed::Internal::JSON::Request.new(
@@ -53,6 +63,10 @@ module Seed
           end
 
           # Returns latest version of a problem
+          #
+          # @param request_options [Seed::RequestOptions]
+          #
+          # @param params [Hash[untyped, untyped]]
           #
           # @return [Seed::V2::V3::Problem::Types::ProblemInfoV2]
           def get_latest_problem(request_options: {}, **params)
@@ -76,6 +90,10 @@ module Seed
           end
 
           # Returns requested version of a problem
+          #
+          # @param request_options [Seed::RequestOptions]
+          #
+          # @param params [Hash[untyped, untyped]]
           #
           # @return [Seed::V2::V3::Problem::Types::ProblemInfoV2]
           def get_problem_version(request_options: {}, **params)

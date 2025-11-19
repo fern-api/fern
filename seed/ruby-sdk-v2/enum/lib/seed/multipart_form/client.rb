@@ -3,11 +3,17 @@
 module Seed
   module MultipartForm
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::MultipartForm::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [void]
+      #
       # @return [untyped]
       def multipart_form(request_options: {}, **params)
         body = Internal::Multipart::FormData.new

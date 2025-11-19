@@ -5,11 +5,17 @@ module Seed
     module Notification
       module Service
         class Client
+          # @param client [Seed::Internal::Http::RawClient]
+          #
           # @return [Seed::File::Notification::Service::Client]
           def initialize(client:)
             @client = client
           end
 
+          # @param request_options [Seed::RequestOptions]
+          #
+          # @param params [Hash[untyped, untyped]]
+          #
           # @return [Seed::Types::Types::Exception]
           def get_exception(request_options: {}, **params)
             _request = Seed::Internal::JSON::Request.new(

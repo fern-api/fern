@@ -3,11 +3,17 @@
 module Seed
   module Service
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Service::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Types::Types::Movie]
       def get_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -29,6 +35,10 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Types::Types::Movie]
+      #
       # @return [String]
       def create_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -51,6 +61,10 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Types::Types::Metadata]
       def get_metadata(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -80,6 +94,10 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Types::Types::BigEntity]
+      #
       # @return [Seed::Types::Types::Response]
       def create_big_entity(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -102,6 +120,10 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def refresh_token(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

@@ -3,11 +3,17 @@
 module Seed
   module Ec2
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Ec2::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Ec2::Types::BootInstanceRequest]
+      #
       # @return [untyped]
       def boot_instance(request_options: {}, **params)
         _body_prop_names = %i[size]

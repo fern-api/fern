@@ -3,11 +3,17 @@
 module Seed
   module Dummy
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Dummy::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Dummy::Types::GenerateStreamRequest]
+      #
       # @return [untyped]
       def generate_stream(request_options: {}, **params)
         _body_prop_names = %i[stream num_events]
@@ -31,6 +37,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      #
+      # @param params [Seed::Dummy::Types::Generateequest]
+      #
       # @return [Seed::Dummy::Types::StreamResponse]
       def generate(request_options: {}, **params)
         _body_prop_names = %i[stream num_events]

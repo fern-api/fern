@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc39
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add YARD documentation comments for method parameters in generated SDK code.
+  irVersion: 61
+
 - version: 1.0.0-rc38
   createdAt: "2025-11-19"
   changelogEntry:
