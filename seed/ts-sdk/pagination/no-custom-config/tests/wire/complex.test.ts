@@ -24,7 +24,7 @@ describe("ComplexClient", () => {
             type: "conversation.list",
         };
         server
-            .mockEndpoint()
+            .mockEndpoint({ once: false })
             .post("/index/conversations/search")
             .jsonBody(rawRequestBody)
             .respondWith()
