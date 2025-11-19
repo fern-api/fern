@@ -8,7 +8,6 @@ describe("InlinedRequestsClient", () => {
     test("postWithObjectBodyandResponse (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = {
             string: "string",
             integer: 1,
@@ -95,7 +94,6 @@ describe("InlinedRequestsClient", () => {
     test("postWithObjectBodyandResponse (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = {
             string: "string",
             integer: 1,

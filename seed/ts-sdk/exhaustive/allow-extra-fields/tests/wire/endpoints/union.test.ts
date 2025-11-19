@@ -7,7 +7,6 @@ describe("UnionClient", () => {
     test("getAndReturnUnion", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = { animal: "dog", name: "name", likesToWoof: true };
         const rawResponseBody = { animal: "dog", name: "name", likesToWoof: true };
         server

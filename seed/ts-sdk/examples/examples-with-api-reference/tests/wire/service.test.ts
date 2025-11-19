@@ -55,7 +55,6 @@ describe("ServiceClient", () => {
     test("createMovie", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = {
             id: "movie-c06a4ad7",
             prequel: "movie-cv9b914f",
@@ -140,7 +139,6 @@ describe("ServiceClient", () => {
     test("createBigEntity", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = {
             castMember: { name: "name", id: "id" },
             extendedMovie: {
@@ -508,7 +506,6 @@ describe("ServiceClient", () => {
     test("refreshToken (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = { ttl: 420 };
 
         server.mockEndpoint().post("/refresh-token").jsonBody(rawRequestBody).respondWith().statusCode(200).build();

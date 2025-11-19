@@ -7,7 +7,6 @@ describe("UserClient", () => {
     test("createUsername", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedRequestParametersClient({ environment: server.baseUrl });
-
         const rawRequestBody = { username: "username", password: "password", name: "test" };
 
         server.mockEndpoint().post("/user/username").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
@@ -24,7 +23,6 @@ describe("UserClient", () => {
     test("createUsernameWithReferencedType", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedRequestParametersClient({ environment: server.baseUrl });
-
         const rawRequestBody = { username: "username", password: "password", name: "test" };
 
         server

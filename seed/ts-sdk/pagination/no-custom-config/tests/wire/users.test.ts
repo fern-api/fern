@@ -94,7 +94,6 @@ describe("UsersClient", () => {
     test("listWithBodyCursorPagination", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = { pagination: { cursor: "cursor" } };
         const rawResponseBody = {
             hasNextPage: true,
@@ -254,7 +253,6 @@ describe("UsersClient", () => {
     test("listWithBodyOffsetPagination", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = { pagination: { page: 1 } };
         const rawResponseBody = {
             hasNextPage: true,

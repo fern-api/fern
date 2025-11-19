@@ -10,7 +10,6 @@ describe("S3Client", () => {
             token: "test",
             environment: { ec2: server.baseUrl, s3: server.baseUrl },
         });
-
         const rawRequestBody = { s3Key: "s3Key" };
         const rawResponseBody = "string";
         server

@@ -49,7 +49,6 @@ export class MigrationClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
                 "admin-key-header": adminKeyHeader,
                 "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),

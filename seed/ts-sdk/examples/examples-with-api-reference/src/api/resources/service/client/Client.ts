@@ -38,11 +38,7 @@ export class ServiceClient {
         movieId: SeedExamples.MovieId,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExamples.Movie>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -126,11 +122,7 @@ export class ServiceClient {
         request: SeedExamples.Movie,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExamples.MovieId>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -216,10 +208,7 @@ export class ServiceClient {
 
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                "X-API-Version": xApiVersion,
-            }),
+            mergeOnlyDefinedHeaders({ "X-API-Version": xApiVersion }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -460,11 +449,7 @@ export class ServiceClient {
         request: SeedExamples.BigEntity,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExamples.Response>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -535,11 +520,7 @@ export class ServiceClient {
         request?: SeedExamples.RefreshTokenRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??

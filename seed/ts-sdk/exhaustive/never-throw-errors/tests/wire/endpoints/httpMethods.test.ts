@@ -23,7 +23,6 @@ describe("HttpMethodsClient", () => {
     test("testPost", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = { string: "string" };
         const rawResponseBody = {
             string: "string",
@@ -79,7 +78,6 @@ describe("HttpMethodsClient", () => {
     test("testPut", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = { string: "string" };
         const rawResponseBody = {
             string: "string",
@@ -135,7 +133,6 @@ describe("HttpMethodsClient", () => {
     test("testPatch", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = {
             string: "string",
             integer: 1,

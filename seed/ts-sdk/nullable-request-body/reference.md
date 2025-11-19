@@ -54,7 +54,7 @@ await client.testGroup.testMethodName({
 <dl>
 <dd>
 
-**requestOptions:** `TestGroup.RequestOptions` 
+**requestOptions:** `TestGroupClient.RequestOptions` 
     
 </dd>
 </dl>

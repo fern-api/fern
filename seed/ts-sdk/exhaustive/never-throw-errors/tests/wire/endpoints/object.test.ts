@@ -7,7 +7,6 @@ describe("ObjectClient", () => {
     test("getAndReturnWithOptionalField", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = {
             string: "string",
             integer: 1,
@@ -91,7 +90,6 @@ describe("ObjectClient", () => {
     test("getAndReturnWithRequiredField", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = { string: "string" };
         const rawResponseBody = { string: "string" };
         server
@@ -119,7 +117,6 @@ describe("ObjectClient", () => {
     test("getAndReturnWithMapOfMap", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = { map: { map: { map: "map" } } };
         const rawResponseBody = { map: { map: { map: "map" } } };
         server
@@ -155,7 +152,6 @@ describe("ObjectClient", () => {
     test("getAndReturnNestedWithOptionalField", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = {
             string: "string",
             NestedObject: {
@@ -251,7 +247,6 @@ describe("ObjectClient", () => {
     test("getAndReturnNestedWithRequiredField", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = {
             string: "string",
             NestedObject: {
@@ -347,7 +342,6 @@ describe("ObjectClient", () => {
     test("getAndReturnNestedWithRequiredFieldAsList", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = [
             {
                 string: "string",

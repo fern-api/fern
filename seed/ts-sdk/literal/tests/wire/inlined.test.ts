@@ -7,7 +7,6 @@ describe("InlinedClient", () => {
     test("send", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedLiteralClient({ environment: server.baseUrl });
-
         const rawRequestBody = {
             temperature: 10.1,
             prompt: "You are a helpful assistant",

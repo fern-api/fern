@@ -7,7 +7,6 @@ describe("FooClient", () => {
     test("find", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedCrossPackageTypeNamesClient({ environment: server.baseUrl });
-
         const rawRequestBody = { publicProperty: "publicProperty", privateProperty: 1 };
         const rawResponseBody = { imported: "imported" };
         server

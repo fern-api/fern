@@ -18,7 +18,6 @@ describe("ServiceClient", () => {
     test("unknownRequest (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ environment: server.baseUrl });
-
         const rawRequestBody = { key: "value" };
 
         server.mockEndpoint().post("/service").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
@@ -32,7 +31,6 @@ describe("ServiceClient", () => {
     test("unknownRequest (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ environment: server.baseUrl });
-
         const rawRequestBody = { key: "value" };
         const rawResponseBody = "string";
         server

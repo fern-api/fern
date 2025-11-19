@@ -7,7 +7,6 @@ describe("PrimitiveClient", () => {
     test("getAndReturnString", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = "string";
         const rawResponseBody = "string";
         server
@@ -31,7 +30,6 @@ describe("PrimitiveClient", () => {
     test("getAndReturnInt", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = 1;
         const rawResponseBody = 1;
         server
@@ -55,7 +53,6 @@ describe("PrimitiveClient", () => {
     test("getAndReturnLong", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = 1000000;
         const rawResponseBody = 1000000;
         server
@@ -79,7 +76,6 @@ describe("PrimitiveClient", () => {
     test("getAndReturnDouble", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = 1.1;
         const rawResponseBody = 1.1;
         server
@@ -103,7 +99,6 @@ describe("PrimitiveClient", () => {
     test("getAndReturnBool", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = true;
         const rawResponseBody = true;
         server
@@ -127,7 +122,6 @@ describe("PrimitiveClient", () => {
     test("getAndReturnDatetime", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = "2024-01-15T09:30:00Z";
         const rawResponseBody = "2024-01-15T09:30:00Z";
         server
@@ -151,7 +145,6 @@ describe("PrimitiveClient", () => {
     test("getAndReturnDate", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = "2023-01-15";
         const rawResponseBody = "2023-01-15";
         server
@@ -175,7 +168,6 @@ describe("PrimitiveClient", () => {
     test("getAndReturnUUID", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
         const rawResponseBody = "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32";
         server
@@ -199,7 +191,6 @@ describe("PrimitiveClient", () => {
     test("getAndReturnBase64", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = "SGVsbG8gd29ybGQh";
         const rawResponseBody = "SGVsbG8gd29ybGQh";
         server

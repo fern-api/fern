@@ -7,7 +7,6 @@ describe("ProblemClient", () => {
     test("createProblem", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
-
         const rawRequestBody = {
             problemName: "problemName",
             problemDescription: {
@@ -169,7 +168,6 @@ describe("ProblemClient", () => {
     test("updateProblem", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
-
         const rawRequestBody = {
             problemName: "problemName",
             problemDescription: {
@@ -345,7 +343,6 @@ describe("ProblemClient", () => {
     test("getDefaultStarterFiles", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
-
         const rawRequestBody = {
             inputParams: [
                 { variableType: { type: "integerType" }, name: "name" },

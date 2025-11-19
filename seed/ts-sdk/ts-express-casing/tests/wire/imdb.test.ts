@@ -8,7 +8,6 @@ describe("ImdbClient", () => {
     test("create_movie", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedApiClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = { id: "id", movie_title: "movie_title", movie_rating: 1.1 };
         const rawResponseBody = "string";
         server

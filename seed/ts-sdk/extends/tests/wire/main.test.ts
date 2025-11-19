@@ -7,7 +7,6 @@ describe("SeedExtendsClient", () => {
     test("extendedInlineRequestBody", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExtendsClient({ environment: server.baseUrl });
-
         const rawRequestBody = { unique: "unique", name: "name", docs: "docs" };
 
         server

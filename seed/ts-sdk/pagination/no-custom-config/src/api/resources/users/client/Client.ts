@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedPagination from "../../../index.js";
@@ -56,7 +56,6 @@ export class UsersClient {
                 }
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({
@@ -145,7 +144,6 @@ export class UsersClient {
                 }
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({
@@ -227,7 +225,6 @@ export class UsersClient {
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({
@@ -331,7 +328,6 @@ export class UsersClient {
                 }
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({
@@ -429,7 +425,6 @@ export class UsersClient {
                 }
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({
@@ -512,7 +507,6 @@ export class UsersClient {
             ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({
@@ -609,7 +603,6 @@ export class UsersClient {
                 }
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({
@@ -703,7 +696,6 @@ export class UsersClient {
                 }
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({
@@ -790,7 +782,6 @@ export class UsersClient {
                 }
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({
@@ -875,7 +866,6 @@ export class UsersClient {
                 }
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({
@@ -960,7 +950,6 @@ export class UsersClient {
                 }
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({
@@ -1046,7 +1035,6 @@ export class UsersClient {
                 }
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
                     requestOptions?.headers,
                 );
                 const _response = await core.fetcher({

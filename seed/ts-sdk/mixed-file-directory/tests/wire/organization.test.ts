@@ -7,7 +7,6 @@ describe("OrganizationClient", () => {
     test("create", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedMixedFileDirectoryClient({ environment: server.baseUrl });
-
         const rawRequestBody = { name: "name" };
         const rawResponseBody = {
             id: "id",

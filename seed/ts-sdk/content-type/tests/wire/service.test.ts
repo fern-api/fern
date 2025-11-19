@@ -7,7 +7,6 @@ describe("ServiceClient", () => {
     test("patch", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedContentTypesClient({ environment: server.baseUrl });
-
         const rawRequestBody = { application: "application", require_auth: true };
 
         server.mockEndpoint().patch("").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
@@ -22,7 +21,6 @@ describe("ServiceClient", () => {
     test("patchComplex", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedContentTypesClient({ environment: server.baseUrl });
-
         const rawRequestBody = {
             name: "name",
             age: 1,
@@ -64,7 +62,6 @@ describe("ServiceClient", () => {
     test("namedPatchWithMixed", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedContentTypesClient({ environment: server.baseUrl });
-
         const rawRequestBody = { appId: "appId", instructions: "instructions", active: true };
 
         server.mockEndpoint().patch("/named-mixed/id").jsonBody(rawRequestBody).respondWith().statusCode(200).build();
@@ -80,7 +77,6 @@ describe("ServiceClient", () => {
     test("optionalMergePatchTest", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedContentTypesClient({ environment: server.baseUrl });
-
         const rawRequestBody = {
             requiredField: "requiredField",
             optionalString: "optionalString",
@@ -110,7 +106,6 @@ describe("ServiceClient", () => {
     test("regularPatch", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedContentTypesClient({ environment: server.baseUrl });
-
         const rawRequestBody = { field1: "field1", field2: 1 };
 
         server.mockEndpoint().patch("/regular/id").jsonBody(rawRequestBody).respondWith().statusCode(200).build();

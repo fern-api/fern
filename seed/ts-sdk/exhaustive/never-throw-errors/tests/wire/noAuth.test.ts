@@ -7,7 +7,6 @@ describe("NoAuthClient", () => {
     test("postWithNoAuth", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
-
         const rawRequestBody = { key: "value" };
         const rawResponseBody = true;
         server
