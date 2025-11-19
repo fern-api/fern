@@ -1,3 +1,11 @@
+- version: 3.17.1
+  changelogEntry:
+    - summary: |
+        Add File Uploads documentation section to generated README. The README now includes a "File Uploads" section in the Advanced section that documents how to upload files using File objects, InputStreams, and InputStreams with custom MediaType. This documentation covers the InputStream-based upload methods added in version 3.17.0.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+
 - version: 3.17.0
   changelogEntry:
     - summary: |
