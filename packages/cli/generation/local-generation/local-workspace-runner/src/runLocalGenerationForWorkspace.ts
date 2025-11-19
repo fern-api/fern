@@ -196,6 +196,7 @@ export async function runLocalGenerationForWorkspace({
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
                     ir: intermediateRepresentation,
+                    whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
                     runner
                 });
 

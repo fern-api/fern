@@ -72,6 +72,7 @@ export async function writeFilesToDiskAndRunGenerator({
     inspect,
     executionEnvironment,
     runner,
+    whiteLabel,
     ir
 }: {
     organization: string;
@@ -95,6 +96,7 @@ export async function writeFilesToDiskAndRunGenerator({
     inspect: boolean;
     executionEnvironment?: ExecutionEnvironment;
     runner: ContainerRunner | undefined;
+    whiteLabel?: boolean;
     ir: IntermediateRepresentation;
 }): Promise<{ ir: IntermediateRepresentation; generatorConfig: FernGeneratorExec.GeneratorConfig }> {
     const { latest, migrated } = await getIntermediateRepresentation({
@@ -180,6 +182,7 @@ export async function writeFilesToDiskAndRunGenerator({
         writeUnitTests,
         generateOauthClients,
         generatePaginatedClients,
+        whiteLabel,
         paths
     });
 
