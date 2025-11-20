@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Updates dependencies to fix `fern` commands.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.2
+
+- changelogEntry:
+    - summary: |
         Updates the **beta** `write-translation` command to use `--stub` flag for mocking translation configuration.
       type: fix
   irVersion: 61
