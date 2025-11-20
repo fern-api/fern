@@ -63,7 +63,16 @@ export class Method extends AstNode {
     public readonly returnType: Type;
     private readonly splatOptionDocs: string[];
 
-    constructor({ name, docstring, kind, visibility, parameters, returnType, statements, splatOptionDocs }: Method.Args) {
+    constructor({
+        name,
+        docstring,
+        kind,
+        visibility,
+        parameters,
+        returnType,
+        statements,
+        splatOptionDocs
+    }: Method.Args) {
         super();
 
         this.name = name;
