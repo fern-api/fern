@@ -215,6 +215,7 @@ export class DocsDefinitionResolver {
     }
     private collectedFileIds = new Map<AbsoluteFilePath, string>();
     private markdownFilesToFullSlugs: Map<AbsoluteFilePath, string> = new Map();
+    private markdownFilesToSidebarTitle: Map<AbsoluteFilePath, string> = new Map();
     private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
     private markdownFilesToTags: Map<AbsoluteFilePath, string[]> = new Map();
     private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
@@ -271,6 +272,9 @@ export class DocsDefinitionResolver {
         // create a map of markdown files to their URL pathnames
         // this will be used to resolve relative markdown links to their final URLs
         this.markdownFilesToFullSlugs = await this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
+
+        // create a map of markdown files to their sidebar titles
+        this.markdownFilesToSidebarTitle = await this.getMarkdownFilesToSidebarTitle(this.parsedDocsConfig.pages);
 
         // create a map of markdown files to their noindex values
         this.markdownFilesToNoIndex = await this.getMarkdownFilesToNoIndex(this.parsedDocsConfig.pages);
@@ -448,6 +452,25 @@ export class DocsDefinitionResolver {
             }
         }
         return mdxFilePathToSlug;
+    }
+
+    /**
+     * Creates a map of markdown files to their sidebar titles specified in the frontmatter only
+     * @param pages - the pages to convert to sidebar titles
+     * @returns a map of markdown files to their sidebar titles
+     */
+    private async getMarkdownFilesToSidebarTitle(
+        pages: Record<RelativeFilePath, string>
+    ): Promise<Map<AbsoluteFilePath, string>> {
+        const mdxFilePathToSidebarTitle = new Map<AbsoluteFilePath, string>();
+        for (const [relativePath, markdown] of Object.entries(pages)) {
+            const frontmatter = matter(markdown);
+            const sidebarTitle = frontmatter.data["sidebar-title"];
+            if (typeof sidebarTitle === "string" && sidebarTitle.trim().length > 0) {
+                mdxFilePathToSidebarTitle.set(this.resolveFilepath(relativePath), sidebarTitle.trim());
+            }
+        }
+        return mdxFilePathToSidebarTitle;
     }
 
     /**
@@ -1222,7 +1245,7 @@ export class DocsDefinitionResolver {
             id,
             type: "page",
             slug: slug.get(),
-            title: item.title,
+            title: this.markdownFilesToSidebarTitle.get(item.absolutePath) ?? item.title,
             icon: this.resolveIconFileId(item.icon),
             hidden: hideChildren || item.hidden,
             viewers: item.viewers,
@@ -1266,7 +1289,10 @@ export class DocsDefinitionResolver {
             type: "section",
             overviewPageId: pageId,
             slug: slug.get(),
-            title: item.title,
+            title:
+                item.overviewAbsolutePath != null
+                    ? (this.markdownFilesToSidebarTitle.get(item.overviewAbsolutePath) ?? item.title)
+                    : item.title,
             icon: this.resolveIconFileId(item.icon),
             collapsed: item.collapsed,
             hidden: hiddenSection,
