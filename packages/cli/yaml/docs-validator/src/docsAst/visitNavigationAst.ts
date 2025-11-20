@@ -11,8 +11,6 @@ import { DocsConfigFileAstVisitor } from "./DocsConfigFileAstVisitor";
 import { visitFilepath } from "./visitFilepath";
 
 const VALIDATION_CONCURRENCY = parseInt(process.env.FERN_DOCS_VALIDATION_CONCURRENCY ?? "32", 10);
-const MAX_ASSET_SCAN_BYTES = parseInt(process.env.FERN_DOCS_MAX_ASSET_SCAN_BYTES ?? "5242880", 10);
-const PROGRESS_LOG_INTERVAL = 250;
 
 export declare namespace visitNavigationAst {
     interface Args {
@@ -35,7 +33,7 @@ export async function visitNavigationAst({
     context,
     nodePath
 }: visitNavigationAst.Args): Promise<void> {
-    context.logger.debug(`[docs]: Starting navigation validation with concurrency limit: ${VALIDATION_CONCURRENCY}`);
+    context.logger.debug(`Starting navigation validation with concurrency limit: ${VALIDATION_CONCURRENCY}`);
 
     if (navigationConfigIsTabbed(navigation)) {
         await asyncPool(VALIDATION_CONCURRENCY, navigation, async (tab, tabIdx) => {
@@ -189,7 +187,7 @@ async function visitNavigationItem({
 
             if (fileSizeMB > 1) {
                 context.logger.trace(
-                    `[docs]: Processing large markdown file: ${navigationItem.path} (${fileSizeMB.toFixed(2)} MB)`
+                    `Processing large markdown file: ${navigationItem.path} (${fileSizeMB.toFixed(2)} MB)`
                 );
             }
 
@@ -197,8 +195,8 @@ async function visitNavigationItem({
             const content = (await readFile(absoluteFilepath, "utf8")).toString();
             const readTime = performance.now() - startTime;
 
-            if (readTime > 200) {
-                context.logger.debug(`[docs]: Slow file read: ${navigationItem.path} took ${readTime.toFixed(0)}ms`);
+            if (readTime > 2000) {
+                context.logger.debug(`Slow file read: ${navigationItem.path} took ${readTime.toFixed(0)}ms`);
             }
 
             await visitor.markdownPage?.(
@@ -210,38 +208,32 @@ async function visitNavigationItem({
                 [...nodePath, navigationItem.path]
             );
 
-            if (fileStats.size <= MAX_ASSET_SCAN_BYTES) {
-                try {
-                    const parseStart = performance.now();
-                    const { filepaths } = parseImagePaths(content, {
-                        absolutePathToFernFolder,
-                        absolutePathToMarkdownFile: absoluteFilepath
-                    });
-                    const parseTime = performance.now() - parseStart;
+            try {
+                const parseStart = performance.now();
+                const { filepaths } = parseImagePaths(content, {
+                    absolutePathToFernFolder,
+                    absolutePathToMarkdownFile: absoluteFilepath
+                });
+                const parseTime = performance.now() - parseStart;
 
-                    if (parseTime > 2000) {
-                        context.logger.debug(
-                            `[docs]: Slow image path parsing: ${navigationItem.path} took ${parseTime.toFixed(0)}ms`
-                        );
-                    }
-
-                    for (const filepath of filepaths) {
-                        await visitor.filepath?.(
-                            {
-                                absoluteFilepath: filepath,
-                                value: relative(absolutePathToFernFolder, filepath),
-                                willBeUploaded: true
-                            },
-                            [...nodePath, navigationItem.path]
-                        );
-                    }
-                } catch (err) {
-                    context.logger.trace(`[docs]: Failed to parse image paths in ${navigationItem.path}: ${err}`);
+                if (parseTime > 2000) {
+                    context.logger.debug(
+                        `Slow image path parsing: ${navigationItem.path} took ${parseTime.toFixed(0)}ms`
+                    );
                 }
-            } else {
-                context.logger.debug(
-                    `[docs]: Skipping asset scan for large file: ${navigationItem.path} (${fileSizeMB.toFixed(2)} MB > ${(MAX_ASSET_SCAN_BYTES / (1024 * 1024)).toFixed(2)} MB). Set FERN_DOCS_MAX_ASSET_SCAN_BYTES to override.`
-                );
+
+                for (const filepath of filepaths) {
+                    await visitor.filepath?.(
+                        {
+                            absoluteFilepath: filepath,
+                            value: relative(absolutePathToFernFolder, filepath),
+                            willBeUploaded: true
+                        },
+                        [...nodePath, navigationItem.path]
+                    );
+                }
+            } catch (err) {
+                context.logger.trace(`Failed to parse image paths in ${navigationItem.path}: ${err}`);
             }
         }
     }
@@ -262,18 +254,18 @@ async function visitNavigationItem({
 
     if (navigationItemIsChangelog(navigationItem)) {
         const changelogDir = resolve(dirname(absoluteFilepathToConfiguration), navigationItem.changelog);
-        context.logger.trace(`[docs]: Starting changelog processing for directory: ${changelogDir}`);
+        context.logger.trace(`Starting changelog processing for directory: ${changelogDir}`);
 
         if (await doesPathExist(changelogDir)) {
             const startTime = performance.now();
             const files = await readdir(changelogDir);
             const markdownFiles = files.filter((file) => file.endsWith(".md") || file.endsWith(".mdx"));
-            context.logger.debug(`[docs]: Processing ${markdownFiles.length} changelog files in ${changelogDir}`);
+            context.logger.debug(`Processing ${markdownFiles.length} changelog files in ${changelogDir}`);
 
             await asyncPool(VALIDATION_CONCURRENCY, markdownFiles, async (file) => {
                 const absoluteFilepath = resolve(changelogDir, file);
                 const content = (await readFile(absoluteFilepath, "utf8")).toString();
-                context.logger.trace(`[docs]: Validating changelog file: ${file}`);
+                context.logger.trace(`Validating changelog file: ${file}`);
 
                 await visitor.markdownPage?.(
                     {
@@ -287,10 +279,10 @@ async function visitNavigationItem({
 
             const elapsedTime = performance.now() - startTime;
             context.logger.debug(
-                `[docs]: Finished processing ${markdownFiles.length} changelog files in ${elapsedTime.toFixed(0)}ms`
+                `Finished processing ${markdownFiles.length} changelog files in ${elapsedTime.toFixed(0)}ms`
             );
         } else {
-            context.logger.trace(`[docs]: Changelog directory does not exist: ${changelogDir}`);
+            context.logger.trace(`Changelog directory does not exist: ${changelogDir}`);
         }
     }
 }

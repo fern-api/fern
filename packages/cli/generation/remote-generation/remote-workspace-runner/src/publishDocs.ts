@@ -27,10 +27,11 @@ import { OSSWorkspace } from "../../../../workspace/lazy-fern-workspace/src";
 import { getDynamicGeneratorConfig } from "./getDynamicGeneratorConfig";
 import { getFaiClient } from "./getFaiClient";
 import { measureImageSizes } from "./measureImageSizes";
+import { asyncPool } from "./utils/asyncPool";
 
 const MEASURE_IMAGE_BATCH_SIZE = 10;
 const UPLOAD_FILE_BATCH_SIZE = 10;
-const HASH_BATCH_SIZE = 10;
+const HASH_CONCURRENCY = parseInt(process.env.FERN_DOCS_ASSET_HASH_CONCURRENCY ?? "32", 10);
 
 interface FileWithMimeType {
     mediaType: string;
@@ -107,15 +108,18 @@ export async function publishDocs({
 
             const measuredImages = await measureImageSizes(imagesToMeasure, MEASURE_IMAGE_BATCH_SIZE, context);
 
+            context.logger.debug(`Hashing ${measuredImages.size} image files with concurrency ${HASH_CONCURRENCY}...`);
+            const hashImageStart = performance.now();
             const images: DocsV2Write.ImageFilePath[] = [];
 
-            for (const image of measuredImages.values()) {
+            const imageArray = Array.from(measuredImages.values());
+            const hashedImages = await asyncPool(HASH_CONCURRENCY, imageArray, async (image) => {
                 const filePath = filesMap.get(image.filePath);
                 if (filePath == null) {
-                    continue;
+                    return null;
                 }
 
-                images.push({
+                return {
                     filePath: CjsFdrSdk.docs.v1.write.FilePath(
                         convertToFernHostRelativeFilePath(filePath.relativeFilePath)
                     ),
@@ -124,18 +128,29 @@ export async function publishDocs({
                     blurDataUrl: image.blurDataUrl,
                     alt: undefined,
                     fileHash: await calculateFileHash(filePath.absoluteFilePath)
-                });
-            }
+                };
+            });
+
+            images.push(...hashedImages.filter((img): img is DocsV2Write.ImageFilePath => img != null));
+            const hashImageTime = performance.now() - hashImageStart;
+            context.logger.debug(`Hashed ${images.length} images in ${hashImageTime.toFixed(0)}ms`);
 
             const nonImageFiles = files.filter(({ absoluteFilePath }) => !measuredImages.has(absoluteFilePath));
-            const filepaths: CjsFdrSdk.docs.v2.write.FilePathInput[] = [];
 
-            for (const file of nonImageFiles) {
-                filepaths.push({
+            context.logger.debug(
+                `Hashing ${nonImageFiles.length} non-image files with concurrency ${HASH_CONCURRENCY}...`
+            );
+            const hashNonImageStart = performance.now();
+            const filepaths: CjsFdrSdk.docs.v2.write.FilePathInput[] = await asyncPool(
+                HASH_CONCURRENCY,
+                nonImageFiles,
+                async (file) => ({
                     path: CjsFdrSdk.docs.v1.write.FilePath(convertToFernHostRelativeFilePath(file.relativeFilePath)),
                     fileHash: await calculateFileHash(file.absoluteFilePath)
-                });
-            }
+                })
+            );
+            const hashNonImageTime = performance.now() - hashNonImageStart;
+            context.logger.debug(`Hashed ${filepaths.length} non-image files in ${hashNonImageTime.toFixed(0)}ms`);
 
             if (preview) {
                 const startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
@@ -148,6 +163,8 @@ export async function publishDocs({
                 if (startDocsRegisterResponse.ok) {
                     urlToOutput = startDocsRegisterResponse.body.previewUrl;
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
+                    context.logger.debug(`Received preview registration ID: ${docsRegistrationId}`);
+
                     if (skipUpload) {
                         context.logger.debug("Skip-upload mode: skipping file uploads for docs preview");
                     } else {
@@ -159,9 +176,10 @@ export async function publishDocs({
                         );
 
                         const uploadCount = Object.keys(urlsToUpload).length;
+                        const skippedCount = skippedSet.size;
 
                         if (uploadCount > 0) {
-                            // context.logger.info(`↑ Uploading ${uploadCount} files...`); // uncomment when FDR is updated to persist hashes over multiple previews
+                            context.logger.debug(`Uploading ${uploadCount} files (${skippedCount} skipped)...`);
                             await uploadFiles(
                                 urlsToUpload,
                                 docsWorkspace.absoluteFilePath,
@@ -169,7 +187,7 @@ export async function publishDocs({
                                 UPLOAD_FILE_BATCH_SIZE
                             );
                         } else {
-                            // context.logger.info("✓ No files to upload (all up to date)"); //ibid.
+                            context.logger.debug(`No files to upload (all ${skippedCount} up to date)`);
                         }
                     }
                     return convertToFilePathPairs(
@@ -191,6 +209,7 @@ export async function publishDocs({
                 });
                 if (startDocsRegisterResponse.ok) {
                     docsRegistrationId = startDocsRegisterResponse.body.docsRegistrationId;
+                    context.logger.debug(`Received production registration ID: ${docsRegistrationId}`);
 
                     const skippedCount = startDocsRegisterResponse.body.skippedFiles?.length || 0;
                     if (skippedCount > 0) {
@@ -311,13 +330,27 @@ export async function publishDocs({
         targetAudiences
     });
 
+    context.logger.info("Resolving docs definition...");
+    const resolveStart = performance.now();
     const docsDefinition = await resolver.resolve();
+    const resolveTime = performance.now() - resolveStart;
+
+    const pageCount = Object.keys(docsDefinition.pages).length;
+    const apiCount = Object.keys(docsDefinition.apis).length;
+    const resolveMemory = process.memoryUsage();
+    context.logger.info(
+        `Resolved docs definition in ${resolveTime.toFixed(0)}ms: ${pageCount} pages, ${apiCount} APIs`
+    );
+    context.logger.debug(
+        `Memory after resolve: RSS=${(resolveMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(resolveMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
+    );
 
     if (docsRegistrationId == null) {
         return context.failAndThrow("Failed to publish docs.", "Docs registration ID is missing.");
     }
 
-    context.logger.debug("Publishing docs...");
+    context.logger.info("Publishing docs to FDR...");
+    const publishStart = performance.now();
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(
         DocsV1Write.DocsRegistrationId(docsRegistrationId),
         {
@@ -327,6 +360,9 @@ export async function publishDocs({
     );
 
     if (registerDocsResponse.ok) {
+        const publishTime = performance.now() - publishStart;
+        context.logger.debug(`Docs published to FDR in ${publishTime.toFixed(0)}ms`);
+
         const url = wrapWithHttps(urlToOutput);
         await updateAiChatFromDocsDefinition({
             docsDefinition,
