@@ -16,7 +16,7 @@ RUN curl -L https://cs.symfony.com/download/php-cs-fixer-v3.phar -o /usr/local/b
     && chmod +x /usr/local/bin/php-cs-fixer
 
 # Install generator-cli before copying dist to cache this layer
-RUN npm install -f -g @fern-api/generator-cli@0.2.0
+RUN npm install -f -g @fern-api/generator-cli
 
 # Copy generator files (these change frequently, so keep them last)
 COPY generators/php/sdk/features.yml /assets/features.yml
