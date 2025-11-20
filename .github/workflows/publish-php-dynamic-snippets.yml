@@ -81,4 +81,4 @@ jobs:
         with:
           package-name: ${{ env.PACKAGE_NAME }}
           version: ${{ steps.ver.outputs.version }}
-          github-token: ${{ secrets.FERN_GITHUB_TOKEN }}
+          github-token: ${{ secrets.ACTIONS_PAT }}
