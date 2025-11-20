@@ -3,6 +3,8 @@
 module Seed
   module Nested
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Nested::Client]
       def initialize(client:)
         @client = client

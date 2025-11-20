@@ -16,7 +16,9 @@ func do() {
     request := &fern.SearchRequest{
         Limit: 1,
         Id: "id",
-        Date: "date",
+        Date: fern.MustParseDate(
+            "2023-01-15",
+        ),
         Deadline: fern.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
@@ -46,10 +48,8 @@ func do() {
                 "2024-01-15T09:30:00Z",
             ),
         ),
-        KeyValue: map[string]*string{
-            "keyValue": fern.String(
-                "keyValue",
-            ),
+        KeyValue: map[string]string{
+            "keyValue": "keyValue",
         },
         OptionalString: fern.String(
             "optionalString",

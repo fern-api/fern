@@ -166,6 +166,7 @@ impl HttpClient {
     ///     None,
     /// ).await?;
     /// ```
+    #[cfg(feature = "multipart")]
     pub async fn execute_multipart_request<T>(
         &self,
         method: Method,
@@ -320,7 +321,6 @@ impl HttpClient {
         serde_json::from_str(&text).map_err(ApiError::Serialization)
     }
 
-
     /// Execute a request and return a streaming response (for large file downloads)
     ///
     /// This method returns a `ByteStream` that can be used to download large files
@@ -451,6 +451,7 @@ impl HttpClient {
     ///     println!("Received: {:?}", chunk);
     /// }
     /// ```
+    #[cfg(feature = "sse")]
     pub async fn execute_sse_request<T>(
         &self,
         method: Method,
@@ -499,9 +500,7 @@ impl HttpClient {
         );
         req.headers_mut().insert(
             "Cache-Control",
-            "no-store"
-                .parse()
-                .map_err(|_| ApiError::InvalidHeader)?,
+            "no-store".parse().map_err(|_| ApiError::InvalidHeader)?,
         );
 
         // Execute with retries

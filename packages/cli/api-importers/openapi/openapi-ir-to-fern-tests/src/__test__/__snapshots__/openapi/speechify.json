@@ -55,7 +55,7 @@
               },
               "token_type": {
                 "docs": "Token type",
-                "type": "optional<literal<"bearer">>",
+                "type": "optional<AccessTokenTokenType>",
               },
             },
             "source": {
@@ -93,6 +93,16 @@
                 "name": "VoicesAll",
                 "value": "voices:all",
               },
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "AccessTokenTokenType": {
+            "docs": "Token type",
+            "enum": [
+              "bearer",
             ],
             "inline": true,
             "source": {
@@ -505,6 +515,13 @@ types:
     inline: true
     source:
       openapi: ../openapi.json
+  AccessTokenTokenType:
+    enum:
+      - bearer
+    docs: Token type
+    inline: true
+    source:
+      openapi: ../openapi.json
   AccessToken:
     properties:
       access_token: optional<string>
@@ -515,7 +532,7 @@ types:
         type: optional<AccessTokenScope>
         docs: The scope, or a space-delimited list of scopes the token is issued for
       token_type:
-        type: optional<literal<"bearer">>
+        type: optional<AccessTokenTokenType>
         docs: Token type
     source:
       openapi: ../openapi.json
@@ -1845,7 +1862,7 @@ service:
                   "properties": {
                     "grant_type": {
                       "docs": "in: body",
-                      "type": "literal<"client_credentials">",
+                      "type": "CreateAccessTokenRequestGrantType",
                     },
                     "scope": {
                       "docs": "The scope, or a space-delimited list of scopes the token is requested for
@@ -1875,6 +1892,16 @@ in: body",
           },
         },
         "types": {
+          "CreateAccessTokenRequestGrantType": {
+            "docs": "in: body",
+            "enum": [
+              "client_credentials",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
           "CreateAccessTokenRequestScope": {
             "docs": "The scope, or a space-delimited list of scopes the token is requested for
 in: body",
@@ -1916,6 +1943,13 @@ in: body",
         },
       },
       "rawContents": "types:
+  CreateAccessTokenRequestGrantType:
+    enum:
+      - client_credentials
+    docs: 'in: body'
+    inline: true
+    source:
+      openapi: ../openapi.json
   CreateAccessTokenRequestScope:
     enum:
       - value: audio:speech
@@ -1957,7 +1991,7 @@ service:
         body:
           properties:
             grant_type:
-              type: literal<"client_credentials">
+              type: CreateAccessTokenRequestGrantType
               docs: 'in: body'
             scope:
               type: optional<CreateAccessTokenRequestScope>

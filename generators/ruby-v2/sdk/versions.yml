@@ -1,4 +1,53 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc40
+  createdAt: "2025-11-20"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Reorder YARD tags to follow standard convention (@param before @option).
+  irVersion: 61
+
+- version: 1.0.0-rc39
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add YARD documentation comments for method parameters in generated SDK code.
+  irVersion: 61
+
+- version: 1.0.0-rc38
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix route parameters and multipart file upload properties to use snake_case names in Ruby code instead of camelCase wire values.
+        Ruby parameter keys now follow Ruby naming conventions (e.g., `params[:payment_id]` instead of `params[:paymentId]`) while preserving the original wire values for HTTP requests.
+  irVersion: 61
+
+- version: 1.0.0-rc37
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: chore
+      summary: |
+        Bump generator CLI version to publish new Docker image.
+  irVersion: 61
+
+- version: 1.0.0-rc36
+  createdAt: "2025-11-17"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Validate that all required (non-optional) fields are present for undiscriminated union members.
+  irVersion: 61
+
+- version: 1.0.0-rc35
+  createdAt: "2025-11-17"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Properly (de)serialize union members with non-snake_case field names.
+  irVersion: 61
+
 - version: 1.0.0-rc34
   createdAt: "2025-11-07"
   changelogEntry:

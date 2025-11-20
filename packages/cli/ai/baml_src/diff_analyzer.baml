@@ -19,7 +19,7 @@ class AnalyzeCommitDiffResponse {
 }
 
 // Main function that analyzes SDK diffs
-function AnalyzeSdkDiff(request: AnalyzeCommitDiffRequest) -> AnalyzeCommitDiffResponse {
+function AnalyzeSdkDiff(diff: string @description("The git diff to analyze for generating a commit message")) -> AnalyzeCommitDiffResponse {
   client DefaultClient
 
   prompt #"
@@ -45,8 +45,6 @@ function AnalyzeSdkDiff(request: AnalyzeCommitDiffRequest) -> AnalyzeCommitDiffR
     - <change 1>
     - <change 2>
     - <change 3>
-
-    🌿 Generated with Fern
     ```
 
     Message Guidelines:
@@ -58,11 +56,17 @@ function AnalyzeSdkDiff(request: AnalyzeCommitDiffRequest) -> AnalyzeCommitDiffR
     - For PATCH: describe the fix or improvement
     - For NO_CHANGE: use type "chore" and state that no functional changes were made
     - Be specific and action-oriented
-    - Always end with the "🌿 Generated with Fern" footer
+    - Do not use "Fern regeneration" in commit messages - use "SDK regeneration" instead
     - NEVER include the literal version "505.503.4455" in the commit message - if you see this placeholder
     in the diff, describe changes generically (e.g., "added X-Fern-SDK-Version header")
 
     Git Diff:
-    {diff}
+    ---
+    {{diff}}
+    ---
+
+    Remember again that YOU MUST return a structured JSON response with these two fields:
+    - message: A git commit message formatted like the example previously provided
+    - version_bump: One of: MAJOR, MINOR, PATCH, or NO_CHANGE
   "#
 }

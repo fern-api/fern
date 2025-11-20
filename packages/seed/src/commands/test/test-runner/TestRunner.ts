@@ -20,7 +20,7 @@ export declare namespace TestRunner {
         taskContextFactory: TaskContextFactory;
         skipScripts: boolean;
         scriptRunner: ScriptRunner | undefined;
-        keepDocker: boolean;
+        keepContainer: boolean;
         inspect: boolean;
     }
 
@@ -50,7 +50,7 @@ export declare namespace TestRunner {
         absolutePathToFernDefinition: AbsoluteFilePath;
         outputMode: OutputMode;
         outputFolder: string;
-        keepDocker: boolean | undefined;
+        keepContainer: boolean | undefined;
         publishMetadata: unknown;
         readme: generatorsYml.ReadmeSchema | undefined;
         shouldGenerateDynamicSnippetTests: boolean | undefined;
@@ -105,15 +105,15 @@ export abstract class TestRunner {
     protected readonly lock: Semaphore;
     protected readonly taskContextFactory: TaskContextFactory;
     private readonly skipScripts: boolean;
-    private readonly keepDocker: boolean;
+    private readonly keepContainer: boolean;
     private scriptRunner: ScriptRunner | undefined;
 
-    constructor({ generator, lock, taskContextFactory, skipScripts, keepDocker, scriptRunner }: TestRunner.Args) {
+    constructor({ generator, lock, taskContextFactory, skipScripts, keepContainer, scriptRunner }: TestRunner.Args) {
         this.generator = generator;
         this.lock = lock;
         this.taskContextFactory = taskContextFactory;
         this.skipScripts = skipScripts;
-        this.keepDocker = keepDocker;
+        this.keepContainer = keepContainer;
         this.scriptRunner = scriptRunner;
     }
 
@@ -141,6 +141,7 @@ export abstract class TestRunner {
                 );
             }
             const taskContext = this.taskContextFactory.create(`${this.generator.workspaceName}:${id}`);
+            const disableDynamicSnippetTests = configuration?.disableDynamicSnippetTests ?? false;
             const outputFolder = configuration?.outputFolder ?? "";
             if (!outputDir) {
                 outputDir =
@@ -209,10 +210,11 @@ export abstract class TestRunner {
                     absolutePathToFernDefinition: absolutePathToApiDefinition,
                     outputMode,
                     outputFolder,
-                    keepDocker: this.keepDocker,
+                    keepContainer: this.keepContainer,
                     publishMetadata,
                     readme,
-                    shouldGenerateDynamicSnippetTests: workspaceShouldGenerateDynamicSnippetTests(this.generator),
+                    shouldGenerateDynamicSnippetTests:
+                        !disableDynamicSnippetTests && workspaceShouldGenerateDynamicSnippetTests(this.generator),
                     inspect,
                     license
                 });

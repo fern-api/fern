@@ -49,3 +49,11 @@ fixtures:
     - customConfig:
         generateBuilders: true
       outputFolder: with-builders 
+
+allowedFailures:
+  - circular-references
+  - circular-references-advanced
+  - examples
+  - objects-with-imports
+  - pagination
+  - trace

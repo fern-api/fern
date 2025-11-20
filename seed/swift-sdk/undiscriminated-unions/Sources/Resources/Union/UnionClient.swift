@@ -65,4 +65,14 @@ public final class UnionClient: Sendable {
             responseType: String.self
         )
     }
+
+    public func testCamelCaseProperties(request: Requests.PaymentRequest, requestOptions: RequestOptions? = nil) async throws -> String {
+        return try await httpClient.performRequest(
+            method: .post,
+            path: "/camel-case",
+            body: request,
+            requestOptions: requestOptions,
+            responseType: String.self
+        )
+    }
 }

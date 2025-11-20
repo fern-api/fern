@@ -298,6 +298,7 @@ class AbstractGenerator(ABC):
         workflow_yaml = """name: ci
 on: [push]
 jobs:
+  compile:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
@@ -305,6 +306,8 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
+          python-version: 3.9
+      - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
       - name: Install dependencies
@@ -319,7 +322,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -331,12 +334,12 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: fern test --command "poetry run pytest -rP -n auto ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest -rP .
+        run: poetry run pytest -rP -n auto .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -358,7 +361,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -388,7 +391,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -404,7 +407,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -416,12 +419,12 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: fern test --command "poetry run pytest -rP -n auto ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest -rP .
+        run: poetry run pytest -rP -n auto .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -442,7 +445,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -466,7 +469,8 @@ jobs:
       name: pypi
       url: https://pypi.org/p/${{{{ github.event.repository.name }}}}
     permissions:
-      id-token: write
+      contents: read   # Required for checkout
+      id-token: write  # Required for OIDC
     steps:
       - name: Download all the dists
         uses: actions/download-artifact@v4

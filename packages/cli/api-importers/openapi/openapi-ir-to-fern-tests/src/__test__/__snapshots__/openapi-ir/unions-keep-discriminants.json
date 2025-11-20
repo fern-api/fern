@@ -53,13 +53,20 @@
             "generatedName": "triangleType",
             "key": "type",
             "schema": {
-              "value": {
-                "value": "triangle",
-                "type": "string"
-              },
               "generatedName": "TriangleType",
+              "values": [
+                {
+                  "generatedName": "triangle",
+                  "value": "triangle",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.json",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },
@@ -110,13 +117,20 @@
             "generatedName": "squareType",
             "key": "type",
             "schema": {
-              "value": {
-                "value": "square",
-                "type": "string"
-              },
               "generatedName": "SquareType",
+              "values": [
+                {
+                  "generatedName": "square",
+                  "value": "square",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.json",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },

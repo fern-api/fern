@@ -4,11 +4,16 @@ module Seed
   module Endpoints
     module Enum
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::Endpoints::Enum::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Seed::Types::Enum::Types::WeatherReport]
+        #
         # @return [Seed::Types::Enum::Types::WeatherReport]
         def get_and_return_enum(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(

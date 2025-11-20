@@ -114,11 +114,8 @@
           "request": {
             "properties": {
               "type": {
-                "value": {
-                  "value": "circle",
-                  "type": "string"
-                },
-                "type": "literal"
+                "value": "circle",
+                "type": "enum"
               },
               "radius": {
                 "value": {
@@ -134,11 +131,8 @@
             "value": {
               "properties": {
                 "type": {
-                  "value": {
-                    "value": "circle",
-                    "type": "string"
-                  },
-                  "type": "literal"
+                  "value": "circle",
+                  "type": "enum"
                 },
                 "radius": {
                   "value": {
@@ -174,13 +168,20 @@
             "generatedName": "circleType",
             "key": "type",
             "schema": {
-              "value": {
-                "value": "circle",
-                "type": "string"
-              },
               "generatedName": "CircleType",
+              "values": [
+                {
+                  "generatedName": "circle",
+                  "value": "circle",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },
@@ -217,13 +218,20 @@
             "generatedName": "squareType",
             "key": "type",
             "schema": {
-              "value": {
-                "value": "square",
-                "type": "string"
-              },
               "generatedName": "SquareType",
+              "values": [
+                {
+                  "generatedName": "square",
+                  "value": "square",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },

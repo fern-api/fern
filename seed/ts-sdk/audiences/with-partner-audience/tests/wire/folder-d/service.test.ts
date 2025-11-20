@@ -3,10 +3,10 @@
 import { SeedAudiencesClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("getDirectThread", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedAudiencesClient({ environment: server.baseUrl });
+        const client = new SeedAudiencesClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { foo: "foo" };
         server.mockEndpoint().get("/partner-path").respondWith().statusCode(200).jsonBody(rawResponseBody).build();

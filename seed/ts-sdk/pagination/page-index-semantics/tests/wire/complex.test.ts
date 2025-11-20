@@ -3,10 +3,10 @@
 import { SeedPaginationClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Complex", () => {
+describe("ComplexClient", () => {
     test("search", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPaginationClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = {
             pagination: { per_page: 1, starting_after: "starting_after" },
             query: { field: "field", operator: "=", value: "value" },
@@ -24,7 +24,7 @@ describe("Complex", () => {
             type: "conversation.list",
         };
         server
-            .mockEndpoint()
+            .mockEndpoint({ once: false })
             .post("/index/conversations/search")
             .jsonBody(rawRequestBody)
             .respondWith()

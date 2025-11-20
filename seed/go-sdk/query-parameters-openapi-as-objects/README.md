@@ -4,6 +4,20 @@
 
 The Seed Go library provides convenient access to the Seed APIs from Go.
 
+## Table of Contents
+
+- [Reference](#reference)
+- [Usage](#usage)
+- [Environments](#environments)
+- [Errors](#errors)
+- [Request Options](#request-options)
+- [Advanced](#advanced)
+  - [Response Headers](#response-headers)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Explicit Null](#explicit-null)
+- [Contributing](#contributing)
+
 ## Reference
 
 A full reference for this library is available [here](./reference.md).
@@ -26,7 +40,9 @@ func do() {
     request := &fern.SearchRequest{
         Limit: 1,
         Id: "id",
-        Date: "date",
+        Date: fern.MustParseDate(
+            "2023-01-15",
+        ),
         Deadline: fern.MustParseDateTime(
             "2024-01-15T09:30:00Z",
         ),
@@ -56,10 +72,8 @@ func do() {
                 "2024-01-15T09:30:00Z",
             ),
         ),
-        KeyValue: map[string]*string{
-            "keyValue": fern.String(
-                "keyValue",
-            ),
+        KeyValue: map[string]string{
+            "keyValue": "keyValue",
         },
         OptionalString: fern.String(
             "optionalString",
@@ -195,7 +209,8 @@ response, err := client.Search(
 ### Response Headers
 
 You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
-when you need to examine the response headers received from the API call.
+when you need to examine the response headers received from the API call. (When the endpoint is paginated,
+the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
 response, err := client.WithRawResponse.Search(...)
@@ -203,6 +218,7 @@ if err != nil {
     return err
 }
 fmt.Printf("Got response headers: %v", response.Header)
+fmt.Printf("Got status code: %d", response.StatusCode)
 ```
 
 ### Retries

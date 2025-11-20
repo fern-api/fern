@@ -20,8 +20,8 @@ client = SeedApiWideBasePath(
 )
 client.service.post(
     service_param="serviceParam",
-    resource_param="resourceParam",
     endpoint_param=1,
+    resource_param="resourceParam",
 )
 
 ```
@@ -54,7 +54,7 @@ client.service.post(
 <dl>
 <dd>
 
-**resource_param:** `str` 
+**endpoint_param:** `int` 
     
 </dd>
 </dl>
@@ -62,7 +62,7 @@ client.service.post(
 <dl>
 <dd>
 
-**endpoint_param:** `int` 
+**resource_param:** `str` 
     
 </dd>
 </dl>

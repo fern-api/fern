@@ -18,6 +18,7 @@ import { ReferenceConfigAssembler } from "./reference";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest, convertIr } from "./utils";
+import { WireTestGenerator } from "./wire-tests";
 
 const execAsync = promisify(exec);
 
@@ -198,6 +199,9 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         context.logger.debug("Generating reference.md documentation...");
         // Generate reference.md if configured
         await this.generateReference(context);
+
+        // Generate wire tests if enabled
+        await this.generateWireTestFiles(context);
 
         context.logger.debug(`Persisting files to ${context.project.absolutePathToOutputDirectory}...`);
         await context.project.persist();
@@ -541,6 +545,32 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             }
         }
 
+        // Add request types for endpoints with referenced body AND query parameters
+        for (const service of Object.values(context.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                // Check for referenced body + query parameters
+                if (endpoint.requestBody?.type === "reference" && endpoint.queryParameters.length > 0) {
+                    // Get the unique type name (may have suffix if there's a collision)
+                    const uniqueRequestName = context.getReferencedRequestWithQueryTypeName(endpoint.id);
+                    const rawModuleName = context.getModuleNameForReferencedRequestWithQuery(endpoint.id);
+                    const escapedModuleName = context.escapeRustKeyword(rawModuleName);
+
+                    // Only add if we haven't seen this module name before
+                    if (!uniqueModuleNames.has(escapedModuleName)) {
+                        uniqueModuleNames.add(escapedModuleName);
+                        moduleDeclarations.push(new ModuleDeclaration({ name: escapedModuleName, isPublic: true }));
+                        useStatements.push(
+                            new UseStatement({
+                                path: escapedModuleName,
+                                items: [uniqueRequestName],
+                                isPublic: true
+                            })
+                        );
+                    }
+                }
+            }
+        }
+
         return new Module({
             moduleDeclarations,
             useStatements,
@@ -563,10 +593,19 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
                 return;
             }
 
+            // Generate endpoint snippets
+            const endpointSnippets = this.generateSnippets(context);
+
+            // If there are no endpoint snippets (i.e., no examples defined), skip README generation
+            if (endpointSnippets.length === 0) {
+                context.logger.debug(`Skipping README.md generation - no endpoint examples defined`);
+                return;
+            }
+
             // Generate README content using the agent
             const readmeContent = await context.generatorAgent.generateReadme({
                 context,
-                endpointSnippets: this.generateSnippets(context)
+                endpointSnippets
             });
 
             context.logger.debug(
@@ -652,6 +691,29 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
             const errorMsg = extractErrorMessage(error);
             context.logger.debug(`Reference generation failed: ${errorMsg}`);
             throw new Error(`Failed to generate reference.md: ${errorMsg}`);
+        }
+    }
+
+    // ===========================
+    // WIRE TEST GENERATION
+    // ===========================
+
+    private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {
+        if (!context.customConfig.enableWireTests) {
+            return;
+        }
+
+        try {
+            context.logger.debug("Generating WireMock integration tests...");
+            const wireTestGenerator = new WireTestGenerator(context, context.ir);
+            await wireTestGenerator.generate();
+            context.logger.debug("WireMock test generation complete");
+        } catch (error) {
+            context.logger.error("Failed to generate WireMock tests");
+            if (error instanceof Error) {
+                context.logger.debug(error.message);
+                context.logger.debug(error.stack ?? "");
+            }
         }
     }
 

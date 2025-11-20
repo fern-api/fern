@@ -39,6 +39,7 @@ export class DiscriminatedUnionGenerator {
     private generateEnumForTypeDeclaration(): swift.EnumWithAssociatedValues {
         return swift.enumWithAssociatedValues({
             name: this.symbol.name,
+            indirect: this.context.shouldGenerateEnumAsIndirect(this.symbol),
             accessLevel: swift.AccessLevel.Public,
             conformances: [swift.Protocol.Codable, swift.Protocol.Hashable, swift.Protocol.Sendable],
             cases: this.generateCasesForTypeDeclaration(),
@@ -248,11 +249,13 @@ export class DiscriminatedUnionGenerator {
                     type: referencer.referenceSwiftType("String"),
                     value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
                 });
-                dataPropertyDefinitions.push({
-                    unsafeName: sanitizeSelf(singleUnionType.shape.name.name.camelCase.unsafeName),
-                    rawName: singleUnionType.shape.name.wireValue,
-                    type: singleUnionType.shape.type
-                });
+                if (this.unionTypeDeclaration.discriminant.wireValue !== singleUnionType.shape.name.wireValue) {
+                    dataPropertyDefinitions.push({
+                        unsafeName: sanitizeSelf(singleUnionType.shape.name.name.camelCase.unsafeName),
+                        rawName: singleUnionType.shape.name.wireValue,
+                        type: singleUnionType.shape.type
+                    });
+                }
             } else if (singleUnionType.shape.propertiesType === "samePropertiesAsObject") {
                 const variantProperties = this.context.getPropertiesOfDiscriminatedUnionVariant(
                     singleUnionType.shape.typeId
@@ -264,12 +267,14 @@ export class DiscriminatedUnionGenerator {
                     value: swift.Expression.stringLiteral(singleUnionType.discriminantValue.wireValue)
                 });
                 dataPropertyDefinitions.push(
-                    ...variantProperties.map((p) => ({
-                        unsafeName: sanitizeSelf(p.name.name.camelCase.unsafeName),
-                        rawName: p.name.wireValue,
-                        type: p.valueType,
-                        docsContent: p.docs
-                    }))
+                    ...variantProperties
+                        .filter((p) => this.unionTypeDeclaration.discriminant.wireValue !== p.name.wireValue)
+                        .map((p) => ({
+                            unsafeName: sanitizeSelf(p.name.name.camelCase.unsafeName),
+                            rawName: p.name.wireValue,
+                            type: p.valueType,
+                            docsContent: p.docs
+                        }))
                 );
             } else if (singleUnionType.shape.propertiesType === "noProperties") {
                 noop();

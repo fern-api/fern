@@ -4,10 +4,10 @@ import * as SeedExamples from "../../../src/api/index";
 import { SeedExamplesClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("getFile", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "A file with that name was not found!";
         server

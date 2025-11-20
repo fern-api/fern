@@ -3,10 +3,15 @@
 import { SeedTraceClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Submission", () => {
+describe("SubmissionClient", () => {
     test("createExecutionSession", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = {
             sessionId: "sessionId",
@@ -33,7 +38,12 @@ describe("Submission", () => {
 
     test("getExecutionSession", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = {
             sessionId: "sessionId",
@@ -60,7 +70,12 @@ describe("Submission", () => {
 
     test("stopExecutionSession", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
 
         server.mockEndpoint().delete("/sessions/stop/sessionId").respondWith().statusCode(200).build();
 
@@ -70,7 +85,12 @@ describe("Submission", () => {
 
     test("getExecutionSessionsState", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = {
             states: {

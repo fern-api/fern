@@ -3,10 +3,10 @@
 import { SeedExhaustiveClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Urls", () => {
+describe("UrlsClient", () => {
     test("withMixedCase", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
         server.mockEndpoint().get("/urls/MixedCase").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -22,7 +22,7 @@ describe("Urls", () => {
 
     test("noEndingSlash", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
         server
@@ -44,7 +44,7 @@ describe("Urls", () => {
 
     test("withEndingSlash", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
         server
@@ -66,7 +66,7 @@ describe("Urls", () => {
 
     test("withUnderscores", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = "string";
         server

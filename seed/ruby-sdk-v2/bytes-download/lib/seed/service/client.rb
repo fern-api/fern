@@ -3,11 +3,16 @@
 module Seed
   module Service
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Service::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [untyped]
       def simple(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
@@ -27,6 +32,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [String] :id
+      #
       # @return [untyped]
       def download(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

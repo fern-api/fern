@@ -578,7 +578,11 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         publishEnvVars);
             }
             runCommandBlocking(
-                    new String[] {"gradle", "publish"},
+                    new String[] {"chmod", "+x", "gradlew"},
+                    Paths.get(generatorConfig.getOutput().getPath()),
+                    publishEnvVars);
+            runCommandBlocking(
+                    new String[] {"./gradlew", "publish", "--stacktrace", "--info", "--no-daemon"},
                     Paths.get(generatorConfig.getOutput().getPath()),
                     publishEnvVars);
         }
@@ -595,6 +599,10 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
     public abstract List<AbstractGradleDependency> getBuildGradleDependencies();
 
     public abstract List<String> getSubProjects();
+
+    public List<String> getAdditionalBuildGradleBlocks() {
+        return List.of();
+    }
 
     public abstract <T extends ICustomConfig> T getCustomConfig(GeneratorConfig generatorConfig);
 
@@ -640,7 +648,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         + "    options.addStringOption('Xdoclint:none', '-quiet')\n"
                         + "}")
                 .addCustomBlocks("spotless {\n" + "    java {\n" + "        palantirJavaFormat()\n" + "    }\n" + "}\n")
-                .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n");
+                .addCustomBlocks("java {\n" + "    withSourcesJar()\n" + "    withJavadocJar()\n" + "}\n")
+                .addAllCustomBlocks(getAdditionalBuildGradleBlocks());
         if (maybeMavenCoordinate.isPresent()) {
             buildGradle.addCustomBlocks("group = '" + maybeMavenCoordinate.get().getGroup() + "'");
             buildGradle.addCustomBlocks(

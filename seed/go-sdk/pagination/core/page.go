@@ -3,6 +3,7 @@ package core
 import (
 	"context"
 	"errors"
+	"net/http"
 )
 
 // ErrNoPages is a sentinel error used to signal that no pages remain.
@@ -30,6 +31,8 @@ type PageResponse[Cursor comparable, Result any] struct {
 type Page[Cursor comparable, T any] struct {
 	Results      []T
 	RawResponse  PageResponse[Cursor, T]
+	StatusCode   int
+	Header       http.Header
 	NextPageFunc func(context.Context) (*Page[Cursor, T], error)
 }
 

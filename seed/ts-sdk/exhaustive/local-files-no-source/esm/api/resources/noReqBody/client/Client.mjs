@@ -8,15 +8,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+import { normalizeClientOptions } from "../../../../BaseClient.mjs";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.mjs";
 import * as core from "../../../../core/index.mjs";
 import * as errors from "../../../../errors/index.mjs";
-export class NoReqBody {
-    constructor(_options) {
-        this._options = _options;
+export class NoReqBodyClient {
+    constructor(options) {
+        this._options = normalizeClientOptions(options);
     }
     /**
-     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.noReqBody.getWithNoRequestBody()
@@ -70,7 +71,7 @@ export class NoReqBody {
         });
     }
     /**
-     * @param {NoReqBody.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {NoReqBodyClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.noReqBody.postWithNoRequestBody()

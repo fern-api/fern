@@ -44,12 +44,28 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
 
     public getReturnTypeForEndpoint(httpEndpoint: HttpEndpoint): java.Type {
         if (httpEndpoint.pagination != null) {
+            if (httpEndpoint.pagination.type === "custom") {
+                const responseBody = httpEndpoint.response?.body;
+                if (responseBody && responseBody.type === "json") {
+                    const responseType = this.javaTypeMapper.convert({
+                        reference: responseBody.value.responseBodyType
+                    });
+                    return java.Type.generic(
+                        java.classReference({
+                            name: this.getPaginationClassName(httpEndpoint.pagination),
+                            packageName: this.getPaginationPackageName()
+                        }),
+                        [responseType]
+                    );
+                }
+            }
+
             const itemType = this.getPaginationItemType(httpEndpoint.pagination);
 
             if (itemType) {
                 return java.Type.generic(
                     java.classReference({
-                        name: this.getPaginationClassName(),
+                        name: this.getPaginationClassName(httpEndpoint.pagination),
                         packageName: this.getPaginationPackageName()
                     }),
                     [itemType]
@@ -115,9 +131,9 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return this.getResourcesPackage(fernFilePath, TYPES_DIRECTORY);
     }
 
-    public getPaginationClassReference(): java.ClassReference {
+    public getPaginationClassReference(paginationType?: Pagination): java.ClassReference {
         return java.classReference({
-            name: this.getPaginationClassName(),
+            name: this.getPaginationClassName(paginationType),
             packageName: this.getPaginationPackageName()
         });
     }
@@ -200,7 +216,10 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
         return false;
     }
 
-    public getPaginationClassName(): string {
+    public getPaginationClassName(paginationType?: Pagination): string {
+        if (paginationType?.type === "custom") {
+            return this.customConfig?.["custom-pager-name"] ?? "CustomPager";
+        }
         return "SyncPagingIterable";
     }
 
@@ -365,6 +384,8 @@ export class SdkGeneratorContext extends AbstractJavaGeneratorContext<SdkCustomC
             if (resultsProperty?.property?.valueType) {
                 return this.extractPaginationItemType(resultsProperty.property.valueType);
             }
+        } else if (pagination.type === "custom") {
+            return undefined;
         }
         return undefined;
     }

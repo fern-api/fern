@@ -1,12 +1,6 @@
 import { FernToken } from "@fern-api/auth";
 import { TaskContext } from "@fern-api/task-context";
-import {
-    AIExampleEnhancerConfig,
-    ExampleEnhancementBatchRequest,
-    ExampleEnhancementBatchResponse,
-    ExampleEnhancementRequest,
-    ExampleEnhancementResponse
-} from "./types";
+import { AIExampleEnhancerConfig, ExampleEnhancementRequest, ExampleEnhancementResponse } from "./types";
 
 type AIEnhancerResolvedConfig = Required<Omit<AIExampleEnhancerConfig, "openaiApiKey">> &
     Pick<AIExampleEnhancerConfig, "openaiApiKey">;

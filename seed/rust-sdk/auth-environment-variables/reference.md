@@ -85,7 +85,13 @@ async fn main() {
         ..Default::default()
     };
     let client = AuthEnvironmentVariablesClient::new(config).expect("Failed to build client");
-    client.service.get_with_header(None).await;
+    client
+        .service
+        .get_with_header(Some(
+            RequestOptions::new()
+                .additional_header("X-Endpoint-Header", "X-Endpoint-Header".to_string()),
+        ))
+        .await;
 }
 ```
 </dd>
