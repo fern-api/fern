@@ -170,6 +170,18 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
                         .build(),
                 ParsedGradleDependency.builder()
                         .type(GradleDependencyType.API)
+                        .group("jakarta.validation")
+                        .artifact("jakarta.validation-api")
+                        .version("3.0.2")
+                        .build(),
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
+                        .group("jakarta.ws.rs")
+                        .artifact("jakarta.ws.rs-api")
+                        .version("3.1.0")
+                        .build(),
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
                         .group("com.fasterxml.jackson.core")
                         .artifact("jackson-databind")
                         .version(ParsedGradleDependency.JACKSON_DATABIND_VERSION)
@@ -191,6 +203,15 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
     @Override
     public List<String> getSubProjects() {
         return subprojects;
+    }
+
+    @Override
+    public List<String> getAdditionalBuildGradleBlocks() {
+        return List.of("java {\n"
+                + "    toolchain {\n"
+                + "        languageVersion = JavaLanguageVersion.of(17)\n"
+                + "    }\n"
+                + "}");
     }
 
     @Override
