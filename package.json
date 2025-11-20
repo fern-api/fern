@@ -58,6 +58,7 @@
     "generators-yml:jsonschema": "pnpm fern jsonschema generators-yml.schema.json --api generators-yml --type generators.GeneratorsConfigurationSchema",
     "check-cli-release-blockers": "pnpm fern-script check-cli-release-blockers",
     "check-docs-release-blockers": "pnpm fern-script check-docs-release-blockers",
+    "validate-cli-dependencies": "node scripts/validate-cli-dependencies.js",
     "root-package:check": "pnpm fern-script check-root-package",
     "root-package:fix": "pnpm root-package:check --fix",
     "seed": "node --enable-source-maps packages/seed/dist/cli.cjs",
