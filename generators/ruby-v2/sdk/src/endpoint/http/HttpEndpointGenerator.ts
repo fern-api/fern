@@ -72,6 +72,7 @@ export class HttpEndpointGenerator {
         let requestStatements = this.generateRequestProcedure({ endpoint, sendRequestCodeBlock });
 
         const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
+        const splatOptionDocs = this.generateSplatOptionDocs({ endpoint });
 
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
@@ -181,6 +182,7 @@ export class HttpEndpointGenerator {
                     type: request?.getParameterType() ?? ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped())
                 })
             },
+            splatOptionDocs,
             statements
         });
     }
@@ -296,18 +298,15 @@ export class HttpEndpointGenerator {
     }
 
     private generateEnhancedDocstring({
-        endpoint,
-        request
+        endpoint
     }: {
         endpoint: HttpEndpoint;
         request: ReturnType<typeof getEndpointRequest>;
     }): string {
-        const docParts: string[] = [];
+        return endpoint.docs ?? "";
+    }
 
-        if (endpoint.docs != null) {
-            docParts.push(endpoint.docs);
-        }
-
+    private generateSplatOptionDocs({ endpoint }: { endpoint: HttpEndpoint }): string[] {
         const optionTags: string[] = [];
 
         for (const pathParam of endpoint.allPathParameters) {
@@ -328,14 +327,7 @@ export class HttpEndpointGenerator {
             optionTags.push(`@option params [${typeString}] :${paramName}`);
         }
 
-        if (optionTags.length > 0) {
-            if (docParts.length > 0) {
-                docParts.push("");
-            }
-            docParts.push(...optionTags);
-        }
-
-        return docParts.join("\n");
+        return optionTags;
     }
 
     private typeReferenceToYardString(typeReference: TypeReference): string {

@@ -44,6 +44,8 @@ export declare namespace Method {
         returnType?: Type;
         /* The statements of the method. */
         statements?: AstNode[];
+        /* YARD @option tags for the keyword splat parameter. */
+        splatOptionDocs?: string[];
     }
 }
 
@@ -59,8 +61,9 @@ export class Method extends AstNode {
     private readonly visibility: MethodVisibility;
     private readonly statements: AstNode[];
     public readonly returnType: Type;
+    private readonly splatOptionDocs: string[];
 
-    constructor({ name, docstring, kind, visibility, parameters, returnType, statements }: Method.Args) {
+    constructor({ name, docstring, kind, visibility, parameters, returnType, statements, splatOptionDocs }: Method.Args) {
         super();
 
         this.name = name;
@@ -74,6 +77,7 @@ export class Method extends AstNode {
         this.yieldParameter = parameters?.yield;
         this.returnType = returnType ?? Type.untyped();
         this.statements = statements ?? [];
+        this.splatOptionDocs = splatOptionDocs ?? [];
     }
 
     public addStatement(statement: AstNode): void {
@@ -119,6 +123,10 @@ export class Method extends AstNode {
                 writer.write(` ${this.keywordSplatParameter.docs}`);
             }
             writer.newLine();
+        }
+
+        for (const optionDoc of this.splatOptionDocs) {
+            writer.writeLine(`# ${optionDoc}`);
         }
 
         if (this.returnType != null) {
