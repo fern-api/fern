@@ -809,6 +809,14 @@ describe("streaming parser for large files", () => {
         expect(result.markdown).toContain("![image](/Volume/git/fern/my/docs/folder/path/to/image.png)");
     });
 
+    it("should parse markdown images with absolute paths in streaming parser", () => {
+        const page =
+            "This is a test page with an absolute image ![image](/static/image.png) and plenty more content so that we definitely exceed the 100 bytes threshold required for the streaming parser to kick in during the test run.";
+        const result = parseImagePaths(page, PATHS, CONTEXT);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/static/image.png"]);
+        expect(result.markdown).toContain("![image](/Volume/git/fern/static/image.png)");
+    });
+
     it("should parse multiple markdown images with streaming parser", () => {
         const page =
             "This is a test page with images ![image1](path/to/image1.png) and ![image2](path/to/image2.png) and more content to exceed threshold";
@@ -963,6 +971,14 @@ describe("replaceImagePathsAndUrls with streaming parser for large files", () =>
             CONTEXT
         );
         expect(replaced).toContain("[text](/other/page)");
+    });
+
+    it("should replace absolute image paths with file IDs using streaming parser", () => {
+        const page =
+            "This is a test page with an absolute image ![image](/static/image.png) and lots more content to exceed the 100 bytes threshold for the streaming parser to run while replacing paths.";
+        const fileIdsMap = new Map([[AbsoluteFilePath.of("/Volume/git/fern/static/image.png"), "absolute-file-id"]]);
+        const replaced = replaceImagePathsAndUrls(page, fileIdsMap, {}, PATHS, CONTEXT);
+        expect(replaced).toContain("![image](file:absolute-file-id)");
     });
 
     it("should preserve anchors when replacing image paths using streaming parser", () => {

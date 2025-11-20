@@ -12,7 +12,9 @@ import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpression
 import { parseMarkdownToTree } from "./parseMarkdownToTree";
 import { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes";
 
-const LARGE_FILE_BYTES = parseInt(process.env.FERN_DOCS_LARGE_FILE_BYTES ?? "5000000", 10);
+function getLargeFileBytes(): number {
+    return parseInt(process.env.FERN_DOCS_LARGE_FILE_BYTES ?? "5000000", 10);
+}
 
 interface Edit {
     start: number;
@@ -85,11 +87,20 @@ function streamingScanForImages(
     return { filepaths, edits };
 }
 
+interface MarkdownImageParseResult {
+    filepath: AbsoluteFilePath;
+    edit: Edit;
+    nextIndex: number;
+    originalUrl: string;
+    rawSrc: string;
+    src: string;
+}
+
 function parseMarkdownImage(
     content: string,
     start: number,
     metadata: AbsolutePathMetadata
-): { filepath: AbsoluteFilePath; edit: Edit; nextIndex: number } | null {
+): MarkdownImageParseResult | null {
     let i = start + 2;
     const len = content.length;
 
@@ -129,14 +140,19 @@ function parseMarkdownImage(
 
     const urlEnd = i - 1;
     const url = content.slice(urlStart, urlEnd).trim();
-    const src = trimAnchor(url);
+    const rawSrc = trimAnchor(url);
+    const src = rawSrc != null ? unescapeMarkdownUrl(rawSrc) : undefined;
     const resolvedPath = resolvePath(src, metadata);
 
-    if (src && resolvedPath) {
+    if (rawSrc && src && resolvedPath) {
+        const replacement = url.replace(rawSrc, resolvedPath);
         return {
             filepath: resolvedPath,
-            edit: { start: urlStart, end: urlEnd, replacement: resolvedPath },
-            nextIndex: i
+            edit: { start: urlStart, end: urlEnd, replacement },
+            nextIndex: i,
+            originalUrl: url,
+            rawSrc,
+            src
         };
     }
 
@@ -370,7 +386,7 @@ export function parseImagePaths(
     replaceFrontmatterImagesforLogo(data, mapImage);
 
     const contentBytes = Buffer.byteLength(content, "utf8");
-    const isLargeFile = contentBytes > LARGE_FILE_BYTES;
+    const isLargeFile = contentBytes > getLargeFileBytes();
 
     let replacedContent: string;
 
@@ -563,7 +579,18 @@ export function replaceImagePathsAndUrls(
         if (isAbsolute(image)) {
             const absolutePath = AbsoluteFilePath.of(image);
             const fileId = fileIdsMap.get(absolutePath);
-            return fileId ? `file:${fileId}` : undefined;
+            if (fileId) {
+                return `file:${fileId}`;
+            }
+
+            const resolvedFromRoot = resolvePath(image, metadata);
+            if (resolvedFromRoot) {
+                const fallbackFileId = fileIdsMap.get(resolvedFromRoot);
+                if (fallbackFileId) {
+                    return `file:${fallbackFileId}`;
+                }
+            }
+            return undefined;
         }
 
         const resolvedPath = resolvePath(image, metadata);
@@ -579,7 +606,7 @@ export function replaceImagePathsAndUrls(
     replaceFrontmatterImagesforLogo(data, mapImage);
 
     const contentBytes = Buffer.byteLength(content, "utf8");
-    const isLargeFile = contentBytes > LARGE_FILE_BYTES;
+    const isLargeFile = contentBytes > getLargeFileBytes();
 
     let replacedContent: string;
 
@@ -597,9 +624,13 @@ export function replaceImagePathsAndUrls(
             if (content[i] === "!" && content[i + 1] === "[") {
                 const result = parseMarkdownImage(content, i, metadata);
                 if (result) {
-                    const imageSrc = mapImage(result.edit.replacement);
+                    const imageSrc = mapImage(result.src);
                     if (imageSrc) {
-                        edits.push({ start: result.edit.start, end: result.edit.end, replacement: imageSrc });
+                        edits.push({
+                            start: result.edit.start,
+                            end: result.edit.end,
+                            replacement: result.originalUrl.replace(result.rawSrc, imageSrc)
+                        });
                     }
                     i = result.nextIndex;
                     continue;
@@ -845,6 +876,10 @@ export function trimAnchor(text: unknown): string | undefined {
         return undefined;
     }
     return text.replace(/#.*$/, "");
+}
+
+function unescapeMarkdownUrl(text: string): string {
+    return text.replace(/\\([()])/g, "$1");
 }
 
 function visitFrontmatterImages(
