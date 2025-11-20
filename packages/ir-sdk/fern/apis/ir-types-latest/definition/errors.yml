@@ -14,6 +14,11 @@ types:
       discriminantValue: commons.NameAndWireValue
       type: optional<types.TypeReference>
       statusCode: integer
+      isWildcardStatusCode:
+        type: optional<boolean>
+        docs: |
+          When true, indicates that the statusCode represents a wildcard pattern (e.g., 4XX or 5XX).
+          The statusCode field will contain the base value (400 for 4XX, 500 for 5XX).
       examples: list<ExampleError>
       v2Examples: optional<examples.V2SchemaExamples>
   ErrorDeclarationDiscriminantValue:

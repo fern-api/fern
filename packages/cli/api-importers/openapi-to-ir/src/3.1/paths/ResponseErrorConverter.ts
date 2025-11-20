@@ -7,6 +7,7 @@ export declare namespace ResponseErrorConverter {
         responseError: OpenAPIV3_1.ResponseObject;
         methodName: string;
         statusCode: number;
+        isWildcardStatusCode?: boolean;
     }
 
     export interface Output extends Converters.AbstractConverters.AbstractMediaTypeObjectConverter.Output {
@@ -14,6 +15,7 @@ export declare namespace ResponseErrorConverter {
         errorType: TypeReference;
         displayName: string;
         statusCode: number;
+        isWildcardStatusCode?: boolean;
     }
 }
 
@@ -21,6 +23,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
     private readonly responseError: OpenAPIV3_1.ResponseObject;
     private readonly statusCode: number;
     private readonly methodName: string;
+    private readonly isWildcardStatusCode?: boolean;
 
     constructor({
         context,
@@ -29,12 +32,14 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
         group,
         method,
         methodName,
-        statusCode
+        statusCode,
+        isWildcardStatusCode
     }: ResponseErrorConverter.Args) {
         super({ context, breadcrumbs, group, method });
         this.responseError = responseError;
         this.statusCode = statusCode;
         this.methodName = methodName;
+        this.isWildcardStatusCode = isWildcardStatusCode;
     }
 
     public convert(): ResponseErrorConverter.Output | undefined {
@@ -65,6 +70,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
                 errorType: TypeReference.unknown(),
                 displayName: errorName,
                 statusCode: this.statusCode,
+                isWildcardStatusCode: this.isWildcardStatusCode,
                 inlinedTypes: {},
                 examples: {}
             };
@@ -132,6 +138,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             errorType: convertedSchema.type,
             displayName: errorName,
             statusCode: this.statusCode,
+            isWildcardStatusCode: this.isWildcardStatusCode,
             inlinedTypes: convertedSchema.inlinedTypes,
             examples: convertedSchema.examples
         };

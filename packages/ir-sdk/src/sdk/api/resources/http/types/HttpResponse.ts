@@ -6,5 +6,6 @@ import * as FernIr from "../../../index";
 
 export interface HttpResponse {
     statusCode: number | undefined;
+    isWildcardStatusCode: boolean | undefined;
     body: FernIr.HttpResponseBody | undefined;
 }

@@ -10,6 +10,7 @@ export interface ErrorDeclaration extends FernIr.WithDocs {
     discriminantValue: FernIr.NameAndWireValue;
     type: FernIr.TypeReference | undefined;
     statusCode: number;
+    isWildcardStatusCode: boolean | undefined;
     examples: FernIr.ExampleError[];
     v2Examples: FernIr.V2SchemaExamples | undefined;
 }
