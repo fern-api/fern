@@ -7,13 +7,6 @@ The Basic TypeScript library provides convenient access to the Basic APIs from T
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-
-## Table of Contents
-
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
