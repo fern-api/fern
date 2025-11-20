@@ -42,7 +42,7 @@ runs:
 
         # Sanitize package name for branch name (replace special characters)
         SANITIZED_PKG=$(echo "${{ inputs.package-name }}" | sed 's/[^a-zA-Z0-9._-]/-/g')
-        
+
         # Create branch
         BRANCH_NAME="devin/update-${SANITIZED_PKG}-to-${{ inputs.version }}"
         git checkout -b "$BRANCH_NAME"
