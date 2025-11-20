@@ -503,13 +503,19 @@ export class ExampleEndpointFactory {
                     ignoreOptionals: true
                 }
             });
-            if (example != null && !isExamplePrimitive(example)) {
-                this.logger.debug(
-                    `Expected a primitive example but got ${example.type} for query parameter ${
-                        queryParameter.name
-                    } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
-                );
-                example = undefined;
+            if (example != null) {
+                const resolvedSchema = this.getResolvedSchema(queryParameter.schema);
+                const isArrayParam = resolvedSchema.type === "array";
+                const isValidExample = isExamplePrimitive(example) || (isArrayParam && example.type === "array");
+                
+                if (!isValidExample) {
+                    this.logger.debug(
+                        `Expected a primitive example but got ${example.type} for query parameter ${
+                            queryParameter.name
+                        } for ${endpoint.method.toUpperCase()} ${endpoint.path}`
+                    );
+                    example = undefined;
+                }
             }
             if (required && example == null) {
                 return [];
@@ -691,8 +697,31 @@ export class ExampleEndpointFactory {
         return isSchemaRequired(this.getResolvedSchema(schema));
     }
 
-    private getResolvedSchema(schema: SchemaWithExample) {
-        return schema;
+    private getResolvedSchema(schema: SchemaWithExample): SchemaWithExample {
+        let current = schema;
+        const visited = new Set<string>();
+        
+        while (true) {
+            if (current.type === "optional" || current.type === "nullable") {
+                current = current.value;
+            } else if (current.type === "reference") {
+                if (visited.has(current.schema)) {
+                    break;
+                }
+                visited.add(current.schema);
+                
+                const referencedSchema = this.schemas[current.schema];
+                if (referencedSchema != null) {
+                    current = referencedSchema;
+                } else {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        
+        return current;
     }
 }
 
@@ -870,7 +899,7 @@ export function isExamplePrimitive(example: FullExample): boolean {
         case "literal":
             return true;
         case "unknown":
-            return isExamplePrimitive(example);
+            return isExamplePrimitive(example.value);
         case "array":
         case "object":
         case "map":
