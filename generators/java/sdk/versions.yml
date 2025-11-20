@@ -1,3 +1,11 @@
+- version: 3.18.2
+  changelogEntry:
+    - summary: |
+        Fix bugs in 3.17.0's addition of InputStream-based method overloads.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 3.18.1
   changelogEntry:
     - summary: |
