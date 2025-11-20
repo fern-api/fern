@@ -1,6 +1,13 @@
 # yaml-language-server: $schema=../../versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add test cases to verify that "Advanced" and "Contributing" sections are always placed at the end of generated READMEs, even when custom sections are present.
+      type: chore
+  createdAt: "2025-11-20"
+  version: 0.4.6
+
+- changelogEntry:
+    - summary: |
         Treat Table of Contents as a core block type to prevent duplicate sections in generated READMEs.
       type: fix
   createdAt: "2025-11-19"
