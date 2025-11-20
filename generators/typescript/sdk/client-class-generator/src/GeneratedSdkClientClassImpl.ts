@@ -1154,7 +1154,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 packageResolver: this.packageResolver
             })
         ) {
-            return this.oauthAuthScheme != null || this.bearerAuthScheme != null;
+            return this.oauthAuthScheme != null;
         }
         return false;
     }
