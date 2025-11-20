@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Add missing error type mappings in remote generation error handler. The CLI now properly handles IllegalApiVersionError, CannotPublishPypiPackage, and OrgNotConfiguredForWhitelabel errors from the remote generation service, and displays improved error messages for invalid generator versions with SemVer format guidance.
+        Improve misc error handling, including for illegal version strings
       type: fix
   irVersion: 61
   createdAt: "2025-11-20"

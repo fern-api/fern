@@ -218,14 +218,8 @@ async function createJob({
             illegalApiNameError: () => {
                 return context.failAndThrow("API name is invalid: " + workspace.definition.rootApiFile.contents.name);
             },
-            illegalApiVersionError: (details) => {
-                const remote = details?.message && details.message.trim() ? ` – ${details.message.trim()}` : "";
-                const provided = typeof version === "string" ? version : undefined;
-                const patchHint = provided && /^\d+\.\d+$/.test(provided) ? ` Did you mean "${provided}.0"?` : "";
-                const label = provided ? ` "${provided}"` : "";
-                return context.failAndThrow(
-                    `Invalid version${label}. Versions must use SemVer MAJOR.MINOR.PATCH (e.g., 0.31.0).${patchHint}${remote}`
-                );
+            illegalApiVersionError: () => {
+                return context.failAndThrow("API version is invalid: " + version);
             },
             cannotPublishToNpmScope: ({ validScope, invalidScope }) => {
                 return context.failAndThrow(
