@@ -73,3 +73,82 @@ export const multipleCustomSectionsConfig: FernGeneratorCli.ReadmeConfig = {
         }
     ]
 };
+
+export const customSectionsWithAdvancedFeaturesConfig: FernGeneratorCli.ReadmeConfig = {
+    ...baseConfig,
+    customSections: [
+        {
+            name: "Custom Section",
+            language: FernGeneratorCli.Language.Php,
+            content: "This is a custom section that should appear before Advanced Features"
+        }
+    ],
+    features: [
+        {
+            id: "RETRIES",
+            snippetsAreOptional: true,
+            addendum: "This is an advanced feature (retries)"
+        },
+        {
+            id: "TIMEOUTS",
+            snippetsAreOptional: true,
+            addendum: "This is an advanced feature (timeouts)"
+        }
+    ]
+};
+
+export const customSectionsWithCoreAndAdvancedFeaturesConfig: FernGeneratorCli.ReadmeConfig = {
+    ...baseConfig,
+    customSections: [
+        {
+            name: "Custom Section",
+            language: FernGeneratorCli.Language.Php,
+            content: "This is a custom section that should appear after core features but before Advanced Features"
+        }
+    ],
+    features: [
+        {
+            id: "USAGE",
+            snippetsAreOptional: true,
+            addendum: "This is a core feature"
+        },
+        {
+            id: "RETRIES",
+            snippetsAreOptional: true,
+            addendum: "This is an advanced feature (retries)"
+        },
+        {
+            id: "TIMEOUTS",
+            snippetsAreOptional: true,
+            addendum: "This is an advanced feature (timeouts)"
+        }
+    ]
+};
+
+export const multipleCustomSectionsWithAdvancedFeaturesConfig: FernGeneratorCli.ReadmeConfig = {
+    ...baseConfig,
+    customSections: [
+        {
+            name: "Custom Section One",
+            language: FernGeneratorCli.Language.Php,
+            content: "First custom section"
+        },
+        {
+            name: "Custom Section Two",
+            language: FernGeneratorCli.Language.Php,
+            content: "Second custom section"
+        }
+    ],
+    features: [
+        {
+            id: "USAGE",
+            snippetsAreOptional: true,
+            addendum: "This is a core feature"
+        },
+        {
+            id: "RETRIES",
+            snippetsAreOptional: true,
+            addendum: "This is an advanced feature (retries)"
+        }
+    ]
+};
