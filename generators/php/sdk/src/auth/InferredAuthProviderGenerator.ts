@@ -13,11 +13,7 @@ import {
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 
-export class InferredAuthProviderGenerator extends FileGenerator<
-    PhpFile,
-    SdkCustomConfigSchema,
-    SdkGeneratorContext
-> {
+export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private readonly ir: IntermediateRepresentation;
     private readonly authScheme: InferredAuthScheme;
     private readonly endpoint: HttpEndpoint;
@@ -50,7 +46,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<
     public doGenerate(): PhpFile {
         const authNamespace = this.context.getRootNamespace() + "\\Auth";
         const rootClientName = this.context.getRootClientClassName();
-        
+
         const class_ = php.class_({
             name: "InferredAuthProvider",
             namespace: authNamespace
@@ -84,7 +80,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<
                 name: "DateTime",
                 namespace: ""
             });
-            
+
             class_.addField(
                 php.field({
                     name: "$expiresAt",
@@ -182,7 +178,10 @@ export class InferredAuthProviderGenerator extends FileGenerator<
             parameters: [],
             docs: "Get cached authentication headers.\n\n@return array<string, string>",
             body: php.codeblock((writer) => {
-                writer.controlFlow("if", php.codeblock("$this->expiresAt !== null && $this->expiresAt <= new \\DateTime()"));
+                writer.controlFlow(
+                    "if",
+                    php.codeblock("$this->expiresAt !== null && $this->expiresAt <= new \\DateTime()")
+                );
                 writer.writeTextStatement("$this->cachedAuthHeaders = null");
                 writer.endControlFlow();
                 writer.writeLine();
@@ -204,13 +203,13 @@ export class InferredAuthProviderGenerator extends FileGenerator<
             docs: "Get authentication headers from token endpoint.\n\n@return array<string, string>",
             body: php.codeblock((writer) => {
                 const requestClassName = this.getRequestClassName();
-                
+
                 writer.writeLine("/** @phpstan-ignore-next-line */");
                 writer.write("$request = new ");
                 writer.write(requestClassName);
                 writer.writeTextStatement("($this->authTokenParameters)");
                 writer.writeLine();
-                
+
                 writer.write("$response = $this->client->");
                 writer.write(this.getTokenEndpointMethodPath());
                 writer.writeTextStatement("($request)");
@@ -218,7 +217,9 @@ export class InferredAuthProviderGenerator extends FileGenerator<
 
                 if (this.authScheme.tokenEndpoint.expiryProperty) {
                     writer.write("$this->expiresAt = $this->getExpiresAt(");
-                    writer.write(this.getResponsePropertyAccess("$response", this.authScheme.tokenEndpoint.expiryProperty));
+                    writer.write(
+                        this.getResponsePropertyAccess("$response", this.authScheme.tokenEndpoint.expiryProperty)
+                    );
                     writer.writeTextStatement(")");
                     writer.writeLine();
                 }
@@ -245,7 +246,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<
             name: "DateTime",
             namespace: ""
         });
-        
+
         return php.method({
             access: "private",
             name: "getExpiresAt",
@@ -278,32 +279,32 @@ export class InferredAuthProviderGenerator extends FileGenerator<
 
     private getResponsePropertyAccess(variable: string, property: ResponseProperty): string {
         let access = variable;
-        
+
         if (property.propertyPath) {
             for (const pathItem of property.propertyPath) {
                 access += `->${pathItem.name.camelCase.unsafeName}`;
             }
         }
-        
+
         access += `->${property.property.name.name.camelCase.unsafeName}`;
-        
+
         return access;
     }
 
     private getRequestClassName(): string {
         const serviceLocation = this.context.getLocationForServiceId(this.authScheme.tokenEndpoint.endpoint.serviceId);
-        
+
         let requestName: string;
         if (this.endpoint.sdkRequest?.shape.type === "wrapper") {
             requestName = this.endpoint.sdkRequest.shape.wrapperName.pascalCase.safeName;
         } else {
             requestName = this.endpoint.name.pascalCase.safeName;
         }
-        
+
         if (!requestName.endsWith("Request")) {
             requestName += "Request";
         }
-        
+
         return `\\${serviceLocation.namespace}\\Requests\\${requestName}`;
     }
 }
