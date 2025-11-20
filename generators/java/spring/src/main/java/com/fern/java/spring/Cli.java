@@ -211,6 +211,8 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
                 + "    toolchain {\n"
                 + "        languageVersion = JavaLanguageVersion.of(17)\n"
                 + "    }\n"
+                + "    sourceCompatibility = JavaVersion.VERSION_17\n"
+                + "    targetCompatibility = JavaVersion.VERSION_17\n"
                 + "}");
     }
 

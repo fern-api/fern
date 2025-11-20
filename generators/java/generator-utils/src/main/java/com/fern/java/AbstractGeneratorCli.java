@@ -578,7 +578,11 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                         publishEnvVars);
             }
             runCommandBlocking(
-                    new String[] {"gradle", "publish"},
+                    new String[] {"chmod", "+x", "gradlew"},
+                    Paths.get(generatorConfig.getOutput().getPath()),
+                    publishEnvVars);
+            runCommandBlocking(
+                    new String[] {"./gradlew", "publish", "--stacktrace", "--info", "--no-daemon"},
                     Paths.get(generatorConfig.getOutput().getPath()),
                     publishEnvVars);
         }
