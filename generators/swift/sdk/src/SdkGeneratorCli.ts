@@ -1,7 +1,7 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertNever, extractErrorMessage, noop } from "@fern-api/core-utils";
+import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractSwiftGeneratorCli } from "@fern-api/swift-base";
+import { AbstractSwiftGeneratorCli, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
 import { sanitizeSelf, swift } from "@fern-api/swift-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/swift-dynamic-snippets";
 import {
@@ -152,6 +152,7 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     private async generateSourceFiles(context: SdkGeneratorContext): Promise<void> {
         // Generation order determines priority when resolving duplicate file names
         await this.generateSourceAsIsFiles(context);
+        await this.generateSourceTemplateFiles(context);
         this.generateSourceSubClientFiles(context);
         this.generateSourceRequestFiles(context);
         this.generateSourceSchemaFiles(context);
@@ -167,6 +168,24 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                     directory: def.directory,
                     contents: await def.loadContents()
                 });
+            })
+        );
+    }
+
+    private async generateSourceTemplateFiles(context: SdkGeneratorContext) {
+        const templateDataGenerator = new TemplateDataGenerator({ context });
+        await Promise.all(
+            entries(SourceTemplateFiles).map(async ([templateId, template]) => {
+                const rawContents = await template.loadContents();
+                const templateData = templateDataGenerator.generateSourceTemplateData(templateId);
+                if (templateData) {
+                    const contents = this.renderTemplate(rawContents, templateData);
+                    context.project.addSourceAsIsFile({
+                        nameCandidateWithoutExtension: template.filenameWithoutExtension(templateData),
+                        directory: template.directory,
+                        contents
+                    });
+                }
             })
         );
     }
@@ -563,10 +582,8 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
     }
 
     private async generateTestFiles(context: SdkGeneratorContext): Promise<void> {
-        if (!context.hasTests) {
-            return;
-        }
         await this.generateTestAsIsFiles(context);
+        await this.generateTestTemplateFiles(context);
         if (context.customConfig.enableWireTests) {
             this.generateWireTestSuiteFiles(context);
         }
@@ -576,22 +593,27 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         await Promise.all(
             context.getTestAsIsFiles().map(async (def) => {
                 const rawContents = await def.loadContents();
-                if (def.filenameWithoutExtension.endsWith(".Template")) {
-                    const templateDataGenerator = new TemplateDataGenerator({ context });
-                    const templateData = templateDataGenerator.generateTemplateData(def.filenameWithoutExtension);
-                    if (templateData) {
-                        const contents = this.renderTemplate(rawContents, templateData);
-                        context.project.addTestAsIsFile({
-                            nameCandidateWithoutExtension: def.filenameWithoutExtension.replace(".Template", ""),
-                            directory: def.directory,
-                            contents
-                        });
-                    }
-                } else {
+                context.project.addTestAsIsFile({
+                    nameCandidateWithoutExtension: def.filenameWithoutExtension,
+                    directory: def.directory,
+                    contents: rawContents
+                });
+            })
+        );
+    }
+
+    private async generateTestTemplateFiles(context: SdkGeneratorContext) {
+        const templateDataGenerator = new TemplateDataGenerator({ context });
+        await Promise.all(
+            entries(TestTemplateFiles).map(async ([templateId, template]) => {
+                const rawContents = await template.loadContents();
+                const templateData = templateDataGenerator.generateTestTemplateData(templateId);
+                if (templateData) {
+                    const contents = this.renderTemplate(rawContents, templateData);
                     context.project.addTestAsIsFile({
-                        nameCandidateWithoutExtension: def.filenameWithoutExtension,
-                        directory: def.directory,
-                        contents: rawContents
+                        nameCandidateWithoutExtension: template.filenameWithoutExtension(templateData),
+                        directory: template.directory,
+                        contents
                     });
                 }
             })
