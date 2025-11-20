@@ -250,8 +250,8 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             const publishInfo = outputMode.publishInfo;
             if (publishInfo.type === "rubygems") {
                 shouldWritePublishBlock = true;
-                registryUrl = publishInfo.registryUrl;
-                const gemHostApiKeyEnvVar = publishInfo.apiKeyEnvironmentVariable ?? "RUBYGEMS_AUTH_TOKEN";
+                registryUrl = publishInfo.registryUrl?.trim() || "https://rubygems.org";
+                const gemHostApiKeyEnvVar = publishInfo.apiKeyEnvironmentVariable?.trim() || "RUBYGEMS_AUTH_TOKEN";
                 gemHostApiKeySecret = `\${{ secrets.${gemHostApiKeyEnvVar} }}`;
             }
         }
