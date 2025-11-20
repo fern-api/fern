@@ -36,6 +36,7 @@ export class EnumGenerator extends FileGenerator<PhpFile, ModelCustomConfigSchem
     }
 
     protected getFilepath(): RelativeFilePath {
-        return this.context.getLocationForTypeId(this.typeDeclaration.name.typeId).directory;
+        const location = this.context.getLocationForTypeId(this.typeDeclaration.name.typeId);
+        return RelativeFilePath.of(`${location.directory}/${this.classReference.name}`);
     }
 }

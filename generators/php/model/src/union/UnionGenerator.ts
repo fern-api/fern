@@ -1314,6 +1314,7 @@ export class UnionGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     protected getFilepath(): RelativeFilePath {
-        return this.context.getLocationForTypeId(this.typeDeclaration.name.typeId).directory;
+        const location = this.context.getLocationForTypeId(this.typeDeclaration.name.typeId);
+        return RelativeFilePath.of(`${location.directory}/${this.classReference.name}`);
     }
 }

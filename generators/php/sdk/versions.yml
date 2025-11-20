@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.18.3
+  changelogEntry:
+    - summary: |
+        Fix duplicate logging in PHP SDK generator by including class names in log messages. Previously, multiple types in the same directory would log identical "Generating {directory}" messages, causing log spam. Now each type logs a unique "Generating {directory}/{className}" message.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 1.18.2
   changelogEntry:
     - summary: |

@@ -71,6 +71,7 @@ export class ObjectGenerator extends FileGenerator<PhpFile, ModelCustomConfigSch
     }
 
     protected getFilepath(): RelativeFilePath {
-        return this.context.getLocationForTypeId(this.typeDeclaration.name.typeId).directory;
+        const location = this.context.getLocationForTypeId(this.typeDeclaration.name.typeId);
+        return RelativeFilePath.of(`${location.directory}/${this.classReference.name}`);
     }
 }
