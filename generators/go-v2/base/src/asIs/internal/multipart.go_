@@ -82,7 +82,7 @@ func (w *MultipartWriter) WriteField(
 // WriteJSON writes the given value as a JSON form field.
 func (w *MultipartWriter) WriteJSON(
 	field string,
-	value any,
+	value interface{},
 	opts ...WriteMultipartOption,
 ) error {
 	bytes, err := json.Marshal(value)

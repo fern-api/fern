@@ -30,41 +30,17 @@ var (
 	//go:embed sdk/internal/explicit_fields_test.go
 	explicitFieldsTestFile string
 
-	//go:embed sdk/internal/extra_properties.go
-	extraPropertiesFile string
+	//go:embed sdk/internal/pointer.go
+	pointerInternalFile string
 
-	//go:embed sdk/internal/extra_properties_test.go
-	extraPropertiesTestFile string
-
-	//go:embed sdk/utils/file_param.go
-	fileParamFile string
-
-	//go:embed sdk/core/http.go
-	httpCoreFile string
-
-	//go:embed sdk/internal/http.go
-	httpInternalFile string
-
-	//go:embed sdk/internal/multipart.go
-	multipartFile string
-
-	//go:embed sdk/internal/multipart_test.go
-	multipartTestFile string
+	//go:embed sdk/utils/pointer.go
+	pointerUtilsFile string
 
 	//go:embed sdk/core/optional.go
 	optionalFile string
 
 	//go:embed sdk/core/optional_test.go
 	optionalTestFile string
-
-	//go:embed sdk/utils/pointer.go
-	pointerFile string
-
-	//go:embed sdk/internal/query.go
-	queryFile string
-
-	//go:embed sdk/internal/query_test.go
-	queryTestFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.

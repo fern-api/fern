@@ -41,6 +41,7 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await this.writeGoMod();
         await this.writeCoreFiles();
         await this.writeInternalFiles();
+        await this.writeUtilsFiles();
         await this.writeRootAsIsFiles();
         await this.writeGoFiles({
             files: Object.values(this.goFiles).flat()
@@ -150,6 +151,14 @@ export class GoProject extends AbstractProject<AbstractGoGeneratorContext<BaseGo
         await this.writeAsIsFiles({
             filenames: this.context.getCoreAsIsFiles(),
             getPackageName: () => "core",
+            getImportPath: (dirname) => this.getImportPath(dirname)
+        });
+    }
+
+    private async writeUtilsFiles(): Promise<void> {
+        await this.writeAsIsFiles({
+            filenames: this.context.getUtilsAsIsFiles(),
+            getPackageName: () => "utils",
             getImportPath: (dirname) => this.getImportPath(dirname)
         });
     }

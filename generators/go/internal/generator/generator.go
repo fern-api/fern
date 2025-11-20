@@ -342,8 +342,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	files = append(files, newTimeFile(g.coordinator))
 	files = append(files, newExplicitFieldsFile(g.coordinator))
 	files = append(files, newExplicitFieldsTestFile(g.coordinator))
-	files = append(files, newExtraPropertiesFile(g.coordinator))
-	files = append(files, newExtraPropertiesTestFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
 	switch mode {
 	case ModeFiber:
@@ -560,16 +558,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newOptionalTestFile(g.coordinator))
 		}
 		files = append(files, newApiErrorFile(g.coordinator))
-		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
-		files = append(files, newHttpCoreFile(g.coordinator))
-		files = append(files, newHttpInternalFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, rootPackageName, generatedNames))
-		files = append(files, newQueryFile(g.coordinator))
-		files = append(files, newQueryTestFile(g.coordinator))
-		if needsFileUploadHelpers(ir) {
-			files = append(files, newMultipartFile(g.coordinator))
-			files = append(files, newMultipartTestFile(g.coordinator))
-		}
 		clientTestFile, err := newClientTestFile(g.config.FullImportPath, rootPackageName, g.coordinator, g.config.ClientName, g.config.ClientConstructorName)
 		if err != nil {
 			return nil, err
@@ -1061,91 +1050,6 @@ func declaredTypeNamesForTypeIDs(ir *fernir.IntermediateRepresentation, typeIDs 
 // access the helpers alongside the rest of the top-level definitions. However,
 // if any naming conflict exists between the generated types, this file is
 // deposited in the core package.
-func newPointerFile(coordinator *coordinator.Client, rootPackageName string, generatedNames map[string]struct{}) *File {
-	// First determine whether or not we need to generate the type in the
-	// core package.
-	var useCorePackage bool
-	for generatedName := range generatedNames {
-		if _, ok := pointerFunctionNames[generatedName]; ok {
-			useCorePackage = true
-			break
-		}
-	}
-	if useCorePackage {
-		return NewFile(
-			coordinator,
-			"core/pointer.go",
-			[]byte(pointerFile),
-		)
-	}
-	// We're going to generate the pointers at the root of the repository,
-	// so now we need to determine whether or not we can use the standard
-	// filename, or if it needs a prefix.
-	filename := "pointer.go"
-	if _, ok := generatedNames["Pointer"]; ok {
-		filename = "_pointer.go"
-	}
-	// Finally, we need to replace the package declaration so that it matches
-	// the root package declaration of the generated SDK.
-	content := strings.Replace(
-		pointerFile,
-		"package core",
-		fmt.Sprintf("package %s", rootPackageName),
-		1,
-	)
-	return NewFile(
-		coordinator,
-		filename,
-		[]byte(content),
-	)
-}
-
-// newFileParamFile returns a *File containing the FileParam helper type
-// for multipart file uploads.
-//
-// In general, this file is deposited at the root of the SDK so that users can
-// access the helpers alongside the rest of the top-level definitions. However,
-// if any naming conflict exists between the generated types, this file is
-// deposited in the core package.
-func newFileParamFile(coordinator *coordinator.Client, rootPackageName string, generatedNames map[string]struct{}) *File {
-	// First determine whether or not we need to generate the type in the
-	// core package.
-	var useCorePackage bool
-	for generatedName := range generatedNames {
-		if _, ok := pointerFunctionNames[generatedName]; ok {
-			useCorePackage = true
-			break
-		}
-	}
-	if useCorePackage {
-		return NewFile(
-			coordinator,
-			"core/file_param.go",
-			[]byte(fileParamFile),
-		)
-	}
-	// We're going to generate the pointers at the root of the repository,
-	// so now we need to determine whether or not we can use the standard
-	// filename, or if it needs a prefix.
-	filename := "file_param.go"
-	if _, ok := generatedNames["FileParam"]; ok {
-		filename = "_file_param.go"
-	}
-	// Finally, we need to replace the package declaration so that it matches
-	// the root package declaration of the generated SDK.
-	content := strings.Replace(
-		fileParamFile,
-		"package core",
-		fmt.Sprintf("package %s", rootPackageName),
-		1,
-	)
-	return NewFile(
-		coordinator,
-		filename,
-		[]byte(content),
-	)
-}
-
 func newClientTestFile(
 	baseImportPath string,
 	rootPackageName string,
@@ -1184,6 +1088,52 @@ func newApiErrorFile(coordinator *coordinator.Client) *File {
 	)
 }
 
+// newPointerFile returns a *File containing the Pointer helper function
+// for creating pointers to values.
+//
+// In general, this file is deposited at the root of the SDK so that users can
+// access the helpers alongside the rest of the top-level definitions. However,
+// if any naming conflict exists between the generated types, this file is
+// deposited in the core package.
+func newPointerFile(coordinator *coordinator.Client, rootPackageName string, generatedNames map[string]struct{}) *File {
+	// First determine whether or not we need to generate the type in the
+	// core package.
+	var useCorePackage bool
+	for generatedName := range generatedNames {
+		if _, ok := pointerFunctionNames[generatedName]; ok {
+			useCorePackage = true
+			break
+		}
+	}
+	if useCorePackage {
+		return NewFile(
+			coordinator,
+			"core/pointer.go",
+			[]byte(pointerUtilsFile),
+		)
+	}
+	// We're going to generate the pointers at the root of the repository,
+	// so now we need to determine whether or not we can use the standard
+	// filename, or if it needs a prefix.
+	filename := "pointer.go"
+	if _, ok := generatedNames["Pointer"]; ok {
+		filename = "_pointer.go"
+	}
+	// Finally, we need to replace the package declaration so that it matches
+	// the root package declaration of the generated SDK.
+	content := strings.Replace(
+		pointerUtilsFile,
+		"package core",
+		fmt.Sprintf("package %s", rootPackageName),
+		1,
+	)
+	return NewFile(
+		coordinator,
+		filename,
+		[]byte(content),
+	)
+}
+
 // func newErrorDecoderFile(coordinator *coordinator.Client, baseImportPath string) *File {
 // 	content := replaceCoreImportPath(errorDecoderFile, baseImportPath)
 // 	return NewFile(
@@ -1202,38 +1152,6 @@ func newApiErrorFile(coordinator *coordinator.Client) *File {
 // 	)
 // }
 
-func newHttpCoreFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"core/http.go",
-		[]byte(httpCoreFile),
-	)
-}
-
-func newHttpInternalFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"internal/http.go",
-		[]byte(httpInternalFile),
-	)
-}
-
-func newMultipartFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"internal/multipart.go",
-		[]byte(multipartFile),
-	)
-}
-
-func newMultipartTestFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"internal/multipart_test.go",
-		[]byte(multipartTestFile),
-	)
-}
-
 func newOptionalFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
@@ -1247,22 +1165,6 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/optional_test.go",
 		[]byte(optionalTestFile),
-	)
-}
-
-func newQueryFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"internal/query.go",
-		[]byte(queryFile),
-	)
-}
-
-func newQueryTestFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"internal/query_test.go",
-		[]byte(queryTestFile),
 	)
 }
 
@@ -1295,22 +1197,6 @@ func newExplicitFieldsTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"internal/explicit_fields_test.go",
 		[]byte(explicitFieldsTestFile),
-	)
-}
-
-func newExtraPropertiesFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"internal/extra_properties.go",
-		[]byte(extraPropertiesFile),
-	)
-}
-
-func newExtraPropertiesTestFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"internal/extra_properties_test.go",
-		[]byte(extraPropertiesTestFile),
 	)
 }
 
@@ -1865,18 +1751,6 @@ func needsPaginationHelpers(ir *fernir.IntermediateRepresentation) bool {
 	for _, irService := range ir.Services {
 		for _, irEndpoint := range irService.Endpoints {
 			if irEndpoint.Pagination != nil {
-				return true
-			}
-		}
-	}
-	return false
-}
-
-// needsFileUploadHelpers returns true if at least endpoint specifies a file upload.
-func needsFileUploadHelpers(ir *fernir.IntermediateRepresentation) bool {
-	for _, irService := range ir.Services {
-		for _, irEndpoint := range irService.Endpoints {
-			if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
 				return true
 			}
 		}

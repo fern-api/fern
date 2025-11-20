@@ -57,11 +57,23 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
     }
 
     public getInternalAsIsFiles(): string[] {
-        return [];
+        const files = [
+            AsIsFiles.HttpInternal,
+            AsIsFiles.Query,
+            AsIsFiles.QueryTest,
+            AsIsFiles.ExtraProperties,
+            AsIsFiles.ExtraPropertiesTest
+        ];
+
+        if (this.needsFileUploadHelpers()) {
+            files.push(AsIsFiles.Multipart, AsIsFiles.MultipartTest);
+        }
+
+        return files;
     }
 
     public getCoreAsIsFiles(): string[] {
-        const files = [];
+        const files = [AsIsFiles.HttpCore];
 
         if (this.needsPaginationHelpers()) {
             files.push(AsIsFiles.Page);
@@ -92,7 +104,26 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             files.push(AsIsFiles.Streamer);
         }
 
+        if (this.needsFileUploadHelpers()) {
+            files.push(AsIsFiles.FileParam);
+        }
+
         return files;
+    }
+
+    public getUtilsAsIsFiles(): string[] {
+        return [];
+    }
+
+    private needsFileUploadHelpers(): boolean {
+        for (const service of Object.values(this.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (this.isFileUploadEndpoint(endpoint)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public getClientClassName(subpackage?: Subpackage): string {
