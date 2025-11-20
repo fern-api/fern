@@ -188,8 +188,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     await typescriptProject.installDependencies(logger);
                     await typescriptProject.checkFix(logger);
 
-                    if (this.shouldGenerateFullProject(ir)) {
-                        await typescriptProject.copyProjectTo({
+                    if (this.outputSourceFiles(customConfig)) {
+                        await typescriptProject.copySrcTo({
                             destinationPath,
                             zipFilename: OUTPUT_ZIP_FILENAME,
                             unzipOutput: options?.unzipOutput,
@@ -197,8 +197,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         });
                         return;
                     }
-                    if (this.outputSourceFiles(customConfig)) {
-                        await typescriptProject.copySrcTo({
+                    if (this.shouldGenerateFullProject(ir)) {
+                        await typescriptProject.copyProjectTo({
                             destinationPath,
                             zipFilename: OUTPUT_ZIP_FILENAME,
                             unzipOutput: options?.unzipOutput,
