@@ -2,7 +2,6 @@ FROM node:22.12-alpine3.20 AS node
 FROM composer:2.7.9
 
 ENV YARN_CACHE_FOLDER=/.yarn
-ENV NODE_OPTIONS=--jitless
 
 RUN apk --no-cache add bash curl git zip
 RUN git config --global user.name "fern" && git config --global user.email "hey@buildwithfern.com"
