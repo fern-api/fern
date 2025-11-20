@@ -1,0 +1,11 @@
+instances: []
+navigation:
+  - page: Original Page Title
+    path: ./page-with-sidebar-title.mdx
+  - page: Page Without Override
+    path: ./page-without-override.mdx
+  - section: Original Section Title
+    path: ./section-overview.mdx
+    contents:
+      - page: Nested Page
+        path: ./nested-page.mdx
