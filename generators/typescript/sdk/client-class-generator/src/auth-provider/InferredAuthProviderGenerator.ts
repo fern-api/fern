@@ -1,15 +1,8 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import {
-    ExportedFilePath,
-    getPropertyKey,
-    getTextOfTsNode,
-    maybeAddDocsStructure,
-    PackageId
-} from "@fern-typescript/commons";
+import { ExportedFilePath, getTextOfTsNode, maybeAddDocsStructure, PackageId } from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
 import {
     MethodDeclarationStructure,
-    PropertySignatureStructure,
     Scope,
     StatementStructures,
     StructureKind,
@@ -27,9 +20,6 @@ export declare namespace InferredAuthProviderGenerator {
     }
 }
 const CLASS_NAME = "InferredAuthProvider";
-const AUTH_TOKEN_PARAMS_OPTION_NAME = "authTokenParameters";
-const AUTH_TOKEN_PARAMS_FIELD_NAME = "authTokenParameters";
-const AUTH_TOKEN_TYPE_NAME = "AuthTokenParameters";
 const OPTIONS_TYPE_NAME = "Options";
 const BUFFER_IN_MINUTES_VAR_NAME = "BUFFER_IN_MINUTES";
 const GET_EXPIRES_AT_FN_NAME = "getExpiresAt";
@@ -124,14 +114,14 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
             properties: [
                 {
                     name: "client",
-                    type: getTextOfTsNode(this.getRootClientTypeNode(context)),
+                    type: getTextOfTsNode(this.getAuthClientTypeNode(context)),
                     hasQuestionToken: false,
                     isReadonly: true,
                     scope: Scope.Private
                 },
                 {
-                    name: AUTH_TOKEN_PARAMS_FIELD_NAME,
-                    type: getTextOfTsNode(this.getAuthTokenParametersTypeNode()),
+                    name: "options",
+                    type: getTextOfTsNode(this.getOptionsType()),
                     hasQuestionToken: false,
                     isReadonly: true,
                     scope: Scope.Private
@@ -233,8 +223,8 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                         }
                     ],
                     statements: [
-                        `this.client = options.client;`,
-                        `this.${AUTH_TOKEN_PARAMS_FIELD_NAME} = options.${AUTH_TOKEN_PARAMS_OPTION_NAME};`
+                        `this.options = options;`,
+                        `this.client = new ${getTextOfTsNode(this.getAuthClientTypeNode(context))}(options);`
                     ]
                 }
             ]
@@ -280,7 +270,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                                 undefined,
                                 ts.factory.createAwaitExpression(
                                     ts.factory.createCallExpression(
-                                        this.getAuthTokenEndpointReferenceFromRoot(context),
+                                        this.getAuthTokenEndpointReferenceFromRoot(),
                                         undefined,
                                         this.authTokenParametersToAuthTokenRequest({ context, requestWrapper })
                                     )
@@ -376,11 +366,10 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         return method;
     }
 
-    private getAuthTokenEndpointReferenceFromRoot(context: SdkContext): ts.Expression {
+    private getAuthTokenEndpointReferenceFromRoot(): ts.Expression {
+        // this.client is now the AuthClient directly, so we can call the method directly on it
         return ts.factory.createPropertyAccessExpression(
-            context.sdkClientClass.getGeneratedSdkClientClass(this.packageId).accessFromRootClient({
-                referenceToRootClient: ts.factory.createIdentifier("this.client")
-            }),
+            ts.factory.createIdentifier("this.client"),
             ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
         );
     }
@@ -401,7 +390,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                             ts.factory.createIdentifier(p.name),
                             context.coreUtilities.fetcher.Supplier.get(
                                 ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier("this.authTokenParameters"),
+                                    ts.factory.createIdentifier("this.options"),
                                     ts.factory.createIdentifier(p.safeName)
                                 )
                             )
@@ -412,22 +401,18 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
         ];
     }
 
-    private getRootClientTypeNode(context: SdkContext): ts.Node {
-        return context.sdkClientClass.getReferenceToClientClass({ isRoot: true }).getTypeNode();
+    private getAuthClientTypeNode(context: SdkContext): ts.TypeNode {
+        return context.sdkClientClass.getReferenceToClientClass(this.packageId).getTypeNode();
     }
 
     private writeOptions(context: SdkContext): void {
-        const properties = context.authProvider.getPropertiesForAuthTokenParams(
-            FernIr.AuthScheme.inferred(this.authScheme)
-        );
-        const tokenRequestProperties: PropertySignatureStructure[] = properties.map((prop) => ({
-            kind: StructureKind.PropertySignature,
-            name: getPropertyKey(prop.name),
-            hasQuestionToken: prop.isOptional,
-            type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(prop.type)),
-            docs: prop.docs
-        }));
+        // Import BaseClientOptions
+        context.importsManager.addImportFromRoot("BaseClient", {
+            namedImports: ["BaseClientOptions"]
+        });
 
+        // InferredAuthProvider.Options now just extends BaseClientOptions
+        // The auth token parameters are defined directly in BaseClientOptions
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
@@ -435,32 +420,12 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
             statements: [
                 {
                     kind: StructureKind.Interface,
-                    name: AUTH_TOKEN_TYPE_NAME,
-                    properties: tokenRequestProperties,
-                    isExported: true
-                },
-                {
-                    kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    properties: [
-                        {
-                            name: "client",
-                            type: getTextOfTsNode(this.getRootClientTypeNode(context)),
-                            hasQuestionToken: false
-                        },
-                        {
-                            name: AUTH_TOKEN_PARAMS_OPTION_NAME,
-                            type: AUTH_TOKEN_TYPE_NAME,
-                            hasQuestionToken: false
-                        }
-                    ]
+                    extends: ["BaseClientOptions"],
+                    properties: []
                 }
             ]
         });
-    }
-
-    private getAuthTokenParametersTypeNode(): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_TOKEN_TYPE_NAME}`);
     }
 }

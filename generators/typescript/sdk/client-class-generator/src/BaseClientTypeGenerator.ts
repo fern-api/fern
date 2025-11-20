@@ -27,13 +27,20 @@ export class BaseClientTypeGenerator {
     }
 
     public writeToFile(context: SdkContext): void {
+        // Add import for AuthProvider at the top of the file
+        context.importsManager.addImportFromRoot("core/auth", {
+            namedImports: ["AuthProvider"]
+        });
+
         context.sourceFile.addInterface(context.baseClient.generateBaseClientOptionsInterface(context));
         context.sourceFile.addInterface(context.baseClient.generateBaseRequestOptionsInterface(context));
         if (this.generateIdempotentRequestOptions) {
             context.sourceFile.addInterface(context.baseClient.generateBaseIdempotentRequestOptionsInterface(context));
         }
 
+        this.generateNormalizedClientOptionsTypes(context);
         this.generateNormalizeClientOptionsFunction(context);
+        this.generateNormalizeClientOptionsWithAuthFunction(context);
     }
 
     private generateNormalizeClientOptionsFunction(context: SdkContext): void {
@@ -115,12 +122,83 @@ export class BaseClientTypeGenerator {
         const functionCode = `
 export function normalizeClientOptions<T extends BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
-): T {${headersSection}    return {
+): NormalizedClientOptions<T> {${headersSection}    return {
         ...options,
         logging: ${getTextOfTsNode(
             context.coreUtilities.logging.createLogger._invoke(ts.factory.createIdentifier("options?.logging"))
         )},${headersReturn}
-    } as T;
+    } as NormalizedClientOptions<T>;
+}`;
+
+        context.sourceFile.addStatements(functionCode);
+    }
+
+    private generateNormalizedClientOptionsTypes(context: SdkContext): void {
+        const typesCode = `
+export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
+    logging: ${getTextOfTsNode(context.coreUtilities.logging.Logger._getReferenceToType())};
+    authProvider?: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};
+}
+
+export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
+    authProvider: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};
+}`;
+
+        context.sourceFile.addStatements(typesCode);
+    }
+
+    private generateNormalizeClientOptionsWithAuthFunction(context: SdkContext): void {
+        context.importsManager.addImportFromRoot("BaseClient", {
+            namedImports: ["normalizeClientOptions"]
+        });
+
+        // Determine which auth provider to use
+        let authProviderCreation = "";
+        const isAnyAuth = this.ir.auth.requirement === "ANY";
+
+        // Only generate auth provider for non-ANY auth schemes
+        if (!isAnyAuth) {
+            for (const authScheme of this.ir.auth.schemes) {
+                if (authScheme.type === "bearer") {
+                    // Import BearerAuthProvider
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/BearerAuthProvider.js",
+                        namedImports: ["BearerAuthProvider"]
+                    });
+                    authProviderCreation = "new BearerAuthProvider(options)";
+                    break;
+                } else if (authScheme.type === "basic") {
+                    // Import BasicAuthProvider
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/BasicAuthProvider.js",
+                        namedImports: ["BasicAuthProvider"]
+                    });
+                    authProviderCreation = "new BasicAuthProvider(options)";
+                    break;
+                } else if (authScheme.type === "inferred") {
+                    // Import InferredAuthProvider
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/InferredAuthProvider.js",
+                        namedImports: ["InferredAuthProvider"]
+                    });
+                    authProviderCreation = "new InferredAuthProvider(options)";
+                    break;
+                }
+            }
+        }
+
+        // If no auth provider creation code, don't generate the function
+        if (!authProviderCreation) {
+            return;
+        }
+
+        const functionCode = `
+export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
+    ${OPTIONS_PARAMETER_NAME}: T
+): NormalizedClientOptionsWithAuth<T> {
+    const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
+    normalized.authProvider ??= ${authProviderCreation};
+    return normalized;
 }`;
 
         context.sourceFile.addStatements(functionCode);

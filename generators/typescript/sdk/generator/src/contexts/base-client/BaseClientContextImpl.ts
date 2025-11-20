@@ -47,6 +47,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     public static readonly IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME;
     private bearerAuthScheme: FernIr.BearerAuthScheme | undefined;
     private basicAuthScheme: FernIr.BasicAuthScheme | undefined;
+    private inferredAuthScheme: FernIr.InferredAuthScheme | undefined;
     private readonly authHeaders: FernIr.HeaderAuthScheme[];
 
     constructor({
@@ -77,7 +78,9 @@ export class BaseClientContextImpl implements BaseClientContext {
                     this.authHeaders.push(header);
                 },
                 oauth: () => undefined,
-                inferred: () => undefined,
+                inferred: (inferredAuthScheme) => {
+                    this.inferredAuthScheme = inferredAuthScheme;
+                },
                 _other: () => {
                     throw new Error("Unknown auth scheme: " + authScheme.type);
                 }
@@ -209,6 +212,21 @@ export class BaseClientContextImpl implements BaseClientContext {
                         (this.basicAuthScheme.passwordEnvVar != null && this.basicAuthScheme.usernameEnvVar != null)
                 }
             );
+        }
+
+        if (this.inferredAuthScheme != null) {
+            const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
+                FernIr.AuthScheme.inferred(this.inferredAuthScheme)
+            );
+            for (const param of authTokenParams) {
+                properties.push({
+                    kind: StructureKind.PropertySignature,
+                    name: getPropertyKey(param.name),
+                    type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(param.type)),
+                    hasQuestionToken: param.isOptional,
+                    docs: param.docs
+                });
+            }
         }
 
         for (const header of this.authHeaders) {

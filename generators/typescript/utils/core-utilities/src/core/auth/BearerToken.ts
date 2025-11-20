@@ -2,8 +2,6 @@ export type BearerToken = string;
 
 const BEARER_AUTH_HEADER_PREFIX = /^Bearer /i;
 
-function toAuthorizationHeader(token: string): string;
-function toAuthorizationHeader(token: string | undefined): string | undefined;
 function toAuthorizationHeader(token: string | undefined): string | undefined {
     if (token == null) {
         return undefined;
