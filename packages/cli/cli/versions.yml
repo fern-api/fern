@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Improve misc error handling, including for illegal version strings
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 1.11.3
+
+- changelogEntry:
+    - summary: |
         Fix OpenAPI enum references being inlined instead of preserved as references. Enum schemas (type: string with enum property) are no longer treated as inlinable primitives, ensuring that $ref to enum schemas maintain their reference structure in the generated IR.
       type: fix
   irVersion: 61
