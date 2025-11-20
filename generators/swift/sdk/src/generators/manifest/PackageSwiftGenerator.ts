@@ -19,48 +19,6 @@ export class PackageSwiftGenerator {
     }
 
     public generate(): SwiftFile {
-        const targetElements = [
-            swift.Expression.contextualMethodCall({
-                methodName: "target",
-                arguments_: [
-                    swift.functionArgument({
-                        label: "name",
-                        value: swift.Expression.stringLiteral(this.sdkGeneratorContext.sourceTargetName)
-                    }),
-                    swift.functionArgument({
-                        label: "path",
-                        value: swift.Expression.stringLiteral("Sources")
-                    })
-                ],
-                multiline: true
-            })
-        ];
-
-        if (this.sdkGeneratorContext.hasTests) {
-            targetElements.push(
-                swift.Expression.contextualMethodCall({
-                    methodName: "testTarget",
-                    arguments_: [
-                        swift.functionArgument({
-                            label: "name",
-                            value: swift.Expression.stringLiteral(this.sdkGeneratorContext.testTargetName)
-                        }),
-                        swift.functionArgument({
-                            label: "dependencies",
-                            value: swift.Expression.arrayLiteral({
-                                elements: [swift.Expression.stringLiteral(this.sdkGeneratorContext.sourceTargetName)]
-                            })
-                        }),
-                        swift.functionArgument({
-                            label: "path",
-                            value: swift.Expression.stringLiteral("Tests")
-                        })
-                    ],
-                    multiline: true
-                })
-            );
-        }
-
         return SwiftFile.create({
             filename: "Package.swift",
             directory: RelativeFilePath.of(""),
@@ -165,7 +123,50 @@ export class PackageSwiftGenerator {
                             swift.functionArgument({
                                 label: "targets",
                                 value: swift.Expression.arrayLiteral({
-                                    elements: targetElements,
+                                    elements: [
+                                        swift.Expression.contextualMethodCall({
+                                            methodName: "target",
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    label: "name",
+                                                    value: swift.Expression.stringLiteral(
+                                                        this.sdkGeneratorContext.sourceTargetName
+                                                    )
+                                                }),
+                                                swift.functionArgument({
+                                                    label: "path",
+                                                    value: swift.Expression.stringLiteral("Sources")
+                                                })
+                                            ],
+                                            multiline: true
+                                        }),
+                                        swift.Expression.contextualMethodCall({
+                                            methodName: "testTarget",
+                                            arguments_: [
+                                                swift.functionArgument({
+                                                    label: "name",
+                                                    value: swift.Expression.stringLiteral(
+                                                        this.sdkGeneratorContext.testTargetName
+                                                    )
+                                                }),
+                                                swift.functionArgument({
+                                                    label: "dependencies",
+                                                    value: swift.Expression.arrayLiteral({
+                                                        elements: [
+                                                            swift.Expression.stringLiteral(
+                                                                this.sdkGeneratorContext.sourceTargetName
+                                                            )
+                                                        ]
+                                                    })
+                                                }),
+                                                swift.functionArgument({
+                                                    label: "path",
+                                                    value: swift.Expression.stringLiteral("Tests")
+                                                })
+                                            ],
+                                            multiline: true
+                                        })
+                                    ],
                                     multiline: true
                                 })
                             })

@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Optimize docs generation and image path parsing and replacement for large markdown files (>5MB) using batched edits, precomputed line positions, and filtered AST traversal.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.4
+
 - changelogEntry:
     - summary: |
         Updates CLI dependencies to fix `fern` commands.
