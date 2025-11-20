@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.32.1
+  changelogEntry:
+    - summary: Add contents:read permission to generated publish workflow for OIDC authentication to fix actions/checkout@v4 requirements.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 3.32.0
   changelogEntry:
     - summary: Add support for OAuth and inferred auth in generated wire tests.
