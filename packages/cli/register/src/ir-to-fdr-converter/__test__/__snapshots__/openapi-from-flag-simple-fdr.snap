@@ -23,7 +23,6 @@
             "availability": undefined,
             "description": "Service is unhealthy",
             "examples": [],
-            "isWildcard": undefined,
             "name": "ServiceUnavailableError",
             "statusCode": 503,
             "type": {
@@ -93,7 +92,6 @@
         },
         "response": {
           "description": "Service is healthy",
-          "isWildcard": undefined,
           "statusCode": 200,
           "type": {
             "type": "reference",
@@ -108,7 +106,6 @@
           "responses": [
             {
               "description": "Service is healthy",
-              "isWildcard": undefined,
               "statusCode": 200,
               "type": {
                 "type": "reference",
@@ -141,7 +138,6 @@
             "availability": undefined,
             "description": "User not found",
             "examples": [],
-            "isWildcard": undefined,
             "name": "NotFoundError",
             "statusCode": 404,
             "type": {
@@ -263,7 +259,6 @@
         },
         "response": {
           "description": "User found successfully",
-          "isWildcard": undefined,
           "statusCode": 200,
           "type": {
             "type": "reference",
@@ -278,7 +273,6 @@
           "responses": [
             {
               "description": "User found successfully",
-              "isWildcard": undefined,
               "statusCode": 200,
               "type": {
                 "type": "reference",
@@ -311,7 +305,6 @@
             "availability": undefined,
             "description": "Invalid user data",
             "examples": [],
-            "isWildcard": undefined,
             "name": "BadRequestError",
             "statusCode": 400,
             "type": {
@@ -426,7 +419,6 @@
         },
         "response": {
           "description": "User created successfully",
-          "isWildcard": undefined,
           "statusCode": 201,
           "type": {
             "type": "reference",
@@ -441,7 +433,6 @@
           "responses": [
             {
               "description": "User created successfully",
-              "isWildcard": undefined,
               "statusCode": 201,
               "type": {
                 "type": "reference",

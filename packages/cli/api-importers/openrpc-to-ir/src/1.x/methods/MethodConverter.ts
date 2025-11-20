@@ -193,7 +193,11 @@ export class MethodConverter extends AbstractConverter<OpenRPCConverterContext3_
             sdkRequest: undefined,
             response:
                 jsonResponseBody != null
-                    ? { body: HttpResponseBody.json(JsonResponse.response(jsonResponseBody)), statusCode: undefined, isWildcardStatusCode: undefined }
+                    ? {
+                          body: HttpResponseBody.json(JsonResponse.response(jsonResponseBody)),
+                          statusCode: undefined,
+                          isWildcardStatusCode: undefined
+                      }
                     : undefined,
             v2Responses: undefined,
             errors: [],
