@@ -5280,6 +5280,36 @@ docs: Real-time transcription
                 "root.ServiceUnavailableError",
                 "root.GatewayTimeoutError",
               ],
+              "examples": [
+                {
+                  "path-parameters": {
+                    "transcript_id": "transcript_id",
+                  },
+                  "query-parameters": {
+                    "words": "words",
+                  },
+                  "response": {
+                    "body": {
+                      "id": "id",
+                      "matches": [
+                        {
+                          "count": 1,
+                          "indexes": [
+                            1,
+                          ],
+                          "text": "text",
+                          "timestamps": [
+                            [
+                              1,
+                            ],
+                          ],
+                        },
+                      ],
+                      "total_count": 1,
+                    },
+                  },
+                },
+              ],
               "method": "GET",
               "pagination": undefined,
               "path": "/v2/transcript/{transcript_id}/word-search",
@@ -6040,6 +6070,22 @@ service:
         - root.InternalServerError
         - root.ServiceUnavailableError
         - root.GatewayTimeoutError
+      examples:
+        - path-parameters:
+            transcript_id: transcript_id
+          query-parameters:
+            words: words
+          response:
+            body:
+              id: id
+              total_count: 1
+              matches:
+                - text: text
+                  count: 1
+                  timestamps:
+                    - - 1
+                  indexes:
+                    - 1
     getRedactedAudio:
       path: /v2/transcript/{transcript_id}/redacted-audio
       method: GET

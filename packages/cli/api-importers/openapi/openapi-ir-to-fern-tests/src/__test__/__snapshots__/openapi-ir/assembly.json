@@ -5546,7 +5546,117 @@
       "security": [],
       "method": "GET",
       "path": "/v2/transcript/{transcript_id}/word-search",
-      "examples": [],
+      "examples": [
+        {
+          "pathParameters": [
+            {
+              "name": "transcript_id",
+              "value": {
+                "value": {
+                  "value": "transcript_id",
+                  "type": "string"
+                },
+                "type": "primitive"
+              }
+            }
+          ],
+          "queryParameters": [
+            {
+              "name": "words",
+              "value": {
+                "value": [
+                  {
+                    "value": {
+                      "value": "words",
+                      "type": "string"
+                    },
+                    "type": "primitive"
+                  }
+                ],
+                "type": "array"
+              }
+            }
+          ],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "total_count": {
+                  "value": {
+                    "value": 1,
+                    "type": "int"
+                  },
+                  "type": "primitive"
+                },
+                "matches": {
+                  "value": [
+                    {
+                      "properties": {
+                        "text": {
+                          "value": {
+                            "value": "text",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "count": {
+                          "value": {
+                            "value": 1,
+                            "type": "int"
+                          },
+                          "type": "primitive"
+                        },
+                        "timestamps": {
+                          "value": [
+                            {
+                              "value": [
+                                {
+                                  "value": {
+                                    "value": 1,
+                                    "type": "int"
+                                  },
+                                  "type": "primitive"
+                                }
+                              ],
+                              "type": "array"
+                            }
+                          ],
+                          "type": "array"
+                        },
+                        "indexes": {
+                          "value": [
+                            {
+                              "value": {
+                                "value": 1,
+                                "type": "int"
+                              },
+                              "type": "primitive"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
       "source": {
         "file": "../openapi.yml",
         "type": "openapi"
