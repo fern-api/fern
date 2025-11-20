@@ -39,7 +39,6 @@ def verify_request_count(
     assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"
 
 
-@pytest.mark.asyncio
 def test_endpoints_urls_with_mixed_case() -> None:
     """Test withMixedCase endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
@@ -47,7 +46,6 @@ def test_endpoints_urls_with_mixed_case() -> None:
     verify_request_count("GET", "/urls/MixedCase", None, 1)
 
 
-@pytest.mark.asyncio
 def test_endpoints_urls_no_ending_slash() -> None:
     """Test noEndingSlash endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
@@ -55,7 +53,6 @@ def test_endpoints_urls_no_ending_slash() -> None:
     verify_request_count("GET", "/urls/no-ending-slash", None, 1)
 
 
-@pytest.mark.asyncio
 def test_endpoints_urls_with_ending_slash() -> None:
     """Test withEndingSlash endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
@@ -63,7 +60,6 @@ def test_endpoints_urls_with_ending_slash() -> None:
     verify_request_count("GET", "/urls/with-ending-slash/", None, 1)
 
 
-@pytest.mark.asyncio
 def test_endpoints_urls_with_underscores() -> None:
     """Test withUnderscores endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")

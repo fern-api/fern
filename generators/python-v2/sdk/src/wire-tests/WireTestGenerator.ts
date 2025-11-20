@@ -2,7 +2,14 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { python } from "@fern-api/python-ast";
 import { WriteablePythonFile } from "@fern-api/python-base";
-import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import {
+    dynamic,
+    HttpEndpoint,
+    HttpService,
+    IntermediateRepresentation,
+    ObjectProperty,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
@@ -275,11 +282,6 @@ export class WireTestGenerator {
 
             const method = python.method({
                 name: testName,
-                decorators: [
-                    python.decorator({
-                        callable: python.codeBlock("pytest.mark.asyncio")
-                    })
-                ],
                 return_: python.Type.none(),
                 docstring: `Test ${endpoint.name.originalName} endpoint with WireMock`
             });
@@ -305,6 +307,9 @@ export class WireTestGenerator {
         // Build query parameters
         const queryParams = this.buildQueryParameters(endpoint, example);
 
+        // Build headers
+        const headers = this.buildHeaders(endpoint, example);
+
         // Build request body
         const requestBody = this.buildRequestBody(endpoint, example);
 
@@ -320,6 +325,11 @@ export class WireTestGenerator {
         // Add path parameters as positional arguments
         pathParams.forEach((value) => {
             args.push(value);
+        });
+
+        // Add headers
+        headers.forEach(([key, value]) => {
+            args.push(`${key}=${value}`);
         });
 
         // Add query parameters
@@ -367,17 +377,137 @@ export class WireTestGenerator {
         return queryParams;
     }
 
+    private buildHeaders(endpoint: HttpEndpoint, example: dynamic.EndpointExample): Array<[string, string]> {
+        const headers: Array<[string, string]> = [];
+
+        if (example.headers) {
+            // Map wire header names to SDK parameter names
+            const headerMap = new Map<string, string>();
+            for (const header of endpoint.headers) {
+                const wireKey = header.name.wireValue;
+                // Convert wire header name to Python parameter name (lowercase with underscores)
+                const pythonName = wireKey.toLowerCase().replace(/-/g, "_");
+                headerMap.set(wireKey, pythonName);
+            }
+
+            for (const [wireKey, value] of Object.entries(example.headers)) {
+                if (value != null) {
+                    const paramName = headerMap.get(wireKey) ?? wireKey.toLowerCase().replace(/-/g, "_");
+                    headers.push([paramName, this.formatValue(value)]);
+                }
+            }
+        }
+
+        return headers;
+    }
+
     private buildRequestBody(endpoint: HttpEndpoint, example: dynamic.EndpointExample): string | null {
         if (!endpoint.requestBody || !example.requestBody) {
             return null;
         }
 
-        // Generate Python dict representation (not JSON)
-        if (typeof example.requestBody === "object") {
-            return `request=${this.jsonToPython(example.requestBody)}`;
-        }
+        // Use the discriminated union visitor pattern to handle different request body types
+        return endpoint.requestBody._visit<string | null>({
+            inlinedRequestBody: (inlinedBody) => {
+                // For inlined request bodies, generate individual keyword arguments
+                // Example: string="value", integer=1, bool_=True
+                if (
+                    example.requestBody != null &&
+                    typeof example.requestBody === "object" &&
+                    !Array.isArray(example.requestBody)
+                ) {
+                    const params: string[] = [];
 
-        return null;
+                    // Map wire names to property definitions to get correct SDK parameter names
+                    const propertyMap = new Map<string, string>();
+                    for (const prop of inlinedBody.properties) {
+                        const wireKey = prop.name.wireValue;
+                        const pythonName = prop.name.name.snakeCase.safeName;
+                        propertyMap.set(wireKey, pythonName);
+                    }
+
+                    // Generate parameters using the correct SDK names
+                    for (const [wireKey, value] of Object.entries(example.requestBody)) {
+                        const paramName = propertyMap.get(wireKey) ?? wireKey;
+                        params.push(`${paramName}=${this.jsonToPython(value)}`);
+                    }
+                    return params.join(", ");
+                }
+                return null;
+            },
+            reference: (value) => {
+                // For referenced request bodies, check if the type is an object (which gets flattened)
+                // or a primitive/enum (which stays as a single 'request' parameter)
+                const objectTypeDecl = this.getObjectTypeIfFlattened(value.requestBodyType);
+
+                if (objectTypeDecl != null) {
+                    // Object types get flattened into individual parameters
+                    if (
+                        example.requestBody != null &&
+                        typeof example.requestBody === "object" &&
+                        !Array.isArray(example.requestBody)
+                    ) {
+                        const params: string[] = [];
+
+                        // Map wire names to property definitions to get correct SDK parameter names
+                        const propertyMap = new Map<string, string>();
+                        for (const prop of objectTypeDecl.properties) {
+                            const wireKey = prop.name.wireValue;
+                            const pythonName = prop.name.name.snakeCase.safeName;
+                            propertyMap.set(wireKey, pythonName);
+                        }
+
+                        // Generate parameters using the correct SDK names
+                        for (const [wireKey, value] of Object.entries(example.requestBody)) {
+                            const paramName = propertyMap.get(wireKey) ?? wireKey;
+                            params.push(`${paramName}=${this.jsonToPython(value)}`);
+                        }
+                        return params.join(", ");
+                    }
+                } else {
+                    // Primitives and enums stay as a single 'request' parameter
+                    if (example.requestBody != null) {
+                        return `request=${this.jsonToPython(example.requestBody)}`;
+                    }
+                }
+                return null;
+            },
+            fileUpload: () => {
+                // File uploads are not supported in wire tests yet
+                return null;
+            },
+            bytes: () => {
+                // Bytes requests are not supported in wire tests yet
+                return null;
+            },
+            _other: () => {
+                this.context.logger.warn(`Unknown request body type for endpoint ${endpoint.name.originalName}`);
+                return null;
+            }
+        });
+    }
+
+    private getObjectTypeIfFlattened(typeRef: TypeReference): { properties: ObjectProperty[] } | null {
+        // Check if the TypeReference points to an object type declaration
+        // If it does, return the object type so we can access its properties
+        return typeRef._visit<{ properties: ObjectProperty[] } | null>({
+            named: (namedType) => {
+                // Look up the type declaration in the IR
+                const typeDecl = this.context.ir.types[namedType.typeId];
+                if (!typeDecl) {
+                    return null;
+                }
+                // Check if the type shape is an object
+                if (typeDecl.shape.type === "object") {
+                    return typeDecl.shape;
+                }
+                return null;
+            },
+            primitive: () => null,
+            container: () => null,
+            unknown: () => null,
+            _other: () => null
+        });
     }
 
     private formatValue(value: unknown): string {

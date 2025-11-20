@@ -39,10 +39,9 @@ def verify_request_count(
     assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"
 
 
-@pytest.mark.asyncio
 def test_reqWithHeaders_get_with_custom_header() -> None:
     """Test getWithCustomHeader endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.req_with_headers.get_with_custom_header()
+    result = client.req_with_headers.get_with_custom_header(x_test_service_header="X-TEST-SERVICE-HEADER", x_test_endpoint_header="X-TEST-ENDPOINT-HEADER", request="string")
     verify_request_count("POST", "/test-headers/custom-header", None, 1)
 

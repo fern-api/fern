@@ -39,74 +39,65 @@ def verify_request_count(
     assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"
 
 
-@pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_string() -> None:
     """Test getAndReturnString endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.endpoints.primitive.get_and_return_string()
+    result = client.endpoints.primitive.get_and_return_string(request="string")
     verify_request_count("POST", "/primitive/string", None, 1)
 
 
-@pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_int() -> None:
     """Test getAndReturnInt endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.endpoints.primitive.get_and_return_int()
+    result = client.endpoints.primitive.get_and_return_int(request=1)
     verify_request_count("POST", "/primitive/integer", None, 1)
 
 
-@pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_long() -> None:
     """Test getAndReturnLong endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.endpoints.primitive.get_and_return_long()
+    result = client.endpoints.primitive.get_and_return_long(request=1000000)
     verify_request_count("POST", "/primitive/long", None, 1)
 
 
-@pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_double() -> None:
     """Test getAndReturnDouble endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.endpoints.primitive.get_and_return_double()
+    result = client.endpoints.primitive.get_and_return_double(request=1.1)
     verify_request_count("POST", "/primitive/double", None, 1)
 
 
-@pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_bool() -> None:
     """Test getAndReturnBool endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.endpoints.primitive.get_and_return_bool()
+    result = client.endpoints.primitive.get_and_return_bool(request=True)
     verify_request_count("POST", "/primitive/boolean", None, 1)
 
 
-@pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_datetime() -> None:
     """Test getAndReturnDatetime endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.endpoints.primitive.get_and_return_datetime()
+    result = client.endpoints.primitive.get_and_return_datetime(request="2024-01-15T09:30:00Z")
     verify_request_count("POST", "/primitive/datetime", None, 1)
 
 
-@pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_date() -> None:
     """Test getAndReturnDate endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.endpoints.primitive.get_and_return_date()
+    result = client.endpoints.primitive.get_and_return_date(request="2023-01-15")
     verify_request_count("POST", "/primitive/date", None, 1)
 
 
-@pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_uuid() -> None:
     """Test getAndReturnUUID endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.endpoints.primitive.get_and_return_uuid()
+    result = client.endpoints.primitive.get_and_return_uuid(request="d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
     verify_request_count("POST", "/primitive/uuid", None, 1)
 
 
-@pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_base_64() -> None:
     """Test getAndReturnBase64 endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.endpoints.primitive.get_and_return_base_64()
+    result = client.endpoints.primitive.get_and_return_base_64(request="SGVsbG8gd29ybGQh")
     verify_request_count("POST", "/primitive/base64", None, 1)
 

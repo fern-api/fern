@@ -39,10 +39,9 @@ def verify_request_count(
     assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"
 
 
-@pytest.mark.asyncio
 def test_endpoints_enum_get_and_return_enum() -> None:
     """Test getAndReturnEnum endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.endpoints.enum.get_and_return_enum()
+    result = client.endpoints.enum.get_and_return_enum(request="SUNNY")
     verify_request_count("POST", "/enum", None, 1)
 

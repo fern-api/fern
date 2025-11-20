@@ -39,7 +39,6 @@ def verify_request_count(
     assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"
 
 
-@pytest.mark.asyncio
 def test_endpoints_put_add() -> None:
     """Test add endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")

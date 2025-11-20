@@ -39,7 +39,6 @@ def verify_request_count(
     assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"
 
 
-@pytest.mark.asyncio
 def test_noReqBody_get_with_no_request_body() -> None:
     """Test getWithNoRequestBody endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
@@ -47,7 +46,6 @@ def test_noReqBody_get_with_no_request_body() -> None:
     verify_request_count("GET", "/no-req-body", None, 1)
 
 
-@pytest.mark.asyncio
 def test_noReqBody_post_with_no_request_body() -> None:
     """Test postWithNoRequestBody endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
