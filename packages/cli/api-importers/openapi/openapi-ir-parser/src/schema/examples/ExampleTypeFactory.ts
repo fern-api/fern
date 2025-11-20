@@ -224,7 +224,6 @@ export class ExampleTypeFactory {
                                     result[schema.value.discriminantProperty] = FullExample.primitive(
                                         PrimitiveExample.string(unionVariant[0])
                                     );
-                                    selectedVariant = unionVariant;
                                     break;
                                 }
                             }
@@ -240,12 +239,6 @@ export class ExampleTypeFactory {
                             result[schema.value.discriminantProperty] = FullExample.primitive(
                                 PrimitiveExample.string(firstVariant[0])
                             );
-
-                            // Try to get properties for this variant if it's an object
-                            if (firstVariant[1].type === "object") {
-                                allProperties = this.getAllProperties(firstVariant[1]);
-                                requiredProperties = this.getAllRequiredProperties(firstVariant[1]);
-                            }
                         }
 
                         for (const commonProperty of schema.value.commonProperties) {
