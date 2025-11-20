@@ -290,6 +290,11 @@ public abstract class AbstractEndpointWriter {
                     .get(0);
             if (typeNameIsOptional(bodyParameterSpec.type)) {
                 paramNamesWoBody.add("Optional.empty()");
+            } else if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
+                // Handle parameterized types with type witness syntax
+                // E.g., OptionalNullable<SomeType> becomes OptionalNullable.<SomeType>builder().build()
+                // We use $1T to refer to rawType and $2T to refer to the type argument
+                paramNamesWoBody.add("$1T.<$2T>builder().build()");
             } else {
                 paramNamesWoBody.add("$T.builder().build()");
             }
