@@ -5,18 +5,23 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::Playlist::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
       # Create a new playlist
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash[untyped, untyped]]
       # @param params [Seed::Playlist::Types::PlaylistCreateRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
       # @option params [String] :datetime
-      # @option params [String | nil] :optional_datetime
+      # @option params [String, nil] :optional_datetime
       #
       # @return [Seed::Playlist::Types::Playlist]
       def create_playlist(request_options: {}, **params)
@@ -53,13 +58,18 @@ module Seed
 
       # Returns the user's playlists
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash[untyped, untyped]]
       # @param params [Hash[untyped, untyped]]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
-      # @option params [Integer | nil] :limit
+      # @option params [Integer, nil] :limit
       # @option params [String] :other_field
       # @option params [String] :multi_line_docs
-      # @option params [String | nil] :optional_multiple_field
+      # @option params [String, nil] :optional_multiple_field
       # @option params [String] :multiple_field
       #
       # @return [Array[Seed::Playlist::Types::Playlist]]
@@ -94,8 +104,13 @@ module Seed
 
       # Returns a playlist
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash[untyped, untyped]]
       # @param params [Hash[untyped, untyped]]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
       # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
       #
@@ -122,12 +137,17 @@ module Seed
 
       # Updates a playlist
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash[untyped, untyped]]
       # @param params [Hash[untyped, untyped]]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
       # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
       #
-      # @return [Seed::Playlist::Types::Playlist | nil]
+      # @return [Seed::Playlist::Types::Playlist, nil]
       def update_playlist(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
@@ -149,8 +169,13 @@ module Seed
 
       # Deletes a playlist
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash[untyped, untyped]]
       # @param params [Hash[untyped, untyped]]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [Integer] :service_param
       # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
       #
