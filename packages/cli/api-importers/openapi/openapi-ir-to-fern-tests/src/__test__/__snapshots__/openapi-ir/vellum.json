@@ -1142,18 +1142,12 @@
                           "type": "enum"
                         },
                         "processing_failure_reason": {
-                          "value": {
-                            "value": "EXCEEDED_CHARACTER_LIMIT",
-                            "type": "string"
-                          },
-                          "type": "literal"
+                          "value": "EXCEEDED_CHARACTER_LIMIT",
+                          "type": "enum"
                         },
                         "status": {
-                          "value": {
-                            "value": "ACTIVE",
-                            "type": "string"
-                          },
-                          "type": "literal"
+                          "value": "ACTIVE",
+                          "type": "enum"
                         },
                         "keywords": {
                           "value": [
@@ -7771,13 +7765,20 @@
       },
       "ProcessingFailureReasonEnum": {
         "description": "* `EXCEEDED_CHARACTER_LIMIT` - Exceeded Character Limit",
-        "value": {
-          "value": "EXCEEDED_CHARACTER_LIMIT",
-          "type": "string"
-        },
         "generatedName": "ProcessingFailureReasonEnum",
+        "values": [
+          {
+            "generatedName": "EXCEEDED_CHARACTER_LIMIT",
+            "value": "EXCEEDED_CHARACTER_LIMIT",
+            "casing": {}
+          }
+        ],
         "groupName": [],
-        "type": "literal"
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
       },
       "ProcessingStateEnum": {
         "description": "* `QUEUED` - Queued\n* `PROCESSING` - Processing\n* `PROCESSED` - Processed\n* `FAILED` - Failed",
@@ -10781,13 +10782,20 @@
       },
       "SlimDocumentStatusEnum": {
         "description": "* `ACTIVE` - Active",
-        "value": {
-          "value": "ACTIVE",
-          "type": "string"
-        },
         "generatedName": "SlimDocumentStatusEnum",
+        "values": [
+          {
+            "generatedName": "ACTIVE",
+            "value": "ACTIVE",
+            "casing": {}
+          }
+        ],
         "groupName": [],
-        "type": "literal"
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
       },
       "SubmitCompletionActualRequest": {
         "allOf": [],

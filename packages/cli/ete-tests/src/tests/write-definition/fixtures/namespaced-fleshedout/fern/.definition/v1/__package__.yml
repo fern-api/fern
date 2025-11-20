@@ -4,6 +4,12 @@ types:
       data: optional<string>
     source:
       openapi: openapi/cohere.yaml
+  ChatRequestAccepts:
+    enum:
+      - name: TextEventStream
+        value: text/event-stream
+    source:
+      openapi: openapi/cohere.yaml
   ChatRequestPromptTruncation:
     docs: >
       Defaults to `AUTO` when `connectors` are specified and `OFF` in all other
@@ -440,7 +446,7 @@ service:
               Pass text/event-stream to receive the streamed response as
               server-sent events. The default is `\n` delimited events.
             name: accepts
-            type: optional<literal<"text/event-stream">>
+            type: optional<ChatRequestAccepts>
         name: ChatRequest
       response:
         docs: OK

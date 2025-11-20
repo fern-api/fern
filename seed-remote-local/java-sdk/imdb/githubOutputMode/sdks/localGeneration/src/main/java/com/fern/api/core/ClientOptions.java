@@ -37,7 +37,7 @@ public final class ClientOptions {
             {
                 put("X-Fern-Language", "JAVA");
                 put("X-Fern-SDK-Name", "com.fern-api:test-remote-local-sdk");
-                put("X-Fern-SDK-Version", "0.0.0");
+                put("X-Fern-SDK-Version", "7.7.7");
             }
         });
         this.headerSuppliers = headerSuppliers;

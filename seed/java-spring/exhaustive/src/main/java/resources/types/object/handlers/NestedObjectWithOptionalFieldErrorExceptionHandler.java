@@ -15,6 +15,6 @@ public final class NestedObjectWithOptionalFieldErrorExceptionHandler {
   @ExceptionHandler(NestedObjectWithOptionalFieldError.class)
   ResponseEntity<Object> handle(
       NestedObjectWithOptionalFieldError nestedObjectWithOptionalFieldError) {
-    return new ResponseEntity<>(nestedObjectWithOptionalFieldError.getBody(), null, NestedObjectWithOptionalFieldError.STATUS_CODE);
+    return ResponseEntity.status(NestedObjectWithOptionalFieldError.STATUS_CODE).body(nestedObjectWithOptionalFieldError.getBody());
   }
 }

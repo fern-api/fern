@@ -83,7 +83,15 @@ client := client.NewClient(
 
 ## Pagination
 
-List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page using the `GetNextPage` helper method. If need be you can access the raw response using the `RawResponse` field on the page.
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items.
+You can also iterate page-by-page using the `GetNextPage` helper method.
+
+The `Page.Results` attribute, which contains the relevant list of items returned by the call to the server,
+is the only attribute you will need for most use cases. But if need be, several other attributes are available:
+
+- `Page.Response` contains the full spec-defined response as returned by the server.
+- `Page.StatusCode` and `Page.Header` returns HTTP metadata associated with the call to the server.
+- `Page.RawResponse` returns the pagination object if you need to access its fields (like `Next`).
 
 ```go
 // Loop over the items using the provided iterator.
@@ -118,7 +126,7 @@ for page != nil {
     }
 }
 
-// Alternatively, access the next cursor directly from the raw response.
+// Paginated endpoints return a Page with directly accessible headers, status code, and full response
 ctx := context.TODO()
 page, err := client.Complex.Search(
     ctx,
@@ -127,6 +135,15 @@ page, err := client.Complex.Search(
 if err != nil {
     return err
 }
+
+// Access response metadata directly from the page
+fmt.Printf("Got headers: %v", page.Header)
+fmt.Printf("Got status code: %d", page.StatusCode)
+
+// Access the full spec-defined response object
+fullResponse := page.Response
+
+// Access individual fields from the pagination object
 nextCursor := page.RawResponse.Next
 ```
 
@@ -181,14 +198,27 @@ response, err := client.Complex.Search(
 ### Response Headers
 
 You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
-when you need to examine the response headers received from the API call.
+when you need to examine the response headers received from the API call. (When the endpoint is paginated,
+the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
+// For non-paginated endpoints, use WithRawResponse as described
+// to retrieve the headers and returned status code:
 response, err := client.Complex.WithRawResponse.Search(...)
 if err != nil {
     return err
 }
 fmt.Printf("Got response headers: %v", response.Header)
+fmt.Printf("Got status code: %d", response.StatusCode)
+
+// For paginated endpoints, WithRawResponse is unnecessary, as the
+// headers and status code are directly available on the Page object.
+page, err := client.Complex.Search(...)
+if err != nil {
+    return err
+}
+fmt.Printf("Got response headers: %v", page.Header)
+fmt.Printf("Got status code: %d", page.StatusCode)
 ```
 
 ### Retries

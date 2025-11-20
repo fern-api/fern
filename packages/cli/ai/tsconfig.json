@@ -6,5 +6,10 @@
     "rootDir": "src",
     "types": ["vitest/globals", "node"]
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../configuration"
+    }
+  ]
 }

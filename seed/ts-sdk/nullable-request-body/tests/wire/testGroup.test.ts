@@ -4,10 +4,10 @@ import * as SeedApi from "../../src/api/index";
 import { SeedApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("TestGroup", () => {
+describe("TestGroupClient", () => {
     test("test_method_name (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ environment: server.baseUrl });
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {};
         const rawResponseBody = { key: "value" };
         server
@@ -30,7 +30,7 @@ describe("TestGroup", () => {
 
     test("test_method_name (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ environment: server.baseUrl });
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { id: "id", name: "name" };
         const rawResponseBody = { id: "id", name: "name" };
         server

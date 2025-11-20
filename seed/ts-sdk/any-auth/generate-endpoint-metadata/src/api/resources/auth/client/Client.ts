@@ -45,10 +45,7 @@ export class AuthClient {
         const _metadata: core.EndpointMetadata = { security: undefined };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(_metadata),
-                ...(await this._getCustomAuthorizationHeaders(_metadata)),
-            }),
+            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders(_metadata)) }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -97,15 +94,6 @@ export class AuthClient {
                     rawResponse: _response.rawResponse,
                 });
         }
-    }
-
-    protected async _getAuthorizationHeader(endpointMetadata: core.EndpointMetadata): Promise<string | undefined> {
-        const bearer = await core.EndpointSupplier.get(this._options.token, { endpointMetadata });
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
     }
 
     protected async _getCustomAuthorizationHeaders(

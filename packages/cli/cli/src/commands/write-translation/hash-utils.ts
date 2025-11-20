@@ -95,6 +95,19 @@ export function updateHashForFile(hashMappings: FileHashMap, relativePath: Relat
 }
 
 /**
+ * Update hash mapping for a specific file and immediately save to disk
+ */
+export async function updateAndSaveHashForFile(
+    translationsDirectory: string,
+    hashMappings: FileHashMap,
+    relativePath: RelativeFilePath,
+    content: string
+): Promise<void> {
+    updateHashForFile(hashMappings, relativePath, content);
+    await saveHashMappings(translationsDirectory, hashMappings);
+}
+
+/**
  * Remove hash mapping for files that no longer exist
  */
 export function cleanupHashMappings(hashMappings: FileHashMap, existingFiles: Set<RelativeFilePath>): FileHashMap {

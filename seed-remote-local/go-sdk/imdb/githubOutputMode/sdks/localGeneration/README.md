@@ -30,9 +30,9 @@ Instantiate and use the client with the following:
 package example
 
 import (
-    client "github.com/fern-api/test-remote-local-sdk/client"
-    option "github.com/fern-api/test-remote-local-sdk/option"
-    testremotelocalsdk "github.com/fern-api/test-remote-local-sdk"
+    client "github.com/fern-api/empty/v7/client"
+    option "github.com/fern-api/empty/v7/option"
+    v7 "github.com/fern-api/empty/v7"
     context "context"
 )
 
@@ -42,7 +42,7 @@ func do() {
             "<token>",
         ),
     )
-    request := &testremotelocalsdk.CreateMovieRequest{
+    request := &v7.CreateMovieRequest{
         Title: "title",
         Rating: 1.1,
     }

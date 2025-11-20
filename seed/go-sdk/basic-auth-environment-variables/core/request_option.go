@@ -49,7 +49,7 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 func (r *RequestOptions) ToHeader() http.Header {
 	header := r.cloneHeader()
 	if r.Username != "" && r.AccessToken != "" {
-		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+": "+r.AccessToken)))
+		header.Set("Authorization", "Basic "+base64.StdEncoding.EncodeToString([]byte(r.Username+":"+r.AccessToken)))
 	}
 	return header
 }

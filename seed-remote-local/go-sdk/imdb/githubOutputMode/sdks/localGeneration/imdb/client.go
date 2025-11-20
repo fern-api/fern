@@ -4,10 +4,10 @@ package imdb
 
 import (
 	context "context"
-	testremotelocalsdk "github.com/fern-api/test-remote-local-sdk"
-	core "github.com/fern-api/test-remote-local-sdk/core"
-	internal "github.com/fern-api/test-remote-local-sdk/internal"
-	option "github.com/fern-api/test-remote-local-sdk/option"
+	v7 "github.com/fern-api/empty/v7"
+	core "github.com/fern-api/empty/v7/core"
+	internal "github.com/fern-api/empty/v7/internal"
+	option "github.com/fern-api/empty/v7/option"
 )
 
 type Client struct {
@@ -35,9 +35,9 @@ func NewClient(options *core.RequestOptions) *Client {
 // Add a movie to the database using the movies/* /... path.
 func (c *Client) CreateMovie(
 	ctx context.Context,
-	request *testremotelocalsdk.CreateMovieRequest,
+	request *v7.CreateMovieRequest,
 	opts ...option.RequestOption,
-) (testremotelocalsdk.MovieId, error) {
+) (v7.MovieId, error) {
 	response, err := c.WithRawResponse.CreateMovie(
 		ctx,
 		request,
@@ -51,9 +51,9 @@ func (c *Client) CreateMovie(
 
 func (c *Client) GetMovie(
 	ctx context.Context,
-	movieId testremotelocalsdk.MovieId,
+	movieId v7.MovieId,
 	opts ...option.RequestOption,
-) (*testremotelocalsdk.Movie, error) {
+) (*v7.Movie, error) {
 	response, err := c.WithRawResponse.GetMovie(
 		ctx,
 		movieId,

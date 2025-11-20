@@ -4,7 +4,7 @@
   "generatorVersion": "1.16.0",
   "generatorConfig": {
     "module": {
-      "path": "github.com/fern-api/test-remote-local-sdk"
+      "path": "github.com/fern-api/empty"
     }
   }
 }

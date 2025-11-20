@@ -347,8 +347,8 @@ client = SeedUndiscriminatedUnions(
 )
 client.union.test_camel_case_properties(
     payment_method=TokenizeCard(
-        method="method",
-        card_number="cardNumber",
+        method="card",
+        card_number="1234567890123456",
     ),
 )
 

@@ -3,11 +3,16 @@
 module Seed
   module User
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::User::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Seed::User::Types::CreateUserRequest]
+      #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
         _body_prop_names = %i[type version name]

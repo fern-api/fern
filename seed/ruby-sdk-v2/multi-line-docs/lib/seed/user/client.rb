@@ -3,6 +3,8 @@
 module Seed
   module User
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::User::Client]
       def initialize(client:)
         @client = client
@@ -11,12 +13,16 @@ module Seed
       # Retrieve a user.
       # This endpoint is used to retrieve a user.
       #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [String] :user_id
+      #
       # @return [untyped]
       def get_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "users/#{params[:userId]}"
+          path: "users/#{params[:user_id]}"
         )
         begin
           _response = @client.send(_request)
@@ -32,6 +38,9 @@ module Seed
 
       # Create a new user.
       # This endpoint is used to create a new user.
+      #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Seed::User::Types::CreateUserRequest]
       #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)

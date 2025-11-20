@@ -18,6 +18,7 @@ export const PlaygroundSettings: core.serialization.ObjectSchema<
         "limit-websocket-messages-per-connection",
         core.serialization.number().optional(),
     ),
+    hidden: core.serialization.boolean().optional(),
 });
 
 export declare namespace PlaygroundSettings {
@@ -26,5 +27,6 @@ export declare namespace PlaygroundSettings {
         button?: PlaygroundButtonSettings.Raw | null;
         oauth?: boolean | null;
         "limit-websocket-messages-per-connection"?: number | null;
+        hidden?: boolean | null;
     }
 }

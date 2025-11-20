@@ -5,8 +5,8 @@ package com.seed.pagination.resources.users;
 
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.RequestOptions;
+import com.seed.pagination.core.pagination.CustomPager;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
-import com.seed.pagination.types.UsernameCursor;
 
 public class UsersClient {
     protected final ClientOptions clientOptions;
@@ -25,15 +25,15 @@ public class UsersClient {
         return this.rawClient;
     }
 
-    public UsernameCursor listUsernamesCustom() {
+    public CustomPager<String> listUsernamesCustom() {
         return this.rawClient.listUsernamesCustom().body();
     }
 
-    public UsernameCursor listUsernamesCustom(ListUsernamesRequestCustom request) {
+    public CustomPager<String> listUsernamesCustom(ListUsernamesRequestCustom request) {
         return this.rawClient.listUsernamesCustom(request).body();
     }
 
-    public UsernameCursor listUsernamesCustom(ListUsernamesRequestCustom request, RequestOptions requestOptions) {
+    public CustomPager<String> listUsernamesCustom(ListUsernamesRequestCustom request, RequestOptions requestOptions) {
         return this.rawClient.listUsernamesCustom(request, requestOptions).body();
     }
 }

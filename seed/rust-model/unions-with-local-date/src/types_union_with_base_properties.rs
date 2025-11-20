@@ -8,7 +8,8 @@ pub enum UnionWithBaseProperties {
             id: String,
         },
 
-        String {
+        #[serde(rename = "string")]
+        r#String {
             value: String,
             id: String,
         },

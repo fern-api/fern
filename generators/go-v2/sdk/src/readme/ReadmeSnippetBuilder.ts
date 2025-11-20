@@ -133,12 +133,37 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderWithRawResponseHeadersSnippet(endpoint: EndpointWithFilepath): string {
+        const isPaginated = endpoint.endpoint.pagination != null;
+
+        if (isPaginated) {
+            return this.writeCode(dedent`
+                // For non-paginated endpoints, use WithRawResponse as described
+                // to retrieve the headers and returned status code:
+                response, err := ${this.getWithRawResponseMethodCall(endpoint)}(...)
+                if err != nil {
+                    return err
+                }
+                fmt.Printf("Got response headers: %v", response.Header)
+                fmt.Printf("Got status code: %d", response.StatusCode)
+
+                // For paginated endpoints, WithRawResponse is unnecessary, as the
+                // headers and status code are directly available on the Page object.
+                page, err := ${this.getMethodCall(endpoint)}(...)
+                if err != nil {
+                    return err
+                }
+                fmt.Printf("Got response headers: %v", page.Header)
+                fmt.Printf("Got status code: %d", page.StatusCode)
+            `);
+        }
+
         return this.writeCode(dedent`
             response, err := ${this.getWithRawResponseMethodCall(endpoint)}(...)
             if err != nil {
                 return err
             }
             fmt.Printf("Got response headers: %v", response.Header)
+            fmt.Printf("Got status code: %d", response.StatusCode)
         `);
     }
 
@@ -248,7 +273,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 }
             }
 
-            // Alternatively, access the next cursor directly from the raw response.
+            // Paginated endpoints return a Page with directly accessible headers, status code, and full response
             ctx := context.TODO()
             page, err := ${this.getMethodCall(endpoint)}(
                 ctx,
@@ -257,6 +282,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             if err != nil {
                 return err
             }
+
+            // Access response metadata directly from the page
+            fmt.Printf("Got headers: %v", page.Header)
+            fmt.Printf("Got status code: %d", page.StatusCode)
+
+            // Access the full spec-defined response object
+            fullResponse := page.Response
+
+            // Access individual fields from the pagination object
             nextCursor := page.RawResponse.Next
         `);
     }

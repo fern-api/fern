@@ -3,12 +3,17 @@
 module Seed
   module Service
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Service::Client]
       def initialize(client:)
         @client = client
       end
 
       # GET request with custom api key
+      #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [String]
       def get_with_api_key(request_options: {}, **_params)
@@ -30,6 +35,10 @@ module Seed
       end
 
       # GET request with custom api key
+      #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [String] :x_endpoint_header
       #
       # @return [String]
       def get_with_header(request_options: {}, **_params)
