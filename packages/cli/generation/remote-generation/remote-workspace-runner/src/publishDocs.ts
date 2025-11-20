@@ -110,28 +110,34 @@ export async function publishDocs({
 
             context.logger.debug(`Hashing ${measuredImages.size} image files with concurrency ${HASH_CONCURRENCY}...`);
             const hashImageStart = performance.now();
-            const images: DocsV2Write.ImageFilePath[] = [];
 
             const imageArray = Array.from(measuredImages.values());
-            const hashedImages = await asyncPool(HASH_CONCURRENCY, imageArray, async (image) => {
-                const filePath = filesMap.get(image.filePath);
-                if (filePath == null) {
-                    return null;
+            const hashedImages: Array<DocsV2Write.ImageFilePath | null> = await asyncPool(
+                HASH_CONCURRENCY,
+                imageArray,
+                async (image) => {
+                    const filePath = filesMap.get(image.filePath);
+                    if (filePath == null) {
+                        return null;
+                    }
+
+                    const obj = {
+                        filePath: CjsFdrSdk.docs.v1.write.FilePath(
+                            convertToFernHostRelativeFilePath(filePath.relativeFilePath)
+                        ),
+                        width: image.width,
+                        height: image.height,
+                        blurDataUrl: image.blurDataUrl,
+                        alt: undefined,
+                        fileHash: await calculateFileHash(filePath.absoluteFilePath)
+                    } as DocsV2Write.ImageFilePath;
+                    return obj;
                 }
+            );
 
-                return {
-                    filePath: CjsFdrSdk.docs.v1.write.FilePath(
-                        convertToFernHostRelativeFilePath(filePath.relativeFilePath)
-                    ),
-                    width: image.width,
-                    height: image.height,
-                    blurDataUrl: image.blurDataUrl,
-                    alt: undefined,
-                    fileHash: await calculateFileHash(filePath.absoluteFilePath)
-                };
-            });
-
-            images.push(...hashedImages.filter((img): img is DocsV2Write.ImageFilePath => img != null));
+            const images: DocsV2Write.ImageFilePath[] = hashedImages.filter(
+                (img): img is DocsV2Write.ImageFilePath => img != null
+            );
             const hashImageTime = performance.now() - hashImageStart;
             context.logger.debug(`Hashed ${images.length} images in ${hashImageTime.toFixed(0)}ms`);
 
@@ -336,10 +342,10 @@ export async function publishDocs({
     const resolveTime = performance.now() - resolveStart;
 
     const pageCount = Object.keys(docsDefinition.pages).length;
-    const apiCount = Object.keys(docsDefinition.apis).length;
+    const apiWorkspaceCount = apiWorkspaces.length;
     const resolveMemory = process.memoryUsage();
     context.logger.info(
-        `Resolved docs definition in ${resolveTime.toFixed(0)}ms: ${pageCount} pages, ${apiCount} APIs`
+        `Resolved docs definition in ${resolveTime.toFixed(0)}ms: ${pageCount} pages${apiWorkspaceCount ? `, ${apiWorkspaceCount} API workspaces` : ""}`
     );
     context.logger.debug(
         `Memory after resolve: RSS=${(resolveMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(resolveMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
