@@ -568,24 +568,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public instantiate({
         referenceToClient,
-        referenceToOptions,
-        referenceToAuthProvider
+        referenceToOptions
     }: {
         referenceToClient: ts.Expression;
         referenceToOptions: ts.Expression;
-        referenceToAuthProvider?: ts.Expression | undefined;
     }): ts.Expression {
-        return ts.factory.createNewExpression(referenceToClient, undefined, [
-            referenceToAuthProvider && this.anyEndpointWithAuth
-                ? ts.factory.createObjectLiteralExpression([
-                      ts.factory.createSpreadAssignment(referenceToOptions),
-                      ts.factory.createPropertyAssignment(
-                          AuthProviderInstance.OPTIONS_PROPERTY_NAME,
-                          referenceToAuthProvider
-                      )
-                  ])
-                : referenceToOptions
-        ]);
+        return ts.factory.createNewExpression(referenceToClient, undefined, [referenceToOptions]);
     }
 
     public instantiateAsRoot(args: { context: SdkContext; npmPackage: NpmPackage }): ts.Expression {

@@ -115,8 +115,6 @@ export class GeneratedWrappedService {
             return;
         }
 
-        let authProviderReference: ts.Expression | undefined;
-
         class_.getAccessors.push({
             name: this.getGetterName(),
             returnType: getTextOfTsNode(referenceToWrapped.getTypeNode()),
@@ -133,8 +131,7 @@ export class GeneratedWrappedService {
                                 ts.SyntaxKind.QuestionQuestionEqualsToken,
                                 generatedWrappedService.instantiate({
                                     referenceToClient: referenceToWrapped.getExpression(),
-                                    referenceToOptions: this.wrapperService.getReferenceToOptions(),
-                                    referenceToAuthProvider: this.wrapperService.getReferenceToAuthProvider()
+                                    referenceToOptions: this.wrapperService.getReferenceToOptions()
                                 })
                             )
                         )
