@@ -17,14 +17,14 @@ describe("no-conflicting-endpoint-parameters", () => {
         expect(violations).toEqual([
             {
                 message:
-                    "Path parameter request is not suitable for code generation, because it can conflict with the request body parameter.",
+                    "The path parameter name request is reserved and conflicts with the request body parameter used in generated code. Please rename this path parameter to avoid the conflict (e.g., 'request_id', 'request_identifier', or 'req_id').",
                 nodePath: ["service", "path-parameters", "request"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "fatal"
             },
             {
                 message:
-                    "Path parameter request is not suitable for code generation, because it can conflict with the request body parameter.",
+                    "The path parameter name request is reserved and conflicts with the request body parameter used in generated code. Please rename this path parameter to avoid the conflict (e.g., 'request_id', 'request_identifier', or 'req_id').",
                 nodePath: ["service", "endpoints", "b", "path-parameters", "request"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "fatal"

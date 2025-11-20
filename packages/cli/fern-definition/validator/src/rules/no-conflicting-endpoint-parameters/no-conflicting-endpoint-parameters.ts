@@ -13,9 +13,7 @@ export const NoConflictingEndpointParametersRule: Rule = {
                         return [
                             {
                                 severity: "fatal",
-                                message: `Path parameter ${chalk.bold(
-                                    pathParameterKey
-                                )} is not suitable for code generation, because it can conflict with the request body parameter.`
+                                message: `The path parameter name ${chalk.bold(DEFAULT_REQUEST_PARAMETER_NAME)} is reserved and conflicts with the request body parameter used in generated code. Please rename this path parameter to avoid the conflict (e.g., 'request_id', 'request_identifier', or 'req_id').`
                             }
                         ];
                     } else {

@@ -39,11 +39,6 @@ module <%= gem_namespace %>
           conn.continue_timeout = @timeout
 
           conn.request(http_request)
-          # begin
-          #   conn.request(http_request)
-          # rescue StandardError => e
-          #   raise HttpError, "HTTP request failed: #{e.message}"
-          # end
         end
 
         # @param request [<%= gem_namespace %>::Internal::Http::BaseRequest] The HTTP request.
@@ -96,10 +91,10 @@ module <%= gem_namespace %>
 
           http = Net::HTTP.new(url.host, port)
           http.use_ssl = is_https
-          http.max_retries = 0
+          http.max_retries = @max_retries
           http
         end
       end
     end
   end
-end 
+end    

@@ -15,6 +15,7 @@ interface EndpointWithFilepath {
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static PAGINATION_FEATURE_ID: FernGeneratorCli.FeatureId = "PAGINATION";
+    private static ENVIRONMENTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ENVIRONMENTS";
 
     private readonly context: SdkGeneratorContext;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
@@ -47,6 +48,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.CustomClient] = this.buildCustomClientSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
+        if (this.context.ir.environments != null) {
+            snippets[ReadmeSnippetBuilder.ENVIRONMENTS_FEATURE_ID] = this.buildEnvironmentsSnippets();
+        }
         if (this.isPaginationEnabled) {
             snippets[FernGeneratorCli.StructuredFeatureId.Pagination] = this.buildPaginationSnippets();
         }
@@ -356,6 +360,136 @@ foreach ($items->getPages() as $page) {
         return `${this.context.getAccessFromRootClient(endpoint.fernFilepath)}->${this.context.getEndpointMethodName(
             endpoint.endpoint
         )}`;
+    }
+
+    private buildEnvironmentsSnippets(): string[] {
+        const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
+
+        if (isMultiUrl) {
+            return [this.buildMultiUrlEnvironmentsSnippet()];
+        } else {
+            return [this.buildSingleUrlEnvironmentsSnippet()];
+        }
+    }
+
+    private buildSingleUrlEnvironmentsSnippet(): string {
+        const environments =
+            this.context.ir.environments?.environments._visit({
+                singleBaseUrl: (value) => value.environments,
+                multipleBaseUrls: () => [],
+                _other: () => []
+            }) ?? [];
+
+        if (environments.length === 0) {
+            return "";
+        }
+
+        const environmentsList = environments
+            .map((env) => {
+                const envName = this.context.getEnvironmentName(env.name);
+                return `- \`${this.context.getEnvironmentsClassReference().name}::${envName}\``;
+            })
+            .join("\n");
+
+        const firstEnv = environments[0];
+        const firstEnvName = firstEnv ? this.context.getEnvironmentName(firstEnv.name) : "Production";
+
+        return this.writeCode(`
+The SDK defaults to the \`${firstEnvName}\` environment. To use a different environment, pass it to the client constructor:
+
+\`\`\`php
+use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};
+use ${this.context.getRootNamespace()}\\${this.context.getEnvironmentsClassReference().name};
+
+${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(
+    token: '<YOUR_TOKEN>',
+    options: [
+        'baseUrl' => ${this.context.getEnvironmentsClassReference().name}::Staging->value
+    ]
+);
+\`\`\`
+
+Available environments:
+${environmentsList}
+`);
+    }
+
+    private buildMultiUrlEnvironmentsSnippet(): string {
+        const environments =
+            this.context.ir.environments?.environments._visit({
+                multipleBaseUrls: (value) => value.environments,
+                singleBaseUrl: () => [],
+                _other: () => []
+            }) ?? [];
+
+        const baseUrls =
+            this.context.ir.environments?.environments._visit({
+                multipleBaseUrls: (value) => value.baseUrls,
+                singleBaseUrl: () => [],
+                _other: () => []
+            }) ?? [];
+
+        if (environments.length === 0) {
+            return "";
+        }
+
+        const environmentsList = environments
+            .map((env) => {
+                const envName = this.context.getEnvironmentName(env.name);
+                return `- \`${this.context.getEnvironmentsClassReference().name}::${envName}()\``;
+            })
+            .join("\n");
+
+        const firstEnv = environments[0];
+        const firstEnvName = firstEnv ? this.context.getEnvironmentName(firstEnv.name) : "Production";
+
+        const baseUrlsList = baseUrls
+            .map((baseUrl) => {
+                const propertyName = baseUrl.name.camelCase.safeName;
+                return `  - \`${propertyName}\`: The ${propertyName} base URL`;
+            })
+            .join("\n");
+
+        const customEnvParams = baseUrls
+            .map((baseUrl, index) => {
+                const propertyName = baseUrl.name.camelCase.safeName;
+                const indent = index === 0 ? "" : "    ";
+                return `${indent}${propertyName}: 'https://your-${propertyName}-url.com'`;
+            })
+            .join(",\n");
+
+        return this.writeCode(`
+This API uses multiple base URLs for different services. The SDK defaults to the \`${firstEnvName}\` environment.
+
+Available environments:
+${environmentsList}
+
+Each environment provides multiple base URLs:
+${baseUrlsList}
+
+To use a different environment, pass it to the client constructor:
+
+\`\`\`php
+use ${this.context.getRootNamespace()}\\${this.context.getRootClientClassName()};
+use ${this.context.getRootNamespace()}\\${this.context.getEnvironmentsClassReference().name};
+
+${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(
+    token: '<YOUR_TOKEN>',
+    environment: ${this.context.getEnvironmentsClassReference().name}::Staging()
+);
+\`\`\`
+
+You can also create a custom environment with your own URLs:
+
+\`\`\`php
+${this.context.getClientVariableName()} = new ${this.context.getRootClientClassName()}(
+    token: '<YOUR_TOKEN>',
+    environment: ${this.context.getEnvironmentsClassReference().name}::custom(
+        ${customEnvParams}
+    )
+);
+\`\`\`
+`);
     }
 
     private writeCode(s: string): string {
