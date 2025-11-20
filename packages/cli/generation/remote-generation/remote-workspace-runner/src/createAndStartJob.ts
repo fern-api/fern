@@ -368,9 +368,9 @@ async function startJob({
 // java generator to support the new implementation, we manually migrate
 // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
 function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Error {
-    if (error?.reason === "status-code") {
+    if (error?.content?.reason === "status-code") {
         // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-        const body = error.body as any;
+        const body = error.content.body as any;
         switch (body?._error) {
             case "IllegalApiNameError":
                 return FernFiddle.remoteGen.createJobV3.Error.illegalApiNameError();

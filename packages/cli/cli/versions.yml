@@ -1,12 +1,53 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Optimize image path parsing and replacement for large markdown files (>5MB) using batched edits, precomputed line positions, and filtered AST traversal.
+        Optimize docs generation and image path parsing and replacement for large markdown files (>5MB) using batched edits, precomputed line positions, and filtered AST traversal.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.4
+
+- changelogEntry:
+    - summary: |
+        Updates CLI dependencies to fix `fern` commands.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.3
+
+- changelogEntry:
+    - summary: |
+        Updates dependencies to fix `fern` commands.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.2
+
+- changelogEntry:
+    - summary: |
+        Updates the **beta** `write-translation` command to use `--stub` flag for mocking translation configuration.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.1
+
+- changelogEntry:
+    - summary: |
+        Support sidebar title overrides in the frontmatter of markdown files.
       type: feat
   irVersion: 61
   createdAt: "2025-11-20"
+  version: 2.0.0
+
+- changelogEntry:
+    - summary: |
+        Improve misc error handling, including for illegal version strings.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
   version: 2.0.0-rc2
-  
+
 - changelogEntry:
     - summary: |
         Fix migration directory name to match exported version (2.0.0-rc0).
