@@ -108,8 +108,10 @@ export class Method extends AstNode {
         }
 
         for (const positionalParameter of this.positionalParameters) {
-            writer.write(`# @option ${positionalParameter.name} [`);
-            positionalParameter.type.writeTypeDefinition(writer);
+            writer.write(`# @param ${positionalParameter.name} [`);
+            const typeWriter = new Writer({ customConfig: writer.customConfig });
+            positionalParameter.type.writeTypeDefinition(typeWriter);
+            writer.write(this.normalizeForYard(typeWriter.toString()));
             writer.write("]");
             writer.newLine();
         }
@@ -225,8 +227,14 @@ export class Method extends AstNode {
     }
 
     private normalizeForYard(typeString: string): string {
-        let normalized = typeString.replace(/ \| /g, ", ");
+        let normalized = typeString.replace(/\s*\|\s*/g, ", ");
+        
         normalized = normalized.replace(/\bbool\b/g, "Boolean");
+        
+        while (normalized.includes(", nil, nil")) {
+            normalized = normalized.replace(/, nil, nil/g, ", nil");
+        }
+        
         return normalized;
     }
 

@@ -355,8 +355,11 @@ export class HttpEndpointGenerator {
     }
 
     private normalizeForYard(typeString: string): string {
-        let normalized = typeString.replace(/ \| /g, ", ");
+        let normalized = typeString.replace(/\s*\|\s*/g, ", ");
         normalized = normalized.replace(/\bbool\b/g, "Boolean");
+        while (normalized.includes(", nil, nil")) {
+            normalized = normalized.replace(/, nil, nil/g, ", nil");
+        }
         return normalized;
     }
 }
