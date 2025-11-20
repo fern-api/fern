@@ -3,7 +3,7 @@ import { AuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ExportedFilePath } from "@fern-typescript/commons";
 import { GeneratedFile, SdkContext } from "@fern-typescript/contexts";
 
-import { AuthProviderGenerator, InferredAuthProviderGenerator } from "./auth-provider";
+import { AuthProviderGenerator, BasicAuthProviderGenerator, InferredAuthProviderGenerator } from "./auth-provider";
 
 export declare namespace AuthProvidersGenerator {
     export interface Init {
@@ -23,6 +23,9 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
                         authScheme
                     });
                 case "basic":
+                    return new BasicAuthProviderGenerator({
+                        authScheme
+                    });
                 case "bearer":
                 case "header":
                 case "oauth":
