@@ -1,6 +1,6 @@
 # Reference
 ## Imdb
-<details><summary><code>client.Imdb.CreateMovie(request) -> testremotelocalsdk.MovieId</code></summary>
+<details><summary><code>client.Imdb.CreateMovie(request) -> v7.MovieId</code></summary>
 <dl>
 <dd>
 
@@ -27,7 +27,7 @@ Add a movie to the database using the movies/* /... path.
 <dd>
 
 ```go
-request := &testremotelocalsdk.CreateMovieRequest{
+request := &v7.CreateMovieRequest{
         Title: "title",
         Rating: 1.1,
     }
@@ -50,7 +50,7 @@ client.Imdb.CreateMovie(
 <dl>
 <dd>
 
-**request:** `*testremotelocalsdk.CreateMovieRequest` 
+**request:** `*v7.CreateMovieRequest` 
     
 </dd>
 </dl>
@@ -62,7 +62,7 @@ client.Imdb.CreateMovie(
 </dl>
 </details>
 
-<details><summary><code>client.Imdb.GetMovie(MovieId) -> *testremotelocalsdk.Movie</code></summary>
+<details><summary><code>client.Imdb.GetMovie(MovieId) -> *v7.Movie</code></summary>
 <dl>
 <dd>
 
@@ -94,7 +94,7 @@ client.Imdb.GetMovie(
 <dl>
 <dd>
 
-**movieId:** `testremotelocalsdk.MovieId` 
+**movieId:** `v7.MovieId` 
     
 </dd>
 </dl>

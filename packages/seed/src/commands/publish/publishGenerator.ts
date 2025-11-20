@@ -55,7 +55,7 @@ export async function publishGenerator({
             path.join(__dirname, RelativeFilePath.of("../../.."), RelativeFilePath.of(publishConfig.workingDirectory))
         );
     }
-    // Instance of PublishDocker configuration, leverage docker CLI here
+    // Instance of PublishDocker configuration, leverage container CLI here
     if ("docker" in publishConfig) {
         const unparsedCommands = publishConfig.preBuildCommands;
         const preBuildCommands = Array.isArray(unparsedCommands)
@@ -65,7 +65,7 @@ export async function publishGenerator({
               : [];
 
         await runCommands(preBuildCommands, context, workingDirectory);
-        await buildAndPushDockerImage(publishConfig.docker, publishVersion, context);
+        await buildAndPushContainerImage(publishConfig.docker, publishVersion, context);
     } else {
         // Instance of PublishCommand configuration, leverage these commands outright
         const unparsedCommands = publishConfig.command;
@@ -76,28 +76,26 @@ export async function publishGenerator({
     }
 }
 
-async function buildAndPushDockerImage(
-    dockerConfig: PublishDockerConfiguration,
+async function buildAndPushContainerImage(
+    containerConfig: PublishDockerConfiguration,
     version: string,
     context: TaskContext
 ) {
-    // Push the Docker image to the registry
     const dockerHubUsername = process?.env?.DOCKER_USERNAME;
     const dockerHubPassword = process?.env?.DOCKER_PASSWORD;
     if (!dockerHubUsername || !dockerHubPassword) {
         context.failAndThrow("Docker Hub credentials not found within your environment variables.");
     }
 
-    context.logger.debug("Logging into Docker Hub...");
+    context.logger.debug(`Logging into container registry...`);
     await loggingExeca(context.logger, "docker", ["login", "-u", dockerHubUsername, "--password-stdin"], {
         doNotPipeOutput: true,
         input: dockerHubPassword
     });
 
-    // Build and push the Docker image, now that you've run the pre-build commands
-    const aliases = [dockerConfig.image, ...(dockerConfig.aliases ?? [])].map((alias) => `${alias}:${version}`);
+    const aliases = [containerConfig.image, ...(containerConfig.aliases ?? [])].map((alias) => `${alias}:${version}`);
     const tagArgs = aliases.map((imageTag) => ["-t", imageTag]).flat();
-    context.logger.debug(`Pushing Docker image ${aliases[0]} to Docker Hub...`);
+    context.logger.debug(`Pushing container image ${aliases[0]} using docker...`);
     if (aliases.length > 1) {
         context.logger.debug(`Also tagging with aliases: ${aliases.slice(1).join(", ")}`);
     }
@@ -107,9 +105,9 @@ async function buildAndPushDockerImage(
         "--platform",
         "linux/amd64,linux/arm64",
         "-f",
-        dockerConfig.file,
+        containerConfig.file,
         ...tagArgs,
-        dockerConfig.context
+        containerConfig.context
     ];
     try {
         await loggingExeca(context.logger, "docker", standardBuildOptions, { doNotPipeOutput: true });

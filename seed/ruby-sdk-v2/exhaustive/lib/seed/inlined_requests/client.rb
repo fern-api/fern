@@ -3,12 +3,17 @@
 module Seed
   module InlinedRequests
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::InlinedRequests::Client]
       def initialize(client:)
         @client = client
       end
 
       # POST with custom object in request body, response is an object
+      #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Seed::InlinedRequests::Types::PostWithObjectBody]
       #
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
       def post_with_object_bodyand_response(request_options: {}, **params)

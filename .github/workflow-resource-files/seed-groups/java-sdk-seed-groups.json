@@ -53,8 +53,7 @@
         "oauth-client-credentials-default",
         "exhaustive:custom-error-names",
         "exhaustive:json-include-non-empty",
-        "inferred-auth-implicit",
-        "pagination-custom"
+        "inferred-auth-implicit"
       ],
       "groupTotalTimeSeconds": 4757
     },

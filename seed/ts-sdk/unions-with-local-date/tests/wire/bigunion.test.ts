@@ -3,10 +3,10 @@
 import { SeedUnionsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Bigunion", () => {
+describe("BigunionClient", () => {
     test("get", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnionsClient({ environment: server.baseUrl });
+        const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = {
             type: "normalSweet",
@@ -29,7 +29,7 @@ describe("Bigunion", () => {
 
     test("update", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnionsClient({ environment: server.baseUrl });
+        const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             type: "normalSweet",
             id: "id",
@@ -59,7 +59,7 @@ describe("Bigunion", () => {
 
     test("update-many", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnionsClient({ environment: server.baseUrl });
+        const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = [
             {
                 type: "normalSweet",

@@ -1,4 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 0.13.0
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: feat
+      summary: |
+        enable custom Cargo features and conditional dependency management
+  irVersion: 61
+
+- version: 0.12.1
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: chore
+      summary: |
+        Bump generator CLI version to publish new Docker image.
+  irVersion: 61
+
+- version: 0.12.0
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: feat
+      summary: |
+        add wire test generation with WireMock integration
+  irVersion: 61
+
 - version: 0.11.0
   createdAt: "2025-11-07"
   changelogEntry:

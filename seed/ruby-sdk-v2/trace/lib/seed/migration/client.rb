@@ -3,11 +3,17 @@
 module Seed
   module Migration
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Migration::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [String] :admin_key_header
+      #
       # @return [Array[Seed::Migration::Types::Migration]]
       def get_attempted_migrations(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(

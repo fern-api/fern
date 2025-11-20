@@ -38,11 +38,11 @@ import (
 func do() {
     client := client.NewClient()
     request := &fern.TestMethodNameTestGroupRequest{
+        PathParam: "path_param",
         Body: &fern.PlainObject{},
     }
     client.TestGroup.TestMethodName(
         context.TODO(),
-        "path_param",
         request,
     )
 }
@@ -110,7 +110,8 @@ response, err := client.TestGroup.TestMethodName(
 ### Response Headers
 
 You can access the raw HTTP response data by using the `WithRawResponse` field on the client. This is useful
-when you need to examine the response headers received from the API call.
+when you need to examine the response headers received from the API call. (When the endpoint is paginated,
+the raw HTTP response data will be included automatically in the Page response object.)
 
 ```go
 response, err := client.TestGroup.WithRawResponse.TestMethodName(...)
@@ -118,6 +119,7 @@ if err != nil {
     return err
 }
 fmt.Printf("Got response headers: %v", response.Header)
+fmt.Printf("Got status code: %d", response.StatusCode)
 ```
 
 ### Retries

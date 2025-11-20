@@ -6,7 +6,7 @@ import { mockServerPool } from "../../../mock-server/MockServerPool";
 describe("ServiceClient", () => {
     test("getException", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = {
             type: "generic",

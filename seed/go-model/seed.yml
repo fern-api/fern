@@ -27,6 +27,9 @@ test:
   docker:
     image: fernapi/fern-go-model:latest
     command: pnpm --filter @fern-api/go-model dist:cli && docker build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest .
+  podman:
+    image: fernapi/fern-go-model:latest
+    command: pnpm --filter @fern-api/go-model dist:cli && podman build -f ./generators/go/model/Dockerfile -t fernapi/fern-go-model:latest .
 
 fixtures:
   streaming:
@@ -46,7 +49,7 @@ fixtures:
         includeLegacyClientOptions: true
 
 scripts:
-  - docker: golang:1.23.8-alpine3.20
+  - image: golang:1.23.8-alpine3.20
     commands:
       - CGO_ENABLED=0 go test ./...
 

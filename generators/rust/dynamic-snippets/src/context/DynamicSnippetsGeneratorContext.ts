@@ -8,8 +8,10 @@ import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import {
     convertToPascalCase,
     escapeRustKeyword,
+    escapeRustReservedType,
     generateDefaultCrateName,
     getName,
+    RustFilenameRegistry,
     validateAndSanitizeCrateName
 } from "@fern-api/rust-base";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
@@ -24,6 +26,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     public dynamicTypeLiteralMapper: DynamicTypeLiteralMapper;
     public filePropertyMapper: FilePropertyMapper;
     private errorStack: string[] = [];
+    private registry: RustFilenameRegistry;
+    private declarationToTypeId: Map<string, string> = new Map();
 
     constructor({
         ir,
@@ -37,9 +41,36 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         super({ ir, config, options });
         this.ir = ir;
         this.customConfig = config.customConfig as BaseRustCustomConfigSchema | undefined;
+        this.registry = RustFilenameRegistry.create();
+
+        // Pre-register all type names from IR to match model generator naming
+        this.preregisterTypeNames();
+
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
         this.filePropertyMapper = new FilePropertyMapper({ context: this });
+    }
+
+    private preregisterTypeNames(): void {
+        // Register all IR types to ensure consistent naming with model generator
+        for (const [typeId, type] of Object.entries(this.ir.types)) {
+            const baseName = type.declaration.name.pascalCase.safeName;
+            this.registry.registerSchemaTypeTypeName(typeId, baseName);
+
+            // Create a lookup key for this declaration
+            const key = this.getDeclarationKey(type.declaration);
+            this.declarationToTypeId.set(key, typeId);
+        }
+    }
+
+    /**
+     * Create a unique key for a type declaration based on its file path and name.
+     * This helps us look up the typeId when we only have the declaration.
+     */
+    private getDeclarationKey(declaration: FernIr.dynamic.Declaration): string {
+        const fernFilepath = declaration.fernFilepath.packagePath.join("/");
+        const name = declaration.name.pascalCase.safeName;
+        return `${fernFilepath}::${name}`;
     }
 
     public clone(): DynamicSnippetsGeneratorContext {
@@ -54,8 +85,31 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return this.getTypeName(name);
     }
 
+    /**
+     * Get the generated struct name for a type by its declaration.
+     * This returns the deduplicated name (e.g., "Metadata2" instead of "Metadata")
+     * when there are naming collisions.
+     */
+    public getStructNameByDeclaration(declaration: FernIr.dynamic.Declaration): string {
+        const key = this.getDeclarationKey(declaration);
+        const typeId = this.declarationToTypeId.get(key);
+        if (typeId) {
+            return this.registry.getSchemaTypeTypeNameOrThrow(typeId);
+        }
+        // Fallback to basic name if not found in registry
+        return getName(declaration.name.pascalCase.safeName);
+    }
+
     public getEnumName(name: FernIr.Name): string {
         return this.getTypeName(name);
+    }
+
+    /**
+     * Get the generated type name for a type by its ID.
+     * This ensures we get the deduplicated name (e.g., "Metadata2" instead of "Metadata")
+     */
+    public getTypeNameById(typeId: string): string {
+        return this.registry.getSchemaTypeTypeNameOrThrow(typeId);
     }
 
     private getTypeName(name: FernIr.Name): string {
@@ -77,6 +131,13 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getMethodName(name: FernIr.Name): string {
         return getName(name.snakeCase.safeName);
+    }
+
+    /**
+     * Escapes Rust reserved types by prefixing them with 'r#'
+     */
+    public escapeRustReservedType(name: string): string {
+        return escapeRustReservedType(name);
     }
 
     /**
