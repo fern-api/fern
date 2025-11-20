@@ -228,15 +228,70 @@ export class EndpointSnippetGenerator {
         }
 
         const environmentClassRef = this.context.getEnvironmentsClassReference();
-        let environmentName: string | undefined;
 
-        if (environment != null && this.context.isMultiEnvironmentValues(environment)) {
-            environmentName = this.resolveMultiEnvironmentName(environment);
-        } else {
-            environmentName = this.getDefaultEnvironmentName();
+        if (environment != null) {
+            if (this.context.isSingleEnvironmentID(environment)) {
+                const environmentName = this.context.resolveEnvironmentName(environment);
+                if (environmentName == null) {
+                    this.addWarning(`Environment "${environment}" was not found`);
+                    return undefined;
+                }
+                const className = this.context.getClassName(environmentName);
+                return {
+                    name: "environment",
+                    assignment: php.TypeLiteral.reference(
+                        php.codeblock((writer) => {
+                            writer.writeNode(environmentClassRef);
+                            writer.write(`::`);
+                            writer.write(className);
+                            writer.write(`()`);
+                        })
+                    )
+                };
+            }
+
+            if (this.context.isMultiEnvironmentValues(environment)) {
+                const result = this.resolveMultiEnvironmentName(environment);
+                if (result == null) {
+                    this.addWarning("Invalid multi url environment");
+                    return undefined;
+                }
+                if (result.type === "named") {
+                    return {
+                        name: "environment",
+                        assignment: php.TypeLiteral.reference(
+                            php.codeblock((writer) => {
+                                writer.writeNode(environmentClassRef);
+                                writer.write(`::`);
+                                writer.write(result.name);
+                                writer.write(`()`);
+                            })
+                        )
+                    };
+                } else {
+                    return {
+                        name: "environment",
+                        assignment: php.TypeLiteral.reference(
+                            php.codeblock((writer) => {
+                                writer.writeNode(environmentClassRef);
+                                writer.write(`::custom(`);
+                                const entries = Object.entries(result.urls);
+                                entries.forEach(([paramName, url], index) => {
+                                    writer.write(`${paramName}: '${url}'`);
+                                    if (index < entries.length - 1) {
+                                        writer.write(`, `);
+                                    }
+                                });
+                                writer.write(`)`);
+                            })
+                        )
+                    };
+                }
+            }
         }
 
-        if (environmentName == null) {
+        const defaultName = this.getDefaultEnvironmentName();
+        if (defaultName == null) {
             return undefined;
         }
 
@@ -246,7 +301,7 @@ export class EndpointSnippetGenerator {
                 php.codeblock((writer) => {
                     writer.writeNode(environmentClassRef);
                     writer.write(`::`);
-                    writer.write(environmentName);
+                    writer.write(defaultName);
                     writer.write(`()`);
                 })
             )
@@ -282,8 +337,15 @@ export class EndpointSnippetGenerator {
         return this.context.getClassName(firstEnv.name);
     }
 
-    private resolveMultiEnvironmentName(environment: FernIr.dynamic.MultipleEnvironmentUrlValues): string | undefined {
-        const firstBaseUrlId = Object.keys(environment)[0];
+    private resolveMultiEnvironmentName(
+        environment: FernIr.dynamic.MultipleEnvironmentUrlValues
+    ): { type: "named"; name: string } | { type: "custom"; urls: Record<string, string> } | undefined {
+        const baseUrlIds = Object.keys(environment);
+        if (baseUrlIds.length === 0) {
+            return undefined;
+        }
+
+        const firstBaseUrlId = baseUrlIds[0];
         if (firstBaseUrlId == null) {
             return undefined;
         }
@@ -293,18 +355,59 @@ export class EndpointSnippetGenerator {
             return undefined;
         }
 
-        const environmentId = this.context.isSingleEnvironmentID(firstBaseUrlValue) ? firstBaseUrlValue : undefined;
+        if (this.context.isSingleEnvironmentID(firstBaseUrlValue)) {
+            const environmentName = this.context.resolveEnvironmentName(firstBaseUrlValue);
+            if (environmentName == null) {
+                return undefined;
+            }
 
-        if (environmentId == null) {
-            return "custom";
+            const allSameEnvironment = baseUrlIds.every((baseUrlId) => {
+                const value = environment[baseUrlId];
+                return value != null && this.context.isSingleEnvironmentID(value) && value === firstBaseUrlValue;
+            });
+
+            if (allSameEnvironment) {
+                return { type: "named", name: this.context.getClassName(environmentName) };
+            }
         }
 
-        const environmentName = this.context.resolveEnvironmentName(environmentId);
-        if (environmentName == null) {
-            return undefined;
+        const urls: Record<string, string> = {};
+        let hasAnyLiteralUrl = false;
+        for (const baseUrlId of baseUrlIds) {
+            const value = environment[baseUrlId];
+            if (value == null) {
+                continue;
+            }
+            if (!this.context.isSingleEnvironmentID(value)) {
+                hasAnyLiteralUrl = true;
+                const paramName = this.getBaseUrlPropertyName(baseUrlId);
+                urls[paramName] = value;
+            }
         }
 
-        return this.context.getClassName(environmentName);
+        if (hasAnyLiteralUrl && Object.keys(urls).length > 0) {
+            return { type: "custom", urls };
+        }
+
+        return undefined;
+    }
+
+    private getBaseUrlPropertyName(baseUrlId: string): string {
+        if (this.context.ir.environments?.environments.type !== "multipleBaseUrls") {
+            return baseUrlId;
+        }
+
+        const environmentsConfig = this.context.ir.environments.environments;
+        if (environmentsConfig.type !== "multipleBaseUrls") {
+            return baseUrlId;
+        }
+
+        const baseUrl = environmentsConfig.baseUrls.find((url) => url.id === baseUrlId);
+        if (baseUrl == null) {
+            return baseUrlId;
+        }
+
+        return baseUrl.name.camelCase.safeName;
     }
 
     private getConstructorBaseUrlArgs({

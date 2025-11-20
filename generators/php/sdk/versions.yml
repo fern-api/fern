@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.19.0
+  changelogEntry:
+    - summary: |
+        Add support for multi-URL environments. Generated SDKs now use a class-based Environments with readonly properties for each service URL, enabling APIs with different base URLs per service (e.g., EC2 and S3). Sub-clients receive the full Environments instance and access their specific URL via property access.
+      type: feat
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 1.18.2
   changelogEntry:
     - summary: |
