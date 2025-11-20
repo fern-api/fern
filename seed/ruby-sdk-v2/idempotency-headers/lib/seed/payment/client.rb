@@ -36,10 +36,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @option params [String] :payment_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :payment_id
       #
       # @return [untyped]
       def delete(request_options: {}, **params)

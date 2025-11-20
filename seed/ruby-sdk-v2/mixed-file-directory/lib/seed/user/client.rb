@@ -12,10 +12,9 @@ module Seed
 
       # List all users.
       #
-      # @option params [Integer | nil] :limit
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [Integer | nil] :limit
       #
       # @return [Array[Seed::User::Types::User]]
       def list(request_options: {}, **params)

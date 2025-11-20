@@ -10,10 +10,9 @@ module Seed
         @client = client
       end
 
-      # @option params [String] :admin_key_header
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :admin_key_header
       #
       # @return [Array[Seed::Migration::Types::Migration]]
       def get_attempted_migrations(request_options: {}, **_params)

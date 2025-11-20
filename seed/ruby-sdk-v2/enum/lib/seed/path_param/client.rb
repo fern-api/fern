@@ -10,11 +10,10 @@ module Seed
         @client = client
       end
 
-      # @option params [Seed::Types::Operand] :operand
-      # @option params [Seed::Types::ColorOrOperand] :operand_or_color
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::Types::Operand] :operand
+      # @option params [Seed::Types::ColorOrOperand] :operand_or_color
       #
       # @return [untyped]
       def send_(request_options: {}, **params)

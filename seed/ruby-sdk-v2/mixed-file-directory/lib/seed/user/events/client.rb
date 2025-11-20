@@ -13,10 +13,9 @@ module Seed
 
         # List all user events.
         #
-        # @option params [Integer | nil] :limit
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
+        # @option params [Integer | nil] :limit
         #
         # @return [Array[Seed::User::Events::Types::Event]]
         def list_events(request_options: {}, **params)

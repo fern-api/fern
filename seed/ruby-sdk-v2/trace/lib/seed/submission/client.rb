@@ -12,10 +12,9 @@ module Seed
 
       # Returns sessionId and execution server URL for session. Spins up server.
       #
-      # @option params [Seed::Commons::Types::Language] :language
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::Commons::Types::Language] :language
       #
       # @return [Seed::Submission::Types::ExecutionSessionResponse]
       def create_execution_session(request_options: {}, **params)
@@ -40,10 +39,9 @@ module Seed
 
       # Returns execution server URL for session. Returns empty if session isn't registered.
       #
-      # @option params [String] :session_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :session_id
       #
       # @return [Seed::Submission::Types::ExecutionSessionResponse | nil]
       def get_execution_session(request_options: {}, **params)
@@ -66,10 +64,9 @@ module Seed
 
       # Stops execution session.
       #
-      # @option params [String] :session_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :session_id
       #
       # @return [untyped]
       def stop_execution_session(request_options: {}, **params)

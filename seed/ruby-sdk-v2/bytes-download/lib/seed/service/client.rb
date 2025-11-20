@@ -32,10 +32,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @option params [String] :id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :id
       #
       # @return [untyped]
       def download(request_options: {}, **params)

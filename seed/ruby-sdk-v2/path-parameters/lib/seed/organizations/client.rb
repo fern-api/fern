@@ -10,11 +10,10 @@ module Seed
         @client = client
       end
 
-      # @option params [String] :tenant_id
-      # @option params [String] :organization_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :tenant_id
+      # @option params [String] :organization_id
       #
       # @return [Seed::Organizations::Types::Organization]
       def get_organization(request_options: {}, **params)
@@ -37,12 +36,11 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [String] :tenant_id
       # @option params [String] :organization_id
       # @option params [String] :user_id
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::User::Types::User]
       def get_organization_user(request_options: {}, **params)
@@ -65,12 +63,11 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [String] :tenant_id
       # @option params [String] :organization_id
       # @option params [Integer | nil] :limit
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::Organizations::Types::Organization]]
       def search_organizations(request_options: {}, **params)

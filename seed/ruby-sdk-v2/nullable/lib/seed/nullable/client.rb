@@ -10,14 +10,13 @@ module Seed
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [String | nil] :usernames
       # @option params [String | nil] :avatar
       # @option params [bool | nil] :activated
       # @option params [String | nil | nil] :tags
       # @option params [bool | nil | nil] :extra
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::Nullable::Types::User]]
       def get_users(request_options: {}, **params)

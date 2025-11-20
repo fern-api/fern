@@ -10,10 +10,9 @@ module Seed
         @client = client
       end
 
-      # @option params [String | nil] :starting_after
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String | nil] :starting_after
       #
       # @return [Seed::Types::UsernameCursor]
       def list_usernames_custom(request_options: {}, **params)

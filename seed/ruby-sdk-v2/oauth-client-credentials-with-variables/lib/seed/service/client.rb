@@ -10,10 +10,9 @@ module Seed
         @client = client
       end
 
-      # @option params [String] :endpoint_param
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :endpoint_param
       #
       # @return [untyped]
       def post(request_options: {}, **params)

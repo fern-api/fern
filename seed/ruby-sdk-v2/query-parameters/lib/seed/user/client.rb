@@ -10,6 +10,8 @@ module Seed
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [Integer] :limit
       # @option params [String] :id
       # @option params [String] :date
@@ -24,9 +26,6 @@ module Seed
       # @option params [Seed::User::Types::User | nil] :optional_user
       # @option params [Seed::User::Types::User] :exclude_user
       # @option params [String] :filter
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::User::Types::User]
       def get_username(request_options: {}, **params)

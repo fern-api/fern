@@ -13,10 +13,9 @@ module Seed
 
         # GET with path param
         #
-        # @option params [String] :param
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :param
         #
         # @return [String]
         def get_with_path(request_options: {}, **params)
@@ -39,10 +38,9 @@ module Seed
 
         # GET with path param
         #
-        # @option params [String] :param
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :param
         #
         # @return [String]
         def get_with_inline_path(request_options: {}, **params)
@@ -65,11 +63,10 @@ module Seed
 
         # GET with query param
         #
-        # @option params [String] :query
-        # @option params [Integer] :number
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :query
+        # @option params [Integer] :number
         #
         # @return [untyped]
         def get_with_query(request_options: {}, **params)
@@ -100,11 +97,10 @@ module Seed
 
         # GET with multiple of same query param
         #
-        # @option params [String] :query
-        # @option params [Integer] :number
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :query
+        # @option params [Integer] :number
         #
         # @return [untyped]
         def get_with_allow_multiple_query(request_options: {}, **params)
@@ -135,11 +131,10 @@ module Seed
 
         # GET with path and query params
         #
-        # @option params [String] :param
-        # @option params [String] :query
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :param
+        # @option params [String] :query
         #
         # @return [untyped]
         def get_with_path_and_query(request_options: {}, **params)
@@ -169,11 +164,10 @@ module Seed
 
         # GET with path and query params
         #
-        # @option params [String] :param
-        # @option params [String] :query
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :param
+        # @option params [String] :query
         #
         # @return [untyped]
         def get_with_inline_path_and_query(request_options: {}, **params)
@@ -203,10 +197,9 @@ module Seed
 
         # PUT to update with path param
         #
-        # @option params [String] :param
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :param
         #
         # @return [String]
         def modify_with_path(request_options: {}, **params)
@@ -230,10 +223,9 @@ module Seed
 
         # PUT to update with path param
         #
-        # @option params [String] :param
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :param
         #
         # @return [String]
         def modify_with_inline_path(request_options: {}, **params)

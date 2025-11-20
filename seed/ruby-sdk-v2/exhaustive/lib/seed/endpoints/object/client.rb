@@ -111,10 +111,9 @@ module Seed
           end
         end
 
-        # @option params [String] :string
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
+        # @option params [String] :string
         #
         # @return [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field(request_options: {}, **params)

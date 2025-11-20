@@ -10,10 +10,9 @@ module Seed
         @client = client
       end
 
-      # @option params [Seed::Types::Types::MovieId] :movie_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::Types::Types::MovieId] :movie_id
       #
       # @return [Seed::Types::Types::Movie]
       def get_movie(request_options: {}, **params)
@@ -61,12 +60,11 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [bool | nil] :shallow
       # @option params [String | nil] :tag
       # @option params [String] :x_api_version
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::Metadata]
       def get_metadata(request_options: {}, **params)

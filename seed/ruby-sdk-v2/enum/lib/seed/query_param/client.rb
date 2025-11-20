@@ -10,13 +10,12 @@ module Seed
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [Seed::Types::Operand] :operand
       # @option params [Seed::Types::Operand | nil] :maybe_operand
       # @option params [Seed::Types::ColorOrOperand] :operand_or_color
       # @option params [Seed::Types::ColorOrOperand | nil] :maybe_operand_or_color
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]
       def send_(request_options: {}, **params)
@@ -47,13 +46,12 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [Seed::Types::Operand] :operand
       # @option params [Seed::Types::Operand | nil] :maybe_operand
       # @option params [Seed::Types::ColorOrOperand] :operand_or_color
       # @option params [Seed::Types::ColorOrOperand | nil] :maybe_operand_or_color
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]
       def send_list(request_options: {}, **params)

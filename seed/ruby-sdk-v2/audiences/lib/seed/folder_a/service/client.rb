@@ -11,11 +11,10 @@ module Seed
           @client = client
         end
 
-        # @option params [String] :ids
-        # @option params [String] :tags
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :ids
+        # @option params [String] :tags
         #
         # @return [Seed::FolderA::Service::Types::Response]
         def get_direct_thread(request_options: {}, **params)

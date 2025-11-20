@@ -11,10 +11,9 @@ module Seed
           @client = client
         end
 
-        # @option params [String] :id
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :id
         #
         # @return [String]
         def test_get(request_options: {}, **params)
@@ -60,10 +59,9 @@ module Seed
           end
         end
 
-        # @option params [String] :id
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
+        # @option params [String] :id
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_put(request_options: {}, **params)
@@ -87,10 +85,9 @@ module Seed
           end
         end
 
-        # @option params [String] :id
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
+        # @option params [String] :id
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_patch(request_options: {}, **params)
@@ -114,10 +111,9 @@ module Seed
           end
         end
 
-        # @option params [String] :id
-        #
         # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :id
         #
         # @return [bool]
         def test_delete(request_options: {}, **params)
