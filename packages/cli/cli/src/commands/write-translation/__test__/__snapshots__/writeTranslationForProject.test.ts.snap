@@ -2,6 +2,7 @@
 
 exports[`writeTranslationForProject > should be idempotent - no changes when running again without modifications (stub mode) 1`] = `
 [
+  "Copying asset files...",
   "en (source) hash tracking summary: 0 processed, 4 skipped (4 total)",
   "✓ Successfully tracked en source language hashes (no directory created)",
   "de translation summary: 0 processed, 4 skipped (4 total)",

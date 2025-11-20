@@ -8,10 +8,10 @@ vi.mock("../translation-service", () => ({
 }));
 
 vi.mock("../yaml-processor", () => ({
-    translateYamlContent: vi.fn((content: string, stub: boolean) => {
+    translateYamlContent: vi.fn(({ yamlContent, stub }: { yamlContent: string; stub: boolean }) => {
         // In stub mode, add slugs to YAML content but don't translate
-        if (stub && content.includes("page:")) {
-            const lines = content.split("\n");
+        if (stub && yamlContent.includes("page:")) {
+            const lines = yamlContent.split("\n");
             const result = [];
             for (let i = 0; i < lines.length; i++) {
                 result.push(lines[i]);
@@ -25,7 +25,7 @@ vi.mock("../yaml-processor", () => ({
             }
             return Promise.resolve(result.join("\n"));
         }
-        return Promise.resolve(`[TRANSLATED] ${content}`);
+        return Promise.resolve(`[TRANSLATED] ${yamlContent}`);
     })
 }));
 

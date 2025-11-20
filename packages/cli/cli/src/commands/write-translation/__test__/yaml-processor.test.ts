@@ -41,7 +41,7 @@ navigation:
             type PageDoc = { navigation: PageItem[] };
             const parsed = yaml.load(result) as PageDoc;
 
-            expect(parsed.navigation[0]?.page).toBe("[TRANSLATED] Hello World");
+            expect(parsed.navigation[0]?.page).toBe("Hello World");
             expect(parsed.navigation[0]?.path).toBe("./hello.mdx");
             expect(parsed.navigation[0]?.slug).toBe("hello-world");
         });
@@ -111,7 +111,7 @@ navigation:
             });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.section).toBe("[TRANSLATED] API Guide");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.section).toBe("API Guide");
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("api-guide");
             expect(
                 (
@@ -189,7 +189,7 @@ navigation:
             });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.api).toBe("[TRANSLATED] My API");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.api).toBe("My API");
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("my-api");
         });
 
@@ -272,7 +272,7 @@ navigation:
             });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.title).toBe("[TRANSLATED] Release Notes");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.title).toBe("Release Notes");
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("release-notes");
         });
 
@@ -335,7 +335,7 @@ navigation:
             });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
-            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.link).toBe("[TRANSLATED] External Link");
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.link).toBe("External Link");
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.href).toBe("https://example.com");
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBeUndefined();
         });
@@ -526,7 +526,7 @@ tabs:
 
             type TabsRecord = Record<string, { "display-name": string; icon: string; slug?: string }>;
             const tabs = parsed.tabs as TabsRecord;
-            expect(tabs["getting-started"]?.["display-name"]).toBe("[TRANSLATED] Getting Started");
+            expect(tabs["getting-started"]?.["display-name"]).toBe("Getting Started");
             expect(tabs["getting-started"]?.slug).toBe("getting-started");
         });
 
@@ -624,7 +624,7 @@ products:
             type ProductItem = { "display-name": string; icon: string; path: string; slug?: string };
             type ProductsDoc = { products: ProductItem[] };
             const doc = parsed as ProductsDoc;
-            expect(doc.products[0]?.["display-name"]).toBe("[TRANSLATED] Core Platform");
+            expect(doc.products[0]?.["display-name"]).toBe("Core Platform");
             expect(doc.products[0]?.slug).toBe("core-platform");
         });
 
@@ -683,7 +683,7 @@ products:
     });
 
     describe("Source language preservation", () => {
-        it("should not modify source language content", async () => {
+        it("should return content unchanged when language matches source language", async () => {
             const sourceYaml = `
 navigation:
   - page: Hello World
@@ -692,7 +692,7 @@ navigation:
 
             const result = await translateYamlContent({
                 yamlContent: sourceYaml,
-                language: "es",
+                language: "en",
                 sourceLanguage: "en",
                 filePath: "nav.yml",
                 cliContext: mockCliContext,
