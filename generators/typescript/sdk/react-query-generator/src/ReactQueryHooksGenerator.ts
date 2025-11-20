@@ -195,11 +195,13 @@ export class ReactQueryHooksGenerator {
         exportsManager: ExportsManager;
         context: SdkContext;
     }): void {
-        importsManager.addImport("@tanstack/react-query", "useQuery");
-        importsManager.addImport("@tanstack/react-query", "UseQueryOptions");
-        importsManager.addImport("@tanstack/react-query", "UseQueryResult");
+        importsManager.addImport("@tanstack/react-query", {
+            namedImports: ["useQuery", "UseQueryOptions", "UseQueryResult"]
+        });
 
-        importsManager.addImport("react", "useContext");
+        importsManager.addImport("react", {
+            namedImports: ["useContext"]
+        });
 
         const hookCode = `
 export function ${hookName}(
@@ -240,11 +242,13 @@ export function ${hookName}(
         exportsManager: ExportsManager;
         context: SdkContext;
     }): void {
-        importsManager.addImport("@tanstack/react-query", "useSuspenseQuery");
-        importsManager.addImport("@tanstack/react-query", "UseSuspenseQueryOptions");
-        importsManager.addImport("@tanstack/react-query", "UseSuspenseQueryResult");
+        importsManager.addImport("@tanstack/react-query", {
+            namedImports: ["useSuspenseQuery", "UseSuspenseQueryOptions", "UseSuspenseQueryResult"]
+        });
 
-        importsManager.addImport("react", "useContext");
+        importsManager.addImport("react", {
+            namedImports: ["useContext"]
+        });
 
         const hookCode = `
 export function ${suspenseHookName}(
@@ -285,11 +289,13 @@ export function ${suspenseHookName}(
         exportsManager: ExportsManager;
         context: SdkContext;
     }): void {
-        importsManager.addImport("@tanstack/react-query", "useInfiniteQuery");
-        importsManager.addImport("@tanstack/react-query", "UseInfiniteQueryOptions");
-        importsManager.addImport("@tanstack/react-query", "UseInfiniteQueryResult");
+        importsManager.addImport("@tanstack/react-query", {
+            namedImports: ["useInfiniteQuery", "UseInfiniteQueryOptions", "UseInfiniteQueryResult"]
+        });
 
-        importsManager.addImport("react", "useContext");
+        importsManager.addImport("react", {
+            namedImports: ["useContext"]
+        });
 
         const hookCode = `
 export function ${infiniteHookName}(
@@ -331,11 +337,13 @@ export function ${infiniteHookName}(
         exportsManager: ExportsManager;
         context: SdkContext;
     }): void {
-        importsManager.addImport("@tanstack/react-query", "useMutation");
-        importsManager.addImport("@tanstack/react-query", "UseMutationOptions");
-        importsManager.addImport("@tanstack/react-query", "UseMutationResult");
+        importsManager.addImport("@tanstack/react-query", {
+            namedImports: ["useMutation", "UseMutationOptions", "UseMutationResult"]
+        });
 
-        importsManager.addImport("react", "useContext");
+        importsManager.addImport("react", {
+            namedImports: ["useContext"]
+        });
 
         const hookCode = `
 export function ${hookName}(
@@ -373,7 +381,9 @@ export function ${hookName}(
         exportsManager: ExportsManager;
         context: SdkContext;
     }): void {
-        importsManager.addImport("@tanstack/react-query", "QueryClient");
+        importsManager.addImport("@tanstack/react-query", {
+            namedImports: ["QueryClient"]
+        });
 
         const serviceName = this.getServiceName(service);
         const endpointName = this.getEndpointName(endpoint);
@@ -433,7 +443,9 @@ export function ${invalidateAllFunctionName}(
             return;
         }
 
-        importsManager.addImport("@tanstack/react-query", "QueryClient");
+        importsManager.addImport("@tanstack/react-query", {
+            namedImports: ["QueryClient"]
+        });
 
         const serviceName = this.getServiceName(service);
         const endpointName = this.getEndpointName(endpoint);

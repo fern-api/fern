@@ -6,40 +6,43 @@
     "url": "https://github.com/fern-api/fern.git",
     "directory": "generators/typescript/sdk/react-query-generator"
   },
-  "files": [
-    "lib"
-  ],
-  "type": "module",
-  "source": "src/index.ts",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
   "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "development": "./src/index.ts",
+      "source": "./src/index.ts",
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "main": "lib/index.js",
+  "source": "src/index.ts",
+  "types": "lib/index.d.ts",
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "test": "vitest --run",
-    "test:update": "vitest --run -u",
-    "lint:eslint": "eslint --max-warnings 0 . --ignore-path=../../../../.eslintignore",
-    "lint:eslint:fix": "yarn lint:eslint --fix",
-    "format": "prettier --write --ignore-unknown --ignore-path ../../../../.prettierignore \"**\"",
-    "format:check": "prettier --check --ignore-unknown --ignore-path ../../../../.prettierignore \"**\"",
-    "organize-imports": "organize-imports-cli tsconfig.json",
-    "depcheck": "depcheck"
+    "compile:debug": "tsc --build --sourceMap",
+    "depcheck": "depcheck",
+    "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
+    "test:update": "vitest --passWithNoTests --run -u"
   },
   "dependencies": {
     "@fern-fern/ir-sdk": "^61.7.0",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
-    "ts-morph": "^23.0.0"
+    "ts-morph": "^15.1.0"
   },
   "devDependencies": {
-    "@types/node": "^18.7.18",
-    "depcheck": "^1.4.6",
-    "organize-imports-cli": "^0.10.0",
-    "prettier": "^2.7.1",
-    "typescript": "4.6.4",
-    "vitest": "^2.0.5"
+    "@fern-api/configs": "workspace:*",
+    "@types/node": "18.15.3",
+    "depcheck": "^1.4.7",
+    "typescript": "5.9.3",
+    "vitest": "^4.0.8"
   },
   "publishConfig": {
     "access": "public"

@@ -28,8 +28,9 @@ export class ReactQueryProviderGenerator {
         file: SourceFile;
         importsManager: ImportsManager;
     }): void {
-        importsManager.addImport("react", "createContext");
-        importsManager.addImport("react", "ReactNode");
+        importsManager.addImport("react", {
+            namedImports: ["createContext", "ReactNode"]
+        });
 
         const providerName = `${this.namespaceExport}Provider`;
         const contextName = "SdkClientContext";
