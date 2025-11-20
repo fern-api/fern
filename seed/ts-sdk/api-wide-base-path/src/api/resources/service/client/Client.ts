@@ -22,6 +22,7 @@ export class ServiceClient {
     /**
      * @param {string} serviceParam
      * @param {number} endpointParam
+     * @param {string} resourceParam
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -30,6 +31,7 @@ export class ServiceClient {
     public post(
         serviceParam: string,
         endpointParam: number,
+        resourceParam: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
@@ -40,6 +42,7 @@ export class ServiceClient {
     private async __post(
         serviceParam: string,
         endpointParam: number,
+        resourceParam: string,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

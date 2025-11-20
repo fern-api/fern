@@ -3,11 +3,16 @@
 module Seed
   module Service
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Service::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Service::Types::Response]
       def get_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -30,6 +35,9 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Service::Types::Response]
       def get_movie_docs(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -52,6 +60,9 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Types::StringResponse]
       def get_movie_name(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -74,6 +85,9 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Service::Types::Response]
       def get_movie_metadata(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -96,6 +110,9 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Service::Types::Response | nil]
       def get_optional_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -116,6 +133,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Service::Types::WithDocs | nil]
       def get_optional_movie_docs(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -138,6 +158,9 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Types::StringResponse | nil]
       def get_optional_movie_name(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

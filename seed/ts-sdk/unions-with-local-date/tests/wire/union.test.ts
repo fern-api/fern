@@ -3,10 +3,10 @@
 import { SeedUnionsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Union", () => {
+describe("UnionClient", () => {
     test("get", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnionsClient({ environment: server.baseUrl });
+        const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { type: "circle", id: "id", name: "name", radius: 1.1 };
         server.mockEndpoint().get("/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
@@ -22,7 +22,7 @@ describe("Union", () => {
 
     test("update", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedUnionsClient({ environment: server.baseUrl });
+        const client = new SeedUnionsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { type: "circle", id: "id", name: "name", radius: 1.1 };
         const rawResponseBody = true;
         server

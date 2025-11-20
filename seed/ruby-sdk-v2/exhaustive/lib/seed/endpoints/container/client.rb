@@ -4,11 +4,16 @@ module Seed
   module Endpoints
     module Container
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::Endpoints::Container::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Array[String]]
         def get_and_return_list_of_primitives(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -29,6 +34,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_list_of_objects(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -49,6 +57,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Array[String]]
         def get_and_return_set_of_primitives(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -69,6 +80,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_set_of_objects(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -89,6 +103,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Hash[String, String]]
         def get_and_return_map_prim_to_prim(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -109,6 +126,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_map_of_prim_to_object(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -129,6 +149,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithRequiredField | nil]
         def get_and_return_optional(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(

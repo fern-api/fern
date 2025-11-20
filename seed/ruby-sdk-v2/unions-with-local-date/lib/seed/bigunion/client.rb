@@ -3,11 +3,17 @@
 module Seed
   module Bigunion
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Bigunion::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [String] :id
+      #
       # @return [Seed::Bigunion::Types::BigUnion]
       def get(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -29,6 +35,9 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Seed::Bigunion::Types::BigUnion]
+      #
       # @return [bool]
       def update(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -49,6 +58,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Hash[String, bool]]
       def update_many(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

@@ -34,6 +34,11 @@
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u"
   },
+  "dependencies": {
+    "@boundaryml/baml": "^0.211.2",
+    "@types/minimatch": "^6.0.0",
+    "minimatch": "^10.1.1"
+  },
   "devDependencies": {
     "@fern-api/api-workspace-commons": "workspace:*",
     "@fern-api/configs": "workspace:*",
@@ -61,7 +66,7 @@
     "console-table-printer": "^2.12.0",
     "depcheck": "^1.4.7",
     "find-up": "^6.3.0",
-    "js-yaml": "^4.1.0",
+    "js-yaml": "^4.1.1",
     "lodash-es": "^4.17.21",
     "moment": "^2.30.1",
     "pretty-ms": "^9.0.0",

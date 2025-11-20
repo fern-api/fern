@@ -97,8 +97,16 @@ export async function generateDocsWorkspace({
             excludeRules: getExcludeRules(brokenLinks, strictBrokenLinks, isRunningOnSelfHosted)
         });
 
-        const ossWorkspaces = await filterOssWorkspaces(project);
+        context.logger.info("Validation complete, starting remote docs generation...");
 
+        const filterStart = performance.now();
+        const ossWorkspaces = await filterOssWorkspaces(project);
+        const filterTime = performance.now() - filterStart;
+        context.logger.debug(
+            `Filtered OSS workspaces (${ossWorkspaces.length} workspaces) in ${filterTime.toFixed(0)}ms`
+        );
+
+        const generationStart = performance.now();
         await runRemoteGenerationForDocsWorkspace({
             organization: project.config.organization,
             apiWorkspaces: project.apiWorkspaces,
@@ -111,6 +119,8 @@ export async function generateDocsWorkspace({
             disableTemplates,
             skipUpload
         });
+        const generationTime = performance.now() - generationStart;
+        context.logger.debug(`Remote docs generation completed in ${generationTime.toFixed(0)}ms`);
     });
 }
 

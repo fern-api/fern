@@ -1,0 +1,20 @@
+{
+  "cliVersion": "DUMMY",
+  "generatorName": "fernapi/fern-rust-sdk",
+  "generatorVersion": "latest",
+  "generatorConfig": {
+    "clientName": "ImdbClient",
+    "features": {
+      "experimental": [
+        "reqwest/blocking",
+        "tokio/process"
+      ],
+      "advanced": [
+        "sse"
+      ]
+    },
+    "defaultFeatures": [
+      "experimental"
+    ]
+  }
+}

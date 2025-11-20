@@ -9,8 +9,7 @@ pub struct GetPlaylistsQueryRequest {
     #[serde(rename = "multiLineDocs")]
     pub multi_line_docs: String,
     #[serde(rename = "optionalMultipleField")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_multiple_field: Option<String>,
+    pub optional_multiple_field: Vec<Option<String>>,
     #[serde(rename = "multipleField")]
-    pub multiple_field: String,
+    pub multiple_field: Vec<String>,
 }

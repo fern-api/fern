@@ -4,11 +4,16 @@ module Seed
   module Endpoints
     module ContentType
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::Endpoints::ContentType::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
+        #
         # @return [untyped]
         def post_json_patch_content_type(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -29,6 +34,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
+        #
         # @return [untyped]
         def post_json_patch_content_with_charset_type(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(

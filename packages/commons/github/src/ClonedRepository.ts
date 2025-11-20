@@ -76,6 +76,12 @@ export class ClonedRepository {
         });
     }
 
+    public async commitAllChanges(message?: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.add(".");
+        await this.commit(message);
+    }
+
     public async checkout(branch: string): Promise<void> {
         await this.git.cwd(this.clonePath);
         try {

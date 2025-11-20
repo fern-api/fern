@@ -52,7 +52,6 @@ export class ProblemClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
@@ -127,7 +126,6 @@ export class ProblemClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
@@ -205,7 +203,6 @@ export class ProblemClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
@@ -288,7 +285,6 @@ export class ProblemClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
                 "X-Random-Header": requestOptions?.xRandomHeader ?? this._options?.xRandomHeader,
             }),
             requestOptions?.headers,
@@ -335,14 +331,5 @@ export class ProblemClient {
             },
             rawResponse: _response.rawResponse,
         };
-    }
-
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer = await core.Supplier.get(this._options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
     }
 }

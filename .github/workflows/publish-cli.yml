@@ -20,8 +20,29 @@ on:
         type: string
 
 jobs:
-  dev:
+  detect-release-bump:
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
+    runs-on: ubuntu-latest
+    outputs:
+      is_release_bump: ${{ steps.check_versions_yml.outputs.is_release_bump }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check if versions.yml changed
+        id: check_versions_yml
+        run: |
+          if git diff --name-only HEAD~1..HEAD | grep -q '^packages/cli/cli/versions.yml$'; then
+            echo "is_release_bump=true" >> $GITHUB_OUTPUT
+          else
+            echo "is_release_bump=false" >> $GITHUB_OUTPUT
+          fi
+
+  dev:
+    needs: [detect-release-bump]
+    if: ${{ inputs.version == null && github.repository == 'fern-api/fern' && needs.detect-release-bump.outputs.is_release_bump == 'false' }}
     runs-on: ubuntu-latest
     env:
       NPM_TOKEN: ${{ secrets.FERN_NPM_TOKEN }}
@@ -118,6 +139,11 @@ jobs:
 
           # Proceed with publishing
           echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          
+          # Publish dev CLI at the same version as prod
+          pnpm seed publish cli --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug --dev
+          
+          # Publish prod CLI
           pnpm seed publish cli --changelog packages/cli/cli/versions.yml --previous-changelog tmp_cli_previous_versions.yml --log-level debug
           pnpm seed register cli
 
@@ -141,6 +167,11 @@ jobs:
       - name: Build Seed
         run: |
           pnpm seed:build
+
+      - name: Publish Dev CLI
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+          pnpm seed publish cli --ver ${{ inputs.version }} --dev --log-level debug
 
       - name: Publish + Register CLI
         env:

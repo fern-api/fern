@@ -72,6 +72,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             return this.newRootClientFile(class_);
         }
 
+        const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
+
         class_.addField(
             php.field({
                 name: `$${this.context.getClientOptionsName()}`,
@@ -80,6 +82,16 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             })
         );
         class_.addField(this.context.rawClient.getField());
+
+        if (isMultiUrl) {
+            class_.addField(
+                php.field({
+                    name: "$environment",
+                    access: "private",
+                    type: php.Type.reference(this.context.getEnvironmentsClassReference())
+                })
+            );
+        }
 
         const subpackages = this.getRootSubpackages();
         const constructorParameters = this.getConstructorParameters();
@@ -121,6 +133,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         constructorParameters: ConstructorParameters;
         subpackages: Subpackage[];
     }): php.Class.Constructor {
+        const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
+        const hasDefaultEnvironment = this.context.ir.environments?.defaultEnvironment != null;
+
         const parameters: php.Parameter[] = [];
         for (const param of [...constructorParameters.required, ...constructorParameters.optional]) {
             parameters.push(
@@ -137,6 +152,21 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     name: param.name,
                     type: this.getLiteralRootClientParameterType({ literal: param.value }),
                     docs: param.docs
+                })
+            );
+        }
+
+        if (isMultiUrl) {
+            const environmentType = hasDefaultEnvironment
+                ? php.Type.optional(php.Type.reference(this.context.getEnvironmentsClassReference()))
+                : php.Type.reference(this.context.getEnvironmentsClassReference());
+
+            parameters.push(
+                php.parameter({
+                    name: "environment",
+                    type: environmentType,
+                    initializer: hasDefaultEnvironment ? php.codeblock("null") : undefined,
+                    docs: "The environment to use for API requests."
                 })
             );
         }
@@ -301,6 +331,33 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 );
                 writer.writeLine();
 
+                if (isMultiUrl && hasDefaultEnvironment) {
+                    const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
+                    if (defaultEnvironmentId != null) {
+                        const environmentName = this.context.ir.environments?.environments._visit({
+                            multipleBaseUrls: (value) => {
+                                return value.environments.find((env) => env.id === defaultEnvironmentId)?.name;
+                            },
+                            singleBaseUrl: () => undefined,
+                            _other: () => undefined
+                        });
+                        if (environmentName != null) {
+                            writer.write("$environment ??= ");
+                            writer.writeNodeStatement(
+                                php.codeblock((writer) => {
+                                    writer.writeNode(this.context.getEnvironmentsClassReference());
+                                    writer.write(`::${this.context.getEnvironmentName(environmentName)}()`);
+                                })
+                            );
+                        }
+                    }
+                }
+
+                if (isMultiUrl) {
+                    writer.writeTextStatement("$this->environment = $environment");
+                }
+                writer.writeLine();
+
                 writer.write("$this->client = ");
                 writer.writeNodeStatement(
                     this.context.rawClient.instantiate({
@@ -322,13 +379,27 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
                 for (const subpackage of subpackages) {
                     writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
+
+                    const subClientArgs: php.AstNode[] = [
+                        php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)
+                    ];
+
+                    if (isMultiUrl && subpackage.service != null) {
+                        const service = this.context.getHttpServiceOrThrow(subpackage.service);
+                        const firstEndpoint = service.endpoints[0];
+                        if (firstEndpoint?.baseUrl != null) {
+                            subClientArgs.push(php.codeblock(`$this->environment`));
+                        } else {
+                            subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
+                        }
+                    } else {
+                        subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
+                    }
+
                     writer.writeNodeStatement(
                         php.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
-                            arguments_: [
-                                php.codeblock(`$this->${this.context.rawClient.getFieldName()}`),
-                                php.codeblock(`$this->${this.context.getClientOptionsName()}`)
-                            ]
+                            arguments_: subClientArgs
                         })
                     );
                 }

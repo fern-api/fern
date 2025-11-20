@@ -14,7 +14,9 @@ import com.seed.fileUpload.resources.service.requests.OptionalArgsRequest;
 import com.seed.fileUpload.resources.service.requests.WithContentTypeRequest;
 import com.seed.fileUpload.resources.service.requests.WithFormEncodingRequest;
 import java.io.File;
+import java.io.InputStream;
 import java.util.Optional;
+import okhttp3.MediaType;
 
 public class ServiceClient {
     protected final ClientOptions clientOptions;
@@ -58,6 +60,22 @@ public class ServiceClient {
         this.rawClient.justFile(file, request, requestOptions).body();
     }
 
+    public void justFile(InputStream stream, String filename) {
+        this.rawClient.justFile(stream, filename).body();
+    }
+
+    public void justFile(InputStream stream, String filename, MediaType mediaType) {
+        this.rawClient.justFile(stream, filename, mediaType).body();
+    }
+
+    public void justFile(InputStream stream, String filename, RequestOptions requestOptions) {
+        this.rawClient.justFile(stream, filename, requestOptions).body();
+    }
+
+    public void justFile(InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        this.rawClient.justFile(stream, filename, mediaType, requestOptions).body();
+    }
+
     public void justFileWithQueryParams(File file, JustFileWithQueryParamsRequest request) {
         this.rawClient.justFileWithQueryParams(file, request).body();
     }
@@ -65,6 +83,25 @@ public class ServiceClient {
     public void justFileWithQueryParams(
             File file, JustFileWithQueryParamsRequest request, RequestOptions requestOptions) {
         this.rawClient.justFileWithQueryParams(file, request, requestOptions).body();
+    }
+
+    public void justFileWithQueryParams(InputStream stream, String filename) {
+        this.rawClient.justFileWithQueryParams(stream, filename).body();
+    }
+
+    public void justFileWithQueryParams(InputStream stream, String filename, MediaType mediaType) {
+        this.rawClient.justFileWithQueryParams(stream, filename, mediaType).body();
+    }
+
+    public void justFileWithQueryParams(InputStream stream, String filename, RequestOptions requestOptions) {
+        this.rawClient.justFileWithQueryParams(stream, filename, requestOptions).body();
+    }
+
+    public void justFileWithQueryParams(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        this.rawClient
+                .justFileWithQueryParams(stream, filename, mediaType, requestOptions)
+                .body();
     }
 
     public void withContentType(File file, WithContentTypeRequest request) {
@@ -75,12 +112,50 @@ public class ServiceClient {
         this.rawClient.withContentType(file, request, requestOptions).body();
     }
 
+    public void withContentType(InputStream stream, String filename) {
+        this.rawClient.withContentType(stream, filename).body();
+    }
+
+    public void withContentType(InputStream stream, String filename, MediaType mediaType) {
+        this.rawClient.withContentType(stream, filename, mediaType).body();
+    }
+
+    public void withContentType(InputStream stream, String filename, RequestOptions requestOptions) {
+        this.rawClient.withContentType(stream, filename, requestOptions).body();
+    }
+
+    public void withContentType(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        this.rawClient
+                .withContentType(stream, filename, mediaType, requestOptions)
+                .body();
+    }
+
     public void withFormEncoding(File file, WithFormEncodingRequest request) {
         this.rawClient.withFormEncoding(file, request).body();
     }
 
     public void withFormEncoding(File file, WithFormEncodingRequest request, RequestOptions requestOptions) {
         this.rawClient.withFormEncoding(file, request, requestOptions).body();
+    }
+
+    public void withFormEncoding(InputStream stream, String filename) {
+        this.rawClient.withFormEncoding(stream, filename).body();
+    }
+
+    public void withFormEncoding(InputStream stream, String filename, MediaType mediaType) {
+        this.rawClient.withFormEncoding(stream, filename, mediaType).body();
+    }
+
+    public void withFormEncoding(InputStream stream, String filename, RequestOptions requestOptions) {
+        this.rawClient.withFormEncoding(stream, filename, requestOptions).body();
+    }
+
+    public void withFormEncoding(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        this.rawClient
+                .withFormEncoding(stream, filename, mediaType, requestOptions)
+                .body();
     }
 
     public void withFormEncodedContainers(
@@ -114,12 +189,59 @@ public class ServiceClient {
         return this.rawClient.optionalArgs(imageFile, request, requestOptions).body();
     }
 
+    public String optionalArgs(Optional<File> imageFile, InputStream stream, String filename) {
+        return this.rawClient.optionalArgs(imageFile, stream, filename).body();
+    }
+
+    public String optionalArgs(Optional<File> imageFile, InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient
+                .optionalArgs(imageFile, stream, filename, mediaType)
+                .body();
+    }
+
+    public String optionalArgs(
+            Optional<File> imageFile, InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient
+                .optionalArgs(imageFile, stream, filename, requestOptions)
+                .body();
+    }
+
+    public String optionalArgs(
+            Optional<File> imageFile,
+            InputStream stream,
+            String filename,
+            MediaType mediaType,
+            RequestOptions requestOptions) {
+        return this.rawClient
+                .optionalArgs(imageFile, stream, filename, mediaType, requestOptions)
+                .body();
+    }
+
     public String withInlineType(File file, InlineTypeRequest request) {
         return this.rawClient.withInlineType(file, request).body();
     }
 
     public String withInlineType(File file, InlineTypeRequest request, RequestOptions requestOptions) {
         return this.rawClient.withInlineType(file, request, requestOptions).body();
+    }
+
+    public String withInlineType(InputStream stream, String filename) {
+        return this.rawClient.withInlineType(stream, filename).body();
+    }
+
+    public String withInlineType(InputStream stream, String filename, MediaType mediaType) {
+        return this.rawClient.withInlineType(stream, filename, mediaType).body();
+    }
+
+    public String withInlineType(InputStream stream, String filename, RequestOptions requestOptions) {
+        return this.rawClient.withInlineType(stream, filename, requestOptions).body();
+    }
+
+    public String withInlineType(
+            InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions) {
+        return this.rawClient
+                .withInlineType(stream, filename, mediaType, requestOptions)
+                .body();
     }
 
     public void simple() {

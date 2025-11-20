@@ -567,6 +567,12 @@ export class SdkWireTestGenerator {
     }
 
     private shouldBuildTest(endpoint: HttpEndpoint): boolean {
+        // Skip endpoints with custom pagination
+        if (endpoint.pagination?.type === "custom") {
+            this.context.logger.debug(`Skipping custom pagination endpoint: ${endpoint.id}`);
+            return false;
+        }
+
         if (this.context.ir.auth?.schemes?.some((scheme) => scheme.type === "oauth") && endpoint.auth) {
             this.context.logger.debug(`Skipping OAuth endpoint: ${endpoint.id}`);
             return false;

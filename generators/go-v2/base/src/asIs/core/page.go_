@@ -3,6 +3,7 @@ package core
 import (
 	"context"
 	"errors"
+	"net/http"
 )
 
 // ErrNoPages is a sentinel error used to signal that no pages remain.
@@ -20,35 +21,44 @@ type PageRequest[Cursor comparable] struct {
 }
 
 // PageResponse represents the information associated with a single page.
-type PageResponse[Cursor comparable, Result any] struct {
-	Results []Result
-	Next    Cursor
-	Done    bool
+//
+// Type parameters:
+//   - Cursor: the type used for pagination (e.g., string cursor or integer offset)
+//   - T: the type of individual items in the page
+//   - R: the response type returned by the paginated endpoint
+type PageResponse[Cursor comparable, T any, R any] struct {
+	Results  []T
+	Response R
+	Next     Cursor
+	Done     bool
 }
 
 // Page represents a single page of results.
-type Page[Cursor comparable, T any] struct {
+type Page[Cursor comparable, T any, R any] struct {
 	Results      []T
-	RawResponse  PageResponse[Cursor, T]
-	NextPageFunc func(context.Context) (*Page[Cursor, T], error)
+	Response     R
+	RawResponse  PageResponse[Cursor, T, R]
+	StatusCode   int
+	Header       http.Header
+	NextPageFunc func(context.Context) (*Page[Cursor, T, R], error)
 }
 
 // GetNextPage fetches the next page, if any. If no pages remain,
 // the ErrNoPages error is returned.
-func (p *Page[Cursor, T]) GetNextPage(ctx context.Context) (*Page[Cursor, T], error) {
+func (p *Page[Cursor, T, R]) GetNextPage(ctx context.Context) (*Page[Cursor, T, R], error) {
 	return p.NextPageFunc(ctx)
 }
 
 // Iterator returns an iterator that starts at the current page.
-func (p *Page[Cursor, T]) Iterator() *PageIterator[Cursor, T] {
-	return &PageIterator[Cursor, T]{
+func (p *Page[Cursor, T, R]) Iterator() *PageIterator[Cursor, T, R] {
+	return &PageIterator[Cursor, T, R]{
 		page: p,
 	}
 }
 
 // PageIterator is an auto-iterator for paginated endpoints.
-type PageIterator[Cursor comparable, T any] struct {
-	page    *Page[Cursor, T]
+type PageIterator[Cursor comparable, T any, R any] struct {
+	page    *Page[Cursor, T, R]
 	current T
 	index   int
 	err     error
@@ -56,7 +66,7 @@ type PageIterator[Cursor comparable, T any] struct {
 
 // Next returns true if the given iterator has more results,
 // fetching the next page as needed.
-func (p *PageIterator[Cursor, T]) Next(ctx context.Context) bool {
+func (p *PageIterator[Cursor, T, R]) Next(ctx context.Context) bool {
 	if p.page == nil || len(p.page.Results) == 0 {
 		return false
 	}
@@ -73,12 +83,12 @@ func (p *PageIterator[Cursor, T]) Next(ctx context.Context) bool {
 }
 
 // Current returns the current element.
-func (p *PageIterator[Cursor, T]) Current() T {
+func (p *PageIterator[Cursor, T, R]) Current() T {
 	return p.current
 }
 
 // Err returns a non-nil error if the iterator encountered an error.
-func (p *PageIterator[Cursor, T]) Err() error {
+func (p *PageIterator[Cursor, T, R]) Err() error {
 	if errors.Is(p.err, ErrNoPages) {
 		return nil
 	}

@@ -51,7 +51,15 @@ async fn main() {
         ..Default::default()
     };
     let client = EnumClient::new(config).expect("Failed to build client");
-    client.headers.send(None).await;
+    client
+        .headers
+        .send(Some(
+            RequestOptions::new()
+                .additional_header("operand", Operand::GreaterThan)
+                .additional_header("maybeOperand", Some(Operand::GreaterThan))
+                .additional_header("operandOrColor", ColorOrOperand::Color(Color::Red)),
+        ))
+        .await;
 }
 ```
 
