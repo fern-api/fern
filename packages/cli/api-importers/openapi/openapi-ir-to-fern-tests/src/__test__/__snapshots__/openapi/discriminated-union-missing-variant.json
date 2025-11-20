@@ -61,10 +61,19 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "connector_type": "literal<"AWS">",
+              "connector_type": "ApiAwsDeploymentMetadataConnectorType",
               "region": "string",
               "vpc_id": "string",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ApiAwsDeploymentMetadataConnectorType": {
+            "enum": [
+              "AWS",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -73,10 +82,19 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "connector_type": "literal<"AZURE">",
+              "connector_type": "ApiAzureDeploymentMetadataConnectorType",
               "resource_group": "string",
               "subscription_id": "string",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ApiAzureDeploymentMetadataConnectorType": {
+            "enum": [
+              "AZURE",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -86,9 +104,18 @@
             "inline": undefined,
             "properties": {
               "account_id": "string",
-              "compute_type": "literal<"AWS">",
+              "compute_type": "ApiComputeConnectorPropertiesAwsComputeType",
               "credentials_secret_arn": "string",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ApiComputeConnectorPropertiesAwsComputeType": {
+            "enum": [
+              "AWS",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -97,10 +124,19 @@
             "docs": undefined,
             "inline": undefined,
             "properties": {
-              "compute_type": "literal<"AZURE">",
+              "compute_type": "ApiComputeConnectorPropertiesAzureComputeType",
               "resource_group": "string",
               "subscription_id": "string",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ApiComputeConnectorPropertiesAzureComputeType": {
+            "enum": [
+              "AZURE",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -179,30 +215,54 @@
   source:
     openapi: ../openapi.yml
 types:
+  ApiComputeConnectorPropertiesAwsComputeType:
+    enum:
+      - AWS
+    inline: true
+    source:
+      openapi: ../openapi.yml
   ApiComputeConnectorPropertiesAws:
     properties:
-      compute_type: literal<"AWS">
+      compute_type: ApiComputeConnectorPropertiesAwsComputeType
       credentials_secret_arn: string
       account_id: string
     source:
       openapi: ../openapi.yml
+  ApiComputeConnectorPropertiesAzureComputeType:
+    enum:
+      - AZURE
+    inline: true
+    source:
+      openapi: ../openapi.yml
   ApiComputeConnectorPropertiesAzure:
     properties:
-      compute_type: literal<"AZURE">
+      compute_type: ApiComputeConnectorPropertiesAzureComputeType
       subscription_id: string
       resource_group: string
     source:
       openapi: ../openapi.yml
+  ApiAwsDeploymentMetadataConnectorType:
+    enum:
+      - AWS
+    inline: true
+    source:
+      openapi: ../openapi.yml
   ApiAwsDeploymentMetadata:
     properties:
-      connector_type: literal<"AWS">
+      connector_type: ApiAwsDeploymentMetadataConnectorType
       region: string
       vpc_id: string
     source:
       openapi: ../openapi.yml
+  ApiAzureDeploymentMetadataConnectorType:
+    enum:
+      - AZURE
+    inline: true
+    source:
+      openapi: ../openapi.yml
   ApiAzureDeploymentMetadata:
     properties:
-      connector_type: literal<"AZURE">
+      connector_type: ApiAzureDeploymentMetadataConnectorType
       subscription_id: string
       resource_group: string
     source:

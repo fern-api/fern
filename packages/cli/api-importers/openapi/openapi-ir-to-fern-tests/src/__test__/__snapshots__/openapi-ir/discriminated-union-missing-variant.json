@@ -171,13 +171,20 @@
             "generatedName": "apiComputeConnectorPropertiesAwsComputeType",
             "key": "compute_type",
             "schema": {
-              "value": {
-                "value": "AWS",
-                "type": "string"
-              },
               "generatedName": "ApiComputeConnectorPropertiesAwsComputeType",
+              "values": [
+                {
+                  "generatedName": "AWS",
+                  "value": "AWS",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },
@@ -228,13 +235,20 @@
             "generatedName": "apiComputeConnectorPropertiesAzureComputeType",
             "key": "compute_type",
             "schema": {
-              "value": {
-                "value": "AZURE",
-                "type": "string"
-              },
               "generatedName": "ApiComputeConnectorPropertiesAzureComputeType",
+              "values": [
+                {
+                  "generatedName": "AZURE",
+                  "value": "AZURE",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },
@@ -285,13 +299,20 @@
             "generatedName": "apiAwsDeploymentMetadataConnectorType",
             "key": "connector_type",
             "schema": {
-              "value": {
-                "value": "AWS",
-                "type": "string"
-              },
               "generatedName": "ApiAwsDeploymentMetadataConnectorType",
+              "values": [
+                {
+                  "generatedName": "AWS",
+                  "value": "AWS",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },
@@ -342,13 +363,20 @@
             "generatedName": "apiAzureDeploymentMetadataConnectorType",
             "key": "connector_type",
             "schema": {
-              "value": {
-                "value": "AZURE",
-                "type": "string"
-              },
               "generatedName": "ApiAzureDeploymentMetadataConnectorType",
+              "values": [
+                {
+                  "generatedName": "AZURE",
+                  "value": "AZURE",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },
