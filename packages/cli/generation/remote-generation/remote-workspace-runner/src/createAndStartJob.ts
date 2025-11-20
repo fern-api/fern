@@ -220,9 +220,11 @@ async function createJob({
             },
             illegalApiVersionError: (details) => {
                 const remote = details?.message && details.message.trim() ? ` – ${details.message.trim()}` : "";
-                const patchHint = /^\d+\.\d+$/.test(version) ? ` Did you mean "${version}.0"?` : "";
+                const provided = typeof version === "string" ? version : undefined;
+                const patchHint = provided && /^\d+\.\d+$/.test(provided) ? ` Did you mean "${provided}.0"?` : "";
+                const label = provided ? ` "${provided}"` : "";
                 return context.failAndThrow(
-                    `Invalid generator version "${version}". Versions must use SemVer MAJOR.MINOR.PATCH (e.g., 0.31.0).${patchHint}${remote}`
+                    `Invalid version${label}. Versions must use SemVer MAJOR.MINOR.PATCH (e.g., 0.31.0).${patchHint}${remote}`
                 );
             },
             cannotPublishToNpmScope: ({ validScope, invalidScope }) => {
