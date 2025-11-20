@@ -382,7 +382,7 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                 @Override
                 public TypeName visitBytes(BytesResponse bytesResponse) {
-                    throw new RuntimeException("Returning bytes is not supported.");
+                    return ArrayTypeName.of(byte.class);
                 }
 
                 @Override
@@ -497,7 +497,8 @@ public abstract class AbstractHttpResponseParserGenerator {
 
                 @Override
                 public Void visitBytes(BytesResponse bytesResponse) {
-                    throw new RuntimeException("Returning bytes is not supported.");
+                    addTryWithResourcesVariant(httpResponseBuilder);
+                    return null;
                 }
 
                 @Override
@@ -746,7 +747,14 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitBytes(BytesResponse bytesResponse) {
-            throw new RuntimeException("Returning bytes is not supported.");
+            endpointMethodBuilder.returns(ArrayTypeName.of(byte.class));
+            handleSuccessfulResult(
+                    httpResponseBuilder,
+                    CodeBlock.of(
+                            "$L != null ? $L.bytes() : new byte[0]",
+                            variables.getResponseBodyName(),
+                            variables.getResponseBodyName()));
+            return null;
         }
 
         @Override
