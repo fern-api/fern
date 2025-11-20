@@ -299,6 +299,10 @@ export class InferredAuthProviderGenerator extends FileGenerator<
             requestName = this.endpoint.name.pascalCase.safeName;
         }
         
-        return `\\${serviceLocation.namespace}\\Requests\\${requestName}Request`;
+        if (!requestName.endsWith("Request")) {
+            requestName += "Request";
+        }
+        
+        return `\\${serviceLocation.namespace}\\Requests\\${requestName}`;
     }
 }
