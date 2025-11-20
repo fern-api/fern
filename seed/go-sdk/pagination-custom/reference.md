@@ -1,6 +1,6 @@
 # Reference
 ## Users
-<details><summary><code>client.Users.ListUsernamesCustom() -> *core.PayrocPager[fern.UsernameCursor]</code></summary>
+<details><summary><code>client.Users.ListUsernamesCustom() -> *fern.UsernameCursor</code></summary>
 <dl>
 <dd>
 

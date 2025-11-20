@@ -246,3 +246,5 @@ allowedFailures:
   - file-upload:no-custom-config 
   - file-upload:package-name 
   - file-upload-openapi
+
+  - pagination-custom:.

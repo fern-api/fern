@@ -36,32 +36,14 @@ func (c *Client) ListUsernamesCustom(
 	ctx context.Context,
 	request *fern.ListUsernamesRequestCustom,
 	opts ...option.RequestOption,
-) (*core.PayrocPager[fern.UsernameCursor], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		c.baseURL,
-		"",
-	)
-	endpointURL := baseURL + "/users"
-	queryParams, err := internal.QueryValues(request)
-	if err != nil {
-		return nil, err
-	}
-	if len(queryParams) > 0 {
-		endpointURL += "?" + queryParams.Encode()
-	}
-	response, callErr := c.WithRawResponse.ListUsernamesCustom(
+) (*fern.UsernameCursor, error) {
+	response, err := c.WithRawResponse.ListUsernamesCustom(
 		ctx,
 		request,
 		opts...,
 	)
-	if callErr != nil {
-		return nil, callErr
+	if err != nil {
+		return nil, err
 	}
-	var responseBody *fern.UsernameCursor = response.Body
-	pager := core.NewPayrocPager[fern.UsernameCursor](
-		responseBody,
-	)
-	return pager, nil
+	return response.Body, nil
 }
