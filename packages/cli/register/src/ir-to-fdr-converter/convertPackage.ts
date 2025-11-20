@@ -737,11 +737,10 @@ function convertResponse(irResponse: Ir.http.HttpResponse): FdrCjsSdk.api.v1.reg
         }
     );
     if (type != null) {
-        return { type, statusCode: irResponse.statusCode, isWildcard: undefined, description };
+        return { type, statusCode: irResponse.statusCode, description };
     } else if (irResponse.statusCode != null) {
         return {
             statusCode: irResponse.statusCode,
-            isWildcard: undefined,
             description,
             type: { type: "object", extends: [], properties: [], extraProperties: undefined }
         };
@@ -768,7 +767,6 @@ function convertResponseErrorsV2(
                                   value: convertTypeReference(errorDeclaration.type)
                               },
                     statusCode: errorDeclaration.statusCode,
-                    isWildcard: undefined,
                     description: errorDeclaration.docs ?? undefined,
                     name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,
                     availability: undefined,
@@ -817,7 +815,6 @@ function convertResponseErrorsV2(
                                   extraProperties: undefined
                               },
                     statusCode: errorDeclaration.statusCode,
-                    isWildcard: undefined,
                     description: errorDeclaration.docs ?? undefined,
                     availability: undefined,
                     name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,

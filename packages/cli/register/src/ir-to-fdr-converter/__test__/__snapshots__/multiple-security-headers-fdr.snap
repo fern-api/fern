@@ -68,7 +68,6 @@
             "availability": undefined,
             "description": "Unauthorized",
             "examples": [],
-            "isWildcard": undefined,
             "name": "UnauthorizedError",
             "statusCode": 401,
             "type": {
@@ -184,7 +183,6 @@
         },
         "response": {
           "description": "Transaction created successfully",
-          "isWildcard": undefined,
           "statusCode": 200,
           "type": {
             "type": "reference",
@@ -199,7 +197,6 @@
           "responses": [
             {
               "description": "Transaction created successfully",
-              "isWildcard": undefined,
               "statusCode": 200,
               "type": {
                 "type": "reference",
@@ -341,7 +338,6 @@
         },
         "response": {
           "description": "Transaction created successfully",
-          "isWildcard": undefined,
           "statusCode": 200,
           "type": {
             "type": "reference",
@@ -356,7 +352,6 @@
           "responses": [
             {
               "description": "Transaction created successfully",
-              "isWildcard": undefined,
               "statusCode": 200,
               "type": {
                 "type": "reference",
@@ -448,7 +443,6 @@
         },
         "response": {
           "description": "Merchant settings",
-          "isWildcard": undefined,
           "statusCode": 200,
           "type": {
             "type": "reference",
@@ -463,7 +457,6 @@
           "responses": [
             {
               "description": "Merchant settings",
-              "isWildcard": undefined,
               "statusCode": 200,
               "type": {
                 "type": "reference",
@@ -559,7 +552,6 @@
         },
         "response": {
           "description": "List of users",
-          "isWildcard": undefined,
           "statusCode": 200,
           "type": {
             "type": "reference",
@@ -577,7 +569,6 @@
           "responses": [
             {
               "description": "List of users",
-              "isWildcard": undefined,
               "statusCode": 200,
               "type": {
                 "type": "reference",

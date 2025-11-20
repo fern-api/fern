@@ -23,7 +23,6 @@
             "availability": undefined,
             "description": "Bad request",
             "examples": [],
-            "isWildcard": undefined,
             "name": "BadRequestError",
             "statusCode": 400,
             "type": {
@@ -146,7 +145,6 @@
         },
         "response": {
           "description": "Event created successfully",
-          "isWildcard": undefined,
           "statusCode": 200,
           "type": {
             "type": "reference",
@@ -161,7 +159,6 @@
           "responses": [
             {
               "description": "Event created successfully",
-              "isWildcard": undefined,
               "statusCode": 200,
               "type": {
                 "type": "reference",
