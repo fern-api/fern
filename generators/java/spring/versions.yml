@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix issues with maven publishing.
+      type: break
+  createdAt: "2025-11-20"
+  irVersion: 61
+  version: 2.0.0-rc1
+
+- changelogEntry:
+    - summary: |
         Generate Java 17 and Spring 6 compatible code.
       type: break
   createdAt: "2025-11-19"
