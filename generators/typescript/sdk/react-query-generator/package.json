@@ -27,13 +27,11 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/core-utils": "workspace:*",
     "@fern-fern/ir-sdk": "^61.7.0",
     "@fern-typescript/commons": "workspace:*",
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
-    "ts-morph": "^23.0.0",
-    "ts-poet": "^6.9.1"
+    "ts-morph": "^23.0.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.18",

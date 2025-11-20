@@ -1,19 +1,14 @@
 {
-  "extends": "../../../../tsconfig.base.json",
+  "extends": "@fern-api/configs/tsconfig/main.json",
   "compilerOptions": {
     "composite": true,
-    "outDir": "./lib",
-    "rootDir": "./src"
+    "outDir": "lib",
+    "rootDir": "src"
   },
-  "include": [
-    "./src"
-  ],
+  "include": ["./src/**/*"],
   "references": [
     {
       "path": "../../../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../../../packages/ir-sdk"
     },
     {
       "path": "../../utils/commons"
