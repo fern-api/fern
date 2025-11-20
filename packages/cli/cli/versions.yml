@@ -1,7 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Fix error messaging for invalid generator versions. When a user provides an invalid version format (e.g., "0.31" instead of "0.31.0"), the CLI now displays a helpful error message explaining that versions must use SemVer MAJOR.MINOR.PATCH format and suggests the correct format.
+        Add missing error type mappings in remote generation error handler. The CLI now properly handles IllegalApiVersionError, CannotPublishPypiPackage, and OrgNotConfiguredForWhitelabel errors from the remote generation service, and displays improved error messages for invalid generator versions with SemVer format guidance.
       type: fix
   irVersion: 61
   createdAt: "2025-11-20"

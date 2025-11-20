@@ -263,10 +263,8 @@ async function createJob({
             },
             _other: (content) => {
                 context.logger.debug(`Failed to create job: ${JSON.stringify(content)}`);
-                const { summary, details } = summarizeCreateJobError(content);
                 return context.failAndThrow(
-                    `${summary}\nIf this persists, contact support@buildwithfern.com and include the error details shown below.`,
-                    details
+                    "Failed to create job. Please try again or contact support@buildwithfern.com for assistance."
                 );
             }
         });
@@ -399,69 +397,6 @@ function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Err
         }
     }
     return error;
-}
-
-function summarizeCreateJobError(err: unknown): { summary: string; details: unknown } {
-    const isObj = (v: unknown): v is Record<string, unknown> => typeof v === "object" && v !== null;
-
-    const truncate = (s: string, n = 300) => (s.length > n ? s.slice(0, n) + "…" : s);
-
-    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-    if (isObj(err) && typeof (err as any).reason === "string") {
-        // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-        const reason = (err as any).reason as "status-code" | "non-json" | "timeout" | "unknown";
-        switch (reason) {
-            case "status-code": {
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                const status = (err as any).statusCode as number | undefined;
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                const body = (err as any).body;
-                let hint: string | undefined;
-                if (isObj(body)) {
-                    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                    const msg = (body as any).message ?? (body as any).error ?? (body as any)._error ?? undefined;
-                    if (typeof msg === "string") {
-                        hint = truncate(msg);
-                    }
-                }
-                let next: string | undefined;
-                if (status === 429) {
-                    next = "You are being rate limited. Wait a moment or run locally: fern generate --local";
-                } else if (status != null && status >= 500) {
-                    next =
-                        "The remote generation service returned a server error. Try again shortly or run locally: fern generate --local";
-                }
-                const summaryBase = `Failed to create job: HTTP ${status ?? "unknown"}${hint ? ` – ${hint}` : ""}`;
-                return { summary: next ? `${summaryBase}. ${next}` : summaryBase, details: err };
-            }
-            case "non-json": {
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                const status = (err as any).statusCode as number | undefined;
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                const raw = typeof (err as any).rawBody === "string" ? truncate((err as any).rawBody) : undefined;
-                const summary = `Failed to create job: HTTP ${status ?? "unknown"} with a non-JSON response${raw ? ` – ${raw}` : ""}`;
-                return { summary, details: err };
-            }
-            case "timeout": {
-                return {
-                    summary:
-                        "Failed to create job: request timed out. Check your network or try again. You can also run locally: fern generate --local",
-                    details: err
-                };
-            }
-            case "unknown": {
-                const msg =
-                    // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
-                    typeof (err as any).errorMessage === "string" ? truncate((err as any).errorMessage) : undefined;
-                const summary = `Failed to create job: an unknown error occurred${msg ? ` – ${msg}` : ""}. You can try again or run locally: fern generate --local`;
-                return { summary, details: err };
-            }
-        }
-    }
-    return {
-        summary: "Failed to create job due to an unexpected error. Try again or run locally: fern generate --local",
-        details: err
-    };
 }
 
 function shouldUploadToS3({
