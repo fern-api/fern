@@ -64,8 +64,17 @@
             "inline": undefined,
             "properties": {
               "error": "string",
-              "type": "literal<"error">",
+              "type": "BadRequestErrorBodyType",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "BadRequestErrorBodyType": {
+            "enum": [
+              "error",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -574,10 +583,16 @@ This value is not specified if the SQL statement was not an INSERT or if the tab
         },
       },
       "rawContents": "types:
+  BadRequestErrorBodyType:
+    enum:
+      - error
+    inline: true
+    source:
+      openapi: ../openapi.yml
   BadRequestErrorBody:
     docs: The function throw an error or had invalid syntax
     properties:
-      type: literal<"error">
+      type: BadRequestErrorBodyType
       error: string
     source:
       openapi: ../openapi.yml

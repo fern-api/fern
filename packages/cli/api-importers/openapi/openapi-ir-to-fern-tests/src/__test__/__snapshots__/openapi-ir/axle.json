@@ -1336,11 +1336,8 @@
                               "type": "primitive"
                             },
                             "type": {
-                              "value": {
-                                "value": "vehicle",
-                                "type": "string"
-                              },
-                              "type": "literal"
+                              "value": "vehicle",
+                              "type": "enum"
                             },
                             "data": {
                               "properties": {
@@ -2953,13 +2950,20 @@
             "generatedName": "propertyType",
             "key": "type",
             "schema": {
-              "value": {
-                "value": "vehicle",
-                "type": "string"
-              },
               "generatedName": "PropertyType",
+              "values": [
+                {
+                  "generatedName": "vehicle",
+                  "value": "vehicle",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },
