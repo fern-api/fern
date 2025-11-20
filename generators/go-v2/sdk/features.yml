@@ -10,7 +10,15 @@ features:
 
   - id: PAGINATION
     description: |
-      List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items. You can also iterate page-by-page using the `GetNextPage` helper method. If need be you can access the raw response using the `RawResponse` field on the page.
+      List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items.
+      You can also iterate page-by-page using the `GetNextPage` helper method.
+
+      The `Page.Results` attribute, which contains the relevant list of items returned by the call to the server,
+      is the only attribute you will need for most use cases. But if need be, several other attributes are available:
+
+      - `Page.Response` contains the full spec-defined response as returned by the server.
+      - `Page.StatusCode` and `Page.Header` returns HTTP metadata associated with the call to the server.
+      - `Page.RawResponse` returns the pagination object if you need to access its fields (like `Next`).
 
   - id: ERRORS
     description: |
