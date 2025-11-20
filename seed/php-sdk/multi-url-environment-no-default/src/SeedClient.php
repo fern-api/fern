@@ -36,7 +36,13 @@ class SeedClient
     private RawClient $client;
 
     /**
+     * @var Environments $environment
+     */
+    private Environments $environment;
+
+    /**
      * @param string $token The token to use for authentication.
+     * @param Environments $environment The environment to use for API requests.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -47,6 +53,7 @@ class SeedClient
      */
     public function __construct(
         string $token,
+        Environments $environment,
         ?array $options = null,
     ) {
         $defaultHeaders = [
@@ -63,11 +70,13 @@ class SeedClient
             $this->options['headers'] ?? [],
         );
 
+        $this->environment = $environment;
+
         $this->client = new RawClient(
             options: $this->options,
         );
 
-        $this->ec2 = new Ec2Client($this->client, $this->options);
-        $this->s3 = new S3Client($this->client, $this->options);
+        $this->ec2 = new Ec2Client($this->client, $this->environment->ec2);
+        $this->s3 = new S3Client($this->client, $this->environment->s3);
     }
 }

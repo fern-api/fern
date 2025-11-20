@@ -33,21 +33,21 @@ class S3Client
     private RawClient $client;
 
     /**
+     * @var string $baseUrl
+     */
+    private string $baseUrl;
+
+    /**
      * @param RawClient $client
-     * @param ?array{
-     *   baseUrl?: string,
-     *   client?: ClientInterface,
-     *   maxRetries?: int,
-     *   timeout?: float,
-     *   headers?: array<string, string>,
-     * } $options
+     * @param string $baseUrl
      */
     public function __construct(
         RawClient $client,
-        ?array $options = null,
+        string $baseUrl,
     ) {
         $this->client = $client;
-        $this->options = $options ?? [];
+        $this->baseUrl = $baseUrl;
+        $this->options = [];
     }
 
     /**
@@ -70,7 +70,7 @@ class S3Client
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $this->baseUrl,
                     path: "/s3/presigned-url",
                     method: HttpMethod::POST,
                     body: $request,

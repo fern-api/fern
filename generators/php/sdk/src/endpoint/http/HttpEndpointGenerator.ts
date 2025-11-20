@@ -587,16 +587,23 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): php.CodeBlock {
         return php.codeblock((writer) => {
-            const rawClientFieldName = this.context.rawClient.getFieldName();
-            const clientOptionsName = this.context.getClientOptionsName();
-            const requestOptionName = this.context.getRequestOptionsName();
-            const baseUrlOptionName = this.context.getBaseUrlOptionName();
-            const defaultBaseUrl = this.context.getDefaultBaseUrlForEndpoint(endpoint);
+            const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
+            const hasEndpointBaseUrl = endpoint.baseUrl != null;
 
-            writer.write(
-                `$${requestOptionName}['${baseUrlOptionName}'] ?? $this->${rawClientFieldName}->${clientOptionsName}['${baseUrlOptionName}'] ?? `
-            );
-            writer.writeNode(defaultBaseUrl);
+            if (isMultiUrl && hasEndpointBaseUrl) {
+                writer.write("$this->baseUrl");
+            } else {
+                const rawClientFieldName = this.context.rawClient.getFieldName();
+                const clientOptionsName = this.context.getClientOptionsName();
+                const requestOptionName = this.context.getRequestOptionsName();
+                const baseUrlOptionName = this.context.getBaseUrlOptionName();
+                const defaultBaseUrl = this.context.getDefaultBaseUrlForEndpoint(endpoint);
+
+                writer.write(
+                    `$${requestOptionName}['${baseUrlOptionName}'] ?? $this->${rawClientFieldName}->${clientOptionsName}['${baseUrlOptionName}'] ?? `
+                );
+                writer.writeNode(defaultBaseUrl);
+            }
         });
     }
 

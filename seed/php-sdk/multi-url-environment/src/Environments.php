@@ -18,6 +18,18 @@ class Environments
     public readonly string $s3;
 
     /**
+     * @param string $ec2 The ec2 base URL
+     * @param string $s3 The s3 base URL
+     */
+    private function __construct(
+        string $ec2,
+        string $s3,
+    ) {
+        $this->ec2 = $ec2;
+        $this->s3 = $s3;
+    }
+
+    /**
      * Production environment
      *
      * @return Environments
@@ -56,15 +68,5 @@ class Environments
             ec2: $ec2,
             s3: $s3
         );
-    }
-
-    /**
-     * @param string $ec2 The ec2 base URL
-     * @param string $s3 The s3 base URL
-     */
-    private function __construct(string $ec2, string $s3): void
-    {
-        $this->ec2 = $ec2;
-        $this->s3 = $s3;
     }
 }

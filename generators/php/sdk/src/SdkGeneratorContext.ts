@@ -653,7 +653,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.getEnvironmentAccess(environmentName);
     }
 
-    private getBaseUrlPropertyName(baseUrlId: string): string {
+    public getBaseUrlPropertyName(baseUrlId: string): string {
         const multiUrlEnvs = this.ir.environments?.environments._visit({
             multipleBaseUrls: (value) => value,
             singleBaseUrl: () => undefined,

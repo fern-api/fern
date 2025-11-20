@@ -29,19 +29,16 @@ export class MultiUrlEnvironmentGenerator extends FileGenerator<PhpFile, SdkCust
             docs: "Represents the available environments for the API with multiple base URLs."
         });
 
-        class_.addMethod(
-            php.method({
-                access: "private",
-                name: "__construct",
-                parameters: this.getConstructorParameters(),
-                body: php.codeblock((writer) => {
-                    for (const baseUrl of this.multiUrlEnvironments.baseUrls) {
-                        const propertyName = this.getBaseUrlPropertyName(baseUrl.name.camelCase.safeName);
-                        writer.writeLine(`$this->${propertyName} = $${propertyName};`);
-                    }
-                })
+        class_.addConstructor({
+            access: "private",
+            parameters: this.getConstructorParameters(),
+            body: php.codeblock((writer) => {
+                for (const baseUrl of this.multiUrlEnvironments.baseUrls) {
+                    const propertyName = this.getBaseUrlPropertyName(baseUrl.name.camelCase.safeName);
+                    writer.writeLine(`$this->${propertyName} = $${propertyName};`);
+                }
             })
-        );
+        });
 
         for (const baseUrl of this.multiUrlEnvironments.baseUrls) {
             const propertyName = this.getBaseUrlPropertyName(baseUrl.name.camelCase.safeName);

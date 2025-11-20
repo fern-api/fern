@@ -31,21 +31,21 @@ class Ec2Client
     private RawClient $client;
 
     /**
+     * @var string $baseUrl
+     */
+    private string $baseUrl;
+
+    /**
      * @param RawClient $client
-     * @param ?array{
-     *   baseUrl?: string,
-     *   client?: ClientInterface,
-     *   maxRetries?: int,
-     *   timeout?: float,
-     *   headers?: array<string, string>,
-     * } $options
+     * @param string $baseUrl
      */
     public function __construct(
         RawClient $client,
-        ?array $options = null,
+        string $baseUrl,
     ) {
         $this->client = $client;
-        $this->options = $options ?? [];
+        $this->baseUrl = $baseUrl;
+        $this->options = [];
     }
 
     /**
@@ -67,7 +67,7 @@ class Ec2Client
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    baseUrl: $this->baseUrl,
                     path: "/ec2/boot",
                     method: HttpMethod::POST,
                     body: $request,
