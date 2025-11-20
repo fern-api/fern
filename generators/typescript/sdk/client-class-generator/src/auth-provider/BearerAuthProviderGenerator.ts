@@ -8,6 +8,7 @@ import { AuthProviderGenerator } from "./AuthProviderGenerator";
 export declare namespace BearerAuthProviderGenerator {
     export interface Init {
         authScheme: FernIr.BearerAuthScheme;
+        neverThrowErrors: boolean;
     }
 }
 
@@ -18,9 +19,11 @@ const OPTIONS_TYPE_NAME = "Options";
 export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
     private readonly authScheme: FernIr.BearerAuthScheme;
+    private readonly neverThrowErrors: boolean;
 
     constructor(init: BearerAuthProviderGenerator.Init) {
         this.authScheme = init.authScheme;
+        this.neverThrowErrors = init.neverThrowErrors;
     }
 
     public getFilePath(): ExportedFilePath {
@@ -136,6 +139,20 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                           )
                       )
                   );
+
+        if (this.neverThrowErrors) {
+            return `
+        const ${tokenVar} = ${tokenExpression};
+        
+        const authHeader = ${tokenVar} != null ? ${getTextOfTsNode(
+            context.coreUtilities.auth.BearerToken.toAuthorizationHeader(ts.factory.createIdentifier(tokenVar))
+        )} : undefined;
+        
+        return {
+            headers: authHeader != null ? { Authorization: authHeader } : {}
+        };
+        `;
+        }
 
         const tokenErrorMessage =
             this.authScheme.tokenEnvVar != null

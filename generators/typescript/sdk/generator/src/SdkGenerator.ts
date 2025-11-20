@@ -1394,7 +1394,8 @@ export class SdkGenerator {
         for (const authScheme of this.intermediateRepresentation.auth.schemes) {
             const authProvidersGenerator = new AuthProvidersGenerator({
                 ir: this.intermediateRepresentation,
-                authScheme
+                authScheme,
+                neverThrowErrors: this.config.neverThrowErrors
             });
             if (!authProvidersGenerator.shouldWriteFile()) {
                 continue;

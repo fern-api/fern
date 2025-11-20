@@ -14,12 +14,13 @@ export declare namespace AuthProvidersGenerator {
     export interface Init {
         ir: IntermediateRepresentation;
         authScheme: AuthScheme;
+        neverThrowErrors: boolean;
     }
 }
 
 export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
     private readonly authProviderGenerator: AuthProviderGenerator | undefined;
-    constructor({ ir, authScheme }: AuthProvidersGenerator.Init) {
+    constructor({ ir, authScheme, neverThrowErrors }: AuthProvidersGenerator.Init) {
         this.authProviderGenerator = (() => {
             switch (authScheme.type) {
                 case "inferred":
@@ -33,7 +34,8 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
                     });
                 case "bearer":
                     return new BearerAuthProviderGenerator({
-                        authScheme
+                        authScheme,
+                        neverThrowErrors
                     });
                 case "header":
                 case "oauth":
