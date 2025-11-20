@@ -22,6 +22,13 @@ interface SkippedMajorUpgrade {
     latestMajorVersion: string;
 }
 
+interface AppliedUpgrade {
+    generatorName: string;
+    groupName: string;
+    previousVersion: string;
+    newVersion: string;
+}
+
 function getChangelogUrl(generatorName: string): string | undefined {
     const changelogMap: Record<string, string> = {
         "fernapi/fern-typescript-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
@@ -54,11 +61,15 @@ export async function loadAndUpdateGenerators({
     includeMajor: boolean;
     channel: FernRegistry.generators.ReleaseType | undefined;
     cliVersion: string;
-}): Promise<{ updatedConfiguration: string | undefined; skippedMajorUpgrades: SkippedMajorUpgrade[] }> {
+}): Promise<{
+    updatedConfiguration: string | undefined;
+    skippedMajorUpgrades: SkippedMajorUpgrade[];
+    appliedUpgrades: AppliedUpgrade[];
+}> {
     const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (filepath == null || !(await doesPathExist(filepath))) {
         context.logger.debug("Generators configuration file was not found, no generators to upgrade.");
-        return { updatedConfiguration: undefined, skippedMajorUpgrades: [] };
+        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [] };
     }
     const contents = await readFile(filepath);
     context.logger.debug(`Found generators: ${contents.toString()}`);
@@ -69,15 +80,16 @@ export async function loadAndUpdateGenerators({
     const generatorGroups = parsedDocument.get("groups");
     if (generatorGroups == null) {
         context.logger.debug("No groups were found within the generators configuration, no generators to upgrade.");
-        return { updatedConfiguration: undefined, skippedMajorUpgrades: [] };
+        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [] };
     }
     if (!YAML.isMap(generatorGroups)) {
         context.failAndThrow(`Expected 'groups' to be a map in ${path.relative(process.cwd(), filepath)}`);
-        return { updatedConfiguration: undefined, skippedMajorUpgrades: [] };
+        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [] };
     }
     context.logger.debug(`Groups found: ${generatorGroups.toString()}`);
 
     const skippedMajorUpgrades: SkippedMajorUpgrade[] = [];
+    const appliedUpgrades: AppliedUpgrade[] = [];
 
     for (const groupBlock of generatorGroups.items) {
         // The typing appears to be off in this lib, but BLOCK.key.value is meant to always be available
@@ -143,6 +155,12 @@ export async function loadAndUpdateGenerators({
                     chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
                 );
                 generator.set("version", latestVersion);
+                appliedUpgrades.push({
+                    generatorName,
+                    groupName,
+                    previousVersion: currentGeneratorVersion,
+                    newVersion: latestVersion
+                });
             }
 
             if (!includeMajor) {
@@ -171,7 +189,7 @@ export async function loadAndUpdateGenerators({
         }
     }
 
-    return { updatedConfiguration: parsedDocument.toString(), skippedMajorUpgrades };
+    return { updatedConfiguration: parsedDocument.toString(), skippedMajorUpgrades, appliedUpgrades };
 }
 
 export async function upgradeGenerator({
@@ -190,6 +208,7 @@ export async function upgradeGenerator({
     channel: FernRegistry.generators.ReleaseType | undefined;
 }): Promise<void> {
     const allSkippedMajorUpgrades: SkippedMajorUpgrade[] = [];
+    const allAppliedUpgrades: Array<{ workspace: string | undefined; upgrades: AppliedUpgrade[] }> = [];
 
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
@@ -231,9 +250,51 @@ export async function upgradeGenerator({
                 }
 
                 allSkippedMajorUpgrades.push(...result.skippedMajorUpgrades);
+                if (result.appliedUpgrades.length > 0) {
+                    allAppliedUpgrades.push({
+                        workspace: workspace.workspaceName,
+                        upgrades: result.appliedUpgrades
+                    });
+                }
             });
         })
     );
+
+    if (allAppliedUpgrades.length > 0) {
+        cliContext.logger.info("");
+        cliContext.logger.info(chalk.green("Successfully upgraded generators:"));
+
+        for (const { workspace, upgrades } of allAppliedUpgrades) {
+            const upgradesByGroup = new Map<string, AppliedUpgrade[]>();
+            for (const upgrade of upgrades) {
+                const existing = upgradesByGroup.get(upgrade.groupName) ?? [];
+                existing.push(upgrade);
+                upgradesByGroup.set(upgrade.groupName, existing);
+            }
+
+            for (const [groupName, groupUpgrades] of upgradesByGroup) {
+                const workspacePrefix = workspace != null ? `[${workspace}] ` : "";
+                cliContext.logger.info(chalk.green(`${workspacePrefix}Group ${groupName}:`));
+
+                for (const upgrade of groupUpgrades) {
+                    cliContext.logger.info(
+                        chalk.green(
+                            `  - ${upgrade.generatorName}: ${chalk.dim(upgrade.previousVersion)} → ${upgrade.newVersion}`
+                        )
+                    );
+                    const changelogUrl = getChangelogUrl(upgrade.generatorName);
+                    if (changelogUrl != null) {
+                        cliContext.logger.info(chalk.dim(`    Changelog: ${changelogUrl}`));
+                    }
+                }
+            }
+        }
+    } else {
+        const filterMessage =
+            group != null ? ` for group ${group}` : generator != null ? ` for generator ${generator}` : "";
+        cliContext.logger.info("");
+        cliContext.logger.info(chalk.gray(`All generators are already up to date${filterMessage}.`));
+    }
 
     if (allSkippedMajorUpgrades.length > 0) {
         cliContext.logger.info("");
