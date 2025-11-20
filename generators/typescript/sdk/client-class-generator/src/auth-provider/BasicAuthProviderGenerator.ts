@@ -53,6 +53,11 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public writeToFile(context: SdkContext): void {
+        context.sourceFile.addImportDeclaration({
+            namespaceImport: "errors",
+            moduleSpecifier: "../errors/index.js"
+        });
+
         this.writeOptions(context);
         this.writeClass(context);
     }
@@ -194,15 +199,21 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                 ? `Please specify a ${passwordFieldName} by either passing it in to the constructor or initializing a ${this.authScheme.passwordEnvVar} environment variable`
                 : `Please specify a ${passwordFieldName} by passing it in to the constructor`;
 
+        const errorClassName = `${context.namespaceExport}Error`;
+
         return `
         const ${usernameVar} = ${usernameExpression};
         if (${usernameVar} == null) {
-            throw new Error("${usernameErrorMessage}");
+            throw new errors.${errorClassName}({
+                message: "${usernameErrorMessage}"
+            });
         }
 
         const ${passwordVar} = ${passwordExpression};
         if (${passwordVar} == null) {
-            throw new Error("${passwordErrorMessage}");
+            throw new errors.${errorClassName}({
+                message: "${passwordErrorMessage}"
+            });
         }
         
         const authHeader = ${getTextOfTsNode(
