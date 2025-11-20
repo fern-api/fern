@@ -13,8 +13,10 @@ module Seed
       # Create a new playlist
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Playlist::Types::PlaylistCreateRequest]
+      # @option params [Integer] :service_param
+      # @option params [String] :datetime
+      # @option params [String | nil] :optional_datetime
       #
       # @return [Seed::Playlist::Types::Playlist]
       def create_playlist(request_options: {}, **params)
@@ -52,8 +54,13 @@ module Seed
       # Returns the user's playlists
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [Integer] :service_param
+      # @option params [Integer | nil] :limit
+      # @option params [String] :other_field
+      # @option params [String] :multi_line_docs
+      # @option params [String | nil] :optional_multiple_field
+      # @option params [String] :multiple_field
       #
       # @return [Array[Seed::Playlist::Types::Playlist]]
       def get_playlists(request_options: {}, **params)
@@ -88,8 +95,9 @@ module Seed
       # Returns a playlist
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [Integer] :service_param
+      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
       #
       # @return [Seed::Playlist::Types::Playlist]
       def get_playlist(request_options: {}, **params)
@@ -115,8 +123,9 @@ module Seed
       # Updates a playlist
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [Integer] :service_param
+      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
       #
       # @return [Seed::Playlist::Types::Playlist | nil]
       def update_playlist(request_options: {}, **params)
@@ -141,8 +150,9 @@ module Seed
       # Deletes a playlist
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [Integer] :service_param
+      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
       #
       # @return [untyped]
       def delete_playlist(request_options: {}, **params)

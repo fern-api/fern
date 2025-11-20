@@ -13,7 +13,6 @@ module Seed
       # GET request with custom api key
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [String]

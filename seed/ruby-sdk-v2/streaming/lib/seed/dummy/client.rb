@@ -11,7 +11,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Dummy::Types::GenerateStreamRequest]
       #
       # @return [untyped]
@@ -38,7 +37,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Dummy::Types::Generateequest]
       #
       # @return [Seed::Dummy::Types::StreamResponse]

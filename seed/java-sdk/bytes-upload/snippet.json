@@ -9,8 +9,8 @@
             },
             "snippet": {
                 "type": "java",
-                "sync_client": "package com.example.usage;\n\nimport com.seed.bytesUpload.SeedBytesUploadClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBytesUploadClient client = SeedBytesUploadClient\n            .builder()\n            .build();\n\n        client.service().upload();\n    }\n}\n",
-                "async_client": "package com.example.usage;\n\nimport com.seed.bytesUpload.SeedBytesUploadClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBytesUploadClient client = SeedBytesUploadClient\n            .builder()\n            .build();\n\n        client.service().upload();\n    }\n}\n"
+                "sync_client": "package com.example.usage;\n\nimport com.seed.bytesUpload.SeedBytesUploadClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBytesUploadClient client = SeedBytesUploadClient\n            .builder()\n            .build();\n\n        client.service().upload(\"\".getBytes());\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.bytesUpload.SeedBytesUploadClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedBytesUploadClient client = SeedBytesUploadClient\n            .builder()\n            .build();\n\n        client.service().upload(\"\".getBytes());\n    }\n}\n"
             }
         }
     ],

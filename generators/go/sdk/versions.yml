@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.16.5
+  changelogEntry:
+    - summary: |
+        Fix Basic auth header formatting to remove erroneous whitespace between username and password.
+        Passwords with colons are now properly supported per RFC 7617 specification.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 60
+
 - version: 1.16.4
   changelogEntry:
     - summary: |

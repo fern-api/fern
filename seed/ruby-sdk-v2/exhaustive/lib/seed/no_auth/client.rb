@@ -13,7 +13,6 @@ module Seed
       # POST request with no auth
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [bool]

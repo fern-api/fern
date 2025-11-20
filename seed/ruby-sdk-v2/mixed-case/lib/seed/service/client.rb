@@ -11,8 +11,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :resource_id
       #
       # @return [Seed::Service::Types::Resource]
       def get_resource(request_options: {}, **params)
@@ -36,8 +36,9 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [Integer] :page_limit
+      # @option params [String] :before_date
       #
       # @return [Array[Seed::Service::Types::Resource]]
       def list_resources(request_options: {}, **params)
