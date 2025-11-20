@@ -11,8 +11,9 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::Commons::Types::Language] :language
+      # @option params [Integer] :num_warm_instances
       #
       # @return [untyped]
       def set_num_warm_instances(request_options: {}, **params)
@@ -34,7 +35,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Hash[Seed::Commons::Types::Language, Integer]]

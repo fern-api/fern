@@ -11,7 +11,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Payment::Types::CreatePaymentRequest]
       #
       # @return [String]
@@ -38,8 +37,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :payment_id
       #
       # @return [untyped]
       def delete(request_options: {}, **params)

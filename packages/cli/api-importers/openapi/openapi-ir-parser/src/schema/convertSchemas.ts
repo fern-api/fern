@@ -57,9 +57,11 @@ function isInlinable(
     switch (resolvedSchema.type) {
         case "boolean":
         case "number":
-        case "string":
         case "integer":
             return true;
+        case "string":
+            // Don't inline string schemas that are actually enums
+            return resolvedSchema.enum == null;
         case "array":
             return isInlinable(resolvedSchema.items, context);
         case "object":

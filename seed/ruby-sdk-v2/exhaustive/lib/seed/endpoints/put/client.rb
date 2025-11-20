@@ -12,8 +12,8 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :id
         #
         # @return [Seed::Endpoints::Put::Types::PutResponse]
         def add(request_options: {}, **params)

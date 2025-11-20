@@ -11,8 +11,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Complex::Types::SearchRequest]
+      # @option params [String] :index
       #
       # @return [Seed::Complex::Types::PaginatedConversationResponse]
       def search(request_options: {}, **params)

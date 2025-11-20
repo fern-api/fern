@@ -14,8 +14,8 @@ module Seed
         # This endpoint checks the health of a resource.
         #
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :id
         #
         # @return [untyped]
         def check(request_options: {}, **params)
@@ -39,7 +39,6 @@ module Seed
         # This endpoint checks the health of the service.
         #
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Hash[untyped, untyped]]
         #
         # @return [bool]

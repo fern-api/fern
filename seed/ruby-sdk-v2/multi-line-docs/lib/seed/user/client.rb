@@ -14,8 +14,8 @@ module Seed
       # This endpoint is used to retrieve a user.
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :user_id
       #
       # @return [untyped]
       def get_user(request_options: {}, **params)
@@ -40,7 +40,6 @@ module Seed
       # This endpoint is used to create a new user.
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::User::Types::CreateUserRequest]
       #
       # @return [Seed::User::Types::User]

@@ -293,8 +293,6 @@ scripts:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew compileJava spotlessCheck
 allowedFailures:
   - alias-extends
-  - bytes-download
-  - bytes-upload
   - enum:forward-compatible-enums
   - enum:no-custom-config
   - errors

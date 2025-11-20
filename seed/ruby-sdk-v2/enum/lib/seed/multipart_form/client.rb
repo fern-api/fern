@@ -11,7 +11,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [void]
       #
       # @return [untyped]

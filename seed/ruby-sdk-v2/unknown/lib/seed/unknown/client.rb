@@ -11,7 +11,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Hash[String, Object]]]
@@ -35,7 +34,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Unknown::Types::MyObject]
       #
       # @return [Array[Hash[String, Object]]]

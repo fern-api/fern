@@ -11,7 +11,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]
@@ -34,7 +33,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]

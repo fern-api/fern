@@ -11,8 +11,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Submission::Types::TestSubmissionStatus]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
       #
       # @return [untyped]
       def update_test_submission_status(request_options: {}, **params)
@@ -35,8 +35,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Submission::Types::TestSubmissionUpdate]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
       #
       # @return [untyped]
       def send_test_submission_update(request_options: {}, **params)
@@ -59,8 +59,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Submission::Types::WorkspaceSubmissionStatus]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
       #
       # @return [untyped]
       def update_workspace_submission_status(request_options: {}, **params)
@@ -83,8 +83,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Submission::Types::WorkspaceSubmissionUpdate]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
       #
       # @return [untyped]
       def send_workspace_submission_update(request_options: {}, **params)
@@ -107,8 +107,9 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Admin::Types::StoreTracedTestCaseRequest]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
+      # @option params [String] :test_case_id
       #
       # @return [untyped]
       def store_traced_test_case(request_options: {}, **params)
@@ -136,8 +137,9 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
+      # @option params [Seed::V2::Problem::Types::TestCaseId] :test_case_id
       #
       # @return [untyped]
       def store_traced_test_case_v_2(request_options: {}, **params)
@@ -160,8 +162,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Admin::Types::StoreTracedWorkspaceRequest]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
       #
       # @return [untyped]
       def store_traced_workspace(request_options: {}, **params)
@@ -189,8 +191,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
       #
       # @return [untyped]
       def store_traced_workspace_v_2(request_options: {}, **params)
