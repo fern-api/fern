@@ -27,7 +27,7 @@ This is some handwritten documentation that will be overridden if a custom secti
 
 ## Custom Section
 
-This is a custom section that should appear before Advanced Features
+This is a custom section that should appear before Advanced
 
 ## Advanced
 

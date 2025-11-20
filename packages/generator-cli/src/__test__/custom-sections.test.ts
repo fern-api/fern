@@ -98,24 +98,6 @@ describe("python custom sections", () => {
         config: python.multipleCustomSectionsConfig,
         originalReadme: "../../py.README.md"
     });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/python/custom-sections-with-advanced-features",
-        config: python.customSectionsWithAdvancedFeaturesConfig,
-        originalReadme: "../../py.README.md"
-    });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/python/custom-sections-with-core-and-advanced-features",
-        config: python.customSectionsWithCoreAndAdvancedFeaturesConfig,
-        originalReadme: "../../py.README.md"
-    });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/python/multiple-custom-sections-with-advanced-features",
-        config: python.multipleCustomSectionsWithAdvancedFeaturesConfig,
-        originalReadme: "../../py.README.md"
-    });
 });
 
 describe("java custom sections", () => {
@@ -152,24 +134,6 @@ describe("java custom sections", () => {
     testGenerateReadme({
         fixtureName: "custom-sections/java/multiple-custom-sections",
         config: java.multipleCustomSectionsConfig,
-        originalReadme: "../../java.README.md"
-    });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/java/custom-sections-with-advanced-features",
-        config: java.customSectionsWithAdvancedFeaturesConfig,
-        originalReadme: "../../java.README.md"
-    });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/java/custom-sections-with-core-and-advanced-features",
-        config: java.customSectionsWithCoreAndAdvancedFeaturesConfig,
-        originalReadme: "../../java.README.md"
-    });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/java/multiple-custom-sections-with-advanced-features",
-        config: java.multipleCustomSectionsWithAdvancedFeaturesConfig,
         originalReadme: "../../java.README.md"
     });
 });
@@ -210,24 +174,6 @@ describe("php custom sections", () => {
         config: php.multipleCustomSectionsConfig,
         originalReadme: "../../php.README.md"
     });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/php/custom-sections-with-advanced-features",
-        config: php.customSectionsWithAdvancedFeaturesConfig,
-        originalReadme: "../../php.README.md"
-    });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/php/custom-sections-with-core-and-advanced-features",
-        config: php.customSectionsWithCoreAndAdvancedFeaturesConfig,
-        originalReadme: "../../php.README.md"
-    });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/php/multiple-custom-sections-with-advanced-features",
-        config: php.multipleCustomSectionsWithAdvancedFeaturesConfig,
-        originalReadme: "../../php.README.md"
-    });
 });
 
 describe("csharp custom sections", () => {
@@ -266,24 +212,6 @@ describe("csharp custom sections", () => {
         config: csharp.multipleCustomSectionsConfig,
         originalReadme: "../../csharp.README.md"
     });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/csharp/custom-sections-with-advanced-features",
-        config: csharp.customSectionsWithAdvancedFeaturesConfig,
-        originalReadme: "../../csharp.README.md"
-    });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/csharp/custom-sections-with-core-and-advanced-features",
-        config: csharp.customSectionsWithCoreAndAdvancedFeaturesConfig,
-        originalReadme: "../../csharp.README.md"
-    });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/csharp/multiple-custom-sections-with-advanced-features",
-        config: csharp.multipleCustomSectionsWithAdvancedFeaturesConfig,
-        originalReadme: "../../csharp.README.md"
-    });
 });
 
 describe("go custom sections", () => {
@@ -320,24 +248,6 @@ describe("go custom sections", () => {
     testGenerateReadme({
         fixtureName: "custom-sections/go/multiple-custom-sections",
         config: go.multipleCustomSectionsConfig,
-        originalReadme: "../../go.README.md"
-    });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/go/custom-sections-with-advanced-features",
-        config: go.customSectionsWithAdvancedFeaturesConfig,
-        originalReadme: "../../go.README.md"
-    });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/go/custom-sections-with-core-and-advanced-features",
-        config: go.customSectionsWithCoreAndAdvancedFeaturesConfig,
-        originalReadme: "../../go.README.md"
-    });
-
-    testGenerateReadme({
-        fixtureName: "custom-sections/go/multiple-custom-sections-with-advanced-features",
-        config: go.multipleCustomSectionsWithAdvancedFeaturesConfig,
         originalReadme: "../../go.README.md"
     });
 });

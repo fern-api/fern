@@ -80,7 +80,7 @@ export const customSectionsWithAdvancedFeaturesConfig: FernGeneratorCli.ReadmeCo
         {
             name: "Custom Section",
             language: FernGeneratorCli.Language.Typescript,
-            content: "This is a custom section that should appear before Advanced Features"
+            content: "This is a custom section that should appear before Advanced"
         }
     ],
     features: [
@@ -103,7 +103,7 @@ export const customSectionsWithCoreAndAdvancedFeaturesConfig: FernGeneratorCli.R
         {
             name: "Custom Section",
             language: FernGeneratorCli.Language.Typescript,
-            content: "This is a custom section that should appear after core features but before Advanced Features"
+            content: "This is a custom section that should appear after core features but before Advanced"
         }
     ],
     features: [
