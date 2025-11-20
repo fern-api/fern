@@ -99,6 +99,7 @@
     "@inquirer/prompts": "^7.1.0",
     "@types/axios": "^0.14.0",
     "@types/boxen": "^3.0.1",
+    "@types/cli-progress": "^3.11.6",
     "@types/get-port": "^4.2.0",
     "@types/is-ci": "^3.0.4",
     "@types/js-yaml": "^4.0.8",
@@ -134,5 +135,8 @@
     "vitest": "^4.0.8",
     "yaml": "^2.4.5",
     "yargs": "^17.4.1"
+  },
+  "dependencies": {
+    "cli-progress": "^3.12.0"
   }
 }
