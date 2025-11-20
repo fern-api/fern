@@ -107,6 +107,9 @@ jobs:
         with:
           github_token: ${{ github.token }}
 
+      - name: Verify buf
+        run: buf --version
+
       - uses: actions/setup-go@v5
         with:
           go-version: "stable"
@@ -135,6 +138,9 @@ jobs:
       - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
+
+      - name: Verify buf
+        run: buf --version
 
       - uses: actions/setup-go@v5
         with:
