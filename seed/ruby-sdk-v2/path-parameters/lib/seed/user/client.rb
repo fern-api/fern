@@ -10,8 +10,8 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -41,7 +41,7 @@ module Seed
         end
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Hash]
       # @param params [Seed::User::Types::User]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -72,7 +72,7 @@ module Seed
         end
       end
 
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Hash]
       # @param params [Seed::User::Types::User]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -107,8 +107,8 @@ module Seed
         end
       end
 
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -146,8 +146,8 @@ module Seed
 
       # Test endpoint with path parameter that has a text prefix (v{version})
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -180,8 +180,8 @@ module Seed
 
       # Test endpoint with path parameters listed in different order than found in path
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters

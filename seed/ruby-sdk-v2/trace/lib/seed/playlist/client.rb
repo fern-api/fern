@@ -12,7 +12,7 @@ module Seed
 
       # Create a new playlist
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Hash]
       # @param params [Seed::Playlist::Types::PlaylistCreateRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -58,8 +58,8 @@ module Seed
 
       # Returns the user's playlists
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -104,8 +104,8 @@ module Seed
 
       # Returns a playlist
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -137,8 +137,8 @@ module Seed
 
       # Updates a playlist
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -169,8 +169,8 @@ module Seed
 
       # Deletes a playlist
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters

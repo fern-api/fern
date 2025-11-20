@@ -12,8 +12,8 @@ module Seed
 
       # List resources with pagination
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -61,8 +61,8 @@ module Seed
 
       # Get a single resource
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -103,7 +103,7 @@ module Seed
 
       # Search resources with complex parameters
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Hash]
       # @param params [Seed::Service::Types::SearchResourcesRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -148,8 +148,8 @@ module Seed
 
       # List or search for users
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -201,8 +201,8 @@ module Seed
 
       # Get a user by ID
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -243,7 +243,7 @@ module Seed
 
       # Create a new user
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Hash]
       # @param params [Seed::Types::Types::CreateUserRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -275,7 +275,7 @@ module Seed
 
       # Update a user
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Hash]
       # @param params [Seed::Types::Types::UpdateUserRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -308,8 +308,8 @@ module Seed
 
       # Delete a user
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -338,8 +338,8 @@ module Seed
 
       # List all connections
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -379,8 +379,8 @@ module Seed
 
       # Get a connection by ID
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -419,8 +419,8 @@ module Seed
 
       # List all clients/applications
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -472,8 +472,8 @@ module Seed
 
       # Get a client by ID
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters

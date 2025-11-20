@@ -12,7 +12,7 @@ module Seed
 
       # Creates a problem
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Hash]
       # @param params [Seed::Problem::Types::CreateProblemRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -44,7 +44,7 @@ module Seed
 
       # Updates a problem
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Hash]
       # @param params [Seed::Problem::Types::CreateProblemRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
@@ -77,8 +77,8 @@ module Seed
 
       # Soft deletes a problem
       #
-      # @param request_options [Hash[untyped, untyped]]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
       # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -107,7 +107,7 @@ module Seed
 
       # Returns default starter files for problem
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Hash]
       # @param params [Seed::Problem::Types::GetDefaultStarterFilesRequest]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers

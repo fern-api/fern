@@ -13,8 +13,8 @@ module Seed
 
         # GET with path param
         #
-        # @param request_options [Hash[untyped, untyped]]
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -43,8 +43,8 @@ module Seed
 
         # GET with path param
         #
-        # @param request_options [Hash[untyped, untyped]]
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -73,8 +73,8 @@ module Seed
 
         # GET with query param
         #
-        # @param request_options [Hash[untyped, untyped]]
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -112,8 +112,8 @@ module Seed
 
         # GET with multiple of same query param
         #
-        # @param request_options [Hash[untyped, untyped]]
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -151,8 +151,8 @@ module Seed
 
         # GET with path and query params
         #
-        # @param request_options [Hash[untyped, untyped]]
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -189,8 +189,8 @@ module Seed
 
         # GET with path and query params
         #
-        # @param request_options [Hash[untyped, untyped]]
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -227,8 +227,8 @@ module Seed
 
         # PUT to update with path param
         #
-        # @param request_options [Hash[untyped, untyped]]
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -258,8 +258,8 @@ module Seed
 
         # PUT to update with path param
         #
-        # @param request_options [Hash[untyped, untyped]]
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters

@@ -11,8 +11,8 @@ module Seed
           @client = client
         end
 
-        # @param request_options [Hash[untyped, untyped]]
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters
@@ -39,7 +39,7 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Hash]
         # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -69,7 +69,7 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Hash]
         # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -100,7 +100,7 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
+        # @param request_options [Hash]
         # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
@@ -131,8 +131,8 @@ module Seed
           end
         end
 
-        # @param request_options [Hash[untyped, untyped]]
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
         # @option request_options [String] :base_url
         # @option request_options [Hash{String => Object}] :additional_headers
         # @option request_options [Hash{String => Object}] :additional_query_parameters

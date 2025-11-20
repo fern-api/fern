@@ -12,7 +12,7 @@ module Seed
 
       # POST with custom object in request body, response is an object
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Hash]
       # @param params [Seed::InlinedRequests::Types::PostWithObjectBody]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers

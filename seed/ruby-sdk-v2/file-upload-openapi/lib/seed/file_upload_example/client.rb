@@ -12,7 +12,7 @@ module Seed
 
       # Upload a file to the database
       #
-      # @param request_options [Hash[untyped, untyped]]
+      # @param request_options [Hash]
       # @param params [void]
       # @option request_options [String] :base_url
       # @option request_options [Hash{String => Object}] :additional_headers
