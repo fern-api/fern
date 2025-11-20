@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Optimize image path parsing and replacement for large markdown files (>5MB) using batched edits, precomputed line positions, and filtered AST traversal. Adds FERN_DOCS_LARGE_FILE_BYTES and FERN_DOCS_LARGE_FILE_SKIP_ESTREE environment variables for configuration.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 1.12.0
+
+- changelogEntry:
+    - summary: |
         Fix AutoVersioning to exclude Fern branding from commit messages and PR titles/descriptions when whitelabel config is present.
       type: fix
   irVersion: 61

@@ -12,9 +12,62 @@ import { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpression
 import { parseMarkdownToTree } from "./parseMarkdownToTree";
 import { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes";
 
+const LARGE_FILE_BYTES = parseInt(process.env.FERN_DOCS_LARGE_FILE_BYTES ?? "5000000", 10); // 5MB default
+const LARGE_FILE_SKIP_ESTREE = process.env.FERN_DOCS_LARGE_FILE_SKIP_ESTREE !== "false"; // true by default
+
+interface Edit {
+    start: number;
+    end: number;
+    replacement: string;
+}
+
 interface AbsolutePathMetadata {
     absolutePathToMarkdownFile: AbsoluteFilePath;
     absolutePathToFernFolder: AbsoluteFilePath;
+}
+
+function precomputeLineStarts(content: string): number[] {
+    const lineStarts: number[] = [0];
+    for (let i = 0; i < content.length; i++) {
+        if (content[i] === "\n") {
+            lineStarts.push(i + 1);
+        }
+    }
+    return lineStarts;
+}
+
+function getPositionUsingLineStarts(
+    lineStarts: number[],
+    position: { start: { line: number; column: number }; end: { line: number; column: number } }
+): { start: number; length: number } {
+    const startLine = position.start.line - 1;
+    const endLine = position.end.line - 1;
+    const lineStart = lineStarts[startLine];
+    if (lineStart == null) {
+        return { start: 0, length: 0 };
+    }
+    const start = lineStart + position.start.column - 1;
+    let length = position.end.column - position.start.column;
+    for (let i = startLine; i < endLine; i++) {
+        const nextLineStart = lineStarts[i + 1];
+        const currentLineStart = lineStarts[i];
+        if (nextLineStart != null && currentLineStart != null) {
+            length += nextLineStart - currentLineStart;
+        }
+    }
+    return { start, length };
+}
+
+function applyEdits(content: string, edits: Edit[]): string {
+    if (edits.length === 0) {
+        return content;
+    }
+    edits.sort((a, b) => b.start - a.start);
+    let result = content;
+    for (const edit of edits) {
+        result = result.slice(0, edit.start) + edit.replacement + result.slice(edit.end);
+    }
+    return result;
 }
 
 /**
@@ -25,15 +78,13 @@ interface AbsolutePathMetadata {
  */
 export function parseImagePaths(
     markdown: string,
-    metadata: AbsolutePathMetadata
+    metadata: AbsolutePathMetadata,
+    context?: TaskContext
 ): {
     filepaths: AbsoluteFilePath[];
     markdown: string;
 } {
-    // Don't remove {}! https://github.com/jonschlinkert/gray-matter/issues/43#issuecomment-318258919
     const { content, data } = grayMatter(markdown, {});
-    let replacedContent = content;
-
     const filepaths = new Set<AbsoluteFilePath>();
 
     function mapImage(image: string | undefined) {
@@ -48,16 +99,38 @@ export function parseImagePaths(
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
     replaceFrontmatterImagesforLogo(data, mapImage);
 
+    const contentBytes = Buffer.byteLength(content, "utf8");
+    const isLargeFile = contentBytes > LARGE_FILE_BYTES;
+    const skipEstree = isLargeFile && LARGE_FILE_SKIP_ESTREE;
+
+    if (skipEstree && context) {
+        context.logger.debug(
+            `Large file fast path: skipping dynamic expression analysis for ${metadata.absolutePathToMarkdownFile} (${(contentBytes / 1024 / 1024).toFixed(2)} MB)`
+        );
+    }
+
     const tree = parseMarkdownToTree(content);
+    const lineStarts = precomputeLineStarts(content);
+    const edits: Edit[] = [];
 
-    let offset = 0;
+    const nodeTypeFilter = (node: unknown): boolean => {
+        const n = node as { type?: string };
+        return (
+            n.type === "image" ||
+            n.type === "link" ||
+            n.type === "mdxJsxFlowElement" ||
+            n.type === "mdxJsxTextElement" ||
+            n.type === "mdxFlowExpression" ||
+            n.type === "mdxTextExpression"
+        );
+    };
 
-    visit(tree, (node) => {
+    visit(tree, nodeTypeFilter, (node) => {
         if (node.position == null) {
             return;
         }
-        const { start, length } = getPosition(content, node.position);
-        const original = replacedContent.slice(start + offset, start + offset + length);
+        const { start, length } = getPositionUsingLineStarts(lineStarts, node.position);
+        const original = content.slice(start, start + length);
         let replaced = original;
 
         if (node.type === "image") {
@@ -95,35 +168,34 @@ export function parseImagePaths(
                 }
             }
 
-            node.attributes.forEach((attr) => {
-                if (
-                    isMdxJsxAttribute(attr) &&
-                    typeof attr.value !== "string" &&
-                    attr.value != null &&
-                    attr.value.data?.estree
-                ) {
-                    walkEstreeForSrc(attr.value.data.estree);
-                } else if (isMdxJsxExpressionAttribute(attr) && attr.data?.estree) {
-                    walkEstreeForSrc(attr.data.estree);
-                }
-            });
+            if (!skipEstree) {
+                node.attributes.forEach((attr) => {
+                    if (
+                        isMdxJsxAttribute(attr) &&
+                        typeof attr.value !== "string" &&
+                        attr.value != null &&
+                        attr.value.data?.estree
+                    ) {
+                        walkEstreeForSrc(attr.value.data.estree);
+                    } else if (isMdxJsxExpressionAttribute(attr) && attr.data?.estree) {
+                        walkEstreeForSrc(attr.data.estree);
+                    }
+                });
+            }
         }
 
-        if (isMdxExpression(node) && node.data?.estree) {
+        if (!skipEstree && isMdxExpression(node) && node.data?.estree) {
             walkEstreeForSrc(node.data.estree);
         }
 
-        if (replaced === original && filepaths.size === 0) {
-            return;
+        if (replaced !== original) {
+            edits.push({ start, end: start + length, replacement: replaced });
         }
-
-        replacedContent =
-            replacedContent.slice(0, start + offset) + replaced + replacedContent.slice(start + offset + length);
-        offset += replaced.length - length;
 
         return CONTINUE;
     });
 
+    const replacedContent = applyEdits(content, edits);
     return { filepaths: [...filepaths], markdown: grayMatter.stringify(replacedContent, data) };
 }
 
@@ -191,28 +263,21 @@ export function replaceImagePathsAndUrls(
     fileIdsMap: ReadonlyMap<AbsoluteFilePath, string>,
     markdownFilesToPathName: Record<AbsoluteFilePath, string>,
     metadata: AbsolutePathMetadata,
-    _context: TaskContext
+    context: TaskContext
 ): string {
     const { content, data } = grayMatter(markdown, {});
-    let replacedContent = content;
-
-    const tree = parseMarkdownToTree(content);
-
-    let offset = 0;
 
     function mapImage(image: string | undefined) {
         if (image == null || isExternalUrl(image) || isDataUrl(image)) {
             return undefined;
         }
 
-        // Handle absolute path
         if (isAbsolute(image)) {
             const absolutePath = AbsoluteFilePath.of(image);
             const fileId = fileIdsMap.get(absolutePath);
             return fileId ? `file:${fileId}` : undefined;
         }
 
-        // Handle relative path
         const resolvedPath = resolvePath(image, metadata);
         if (resolvedPath) {
             const fileId = fileIdsMap.get(resolvedPath);
@@ -225,12 +290,38 @@ export function replaceImagePathsAndUrls(
     visitFrontmatterImages(data, ["image", "og:image", "og:logo", "twitter:image"], mapImage);
     replaceFrontmatterImagesforLogo(data, mapImage);
 
-    visit(tree, (node) => {
+    const contentBytes = Buffer.byteLength(content, "utf8");
+    const isLargeFile = contentBytes > LARGE_FILE_BYTES;
+    const skipEstree = isLargeFile && LARGE_FILE_SKIP_ESTREE;
+
+    if (skipEstree) {
+        context.logger.debug(
+            `Large file fast path: skipping dynamic expression analysis for ${metadata.absolutePathToMarkdownFile} (${(contentBytes / 1024 / 1024).toFixed(2)} MB)`
+        );
+    }
+
+    const tree = parseMarkdownToTree(content);
+    const lineStarts = precomputeLineStarts(content);
+    const edits: Edit[] = [];
+
+    const nodeTypeFilter = (node: unknown): boolean => {
+        const n = node as { type?: string };
+        return (
+            n.type === "image" ||
+            n.type === "link" ||
+            n.type === "mdxJsxFlowElement" ||
+            n.type === "mdxJsxTextElement" ||
+            n.type === "mdxFlowExpression" ||
+            n.type === "mdxTextExpression"
+        );
+    };
+
+    visit(tree, nodeTypeFilter, (node) => {
         if (node.position == null) {
             return;
         }
-        const { start, length } = getPosition(content, node.position);
-        const original = replacedContent.slice(start + offset, start + offset + length);
+        const { start, length } = getPositionUsingLineStarts(lineStarts, node.position);
+        const original = content.slice(start, start + length);
         let replaced = original;
 
         function replaceSrc(src: string | undefined) {
@@ -270,35 +361,34 @@ export function replaceImagePathsAndUrls(
             const hrefAttr = node.attributes.find((attr) => attr.type === "mdxJsxAttribute" && attr.name === "href");
             replaceHref(trimAnchor(extractAttributeValueLiteral(hrefAttr?.value)));
 
-            node.attributes.forEach((attr) => {
-                if (
-                    isMdxJsxAttribute(attr) &&
-                    typeof attr.value !== "string" &&
-                    attr.value != null &&
-                    attr.value.data?.estree
-                ) {
-                    walkEstreeForSrcAndHref(attr.value.data.estree);
-                } else if (isMdxJsxExpressionAttribute(attr) && attr.data?.estree) {
-                    walkEstreeForSrcAndHref(attr.data.estree);
-                }
-            });
+            if (!skipEstree) {
+                node.attributes.forEach((attr) => {
+                    if (
+                        isMdxJsxAttribute(attr) &&
+                        typeof attr.value !== "string" &&
+                        attr.value != null &&
+                        attr.value.data?.estree
+                    ) {
+                        walkEstreeForSrcAndHref(attr.value.data.estree);
+                    } else if (isMdxJsxExpressionAttribute(attr) && attr.data?.estree) {
+                        walkEstreeForSrcAndHref(attr.data.estree);
+                    }
+                });
+            }
         }
 
-        if (isMdxExpression(node) && node.data?.estree) {
+        if (!skipEstree && isMdxExpression(node) && node.data?.estree) {
             walkEstreeForSrcAndHref(node.data.estree);
         }
 
-        if (replaced === original) {
-            return;
+        if (replaced !== original) {
+            edits.push({ start, end: start + length, replacement: replaced });
         }
-
-        replacedContent =
-            replacedContent.slice(0, start + offset) + replaced + replacedContent.slice(start + offset + length);
-        offset += replaced.length - length;
 
         return CONTINUE;
     });
 
+    const replacedContent = applyEdits(content, edits);
     return grayMatter.stringify(replacedContent, data);
 }
 
