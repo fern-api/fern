@@ -21,7 +21,6 @@ class SeedClient
 
     /**
      * @var array{
-     *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
      *   timeout?: float,
@@ -44,7 +43,6 @@ class SeedClient
      * @param string $token The token to use for authentication.
      * @param ?Environments $environment The environment to use for API requests.
      * @param ?array{
-     *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
      *   timeout?: float,
@@ -77,7 +75,7 @@ class SeedClient
             options: $this->options,
         );
 
-        $this->ec2 = new Ec2Client($this->client, $this->environment->ec2);
-        $this->s3 = new S3Client($this->client, $this->environment->s3);
+        $this->ec2 = new Ec2Client($this->client, $this->environment);
+        $this->s3 = new S3Client($this->client, $this->environment);
     }
 }

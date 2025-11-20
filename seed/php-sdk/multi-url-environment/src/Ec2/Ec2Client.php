@@ -4,6 +4,7 @@ namespace Seed\Ec2;
 
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Environments;
 use Seed\Ec2\Requests\BootInstanceRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -16,7 +17,6 @@ class Ec2Client
 {
     /**
      * @var array{
-     *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
      *   timeout?: float,
@@ -31,27 +31,26 @@ class Ec2Client
     private RawClient $client;
 
     /**
-     * @var string $baseUrl
+     * @var Environments $environment
      */
-    private string $baseUrl;
+    private Environments $environment;
 
     /**
      * @param RawClient $client
-     * @param string $baseUrl
+     * @param Environments $environment
      */
     public function __construct(
         RawClient $client,
-        string $baseUrl,
+        Environments $environment,
     ) {
         $this->client = $client;
-        $this->baseUrl = $baseUrl;
+        $this->environment = $environment;
         $this->options = [];
     }
 
     /**
      * @param BootInstanceRequest $request
      * @param ?array{
-     *   baseUrl?: string,
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
@@ -67,7 +66,7 @@ class Ec2Client
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->baseUrl,
+                    baseUrl: $this->environment->ec2,
                     path: "/ec2/boot",
                     method: HttpMethod::POST,
                     body: $request,

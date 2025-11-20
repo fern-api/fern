@@ -4,6 +4,7 @@ namespace Seed\S3;
 
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Environments;
 use Seed\S3\Requests\GetPresignedUrlRequest;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -18,7 +19,6 @@ class S3Client
 {
     /**
      * @var array{
-     *   baseUrl?: string,
      *   client?: ClientInterface,
      *   maxRetries?: int,
      *   timeout?: float,
@@ -33,27 +33,26 @@ class S3Client
     private RawClient $client;
 
     /**
-     * @var string $baseUrl
+     * @var Environments $environment
      */
-    private string $baseUrl;
+    private Environments $environment;
 
     /**
      * @param RawClient $client
-     * @param string $baseUrl
+     * @param Environments $environment
      */
     public function __construct(
         RawClient $client,
-        string $baseUrl,
+        Environments $environment,
     ) {
         $this->client = $client;
-        $this->baseUrl = $baseUrl;
+        $this->environment = $environment;
         $this->options = [];
     }
 
     /**
      * @param GetPresignedUrlRequest $request
      * @param ?array{
-     *   baseUrl?: string,
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
@@ -70,7 +69,7 @@ class S3Client
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
-                    baseUrl: $this->baseUrl,
+                    baseUrl: $this->environment->s3,
                     path: "/s3/presigned-url",
                     method: HttpMethod::POST,
                     body: $request,

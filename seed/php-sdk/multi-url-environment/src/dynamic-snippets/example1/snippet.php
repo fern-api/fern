@@ -3,13 +3,12 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Environments;
 use Seed\S3\Requests\GetPresignedUrlRequest;
 
 $client = new SeedClient(
     token: '<token>',
-    options: [
-        'baseUrl' => 'https://api.fern.com',
-    ],
+    environment: Environments::Production(),
 );
 $client->s3->getPresignedUrl(
     new GetPresignedUrlRequest([

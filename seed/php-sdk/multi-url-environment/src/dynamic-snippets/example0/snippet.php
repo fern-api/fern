@@ -3,13 +3,12 @@
 namespace Example;
 
 use Seed\SeedClient;
+use Seed\Environments;
 use Seed\Ec2\Requests\BootInstanceRequest;
 
 $client = new SeedClient(
     token: '<token>',
-    options: [
-        'baseUrl' => 'https://api.fern.com',
-    ],
+    environment: Environments::Production(),
 );
 $client->ec2->bootInstance(
     new BootInstanceRequest([

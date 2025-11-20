@@ -590,8 +590,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
             const hasEndpointBaseUrl = endpoint.baseUrl != null;
 
-            if (isMultiUrl && hasEndpointBaseUrl) {
-                writer.write("$this->baseUrl");
+            if (isMultiUrl && hasEndpointBaseUrl && endpoint.baseUrl != null) {
+                const baseUrlPropertyName = this.context.getBaseUrlPropertyName(endpoint.baseUrl);
+                writer.write(`$this->environment->${baseUrlPropertyName}`);
             } else {
                 const rawClientFieldName = this.context.rawClient.getFieldName();
                 const clientOptionsName = this.context.getClientOptionsName();

@@ -388,8 +388,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         const service = this.context.getHttpServiceOrThrow(subpackage.service);
                         const firstEndpoint = service.endpoints[0];
                         if (firstEndpoint?.baseUrl != null) {
-                            const baseUrlPropertyName = this.context.getBaseUrlPropertyName(firstEndpoint.baseUrl);
-                            subClientArgs.push(php.codeblock(`$this->environment->${baseUrlPropertyName}`));
+                            subClientArgs.push(php.codeblock(`$this->environment`));
                         } else {
                             subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
                         }

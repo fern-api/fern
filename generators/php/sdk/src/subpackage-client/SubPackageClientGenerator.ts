@@ -50,9 +50,9 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
         if (isMultiUrl && hasBaseUrl) {
             class_.addField(
                 php.field({
-                    name: "$baseUrl",
+                    name: "$environment",
                     access: "private",
-                    type: php.Type.string()
+                    type: php.Type.reference(this.context.getEnvironmentsClassReference())
                 })
             );
         }
@@ -96,8 +96,8 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
         if (isMultiUrl && hasBaseUrl) {
             parameters.push(
                 php.parameter({
-                    name: "baseUrl",
-                    type: php.Type.string()
+                    name: "environment",
+                    type: php.Type.reference(this.context.getEnvironmentsClassReference())
                 })
             );
         } else {
@@ -116,7 +116,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                 writer.writeLine(`$this->client = $${this.context.rawClient.getFieldName()};`);
 
                 if (isMultiUrl && hasBaseUrl) {
-                    writer.writeTextStatement("$this->baseUrl = $baseUrl");
+                    writer.writeTextStatement("$this->environment = $environment");
                     writer.writeNodeStatement(
                         php.codeblock((writer) => {
                             writer.write(`$this->${this.context.getClientOptionsName()} = []`);
@@ -143,8 +143,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                         const service = this.context.getHttpServiceOrThrow(subpackage.service);
                         const firstEndpoint = service.endpoints[0];
                         if (firstEndpoint?.baseUrl != null) {
-                            const baseUrlPropertyName = this.context.getBaseUrlPropertyName(firstEndpoint.baseUrl);
-                            subClientArgs.push(php.codeblock(`$this->baseUrl`));
+                            subClientArgs.push(php.codeblock(`$this->environment`));
                         } else {
                             subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
                         }

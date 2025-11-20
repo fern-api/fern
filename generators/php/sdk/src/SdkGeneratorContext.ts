@@ -283,47 +283,46 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getClientOptionsType(): php.Type {
-        return php.Type.typeDict(
-            [
-                {
-                    key: this.getBaseUrlOptionName(),
-                    valueType: php.Type.string(),
-                    optional: true
-                },
-                {
-                    key: this.getGuzzleClientOptionName(),
-                    valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
-                    optional: true
-                },
-                {
-                    key: this.getMaxRetriesOptionName(),
-                    valueType: php.Type.int(),
-                    optional: true
-                },
-                {
-                    key: this.getTimeoutOptionName(),
-                    valueType: php.Type.float(),
-                    optional: true
-                },
-                {
-                    key: this.getHeadersOptionName(),
-                    valueType: php.Type.map(php.Type.string(), php.Type.string()),
-                    optional: true
-                }
-            ],
-            {
-                multiline: true
-            }
-        );
-    }
-
-    public getRequestOptionsType({ endpoint }: { endpoint: HttpEndpoint }): php.Type {
+        const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
         const options = [
             {
+                key: this.getGuzzleClientOptionName(),
+                valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
+                optional: true
+            },
+            {
+                key: this.getMaxRetriesOptionName(),
+                valueType: php.Type.int(),
+                optional: true
+            },
+            {
+                key: this.getTimeoutOptionName(),
+                valueType: php.Type.float(),
+                optional: true
+            },
+            {
+                key: this.getHeadersOptionName(),
+                valueType: php.Type.map(php.Type.string(), php.Type.string()),
+                optional: true
+            }
+        ];
+
+        if (!isMultiUrl) {
+            options.unshift({
                 key: this.getBaseUrlOptionName(),
                 valueType: php.Type.string(),
                 optional: true
-            },
+            });
+        }
+
+        return php.Type.typeDict(options, {
+            multiline: true
+        });
+    }
+
+    public getRequestOptionsType({ endpoint }: { endpoint: HttpEndpoint }): php.Type {
+        const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
+        const options = [
             {
                 key: this.getMaxRetriesOptionName(),
                 valueType: php.Type.int(),
@@ -345,6 +344,15 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                 optional: true
             }
         ];
+
+        if (!isMultiUrl) {
+            options.unshift({
+                key: this.getBaseUrlOptionName(),
+                valueType: php.Type.string(),
+                optional: true
+            });
+        }
+
         if (!this.isMultipartEndpoint(endpoint)) {
             options.push({
                 key: this.getBodyPropertiesOptionName(),
