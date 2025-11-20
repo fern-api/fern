@@ -291,7 +291,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<
 
     private getRequestClassName(): string {
         const serviceLocation = this.context.getLocationForServiceId(this.authScheme.tokenEndpoint.endpoint.serviceId);
-        const endpointName = this.endpoint.name.pascalCase.safeName;
-        return `\\${serviceLocation.namespace}\\Requests\\${endpointName}Request`;
+        const requestName = this.endpoint.sdkRequest?.requestParameterName.pascalCase.safeName ?? this.endpoint.name.pascalCase.safeName;
+        return `\\${serviceLocation.namespace}\\Requests\\${requestName}Request`;
     }
 }
