@@ -11,7 +11,6 @@ ROOT_DIR="$DOCKER_DIR/../../../../.."
 export GENERATOR_VERSION="$TAG"
 
 pnpm install
-pnpm compile
 pnpm dist:cli
 rm -rf "$DOCKER_DIR/dist"
 mv "$DOCKER_DIR/../dist" "$DOCKER_DIR/dist"

@@ -23,8 +23,7 @@ test:
   local:
     workingDirectory: generators/typescript
     buildCommand:
-      - pnpm --filter @fern-typescript/express-generator-cli compile
-      - pnpm --filter @fern-typescript/express-generator-cli build
+      - pnpm --filter @fern-typescript/express-generator-cli dist:cli
     runCommand: node --enable-source-maps express/cli/dist/cli.cjs {CONFIG_PATH}
     env:
       NODE_ENV: test
