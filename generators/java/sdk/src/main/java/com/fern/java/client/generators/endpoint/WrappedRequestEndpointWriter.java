@@ -147,7 +147,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                         generatedWrappedRequest.requestBodyGetter().get());
                 initializeMultipartBody(fileUploadRequestBodyGetter, requestBodyCodeBlock, generatedObjectMapper);
                 inlinedRequestBodyBuilder =
-                        Optional.of(CodeBlock.of("$L.build()", variables.getOkhttpRequestBodyName()));
+                        Optional.of(CodeBlock.of("$L.build()", variables.getMultipartBodyPropertiesName()));
             }
         } else {
             if (httpEndpoint.getMethod().equals(HttpMethod.POST)
@@ -174,7 +174,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                     .add(")\n");
         } else {
             requestBodyCodeBlock.add(
-                    ".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getOkhttpRequestBodyName());
+                    ".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getMultipartBodyPropertiesName());
         }
         Optional<CodeBlock> maybeAcceptsHeader = AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint);
         requestBodyCodeBlock.add(
