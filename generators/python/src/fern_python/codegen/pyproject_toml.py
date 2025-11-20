@@ -229,10 +229,10 @@ packages = [
             deps = self.deps_to_string(self.dependencies)
             dev_deps = self.deps_to_string(self.dev_dependencies)
 
-            # Conditionally add types-requests for wire tests
+            # Conditionally add requests and types-requests for wire tests
             wire_test_deps = ""
             if self.enable_wire_tests:
-                wire_test_deps = 'types-requests = "^2.31.0"\n'
+                wire_test_deps = 'requests = "^2.31.0"\ntypes-requests = "^2.31.0"\n'
 
             return f"""
 [tool.poetry.dependencies]
