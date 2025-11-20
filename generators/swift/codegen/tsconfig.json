@@ -12,9 +12,6 @@
       "path": "../../../packages/commons/core-utils"
     },
     {
-      "path": "../../base"
-    },
-    {
       "path": "../../browser-compatible-base"
     }
   ]

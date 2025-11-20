@@ -3,11 +3,16 @@
 module Seed
   module NoReqBody
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::NoReqBody::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
       def get_with_no_request_body(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
@@ -29,6 +34,9 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [String]
       def post_with_no_request_body(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(

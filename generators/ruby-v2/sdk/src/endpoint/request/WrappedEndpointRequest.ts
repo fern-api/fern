@@ -36,7 +36,18 @@ export class WrappedEndpointRequest extends EndpointRequest {
     }
 
     public getParameterType(): ruby.Type {
-        return ruby.Type.void();
+        if (this.endpoint.requestBody?.type === "inlinedRequestBody") {
+            const wrapperRef = this.context.getRequestWrapperReference(this.serviceId, this.wrapper.wrapperName);
+            return ruby.Type.class_({ name: wrapperRef.name, modules: wrapperRef.modules });
+        }
+        if (
+            this.endpoint.requestBody?.type === "reference" &&
+            this.endpoint.requestBody.requestBodyType.type === "named"
+        ) {
+            const bodyTypeRef = this.context.getReferenceToTypeId(this.endpoint.requestBody.requestBodyType.typeId);
+            return ruby.Type.class_({ name: bodyTypeRef.name, modules: bodyTypeRef.modules });
+        }
+        return ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped());
     }
 
     public getQueryParameterCodeBlock(queryParameterBagName: string): QueryParameterCodeBlock | undefined {

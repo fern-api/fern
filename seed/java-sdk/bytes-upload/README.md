@@ -63,7 +63,7 @@ public class Example {
             .builder()
             .build();
 
-        client.service().upload();
+        client.service().upload("".getBytes());
     }
 }
 ```

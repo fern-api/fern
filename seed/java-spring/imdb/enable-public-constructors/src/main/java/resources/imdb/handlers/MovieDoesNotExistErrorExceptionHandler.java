@@ -14,6 +14,6 @@ import resources.imdb.exceptions.MovieDoesNotExistError;
 public final class MovieDoesNotExistErrorExceptionHandler {
   @ExceptionHandler(MovieDoesNotExistError.class)
   ResponseEntity<Object> handle(MovieDoesNotExistError movieDoesNotExistError) {
-    return new ResponseEntity<>(movieDoesNotExistError.getBody(), null, MovieDoesNotExistError.STATUS_CODE);
+    return ResponseEntity.status(MovieDoesNotExistError.STATUS_CODE).body(movieDoesNotExistError.getBody());
   }
 }

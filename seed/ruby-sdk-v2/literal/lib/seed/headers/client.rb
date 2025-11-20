@@ -3,11 +3,18 @@
 module Seed
   module Headers
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Headers::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Seed::Headers::Types::SendLiteralsInHeadersRequest]
+      # @option params [String] :endpoint_version
+      # @option params [bool] :async
+      #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
         _body_prop_names = %i[query]

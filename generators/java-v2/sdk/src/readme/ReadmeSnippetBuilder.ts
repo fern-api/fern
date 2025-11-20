@@ -40,7 +40,8 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         super({ endpointSnippets });
         this.context = context;
 
-        this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
+        this.isPaginationEnabled =
+            (context.config.generatePaginatedClients ?? false) || context.ir.sdkConfig.hasPaginatedEndpoints;
         this.endpointsById = this.buildEndpointsById();
         this.prerenderedSnippetsByEndpointId = this.buildPrerenderedSnippetsByEndpointId(endpointSnippets);
         this.defaultEndpointId = this.getDefaultEndpointIdWithMaybeEmptySnippets(endpointSnippets);
@@ -491,6 +492,33 @@ UpdateRequest request = UpdateRequest.builder()
         });
 
         const returnTypeClassReference = this.context.getReturnTypeForEndpoint(endpoint.endpoint);
+
+        // Check if this is custom pagination
+        const isCustomPagination = endpoint.endpoint.pagination?.type === "custom";
+
+        if (isCustomPagination) {
+            // For custom pagination, show bidirectional navigation
+            const customPagerClassName = this.context.customConfig?.["custom-pager-name"] ?? "CustomPager";
+
+            const snippet = java.codeblock((writer) => {
+                writer.write(`${customPagerClassName}<Item> page = client.listItems();`);
+                writer.newLine();
+                writer.newLine();
+                writer.writeLine("// Navigate forward through pages");
+                writer.controlFlow("while", java.codeblock("page.hasNext()"));
+                writer.writeLine("page = page.nextPage();");
+                writer.endControlFlow();
+                writer.newLine();
+                writer.writeLine("// Navigate backward through pages");
+                writer.controlFlow("if", java.codeblock("page.hasPrevious()"));
+                writer.writeLine("page = page.previousPage();");
+                writer.endControlFlow();
+            });
+
+            return this.renderSnippet(snippet);
+        }
+
+        // Standard pagination (cursor/offset)
         const paginationClassReference = java.Type.generic(this.context.getPaginationClassReference(), [
             returnTypeClassReference
         ]);

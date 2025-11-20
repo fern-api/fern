@@ -7,7 +7,8 @@ pub enum UnionWithPrimitive {
             value: i64,
         },
 
-        String {
+        #[serde(rename = "string")]
+        r#String {
             value: String,
         },
 }

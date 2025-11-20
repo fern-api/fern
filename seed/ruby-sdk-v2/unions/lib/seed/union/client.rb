@@ -3,11 +3,17 @@
 module Seed
   module Union
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Union::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [String] :id
+      #
       # @return [Seed::Union::Types::Shape]
       def get(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -29,6 +35,9 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Seed::Union::Types::Shape]
+      #
       # @return [bool]
       def update(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

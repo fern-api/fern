@@ -25,8 +25,17 @@
             "inline": undefined,
             "properties": {
               "sideLength": "double",
-              "type": "literal<"square">",
+              "type": "SquareType",
             },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "SquareType": {
+            "enum": [
+              "square",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -37,8 +46,17 @@
             "properties": {
               "base": "double",
               "height": "double",
-              "type": "literal<"triangle">",
+              "type": "TriangleType",
             },
+            "source": {
+              "openapi": "../openapi.json",
+            },
+          },
+          "TriangleType": {
+            "enum": [
+              "triangle",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.json",
             },
@@ -54,16 +72,28 @@
       square: Square
     source:
       openapi: ../openapi.json
+  TriangleType:
+    enum:
+      - triangle
+    inline: true
+    source:
+      openapi: ../openapi.json
   Triangle:
     properties:
-      type: literal<"triangle">
+      type: TriangleType
       base: double
       height: double
     source:
       openapi: ../openapi.json
+  SquareType:
+    enum:
+      - square
+    inline: true
+    source:
+      openapi: ../openapi.json
   Square:
     properties:
-      type: literal<"square">
+      type: SquareType
       sideLength: double
     source:
       openapi: ../openapi.json

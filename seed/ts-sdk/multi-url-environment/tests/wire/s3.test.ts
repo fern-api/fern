@@ -7,6 +7,7 @@ describe("S3Client", () => {
     test("getPresignedUrl", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedMultiUrlEnvironmentClient({
+            maxRetries: 0,
             token: "test",
             environment: { ec2: server.baseUrl, s3: server.baseUrl },
         });

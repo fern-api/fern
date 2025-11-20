@@ -697,11 +697,8 @@
           "request": {
             "properties": {
               "grant_type": {
-                "value": {
-                  "value": "client_credentials",
-                  "type": "string"
-                },
-                "type": "literal"
+                "value": "client_credentials",
+                "type": "enum"
               }
             },
             "type": "object"
@@ -728,11 +725,8 @@
                   "type": "enum"
                 },
                 "token_type": {
-                  "value": {
-                    "value": "bearer",
-                    "type": "string"
-                  },
-                  "type": "literal"
+                  "value": "bearer",
+                  "type": "enum"
                 }
               },
               "type": "object"
@@ -1908,13 +1902,20 @@
               "description": "Token type",
               "value": {
                 "description": "Token type",
-                "value": {
-                  "value": "bearer",
-                  "type": "string"
-                },
                 "generatedName": "AccessTokenTokenType",
+                "values": [
+                  {
+                    "generatedName": "bearer",
+                    "value": "bearer",
+                    "casing": {}
+                  }
+                ],
                 "groupName": [],
-                "type": "literal"
+                "source": {
+                  "file": "../openapi.json",
+                  "type": "openapi"
+                },
+                "type": "enum"
               },
               "groupName": [],
               "type": "optional"
@@ -1941,13 +1942,20 @@
             "key": "grant_type",
             "schema": {
               "description": "in: body",
-              "value": {
-                "value": "client_credentials",
-                "type": "string"
-              },
               "generatedName": "CreateAccessTokenRequestGrantType",
+              "values": [
+                {
+                  "generatedName": "client_credentials",
+                  "value": "client_credentials",
+                  "casing": {}
+                }
+              ],
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../openapi.json",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": []
           },

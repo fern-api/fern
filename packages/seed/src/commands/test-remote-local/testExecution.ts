@@ -224,37 +224,12 @@ async function compareResults(
 }
 
 /**
- * Recursively removes all .git folders from the specified directory
+ * Removes the top-level .git folder from the specified directory if it exists
  * This prevents git submodule warnings when committing test outputs
  */
 async function cleanupGitFolders(outputFolder: string, logger: Logger): Promise<void> {
     try {
-        const { readdir } = await import("fs/promises");
-        const gitFolders: string[] = [];
-
-        logger.debug(`Searching for .git folders in: ${outputFolder}`);
-
-        // Recursively find all .git directories
-        async function findGitFolders(dir: string): Promise<void> {
-            try {
-                const entries = await readdir(dir, { withFileTypes: true });
-                for (const entry of entries) {
-                    const fullPath = path.join(dir, entry.name);
-                    if (entry.isDirectory()) {
-                        if (entry.name === ".git") {
-                            gitFolders.push(fullPath);
-                            logger.debug(`  Found .git folder: ${fullPath}`);
-                        } else {
-                            // Recurse into subdirectories
-                            await findGitFolders(fullPath);
-                        }
-                    }
-                }
-            } catch (error) {
-                // Skip directories we can't read (e.g., permission issues)
-                logger.debug(`  Skipping directory ${dir}: ${error instanceof Error ? error.message : String(error)}`);
-            }
-        }
+        logger.debug(`Checking for top-level .git folder in: ${outputFolder}`);
 
         // Check if the directory exists first
         try {
@@ -264,17 +239,19 @@ async function cleanupGitFolders(outputFolder: string, logger: Logger): Promise<
             return;
         }
 
-        await findGitFolders(outputFolder);
-
-        if (gitFolders.length > 0) {
-            logger.debug(`Removing ${gitFolders.length} .git folder(s)...`);
-            for (const gitFolder of gitFolders) {
+        // Only check for .git at the top level of the output folder
+        const gitFolder = path.join(outputFolder, ".git");
+        try {
+            const gitStat = await stat(gitFolder);
+            if (gitStat.isDirectory()) {
+                logger.debug(`  Found .git folder: ${gitFolder}`);
                 logger.debug(`  Removing: ${gitFolder}`);
                 await rm(gitFolder, { recursive: true, force: true });
+                logger.debug(`Successfully removed .git folder`);
             }
-            logger.debug(`Successfully removed all .git folders`);
-        } else {
-            logger.debug(`No .git folders found in: ${outputFolder}`);
+        } catch (error) {
+            // .git folder doesn't exist, which is fine
+            logger.debug(`No .git folder found in: ${outputFolder}`);
         }
     } catch (error) {
         // Non-fatal - log warning but don't fail the test

@@ -4,11 +4,16 @@ module Seed
   module Endpoints
     module Primitive
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::Endpoints::Primitive::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [String]
         def get_and_return_string(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -29,6 +34,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Integer]
         def get_and_return_int(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -49,6 +57,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Integer]
         def get_and_return_long(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -69,6 +80,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [Integer]
         def get_and_return_double(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -89,6 +103,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [bool]
         def get_and_return_bool(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -109,6 +126,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [String]
         def get_and_return_datetime(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -129,6 +149,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [String]
         def get_and_return_date(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -149,6 +172,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [String]
         def get_and_return_uuid(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -169,6 +195,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        #
         # @return [String]
         def get_and_return_base_64(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(

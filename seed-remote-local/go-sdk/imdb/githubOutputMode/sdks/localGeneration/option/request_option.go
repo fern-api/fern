@@ -3,7 +3,7 @@
 package option
 
 import (
-	core "github.com/fern-api/test-remote-local-sdk/core"
+	core "github.com/fern-api/empty/v7/core"
 	http "net/http"
 	url "net/url"
 )

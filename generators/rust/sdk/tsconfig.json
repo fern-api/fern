@@ -14,7 +14,13 @@
       "path": "../model"
     },
     {
+      "path": "../dynamic-snippets"
+    },
+    {
       "path": "../base"
+    },
+    {
+      "path": "../../../packages/commons/mock-utils"
     },
     {
       "path": "../../../packages/cli/logger"
@@ -23,13 +29,10 @@
       "path": "../../../packages/commons/fs-utils"
     },
     {
-      "path": "../../base"
-    },
-    {
       "path": "../../../packages/commons/core-utils"
     },
     {
-      "path": "../dynamic-snippets"
+      "path": "../../base"
     }
   ]
 }

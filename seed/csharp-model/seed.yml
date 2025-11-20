@@ -20,6 +20,9 @@ test:
   docker:
     image: fernapi/fern-csharp-model:latest
     command: pnpm --filter @fern-api/fern-csharp-model dockerTagLatest
+  podman:
+    image: fernapi/fern-csharp-model:latest
+    command: pnpm --filter @fern-api/fern-csharp-model podmanTagLatest
   local:
     workingDirectory: generators/csharp
     buildCommand:
@@ -45,7 +48,7 @@ fixtures:
         experimental-enable-forward-compatible-enums: false
       outputFolder: plain-enums
 scripts:
-  - docker: fernapi/csharp-seed
+  - image: fernapi/csharp-seed
     commands:
       - dotnet restore src
       - dotnet build src -c Release --no-restore

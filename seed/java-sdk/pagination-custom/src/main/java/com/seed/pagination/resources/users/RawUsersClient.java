@@ -10,6 +10,7 @@ import com.seed.pagination.core.RequestOptions;
 import com.seed.pagination.core.SeedPaginationApiException;
 import com.seed.pagination.core.SeedPaginationException;
 import com.seed.pagination.core.SeedPaginationHttpResponse;
+import com.seed.pagination.core.pagination.CustomPager;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequestCustom;
 import com.seed.pagination.types.UsernameCursor;
 import java.io.IOException;
@@ -27,15 +28,15 @@ public class RawUsersClient {
         this.clientOptions = clientOptions;
     }
 
-    public SeedPaginationHttpResponse<UsernameCursor> listUsernamesCustom() {
+    public SeedPaginationHttpResponse<CustomPager<String>> listUsernamesCustom() {
         return listUsernamesCustom(ListUsernamesRequestCustom.builder().build());
     }
 
-    public SeedPaginationHttpResponse<UsernameCursor> listUsernamesCustom(ListUsernamesRequestCustom request) {
+    public SeedPaginationHttpResponse<CustomPager<String>> listUsernamesCustom(ListUsernamesRequestCustom request) {
         return listUsernamesCustom(request, null);
     }
 
-    public SeedPaginationHttpResponse<UsernameCursor> listUsernamesCustom(
+    public SeedPaginationHttpResponse<CustomPager<String>> listUsernamesCustom(
             ListUsernamesRequestCustom request, RequestOptions requestOptions) {
         HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
@@ -60,7 +61,8 @@ public class RawUsersClient {
             if (response.isSuccessful()) {
                 UsernameCursor parsedResponse =
                         ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsernameCursor.class);
-                return new SeedPaginationHttpResponse<>(parsedResponse, response);
+                return new SeedPaginationHttpResponse<>(
+                        CustomPager.create(parsedResponse, clientOptions.httpClient(), requestOptions), response);
             }
             Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
             throw new SeedPaginationApiException(

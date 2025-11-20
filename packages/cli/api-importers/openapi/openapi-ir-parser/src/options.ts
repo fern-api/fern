@@ -99,7 +99,7 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     useTitlesAsName: false,
     audiences: undefined,
     optionalAdditionalProperties: true,
-    coerceEnumsToLiterals: true,
+    coerceEnumsToLiterals: false,
     respectReadonlySchemas: false,
     respectNullableSchemas: true,
     onlyIncludeReferencedSchemas: false,
