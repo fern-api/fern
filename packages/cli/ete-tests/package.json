@@ -33,7 +33,7 @@
   },
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
-    "@fern-api/fdr-sdk": "0.140.4-906563069",
+    "@fern-api/fdr-sdk": "0.141.0-5b515bbf0",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",

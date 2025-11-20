@@ -11,6 +11,7 @@ import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.MethodSpec;
 import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeName;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -60,9 +61,18 @@ public final class SyncHttpResponseParserGenerator extends AbstractHttpResponseP
             MethodSpec endpointWithRequestOptions,
             List<String> paramNamesWoBody,
             ParameterSpec bodyParameterSpec) {
-        endpointWithoutRequestBuilder.addStatement(
-                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
-                bodyParameterSpec.type);
+        // Handle parameterized types (e.g., OptionalNullable<T>) which need type witness syntax
+        if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
+            ParameterizedTypeName paramType = (ParameterizedTypeName) bodyParameterSpec.type;
+            endpointWithoutRequestBuilder.addStatement(
+                    "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
+                    paramType.rawType,
+                    paramType.typeArguments.get(0));
+        } else {
+            endpointWithoutRequestBuilder.addStatement(
+                    "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
+                    bodyParameterSpec.type);
+        }
     }
 
     @Override

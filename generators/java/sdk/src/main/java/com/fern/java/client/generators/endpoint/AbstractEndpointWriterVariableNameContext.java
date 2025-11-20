@@ -153,7 +153,7 @@ public abstract class AbstractEndpointWriterVariableNameContext {
     }
 
     protected final String getMultipartBodyPropertiesName() {
-        return getVariableName("body");
+        return getVariableName("multipartBodyBuilder");
     }
 
     protected final String getStartingAfterVariableName() {

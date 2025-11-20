@@ -112,7 +112,7 @@ impl NullableOptionalClient2 {
                     .int("limit", request.limit.clone())
                     .int("offset", request.offset.clone())
                     .bool("includeDeleted", request.include_deleted.clone())
-                    .string("sortBy", request.sort_by.clone())
+                    .serialize("sortBy", request.sort_by.clone())
                     .build(),
                 options,
             )
@@ -142,7 +142,7 @@ impl NullableOptionalClient2 {
                     .structured_query("query", request.query.clone())
                     .string("department", request.department.clone())
                     .string("role", request.role.clone())
-                    .bool("isActive", request.is_active.clone())
+                    .serialize("isActive", request.is_active.clone())
                     .build(),
                 options,
             )

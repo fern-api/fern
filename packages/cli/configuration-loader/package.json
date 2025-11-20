@@ -34,7 +34,7 @@
   "dependencies": {
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "0.140.4-906563069",
+    "@fern-api/fdr-sdk": "0.141.0-5b515bbf0",
     "@fern-api/fern-definition-schema": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/github": "workspace:*",
