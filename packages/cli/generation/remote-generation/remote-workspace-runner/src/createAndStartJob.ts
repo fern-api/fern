@@ -20,10 +20,8 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
-import { mkdir, readFile, writeFile } from "fs/promises";
+import { mkdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
-import { relative } from "path";
-import { create as createTar } from "tar";
 import tmp from "tmp-promise";
 import urlJoin from "url-join";
 
@@ -136,28 +134,6 @@ async function createJob({
                 RelativeFilePath.of(PROJECT_CONFIG_FILENAME)
             );
             await writeFile(absolutePathToFernConfigJson, JSON.stringify(projectConfig.rawConfig, undefined, 2));
-            // write sources
-            // TODO: We need handle what happens with source files outside of the fern directory
-            try {
-                const sources = workspace.getSources();
-                for (const source of sources) {
-                    const sourceContents = await readFile(source.absoluteFilePath);
-                    const relativeLocation = relative(workspace.absoluteFilePath, source.absoluteFilePath);
-                    const absolutePathToSourceFile = join(
-                        absolutePathToTmpFernDirectory,
-                        RelativeFilePath.of(relativeLocation)
-                    );
-                    // Make sure the directory exists
-                    await mkdir(dirname(absolutePathToSourceFile), { recursive: true });
-
-                    await writeFile(absolutePathToSourceFile, new Uint8Array(sourceContents));
-                }
-            } catch (error) {
-                context.logger.debug(`Failed to write source files to disk, continuing: ${error}`);
-            }
-
-            const tarPath = join(absolutePathToTmpDir, RelativeFilePath.of("definition.tgz"));
-            await createTar({ file: tarPath, cwd: absolutePathToTmpFernDirectory }, ["."]);
         } catch (error) {
             context.logger.debug(`Failed to create definition tarball, continuing: ${error}`);
         }
