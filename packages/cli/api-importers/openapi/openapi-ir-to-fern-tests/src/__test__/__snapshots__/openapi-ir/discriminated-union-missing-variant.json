@@ -1,0 +1,507 @@
+{
+  "title": "Discriminated Union with Missing Discriminant Properties",
+  "description": "Test case for discriminated union with discriminator mapping references that don't match actual schema names",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "changeConnectorStatus",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "ChangeConnectorStatusRequest",
+      "request": {
+        "schema": {
+          "generatedName": "ChangeConnectorStatusRequest",
+          "schema": "ConnectorRequest",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Success",
+        "schema": {
+          "generatedName": "ChangeConnectorStatusResponse",
+          "schema": "ConnectorResponse",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [
+          {
+            "name": "aws_example",
+            "value": {
+              "compute_type": "AWS",
+              "connector_type": "AWS",
+              "credentials_secret_arn": "arn:aws:secretsmanager:us-east-1:123456789012:secret:MySecret",
+              "account_id": "123456789012"
+            }
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/connectors",
+      "examples": [
+        {
+          "name": "aws_example",
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {
+              "compute_properties": {
+                "value": {
+                  "value": {
+                    "compute_type": {
+                      "value": {
+                        "value": "AWS",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              },
+              "deployment_metadata": {
+                "value": {
+                  "value": {
+                    "connector_type": {
+                      "value": {
+                        "value": "AWS",
+                        "type": "string"
+                      },
+                      "type": "primitive"
+                    }
+                  },
+                  "type": "discriminated"
+                },
+                "type": "oneOf"
+              }
+            },
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "compute_properties": {
+                  "value": {
+                    "value": {
+                      "compute_type": {
+                        "value": {
+                          "value": "AWS",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "discriminated"
+                  },
+                  "type": "oneOf"
+                },
+                "deployment_metadata": {
+                  "value": {
+                    "value": {
+                      "connector_type": {
+                        "value": {
+                          "value": "AWS",
+                          "type": "string"
+                        },
+                        "type": "primitive"
+                      }
+                    },
+                    "type": "discriminated"
+                  },
+                  "type": "oneOf"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "api_ComputeConnectorPropertiesAWS": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "apiComputeConnectorPropertiesAwsComputeType",
+            "key": "compute_type",
+            "schema": {
+              "value": {
+                "value": "AWS",
+                "type": "string"
+              },
+              "generatedName": "ApiComputeConnectorPropertiesAwsComputeType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiComputeConnectorPropertiesAwsCredentialsSecretArn",
+            "key": "credentials_secret_arn",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ApiComputeConnectorPropertiesAwsCredentialsSecretArn",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiComputeConnectorPropertiesAwsAccountId",
+            "key": "account_id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ApiComputeConnectorPropertiesAwsAccountId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ApiComputeConnectorPropertiesAws",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "api_ComputeConnectorPropertiesAzure": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "apiComputeConnectorPropertiesAzureComputeType",
+            "key": "compute_type",
+            "schema": {
+              "value": {
+                "value": "AZURE",
+                "type": "string"
+              },
+              "generatedName": "ApiComputeConnectorPropertiesAzureComputeType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiComputeConnectorPropertiesAzureSubscriptionId",
+            "key": "subscription_id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ApiComputeConnectorPropertiesAzureSubscriptionId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiComputeConnectorPropertiesAzureResourceGroup",
+            "key": "resource_group",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ApiComputeConnectorPropertiesAzureResourceGroup",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ApiComputeConnectorPropertiesAzure",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "api_AWSDeploymentMetadata": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "apiAwsDeploymentMetadataConnectorType",
+            "key": "connector_type",
+            "schema": {
+              "value": {
+                "value": "AWS",
+                "type": "string"
+              },
+              "generatedName": "ApiAwsDeploymentMetadataConnectorType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiAwsDeploymentMetadataRegion",
+            "key": "region",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ApiAwsDeploymentMetadataRegion",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiAwsDeploymentMetadataVpcId",
+            "key": "vpc_id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ApiAwsDeploymentMetadataVpcId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ApiAwsDeploymentMetadata",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "api_AzureDeploymentMetadata": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "apiAzureDeploymentMetadataConnectorType",
+            "key": "connector_type",
+            "schema": {
+              "value": {
+                "value": "AZURE",
+                "type": "string"
+              },
+              "generatedName": "ApiAzureDeploymentMetadataConnectorType",
+              "groupName": [],
+              "type": "literal"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiAzureDeploymentMetadataSubscriptionId",
+            "key": "subscription_id",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ApiAzureDeploymentMetadataSubscriptionId",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "apiAzureDeploymentMetadataResourceGroup",
+            "key": "resource_group",
+            "schema": {
+              "schema": {
+                "type": "string"
+              },
+              "generatedName": "ApiAzureDeploymentMetadataResourceGroup",
+              "groupName": [],
+              "type": "primitive"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ApiAzureDeploymentMetadata",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ConnectorRequest": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "connectorRequestComputeProperties",
+            "key": "compute_properties",
+            "schema": {
+              "value": {
+                "commonProperties": [],
+                "discriminantProperty": "compute_type",
+                "generatedName": "ConnectorRequestComputeProperties",
+                "schemas": {
+                  "AWS": {
+                    "generatedName": "ComponentsSchemasComputeConnectorPropertiesAws",
+                    "schema": "ComputeConnectorPropertiesAWS",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "AZURE": {
+                    "generatedName": "ComponentsSchemasComputeConnectorPropertiesAzure",
+                    "schema": "ComputeConnectorPropertiesAzure",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  }
+                },
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "discriminated"
+              },
+              "type": "oneOf"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "connectorRequestDeploymentMetadata",
+            "key": "deployment_metadata",
+            "schema": {
+              "value": {
+                "commonProperties": [],
+                "discriminantProperty": "connector_type",
+                "generatedName": "ConnectorRequestDeploymentMetadata",
+                "schemas": {
+                  "AWS": {
+                    "generatedName": "ComponentsSchemasAwsDeploymentMetadata",
+                    "schema": "AWSDeploymentMetadata",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "AZURE": {
+                    "generatedName": "ComponentsSchemasAzureDeploymentMetadata",
+                    "schema": "AzureDeploymentMetadata",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  }
+                },
+                "groupName": [],
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "discriminated"
+              },
+              "type": "oneOf"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "ConnectorRequest",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      },
+      "ConnectorResponse": {
+        "generatedName": "ConnectorResponse",
+        "schema": "ConnectorRequest",
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "reference"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}
