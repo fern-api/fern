@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix Maven publish mode to use Java 17 toolchain and add missing Jakarta dependencies (jakarta.validation-api, jakarta.ws.rs-api) required for Spring Boot 3 compilation.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+  version: 2.0.0-rc2
+
+- changelogEntry:
+    - summary: |
         Add support for Maven publish mode to enable publishing Spring server artifacts.
       type: feat
   createdAt: "2025-11-20"
