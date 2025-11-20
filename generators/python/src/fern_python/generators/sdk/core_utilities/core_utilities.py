@@ -675,14 +675,9 @@ class CoreUtilities:
             ),
         )
 
-    def get_paginator_type(
-        self, inner_type: AST.TypeHint, response_type: AST.TypeHint, is_async: bool, is_custom: bool = False
-    ) -> AST.TypeHint:
-        pager_reference = (
-            self.get_custom_paginator_reference(is_async) if is_custom else self.get_paginator_reference(is_async)
-        )
+    def get_paginator_type(self, inner_type: AST.TypeHint, response_type: AST.TypeHint, is_async: bool) -> AST.TypeHint:
         return AST.TypeHint(
-            type=pager_reference,
+            type=self.get_paginator_reference(is_async),
             type_parameters=[AST.TypeParameter(inner_type), AST.TypeParameter(response_type)],
         )
 
