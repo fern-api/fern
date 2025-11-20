@@ -1,4 +1,0 @@
-types:
-  Pointer:
-    properties:
-      name: string

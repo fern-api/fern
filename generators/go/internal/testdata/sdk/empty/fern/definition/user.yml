@@ -1,5 +1,0 @@
-# Simple test for generating a client without any endpoints.
-service:
-  base-path: /users
-  auth: false
-  endpoints: {}
