@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support sidebar title overrides in the frontmatter of markdown files.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.0-rc2
+
+- changelogEntry:
+    - summary: |
         Fix migration directory name to match exported version (2.0.0-rc0).
       type: fix
   irVersion: 61
