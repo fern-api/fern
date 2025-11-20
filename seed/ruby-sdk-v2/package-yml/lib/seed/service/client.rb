@@ -11,8 +11,9 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :id
+      # @option params [String] :nested_id
       #
       # @return [untyped]
       def nop(request_options: {}, **params)

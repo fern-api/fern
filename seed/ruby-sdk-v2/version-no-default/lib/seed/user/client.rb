@@ -11,8 +11,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::User::Types::UserId] :user_id
       #
       # @return [Seed::User::Types::User]
       def get_user(request_options: {}, **params)

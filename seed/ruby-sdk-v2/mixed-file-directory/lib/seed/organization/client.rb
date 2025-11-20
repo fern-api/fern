@@ -13,7 +13,6 @@ module Seed
       # Create a new organization.
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Organization::Types::CreateOrganizationRequest]
       #
       # @return [Seed::Organization::Types::Organization]

@@ -15,7 +15,6 @@ module Seed
           # Returns lightweight versions of all problems
           #
           # @param request_options [Seed::RequestOptions]
-          #
           # @param params [Hash[untyped, untyped]]
           #
           # @return [Array[Seed::V2::V3::Problem::Types::LightweightProblemInfoV2]]
@@ -40,7 +39,6 @@ module Seed
           # Returns latest versions of all problems
           #
           # @param request_options [Seed::RequestOptions]
-          #
           # @param params [Hash[untyped, untyped]]
           #
           # @return [Array[Seed::V2::V3::Problem::Types::ProblemInfoV2]]
@@ -65,8 +63,8 @@ module Seed
           # Returns latest version of a problem
           #
           # @param request_options [Seed::RequestOptions]
-          #
           # @param params [Hash[untyped, untyped]]
+          # @option params [Seed::Commons::Types::ProblemId] :problem_id
           #
           # @return [Seed::V2::V3::Problem::Types::ProblemInfoV2]
           def get_latest_problem(request_options: {}, **params)
@@ -92,8 +90,9 @@ module Seed
           # Returns requested version of a problem
           #
           # @param request_options [Seed::RequestOptions]
-          #
           # @param params [Hash[untyped, untyped]]
+          # @option params [Seed::Commons::Types::ProblemId] :problem_id
+          # @option params [Integer] :problem_version
           #
           # @return [Seed::V2::V3::Problem::Types::ProblemInfoV2]
           def get_problem_version(request_options: {}, **params)

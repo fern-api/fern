@@ -12,7 +12,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Seed::Types::Union::Types::Animal]
         #
         # @return [Seed::Types::Union::Types::Animal]

@@ -11,8 +11,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :endpoint_param
       #
       # @return [untyped]
       def post(request_options: {}, **params)

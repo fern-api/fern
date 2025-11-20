@@ -11,8 +11,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::Types::Types::MovieId] :movie_id
       #
       # @return [Seed::Types::Types::Movie]
       def get_movie(request_options: {}, **params)
@@ -36,7 +36,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Types::Types::Movie]
       #
       # @return [String]
@@ -62,8 +61,10 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [bool | nil] :shallow
+      # @option params [String | nil] :tag
+      # @option params [String] :x_api_version
       #
       # @return [Seed::Types::Types::Metadata]
       def get_metadata(request_options: {}, **params)
@@ -95,7 +96,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Types::Types::BigEntity]
       #
       # @return [Seed::Types::Types::Response]
@@ -121,7 +121,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]
