@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Bump generator CLI version to publish new Docker image.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+  version: 1.8.4
+
+- changelogEntry:
+    - summary: |
         Fixed nullable annotation generation in builder setters when `use-nullable-annotation` is enabled.
         Builder setter parameters for nullable fields now correctly use `@org.jetbrains.annotations.Nullable`
         instead of incorrectly attempting to use the `Nullable<T>` container class as an annotation.

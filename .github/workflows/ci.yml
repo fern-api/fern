@@ -40,6 +40,18 @@ jobs:
       - name: Check dependencies
         run: pnpm depcheck
 
+  validate-cli-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Validate CLI dependencies
+        run: node scripts/validate-cli-dependencies.js
+
   lint:
     runs-on: ubuntu-latest
     steps:

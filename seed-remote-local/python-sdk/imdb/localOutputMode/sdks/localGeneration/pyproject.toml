@@ -3,7 +3,7 @@ name = "default_package_name"
 
 [tool.poetry]
 name = "default_package_name"
-version = "0.0.0"
+version = "7.7.7"
 description = ""
 readme = "README.md"
 authors = []

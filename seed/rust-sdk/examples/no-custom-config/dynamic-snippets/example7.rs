@@ -11,6 +11,12 @@ async fn main() {
     client
         .file
         .service
-        .get_file(&"filename".to_string(), None)
+        .get_file(
+            &"filename".to_string(),
+            Some(
+                RequestOptions::new()
+                    .additional_header("X-File-API-Version", "X-File-API-Version".to_string()),
+            ),
+        )
         .await;
 }

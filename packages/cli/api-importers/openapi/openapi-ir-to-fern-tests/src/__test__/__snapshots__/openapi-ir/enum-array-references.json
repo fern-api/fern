@@ -1,0 +1,673 @@
+{
+  "title": "Enum Array Reference Test API",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "summary": "Get filters with array of enum references",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [
+        {
+          "description": "Filter by quantity units",
+          "name": "quantityUnitFilter",
+          "schema": {
+            "generatedName": "GetFiltersRequestQuantityUnitFilter",
+            "value": {
+              "value": {
+                "generatedName": "GetFiltersRequestQuantityUnitFilterItem",
+                "schema": "QuantityUnit",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "generatedName": "GetFiltersRequestQuantityUnitFilter",
+              "groupName": [],
+              "type": "array"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        },
+        {
+          "description": "Filter by status",
+          "name": "statusFilter",
+          "schema": {
+            "generatedName": "GetFiltersRequestStatusFilter",
+            "value": {
+              "value": {
+                "generatedName": "GetFiltersRequestStatusFilterItem",
+                "schema": "OrderStatus",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "generatedName": "GetFiltersRequestStatusFilter",
+              "groupName": [],
+              "type": "array"
+            },
+            "groupName": [],
+            "type": "optional"
+          },
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          }
+        }
+      ],
+      "headers": [],
+      "generatedRequestName": "GetFiltersRequest",
+      "response": {
+        "description": "Successful response",
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "getFiltersResponseData",
+              "key": "data",
+              "schema": {
+                "generatedName": "GetFiltersResponseData",
+                "value": {
+                  "value": {
+                    "generatedName": "GetFiltersResponseDataItem",
+                    "schema": "Product",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "GetFiltersResponseData",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "GetFiltersResponse",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 200,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/filters",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "response": {
+            "value": {
+              "properties": {
+                "data": {
+                  "value": [
+                    {
+                      "properties": {
+                        "id": {
+                          "value": {
+                            "value": "id",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "name": {
+                          "value": {
+                            "value": "name",
+                            "type": "string"
+                          },
+                          "type": "primitive"
+                        },
+                        "category": {
+                          "value": "ELECTRONICS",
+                          "type": "enum"
+                        },
+                        "quantityUnit": {
+                          "value": "QUANTITY_UNIT_UNSPECIFIED",
+                          "type": "enum"
+                        },
+                        "status": {
+                          "value": "PENDING",
+                          "type": "enum"
+                        },
+                        "allowedUnits": {
+                          "value": [
+                            {
+                              "value": "QUANTITY_UNIT_UNSPECIFIED",
+                              "type": "enum"
+                            }
+                          ],
+                          "type": "array"
+                        }
+                      },
+                      "type": "object"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "summary": "Create product with enum references",
+      "audiences": [],
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "PostProductsRequest",
+      "request": {
+        "schema": {
+          "allOf": [],
+          "properties": [
+            {
+              "conflict": {},
+              "generatedName": "postProductsRequestName",
+              "key": "name",
+              "schema": {
+                "generatedName": "PostProductsRequestName",
+                "value": {
+                  "schema": {
+                    "type": "string"
+                  },
+                  "generatedName": "PostProductsRequestName",
+                  "groupName": [],
+                  "type": "primitive"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "postProductsRequestCategory",
+              "key": "category",
+              "schema": {
+                "generatedName": "PostProductsRequestCategory",
+                "value": {
+                  "generatedName": "PostProductsRequestCategory",
+                  "schema": "ProductCategory",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "type": "optional"
+              },
+              "audiences": [],
+              "readonly": false,
+              "writeonly": false
+            },
+            {
+              "conflict": {},
+              "generatedName": "postProductsRequestAllowedUnits",
+              "key": "allowedUnits",
+              "schema": {
+                "generatedName": "PostProductsRequestAllowedUnits",
+                "value": {
+                  "value": {
+                    "generatedName": "PostProductsRequestAllowedUnitsItem",
+                    "schema": "QuantityUnit",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "PostProductsRequestAllowedUnits",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            },
+            {
+              "conflict": {},
+              "generatedName": "postProductsRequestValidStatuses",
+              "key": "validStatuses",
+              "schema": {
+                "generatedName": "PostProductsRequestValidStatuses",
+                "value": {
+                  "value": {
+                    "generatedName": "PostProductsRequestValidStatusesItem",
+                    "schema": "OrderStatus",
+                    "source": {
+                      "file": "../openapi.yml",
+                      "type": "openapi"
+                    },
+                    "type": "reference"
+                  },
+                  "generatedName": "PostProductsRequestValidStatuses",
+                  "groupName": [],
+                  "type": "array"
+                },
+                "groupName": [],
+                "type": "optional"
+              },
+              "audiences": []
+            }
+          ],
+          "allOfPropertyConflicts": [],
+          "generatedName": "PostProductsRequest",
+          "groupName": [],
+          "additionalProperties": false,
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "object"
+        },
+        "contentType": "application/json",
+        "fullExamples": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "json"
+      },
+      "response": {
+        "description": "Product created",
+        "schema": {
+          "generatedName": "PostProductsResponse",
+          "schema": "Product",
+          "source": {
+            "file": "../openapi.yml",
+            "type": "openapi"
+          },
+          "type": "reference"
+        },
+        "fullExamples": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "statusCode": 201,
+        "type": "json"
+      },
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "POST",
+      "path": "/products",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "request": {
+            "properties": {},
+            "type": "object"
+          },
+          "response": {
+            "value": {
+              "properties": {
+                "id": {
+                  "value": {
+                    "value": "id",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "name": {
+                  "value": {
+                    "value": "name",
+                    "type": "string"
+                  },
+                  "type": "primitive"
+                },
+                "category": {
+                  "value": "ELECTRONICS",
+                  "type": "enum"
+                },
+                "quantityUnit": {
+                  "value": "QUANTITY_UNIT_UNSPECIFIED",
+                  "type": "enum"
+                },
+                "status": {
+                  "value": "PENDING",
+                  "type": "enum"
+                },
+                "allowedUnits": {
+                  "value": [
+                    {
+                      "value": "QUANTITY_UNIT_UNSPECIFIED",
+                      "type": "enum"
+                    }
+                  ],
+                  "type": "array"
+                }
+              },
+              "type": "object"
+            },
+            "type": "withoutStreaming"
+          },
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {
+      "QuantityUnit": {
+        "description": "Units for measuring quantity",
+        "generatedName": "QuantityUnit",
+        "values": [
+          {
+            "generatedName": "QUANTITY_UNIT_UNSPECIFIED",
+            "value": "QUANTITY_UNIT_UNSPECIFIED",
+            "casing": {}
+          },
+          {
+            "generatedName": "QUANTITY_UNIT_COUNT",
+            "value": "QUANTITY_UNIT_COUNT",
+            "casing": {}
+          },
+          {
+            "generatedName": "QUANTITY_UNIT_GALLONS",
+            "value": "QUANTITY_UNIT_GALLONS",
+            "casing": {}
+          },
+          {
+            "generatedName": "QUANTITY_UNIT_POD",
+            "value": "QUANTITY_UNIT_POD",
+            "casing": {}
+          },
+          {
+            "generatedName": "QUANTITY_UNIT_PALLET",
+            "value": "QUANTITY_UNIT_PALLET",
+            "casing": {}
+          },
+          {
+            "generatedName": "QUANTITY_UNIT_SET",
+            "value": "QUANTITY_UNIT_SET",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "OrderStatus": {
+        "description": "Status of an order",
+        "generatedName": "OrderStatus",
+        "values": [
+          {
+            "generatedName": "PENDING",
+            "value": "PENDING",
+            "casing": {}
+          },
+          {
+            "generatedName": "PROCESSING",
+            "value": "PROCESSING",
+            "casing": {}
+          },
+          {
+            "generatedName": "SHIPPED",
+            "value": "SHIPPED",
+            "casing": {}
+          },
+          {
+            "generatedName": "DELIVERED",
+            "value": "DELIVERED",
+            "casing": {}
+          },
+          {
+            "generatedName": "CANCELLED",
+            "value": "CANCELLED",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "ProductCategory": {
+        "description": "Category of a product",
+        "generatedName": "ProductCategory",
+        "values": [
+          {
+            "generatedName": "ELECTRONICS",
+            "value": "ELECTRONICS",
+            "casing": {}
+          },
+          {
+            "generatedName": "CLOTHING",
+            "value": "CLOTHING",
+            "casing": {}
+          },
+          {
+            "generatedName": "HOME_GARDEN",
+            "value": "HOME_GARDEN",
+            "casing": {}
+          },
+          {
+            "generatedName": "BOOKS",
+            "value": "BOOKS",
+            "casing": {}
+          },
+          {
+            "generatedName": "TOYS",
+            "value": "TOYS",
+            "casing": {}
+          }
+        ],
+        "groupName": [],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "Product": {
+        "allOf": [],
+        "properties": [
+          {
+            "conflict": {},
+            "generatedName": "productId",
+            "key": "id",
+            "schema": {
+              "generatedName": "ProductId",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ProductId",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "productName",
+            "key": "name",
+            "schema": {
+              "generatedName": "ProductName",
+              "value": {
+                "schema": {
+                  "type": "string"
+                },
+                "generatedName": "ProductName",
+                "groupName": [],
+                "type": "primitive"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          },
+          {
+            "conflict": {},
+            "generatedName": "productCategory",
+            "key": "category",
+            "schema": {
+              "generatedName": "ProductCategory",
+              "value": {
+                "generatedName": "ProductCategory",
+                "schema": "ProductCategory",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "productQuantityUnit",
+            "key": "quantityUnit",
+            "schema": {
+              "generatedName": "ProductQuantityUnit",
+              "value": {
+                "generatedName": "ProductQuantityUnit",
+                "schema": "QuantityUnit",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "productStatus",
+            "key": "status",
+            "schema": {
+              "generatedName": "ProductStatus",
+              "value": {
+                "generatedName": "ProductStatus",
+                "schema": "OrderStatus",
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "reference"
+              },
+              "type": "optional"
+            },
+            "audiences": [],
+            "readonly": false,
+            "writeonly": false
+          },
+          {
+            "conflict": {},
+            "generatedName": "productAllowedUnits",
+            "key": "allowedUnits",
+            "schema": {
+              "generatedName": "ProductAllowedUnits",
+              "value": {
+                "value": {
+                  "generatedName": "ProductAllowedUnitsItem",
+                  "schema": "QuantityUnit",
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "reference"
+                },
+                "generatedName": "ProductAllowedUnits",
+                "groupName": [],
+                "type": "array"
+              },
+              "groupName": [],
+              "type": "optional"
+            },
+            "audiences": []
+          }
+        ],
+        "allOfPropertyConflicts": [],
+        "generatedName": "Product",
+        "groupName": [],
+        "additionalProperties": false,
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "object"
+      }
+    },
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {},
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

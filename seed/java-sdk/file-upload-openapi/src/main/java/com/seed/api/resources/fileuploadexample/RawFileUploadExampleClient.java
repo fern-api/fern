@@ -4,6 +4,7 @@
 package com.seed.api.resources.fileuploadexample;
 
 import com.seed.api.core.ClientOptions;
+import com.seed.api.core.FileStream;
 import com.seed.api.core.ObjectMappers;
 import com.seed.api.core.RequestOptions;
 import com.seed.api.core.SeedApiApiException;
@@ -12,6 +13,7 @@ import com.seed.api.core.SeedApiHttpResponse;
 import com.seed.api.resources.fileuploadexample.requests.UploadFileRequest;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Optional;
 import okhttp3.Headers;
@@ -64,6 +66,145 @@ public class RawFileUploadExampleClient {
                 .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedApiHttpResponse<String> uploadFile(Optional<File> file, InputStream stream, String filename) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("upload-file")
+                .build();
+        FileStream fs = new FileStream(stream, filename, null);
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        body.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = body.build();
+        Request.Builder _requestBuilder = new Request.Builder();
+        _requestBuilder.url(httpUrl);
+        _requestBuilder.method("POST", body);
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedApiHttpResponse<String> uploadFile(
+            Optional<File> file, InputStream stream, String filename, MediaType mediaType) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("upload-file")
+                .build();
+        FileStream fs = new FileStream(stream, filename, mediaType);
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        body.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = body.build();
+        Request.Builder _requestBuilder = new Request.Builder();
+        _requestBuilder.url(httpUrl);
+        _requestBuilder.method("POST", body);
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedApiHttpResponse<String> uploadFile(
+            Optional<File> file, InputStream stream, String filename, RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("upload-file")
+                .build();
+        FileStream fs = new FileStream(stream, filename, null);
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        body.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = body.build();
+        Request.Builder _requestBuilder = new Request.Builder();
+        _requestBuilder.url(httpUrl);
+        _requestBuilder.method("POST", body);
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        Request okhttpRequest = _requestBuilder.build();
+        OkHttpClient client = clientOptions.httpClient();
+        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
+            client = clientOptions.httpClientWithTimeout(requestOptions);
+        }
+        try (Response response = client.newCall(okhttpRequest).execute()) {
+            ResponseBody responseBody = response.body();
+            String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+            if (response.isSuccessful()) {
+                return new SeedApiHttpResponse<>(
+                        ObjectMappers.JSON_MAPPER.readValue(responseBodyString, String.class), response);
+            }
+            Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
+            throw new SeedApiApiException(
+                    "Error with status code " + response.code(), response.code(), errorBody, response);
+        } catch (IOException e) {
+            throw new SeedApiException("Network error executing HTTP request", e);
+        }
+    }
+
+    public SeedApiHttpResponse<String> uploadFile(
+            Optional<File> file,
+            InputStream stream,
+            String filename,
+            MediaType mediaType,
+            RequestOptions requestOptions) {
+        HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("upload-file")
+                .build();
+        FileStream fs = new FileStream(stream, filename, mediaType);
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        body.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = body.build();
+        Request.Builder _requestBuilder = new Request.Builder();
+        _requestBuilder.url(httpUrl);
+        _requestBuilder.method("POST", body);
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
         if (requestOptions != null && requestOptions.getTimeout().isPresent()) {

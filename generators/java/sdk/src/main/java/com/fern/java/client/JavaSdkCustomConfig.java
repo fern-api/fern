@@ -67,6 +67,9 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
         return false;
     }
 
+    @JsonProperty("custom-pager-name")
+    Optional<String> customPagerName();
+
     @Override
     @Value.Default
     @JsonProperty("collapse-optional-nullable")

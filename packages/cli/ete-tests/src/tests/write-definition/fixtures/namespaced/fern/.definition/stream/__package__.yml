@@ -80,7 +80,13 @@ types:
     extends:
       - Default
     properties:
-      type: literal<"heartbeat">
+      type: HeartbeatType
+    source:
+      openapi: asyncapi/sample.yml
+  HeartbeatType:
+    enum:
+      - heartbeat
+    inline: true
     source:
       openapi: asyncapi/sample.yml
   Market:
@@ -110,6 +116,12 @@ types:
       timestamps:
         docs: The timestamp in milliseconds for this group of events.
         type: double
-      type: literal<"update">
+      type: UpdateType
+    source:
+      openapi: asyncapi/sample.yml
+  UpdateType:
+    enum:
+      - update
+    inline: true
     source:
       openapi: asyncapi/sample.yml

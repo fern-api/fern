@@ -1,5 +1,5 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertDefined, assertNever } from "@fern-api/core-utils";
+import { assertDefined, assertNever, entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, Referencer, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
 import {
@@ -17,9 +17,9 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { SwiftProject } from "../project";
+import { CycleDetector } from "./cycle-detector";
 import { registerDiscriminatedUnionVariants } from "./register-discriminated-unions";
 import { registerLiteralEnums, registerLiteralEnumsForObjectProperties } from "./register-literal-enums";
 import { registerUndiscriminatedUnionVariants } from "./register-undiscriminated-unions";
@@ -28,6 +28,9 @@ export abstract class AbstractSwiftGeneratorContext<
     CustomConfig extends BaseSwiftCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: SwiftProject;
+    private readonly indirectPropertiesMapping: Map<TypeId, Set<string>>;
+    private readonly schemaTypeIdBySymbolId: Map<string, TypeId>;
+    private readonly recursiveTypeIdsForSwiftEnums: Set<TypeId>;
 
     public constructor(
         public readonly ir: IntermediateRepresentation,
@@ -37,6 +40,11 @@ export abstract class AbstractSwiftGeneratorContext<
     ) {
         super(config, generatorNotificationService);
         this.project = new SwiftProject({ context: this });
+        this.schemaTypeIdBySymbolId = new Map();
+        const cycleDetector = new CycleDetector(ir);
+        cycleDetector.detectIllegalCycles();
+        this.indirectPropertiesMapping = cycleDetector.computeIndirectPropertiesMapping();
+        this.recursiveTypeIdsForSwiftEnums = cycleDetector.computeRecursiveTypeIdsForSwiftEnums();
         this.registerProjectSymbols(this.project, ir);
     }
 
@@ -45,20 +53,45 @@ export abstract class AbstractSwiftGeneratorContext<
         this.registerTestSymbols(project);
     }
 
+    public shouldGeneratePropertyAsIndirect(typeId: TypeId, propertyWireValue: string): boolean {
+        return this.indirectPropertiesMapping.get(typeId)?.has(propertyWireValue) ?? false;
+    }
+
+    public getTypeIdForSchemaSymbol(symbol: swift.Symbol): TypeId | undefined {
+        return this.schemaTypeIdBySymbolId.get(symbol.id);
+    }
+
+    public shouldGenerateEnumAsIndirect(symbol: swift.Symbol): boolean {
+        const typeId = this.getTypeIdForSchemaSymbol(symbol);
+        return typeId != null && this.recursiveTypeIdsForSwiftEnums.has(typeId);
+    }
+
     private registerSourceSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
         const { nameRegistry } = project;
-        nameRegistry.registerSourceModuleSymbol({
+        const registeredSourceModuleSymbol = nameRegistry.registerSourceModuleSymbol({
             configModuleName: this.customConfig.moduleName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName,
             asIsSymbols: Object.values(SourceAsIsFiles).flatMap((file) => file.symbols)
         });
         nameRegistry.registerRootClientSymbol({
             configClientClassName: this.customConfig.clientClassName,
-            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+            registeredSourceModuleName: registeredSourceModuleSymbol.name
+        });
+        entries(swift.SourceTemplateFileSpecs).forEach(([templateId]) => {
+            switch (templateId) {
+                case "ClientError":
+                    nameRegistry.registerErrorEnumSymbol(registeredSourceModuleSymbol.name);
+                    break;
+                case "HTTPClient":
+                    nameRegistry.registerSourceStaticSymbol(templateId, { type: "class" });
+                    break;
+                default:
+                    assertNever(templateId);
+            }
         });
         nameRegistry.registerEnvironmentSymbol({
             configEnvironmentEnumName: this.customConfig.environmentEnumName,
-            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+            registeredSourceModuleName: registeredSourceModuleSymbol.name
         });
 
         // Must first register top-level symbols
@@ -76,7 +109,11 @@ export abstract class AbstractSwiftGeneratorContext<
                 typeDeclaration.name.name.pascalCase.unsafeName,
                 symbolShape
             );
-            return { typeDeclaration, registeredSymbol: schemaTypeSymbol };
+            return { typeId, typeDeclaration, registeredSymbol: schemaTypeSymbol };
+        });
+
+        registeredSchemaTypes.forEach(({ typeId, registeredSymbol }) => {
+            this.schemaTypeIdBySymbolId.set(registeredSymbol.id, typeId);
         });
 
         registeredSchemaTypes.forEach(({ typeDeclaration, registeredSymbol }) => {
@@ -143,7 +180,6 @@ export abstract class AbstractSwiftGeneratorContext<
             sourceModuleName: sourceModuleSymbol.name,
             asIsSymbols: Object.values(TestAsIsFiles).flatMap((file) => file.symbols)
         });
-        nameRegistry.registerRetryTestSuiteSymbol();
         nameRegistry.getAllSubClientSymbols().forEach((s) => {
             nameRegistry.registerWireTestSuiteSymbol(s.name);
         });
@@ -179,10 +215,6 @@ export abstract class AbstractSwiftGeneratorContext<
 
     public get schemasDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Schemas");
-    }
-
-    public get hasTests(): boolean {
-        return !!this.customConfig.enableWireTests;
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {

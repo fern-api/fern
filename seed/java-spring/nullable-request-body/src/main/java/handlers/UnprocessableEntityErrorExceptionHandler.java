@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public final class UnprocessableEntityErrorExceptionHandler {
   @ExceptionHandler(UnprocessableEntityError.class)
   ResponseEntity<Object> handle(UnprocessableEntityError unprocessableEntityError) {
-    return new ResponseEntity<>(unprocessableEntityError.getBody(), null, UnprocessableEntityError.STATUS_CODE);
+    return ResponseEntity.status(UnprocessableEntityError.STATUS_CODE).body(unprocessableEntityError.getBody());
   }
 }

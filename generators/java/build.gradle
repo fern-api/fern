@@ -43,12 +43,24 @@ allprojects {
         }
     }
 
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(11)
+        }
+    }
+
     test {
         useJUnitPlatform()
         testLogging {
             events "passed", "skipped", "failed"
         }
     }
+}
 
-    sourceCompatibility = 11
+project(":spring") {
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(17)
+        }
+    }
 }

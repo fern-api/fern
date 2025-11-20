@@ -3,11 +3,16 @@
 module Seed
   module Retries
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Retries::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Array[Seed::Retries::Types::User]]
       def get_users(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(

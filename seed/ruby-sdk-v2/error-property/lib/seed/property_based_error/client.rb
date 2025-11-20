@@ -3,12 +3,17 @@
 module Seed
   module PropertyBasedError
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::PropertyBasedError::Client]
       def initialize(client:)
         @client = client
       end
 
       # GET request that always throws an error
+      #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       #
       # @return [String]
       def throw_error(request_options: {}, **_params)

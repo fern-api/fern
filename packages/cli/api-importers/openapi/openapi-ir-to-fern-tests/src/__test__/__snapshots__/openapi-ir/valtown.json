@@ -4822,13 +4822,20 @@
                 "generatedName": "badRequestErrorBodyType",
                 "key": "type",
                 "schema": {
-                  "value": {
-                    "value": "error",
-                    "type": "string"
-                  },
                   "generatedName": "BadRequestErrorBodyType",
+                  "values": [
+                    {
+                      "generatedName": "error",
+                      "value": "error",
+                      "casing": {}
+                    }
+                  ],
                   "groupName": [],
-                  "type": "literal"
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "enum"
                 },
                 "audiences": []
               },
@@ -4867,11 +4874,8 @@
               "example": {
                 "properties": {
                   "type": {
-                    "value": {
-                      "value": "error",
-                      "type": "string"
-                    },
-                    "type": "literal"
+                    "value": "error",
+                    "type": "enum"
                   },
                   "error": {
                     "value": {
@@ -5114,13 +5118,20 @@
                 "generatedName": "badRequestErrorBodyType",
                 "key": "type",
                 "schema": {
-                  "value": {
-                    "value": "error",
-                    "type": "string"
-                  },
                   "generatedName": "BadRequestErrorBodyType",
+                  "values": [
+                    {
+                      "generatedName": "error",
+                      "value": "error",
+                      "casing": {}
+                    }
+                  ],
                   "groupName": [],
-                  "type": "literal"
+                  "source": {
+                    "file": "../openapi.yml",
+                    "type": "openapi"
+                  },
+                  "type": "enum"
                 },
                 "audiences": []
               },
@@ -5160,11 +5171,8 @@
               "example": {
                 "properties": {
                   "type": {
-                    "value": {
-                      "value": "error",
-                      "type": "string"
-                    },
-                    "type": "literal"
+                    "value": "error",
+                    "type": "enum"
                   },
                   "error": {
                     "value": {

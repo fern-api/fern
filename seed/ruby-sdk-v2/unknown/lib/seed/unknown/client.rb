@@ -3,11 +3,16 @@
 module Seed
   module Unknown
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Unknown::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Array[Hash[String, Object]]]
       def post(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -28,6 +33,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Seed::Unknown::Types::MyObject]
+      #
       # @return [Array[Hash[String, Object]]]
       def post_object(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

@@ -33,7 +33,7 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/path-utils": "workspace:*",
-    "glob": "^11.0.0",
+    "glob": "^11.1.0",
     "json-stream-stringify": "^3.1.4",
     "stream-json": "^1.8.0",
     "tmp-promise": "^3.0.3"

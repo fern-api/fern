@@ -4,7 +4,7 @@ import * as FernApi from "../../src/api/index";
 import { FernApiClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Imdb", () => {
+describe("ImdbClient", () => {
     test("createMovie", async () => {
         const server = mockServerPool.createServer();
         const client = new FernApiClient({ token: "test", environment: server.baseUrl });

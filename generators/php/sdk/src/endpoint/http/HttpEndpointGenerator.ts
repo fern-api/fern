@@ -279,7 +279,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         });
                         break;
                     case "custom":
-                        throw new Error("Custom pagination is not supported yet");
+                        throw new Error("Internal error: custom pagination should be filtered out by hasPagination()");
                     default:
                         assertNever(endpoint.pagination);
                 }
@@ -560,6 +560,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     protected hasPagination(endpoint: HttpEndpoint): endpoint is PagingEndpoint {
         if (!this.context.config.generatePaginatedClients) {
+            return false;
+        }
+        if (endpoint.pagination?.type === "custom") {
             return false;
         }
         return endpoint.pagination !== undefined;

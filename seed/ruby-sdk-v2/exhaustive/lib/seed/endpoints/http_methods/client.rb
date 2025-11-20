@@ -4,11 +4,17 @@ module Seed
   module Endpoints
     module HttpMethods
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::Endpoints::HttpMethods::Client]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        # @option params [String] :id
+        #
         # @return [String]
         def test_get(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -28,6 +34,9 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_post(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -50,6 +59,10 @@ module Seed
           end
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
+        # @option params [String] :id
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_put(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -72,6 +85,10 @@ module Seed
           end
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
+        # @option params [String] :id
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_patch(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -94,6 +111,10 @@ module Seed
           end
         end
 
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        # @option params [String] :id
+        #
         # @return [bool]
         def test_delete(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(

@@ -48,10 +48,10 @@ impl QueryParamClient {
                 "query-list",
                 None,
                 QueryBuilder::new()
-                    .serialize("operand", Some(request.operand.clone()))
-                    .serialize("maybeOperand", request.maybe_operand.clone())
-                    .serialize("operandOrColor", Some(request.operand_or_color.clone()))
-                    .serialize(
+                    .serialize_array("operand", request.operand.clone())
+                    .serialize_array("maybeOperand", request.maybe_operand.clone())
+                    .serialize_array("operandOrColor", request.operand_or_color.clone())
+                    .serialize_array(
                         "maybeOperandOrColor",
                         request.maybe_operand_or_color.clone(),
                     )

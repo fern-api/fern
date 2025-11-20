@@ -1,5 +1,6 @@
 import { LogLevel } from "@fern-api/logger";
 import { printTable } from "console-table-printer";
+import { minimatch } from "minimatch";
 import path from "path";
 import { loadGeneratorWorkspaces } from "../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../Semaphore";
@@ -23,10 +24,32 @@ import { runTestCase } from "./testExecution";
 
 interface TestResult {
     generator: GeneratorNickname;
-    fixture: TestFixture;
+    fixture: string;
     outputMode: OutputMode;
     success: boolean;
     error?: string;
+}
+
+function expandFixtureGlobs(fixturePatterns: string[], availableFixtures: readonly string[]): string[] {
+    const expandedFixtures = new Set<string>();
+
+    for (const pattern of fixturePatterns) {
+        if (pattern.includes("*") || pattern.includes("?") || pattern.includes("[")) {
+            const matches = availableFixtures.filter((fixture) => minimatch(fixture, pattern));
+            if (matches.length === 0) {
+                throw new Error(
+                    `Glob pattern "${pattern}" did not match any fixtures. Available fixtures: ${availableFixtures.join(", ")}`
+                );
+            }
+            for (const match of matches) {
+                expandedFixtures.add(match);
+            }
+        } else {
+            expandedFixtures.add(pattern);
+        }
+    }
+
+    return Array.from(expandedFixtures);
 }
 
 export async function executeTestRemoteLocalCommand({
@@ -58,7 +81,8 @@ export async function executeTestRemoteLocalCommand({
 
     // Default to all generators/fixtures/output modes if not specified
     const generators = (generator.length > 0 ? generator : ALL_GENERATOR_NICKNAMES) as GeneratorNickname[];
-    const fixtures = (fixture.length > 0 ? fixture : ALL_TEST_FIXTURES) as TestFixture[];
+    const fixtures: string[] =
+        fixture.length > 0 ? expandFixtureGlobs(fixture, ALL_TEST_FIXTURES) : [...ALL_TEST_FIXTURES];
     const outputModes: OutputMode[] = (
         outputMode.length > 0 ? outputMode : Array.from(ALL_OUTPUT_MODES)
     ) as OutputMode[];
@@ -93,7 +117,7 @@ export async function executeTestRemoteLocalCommand({
     // Collect all test cases to run
     interface TestCase {
         generator: GeneratorNickname;
-        fixture: TestFixture;
+        fixture: string;
         outputMode: OutputMode;
         workingDirectory: string;
     }

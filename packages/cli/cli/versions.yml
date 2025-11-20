@@ -1,4 +1,169 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Optimize docs generation and image path parsing and replacement for large markdown files (>5MB) using batched edits, precomputed line positions, and filtered AST traversal.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.4
+
+- changelogEntry:
+    - summary: |
+        Updates CLI dependencies to fix `fern` commands.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.3
+
+- changelogEntry:
+    - summary: |
+        Updates dependencies to fix `fern` commands.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.2
+
+- changelogEntry:
+    - summary: |
+        Updates the **beta** `write-translation` command to use `--stub` flag for mocking translation configuration.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.1
+
+- changelogEntry:
+    - summary: |
+        Support sidebar title overrides in the frontmatter of markdown files.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.0
+
+- changelogEntry:
+    - summary: |
+        Improve misc error handling, including for illegal version strings.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.0-rc2
+
+- changelogEntry:
+    - summary: |
+        Fix migration directory name to match exported version (2.0.0-rc0).
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.0-rc1
+
+- changelogEntry:
+    - summary: |
+        Change default for OpenAPI parsing setting:
+          - `coerce-enums-to-literals`: `false` (was `true`)
+        The CLI will automatically upgrade your _generators.yml_ to explicitly set the old default to preserve
+        existing behavior. New users will get the new default.
+      type: break
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.0-rc0
+
+- changelogEntry:
+    - summary: |
+        Improve misc error handling, including for illegal version strings
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 1.11.3
+
+- changelogEntry:
+    - summary: |
+        Fix OpenAPI enum references being inlined instead of preserved as references. Enum schemas (type: string with enum property) are no longer treated as inlinable primitives, ensuring that $ref to enum schemas maintain their reference structure in the generated IR.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.11.2
+
+- changelogEntry:
+    - summary: |
+        Fix AutoVersioning to exclude Fern branding from commit messages and PR titles/descriptions when whitelabel config is present.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.11.1
+
+- changelogEntry:
+    - summary: |
+        Use commit message for auto versioning PR title and description. When auto versioning is successful, the first line of the commit message becomes the PR title and the rest becomes the PR body.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.11.0
+
+- changelogEntry:
+    - summary: |
+        Fix whitelabel behavior for local generation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.10.3
+
+- changelogEntry:
+    - summary: |
+        Support JSX titles in `<Code />` components.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.10.2
+
+- changelogEntry:
+    - summary: |
+        Tweak SDK diffing AI prompt to work better with larger diffs.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.10.1
+
+- changelogEntry:
+    - summary: |
+        Add automatic semantic versioning to local generation with `--version AUTO --local` flags.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.10.0
+
+- changelogEntry:
+    - summary: |
+        Fix issue where x-fern-explorer was not hiding routes from the API Explorer
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.9.2
+
+- changelogEntry:
+    - summary: |
+        Fix issue where `<Code />` components were not able to be added during `fern docs dev` mode.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.9.1
+
+- changelogEntry:
+    - summary: |
+        Add external configuration to tsup build to prevent dev-only dependencies (prettier, vitest, typescript, tsup, depcheck, @types/*) from being accidentally bundled. 
+        This ensures the CLI bundle only includes runtime dependencies and enables metafile generation for bundle analysis.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.9.0
+
+- changelogEntry:
+    - summary: |
+        Fix issue where local generation for github output mode wasn't producing README.md files
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-18"
+  version: 1.8.1
+
 - changelogEntry:
     - summary: |
         Add `fern sdk-diff` command to analyze the differences between two SDKs and generate a commit message and version bump.
@@ -9,7 +174,7 @@
 
 - changelogEntry:
     - summary: |
-        Replace prettier2 with yaml package in `fern format` command to reduce CLI bundle size by ~4.3 MB (11.4% reduction from 38 MB to 33.67 MB). 
+        Replace prettier2 with yaml package in `fern format` command to reduce CLI bundle size by ~4.3 MB (11.4% reduction from 38 MB to 33.67 MB).
         YAML formatting output may have minor differences (e.g., extra blank lines after section headers like `types:` and `errors:`).
       type: feat
   irVersion: 61
@@ -18,7 +183,7 @@
 
 - changelogEntry:
     - summary: |
-        Add `fern self-update` command to update the globally installed Fern CLI. 
+        Add `fern self-update` command to update the globally installed Fern CLI.
         The command detects how the CLI was installed (npm, pnpm, yarn, bun, or brew) and runs the appropriate update command. 
         Supports updating to a specific version (e.g., `fern self-update 0.85.0`) or the latest version (e.g., `fern self-update`). 
         Includes `--dry-run` flag to preview the update command without executing it.
@@ -98,7 +263,7 @@
 
 - changelogEntry:
     - summary: |
-        Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays `generating AI examples for {API name} - X/Y`` to track progress without creating terminal noise.
+        Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays `generating AI examples for {API name} - X/Y` to track progress without creating terminal noise.
       type: feat
   irVersion: 61
   createdAt: "2025-11-14"
