@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { BinaryTreeNodeValue } from "./BinaryTreeNodeValue.js";
-import { NodeId } from "./NodeId.js";
+import type { BinaryTreeNodeValue } from "./BinaryTreeNodeValue.js";
+import type { NodeId } from "./NodeId.js";
 
 export const BinaryTreeValue: core.serialization.ObjectSchema<
     serializers.BinaryTreeValue.Raw,

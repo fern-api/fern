@@ -3,8 +3,8 @@
 import type * as SeedEnum from "../../api/index.js";
 import * as core from "../../core/index.js";
 import type * as serializers from "../index.js";
-import { Color } from "./Color.js";
-import { Operand } from "./Operand.js";
+import type { Color } from "./Color.js";
+import type { Operand } from "./Operand.js";
 
 export const ColorOrOperand: core.serialization.Schema<serializers.ColorOrOperand.Raw, SeedEnum.ColorOrOperand> =
     core.serialization.undiscriminatedUnion([Color, Operand]);

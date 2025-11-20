@@ -3,12 +3,12 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { Language } from "../../commons/types/Language.js";
-import { ProblemId } from "../../commons/types/ProblemId.js";
-import { TestCaseWithExpectedResult } from "../../commons/types/TestCaseWithExpectedResult.js";
-import { ProblemDescription } from "./ProblemDescription.js";
-import { ProblemFiles } from "./ProblemFiles.js";
-import { VariableTypeAndName } from "./VariableTypeAndName.js";
+import type { Language } from "../../commons/types/Language.js";
+import type { ProblemId } from "../../commons/types/ProblemId.js";
+import type { TestCaseWithExpectedResult } from "../../commons/types/TestCaseWithExpectedResult.js";
+import type { ProblemDescription } from "./ProblemDescription.js";
+import type { ProblemFiles } from "./ProblemFiles.js";
+import type { VariableTypeAndName } from "./VariableTypeAndName.js";
 
 export const ProblemInfo: core.serialization.ObjectSchema<serializers.ProblemInfo.Raw, SeedTrace.ProblemInfo> =
     core.serialization.object({

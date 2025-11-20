@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { FunctionImplementationForMultipleLanguages } from "./FunctionImplementationForMultipleLanguages.js";
-import { Parameter } from "./Parameter.js";
+import type { FunctionImplementationForMultipleLanguages } from "./FunctionImplementationForMultipleLanguages.js";
+import type { Parameter } from "./Parameter.js";
 
 export const VoidFunctionDefinition: core.serialization.ObjectSchema<
     serializers.v2.VoidFunctionDefinition.Raw,

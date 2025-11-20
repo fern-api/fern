@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { DoublyLinkedListNodeValue } from "./DoublyLinkedListNodeValue.js";
-import { NodeId } from "./NodeId.js";
+import type { DoublyLinkedListNodeValue } from "./DoublyLinkedListNodeValue.js";
+import type { NodeId } from "./NodeId.js";
 
 export const DoublyLinkedListValue: core.serialization.ObjectSchema<
     serializers.DoublyLinkedListValue.Raw,

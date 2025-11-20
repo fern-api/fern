@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { RunningSubmissionState } from "./RunningSubmissionState.js";
-import { SubmissionId } from "./SubmissionId.js";
+import type { RunningSubmissionState } from "./RunningSubmissionState.js";
+import type { SubmissionId } from "./SubmissionId.js";
 
 export const RunningResponse: core.serialization.ObjectSchema<
     serializers.RunningResponse.Raw,

@@ -3,8 +3,8 @@
 import type * as SeedExhaustive from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { ErrorCategory } from "./ErrorCategory.js";
-import { ErrorCode } from "./ErrorCode.js";
+import type { ErrorCategory } from "./ErrorCategory.js";
+import type { ErrorCode } from "./ErrorCode.js";
 
 export const Error_: core.serialization.ObjectSchema<
     serializers.endpoints.Error_.Raw,

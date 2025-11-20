@@ -3,10 +3,10 @@
 import type * as SeedTrace from "../../../../../../../../api/index.js";
 import * as core from "../../../../../../../../core/index.js";
 import * as serializers from "../../../../../../../index.js";
-import { ParameterId } from "./ParameterId.js";
-import { TestCaseExpects } from "./TestCaseExpects.js";
-import { TestCaseImplementationReference } from "./TestCaseImplementationReference.js";
-import { TestCaseMetadata } from "./TestCaseMetadata.js";
+import type { ParameterId } from "./ParameterId.js";
+import type { TestCaseExpects } from "./TestCaseExpects.js";
+import type { TestCaseImplementationReference } from "./TestCaseImplementationReference.js";
+import type { TestCaseMetadata } from "./TestCaseMetadata.js";
 
 export const TestCaseV2: core.serialization.ObjectSchema<serializers.v2.v3.TestCaseV2.Raw, SeedTrace.v2.v3.TestCaseV2> =
     core.serialization.object({

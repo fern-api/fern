@@ -3,7 +3,7 @@
 import * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { PlaylistIdNotFoundErrorBody } from "../types/PlaylistIdNotFoundErrorBody.js";
+import type { PlaylistIdNotFoundErrorBody } from "../types/PlaylistIdNotFoundErrorBody.js";
 
 export const Error: core.serialization.Schema<
     serializers.playlist.getPlaylist.Error.Raw,

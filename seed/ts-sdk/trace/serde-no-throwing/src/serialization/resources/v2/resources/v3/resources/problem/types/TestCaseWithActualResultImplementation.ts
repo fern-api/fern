@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../../../../../api/index.js";
 import * as core from "../../../../../../../../core/index.js";
 import type * as serializers from "../../../../../../../index.js";
-import { AssertCorrectnessCheck } from "./AssertCorrectnessCheck.js";
-import { NonVoidFunctionDefinition } from "./NonVoidFunctionDefinition.js";
+import type { AssertCorrectnessCheck } from "./AssertCorrectnessCheck.js";
+import type { NonVoidFunctionDefinition } from "./NonVoidFunctionDefinition.js";
 
 export const TestCaseWithActualResultImplementation: core.serialization.ObjectSchema<
     serializers.v2.v3.TestCaseWithActualResultImplementation.Raw,

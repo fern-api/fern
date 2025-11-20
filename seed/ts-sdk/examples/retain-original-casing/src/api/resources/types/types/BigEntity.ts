@@ -2,7 +2,7 @@
 
 import type { Data } from "../../commons/resources/types/types/Data.js";
 import type { EventInfo } from "../../commons/resources/types/types/EventInfo.js";
-import type { Metadata as MetadataType } from "../../commons/resources/types/types/Metadata.js";
+import type { Metadata as SeedExamples_Metadata } from "../../commons/resources/types/types/Metadata.js";
 import type { CastMember } from "./CastMember.js";
 import type { Directory } from "./Directory.js";
 import type { Entity } from "./Entity.js";
@@ -19,7 +19,7 @@ export interface BigEntity {
     extendedMovie?: ExtendedMovie;
     entity?: Entity;
     metadata?: Metadata;
-    commonMetadata?: MetadataType;
+    commonMetadata?: SeedExamples_Metadata;
     eventInfo?: EventInfo;
     data?: Data;
     migration?: Migration;

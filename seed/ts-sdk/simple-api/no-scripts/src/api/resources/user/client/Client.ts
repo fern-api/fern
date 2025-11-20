@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { normalizeClientOptions } from "../../../../BaseClient.js";
 import * as environments from "../../../../environments.js";
 import * as core from "../../../../core/index.js";
-import { User } from "../types/User.js";
+import type { User } from "../types/User.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 

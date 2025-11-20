@@ -3,14 +3,17 @@
 export type Animal = Animal.Dog | Animal.Cat;
 
 export namespace Animal {
-    export interface Dog extends Dog {
+    export interface Dog extends OuterDog {
         animal: "dog";
     }
 
-    export interface Cat extends Cat {
+    export interface Cat extends OuterCat {
         animal: "cat";
     }
 }
+
+type OuterDog = Dog;
+type OuterCat = Cat;
 
 export interface Dog {
     name: string;

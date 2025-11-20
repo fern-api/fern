@@ -3,13 +3,13 @@
 import type { ExecutionSessionResponse } from "../../../../api/resources/submission/types/ExecutionSessionResponse.js";
 import type * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ExecutionSessionResponse as ExecutionSessionResponseType } from "../types/ExecutionSessionResponse.js";
+import type { ExecutionSessionResponse as SeedTrace_ExecutionSessionResponse } from "../types/ExecutionSessionResponse.js";
 
 export const Response: core.serialization.Schema<
     serializers.submission.getExecutionSession.Response.Raw,
     ExecutionSessionResponse | undefined
-> = ExecutionSessionResponseType.optional();
+> = SeedTrace_ExecutionSessionResponse.optional();
 
 export declare namespace Response {
-    export type Raw = ExecutionSessionResponseType.Raw | null | undefined;
+    export type Raw = SeedTrace_ExecutionSessionResponse.Raw | null | undefined;
 }

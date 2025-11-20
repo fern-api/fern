@@ -50,7 +50,11 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
                 {
                     noProperties: () => new NoPropertiesSingleUnionTypeGenerator(),
                     samePropertiesAsObject: (extended) =>
-                        new SamePropertiesAsObjectSingleUnionTypeGenerator({ extended, enableInlineTypes }),
+                        new SamePropertiesAsObjectSingleUnionTypeGenerator({
+                            extended,
+                            enableInlineTypes,
+                            unionMemberName: singleUnionType.discriminantValue.name.pascalCase.safeName
+                        }),
                     singleProperty: (singleProperty) =>
                         new SinglePropertySingleUnionTypeGenerator({
                             getTypeName: () => this.getTypeName(),

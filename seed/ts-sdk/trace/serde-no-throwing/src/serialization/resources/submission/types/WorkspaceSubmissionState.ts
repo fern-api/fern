@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { WorkspaceSubmissionStatus } from "./WorkspaceSubmissionStatus.js";
+import type { WorkspaceSubmissionStatus } from "./WorkspaceSubmissionStatus.js";
 
 export const WorkspaceSubmissionState: core.serialization.ObjectSchema<
     serializers.WorkspaceSubmissionState.Raw,

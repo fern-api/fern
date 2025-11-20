@@ -180,8 +180,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         parameterNaming,
         offsetSemantics
     }: GeneratedSdkClientClassImpl.Init) {
-        importsManager.reserveLocal(serviceClassName);
-
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
         this.serviceClassName = serviceClassName;
@@ -592,6 +590,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public writeToFile(context: SdkContext): void {
+        // Reserve the client class name to prevent imports from using it
+        // This is done in writeToFile() rather than the constructor because
+        // we only want to reserve the name when actually writing the client class file,
+        // not when importing it in other files (like tests)
+        context.importsManager.reserveLocal(this.serviceClassName);
+
         const serviceModule: ModuleDeclarationStructure = {
             kind: StructureKind.Module,
             name: this.serviceClassName,

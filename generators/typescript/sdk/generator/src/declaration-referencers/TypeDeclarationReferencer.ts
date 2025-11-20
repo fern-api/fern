@@ -41,6 +41,6 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Dec
     }
 
     public getReferenceToType(args: DeclarationReferencer.getReferenceTo.Options<DeclaredTypeName>): Reference {
-        return this.getReferenceTo(this.getExportedName(args.name), args);
+        return this.getReferenceTo({ type: "type", name: this.getExportedName(args.name) }, args);
     }
 }

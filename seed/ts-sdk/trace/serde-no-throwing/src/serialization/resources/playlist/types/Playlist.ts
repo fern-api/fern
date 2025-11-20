@@ -3,9 +3,9 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { UserId } from "../../commons/types/UserId.js";
-import { PlaylistCreateRequest } from "./PlaylistCreateRequest.js";
-import { PlaylistId } from "./PlaylistId.js";
+import type { UserId } from "../../commons/types/UserId.js";
+import type { PlaylistCreateRequest } from "./PlaylistCreateRequest.js";
+import type { PlaylistId } from "./PlaylistId.js";
 
 export const Playlist: core.serialization.ObjectSchema<serializers.Playlist.Raw, SeedTrace.Playlist> =
     core.serialization

@@ -3,22 +3,22 @@
 import type { ObjectWithRequiredField } from "../../../../../../api/resources/types/resources/object/types/ObjectWithRequiredField.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { ObjectWithRequiredField as ObjectWithRequiredFieldType } from "../../../../types/resources/object/types/ObjectWithRequiredField.js";
+import type { ObjectWithRequiredField as SeedExhaustive_ObjectWithRequiredField } from "../../../../types/resources/object/types/ObjectWithRequiredField.js";
 
 export const Request: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnListOfObjects.Request.Raw,
     ObjectWithRequiredField[]
-> = core.serialization.list(ObjectWithRequiredFieldType);
+> = core.serialization.list(SeedExhaustive_ObjectWithRequiredField);
 
 export declare namespace Request {
-    export type Raw = ObjectWithRequiredFieldType.Raw[];
+    export type Raw = SeedExhaustive_ObjectWithRequiredField.Raw[];
 }
 
 export const Response: core.serialization.Schema<
     serializers.endpoints.container.getAndReturnListOfObjects.Response.Raw,
     ObjectWithRequiredField[]
-> = core.serialization.list(ObjectWithRequiredFieldType);
+> = core.serialization.list(SeedExhaustive_ObjectWithRequiredField);
 
 export declare namespace Response {
-    export type Raw = ObjectWithRequiredFieldType.Raw[];
+    export type Raw = SeedExhaustive_ObjectWithRequiredField.Raw[];
 }

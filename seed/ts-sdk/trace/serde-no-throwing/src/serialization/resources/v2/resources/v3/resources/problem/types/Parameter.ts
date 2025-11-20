@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../../../../../api/index.js";
 import * as core from "../../../../../../../../core/index.js";
 import * as serializers from "../../../../../../../index.js";
-import { ParameterId } from "./ParameterId.js";
+import type { ParameterId } from "./ParameterId.js";
 
 export const Parameter: core.serialization.ObjectSchema<serializers.v2.v3.Parameter.Raw, SeedTrace.v2.v3.Parameter> =
     core.serialization.object({

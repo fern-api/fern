@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Language } from "../../commons/types/Language.js";
-import { Files } from "../../v2/resources/problem/types/Files.js";
+import type { Language } from "../../commons/types/Language.js";
+import type { Files } from "../../v2/resources/problem/types/Files.js";
 
 export const WorkspaceStarterFilesResponseV2: core.serialization.ObjectSchema<
     serializers.WorkspaceStarterFilesResponseV2.Raw,

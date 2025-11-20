@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { InlineUsersClient as InlineUsersClientType } from "../resources/inlineUsers/client/Client.js";
+import { InlineUsersClient as InlineUsersClient1 } from "../resources/inlineUsers/client/Client.js";
 
 export declare namespace InlineUsersClient {
     export interface Options extends BaseClientOptions {}
@@ -10,13 +10,13 @@ export declare namespace InlineUsersClient {
 
 export class InlineUsersClient {
     protected readonly _options: InlineUsersClient.Options;
-    protected _inlineUsers: InlineUsersClientType | undefined;
+    protected _inlineUsers: InlineUsersClient1 | undefined;
 
     constructor(options: InlineUsersClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public get inlineUsers(): InlineUsersClientType {
-        return (this._inlineUsers ??= new InlineUsersClientType(this._options));
+    public get inlineUsers(): InlineUsersClient1 {
+        return (this._inlineUsers ??= new InlineUsersClient1(this._options));
     }
 }

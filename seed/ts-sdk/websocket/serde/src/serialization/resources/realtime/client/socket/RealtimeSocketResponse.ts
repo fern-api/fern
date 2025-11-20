@@ -6,21 +6,25 @@ import type { ReceiveEvent3 } from "../../../../../api/resources/realtime/types/
 import type { ReceiveSnakeCase } from "../../../../../api/resources/realtime/types/ReceiveSnakeCase.js";
 import * as core from "../../../../../core/index.js";
 import type * as serializers from "../../../../index.js";
-import { ReceiveEvent as ReceiveEventType } from "../../types/ReceiveEvent.js";
-import { ReceiveEvent2 as ReceiveEvent2Type } from "../../types/ReceiveEvent2.js";
-import { ReceiveEvent3 as ReceiveEvent3Type } from "../../types/ReceiveEvent3.js";
-import { ReceiveSnakeCase as ReceiveSnakeCaseType } from "../../types/ReceiveSnakeCase.js";
+import type { ReceiveEvent as SeedWebsocket_ReceiveEvent } from "../../types/ReceiveEvent.js";
+import type { ReceiveEvent2 as SeedWebsocket_ReceiveEvent2 } from "../../types/ReceiveEvent2.js";
+import type { ReceiveEvent3 as SeedWebsocket_ReceiveEvent3 } from "../../types/ReceiveEvent3.js";
+import type { ReceiveSnakeCase as SeedWebsocket_ReceiveSnakeCase } from "../../types/ReceiveSnakeCase.js";
 
 export const RealtimeSocketResponse: core.serialization.Schema<
     serializers.RealtimeSocketResponse.Raw,
     ReceiveEvent | ReceiveSnakeCase | ReceiveEvent2 | ReceiveEvent3
 > = core.serialization.undiscriminatedUnion([
-    ReceiveEventType,
-    ReceiveSnakeCaseType,
-    ReceiveEvent2Type,
-    ReceiveEvent3Type,
+    SeedWebsocket_ReceiveEvent,
+    SeedWebsocket_ReceiveSnakeCase,
+    SeedWebsocket_ReceiveEvent2,
+    SeedWebsocket_ReceiveEvent3,
 ]);
 
 export declare namespace RealtimeSocketResponse {
-    export type Raw = ReceiveEventType.Raw | ReceiveSnakeCaseType.Raw | ReceiveEvent2Type.Raw | ReceiveEvent3Type.Raw;
+    export type Raw =
+        | SeedWebsocket_ReceiveEvent.Raw
+        | SeedWebsocket_ReceiveSnakeCase.Raw
+        | SeedWebsocket_ReceiveEvent2.Raw
+        | SeedWebsocket_ReceiveEvent3.Raw;
 }

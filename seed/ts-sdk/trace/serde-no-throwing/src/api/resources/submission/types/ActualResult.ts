@@ -2,7 +2,7 @@
 
 import type { VariableValue } from "../../commons/types/VariableValue.js";
 import type { ExceptionInfo } from "./ExceptionInfo.js";
-import type { ExceptionV2 as ExceptionV2Type } from "./ExceptionV2.js";
+import type { ExceptionV2 as SeedTrace_ExceptionV2 } from "./ExceptionV2.js";
 
 export type ActualResult = ActualResult.Value | ActualResult.Exception | ActualResult.ExceptionV2;
 
@@ -18,6 +18,6 @@ export namespace ActualResult {
 
     export interface ExceptionV2 {
         type: "exceptionV2";
-        value: ExceptionV2Type;
+        value: SeedTrace_ExceptionV2;
     }
 }

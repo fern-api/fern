@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Language } from "../../commons/types/Language.js";
+import type { Language } from "../../commons/types/Language.js";
 
 export const UnexpectedLanguageError: core.serialization.ObjectSchema<
     serializers.UnexpectedLanguageError.Raw,

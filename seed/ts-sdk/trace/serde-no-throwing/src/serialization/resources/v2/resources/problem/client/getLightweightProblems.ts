@@ -3,13 +3,13 @@
 import type { LightweightProblemInfoV2 } from "../../../../../../api/resources/v2/resources/problem/types/LightweightProblemInfoV2.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { LightweightProblemInfoV2 as LightweightProblemInfoV2Type } from "../types/LightweightProblemInfoV2.js";
+import type { LightweightProblemInfoV2 as SeedTrace_LightweightProblemInfoV2 } from "../types/LightweightProblemInfoV2.js";
 
 export const Response: core.serialization.Schema<
     serializers.v2.problem.getLightweightProblems.Response.Raw,
     LightweightProblemInfoV2[]
-> = core.serialization.list(LightweightProblemInfoV2Type);
+> = core.serialization.list(SeedTrace_LightweightProblemInfoV2);
 
 export declare namespace Response {
-    export type Raw = LightweightProblemInfoV2Type.Raw[];
+    export type Raw = SeedTrace_LightweightProblemInfoV2.Raw[];
 }

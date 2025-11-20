@@ -3,11 +3,11 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { Language } from "../../commons/types/Language.js";
-import { TestCaseWithExpectedResult } from "../../commons/types/TestCaseWithExpectedResult.js";
-import { ProblemDescription } from "./ProblemDescription.js";
-import { ProblemFiles } from "./ProblemFiles.js";
-import { VariableTypeAndName } from "./VariableTypeAndName.js";
+import type { Language } from "../../commons/types/Language.js";
+import type { TestCaseWithExpectedResult } from "../../commons/types/TestCaseWithExpectedResult.js";
+import type { ProblemDescription } from "./ProblemDescription.js";
+import type { ProblemFiles } from "./ProblemFiles.js";
+import type { VariableTypeAndName } from "./VariableTypeAndName.js";
 
 export const CreateProblemRequest: core.serialization.ObjectSchema<
     serializers.CreateProblemRequest.Raw,

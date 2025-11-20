@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ProblemDescriptionBoard } from "./ProblemDescriptionBoard.js";
+import type { ProblemDescriptionBoard } from "./ProblemDescriptionBoard.js";
 
 export const ProblemDescription: core.serialization.ObjectSchema<
     serializers.ProblemDescription.Raw,

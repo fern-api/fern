@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../../../../../api/index.js";
 import * as core from "../../../../../../../../core/index.js";
 import type * as serializers from "../../../../../../../index.js";
-import { Language } from "../../../../../../commons/types/Language.js";
-import { FunctionImplementation } from "./FunctionImplementation.js";
+import type { Language } from "../../../../../../commons/types/Language.js";
+import type { FunctionImplementation } from "./FunctionImplementation.js";
 
 export const FunctionImplementationForMultipleLanguages: core.serialization.ObjectSchema<
     serializers.v2.v3.FunctionImplementationForMultipleLanguages.Raw,

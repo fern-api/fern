@@ -3,11 +3,11 @@
 import type { User } from "../../../../api/resources/user/types/User.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { User as UserType } from "../types/User.js";
+import type { User as SeedPathParameters_User } from "../types/User.js";
 
 export const Response: core.serialization.Schema<serializers.user.searchUsers.Response.Raw, User[]> =
-    core.serialization.list(UserType);
+    core.serialization.list(SeedPathParameters_User);
 
 export declare namespace Response {
-    export type Raw = UserType.Raw[];
+    export type Raw = SeedPathParameters_User.Raw[];
 }

@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { SubmissionId } from "./SubmissionId.js";
+import type { SubmissionId } from "./SubmissionId.js";
 
 export const StopRequest: core.serialization.ObjectSchema<serializers.StopRequest.Raw, SeedTrace.StopRequest> =
     core.serialization.object({

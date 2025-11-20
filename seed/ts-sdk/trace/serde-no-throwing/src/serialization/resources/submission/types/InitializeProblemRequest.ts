@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ProblemId } from "../../commons/types/ProblemId.js";
+import type { ProblemId } from "../../commons/types/ProblemId.js";
 
 export const InitializeProblemRequest: core.serialization.ObjectSchema<
     serializers.InitializeProblemRequest.Raw,

@@ -3,9 +3,9 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { TestCaseId } from "../../v2/resources/problem/types/TestCaseId.js";
-import { SubmissionId } from "./SubmissionId.js";
-import { TestCaseGrade } from "./TestCaseGrade.js";
+import type { TestCaseId } from "../../v2/resources/problem/types/TestCaseId.js";
+import type { SubmissionId } from "./SubmissionId.js";
+import type { TestCaseGrade } from "./TestCaseGrade.js";
 
 export const GradedResponseV2: core.serialization.ObjectSchema<
     serializers.GradedResponseV2.Raw,

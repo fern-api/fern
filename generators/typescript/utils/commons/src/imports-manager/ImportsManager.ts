@@ -1,6 +1,6 @@
-import { SourceFile } from "ts-morph";
+import type { SourceFile } from "ts-morph";
 
-import { ModuleSpecifier } from "../referencing/ModuleSpecifier";
+import type { ModuleSpecifier } from "../referencing/ModuleSpecifier";
 
 export interface ImportDeclaration {
     namespaceImport?: string;
@@ -69,7 +69,7 @@ export class ImportsManager {
             }
         }
 
-        const localName = this.getAvailableLocalName(name, { isTypeOnly, aliasPrefix });
+        const localName = this.getAvailableLocalName(name, { aliasPrefix });
         const alias = localName !== name ? localName : undefined;
 
         this.addImport(moduleSpecifier, {
@@ -87,26 +87,14 @@ export class ImportsManager {
 
     /**
      * Get an available local name, adding a prefix or suffix if needed to avoid conflicts.
-     * Priority for type-only imports: preferredName > preferredNameType > aliasPrefix_preferredName > fallbacks
-     * Priority for value imports: preferredName > aliasPrefix_preferredName > preferredNameType > fallbacks
+     * Priority: preferredName > namespacePrefix_preferredName > numbered fallbacks
      */
-    private getAvailableLocalName(
-        preferredName: string,
-        options?: { isTypeOnly?: boolean; aliasPrefix?: string }
-    ): string {
-        const { isTypeOnly, aliasPrefix } = options ?? {};
+    private getAvailableLocalName(preferredName: string, options?: { aliasPrefix?: string }): string {
+        const { aliasPrefix } = options ?? {};
 
         if (!this.reservedIdentifiers.has(preferredName) && !this.allocatedLocalNames.has(preferredName)) {
             this.allocatedLocalNames.add(preferredName);
             return preferredName;
-        }
-
-        if (isTypeOnly) {
-            const typeVariant = `${preferredName}Type`;
-            if (!this.reservedIdentifiers.has(typeVariant) && !this.allocatedLocalNames.has(typeVariant)) {
-                this.allocatedLocalNames.add(typeVariant);
-                return typeVariant;
-            }
         }
 
         if (aliasPrefix != null) {
@@ -115,20 +103,6 @@ export class ImportsManager {
                 this.allocatedLocalNames.add(prefixedVariant);
                 return prefixedVariant;
             }
-        }
-
-        if (!isTypeOnly) {
-            const typeVariant = `${preferredName}Type`;
-            if (!this.reservedIdentifiers.has(typeVariant) && !this.allocatedLocalNames.has(typeVariant)) {
-                this.allocatedLocalNames.add(typeVariant);
-                return typeVariant;
-            }
-        }
-
-        const underscoreVariant = `${preferredName}_`;
-        if (!this.reservedIdentifiers.has(underscoreVariant) && !this.allocatedLocalNames.has(underscoreVariant)) {
-            this.allocatedLocalNames.add(underscoreVariant);
-            return underscoreVariant;
         }
 
         let counter = 1;

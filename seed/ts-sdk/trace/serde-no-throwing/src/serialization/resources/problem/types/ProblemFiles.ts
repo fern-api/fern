@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { FileInfo } from "../../commons/types/FileInfo.js";
+import type { FileInfo } from "../../commons/types/FileInfo.js";
 
 export const ProblemFiles: core.serialization.ObjectSchema<serializers.ProblemFiles.Raw, SeedTrace.ProblemFiles> =
     core.serialization.object({

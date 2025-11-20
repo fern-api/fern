@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { TraceResponse } from "./TraceResponse.js";
+import type { TraceResponse } from "./TraceResponse.js";
 
 export const TraceResponsesPage: core.serialization.ObjectSchema<
     serializers.TraceResponsesPage.Raw,

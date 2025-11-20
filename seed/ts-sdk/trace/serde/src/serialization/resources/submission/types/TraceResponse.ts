@@ -3,9 +3,9 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { ExpressionLocation } from "./ExpressionLocation.js";
-import { StackInformation } from "./StackInformation.js";
-import { SubmissionId } from "./SubmissionId.js";
+import type { ExpressionLocation } from "./ExpressionLocation.js";
+import type { StackInformation } from "./StackInformation.js";
+import type { SubmissionId } from "./SubmissionId.js";
 
 export const TraceResponse: core.serialization.ObjectSchema<serializers.TraceResponse.Raw, SeedTrace.TraceResponse> =
     core.serialization.object({

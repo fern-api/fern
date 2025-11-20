@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ExceptionInfo } from "./ExceptionInfo.js";
+import type { ExceptionInfo } from "./ExceptionInfo.js";
 
 export const InternalError: core.serialization.ObjectSchema<serializers.InternalError.Raw, SeedTrace.InternalError> =
     core.serialization.object({

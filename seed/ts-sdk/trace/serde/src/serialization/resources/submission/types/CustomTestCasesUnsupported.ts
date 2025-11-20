@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ProblemId } from "../../commons/types/ProblemId.js";
-import { SubmissionId } from "./SubmissionId.js";
+import type { ProblemId } from "../../commons/types/ProblemId.js";
+import type { SubmissionId } from "./SubmissionId.js";
 
 export const CustomTestCasesUnsupported: core.serialization.ObjectSchema<
     serializers.CustomTestCasesUnsupported.Raw,

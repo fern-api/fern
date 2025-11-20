@@ -134,6 +134,12 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                 statements.push(consts);
             }
         }
+
+        // Generate type aliases for naming conflicts (consolidateTypeFiles)
+        // These must come AFTER the module so they reference the outer types
+        const typeAliases = this.getTypeAliasesForNamingConflicts(context);
+        statements.push(...typeAliases);
+
         return statements;
     }
 
@@ -824,6 +830,26 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
 
     private getAllSingleUnionTypesIncludingUnknown(): ParsedSingleUnionType<Context>[] {
         return [...this.parsedSingleUnionTypes, this.unknownSingleUnionType];
+    }
+
+    private getTypeAliasesForNamingConflicts(context: Context): TypeAliasDeclarationStructure[] {
+        const aliases: TypeAliasDeclarationStructure[] = [];
+        for (const parsedSingleUnionType of this.parsedSingleUnionTypes) {
+            // Access the underlying SingleUnionTypeGenerator through the protected property
+            const generator = (parsedSingleUnionType as any).singleUnionType;
+            if (generator?.getTypeAliasForNamingConflict) {
+                const aliasInfo = generator.getTypeAliasForNamingConflict(context);
+                if (aliasInfo) {
+                    aliases.push({
+                        kind: StructureKind.TypeAlias,
+                        name: aliasInfo.name,
+                        type: aliasInfo.type,
+                        isExported: false
+                    });
+                }
+            }
+        }
+        return aliases;
     }
 
     private hasBaseInterface(): boolean {

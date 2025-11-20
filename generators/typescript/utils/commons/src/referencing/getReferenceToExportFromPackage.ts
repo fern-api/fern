@@ -1,5 +1,6 @@
 import { ts } from "ts-morph";
 
+import { NamedExport } from "../exports-manager";
 import { ImportsManager } from "../imports-manager/ImportsManager";
 import { GetReferenceOpts, Reference } from "./Reference";
 
@@ -8,7 +9,7 @@ export declare namespace getReferenceToExportFromPackage {
         importsManager: ImportsManager;
         packageName: string;
         namespaceImport?: string | undefined;
-        exportedName: string;
+        exportedName: NamedExport;
         subImport?: string[];
     }
 }
@@ -20,30 +21,31 @@ export function getReferenceToExportFromPackage({
     exportedName,
     subImport = []
 }: getReferenceToExportFromPackage.Args): Reference {
+    const exportedNameStr = NamedExport.getName(exportedName);
     const addImport = () => {
         importsManager.addImport(packageName, { namedImports: [namespaceImport ?? exportedName] });
     };
 
     const entityName =
         namespaceImport != null
-            ? [exportedName, ...subImport].reduce<ts.EntityName>(
+            ? [exportedNameStr, ...subImport].reduce<ts.EntityName>(
                   (acc, part) => ts.factory.createQualifiedName(acc, part),
                   ts.factory.createIdentifier(namespaceImport)
               )
             : [...subImport].reduce<ts.EntityName>(
                   (acc, part) => ts.factory.createQualifiedName(acc, part),
-                  ts.factory.createIdentifier(exportedName)
+                  ts.factory.createIdentifier(exportedNameStr)
               );
 
     const expression =
         namespaceImport != null
-            ? [exportedName, ...subImport].reduce<ts.Expression>(
+            ? [exportedNameStr, ...subImport].reduce<ts.Expression>(
                   (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
                   ts.factory.createIdentifier(namespaceImport)
               )
             : [...subImport].reduce<ts.Expression>(
                   (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
-                  ts.factory.createIdentifier(exportedName)
+                  ts.factory.createIdentifier(exportedNameStr)
               );
 
     const typeNode = ts.factory.createTypeReferenceNode(entityName);

@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { TestCaseTemplate } from "./TestCaseTemplate.js";
-import { TestCaseV2 } from "./TestCaseV2.js";
+import type { TestCaseTemplate } from "./TestCaseTemplate.js";
+import type { TestCaseV2 } from "./TestCaseV2.js";
 
 export const GetGeneratedTestCaseFileRequest: core.serialization.ObjectSchema<
     serializers.v2.GetGeneratedTestCaseFileRequest.Raw,

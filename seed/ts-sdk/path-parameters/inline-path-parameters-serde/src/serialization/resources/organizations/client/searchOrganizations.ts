@@ -3,13 +3,13 @@
 import type { Organization } from "../../../../api/resources/organizations/types/Organization.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Organization as OrganizationType } from "../types/Organization.js";
+import type { Organization as SeedPathParameters_Organization } from "../types/Organization.js";
 
 export const Response: core.serialization.Schema<
     serializers.organizations.searchOrganizations.Response.Raw,
     Organization[]
-> = core.serialization.list(OrganizationType);
+> = core.serialization.list(SeedPathParameters_Organization);
 
 export declare namespace Response {
-    export type Raw = OrganizationType.Raw[];
+    export type Raw = SeedPathParameters_Organization.Raw[];
 }

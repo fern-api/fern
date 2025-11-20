@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../../../../../api/index.js";
 import * as core from "../../../../../../../../core/index.js";
 import type * as serializers from "../../../../../../../index.js";
-import { ParameterId } from "./ParameterId.js";
+import type { ParameterId } from "./ParameterId.js";
 
 export const DeepEqualityCorrectnessCheck: core.serialization.ObjectSchema<
     serializers.v2.v3.DeepEqualityCorrectnessCheck.Raw,

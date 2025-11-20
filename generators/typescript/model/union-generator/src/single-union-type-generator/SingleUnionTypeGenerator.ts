@@ -33,4 +33,5 @@ export interface SingleUnionTypeGenerator<Context extends ModelContext> {
     getBuilderArgsFromExistingValue(existingValue: ts.Expression): ts.Expression[];
     getNonDiscriminantPropertiesForBuilder(context: Context): ts.ObjectLiteralElementLike[];
     needsRequestResponse(context: Context): { request: boolean; response: boolean };
+    getTypeAliasForNamingConflict?(context: Context): { name: string; type: string } | undefined;
 }

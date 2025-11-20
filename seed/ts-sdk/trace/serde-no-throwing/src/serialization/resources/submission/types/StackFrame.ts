@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Scope } from "./Scope.js";
+import type { Scope } from "./Scope.js";
 
 export const StackFrame: core.serialization.ObjectSchema<serializers.StackFrame.Raw, SeedTrace.StackFrame> =
     core.serialization.object({

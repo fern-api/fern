@@ -3,7 +3,7 @@
 import type * as SeedExhaustive from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { Error_ } from "./Error_.js";
+import type { Error_ } from "./Error_.js";
 
 export const PutResponse: core.serialization.ObjectSchema<
     serializers.endpoints.PutResponse.Raw,

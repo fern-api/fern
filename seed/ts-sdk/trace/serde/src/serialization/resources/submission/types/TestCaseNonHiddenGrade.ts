@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { ExceptionV2 } from "./ExceptionV2.js";
+import type { ExceptionV2 } from "./ExceptionV2.js";
 
 export const TestCaseNonHiddenGrade: core.serialization.ObjectSchema<
     serializers.TestCaseNonHiddenGrade.Raw,
