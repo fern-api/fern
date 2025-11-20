@@ -56,6 +56,9 @@
       "path": "../generic-sdk-error-generators"
     },
     {
+      "path": "../react-query-generator"
+    },
+    {
       "path": "../request-wrapper-generator"
     },
     {
