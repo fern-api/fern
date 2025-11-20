@@ -116,7 +116,9 @@ export class Method extends AstNode {
 
         for (const keywordParameter of this.keywordParameters) {
             writer.write(`# @param ${keywordParameter.name} [`);
-            keywordParameter.type.writeTypeDefinition(writer);
+            const typeWriter = new Writer({ customConfig: writer.customConfig });
+            keywordParameter.type.writeTypeDefinition(typeWriter);
+            writer.write(this.normalizeForYard(typeWriter.toString()));
             writer.write("]");
             if (keywordParameter.docs) {
                 writer.write(` ${keywordParameter.docs}`);
@@ -126,7 +128,9 @@ export class Method extends AstNode {
 
         if (this.keywordSplatParameter != null) {
             writer.write(`# @param ${this.keywordSplatParameter.name} [`);
-            this.keywordSplatParameter.type.writeTypeDefinition(writer);
+            const typeWriter = new Writer({ customConfig: writer.customConfig });
+            this.keywordSplatParameter.type.writeTypeDefinition(typeWriter);
+            writer.write(this.normalizeForYard(typeWriter.toString()));
             writer.write("]");
             if (this.keywordSplatParameter.docs) {
                 writer.write(` ${this.keywordSplatParameter.docs}`);
@@ -143,7 +147,9 @@ export class Method extends AstNode {
                 writer.writeLine("#");
             }
             writer.write(`# @return [`);
-            this.returnType.writeTypeDefinition(writer);
+            const typeWriter = new Writer({ customConfig: writer.customConfig });
+            this.returnType.writeTypeDefinition(typeWriter);
+            writer.write(this.normalizeForYard(typeWriter.toString()));
             writer.write("]");
             writer.newLine();
         }
@@ -216,6 +222,12 @@ export class Method extends AstNode {
         writer.write(") -> ");
 
         this.returnType.writeTypeDefinition(writer);
+    }
+
+    private normalizeForYard(typeString: string): string {
+        let normalized = typeString.replace(/ \| /g, ", ");
+        normalized = normalized.replace(/\bbool\b/g, "Boolean");
+        return normalized;
     }
 
     /*

@@ -73,6 +73,7 @@ export class HttpEndpointGenerator {
 
         const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
         const splatOptionDocs = this.generateSplatOptionDocs({ endpoint });
+        const requestOptionsDocs = this.generateRequestOptionsDocs();
 
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
@@ -173,7 +174,7 @@ export class HttpEndpointGenerator {
                 keyword: [
                     ruby.parameters.keyword({
                         name: "request_options",
-                        type: ruby.Type.class_({ name: "RequestOptions", modules: [this.context.getRootModuleName()] }),
+                        type: ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped()),
                         initializer: ruby.TypeLiteral.hash([])
                     })
                 ],
@@ -182,7 +183,7 @@ export class HttpEndpointGenerator {
                     type: request?.getParameterType() ?? ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped())
                 })
             },
-            splatOptionDocs,
+            splatOptionDocs: [...requestOptionsDocs, ...splatOptionDocs],
             statements
         });
     }
@@ -306,6 +307,16 @@ export class HttpEndpointGenerator {
         return endpoint.docs ?? "";
     }
 
+    private generateRequestOptionsDocs(): string[] {
+        const optionTags: string[] = [];
+        optionTags.push("@option request_options [String] :base_url");
+        optionTags.push("@option request_options [Hash{String => Object}] :additional_headers");
+        optionTags.push("@option request_options [Hash{String => Object}] :additional_query_parameters");
+        optionTags.push("@option request_options [Hash{String => Object}] :additional_body_parameters");
+        optionTags.push("@option request_options [Integer] :timeout_in_seconds");
+        return optionTags;
+    }
+
     private generateSplatOptionDocs({ endpoint }: { endpoint: HttpEndpoint }): string[] {
         const optionTags: string[] = [];
 
@@ -340,6 +351,12 @@ export class HttpEndpointGenerator {
         const rubyType = this.context.typeMapper.convert({ reference: typeReference });
         const writer = new ruby.Writer({ customConfig: this.context.customConfig });
         rubyType.writeTypeDefinition(writer);
-        return writer.toString();
+        return this.normalizeForYard(writer.toString());
+    }
+
+    private normalizeForYard(typeString: string): string {
+        let normalized = typeString.replace(/ \| /g, ", ");
+        normalized = normalized.replace(/\bbool\b/g, "Boolean");
+        return normalized;
     }
 }
