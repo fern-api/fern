@@ -3,11 +3,18 @@
 module Seed
   module User
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::User::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
+      #
       # @return [Seed::User::Types::User]
       def get_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -29,6 +36,10 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Seed::User::Types::User]
+      # @option params [String] :tenant_id
+      #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -51,6 +62,11 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Seed::User::Types::User]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
+      #
       # @return [Seed::User::Types::User]
       def update_user(request_options: {}, **params)
         _path_param_names = %i[tenant_id user_id]
@@ -76,6 +92,12 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
+      # @option params [Integer | nil] :limit
+      #
       # @return [Array[Seed::User::Types::User]]
       def search_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -104,12 +126,48 @@ module Seed
 
       # Test endpoint with path parameter that has a text prefix (v{version})
       #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
+      # @option params [Integer] :version
+      #
       # @return [Seed::User::Types::User]
       def get_user_metadata(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/metadata/v#{params[:version]}"
+        )
+        begin
+          _response = @client.send(_request)
+        rescue Net::HTTPRequestTimeout
+          raise Seed::Errors::TimeoutError
+        end
+        code = _response.code.to_i
+        if code.between?(200, 299)
+          Seed::User::Types::User.load(_response.body)
+        else
+          error_class = Seed::Errors::ResponseError.subclass_for_code(code)
+          raise error_class.new(_response.body, code: code)
+        end
+      end
+
+      # Test endpoint with path parameters listed in different order than found in path
+      #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
+      # @option params [Integer] :version
+      # @option params [String] :thought
+      #
+      # @return [Seed::User::Types::User]
+      def get_user_specifics(request_options: {}, **params)
+        _request = Seed::Internal::JSON::Request.new(
+          base_url: request_options[:base_url],
+          method: "GET",
+          path: "/#{params[:tenant_id]}/user/#{params[:user_id]}/specifics/#{params[:version]}/#{params[:thought]}"
         )
         begin
           _response = @client.send(_request)

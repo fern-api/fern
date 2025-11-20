@@ -1,5 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.10.0
+  changelogEntry:
+    - summary: Add pytest-xdist for parallel test execution and upgrade CI Python version to 3.9 in generated SDKs.
+      type: feat
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 1.9.4
+  changelogEntry:
+    - summary: Bump generator CLI version to publish new Docker image.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+
 - version: 1.9.3
   changelogEntry:
     - summary: Fix circular reference issue for recursive types and unions.

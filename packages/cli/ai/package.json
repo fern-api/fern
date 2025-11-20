@@ -23,17 +23,18 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "generate": "baml-cli generate --from baml_src",
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
+    "generate": "baml-cli generate --from baml_src",
     "test": "vitest --run",
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --run -u"
   },
   "dependencies": {
-    "@boundaryml/baml": "^0.211.2"
+    "@boundaryml/baml": "^0.211.2",
+    "@fern-api/configuration": "workspace:*"
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",

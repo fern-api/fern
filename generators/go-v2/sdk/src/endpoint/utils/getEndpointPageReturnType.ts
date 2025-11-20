@@ -19,23 +19,27 @@ export function getEndpointPageReturnType({
     }
     const pagination = context.getPagination(endpoint);
     if (pagination != null && !context.isPaginationWithRequestBodyEndpoint(endpoint)) {
-        return getCorePageReturnType({ context, pagination });
+        const responseType = getResponseBodyType({ context, body: response.body });
+        return getCorePageReturnType({ context, pagination, responseType });
     }
     return getResponseBodyType({ context, body: response.body });
 }
 
 function getCorePageReturnType({
     context,
-    pagination
+    pagination,
+    responseType
 }: {
     context: SdkGeneratorContext;
     pagination: Pagination;
+    responseType: go.Type;
 }): go.Type {
     return go.Type.pointer(
         go.Type.reference(
             context.getPageTypeReference(
                 getPageType({ context, pagination }),
-                getPaginationValueType({ context, pagination })
+                getPaginationValueType({ context, pagination }),
+                responseType
             )
         )
     );

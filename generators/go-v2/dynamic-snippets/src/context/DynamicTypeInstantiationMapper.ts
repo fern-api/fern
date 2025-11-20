@@ -625,7 +625,8 @@ export class DynamicTypeInstantiationMapper {
                 if (dateTime == null) {
                     return go.TypeInstantiation.nop();
                 }
-                return go.TypeInstantiation.dateTime(dateTime);
+                const normalizedDateTime = this.normalizeDateTimeString(dateTime);
+                return go.TypeInstantiation.dateTime(normalizedDateTime);
             }
             case "UUID": {
                 const uuid = this.context.getValueAsString({ value });
@@ -674,5 +675,15 @@ export class DynamicTypeInstantiationMapper {
         const bool =
             as === "key" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value;
         return this.context.getValueAsBoolean({ value: bool });
+    }
+
+    private normalizeDateTimeString(dateTime: string): string {
+        if (/^\d{4}-\d{2}-\d{2}$/.test(dateTime)) {
+            return `${dateTime}T00:00:00Z`;
+        }
+        if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(dateTime)) {
+            return `${dateTime}Z`;
+        }
+        return dateTime;
     }
 }

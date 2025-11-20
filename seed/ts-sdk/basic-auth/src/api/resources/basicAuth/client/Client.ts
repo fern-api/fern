@@ -2,22 +2,26 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { normalizeClientOptions } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 import * as SeedBasicAuth from "../../../index.js";
 
 export declare namespace BasicAuthClient {
-    export interface Options extends BaseClientOptions {}
+    export interface Options extends BaseClientOptions {
+        authProvider: core.AuthProvider;
+    }
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class BasicAuthClient {
     protected readonly _options: BasicAuthClient.Options;
+    protected readonly _authProvider: core.AuthProvider;
 
     constructor(options: BasicAuthClient.Options) {
         this._options = normalizeClientOptions(options);
+        this._authProvider = options.authProvider;
     }
 
     /**
@@ -37,9 +41,10 @@ export class BasicAuthClient {
     private async __getWithBasicAuth(
         requestOptions?: BasicAuthClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
+        const _authRequest: core.AuthRequest = await this._authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -119,9 +124,10 @@ export class BasicAuthClient {
         request?: unknown,
         requestOptions?: BasicAuthClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
+        const _authRequest: core.AuthRequest = await this._authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -179,12 +185,5 @@ export class BasicAuthClient {
                     rawResponse: _response.rawResponse,
                 });
         }
-    }
-
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        return core.BasicAuth.toAuthorizationHeader({
-            username: await core.Supplier.get(this._options.username),
-            password: await core.Supplier.get(this._options.password),
-        });
     }
 }

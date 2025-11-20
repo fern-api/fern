@@ -1,0 +1,230 @@
+{
+  "title": "Security and Auth Edge Cases",
+  "servers": [],
+  "websocketServers": [],
+  "tags": {
+    "tagsById": {}
+  },
+  "hasEndpointsMarkedInternal": false,
+  "endpoints": [
+    {
+      "audiences": [],
+      "operationId": "getData",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetDataRequest",
+      "errors": {},
+      "servers": [],
+      "authed": true,
+      "security": [],
+      "method": "GET",
+      "path": "/data",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getPublic",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetPublicRequest",
+      "errors": {},
+      "servers": [],
+      "authed": false,
+      "security": [],
+      "method": "GET",
+      "path": "/public",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getProtected",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetProtectedRequest",
+      "errors": {},
+      "servers": [],
+      "authed": true,
+      "security": [
+        {
+          "BearerAuth": []
+        }
+      ],
+      "method": "GET",
+      "path": "/protected",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getSecure",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetSecureRequest",
+      "errors": {},
+      "servers": [],
+      "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": [],
+          "BearerAuth": []
+        }
+      ],
+      "method": "GET",
+      "path": "/secure",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    },
+    {
+      "audiences": [],
+      "operationId": "getFlexible",
+      "tags": [],
+      "pathParameters": [],
+      "queryParameters": [],
+      "headers": [],
+      "generatedRequestName": "GetFlexibleRequest",
+      "errors": {},
+      "servers": [],
+      "authed": true,
+      "security": [
+        {
+          "ApiKeyAuth": []
+        },
+        {
+          "BearerAuth": []
+        },
+        {
+          "OAuth2": [
+            "read"
+          ]
+        }
+      ],
+      "method": "GET",
+      "path": "/flexible",
+      "examples": [
+        {
+          "pathParameters": [],
+          "queryParameters": [],
+          "headers": [],
+          "codeSamples": [],
+          "type": "full"
+        }
+      ],
+      "source": {
+        "file": "../openapi.yml",
+        "type": "openapi"
+      }
+    }
+  ],
+  "webhooks": [],
+  "channels": {},
+  "groupedSchemas": {
+    "rootSchemas": {},
+    "namespacedSchemas": {}
+  },
+  "variables": {},
+  "nonRequestReferencedSchemas": {},
+  "securitySchemes": {
+    "ApiKeyAuth": {
+      "headerName": "X-API-Key",
+      "type": "header"
+    },
+    "BearerAuth": {
+      "type": "bearer"
+    },
+    "BasicAuth": {
+      "type": "basic"
+    },
+    "OAuth2": {
+      "scopesEnum": {
+        "generatedName": "OauthScope",
+        "values": [
+          {
+            "generatedName": "read",
+            "value": "read",
+            "description": "Read access",
+            "casing": {}
+          },
+          {
+            "generatedName": "write",
+            "value": "write",
+            "description": "Write access",
+            "casing": {}
+          },
+          {
+            "generatedName": "admin",
+            "value": "admin",
+            "description": "Admin access",
+            "casing": {}
+          }
+        ],
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
+      },
+      "type": "oauth"
+    },
+    "ApiKeyHeader": {
+      "headerName": "X-API-Key",
+      "type": "header"
+    }
+  },
+  "globalHeaders": [],
+  "idempotencyHeaders": [],
+  "groups": {}
+}

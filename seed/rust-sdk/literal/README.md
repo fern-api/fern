@@ -5,6 +5,20 @@
 
 The Seed Rust library provides convenient access to the Seed APIs from Rust.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Errors](#errors)
+- [Request Types](#request-types)
+- [Advanced](#advanced)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+- [Contributing](#contributing)
+
 ## Installation
 
 Add this to your `Cargo.toml`:
@@ -41,11 +55,13 @@ async fn main() {
         .headers
         .send(
             &SendLiteralsInHeadersRequest {
-                endpoint_version: "02-12-2024".to_string(),
-                r#async: true,
                 query: "What is the weather today".to_string(),
             },
-            None,
+            Some(
+                RequestOptions::new()
+                    .additional_header("X-Endpoint-Version", "02-12-2024".to_string())
+                    .additional_header("X-Async", true),
+            ),
         )
         .await;
 }

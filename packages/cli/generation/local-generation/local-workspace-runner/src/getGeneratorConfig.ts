@@ -91,6 +91,7 @@ export declare namespace getGeneratorConfig {
         writeUnitTests: boolean;
         generateOauthClients: boolean;
         generatePaginatedClients: boolean;
+        whiteLabel?: boolean;
         paths: {
             snippetPath: AbsoluteFilePath | undefined;
             snippetTemplatePath: AbsoluteFilePath | undefined;
@@ -183,6 +184,7 @@ export function getGeneratorConfig({
     writeUnitTests,
     generateOauthClients,
     generatePaginatedClients,
+    whiteLabel,
     paths
 }: getGeneratorConfig.Args): FernGeneratorExec.GeneratorConfig {
     const licenseInfo = extractLicenseInfo(generatorInvocation, absolutePathToFernConfig);
@@ -269,7 +271,7 @@ export function getGeneratorConfig({
         organization,
         environment: FernGeneratorExec.GeneratorEnvironment.local(),
         dryRun: false,
-        whitelabel: false,
+        whitelabel: whiteLabel ?? false,
         writeUnitTests,
         generateOauthClients,
         generatePaginatedClients,

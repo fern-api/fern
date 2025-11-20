@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("SeedApiClient", () => {
     test("foo", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiClient({ environment: server.baseUrl });
+        const client = new SeedApiClient({ maxRetries: 0, environment: server.baseUrl });
 
         server.mockEndpoint().post("").respondWith().statusCode(200).build();
 

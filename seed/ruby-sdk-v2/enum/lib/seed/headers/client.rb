@@ -3,11 +3,20 @@
 module Seed
   module Headers
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Headers::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::Types::Operand] :operand
+      # @option params [Seed::Types::Operand | nil] :maybe_operand
+      # @option params [Seed::Types::ColorOrOperand] :operand_or_color
+      # @option params [Seed::Types::ColorOrOperand | nil] :maybe_operand_or_color
+      #
       # @return [untyped]
       def send_(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(

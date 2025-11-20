@@ -18,7 +18,8 @@ export type AsIsSymbolName =
     | "FormFile"
     | "Nullable"
     | "RequestOptions"
-    | "Networking";
+    | "Networking"
+    | "Indirect";
 
 /**
  * Configuration specification for a static Swift file that gets included as-is in the generated SDK.
@@ -149,6 +150,11 @@ export const SourceAsIsFileSpecs = {
         relativePathToDir: "Public",
         filenameWithoutExtension: "FormFile",
         symbols: [{ name: "FormFile", shape: { type: "struct" } }]
+    },
+    Indirect: {
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "Indirect",
+        symbols: [{ name: "Indirect", shape: { type: "class" } }]
     },
     JsonValue: {
         relativePathToDir: "Public",

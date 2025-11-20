@@ -25,6 +25,9 @@ test:
   docker:
     image: fernapi/fern-csharp-sdk:latest
     command: pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest
+  podman:
+    image: fernapi/fern-csharp-sdk:latest
+    command: pnpm --filter @fern-api/fern-csharp-sdk podmanTagLatest
   local:
     workingDirectory: generators/csharp
     buildCommand:
@@ -36,7 +39,7 @@ generatorType: SDK
 defaultOutputMode: github
 defaultCustomConfig: {}
 scripts:
-  - docker: fernapi/csharp-seed
+  - image: fernapi/csharp-seed
     commands:
       # Check for .NET 10
       # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`

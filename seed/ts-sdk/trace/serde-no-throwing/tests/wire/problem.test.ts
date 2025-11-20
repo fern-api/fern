@@ -6,7 +6,12 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("ProblemClient", () => {
     test("createProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             problemName: "problemName",
             problemDescription: {
@@ -167,7 +172,12 @@ describe("ProblemClient", () => {
 
     test("updateProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             problemName: "problemName",
             problemDescription: {
@@ -327,7 +337,12 @@ describe("ProblemClient", () => {
 
     test("deleteProblem", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
 
         server.mockEndpoint().delete("/problem-crud/delete/problemId").respondWith().statusCode(200).build();
 
@@ -342,7 +357,12 @@ describe("ProblemClient", () => {
 
     test("getDefaultStarterFiles", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             inputParams: [
                 { variableType: { type: "integerType" }, name: "name" },

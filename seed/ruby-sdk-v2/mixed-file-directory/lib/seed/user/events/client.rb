@@ -4,12 +4,18 @@ module Seed
   module User
     module Events
       class Client
+        # @param client [Seed::Internal::Http::RawClient]
+        #
         # @return [Seed::User::Events::Client]
         def initialize(client:)
           @client = client
         end
 
         # List all user events.
+        #
+        # @param request_options [Seed::RequestOptions]
+        # @param params [Hash[untyped, untyped]]
+        # @option params [Integer | nil] :limit
         #
         # @return [Array[Seed::User::Events::Types::Event]]
         def list_events(request_options: {}, **params)

@@ -3,11 +3,16 @@
 module Seed
   module Reference
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Reference::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Seed::Reference::Types::SendRequest]
+      #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

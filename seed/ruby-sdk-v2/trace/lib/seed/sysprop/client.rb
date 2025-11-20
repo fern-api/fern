@@ -3,17 +3,24 @@
 module Seed
   module Sysprop
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Sysprop::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::Commons::Types::Language] :language
+      # @option params [Integer] :num_warm_instances
+      #
       # @return [untyped]
       def set_num_warm_instances(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "PUT",
-          path: "/sysprop/num-warm-instances/#{params[:language]}/#{params[:numWarmInstances]}"
+          path: "/sysprop/num-warm-instances/#{params[:language]}/#{params[:num_warm_instances]}"
         )
         begin
           _response = @client.send(_request)
@@ -27,6 +34,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      #
       # @return [Hash[Seed::Commons::Types::Language, Integer]]
       def get_num_warm_instances(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(

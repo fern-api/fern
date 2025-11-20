@@ -3,11 +3,21 @@
 module Seed
   module Nullable
     class Client
+      # @param client [Seed::Internal::Http::RawClient]
+      #
       # @return [Seed::Nullable::Client]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
+      # @option params [String | nil] :usernames
+      # @option params [String | nil] :avatar
+      # @option params [bool | nil] :activated
+      # @option params [String | nil | nil] :tags
+      # @option params [bool | nil | nil] :extra
+      #
       # @return [Array[Seed::Nullable::Types::User]]
       def get_users(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -38,6 +48,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Seed::Nullable::Types::CreateUserRequest]
+      #
       # @return [Seed::Nullable::Types::User]
       def create_user(request_options: {}, **params)
         _body_prop_names = %i[username tags metadata avatar]
@@ -63,6 +76,9 @@ module Seed
         end
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Seed::Nullable::Types::DeleteUserRequest]
+      #
       # @return [bool]
       def delete_user(request_options: {}, **params)
         _body_prop_names = %i[username]
