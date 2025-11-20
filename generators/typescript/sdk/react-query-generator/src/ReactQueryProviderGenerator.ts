@@ -21,13 +21,7 @@ export class ReactQueryProviderGenerator {
         this.clientClassName = clientClassName;
     }
 
-    public generateProvider({
-        file,
-        importsManager
-    }: {
-        file: SourceFile;
-        importsManager: ImportsManager;
-    }): void {
+    public generateProvider({ file, importsManager }: { file: SourceFile; importsManager: ImportsManager }): void {
         importsManager.addImport("react", {
             namedImports: ["createContext", "ReactNode"]
         });

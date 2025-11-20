@@ -1,8 +1,8 @@
-import { HttpEndpoint, HttpMethod, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ExportsManager, ImportsManager, PackageId } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { PackageResolver } from "@fern-typescript/resolvers";
-import { SourceFile, VariableDeclarationKind } from "ts-morph";
+import { SourceFile } from "ts-morph";
 
 export declare namespace ReactQueryHooksGenerator {
     export interface Init {
@@ -168,9 +168,7 @@ export class ReactQueryHooksGenerator {
     }
 
     private getServiceName(service: HttpService): string {
-        const name = service.name.fernFilepath.allParts.map(part => 
-            part.pascalCase.safeName
-        ).join("");
+        const name = service.name.fernFilepath.allParts.map((part) => part.pascalCase.safeName).join("");
         return name || "Service";
     }
 
@@ -476,11 +474,9 @@ export async function ${prefetchFunctionName}(
     }
 
     private getClientMethodPath(service: HttpService, endpoint: HttpEndpoint): string {
-        const servicePath = service.name.fernFilepath.allParts.map(part => 
-            part.camelCase.safeName
-        ).join(".");
+        const servicePath = service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName).join(".");
         const endpointName = endpoint.name.camelCase.safeName;
-        
+
         if (servicePath) {
             return `${servicePath}.${endpointName}`;
         }
