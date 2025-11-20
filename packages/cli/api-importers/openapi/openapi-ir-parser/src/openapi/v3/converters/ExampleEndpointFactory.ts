@@ -507,7 +507,7 @@ export class ExampleEndpointFactory {
                 const resolvedSchema = this.getResolvedSchema(queryParameter.schema);
                 const isArrayParam = resolvedSchema.type === "array";
                 const isValidExample = isExamplePrimitive(example) || (isArrayParam && example.type === "array");
-                
+
                 if (!isValidExample) {
                     this.logger.debug(
                         `Expected a primitive example but got ${example.type} for query parameter ${
@@ -700,7 +700,7 @@ export class ExampleEndpointFactory {
     private getResolvedSchema(schema: SchemaWithExample): SchemaWithExample {
         let current = schema;
         const visited = new Set<string>();
-        
+
         while (true) {
             if (current.type === "optional" || current.type === "nullable") {
                 current = current.value;
@@ -709,7 +709,7 @@ export class ExampleEndpointFactory {
                     break;
                 }
                 visited.add(current.schema);
-                
+
                 const referencedSchema = this.schemas[current.schema];
                 if (referencedSchema != null) {
                     current = referencedSchema;
@@ -720,7 +720,7 @@ export class ExampleEndpointFactory {
                 break;
             }
         }
-        
+
         return current;
     }
 }
