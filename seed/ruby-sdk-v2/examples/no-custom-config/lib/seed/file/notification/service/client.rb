@@ -13,8 +13,8 @@ module Seed
           end
 
           # @param request_options [Seed::RequestOptions]
-          #
           # @param params [Hash[untyped, untyped]]
+          # @option params [String] :notification_id
           #
           # @return [Seed::Types::Types::Exception]
           def get_exception(request_options: {}, **params)

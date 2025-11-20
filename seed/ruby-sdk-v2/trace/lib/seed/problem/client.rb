@@ -13,7 +13,6 @@ module Seed
       # Creates a problem
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Problem::Types::CreateProblemRequest]
       #
       # @return [Seed::Problem::Types::CreateProblemResponse]
@@ -41,8 +40,8 @@ module Seed
       # Updates a problem
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Problem::Types::CreateProblemRequest]
+      # @option params [Seed::Commons::Types::ProblemId] :problem_id
       #
       # @return [Seed::Problem::Types::UpdateProblemResponse]
       def update_problem(request_options: {}, **params)
@@ -69,8 +68,8 @@ module Seed
       # Soft deletes a problem
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::Commons::Types::ProblemId] :problem_id
       #
       # @return [untyped]
       def delete_problem(request_options: {}, **params)
@@ -94,7 +93,6 @@ module Seed
       # Returns default starter files for problem
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Problem::Types::GetDefaultStarterFilesRequest]
       #
       # @return [Seed::Problem::Types::GetDefaultStarterFilesResponse]

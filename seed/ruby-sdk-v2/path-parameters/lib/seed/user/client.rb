@@ -11,8 +11,9 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
       #
       # @return [Seed::User::Types::User]
       def get_user(request_options: {}, **params)
@@ -36,8 +37,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::User::Types::User]
+      # @option params [String] :tenant_id
       #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)
@@ -62,8 +63,9 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::User::Types::User]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
       #
       # @return [Seed::User::Types::User]
       def update_user(request_options: {}, **params)
@@ -91,8 +93,10 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
+      # @option params [Integer | nil] :limit
       #
       # @return [Array[Seed::User::Types::User]]
       def search_users(request_options: {}, **params)
@@ -123,8 +127,10 @@ module Seed
       # Test endpoint with path parameter that has a text prefix (v{version})
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
+      # @option params [Integer] :version
       #
       # @return [Seed::User::Types::User]
       def get_user_metadata(request_options: {}, **params)
@@ -150,8 +156,11 @@ module Seed
       # Test endpoint with path parameters listed in different order than found in path
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
+      # @option params [Integer] :version
+      # @option params [String] :thought
       #
       # @return [Seed::User::Types::User]
       def get_user_specifics(request_options: {}, **params)

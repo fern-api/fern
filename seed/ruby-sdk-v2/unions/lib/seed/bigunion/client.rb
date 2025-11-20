@@ -11,8 +11,8 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :id
       #
       # @return [Seed::Bigunion::Types::BigUnion]
       def get(request_options: {}, **params)
@@ -36,7 +36,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Bigunion::Types::BigUnion]
       #
       # @return [bool]
@@ -60,7 +59,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Hash[String, bool]]

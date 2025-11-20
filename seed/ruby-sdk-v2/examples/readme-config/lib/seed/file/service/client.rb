@@ -14,8 +14,8 @@ module Seed
         # This endpoint returns a file by its name.
         #
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Hash[untyped, untyped]]
+        # @option params [String] :filename
         #
         # @return [Seed::Types::Types::File]
         def get_file(request_options: {}, **params)

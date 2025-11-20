@@ -12,7 +12,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Seed::Types::Enum::Types::WeatherReport]
         #
         # @return [Seed::Types::Enum::Types::WeatherReport]
