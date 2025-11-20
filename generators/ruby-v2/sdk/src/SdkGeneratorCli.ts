@@ -1,7 +1,7 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { AbstractRubyGeneratorCli, AsIsFiles } from "@fern-api/ruby-base";
+import { AbstractRubyGeneratorCli, AsIsFiles, getAsIsFilepath } from "@fern-api/ruby-base";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
 import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -9,7 +9,6 @@ import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import { template } from "lodash-es";
-import path from "path";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
 import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
@@ -270,8 +269,4 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         await mkdir(ghDir, { recursive: true });
         await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
     }
-}
-
-function getAsIsFilepath(filename: string): AbsoluteFilePath {
-    return AbsoluteFilePath.of(path.join(__dirname, "..", "..", "base", "src", "asIs", filename));
 }

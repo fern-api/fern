@@ -1,3 +1,6 @@
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import path from "path";
+
 export const AsIsFiles = {
     GithubCiYml: "github-ci.yml",
 
@@ -61,6 +64,10 @@ export const AsIsFiles = {
     TestUnionType: "test/unit/internal/types/test_union.Template.rb",
     TestTypeUtils: "test/unit/internal/types/test_utils.Template.rb"
 } as const;
+
+export function getAsIsFilepath(filename: string): AbsoluteFilePath {
+    return AbsoluteFilePath.of(path.join(__dirname, "asIs", filename));
+}
 
 export function topologicalCompareAsIsFiles(fileA: string, fileB: string): number {
     const validFiles = Object.values(AsIsFiles);
