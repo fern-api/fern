@@ -12,14 +12,21 @@ buildScripts:
       - yarn build
 
 publish:
-  versionSubstitution: $VERSION
-  command:
-    - pnpm --filter @fern-typescript/express-generator-cli dockerTagVersion $VERSION
-    - docker push fernapi/fern-typescript-express:$VERSION
+  preBuildCommands:
+    - pnpm --filter @fern-typescript/express-generator-cli dist:cli
+  docker:
+    file: ./generators/typescript/express/cli/Dockerfile
+    image: fernapi/fern-typescript-express
+    context: .
 test:
   docker:
-    image: fernapi/fern-typescript-express:local
-    command: pnpm --filter @fern-typescript/express-generator-cli dockerTagLocal
+    image: fernapi/fern-typescript-express:latest
+    command:
+      - pnpm --filter @fern-typescript/express-generator-cli dockerTagLatest
+  podman:
+    image: fernapi/fern-typescript-express:latest
+    command:
+      - pnpm --filter @fern-typescript/express-generator-cli podmanTagLatest
   local:
     workingDirectory: generators/typescript
     buildCommand:

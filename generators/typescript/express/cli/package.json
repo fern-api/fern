@@ -27,8 +27,8 @@
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
     "dist:cli": "pnpm clean && pnpm compile && node build.mjs",
-    "dockerTagLocal": "./docker/create_docker.sh local",
-    "dockerTagVersion": "./docker/create_docker.sh"
+    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-typescript-express:latest ../../../..",
+    "podmanTagLatest": "pnpm dist:cli && podman build -f ./Dockerfile -t fernapi/fern-typescript-express:latest ../../../.."
   },
   "devDependencies": {
     "@fern-api/configs": "workspace:*",
