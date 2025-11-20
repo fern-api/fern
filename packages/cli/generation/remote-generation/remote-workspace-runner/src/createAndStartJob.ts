@@ -105,7 +105,6 @@ async function createJob({
             shouldLogS3Url
         }),
         whitelabel,
-        fernDefinitionMetadata: undefined,
         preview: absolutePathToPreview != null
     });
 
