@@ -70,6 +70,9 @@ func QueryValuesWithDefaults(v any, defaults map[string]any) (url.Values, error)
 	if err != nil {
 		return values, err
 	}
+	if !val.IsValid() {
+		return values, nil
+	}
 
 	// apply defaults to zero-value fields directly on the original struct
 	valType := val.Type()
