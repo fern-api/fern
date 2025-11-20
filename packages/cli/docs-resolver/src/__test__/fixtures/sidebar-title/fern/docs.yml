@@ -1,4 +1,5 @@
-instances: []
+instances:
+  - url: https://example.docs.buildwithfern.com
 navigation:
   - page: Original Page Title
     path: ./page-with-sidebar-title.mdx
