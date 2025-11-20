@@ -38,11 +38,22 @@ export async function runRulesOnDocsWorkspace({
     apiWorkspaces: AbstractAPIWorkspace<unknown>[];
     ossWorkspaces: OSSWorkspace[];
 }): Promise<ValidationViolation[]> {
+    const startMemory = process.memoryUsage();
+    context.logger.debug(
+        `[docs]: Starting docs validation with ${rules.length} rules: ${rules.map((r) => r.name).join(", ")}`
+    );
+    context.logger.debug(
+        `[docs]: Initial memory usage: RSS=${(startMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(startMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
+    );
+
     const violations: ValidationViolation[] = [];
 
+    const ruleCreationStart = performance.now();
     const allRuleVisitors = await Promise.all(
         rules.map((rule) => rule.create({ workspace, apiWorkspaces, ossWorkspaces, logger: context.logger }))
     );
+    const ruleCreationTime = performance.now() - ruleCreationStart;
+    context.logger.debug(`[docs]: Created ${rules.length} rule visitors in ${ruleCreationTime.toFixed(0)}ms`);
 
     const astVisitor = createDocsConfigFileAstVisitorForRules({
         relativeFilepath: RelativeFilePath.of(DOCS_CONFIGURATION_FILENAME),
@@ -52,6 +63,7 @@ export async function runRulesOnDocsWorkspace({
         }
     });
 
+    const visitStart = performance.now();
     await visitDocsConfigFileYamlAst({
         contents: workspace.config,
         visitor: astVisitor,
@@ -63,6 +75,16 @@ export async function runRulesOnDocsWorkspace({
         context,
         apiWorkspaces
     });
+    const visitTime = performance.now() - visitStart;
+    context.logger.debug(`[docs]: Completed AST traversal in ${visitTime.toFixed(0)}ms`);
+
+    const endMemory = process.memoryUsage();
+    context.logger.debug(
+        `[docs]: Final memory usage: RSS=${(endMemory.rss / 1024 / 1024).toFixed(2)}MB, Heap=${(endMemory.heapUsed / 1024 / 1024).toFixed(2)}MB`
+    );
+    context.logger.debug(
+        `[docs]: Memory delta: RSS=${((endMemory.rss - startMemory.rss) / 1024 / 1024).toFixed(2)}MB, Heap=${((endMemory.heapUsed - startMemory.heapUsed) / 1024 / 1024).toFixed(2)}MB`
+    );
 
     return violations;
 }
