@@ -230,6 +230,7 @@ export class Method extends AstNode {
         let normalized = typeString.replace(/\s*\|\s*/g, ", ");
         normalized = normalized.replace(/\bbool\b/g, "Boolean");
         normalized = normalized.replace(/(^|,\s*)nil(?:,\s*nil)+(?=,|\]|$)/g, "$1nil");
+        normalized = normalized.replace(/Hash\[untyped,\s*untyped\]/g, "Hash");
         return normalized;
     }
 
