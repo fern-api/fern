@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix OpenAPI enum references being inlined instead of preserved as references. Enum schemas (type: string with enum property) are no longer treated as inlinable primitives, ensuring that $ref to enum schemas maintain their reference structure in the generated IR.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-19"
+  version: 1.11.2
+
+- changelogEntry:
+    - summary: |
         Fix AutoVersioning to exclude Fern branding from commit messages and PR titles/descriptions when whitelabel config is present.
       type: fix
   irVersion: 61
