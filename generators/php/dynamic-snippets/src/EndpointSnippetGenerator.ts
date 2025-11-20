@@ -275,7 +275,11 @@ export class EndpointSnippetGenerator {
             }
         }
 
-        return this.context.getClassName(environments[0]!.name);
+        const firstEnv = environments[0];
+        if (firstEnv == null) {
+            return undefined;
+        }
+        return this.context.getClassName(firstEnv.name);
     }
 
     private resolveMultiEnvironmentName(environment: FernIr.dynamic.MultipleEnvironmentUrlValues): string | undefined {
