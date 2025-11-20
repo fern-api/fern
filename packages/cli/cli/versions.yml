@@ -7,8 +7,8 @@
         existing behavior. New users will get the new default.
       type: break
   irVersion: 61
-  createdAt: "2025-11-18"
-  version: 2.0.0
+  createdAt: "2025-11-20"
+  version: 2.0.0-rc0
 
 - changelogEntry:
     - summary: |
