@@ -108,7 +108,7 @@ export class Method extends AstNode {
         }
 
         for (const positionalParameter of this.positionalParameters) {
-            writer.write(`# @param ${positionalParameter.name} [`);
+            writer.write(`# @option ${positionalParameter.name} [`);
             const typeWriter = new Writer({ customConfig: writer.customConfig });
             positionalParameter.type.writeTypeDefinition(typeWriter);
             writer.write(this.normalizeForYard(typeWriter.toString()));
