@@ -272,8 +272,25 @@ public final class PoetTypeNameMapper {
         @Override
         public TypeName visitNullable(TypeReference typeReference) {
             if (customConfig.collapseOptionalNullable()) {
-                TypeName innerTypeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
                 ClassName optionalNullableClassName = poetClassNameFactory.getOptionalNullableClassName();
+
+                // Check if inner type is optional container - collapse nullable<optional<T>> to OptionalNullable<T>
+                if (typeReference.isContainer() && typeReference.getContainer().get().isOptional()) {
+                    TypeReference innerType = typeReference.getContainer().get().getOptional().get();
+                    TypeName innerTypeName = innerType.visit(primitiveDisAllowedTypeReferenceConverter);
+                    return ParameterizedTypeName.get(optionalNullableClassName, innerTypeName);
+                }
+
+                // Visit inner type and check if result is already OptionalNullable
+                TypeName innerTypeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
+
+                // If result is already OptionalNullable, don't wrap again
+                if (innerTypeName instanceof ParameterizedTypeName) {
+                    if (((ParameterizedTypeName) innerTypeName).rawType.equals(optionalNullableClassName)) {
+                        return innerTypeName;
+                    }
+                }
+
                 return ParameterizedTypeName.get(optionalNullableClassName, innerTypeName);
             }
 
@@ -293,13 +310,29 @@ public final class PoetTypeNameMapper {
                         typeReference.getContainer().get().getNullable().get();
                 TypeName innerTypeName = innerType.visit(primitiveDisAllowedTypeReferenceConverter);
                 ClassName optionalNullableClassName = poetClassNameFactory.getOptionalNullableClassName();
+
+                // Check if innerTypeName is already OptionalNullable - if so, don't wrap again
+                if (innerTypeName instanceof ParameterizedTypeName) {
+                    if (((ParameterizedTypeName) innerTypeName).rawType.equals(optionalNullableClassName)) {
+                        return innerTypeName;
+                    }
+                }
+
                 return ParameterizedTypeName.get(optionalNullableClassName, innerTypeName);
             }
 
             TypeName typeName = typeReference.visit(primitiveDisAllowedTypeReferenceConverter);
+            ClassName optionalNullableClassName = poetClassNameFactory.getOptionalNullableClassName();
+
             if (typeName instanceof ParameterizedTypeName) {
                 // Optional should not be re-wrapped in Optional
                 if (((ParameterizedTypeName) typeName).rawType.equals(ClassName.get(Optional.class))) {
+                    return typeName;
+                }
+
+                // When collapse flag is true, OptionalNullable should not be wrapped in Optional
+                if (customConfig.collapseOptionalNullable()
+                        && ((ParameterizedTypeName) typeName).rawType.equals(optionalNullableClassName)) {
                     return typeName;
                 }
             }
