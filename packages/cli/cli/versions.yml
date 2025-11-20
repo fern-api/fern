@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix migration directory name to match exported version (2.0.0-rc0).
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.0-rc1
+
+- changelogEntry:
+    - summary: |
         Change default for OpenAPI parsing setting:
           - `coerce-enums-to-literals`: `false` (was `true`)
         The CLI will automatically upgrade your _generators.yml_ to explicitly set the old default to preserve
