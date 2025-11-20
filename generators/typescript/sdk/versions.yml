@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.34.0
+  changelogEntry:
+    - summary: |
+        Implement auth provider architecture for bearer auth, matching the pattern established by basic auth and inferred auth. Bearer auth now uses a dedicated `BearerAuthProvider` class that implements the `AuthProvider` interface, replacing inline auth logic.
+      type: feat
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 3.33.0
   changelogEntry:
     - summary: |
