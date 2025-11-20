@@ -5,6 +5,14 @@
       type: feat
   irVersion: 61
   createdAt: "2025-11-20"
+  version: 2.0.0-rc3
+
+- changelogEntry:
+    - summary: |
+        Improve misc error handling, including for illegal version strings.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
   version: 2.0.0-rc2
 
 - changelogEntry:
