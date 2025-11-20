@@ -275,8 +275,10 @@ public final class PoetTypeNameMapper {
                 ClassName optionalNullableClassName = poetClassNameFactory.getOptionalNullableClassName();
 
                 // Check if inner type is optional container - collapse nullable<optional<T>> to OptionalNullable<T>
-                if (typeReference.isContainer() && typeReference.getContainer().get().isOptional()) {
-                    TypeReference innerType = typeReference.getContainer().get().getOptional().get();
+                if (typeReference.isContainer()
+                        && typeReference.getContainer().get().isOptional()) {
+                    TypeReference innerType =
+                            typeReference.getContainer().get().getOptional().get();
                     TypeName innerTypeName = innerType.visit(primitiveDisAllowedTypeReferenceConverter);
                     return ParameterizedTypeName.get(optionalNullableClassName, innerTypeName);
                 }
