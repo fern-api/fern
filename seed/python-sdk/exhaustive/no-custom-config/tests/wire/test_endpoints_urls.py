@@ -1,5 +1,5 @@
 from typing import Optional, Dict, Any
-from seed.exhaustive import SeedExhaustive
+from seed import SeedExhaustive
 
 import pytest
 
@@ -43,7 +43,7 @@ def verify_request_count(
 def test_endpoints_urls_with_mixed_case() -> None:
     """Test withMixedCase endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.with_mixed_case()
+    result = client.endpoints.urls.with_mixed_case()
     verify_request_count("GET", "/urls/MixedCase", None, 1)
 
 
@@ -51,7 +51,7 @@ def test_endpoints_urls_with_mixed_case() -> None:
 def test_endpoints_urls_no_ending_slash() -> None:
     """Test noEndingSlash endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.no_ending_slash()
+    result = client.endpoints.urls.no_ending_slash()
     verify_request_count("GET", "/urls/no-ending-slash", None, 1)
 
 
@@ -59,7 +59,7 @@ def test_endpoints_urls_no_ending_slash() -> None:
 def test_endpoints_urls_with_ending_slash() -> None:
     """Test withEndingSlash endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.with_ending_slash()
+    result = client.endpoints.urls.with_ending_slash()
     verify_request_count("GET", "/urls/with-ending-slash/", None, 1)
 
 
@@ -67,6 +67,6 @@ def test_endpoints_urls_with_ending_slash() -> None:
 def test_endpoints_urls_with_underscores() -> None:
     """Test withUnderscores endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.with_underscores()
+    result = client.endpoints.urls.with_underscores()
     verify_request_count("GET", "/urls/with_underscores", None, 1)
 

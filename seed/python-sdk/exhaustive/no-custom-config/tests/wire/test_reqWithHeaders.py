@@ -1,5 +1,5 @@
 from typing import Optional, Dict, Any
-from seed.exhaustive import SeedExhaustive
+from seed import SeedExhaustive
 
 import pytest
 
@@ -43,6 +43,6 @@ def verify_request_count(
 def test_reqWithHeaders_get_with_custom_header() -> None:
     """Test getWithCustomHeader endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.get_with_custom_header()
+    result = client.req_with_headers.get_with_custom_header()
     verify_request_count("POST", "/test-headers/custom-header", None, 1)
 

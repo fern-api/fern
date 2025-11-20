@@ -1,5 +1,5 @@
 from typing import Optional, Dict, Any
-from seed.exhaustive import SeedExhaustive
+from seed import SeedExhaustive
 
 import pytest
 
@@ -43,6 +43,6 @@ def verify_request_count(
 def test_endpoints_enum_get_and_return_enum() -> None:
     """Test getAndReturnEnum endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.get_and_return_enum()
+    result = client.endpoints.enum.get_and_return_enum()
     verify_request_count("POST", "/enum", None, 1)
 

@@ -1,5 +1,5 @@
 from typing import Optional, Dict, Any
-from seed.exhaustive import SeedExhaustive
+from seed import SeedExhaustive
 
 import pytest
 
@@ -43,6 +43,6 @@ def verify_request_count(
 def test_noAuth_post_with_no_auth() -> None:
     """Test postWithNoAuth endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.post_with_no_auth(request={"key":"value"})
+    result = client.no_auth.post_with_no_auth(request={"key":"value"})
     verify_request_count("POST", "/no-auth", None, 1)
 

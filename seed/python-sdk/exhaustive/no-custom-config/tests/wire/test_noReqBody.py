@@ -1,5 +1,5 @@
 from typing import Optional, Dict, Any
-from seed.exhaustive import SeedExhaustive
+from seed import SeedExhaustive
 
 import pytest
 
@@ -43,7 +43,7 @@ def verify_request_count(
 def test_noReqBody_get_with_no_request_body() -> None:
     """Test getWithNoRequestBody endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.get_with_no_request_body()
+    result = client.no_req_body.get_with_no_request_body()
     verify_request_count("GET", "/no-req-body", None, 1)
 
 
@@ -51,6 +51,6 @@ def test_noReqBody_get_with_no_request_body() -> None:
 def test_noReqBody_post_with_no_request_body() -> None:
     """Test postWithNoRequestBody endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.post_with_no_request_body()
+    result = client.no_req_body.post_with_no_request_body()
     verify_request_count("POST", "/no-req-body", None, 1)
 

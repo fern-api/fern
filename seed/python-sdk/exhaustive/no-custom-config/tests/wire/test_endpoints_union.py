@@ -1,5 +1,5 @@
 from typing import Optional, Dict, Any
-from seed.exhaustive import SeedExhaustive
+from seed import SeedExhaustive
 
 import pytest
 
@@ -43,6 +43,6 @@ def verify_request_count(
 def test_endpoints_union_get_and_return_union() -> None:
     """Test getAndReturnUnion endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.get_and_return_union(request={"animal":"dog","name":"name","likesToWoof":True})
+    result = client.endpoints.union.get_and_return_union(request={"animal":"dog","name":"name","likesToWoof":True})
     verify_request_count("POST", "/union", None, 1)
 

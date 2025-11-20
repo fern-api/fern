@@ -1,5 +1,5 @@
 from typing import Optional, Dict, Any
-from seed.exhaustive import SeedExhaustive
+from seed import SeedExhaustive
 
 import pytest
 
@@ -43,6 +43,6 @@ def verify_request_count(
 def test_inlinedRequests_post_with_object_bodyand_response() -> None:
     """Test postWithObjectBodyandResponse endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.post_with_object_bodyand_response(request={"string":"string","integer":1,"NestedObject":{"string":"string","integer":1,"long":1000000,"double":1.1,"bool":True,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"}})
+    result = client.inlined_requests.post_with_object_bodyand_response(request={"string":"string","integer":1,"NestedObject":{"string":"string","integer":1,"long":1000000,"double":1.1,"bool":True,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"}})
     verify_request_count("POST", "/req-bodies/object", None, 1)
 

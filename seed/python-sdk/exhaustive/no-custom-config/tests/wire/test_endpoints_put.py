@@ -1,5 +1,5 @@
 from typing import Optional, Dict, Any
-from seed.exhaustive import SeedExhaustive
+from seed import SeedExhaustive
 
 import pytest
 
@@ -43,6 +43,6 @@ def verify_request_count(
 def test_endpoints_put_add() -> None:
     """Test add endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.add("id")
+    result = client.endpoints.put.add("id")
     verify_request_count("PUT", "/id", None, 1)
 

@@ -62,14 +62,24 @@ export class WireTestGenerator {
         serviceName: string,
         endpoints: HttpEndpoint[]
     ): Promise<WriteablePythonFile | null> {
-        const endpointTestCases: Array<{ endpoint: HttpEndpoint; example: dynamic.EndpointExample }> = [];
+        const endpointTestCases: Array<{
+            endpoint: HttpEndpoint;
+            example: dynamic.EndpointExample;
+            service: HttpService;
+        }> = [];
 
         for (const endpoint of endpoints) {
             const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
             if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
                 const firstExample = dynamicEndpoint.examples[0];
                 if (firstExample) {
-                    endpointTestCases.push({ endpoint, example: firstExample });
+                    // Find the service that owns this endpoint
+                    const service = Object.values(this.context.ir.services).find((s) =>
+                        s.endpoints.some((e) => e.id === endpoint.id)
+                    );
+                    if (service) {
+                        endpointTestCases.push({ endpoint, example: firstExample, service });
+                    }
                 }
             }
         }
@@ -97,7 +107,7 @@ export class WireTestGenerator {
 
     private buildTestFile(
         serviceName: string,
-        testCases: Array<{ endpoint: HttpEndpoint; example: dynamic.EndpointExample }>
+        testCases: Array<{ endpoint: HttpEndpoint; example: dynamic.EndpointExample; service: HttpService }>
     ): python.PythonFile {
         const statements: python.AstNode[] = [];
 
@@ -116,8 +126,8 @@ export class WireTestGenerator {
         statements.push(this.generateVerifyRequestCountFunction());
 
         // Add test functions for each endpoint
-        for (const { endpoint, example } of testCases) {
-            const testFunction = this.generateEndpointTestFunction(serviceName, endpoint, example);
+        for (const { endpoint, example, service } of testCases) {
+            const testFunction = this.generateEndpointTestFunction(serviceName, endpoint, example, service);
             if (testFunction) {
                 statements.push(testFunction);
             }
@@ -240,7 +250,8 @@ export class WireTestGenerator {
     private generateEndpointTestFunction(
         serviceName: string,
         endpoint: HttpEndpoint,
-        example: dynamic.EndpointExample
+        example: dynamic.EndpointExample,
+        service: HttpService
     ): python.Method | null {
         try {
             const testName = this.getTestFunctionName(serviceName, endpoint);
@@ -254,7 +265,7 @@ export class WireTestGenerator {
             statements.push(python.codeBlock(`client = ${clientName}(base_url="http://localhost:8080")`));
 
             // Generate the API call
-            const apiCall = this.generateApiCall(endpoint, example);
+            const apiCall = this.generateApiCall(endpoint, example, service);
             statements.push(python.codeBlock(apiCall));
 
             // Verify request count
@@ -285,7 +296,7 @@ export class WireTestGenerator {
     // API CALL GENERATION
     // =============================================================================
 
-    private generateApiCall(endpoint: HttpEndpoint, example: dynamic.EndpointExample): string {
+    private generateApiCall(endpoint: HttpEndpoint, example: dynamic.EndpointExample, service: HttpService): string {
         const methodName = endpoint.name.snakeCase.safeName;
 
         // Build path parameters
@@ -297,8 +308,12 @@ export class WireTestGenerator {
         // Build request body
         const requestBody = this.buildRequestBody(endpoint, example);
 
+        // Build the client accessor path (e.g., "client.endpoints.container")
+        const servicePath = service.name.fernFilepath.allParts.map((part) => part.snakeCase.unsafeName).join(".");
+        const clientAccessor = servicePath ? `client.${servicePath}` : "client";
+
         // Construct the call
-        let call = `client.${methodName}(`;
+        let call = `${clientAccessor}.${methodName}(`;
 
         const args: string[] = [];
 
@@ -447,11 +462,9 @@ export class WireTestGenerator {
     }
 
     private getClientModulePath(): string[] {
-        // The client is typically at the root of the package
-        // For seed_exhaustive, it would be just ["seed"]
-        const orgName = this.context.config.organization;
-        const workspaceName = this.context.config.workspaceName;
-        return [orgName, workspaceName];
+        // The client is imported from the root package module
+        // e.g., "from seed import SeedExhaustive" -> modulePath is ["seed"]
+        return [this.context.config.organization];
     }
 
     private getClientClassName(): string {
