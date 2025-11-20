@@ -248,20 +248,20 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
             StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
             errorGobbler.start();
             outputGobbler.start();
-            
+
             int exitCode = process.waitFor();
             errorGobbler.join();
             outputGobbler.join();
-            
+
             if (exitCode != 0) {
                 List<String> allOutput = new ArrayList<>();
                 allOutput.addAll(outputGobbler.getCapturedLines());
                 allOutput.addAll(errorGobbler.getCapturedLines());
-                
+
                 int startIndex = Math.max(0, allOutput.size() - 100);
-                String outputTail = allOutput.subList(startIndex, allOutput.size()).stream()
-                        .collect(Collectors.joining("\n"));
-                
+                String outputTail =
+                        allOutput.subList(startIndex, allOutput.size()).stream().collect(Collectors.joining("\n"));
+
                 String errorMessage = "Command failed with exit code " + exitCode + ": " + Arrays.toString(command);
                 if (!outputTail.isEmpty()) {
                     errorMessage += "\n\nLast " + (allOutput.size() - startIndex) + " lines of output:\n" + outputTail;
