@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Updates CLI dependencies to fix `fern` commands.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.3
+
+- changelogEntry:
+    - summary: |
         Updates dependencies to fix `fern` commands.
       type: fix
   irVersion: 61
