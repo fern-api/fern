@@ -203,9 +203,16 @@ export class InferredAuthProviderGenerator extends FileGenerator<
             parameters: [],
             docs: "Get authentication headers from token endpoint.\n\n@return array<string, string>",
             body: php.codeblock((writer) => {
+                const requestClassName = this.getRequestClassName();
+                
+                writer.write("$request = new ");
+                writer.write(requestClassName);
+                writer.writeTextStatement("($this->authTokenParameters)");
+                writer.writeLine();
+                
                 writer.write("$response = $this->client->");
                 writer.write(this.getTokenEndpointMethodPath());
-                writer.writeTextStatement("($this->authTokenParameters)");
+                writer.writeTextStatement("($request)");
                 writer.writeLine();
 
                 if (this.authScheme.tokenEndpoint.expiryProperty) {
@@ -280,5 +287,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<
         access += `->${property.property.name.name.camelCase.unsafeName}`;
         
         return access;
+    }
+
+    private getRequestClassName(): string {
+        const serviceLocation = this.context.getLocationForServiceId(this.authScheme.tokenEndpoint.endpoint.serviceId);
+        const endpointName = this.endpoint.name.pascalCase.safeName;
+        return `\\${serviceLocation.namespace}\\Requests\\${endpointName}Request`;
     }
 }
