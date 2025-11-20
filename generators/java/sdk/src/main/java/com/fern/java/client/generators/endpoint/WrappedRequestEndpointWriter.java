@@ -174,7 +174,7 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                     .add(")\n");
         } else {
             requestBodyCodeBlock.add(
-                    ".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getMultipartBodyPropertiesName());
+                    ".method($S, $L)\n", httpEndpoint.getMethod().toString(), variables.getOkhttpRequestBodyName());
         }
         Optional<CodeBlock> maybeAcceptsHeader = AbstractEndpointWriter.maybeAcceptsHeader(httpEndpoint);
         requestBodyCodeBlock.add(
