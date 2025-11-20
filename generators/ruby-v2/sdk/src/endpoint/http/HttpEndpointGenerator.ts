@@ -174,7 +174,7 @@ export class HttpEndpointGenerator {
                 keyword: [
                     ruby.parameters.keyword({
                         name: "request_options",
-                        type: ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped()),
+                        type: ruby.Type.class_({ name: "Hash" }),
                         initializer: ruby.TypeLiteral.hash([])
                     })
                 ],
@@ -357,9 +357,7 @@ export class HttpEndpointGenerator {
     private normalizeForYard(typeString: string): string {
         let normalized = typeString.replace(/\s*\|\s*/g, ", ");
         normalized = normalized.replace(/\bbool\b/g, "Boolean");
-        while (normalized.includes(", nil, nil")) {
-            normalized = normalized.replace(/, nil, nil/g, ", nil");
-        }
+        normalized = normalized.replace(/(^|,\s*)nil(?:,\s*nil)+(?=,|\]|$)/g, "$1nil");
         return normalized;
     }
 }
