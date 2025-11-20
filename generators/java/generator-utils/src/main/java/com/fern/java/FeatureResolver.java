@@ -59,7 +59,9 @@ public class FeatureResolver {
                 .flatMap(Optional::stream)
                 .findFirst();
         if (maybeOAuthScheme.isEmpty() || generatorConfig.getGenerateOauthClients()) return schemes;
-        logError(generatorExecClient, "OAuth is not supported in your current Java SDK plan; falling back to bearer auth. Please"
+        logError(
+                generatorExecClient,
+                "OAuth is not supported in your current Java SDK plan; falling back to bearer auth. Please"
                         + " reach out to the Fern team!");
         List<AuthScheme> resolvedSchemes = schemes.stream()
                 .filter(authScheme -> !authScheme.isOauth() && !authScheme.isBearer())

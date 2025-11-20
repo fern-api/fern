@@ -17,8 +17,6 @@ import com.fern.generator.exec.model.config.MavenRegistryConfigV2;
 import com.fern.generator.exec.model.logging.ErrorExitStatusUpdate;
 import com.fern.generator.exec.model.logging.ExitStatusUpdate;
 import com.fern.generator.exec.model.logging.GeneratorUpdate;
-import com.fern.generator.exec.model.logging.LogLevel;
-import com.fern.generator.exec.model.logging.LogUpdate;
 import com.fern.generator.exec.model.logging.MavenCoordinate;
 import com.fern.generator.exec.model.logging.PackageCoordinate;
 import com.fern.generator.exec.model.logging.SuccessfulStatusUpdate;
@@ -381,7 +379,8 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
         } catch (Exception e) {
             log.error("Encountered fatal error", e);
-            String errorMessage = e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
+            String errorMessage =
+                    e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
             logError(generatorExecClient, "Java SDK generation failed: " + errorMessage);
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.error(
                     ErrorExitStatusUpdate.builder().message(errorMessage).build())));

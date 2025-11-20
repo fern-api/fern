@@ -49,7 +49,9 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
                 .getGeneratePaginatedClients()
                 .orElse(false);
         if (!generatePaginatedClients) {
-            logError(generatorExecClient, "Pagination is not supported in your current Java SDK plan; falling back to returning full"
+            logError(
+                    generatorExecClient,
+                    "Pagination is not supported in your current Java SDK plan; falling back to returning full"
                             + " response types. Please reach out to the Fern team!");
             return List.of();
         }

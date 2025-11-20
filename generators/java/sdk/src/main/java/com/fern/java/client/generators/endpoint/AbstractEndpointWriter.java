@@ -498,7 +498,8 @@ public abstract class AbstractEndpointWriter {
                             variables.getDefaultedClientName(),
                             clientOptionsField,
                             generatedClientOptions.httpClient());
-                    methodBody.add(responseParserGenerator.getResponseParserCodeBlockWithoutRequestOptions(baseMethodBuilder));
+                    methodBody.add(
+                            responseParserGenerator.getResponseParserCodeBlockWithoutRequestOptions(baseMethodBuilder));
 
                     baseMethodBuilder.addCode(methodBody.build());
                     inputStreamMethodSpec = baseMethodBuilder.build();
@@ -568,7 +569,8 @@ public abstract class AbstractEndpointWriter {
                             variables.getDefaultedClientName(),
                             clientOptionsField,
                             generatedClientOptions.httpClient());
-                    withMediaTypeBody.add(responseParserGenerator.getResponseParserCodeBlockWithoutRequestOptions(withMediaTypeBuilder));
+                    withMediaTypeBody.add(responseParserGenerator.getResponseParserCodeBlockWithoutRequestOptions(
+                            withMediaTypeBuilder));
 
                     withMediaTypeBuilder.addCode(withMediaTypeBody.build());
                     inputStreamWithMediaTypeMethodSpec = withMediaTypeBuilder.build();
