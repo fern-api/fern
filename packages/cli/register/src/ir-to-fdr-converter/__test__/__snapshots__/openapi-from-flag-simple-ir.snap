@@ -118,6 +118,7 @@
       "displayName": "BadRequestError",
       "docs": "Invalid user data",
       "examples": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "CreateUserRequestBadRequestError",
         "fernFilepath": {
@@ -209,6 +210,7 @@
       "displayName": "ServiceUnavailableError",
       "docs": "Service is unhealthy",
       "examples": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "GetHealthRequestServiceUnavailableError",
         "fernFilepath": {
@@ -300,6 +302,7 @@
       "displayName": "NotFoundError",
       "docs": "User not found",
       "examples": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "GetUserRequestNotFoundError",
         "fernFilepath": {

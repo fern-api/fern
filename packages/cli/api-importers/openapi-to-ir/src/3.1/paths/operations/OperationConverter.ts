@@ -148,6 +148,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 },
                 type: responseErrorType,
                 statusCode: convertedError.statusCode,
+                isWildcardStatusCode: convertedError.isWildcardStatusCode,
                 docs: responseError.docs,
                 examples: [],
                 // TODO: Add v2 examples
@@ -259,6 +260,7 @@ export class OperationConverter extends AbstractOperationConverter {
                               responses: [
                                   {
                                       statusCode: 200,
+                                      isWildcardStatusCode: undefined,
                                       body: streamResponse.body
                                   }
                               ]
@@ -427,15 +429,18 @@ export class OperationConverter extends AbstractOperationConverter {
                 };
                 convertedResponseBody.response = {
                     statusCode: 200,
+                    isWildcardStatusCode: undefined,
                     body: converted.responseBody
                 };
                 convertedResponseBody.streamResponse = {
                     statusCode: 200,
+                    isWildcardStatusCode: undefined,
                     body: converted.streamResponseBody
                 };
                 convertedResponseBody.v2Responses = [
                     {
                         statusCode: 200,
+                        isWildcardStatusCode: undefined,
                         body: converted.responseBody
                     }
                 ];

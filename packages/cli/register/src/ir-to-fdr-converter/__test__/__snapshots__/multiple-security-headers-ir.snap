@@ -374,6 +374,7 @@
       "displayName": "UnauthorizedError",
       "docs": "Unauthorized",
       "examples": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "CreateTransactionRequestUnauthorizedError",
         "fernFilepath": {

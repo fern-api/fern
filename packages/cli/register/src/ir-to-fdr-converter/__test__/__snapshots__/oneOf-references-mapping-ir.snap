@@ -118,6 +118,7 @@
       "displayName": "BadRequestError",
       "docs": "Bad request",
       "examples": [],
+      "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "CreateEventRequestBadRequestError",
         "fernFilepath": {
