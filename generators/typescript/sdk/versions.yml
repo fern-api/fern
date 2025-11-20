@@ -6,7 +6,7 @@
       type: feat
   createdAt: "2025-11-20"
   irVersion: 61
-      
+
 - version: 3.32.1
   changelogEntry:
     - summary: Add contents:read permission to generated publish workflow for OIDC authentication to fix actions/checkout@v4 requirements.
