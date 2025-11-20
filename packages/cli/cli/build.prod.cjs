@@ -58,7 +58,8 @@ async function main() {
                 files: ["cli.cjs"],
                 bin: { fern: "cli.cjs" },
                 dependencies: {
-                    "@boundaryml/baml": packageJson.devDependencies["@boundaryml/baml"]
+                    "@boundaryml/baml": packageJson.devDependencies["@boundaryml/baml"],
+                    "cli-progress": packageJson.devDependencies["cli-progress"]
                 }
             },
             undefined,
