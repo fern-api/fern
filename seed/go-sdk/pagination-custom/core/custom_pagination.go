@@ -1,0 +1,126 @@
+package core
+
+import (
+	"context"
+)
+
+// PayrocPager is a generic pager for custom pagination endpoints.
+// It provides bidirectional navigation through pages of results.
+type PayrocPager[T any] struct {
+	current *T
+}
+
+// NewPayrocPager creates a new custom pager with the given initial response
+// and navigation functions.
+func NewPayrocPager[T any](
+	initial *T,
+) *PayrocPager[T] {
+	return &PayrocPager[T]{
+		current: initial,
+	}
+}
+
+// HasNextPage returns true if there is a next page available.
+func (p *PayrocPager[T]) HasNextPage() bool {
+	panic("HasNextPage not implemented")
+}
+
+// GetNextPage fetches the next page of results.
+func (p *PayrocPager[T]) GetNextPage(ctx context.Context) (*T, error) {
+	panic("GetNextPage not implemented")
+}
+
+// HasPrevPage returns true if there is a previous page available.
+func (p *PayrocPager[T]) HasPrevPage() bool {
+	panic("HasPrevPage not implemented")
+}
+
+// GetPrevPage fetches the previous page of results.
+func (p *PayrocPager[T]) GetPrevPage(ctx context.Context) (*T, error) {
+	panic("GetPrevPage not implemented")
+}
+
+// Current returns the current page response.
+func (p *PayrocPager[T]) Current() *T {
+	return p.current
+}
+
+// Iter returns a channel-based iterator for iterating through pages.
+// This works with all Go versions and can be used with range loops.
+// The iterator will yield the current page and continue fetching next pages
+// until no more pages are available or the context is cancelled.
+func (p *PayrocPager[T]) Iter(ctx context.Context) <-chan *T {
+	ch := make(chan *T)
+	go func() {
+		defer close(ch)
+		current := p.current
+		for current != nil {
+			select {
+			case <-ctx.Done():
+				return
+			case ch <- current:
+			}
+			if !p.HasNextPage() {
+				return
+			}
+			next, err := p.GetNextPage(ctx)
+			if err != nil {
+				return
+			}
+			current = next
+		}
+	}()
+	return ch
+}
+
+// Seq returns a range-over-func iterator for Go 1.23+ compatibility.
+// This allows using the pager with range loops: for page := range pager.Seq(ctx) { ... }
+// The iterator will yield the current page and continue fetching next pages
+// until no more pages are available or the context is cancelled.
+func (p *PayrocPager[T]) Seq(ctx context.Context) func(yield func(*T) bool) {
+	return func(yield func(*T) bool) {
+		current := p.current
+		for current != nil {
+			select {
+			case <-ctx.Done():
+				return
+			default:
+			}
+			if !yield(current) {
+				return
+			}
+			if !p.HasNextPage() {
+				return
+			}
+			next, err := p.GetNextPage(ctx)
+			if err != nil {
+				return
+			}
+			current = next
+		}
+	}
+}
+
+// ForEach iterates through all pages and calls the provided function for each page.
+// If the function returns false, iteration stops early.
+func (p *PayrocPager[T]) ForEach(ctx context.Context, fn func(*T) bool) {
+	current := p.current
+	for current != nil {
+		select {
+		case <-ctx.Done():
+			return
+		default:
+		}
+		if !fn(current) {
+			return
+		}
+		if !p.HasNextPage() {
+			return
+		}
+		next, err := p.GetNextPage(ctx)
+		if err != nil {
+			return
+		}
+		current = next
+	}
+}
