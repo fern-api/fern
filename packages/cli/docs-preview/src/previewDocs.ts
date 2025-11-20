@@ -28,6 +28,13 @@ import {
 } from "../../docs-markdown-utils/src";
 
 const frontmatterPositionCache = new Map<string, number | undefined>();
+const frontmatterNavigationCache = new Map<string, Record<string, unknown>>();
+
+/**
+ * Properties in frontmatter that, when changed, require a full refresh
+ * because they affect the navigation structure or page organization.
+ */
+const NAVIGATION_AFFECTING_FRONTMATTER_PROPERTIES = ["sidebar-title", "position", "slug", "noindex", "tags"] as const;
 
 /**
  * Extracts and normalizes the position field from markdown frontmatter.
@@ -52,6 +59,49 @@ function extractFrontmatterPosition(markdown: string): number | undefined {
     } catch {
         return undefined;
     }
+}
+
+/**
+ * Extracts navigation-affecting properties from markdown frontmatter.
+ * Returns an object with the relevant properties for navigation comparison.
+ */
+function extractNavigationAffectingFrontmatter(markdown: string): Record<string, unknown> {
+    try {
+        const { data } = grayMatter(markdown);
+        const relevantProperties: Record<string, unknown> = {};
+
+        for (const property of NAVIGATION_AFFECTING_FRONTMATTER_PROPERTIES) {
+            if (data[property] != null) {
+                relevantProperties[property] = data[property];
+            }
+        }
+
+        return relevantProperties;
+    } catch {
+        return {};
+    }
+}
+
+/**
+ * Compares two frontmatter objects to detect navigation-affecting changes.
+ * Returns true if any navigation-affecting property has changed.
+ */
+function hasNavigationAffectingFrontmatterChanged(
+    previousProperties: Record<string, unknown>,
+    currentProperties: Record<string, unknown>
+): boolean {
+    // Check if any navigation-affecting properties changed
+    for (const property of NAVIGATION_AFFECTING_FRONTMATTER_PROPERTIES) {
+        const previousValue = previousProperties[property];
+        const currentValue = currentProperties[property];
+
+        // Deep comparison for the values
+        if (JSON.stringify(previousValue) !== JSON.stringify(currentValue)) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 export async function getPreviewDocsDefinition({
@@ -96,12 +146,17 @@ export async function getPreviewDocsDefinition({
                 navAffectingChange = true;
             }
 
-            const currentPosition = extractFrontmatterPosition(markdown);
-            const cachedPosition = frontmatterPositionCache.get(absoluteFilePath);
-            if (cachedPosition !== currentPosition) {
+            // Check for navigation-affecting frontmatter changes (including sidebar-title)
+            const currentNavigationProperties = extractNavigationAffectingFrontmatter(markdown);
+            const cachedNavigationProperties = frontmatterNavigationCache.get(absoluteFilePath) ?? {};
+
+            if (hasNavigationAffectingFrontmatterChanged(cachedNavigationProperties, currentNavigationProperties)) {
                 navAffectingChange = true;
             }
 
+            // Update both caches
+            frontmatterNavigationCache.set(absoluteFilePath, currentNavigationProperties);
+            const currentPosition = extractFrontmatterPosition(markdown);
             frontmatterPositionCache.set(absoluteFilePath, currentPosition);
 
             if (isNewFile) {
@@ -213,12 +268,21 @@ export async function getPreviewDocsDefinition({
         dbShape: dbDocsDefinition.config
     });
 
+    // Clear and repopulate both frontmatter caches
     frontmatterPositionCache.clear();
+    frontmatterNavigationCache.clear();
+
     for (const [pageId, page] of Object.entries(dbDocsDefinition.pages)) {
         if (page.rawMarkdown != null) {
             const absolutePath = AbsoluteFilePath.of(`${docsWorkspace.absoluteFilePath}/${pageId.replace("api/", "")}`);
+
+            // Cache position for backward compatibility
             const position = extractFrontmatterPosition(page.rawMarkdown);
             frontmatterPositionCache.set(absolutePath, position);
+
+            // Cache all navigation-affecting frontmatter properties
+            const navigationProperties = extractNavigationAffectingFrontmatter(page.rawMarkdown);
+            frontmatterNavigationCache.set(absolutePath, navigationProperties);
         }
     }
 
