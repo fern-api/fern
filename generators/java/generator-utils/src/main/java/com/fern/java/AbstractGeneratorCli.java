@@ -241,11 +241,35 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
     private static void runCommandBlocking(String[] command, Path workingDirectory, Map<String, String> environment) {
         try {
-            Process process = runCommandAsync(command, workingDirectory, environment);
+            ProcessBuilder pb = new ProcessBuilder(command).directory(workingDirectory.toFile());
+            pb.environment().putAll(environment);
+            Process process = pb.start();
+            StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());
+            StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
+            errorGobbler.start();
+            outputGobbler.start();
+            
             int exitCode = process.waitFor();
+            errorGobbler.join();
+            outputGobbler.join();
+            
             if (exitCode != 0) {
-                throw new RuntimeException("Command failed with non-zero exit code: " + Arrays.toString(command));
+                List<String> allOutput = new ArrayList<>();
+                allOutput.addAll(outputGobbler.getCapturedLines());
+                allOutput.addAll(errorGobbler.getCapturedLines());
+                
+                int startIndex = Math.max(0, allOutput.size() - 100);
+                String outputTail = allOutput.subList(startIndex, allOutput.size()).stream()
+                        .collect(Collectors.joining("\n"));
+                
+                String errorMessage = "Command failed with exit code " + exitCode + ": " + Arrays.toString(command);
+                if (!outputTail.isEmpty()) {
+                    errorMessage += "\n\nLast " + (allOutput.size() - startIndex) + " lines of output:\n" + outputTail;
+                }
+                throw new RuntimeException(errorMessage);
             }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to start command: " + Arrays.toString(command), e);
         } catch (InterruptedException e) {
             throw new RuntimeException("Failed to run command", e);
         }
@@ -582,7 +606,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     Paths.get(generatorConfig.getOutput().getPath()),
                     publishEnvVars);
             runCommandBlocking(
-                    new String[] {"./gradlew", "publish", "--stacktrace", "--info", "--no-daemon"},
+                    new String[] {"./gradlew", "publish", "--stacktrace", "--info", "--console=plain", "--no-daemon"},
                     Paths.get(generatorConfig.getOutput().getPath()),
                     publishEnvVars);
         }
