@@ -173,9 +173,6 @@ allowedFailures:
   # Pagination example values come through as floats instead of integers (e.g. 1.1 instead of 1).
   - pagination:no-custom-config
   - pagination:property-accessors
-  # Multi URL environments are not supported yet.
-  - multi-url-environment
-  - multi-url-environment-no-default
   # Fix union dynamic snippets (i.e. BigUnion).
   - unions:no-custom-config
   - unions:property-accessors

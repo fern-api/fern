@@ -6474,9 +6474,6 @@ importers:
       mime-types:
         specifier: ^2.1.35
         version: 2.1.35
-      tar:
-        specifier: ^6.2.1
-        version: 6.2.1
       terminal-link:
         specifier: ^3.0.0
         version: 3.0.0
@@ -6505,9 +6502,6 @@ importers:
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
-      '@types/tar':
-        specifier: ^6.1.11
-        version: 6.1.13
       '@types/terminal-link':
         specifier: ^1.2.0
         version: 1.2.0

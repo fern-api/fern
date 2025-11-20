@@ -1025,8 +1025,54 @@ export class SubClientGenerator {
             named: () => "serialize", // User-defined types need serialization
             container: (container) => {
                 return container._visit({
-                    optional: (innerType) => this.getQueryBuilderMethodForType(innerType),
-                    nullable: (innerType) => this.getQueryBuilderMethodForType(innerType),
+                    optional: (innerType) => {
+                        // Check if the inner type is also optional/nullable (double optional)
+                        // Double optionals like Option<Option<T>> need serialize() method
+                        const isDoubleOptional = TypeReference._visit(innerType, {
+                            container: (innerContainer) =>
+                                innerContainer._visit({
+                                    optional: () => true,
+                                    nullable: () => true,
+                                    list: () => false,
+                                    map: () => false,
+                                    set: () => false,
+                                    literal: () => false,
+                                    _other: () => false
+                                }),
+                            primitive: () => false,
+                            named: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        });
+                        if (isDoubleOptional) {
+                            return "serialize";
+                        }
+                        return this.getQueryBuilderMethodForType(innerType);
+                    },
+                    nullable: (innerType) => {
+                        // Check if the inner type is also optional/nullable (double optional)
+                        // Double optionals like Option<Option<T>> need serialize() method
+                        const isDoubleOptional = TypeReference._visit(innerType, {
+                            container: (innerContainer) =>
+                                innerContainer._visit({
+                                    optional: () => true,
+                                    nullable: () => true,
+                                    list: () => false,
+                                    map: () => false,
+                                    set: () => false,
+                                    literal: () => false,
+                                    _other: () => false
+                                }),
+                            primitive: () => false,
+                            named: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        });
+                        if (isDoubleOptional) {
+                            return "serialize";
+                        }
+                        return this.getQueryBuilderMethodForType(innerType);
+                    },
                     map: () => "serialize",
                     set: () => "serialize",
                     list: () => "serialize",
@@ -1070,8 +1116,54 @@ export class SubClientGenerator {
             container: (container) => {
                 // Drill down into optional/nullable to get the underlying type
                 return container._visit({
-                    optional: (innerType) => this.getQueryBuilderMethodForType(innerType),
-                    nullable: (innerType) => this.getQueryBuilderMethodForType(innerType),
+                    optional: (innerType) => {
+                        // Check if the inner type is also optional/nullable (double optional)
+                        // Double optionals like Option<Option<T>> need serialize() method
+                        const isDoubleOptional = TypeReference._visit(innerType, {
+                            container: (innerContainer) =>
+                                innerContainer._visit({
+                                    optional: () => true,
+                                    nullable: () => true,
+                                    list: () => false,
+                                    map: () => false,
+                                    set: () => false,
+                                    literal: () => false,
+                                    _other: () => false
+                                }),
+                            primitive: () => false,
+                            named: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        });
+                        if (isDoubleOptional) {
+                            return "serialize";
+                        }
+                        return this.getQueryBuilderMethodForType(innerType);
+                    },
+                    nullable: (innerType) => {
+                        // Check if the inner type is also optional/nullable (double optional)
+                        // Double optionals like Option<Option<T>> need serialize() method
+                        const isDoubleOptional = TypeReference._visit(innerType, {
+                            container: (innerContainer) =>
+                                innerContainer._visit({
+                                    optional: () => true,
+                                    nullable: () => true,
+                                    list: () => false,
+                                    map: () => false,
+                                    set: () => false,
+                                    literal: () => false,
+                                    _other: () => false
+                                }),
+                            primitive: () => false,
+                            named: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        });
+                        if (isDoubleOptional) {
+                            return "serialize";
+                        }
+                        return this.getQueryBuilderMethodForType(innerType);
+                    },
                     map: () => "serialize",
                     set: () => "serialize",
                     list: () => "serialize",
