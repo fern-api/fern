@@ -120,6 +120,8 @@ class SDKCustomConfig(pydantic.BaseModel):
     # the recursion limit is at least this value.
     recursion_limit: Optional[int] = pydantic.Field(None, gt=1000)
 
+    enable_wire_tests: bool = False
+
     class Config:
         extra = pydantic.Extra.forbid
 
