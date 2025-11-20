@@ -694,7 +694,7 @@ export class ExampleEndpointFactory {
     }
 
     private isSchemaRequired(schema: SchemaWithExample) {
-        return isSchemaRequired(this.getResolvedSchema(schema));
+        return isSchemaRequired(schema);
     }
 
     private getResolvedSchema(schema: SchemaWithExample): SchemaWithExample {
