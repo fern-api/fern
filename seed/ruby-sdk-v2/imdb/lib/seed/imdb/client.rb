@@ -37,10 +37,9 @@ module Seed
         end
       end
 
-      # @option params [Seed::Imdb::Types::MovieId] :movie_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::Imdb::Types::MovieId] :movie_id
       #
       # @return [Seed::Imdb::Types::Movie]
       def get_movie(request_options: {}, **params)

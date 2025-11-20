@@ -41,10 +41,9 @@ module Seed
       # - optional<T> fields (can be present or absent, but not null)
       # - optional<nullable<T>> fields (can be present, absent, or null)
       #
-      # @option params [String] :id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Service::Types::PatchComplexRequest]
+      # @option params [String] :id
       #
       # @return [untyped]
       def patch_complex(request_options: {}, **params)
@@ -74,10 +73,9 @@ module Seed
       # Named request with mixed optional/nullable fields and merge-patch content type.
       # This should trigger the NPE issue when optional fields aren't initialized.
       #
-      # @option params [String] :id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Service::Types::NamedMixedPatchRequest]
+      # @option params [String] :id
       #
       # @return [untyped]
       def named_patch_with_mixed(request_options: {}, **params)
@@ -137,10 +135,9 @@ module Seed
 
       # Regular PATCH endpoint without merge-patch semantics
       #
-      # @option params [String] :id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Service::Types::RegularPatchRequest]
+      # @option params [String] :id
       #
       # @return [untyped]
       def regular_patch(request_options: {}, **params)
