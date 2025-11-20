@@ -5,7 +5,7 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::User::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
@@ -13,8 +13,13 @@ module Seed
       # Retrieve a user.
       # This endpoint is used to retrieve a user.
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash[untyped, untyped]]
       # @param params [Hash[untyped, untyped]]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :user_id
       #
       # @return [untyped]
@@ -39,8 +44,13 @@ module Seed
       # Create a new user.
       # This endpoint is used to create a new user.
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash[untyped, untyped]]
       # @param params [Seed::User::Types::CreateUserRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::User::Types::User]
       def create_user(request_options: {}, **params)

@@ -6,15 +6,20 @@ module Seed
       class Client
         # @param client [Seed::Internal::Http::RawClient]
         #
-        # @return [Seed::Endpoints::Params::Client]
+        # @return [void]
         def initialize(client:)
           @client = client
         end
 
         # GET with path param
         #
-        # @param request_options [Seed::RequestOptions]
+        # @param request_options [Hash[untyped, untyped]]
         # @param params [Hash[untyped, untyped]]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :param
         #
         # @return [String]
@@ -38,8 +43,13 @@ module Seed
 
         # GET with path param
         #
-        # @param request_options [Seed::RequestOptions]
+        # @param request_options [Hash[untyped, untyped]]
         # @param params [Hash[untyped, untyped]]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :param
         #
         # @return [String]
@@ -63,8 +73,13 @@ module Seed
 
         # GET with query param
         #
-        # @param request_options [Seed::RequestOptions]
+        # @param request_options [Hash[untyped, untyped]]
         # @param params [Hash[untyped, untyped]]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :query
         # @option params [Integer] :number
         #
@@ -97,8 +112,13 @@ module Seed
 
         # GET with multiple of same query param
         #
-        # @param request_options [Seed::RequestOptions]
+        # @param request_options [Hash[untyped, untyped]]
         # @param params [Hash[untyped, untyped]]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :query
         # @option params [Integer] :number
         #
@@ -131,8 +151,13 @@ module Seed
 
         # GET with path and query params
         #
-        # @param request_options [Seed::RequestOptions]
+        # @param request_options [Hash[untyped, untyped]]
         # @param params [Hash[untyped, untyped]]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :param
         # @option params [String] :query
         #
@@ -164,8 +189,13 @@ module Seed
 
         # GET with path and query params
         #
-        # @param request_options [Seed::RequestOptions]
+        # @param request_options [Hash[untyped, untyped]]
         # @param params [Hash[untyped, untyped]]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :param
         # @option params [String] :query
         #
@@ -197,8 +227,13 @@ module Seed
 
         # PUT to update with path param
         #
-        # @param request_options [Seed::RequestOptions]
+        # @param request_options [Hash[untyped, untyped]]
         # @param params [Hash[untyped, untyped]]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :param
         #
         # @return [String]
@@ -223,8 +258,13 @@ module Seed
 
         # PUT to update with path param
         #
-        # @param request_options [Seed::RequestOptions]
+        # @param request_options [Hash[untyped, untyped]]
         # @param params [Hash[untyped, untyped]]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         # @option params [String] :param
         #
         # @return [String]

@@ -5,17 +5,22 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::BasicAuth::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
       # GET request with basic auth scheme
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash[untyped, untyped]]
       # @param params [Hash[untyped, untyped]]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [bool]
+      # @return [Boolean]
       def get_with_basic_auth(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -36,10 +41,15 @@ module Seed
 
       # POST request with basic auth scheme
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash[untyped, untyped]]
       # @param params [Hash[untyped, untyped]]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [bool]
+      # @return [Boolean]
       def post_with_basic_auth(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

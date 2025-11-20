@@ -6,13 +6,18 @@ module Seed
       class Client
         # @param client [Seed::Internal::Http::RawClient]
         #
-        # @return [Seed::Endpoints::Enum::Client]
+        # @return [void]
         def initialize(client:)
           @client = client
         end
 
-        # @param request_options [Seed::RequestOptions]
+        # @param request_options [Hash[untyped, untyped]]
         # @param params [Seed::Types::Enum::Types::WeatherReport]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Seed::Types::Enum::Types::WeatherReport]
         def get_and_return_enum(request_options: {}, **params)
