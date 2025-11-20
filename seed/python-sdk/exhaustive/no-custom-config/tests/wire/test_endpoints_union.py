@@ -1,4 +1,4 @@
-from typing import Optional, Dict
+from typing import Optional, Dict, Any
 from seed.exhaustive import SeedExhaustive
 
 import pytest
@@ -28,7 +28,7 @@ def verify_request_count(
 ) -> None:
     """Verifies the number of requests made to WireMock"""
     wiremock_admin_url = "http://localhost:8080/__admin"
-    request_body = {"method": method, "urlPath": url_path}
+    request_body: Dict[str, Any] = {"method": method, "urlPath": url_path}
     if query_params:
             query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}
             request_body["queryParameters"] = query_parameters
@@ -43,6 +43,6 @@ def verify_request_count(
 def test_endpoints_union_get_and_return_union() -> None:
     """Test getAndReturnUnion endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.get_and_return_union(request={"animal":"dog","name":"name","likesToWoof":true})
+    result = client.get_and_return_union(request={"animal":"dog","name":"name","likesToWoof":True})
     verify_request_count("POST", "/union", None, 1)
 

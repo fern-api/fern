@@ -52,6 +52,7 @@ class Project:
         exclude_types_from_init_exports: Optional[bool] = False,
         lazy_imports: bool = True,
         recursion_limit: Optional[int] = None,
+        enable_wire_tests: bool = False,
         generator_exec_wrapper: Optional[GeneratorExecWrapper] = None,
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
@@ -79,6 +80,7 @@ class Project:
         self._extras: typing.Dict[str, List[str]] = {}
         self._user_defined_toml = user_defined_toml
         self._exclude_types_from_init_exports = exclude_types_from_init_exports
+        self._enable_wire_tests = enable_wire_tests
         self._generator_exec_wrapper = generator_exec_wrapper
 
     def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
@@ -194,6 +196,7 @@ class Project:
                 pypi_metadata=self._pypi_metadata,
                 license_=self.license_,
                 extras=self._extras,
+                enable_wire_tests=self._enable_wire_tests,
                 user_defined_toml=self._user_defined_toml,
             )
             py_project_toml.write()

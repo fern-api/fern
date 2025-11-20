@@ -1,4 +1,4 @@
-from typing import Optional, Dict
+from typing import Optional, Dict, Any
 from seed.exhaustive import SeedExhaustive
 
 import pytest
@@ -28,7 +28,7 @@ def verify_request_count(
 ) -> None:
     """Verifies the number of requests made to WireMock"""
     wiremock_admin_url = "http://localhost:8080/__admin"
-    request_body = {"method": method, "urlPath": url_path}
+    request_body: Dict[str, Any] = {"method": method, "urlPath": url_path}
     if query_params:
             query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}
             request_body["queryParameters"] = query_parameters
@@ -43,7 +43,7 @@ def verify_request_count(
 def test_endpoints_object_get_and_return_with_optional_field() -> None:
     """Test getAndReturnWithOptionalField endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.get_and_return_with_optional_field(request={"string":"string","integer":1,"long":1000000,"double":1.1,"bool":true,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"})
+    result = client.get_and_return_with_optional_field(request={"string":"string","integer":1,"long":1000000,"double":1.1,"bool":True,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"})
     verify_request_count("POST", "/object/get-and-return-with-optional-field", None, 1)
 
 
@@ -67,7 +67,7 @@ def test_endpoints_object_get_and_return_with_map_of_map() -> None:
 def test_endpoints_object_get_and_return_nested_with_optional_field() -> None:
     """Test getAndReturnNestedWithOptionalField endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.get_and_return_nested_with_optional_field(request={"string":"string","NestedObject":{"string":"string","integer":1,"long":1000000,"double":1.1,"bool":true,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"}})
+    result = client.get_and_return_nested_with_optional_field(request={"string":"string","NestedObject":{"string":"string","integer":1,"long":1000000,"double":1.1,"bool":True,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"}})
     verify_request_count("POST", "/object/get-and-return-nested-with-optional-field", None, 1)
 
 
@@ -75,7 +75,7 @@ def test_endpoints_object_get_and_return_nested_with_optional_field() -> None:
 def test_endpoints_object_get_and_return_nested_with_required_field() -> None:
     """Test getAndReturnNestedWithRequiredField endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.get_and_return_nested_with_required_field("string", request={"string":"string","NestedObject":{"string":"string","integer":1,"long":1000000,"double":1.1,"bool":true,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"}})
+    result = client.get_and_return_nested_with_required_field("string", request={"string":"string","NestedObject":{"string":"string","integer":1,"long":1000000,"double":1.1,"bool":True,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"}})
     verify_request_count("POST", "/object/get-and-return-nested-with-required-field/string", None, 1)
 
 
@@ -83,6 +83,6 @@ def test_endpoints_object_get_and_return_nested_with_required_field() -> None:
 def test_endpoints_object_get_and_return_nested_with_required_field_as_list() -> None:
     """Test getAndReturnNestedWithRequiredFieldAsList endpoint with WireMock"""
     client = SeedExhaustive(base_url="http://localhost:8080")
-    result = client.get_and_return_nested_with_required_field_as_list(request=[{"string":"string","NestedObject":{"string":"string","integer":1,"long":1000000,"double":1.1,"bool":true,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"}},{"string":"string","NestedObject":{"string":"string","integer":1,"long":1000000,"double":1.1,"bool":true,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"}}])
+    result = client.get_and_return_nested_with_required_field_as_list(request=[{"string":"string","NestedObject":{"string":"string","integer":1,"long":1000000,"double":1.1,"bool":True,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"}},{"string":"string","NestedObject":{"string":"string","integer":1,"long":1000000,"double":1.1,"bool":True,"datetime":"2024-01-15T09:30:00Z","date":"2023-01-15","uuid":"d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32","base64":"SGVsbG8gd29ybGQh","list":["list","list"],"set":["set"],"map":{"1":"map"},"bigint":"1000000"}}])
     verify_request_count("POST", "/object/get-and-return-nested-with-required-field-list", None, 1)
 

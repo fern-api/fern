@@ -141,6 +141,7 @@ export class WireTestGenerator {
         // Note: simple "import X" statements are added as raw code blocks separately
         node.addReference(python.reference({ name: "Optional", modulePath: ["typing"] }));
         node.addReference(python.reference({ name: "Dict", modulePath: ["typing"] }));
+        node.addReference(python.reference({ name: "Any", modulePath: ["typing"] }));
 
         const clientModulePath = this.getClientModulePath();
         const clientName = this.getClientClassName();
@@ -208,7 +209,7 @@ export class WireTestGenerator {
 
         const statements = [
             python.codeBlock(`wiremock_admin_url = "http://localhost:8080/__admin"`),
-            python.codeBlock(`request_body = {"method": method, "urlPath": url_path}`),
+            python.codeBlock(`request_body: Dict[str, Any] = {"method": method, "urlPath": url_path}`),
             python.codeBlock(`if query_params:
         query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}
         request_body["queryParameters"] = query_parameters`),
@@ -356,10 +357,9 @@ export class WireTestGenerator {
             return null;
         }
 
-        // For now, generate a simple dict representation
-        // This could be enhanced to handle complex nested structures
+        // Generate Python dict representation (not JSON)
         if (typeof example.requestBody === "object") {
-            return `request=${JSON.stringify(example.requestBody)}`;
+            return `request=${this.jsonToPython(example.requestBody)}`;
         }
 
         return null;
@@ -369,11 +369,44 @@ export class WireTestGenerator {
         if (typeof value === "string") {
             return `"${value}"`;
         }
-        if (typeof value === "number" || typeof value === "boolean") {
+        if (typeof value === "number") {
             return String(value);
+        }
+        if (typeof value === "boolean") {
+            // Python uses True/False (capitalized), not true/false
+            return value ? "True" : "False";
         }
         if (value === null) {
             return "None";
+        }
+        // For complex objects, convert to Python representation
+        return this.jsonToPython(value);
+    }
+
+    /**
+     * Converts JSON representation to Python code representation.
+     * Handles objects, arrays, and nested structures.
+     */
+    private jsonToPython(value: unknown): string {
+        if (value === null) {
+            return "None";
+        }
+        if (typeof value === "boolean") {
+            return value ? "True" : "False";
+        }
+        if (typeof value === "string") {
+            return `"${value}"`;
+        }
+        if (typeof value === "number") {
+            return String(value);
+        }
+        if (Array.isArray(value)) {
+            const items = value.map((item) => this.jsonToPython(item));
+            return `[${items.join(",")}]`;
+        }
+        if (typeof value === "object") {
+            const entries = Object.entries(value).map(([key, val]) => `"${key}":${this.jsonToPython(val)}`);
+            return `{${entries.join(",")}}`;
         }
         return JSON.stringify(value);
     }
