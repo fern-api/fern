@@ -48,23 +48,24 @@ public class RawServiceClient {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             if (request.getMaybeString().isPresent()) {
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "maybe_string",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(
                                 request.getMaybeString().get()));
             }
-            body.addFormDataPart("integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getInteger()));
+            multipartBodyBuilder.addFormDataPart(
+                    "integer", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getInteger()));
             String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
+            multipartBodyBuilder.addFormDataPart(
                     "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
             String fileListMimeType =
                     Files.probeContentType(request.getFileList().toPath());
             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
-            body.addFormDataPart(
+            multipartBodyBuilder.addFormDataPart(
                     "file_list",
                     request.getFileList().getName(),
                     RequestBody.create(request.getFileList(), fileListMimeTypeMediaType));
@@ -73,7 +74,7 @@ public class RawServiceClient {
                         Files.probeContentType(request.getMaybeFile().get().toPath());
                 MediaType maybeFileMimeTypeMediaType =
                         maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "maybe_file",
                         request.getMaybeFile().get().getName(),
                         RequestBody.create(request.getMaybeFile().get(), maybeFileMimeTypeMediaType));
@@ -83,13 +84,13 @@ public class RawServiceClient {
                         Files.probeContentType(request.getMaybeFileList().get().toPath());
                 MediaType maybeFileListMimeTypeMediaType =
                         maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "maybe_file_list",
                         request.getMaybeFileList().get().getName(),
                         RequestBody.create(request.getMaybeFileList().get(), maybeFileListMimeTypeMediaType));
             }
             if (request.getMaybeInteger().isPresent()) {
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "maybe_integer",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(
                                 request.getMaybeInteger().get()));
@@ -97,7 +98,7 @@ public class RawServiceClient {
             if (request.getOptionalListOfStrings().isPresent()) {
                 request.getOptionalListOfStrings().get().forEach(item -> {
                     try {
-                        body.addFormDataPart(
+                        multipartBodyBuilder.addFormDataPart(
                                 "optional_list_of_strings", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException("Failed to write value as JSON", e);
@@ -106,41 +107,44 @@ public class RawServiceClient {
             }
             request.getListOfObjects().forEach(item -> {
                 try {
-                    body.addFormDataPart("list_of_objects", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
+                    multipartBodyBuilder.addFormDataPart(
+                            "list_of_objects", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException("Failed to write value as JSON", e);
                 }
             });
             if (request.getOptionalMetadata().isPresent()) {
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "optional_metadata",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(
                                 request.getOptionalMetadata().get()));
             }
             if (request.getOptionalObjectType().isPresent()) {
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "optional_object_type",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(
                                 request.getOptionalObjectType().get()));
             }
             if (request.getOptionalId().isPresent()) {
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "optional_id",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(
                                 request.getOptionalId().get()));
             }
-            body.addFormDataPart(
+            multipartBodyBuilder.addFormDataPart(
                     "alias_object", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getAliasObject()));
             request.getListOfAliasObject().forEach(item -> {
                 try {
-                    body.addFormDataPart("list_of_alias_object", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
+                    multipartBodyBuilder.addFormDataPart(
+                            "list_of_alias_object", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException("Failed to write value as JSON", e);
                 }
             });
             request.getAliasListOfObject().forEach(item -> {
                 try {
-                    body.addFormDataPart("alias_list_of_object", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
+                    multipartBodyBuilder.addFormDataPart(
+                            "alias_list_of_object", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException("Failed to write value as JSON", e);
                 }
@@ -150,7 +154,7 @@ public class RawServiceClient {
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", body.build())
+                .method("POST", multipartBodyBuilder.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -180,18 +184,18 @@ public class RawServiceClient {
                 .newBuilder()
                 .addPathSegments("just-file")
                 .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
+            multipartBodyBuilder.addFormDataPart(
                     "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", body.build())
+                .method("POST", multipartBodyBuilder.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -218,18 +222,15 @@ public class RawServiceClient {
                 .addPathSegments("just-file")
                 .build();
         FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -250,18 +251,15 @@ public class RawServiceClient {
                 .addPathSegments("just-file")
                 .build();
         FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -283,9 +281,9 @@ public class RawServiceClient {
                 .addPathSegments("just-file")
                 .build();
         FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
@@ -316,9 +314,9 @@ public class RawServiceClient {
                 .addPathSegments("just-file")
                 .build();
         FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
@@ -368,18 +366,18 @@ public class RawServiceClient {
                     request.getOptionalListOfStrings().get(),
                     true);
         }
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
+            multipartBodyBuilder.addFormDataPart(
                     "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", body.build())
+                .method("POST", multipartBodyBuilder.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -422,18 +420,15 @@ public class RawServiceClient {
                     true);
         }
         FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -471,18 +466,15 @@ public class RawServiceClient {
                     true);
         }
         FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -520,9 +512,9 @@ public class RawServiceClient {
                     true);
         }
         FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
@@ -569,9 +561,9 @@ public class RawServiceClient {
                     true);
         }
         FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl.build());
         _requestBuilder.method("POST", body);
@@ -605,16 +597,16 @@ public class RawServiceClient {
                 .newBuilder()
                 .addPathSegments("with-content-type")
                 .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
+            multipartBodyBuilder.addFormDataPart(
                     "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
-            body.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
-            body.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
+            multipartBodyBuilder.addFormDataPart("foo", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getFoo()));
+            multipartBodyBuilder.addFormDataPart("bar", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getBar()));
             if (request.getFooBar().isPresent()) {
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "foo_bar",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(
                                 request.getFooBar().get()));
@@ -624,7 +616,7 @@ public class RawServiceClient {
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", body.build())
+                .method("POST", multipartBodyBuilder.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -651,18 +643,15 @@ public class RawServiceClient {
                 .addPathSegments("with-content-type")
                 .build();
         FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -683,18 +672,15 @@ public class RawServiceClient {
                 .addPathSegments("with-content-type")
                 .build();
         FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -716,9 +702,9 @@ public class RawServiceClient {
                 .addPathSegments("with-content-type")
                 .build();
         FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
@@ -749,9 +735,9 @@ public class RawServiceClient {
                 .addPathSegments("with-content-type")
                 .build();
         FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
@@ -785,20 +771,20 @@ public class RawServiceClient {
                 .newBuilder()
                 .addPathSegments("with-form-encoding")
                 .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
+            multipartBodyBuilder.addFormDataPart(
                     "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
-            QueryStringMapper.addFormDataPart(body, "foo", request.getFoo(), false);
-            QueryStringMapper.addFormDataPart(body, "bar", request.getBar(), false);
+            QueryStringMapper.addFormDataPart(multipartBodyBuilder, "foo", request.getFoo(), false);
+            QueryStringMapper.addFormDataPart(multipartBodyBuilder, "bar", request.getBar(), false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", body.build())
+                .method("POST", multipartBodyBuilder.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -825,18 +811,15 @@ public class RawServiceClient {
                 .addPathSegments("with-form-encoding")
                 .build();
         FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -857,18 +840,15 @@ public class RawServiceClient {
                 .addPathSegments("with-form-encoding")
                 .build();
         FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             if (response.isSuccessful()) {
@@ -890,9 +870,9 @@ public class RawServiceClient {
                 .addPathSegments("with-form-encoding")
                 .build();
         FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
@@ -923,9 +903,9 @@ public class RawServiceClient {
                 .addPathSegments("with-form-encoding")
                 .build();
         FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
@@ -958,21 +938,24 @@ public class RawServiceClient {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             if (request.getMaybeString().isPresent()) {
                 QueryStringMapper.addFormDataPart(
-                        body, "maybe_string", request.getMaybeString().get(), false);
+                        multipartBodyBuilder,
+                        "maybe_string",
+                        request.getMaybeString().get(),
+                        false);
             }
-            QueryStringMapper.addFormDataPart(body, "integer", request.getInteger(), false);
+            QueryStringMapper.addFormDataPart(multipartBodyBuilder, "integer", request.getInteger(), false);
             String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
+            multipartBodyBuilder.addFormDataPart(
                     "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
             String fileListMimeType =
                     Files.probeContentType(request.getFileList().toPath());
             MediaType fileListMimeTypeMediaType = fileListMimeType != null ? MediaType.parse(fileListMimeType) : null;
-            body.addFormDataPart(
+            multipartBodyBuilder.addFormDataPart(
                     "file_list",
                     request.getFileList().getName(),
                     RequestBody.create(request.getFileList(), fileListMimeTypeMediaType));
@@ -981,7 +964,7 @@ public class RawServiceClient {
                         Files.probeContentType(request.getMaybeFile().get().toPath());
                 MediaType maybeFileMimeTypeMediaType =
                         maybeFileMimeType != null ? MediaType.parse(maybeFileMimeType) : null;
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "maybe_file",
                         request.getMaybeFile().get().getName(),
                         RequestBody.create(request.getMaybeFile().get(), maybeFileMimeTypeMediaType));
@@ -991,49 +974,64 @@ public class RawServiceClient {
                         Files.probeContentType(request.getMaybeFileList().get().toPath());
                 MediaType maybeFileListMimeTypeMediaType =
                         maybeFileListMimeType != null ? MediaType.parse(maybeFileListMimeType) : null;
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "maybe_file_list",
                         request.getMaybeFileList().get().getName(),
                         RequestBody.create(request.getMaybeFileList().get(), maybeFileListMimeTypeMediaType));
             }
             if (request.getMaybeInteger().isPresent()) {
                 QueryStringMapper.addFormDataPart(
-                        body, "maybe_integer", request.getMaybeInteger().get(), false);
+                        multipartBodyBuilder,
+                        "maybe_integer",
+                        request.getMaybeInteger().get(),
+                        false);
             }
             if (request.getOptionalListOfStrings().isPresent()) {
                 QueryStringMapper.addFormDataPart(
-                        body,
+                        multipartBodyBuilder,
                         "optional_list_of_strings",
                         request.getOptionalListOfStrings().get(),
                         false);
             }
-            QueryStringMapper.addFormDataPart(body, "list_of_objects", request.getListOfObjects(), false);
+            QueryStringMapper.addFormDataPart(
+                    multipartBodyBuilder, "list_of_objects", request.getListOfObjects(), false);
             if (request.getOptionalMetadata().isPresent()) {
                 QueryStringMapper.addFormDataPart(
-                        body, "optional_metadata", request.getOptionalMetadata().get(), false);
+                        multipartBodyBuilder,
+                        "optional_metadata",
+                        request.getOptionalMetadata().get(),
+                        false);
             }
             if (request.getOptionalObjectType().isPresent()) {
                 QueryStringMapper.addFormDataPart(
-                        body,
+                        multipartBodyBuilder,
                         "optional_object_type",
                         request.getOptionalObjectType().get(),
                         false);
             }
             if (request.getOptionalId().isPresent()) {
                 QueryStringMapper.addFormDataPart(
-                        body, "optional_id", request.getOptionalId().get(), false);
+                        multipartBodyBuilder,
+                        "optional_id",
+                        request.getOptionalId().get(),
+                        false);
             }
             QueryStringMapper.addFormDataPart(
-                    body, "list_of_objects_with_optionals", request.getListOfObjectsWithOptionals(), false);
-            QueryStringMapper.addFormDataPart(body, "alias_object", request.getAliasObject(), false);
-            QueryStringMapper.addFormDataPart(body, "list_of_alias_object", request.getListOfAliasObject(), false);
-            QueryStringMapper.addFormDataPart(body, "alias_list_of_object", request.getAliasListOfObject(), false);
+                    multipartBodyBuilder,
+                    "list_of_objects_with_optionals",
+                    request.getListOfObjectsWithOptionals(),
+                    false);
+            QueryStringMapper.addFormDataPart(multipartBodyBuilder, "alias_object", request.getAliasObject(), false);
+            QueryStringMapper.addFormDataPart(
+                    multipartBodyBuilder, "list_of_alias_object", request.getListOfAliasObject(), false);
+            QueryStringMapper.addFormDataPart(
+                    multipartBodyBuilder, "alias_list_of_object", request.getAliasListOfObject(), false);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", body.build())
+                .method("POST", multipartBodyBuilder.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
@@ -1067,20 +1065,20 @@ public class RawServiceClient {
                 .newBuilder()
                 .addPathSegments("optional-args")
                 .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             if (request.getImageFile().isPresent()) {
                 String imageFileMimeType =
                         Files.probeContentType(request.getImageFile().get().toPath());
                 MediaType imageFileMimeTypeMediaType =
                         imageFileMimeType != null ? MediaType.parse(imageFileMimeType) : null;
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "image_file",
                         request.getImageFile().get().getName(),
                         RequestBody.create(request.getImageFile().get(), imageFileMimeTypeMediaType));
             }
             if (request.getRequest().isPresent()) {
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "request",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(
                                 request.getRequest().get()));
@@ -1090,7 +1088,7 @@ public class RawServiceClient {
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", body.build())
+                .method("POST", multipartBodyBuilder.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
@@ -1119,18 +1117,15 @@ public class RawServiceClient {
                 .addPathSegments("optional-args")
                 .build();
         FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("image_file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -1152,18 +1147,15 @@ public class RawServiceClient {
                 .addPathSegments("optional-args")
                 .build();
         FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("image_file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -1186,9 +1178,9 @@ public class RawServiceClient {
                 .addPathSegments("optional-args")
                 .build();
         FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("image_file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
@@ -1220,9 +1212,9 @@ public class RawServiceClient {
                 .addPathSegments("optional-args")
                 .build();
         FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("image_file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("image_file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
@@ -1256,19 +1248,20 @@ public class RawServiceClient {
                 .newBuilder()
                 .addPathSegments("inline-type")
                 .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
             String fileMimeType = Files.probeContentType(request.getFile().toPath());
             MediaType fileMimeTypeMediaType = fileMimeType != null ? MediaType.parse(fileMimeType) : null;
-            body.addFormDataPart(
+            multipartBodyBuilder.addFormDataPart(
                     "file", request.getFile().getName(), RequestBody.create(request.getFile(), fileMimeTypeMediaType));
-            body.addFormDataPart("request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
+            multipartBodyBuilder.addFormDataPart(
+                    "request", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getRequest()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", body.build())
+                .method("POST", multipartBodyBuilder.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Accept", "application/json");
         Request okhttpRequest = _requestBuilder.build();
@@ -1297,18 +1290,15 @@ public class RawServiceClient {
                 .addPathSegments("inline-type")
                 .build();
         FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -1330,18 +1320,15 @@ public class RawServiceClient {
                 .addPathSegments("inline-type")
                 .build();
         FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
-        _requestBuilder.headers(Headers.of(this.clientOptions.headers(requestOptions)));
+        _requestBuilder.headers(Headers.of(this.clientOptions.headers(null)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();
-        if (requestOptions != null && requestOptions.getTimeout().isPresent()) {
-            client = clientOptions.httpClientWithTimeout(requestOptions);
-        }
         try (Response response = client.newCall(okhttpRequest).execute()) {
             ResponseBody responseBody = response.body();
             String responseBodyString = responseBody != null ? responseBody.string() : "{}";
@@ -1364,9 +1351,9 @@ public class RawServiceClient {
                 .addPathSegments("inline-type")
                 .build();
         FileStream fs = new FileStream(stream, filename, null);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
@@ -1398,9 +1385,9 @@ public class RawServiceClient {
                 .addPathSegments("inline-type")
                 .build();
         FileStream fs = new FileStream(stream, filename, mediaType);
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
-        body.addFormDataPart("file", filename, fs.toRequestBody());
-        RequestBody body = body.build();
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        multipartBodyBuilder.addFormDataPart("file", filename, fs.toRequestBody());
+        RequestBody body = multipartBodyBuilder.build();
         Request.Builder _requestBuilder = new Request.Builder();
         _requestBuilder.url(httpUrl);
         _requestBuilder.method("POST", body);
