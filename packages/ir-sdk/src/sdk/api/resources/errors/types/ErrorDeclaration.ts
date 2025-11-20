@@ -10,6 +10,10 @@ export interface ErrorDeclaration extends FernIr.WithDocs {
     discriminantValue: FernIr.NameAndWireValue;
     type: FernIr.TypeReference | undefined;
     statusCode: number;
+    /**
+     * When true, indicates that the statusCode represents a wildcard pattern (e.g., 4XX or 5XX).
+     * The statusCode field will contain the base value (400 for 4XX, 500 for 5XX).
+     */
     isWildcardStatusCode: boolean | undefined;
     examples: FernIr.ExampleError[];
     v2Examples: FernIr.V2SchemaExamples | undefined;
