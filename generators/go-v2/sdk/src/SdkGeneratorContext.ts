@@ -62,7 +62,9 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             AsIsFiles.Query,
             AsIsFiles.QueryTest,
             AsIsFiles.ExtraProperties,
-            AsIsFiles.ExtraPropertiesTest
+            AsIsFiles.ExtraPropertiesTest,
+            AsIsFiles.Stringer,
+            AsIsFiles.Time
         ];
 
         if (this.needsFileUploadHelpers()) {

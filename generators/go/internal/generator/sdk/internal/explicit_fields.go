@@ -9,8 +9,8 @@ import (
 // HandleExplicitFields processes a struct to remove `omitempty` from
 // fields that have been explicitly set (as indicated by their corresponding bit in explicitFields).
 // Note that `marshaler` should be an embedded struct to avoid infinite recursion.
-// Returns an interface{} that can be passed to json.Marshal.
-func HandleExplicitFields(marshaler interface{}, explicitFields *big.Int) interface{} {
+// Returns an any that can be passed to json.Marshal.
+func HandleExplicitFields(marshaler any, explicitFields *big.Int) any {
 	val := reflect.ValueOf(marshaler)
 	typ := reflect.TypeOf(marshaler)
 

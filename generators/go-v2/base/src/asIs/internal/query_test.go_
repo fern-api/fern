@@ -187,11 +187,11 @@ func TestQueryValues(t *testing.T) {
 
 	t.Run("map", func(t *testing.T) {
 		type request struct {
-			Metadata map[string]interface{} `json:"metadata" url:"metadata"`
+			Metadata map[string]any `json:"metadata" url:"metadata"`
 		}
 		values, err := QueryValues(
 			&request{
-				Metadata: map[string]interface{}{
+				Metadata: map[string]any{
 					"foo": "bar",
 					"baz": "qux",
 				},
@@ -203,12 +203,12 @@ func TestQueryValues(t *testing.T) {
 
 	t.Run("nested map", func(t *testing.T) {
 		type request struct {
-			Metadata map[string]interface{} `json:"metadata" url:"metadata"`
+			Metadata map[string]any `json:"metadata" url:"metadata"`
 		}
 		values, err := QueryValues(
 			&request{
-				Metadata: map[string]interface{}{
-					"inner": map[string]interface{}{
+				Metadata: map[string]any{
+					"inner": map[string]any{
 						"foo": "bar",
 					},
 				},
@@ -220,11 +220,11 @@ func TestQueryValues(t *testing.T) {
 
 	t.Run("nested map array", func(t *testing.T) {
 		type request struct {
-			Metadata map[string]interface{} `json:"metadata" url:"metadata"`
+			Metadata map[string]any `json:"metadata" url:"metadata"`
 		}
 		values, err := QueryValues(
 			&request{
-				Metadata: map[string]interface{}{
+				Metadata: map[string]any{
 					"inner": []string{
 						"one",
 						"two",
@@ -246,7 +246,7 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 			Enabled bool   `json:"enabled" url:"enabled"`
 		}
 
-		defaults := map[string]interface{}{
+		defaults := map[string]any{
 			"name":    "default-name",
 			"age":     25,
 			"enabled": true,
@@ -264,7 +264,7 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 			Enabled bool   `json:"enabled" url:"enabled"`
 		}
 
-		defaults := map[string]interface{}{
+		defaults := map[string]any{
 			"name":    "default-name",
 			"age":     25,
 			"enabled": true,
@@ -285,7 +285,7 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 			Age  int    `json:"age" url:"age"`
 		}
 
-		defaults := map[string]interface{}{
+		defaults := map[string]any{
 			"name":        "default-name",
 			"age":         25,
 			"nonexistent": "should-be-ignored",
@@ -303,7 +303,7 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 			Message string  `json:"message" url:"message"`
 		}
 
-		defaults := map[string]interface{}{
+		defaults := map[string]any{
 			"count":   int(100),     // int -> int64 conversion
 			"rate":    float32(2.5), // float32 -> float64 conversion
 			"message": "hello",      // string -> string (no conversion needed)
@@ -322,7 +322,7 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 		}
 
 		defaultOptional := "default-optional"
-		defaults := map[string]interface{}{
+		defaults := map[string]any{
 			"required": "default-required",
 			"optional": &defaultOptional, // pointer type
 			"count":    42,
@@ -344,7 +344,7 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 			Enabled *bool   `json:"enabled" url:"enabled"`
 		}
 
-		defaults := map[string]interface{}{
+		defaults := map[string]any{
 			"name":    "default-name",
 			"age":     25,
 			"enabled": true,

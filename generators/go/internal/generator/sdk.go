@@ -282,7 +282,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("BaseURL string")
 	f.P("HTTPClient HTTPClient")
 	f.P("HTTPHeader http.Header")
-	f.P("BodyProperties map[string]interface{}")
+	f.P("BodyProperties map[string]any")
 	f.P("QueryParameters url.Values")
 	f.P("MaxAttempts uint")
 
@@ -327,7 +327,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("func NewRequestOptions(opts ...RequestOption) *RequestOptions {")
 	f.P("options := &RequestOptions{")
 	f.P("HTTPHeader: make(http.Header),")
-	f.P("BodyProperties: make(map[string]interface{}),")
+	f.P("BodyProperties: make(map[string]any),")
 	f.P("QueryParameters: make(url.Values),")
 	f.P("}")
 	f.P("for _, opt := range opts {")
@@ -479,7 +479,7 @@ func (f *fileWriter) writeRequestOptionStructs(
 	if err := f.writeOptionStruct("HTTPHeader", "http.Header", true, asIdempotentRequestOption); err != nil {
 		return err
 	}
-	if err := f.writeOptionStruct("BodyProperties", "map[string]interface{}", true, asIdempotentRequestOption); err != nil {
+	if err := f.writeOptionStruct("BodyProperties", "map[string]any", true, asIdempotentRequestOption); err != nil {
 		return err
 	}
 	if err := f.writeOptionStruct("QueryParameters", "url.Values", true, asIdempotentRequestOption); err != nil {
@@ -671,8 +671,8 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("}")
 	f.P()
 	f.P("// WithBodyProperties adds the given body properties to the request.")
-	f.P("func WithBodyProperties(bodyProperties map[string]interface{}) *core.BodyPropertiesOption {")
-	f.P("copiedBodyProperties := make(map[string]interface{}, len(bodyProperties))")
+	f.P("func WithBodyProperties(bodyProperties map[string]any) *core.BodyPropertiesOption {")
+	f.P("copiedBodyProperties := make(map[string]any, len(bodyProperties))")
 	f.P("for key, value := range bodyProperties {")
 	f.P("copiedBodyProperties[key] = value")
 	f.P("}")
@@ -2852,7 +2852,7 @@ func (f *fileWriter) WriteRequestType(
 	}
 	if requestBody.extraProperties {
 		f.P()
-		f.P("ExtraProperties map[string]interface{} `json:\"-\" url:\"-\"`")
+		f.P("ExtraProperties map[string]any `json:\"-\" url:\"-\"`")
 	}
 	f.WriteExplicitFields()
 	f.P("}")

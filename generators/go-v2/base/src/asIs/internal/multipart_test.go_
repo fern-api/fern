@@ -183,7 +183,7 @@ func TestMultipartWriter(t *testing.T) {
 		tests := []struct {
 			desc      string
 			giveField string
-			giveValue interface{}
+			giveValue any
 		}{
 			{
 				desc:      "struct",

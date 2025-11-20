@@ -30,7 +30,7 @@ type InternalTestCase struct {
 	giveErrorDecoder       ErrorDecoder
 	giveRequest            *InternalTestRequest
 	giveQueryParams        url.Values
-	giveBodyProperties     map[string]interface{}
+	giveBodyProperties     map[string]any
 
 	// Client-side assertions.
 	wantResponse *InternalTestResponse
@@ -46,7 +46,7 @@ type InternalTestRequest struct {
 // InternalTestResponse a simple response body.
 type InternalTestResponse struct {
 	Id                  string                 `json:"id"`
-	ExtraBodyProperties map[string]interface{} `json:"extraBodyProperties,omitempty"`
+	ExtraBodyProperties map[string]any `json:"extraBodyProperties,omitempty"`
 	QueryParameters     url.Values             `json:"queryParameters,omitempty"`
 }
 
@@ -153,11 +153,11 @@ func TestCall(t *testing.T) {
 				"X-API-Status": []string{"success"},
 			},
 			giveRequest: new(InternalTestRequest),
-			giveBodyProperties: map[string]interface{}{
+			giveBodyProperties: map[string]any{
 				"key": "value",
 			},
 			wantResponse: &InternalTestResponse{
-				ExtraBodyProperties: map[string]interface{}{
+				ExtraBodyProperties: map[string]any{
 					"key": "value",
 				},
 			},
@@ -354,7 +354,7 @@ func newTestServer(t *testing.T, tc *InternalTestCase) *httptest.Server {
 					return
 				}
 
-				extraBodyProperties := make(map[string]interface{})
+				extraBodyProperties := make(map[string]any)
 				require.NoError(t, json.Unmarshal(bytes, &extraBodyProperties))
 				delete(extraBodyProperties, "id")
 

@@ -25,7 +25,7 @@ type QueryEncoder interface {
 }
 
 // prepareValue handles common validation and unwrapping logic for both functions
-func prepareValue(v interface{}) (reflect.Value, url.Values, error) {
+func prepareValue(v any) (reflect.Value, url.Values, error) {
 	values := make(url.Values)
 	val := reflect.ValueOf(v)
 	for val.Kind() == reflect.Ptr {
@@ -57,7 +57,7 @@ func prepareValue(v interface{}) (reflect.Value, url.Values, error) {
 // supports far less customization and is tailored to fit this SDK's use case.
 //
 // Ref: https://github.com/google/go-querystring
-func QueryValues(v interface{}) (url.Values, error) {
+func QueryValues(v any) (url.Values, error) {
 	_, values, err := prepareValue(v)
 	return values, err
 }
@@ -65,7 +65,7 @@ func QueryValues(v interface{}) (url.Values, error) {
 // QueryValuesWithDefaults encodes url.Values from request objects
 // and default values, merging the defaults into the request.
 // It's expected that the values of defaults are wire names.
-func QueryValuesWithDefaults(v interface{}, defaults map[string]interface{}) (url.Values, error) {
+func QueryValuesWithDefaults(v any, defaults map[string]any) (url.Values, error) {
 	val, values, err := prepareValue(v)
 	if err != nil {
 		return values, err

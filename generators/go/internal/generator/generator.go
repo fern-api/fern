@@ -338,8 +338,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		generatedRootClient.Endpoints = append(generatedRootClient.Endpoints, generatedRootClient.Endpoints...)
 	}
 	files = append(files, modelFiles...)
-	files = append(files, newStringerFile(g.coordinator))
-	files = append(files, newTimeFile(g.coordinator))
 	files = append(files, newExplicitFieldsFile(g.coordinator))
 	files = append(files, newExplicitFieldsTestFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
@@ -1165,22 +1163,6 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/optional_test.go",
 		[]byte(optionalTestFile),
-	)
-}
-
-func newStringerFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"internal/stringer.go",
-		[]byte(stringerFile),
-	)
-}
-
-func newTimeFile(coordinator *coordinator.Client) *File {
-	return NewFile(
-		coordinator,
-		"internal/time.go",
-		[]byte(timeFile),
 	)
 }
 

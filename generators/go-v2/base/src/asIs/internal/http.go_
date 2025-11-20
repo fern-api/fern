@@ -25,8 +25,8 @@ func ResolveBaseURL(values ...string) string {
 
 // EncodeURL encodes the given arguments into the URL, escaping
 // values as needed. Pointer arguments are dereferenced before processing.
-func EncodeURL(urlFormat string, args ...interface{}) string {
-	escapedArgs := make([]interface{}, 0, len(args))
+func EncodeURL(urlFormat string, args ...any) string {
+	escapedArgs := make([]any, 0, len(args))
 	for _, arg := range args {
 		// Dereference the argument if it's a pointer
 		value := dereferenceArg(arg)
@@ -37,7 +37,7 @@ func EncodeURL(urlFormat string, args ...interface{}) string {
 
 // dereferenceArg dereferences a pointer argument if necessary, returning the underlying value.
 // If the argument is not a pointer or is nil, it returns the argument as-is.
-func dereferenceArg(arg interface{}) interface{} {
+func dereferenceArg(arg any) any {
 	if arg == nil {
 		return arg
 	}
