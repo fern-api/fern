@@ -207,12 +207,11 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
 
     @Override
     public List<String> getAdditionalBuildGradleBlocks() {
-        return List.of(
-                "java {\n"
-                        + "    toolchain {\n"
-                        + "        languageVersion = JavaLanguageVersion.of(17)\n"
-                        + "    }\n"
-                        + "}");
+        return List.of("java {\n"
+                + "    toolchain {\n"
+                + "        languageVersion = JavaLanguageVersion.of(17)\n"
+                + "    }\n"
+                + "}");
     }
 
     @Override
