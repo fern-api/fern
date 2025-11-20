@@ -59,7 +59,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         this.generateClients(context);
         this.generateRawClients(context);
         this.generateInternalFiles(context);
-        this.generateCustomPagerAlias(context);
+        // this.generateCustomPagerAlias(context);
 
         await context.snippetGenerator.populateSnippetsCache();
 
@@ -177,27 +177,27 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         }
     }
 
-    private generateCustomPagerAlias(context: SdkGeneratorContext) {
-        if (context.customConfig.customPagerName == null) {
-            return;
-        }
-        const customPagerName = context.customConfig.customPagerName;
-        const wrapperContent = go.codeblock((writer) => {
-            writer.writeLine(`type ${customPagerName}[T any] struct {`);
-            writer.writeLine(`\t*CustomPager[T]`);
-            writer.writeLine(`}`);
-        });
-        const wrapperFile = new GoFile({
-            node: wrapperContent,
-            directory: RelativeFilePath.of("core"),
-            filename: "custom_pager_wrapper.go",
-            packageName: "core",
-            rootImportPath: context.getRootImportPath(),
-            importPath: context.getCoreImportPath(),
-            customConfig: context.customConfig
-        });
-        context.project.addGoFiles(wrapperFile);
-    }
+    // private generateCustomPagerAlias(context: SdkGeneratorContext) {
+    //     if (context.customConfig.customPagerName == null) {
+    //         return;
+    //     }
+    //     const customPagerName = context.customConfig.customPagerName;
+    //     const wrapperContent = go.codeblock((writer) => {
+    //         writer.writeLine(`type ${customPagerName}[T any] struct {`);
+    //         writer.writeLine(`\t*CustomPager[T]`);
+    //         writer.writeLine(`}`);
+    //     });
+    //     const wrapperFile = new GoFile({
+    //         node: wrapperContent,
+    //         directory: RelativeFilePath.of("core"),
+    //         filename: "custom_pager_wrapper.go",
+    //         packageName: "core",
+    //         rootImportPath: context.getRootImportPath(),
+    //         importPath: context.getCoreImportPath(),
+    //         customConfig: context.customConfig
+    //     });
+    //     context.project.addGoFiles(wrapperFile);
+    // }
 
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {
         const endpointSnippets: Endpoint[] = [];

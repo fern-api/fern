@@ -77,13 +77,16 @@ function getCustomPagerReturnType({
         throw new Error("Custom pagination endpoint must have a response body");
     }
     const responseBodyType = getResponseBodyType({ context, body: response.body });
+    // Unwrap pointer type to get base type for generic parameter
+    // (PayrocPager already has a pointer field, so we don't want *T in the generic)
+    const baseType = responseBodyType.isOptional() ? responseBodyType.underlying() : responseBodyType;
     const customPagerName = context.customConfig.customPagerName ?? "CustomPager";
     return go.Type.pointer(
         go.Type.reference(
             go.typeReference({
                 name: customPagerName,
                 importPath: context.getCoreImportPath(),
-                generics: [go.Type.pointer(responseBodyType)]
+                generics: [baseType]
             })
         )
     );

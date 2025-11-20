@@ -24,6 +24,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
 import { getPaginationInfo } from "../utils/getPaginationInfo";
+import { getResponseBodyType } from "../utils/getResponseBodyType";
 
 export declare namespace HttpEndpointGenerator {
     export const OCTET_STREAM_CONTENT_TYPE = "application/octet-stream";
@@ -105,7 +106,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             return this.getPaginationEndpointBody({ signature, endpoint, subpackage, pagination });
         }
         if (pagination?.type === "custom" && this.context.customConfig.customPagerName != null) {
-            return this.getCustomPaginationEndpointBody({ signature, endpoint, subpackage });
+            return this.getCustomPaginationEndpointBody({ signature, endpoint, subpackage, pagination });
         }
         return this.generateDelegatingEndpointBody({ endpoint, signature, subpackage });
     }
@@ -205,85 +206,97 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
     private getCustomPaginationEndpointBody({
         signature,
         endpoint,
-        subpackage
+        subpackage,
+        pagination
     }: {
         signature: EndpointSignatureInfo;
         endpoint: HttpEndpoint;
         subpackage: Subpackage | undefined;
+        pagination: Pagination;
     }): go.CodeBlock {
-        const errorDecoder = this.buildErrorDecoder({ endpoint });
+        // const errorDecoder = this.buildErrorDecoder({ endpoint });
+        // const paginationInfo = getPaginationInfo({
+        //     context: this.context,
+        //     pagination,
+        //     signature,
+        //     callerReference: this.getCallerFieldReference({ subpackage }),
+        //     endpoint,
+        //     errorDecoder
+        // });
         return go.codeblock((writer) => {
+            // Build request options
+            writer.writeNode(this.buildRequestOptions({ endpoint }));
+            writer.newLine();
+
+            // Build base URL
+            writer.writeNode(this.buildBaseUrl({ endpoint, subpackage, rawClient: false }));
+            writer.newLine();
+
+            // Build endpoint URL
+            writer.writeNode(this.buildEndpointUrl({ endpoint, signature }));
+
+            // Build query parameters
+            const buildQueryParameters = this.buildQueryParameters({
+                signature,
+                endpoint,
+                rawClient: false,
+                encodeQuery: true
+            });
+            if (buildQueryParameters != null) {
+                writer.newLine();
+                writer.writeNode(buildQueryParameters);
+            }
+
+            // Call WithRawResponse
+            writer.write("response, callErr := ");
             writer.writeNode(
-                this.prepareRequestCall({
-                    signature,
-                    endpoint,
-                    subpackage,
-                    errorDecoder: undefined,
-                    rawClient: false
+                go.invokeMethod({
+                    method: this.context.getMethodName(endpoint.name),
+                    arguments_: [
+                        ...signature.allParameters.slice(0, -1).map((param) => go.codeblock(param.name)),
+                        go.codeblock("opts...")
+                    ],
+                    on: go.selector({
+                        on: this.getReceiverCodeBlock({ subpackage }),
+                        selector: go.codeblock("WithRawResponse")
+                    })
                 })
             );
             writer.newLine();
+            writer.writeLine("if callErr != nil {");
+            writer.indent();
+            writer.writeLine("return nil, callErr");
+            writer.dedent();
+            writer.writeLine("}");
+
+            // Extract response body type
             const responseBody = endpoint.response?.body;
             if (responseBody == null) {
                 writer.writeLine("return nil, nil");
                 return;
             }
-            let baseResponseType: go.Type;
-            switch (responseBody.type) {
-                case "json":
-                    baseResponseType = this.context.goTypeMapper.convert({
-                        reference: responseBody.value.responseBodyType
-                    });
-                    break;
-                case "fileDownload":
-                case "text":
-                    baseResponseType = go.Type.string();
-                    break;
-                case "bytes":
-                    throw new Error("Returning bytes is not supported");
-                case "streaming":
-                case "streamParameter":
-                    throw new Error("Custom pagination with streaming is not supported");
-                default:
-                    assertNever(responseBody);
-            }
-            writer.writeNode(
-                this.prepareRequestCall({
-                    signature,
-                    endpoint,
-                    subpackage,
-                    errorDecoder: undefined,
-                    rawClient: false
-                })
-            );
+            const responseBodyType = getResponseBodyType({ context: this.context, body: responseBody });
+            // Unwrap pointer type to get base type for generic parameter
+            // (PayrocPager already has a pointer field, so we don't want *T in the generic)
+            const baseType = responseBodyType.isOptional() ? responseBodyType.underlying() : responseBodyType;
+
+            // Extract response body
+            writer.write("var responseBody ");
+            writer.writeNode(responseBodyType);
+            writer.write(" = response.Body");
             writer.newLine();
-            writer.writeLine("if err != nil {");
+
+            // Create pager
+            const customPagerName = this.context.customConfig.customPagerName ?? "CustomPager";
+            writer.write(`pager := core.New${customPagerName}[`);
+            writer.writeNode(baseType);
+            writer.write("](");
+            writer.newLine();
             writer.indent();
-            writer.writeNode(this.writeReturnZeroValueWithError({ signature }));
+            writer.write("responseBody,");
             writer.newLine();
             writer.dedent();
-            writer.writeLine("}");
-            writer.write("base := ");
-            writer.writeNode(
-                go.invokeFunc({
-                    func: go.typeReference({
-                        name: "NewCustomPager",
-                        importPath: this.context.getCoreImportPath()
-                    }),
-                    arguments_: [
-                        this.getResponseBodyReference({ responseBody }),
-                        go.codeblock("nil"),
-                        go.codeblock("nil"),
-                        go.codeblock("nil"),
-                        go.codeblock("nil")
-                    ]
-                })
-            );
-            writer.newLine();
-            const customPagerName = this.context.customConfig.customPagerName ?? "CustomPager";
-            writer.write(`pager := &core.${customPagerName}[*`);
-            writer.writeNode(baseResponseType);
-            writer.write("]{CustomPager: base}");
+            writer.write(")");
             writer.newLine();
             writer.writeLine("return pager, nil");
         });

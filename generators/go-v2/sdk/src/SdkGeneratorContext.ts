@@ -808,7 +808,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
                 default:
                     assertNever(responseBody);
             }
-            return go.Type.pointer(go.Type.reference(this.getCustomPagerTypeReference(baseResponseType)));
+            // Unwrap pointer type to get base type for generic parameter
+            // (PayrocPager already has a pointer field, so we don't want *T in the generic)
+            const unwrappedType = baseResponseType.isOptional() ? baseResponseType.underlying() : baseResponseType;
+            return go.Type.pointer(go.Type.reference(this.getCustomPagerTypeReference(unwrappedType)));
         }
 
         switch (responseBody.type) {

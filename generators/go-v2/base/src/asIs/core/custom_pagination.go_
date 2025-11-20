@@ -4,78 +4,44 @@ import (
 	"context"
 )
 
-// CustomPager is a generic pager for custom pagination endpoints.
+// {{ .CustomPagerName }} is a generic pager for custom pagination endpoints.
 // It provides bidirectional navigation through pages of results.
-type CustomPager[T any] struct {
+type {{ .CustomPagerName }}[T any] struct {
 	current  *T
-	hasNext  func(*T) bool
-	hasPrev  func(*T) bool
-	getNext  func(context.Context, *T) (*T, error)
-	getPrev  func(context.Context, *T) (*T, error)
 }
 
-// NewCustomPager creates a new custom pager with the given initial response
+// New{{ .CustomPagerName }} creates a new custom pager with the given initial response
 // and navigation functions.
-func NewCustomPager[T any](
+func New{{ .CustomPagerName }}[T any](
 	initial *T,
-	hasNext func(*T) bool,
-	hasPrev func(*T) bool,
-	getNext func(context.Context, *T) (*T, error),
-	getPrev func(context.Context, *T) (*T, error),
-) *CustomPager[T] {
-	return &CustomPager[T]{
+) *{{ .CustomPagerName }}[T] {
+	return &{{ .CustomPagerName }}[T]{
 		current: initial,
-		hasNext: hasNext,
-		hasPrev: hasPrev,
-		getNext: getNext,
-		getPrev: getPrev,
 	}
 }
 
 // HasNextPage returns true if there is a next page available.
-func (p *CustomPager[T]) HasNextPage() bool {
-	if p.current == nil || p.hasNext == nil {
-		return false
-	}
-	return p.hasNext(p.current)
+func (p *{{ .CustomPagerName }}[T]) HasNextPage() bool {
+	panic("HasNextPage not implemented")
 }
 
 // GetNextPage fetches the next page of results.
-func (p *CustomPager[T]) GetNextPage(ctx context.Context) (*T, error) {
-	if p.getNext == nil {
-		return nil, ErrNoPages
-	}
-	next, err := p.getNext(ctx, p.current)
-	if err != nil {
-		return nil, err
-	}
-	p.current = next
-	return next, nil
+func (p *{{ .CustomPagerName }}[T]) GetNextPage(ctx context.Context) (*T, error) {
+	panic("GetNextPage not implemented")
 }
 
 // HasPrevPage returns true if there is a previous page available.
-func (p *CustomPager[T]) HasPrevPage() bool {
-	if p.current == nil || p.hasPrev == nil {
-		return false
-	}
-	return p.hasPrev(p.current)
+func (p *{{ .CustomPagerName }}[T]) HasPrevPage() bool {
+	panic("HasPrevPage not implemented")
 }
 
 // GetPrevPage fetches the previous page of results.
-func (p *CustomPager[T]) GetPrevPage(ctx context.Context) (*T, error) {
-	if p.getPrev == nil {
-		return nil, ErrNoPages
-	}
-	prev, err := p.getPrev(ctx, p.current)
-	if err != nil {
-		return nil, err
-	}
-	p.current = prev
-	return prev, nil
+func (p *{{ .CustomPagerName }}[T]) GetPrevPage(ctx context.Context) (*T, error) {
+	panic("GetPrevPage not implemented")
 }
 
 // Current returns the current page response.
-func (p *CustomPager[T]) Current() *T {
+func (p *{{ .CustomPagerName }}[T]) Current() *T {
 	return p.current
 }
 
@@ -83,7 +49,7 @@ func (p *CustomPager[T]) Current() *T {
 // This works with all Go versions and can be used with range loops.
 // The iterator will yield the current page and continue fetching next pages
 // until no more pages are available or the context is cancelled.
-func (p *CustomPager[T]) Iter(ctx context.Context) <-chan *T {
+func (p *{{ .CustomPagerName }}[T]) Iter(ctx context.Context) <-chan *T {
 	ch := make(chan *T)
 	go func() {
 		defer close(ch)
@@ -111,7 +77,7 @@ func (p *CustomPager[T]) Iter(ctx context.Context) <-chan *T {
 // This allows using the pager with range loops: for page := range pager.Seq(ctx) { ... }
 // The iterator will yield the current page and continue fetching next pages
 // until no more pages are available or the context is cancelled.
-func (p *CustomPager[T]) Seq(ctx context.Context) func(yield func(*T) bool) {
+func (p *{{ .CustomPagerName }}[T]) Seq(ctx context.Context) func(yield func(*T) bool) {
 	return func(yield func(*T) bool) {
 		current := p.current
 		for current != nil {
@@ -137,7 +103,7 @@ func (p *CustomPager[T]) Seq(ctx context.Context) func(yield func(*T) bool) {
 
 // ForEach iterates through all pages and calls the provided function for each page.
 // If the function returns false, iteration stops early.
-func (p *CustomPager[T]) ForEach(ctx context.Context, fn func(*T) bool) {
+func (p *{{ .CustomPagerName }}[T]) ForEach(ctx context.Context, fn func(*T) bool) {
 	current := p.current
 	for current != nil {
 		select {
