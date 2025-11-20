@@ -757,7 +757,9 @@ function getPageResponseType({
     pageType: go.Type;
     responseType: go.Type;
 }): go.Type {
-    return go.Type.pointer(go.Type.reference(getPageResponseTypeReference({ context, pagination, pageType, responseType })));
+    return go.Type.pointer(
+        go.Type.reference(getPageResponseTypeReference({ context, pagination, pageType, responseType }))
+    );
 }
 
 function getPageResponseTypeReference({

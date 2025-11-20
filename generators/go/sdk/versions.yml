@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.17.0
+  changelogEntry:
+    - summary: |
+        Provide Page.Response for accessing the full response type returned by the call to the relevant endpoint.
+
+        Pagination now automatically includes the following fields on each page:
+        ```go
+        type Page[Cursor comparable, T any, R any] struct {
+         	  Results      []T
+           	Response     R
+           	RawResponse  PageResponse[Cursor, T, R]
+           	StatusCode   int
+           	Header       http.Header
+           	...
+        }
+        ```
+        where `Results` is the standard slice of results, sufficient for most use cases; `Response` is the full
+        response type of the HTTP call, which includes the `Results` as a sub-attribute; `RawResponse`, which
+        exposes the underlying pagination mechanism if need; and `StatusCode` and `Header`, raw HTTP response
+        metadata corresponding to the data returned by `withRawResponse()` on non-paginated endpoints.
+      type: feat
+  createdAt: "2025-11-19"
+  irVersion: 60
 
 - version: 1.16.5
   changelogEntry:
@@ -6,7 +29,7 @@
         Fix Basic auth header formatting to remove erroneous whitespace between username and password.
         Passwords with colons are now properly supported per RFC 7617 specification.
       type: fix
-  createdAt: "2025-11-20"
+  createdAt: "2025-11-19"
   irVersion: 60
 
 - version: 1.16.4
@@ -46,7 +69,7 @@
     - summary: |
         Provide Page.Header and Page.StatusCode for accessing the headers and status codes of paginated responses;
         unlike for non-paginated responses, this raw data is always included in the response.
-      type: fix
+      type: feat
   createdAt: "2025-11-17"
   irVersion: 60
 
