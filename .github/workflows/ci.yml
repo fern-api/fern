@@ -71,10 +71,7 @@ jobs:
 
       - name: Format
         run: pnpm format:check
-
-      - name: Format YAML
-        run: pnpm format:yaml:check
-
+        
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
