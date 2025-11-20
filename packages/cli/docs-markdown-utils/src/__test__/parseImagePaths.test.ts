@@ -5,6 +5,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { diffLines } from "diff";
 import fs from "fs";
 import { resolve } from "path";
+import { afterEach, beforeEach } from "vitest";
 
 import { parseImagePaths, replaceImagePathsAndUrls } from "../parseImagePaths";
 
@@ -801,14 +802,16 @@ describe("streaming parser for large files", () => {
     });
 
     it("should parse markdown images with streaming parser", () => {
-        const page = "This is a test page with an image ![image](path/to/image.png) and more content to exceed 100 bytes threshold for streaming parser to be used";
+        const page =
+            "This is a test page with an image ![image](path/to/image.png) and more content to exceed 100 bytes threshold for streaming parser to be used";
         const result = parseImagePaths(page, PATHS, CONTEXT);
         expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
         expect(result.markdown).toContain("![image](/Volume/git/fern/my/docs/folder/path/to/image.png)");
     });
 
     it("should parse multiple markdown images with streaming parser", () => {
-        const page = "This is a test page with images ![image1](path/to/image1.png) and ![image2](path/to/image2.png) and more content to exceed threshold";
+        const page =
+            "This is a test page with images ![image1](path/to/image1.png) and ![image2](path/to/image2.png) and more content to exceed threshold";
         const result = parseImagePaths(page, PATHS, CONTEXT);
         expect(result.filepaths).toEqual([
             "/Volume/git/fern/my/docs/folder/path/to/image1.png",
@@ -819,41 +822,47 @@ describe("streaming parser for large files", () => {
     });
 
     it("should parse HTML img tags with streaming parser", () => {
-        const page = "This is a test page with an image <img src='path/to/image.png' /> and more content to exceed 100 bytes threshold for streaming";
+        const page =
+            "This is a test page with an image <img src='path/to/image.png' /> and more content to exceed 100 bytes threshold for streaming";
         const result = parseImagePaths(page, PATHS, CONTEXT);
         expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
         expect(result.markdown).toContain("<img src='/Volume/git/fern/my/docs/folder/path/to/image.png' />");
     });
 
     it("should parse JSX img tags with string literals in streaming parser", () => {
-        const page = "This is a test page with an image <img src={'path/to/image.png'} /> and more content to exceed 100 bytes threshold for streaming";
+        const page =
+            "This is a test page with an image <img src={'path/to/image.png'} /> and more content to exceed 100 bytes threshold for streaming";
         const result = parseImagePaths(page, PATHS, CONTEXT);
         expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
         expect(result.markdown).toContain("<img src={'/Volume/git/fern/my/docs/folder/path/to/image.png'} />");
     });
 
     it("should handle escaped characters in image URLs with streaming parser", () => {
-        const page = "This is a test page with an image ![image](path/to/image\\)test.png) and more content to exceed 100 bytes threshold for streaming";
+        const page =
+            "This is a test page with an image ![image](path/to/image\\)test.png) and more content to exceed 100 bytes threshold for streaming";
         const result = parseImagePaths(page, PATHS, CONTEXT);
         expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image)test.png"]);
     });
 
     it("should skip images inside code fences with streaming parser", () => {
-        const page = "This is a test page\n```\n![image](path/to/image.png)\n```\nand more content to exceed 100 bytes threshold for streaming parser";
+        const page =
+            "This is a test page\n```\n![image](path/to/image.png)\n```\nand more content to exceed 100 bytes threshold for streaming parser";
         const result = parseImagePaths(page, PATHS, CONTEXT);
         expect(result.filepaths).toEqual([]);
         expect(result.markdown).toContain("```\n![image](path/to/image.png)\n```");
     });
 
     it("should skip images inside inline code with streaming parser", () => {
-        const page = "This is a test page with `![image](path/to/image.png)` inline code and more content to exceed 100 bytes threshold for streaming";
+        const page =
+            "This is a test page with `![image](path/to/image.png)` inline code and more content to exceed 100 bytes threshold for streaming";
         const result = parseImagePaths(page, PATHS, CONTEXT);
         expect(result.filepaths).toEqual([]);
         expect(result.markdown).toContain("`![image](path/to/image.png)`");
     });
 
     it("should parse images outside code fences but skip inside with streaming parser", () => {
-        const page = "![outside1](path/to/outside1.png)\n```\n![inside](path/to/inside.png)\n```\n![outside2](path/to/outside2.png) more content";
+        const page =
+            "![outside1](path/to/outside1.png)\n```\n![inside](path/to/inside.png)\n```\n![outside2](path/to/outside2.png) more content";
         const result = parseImagePaths(page, PATHS, CONTEXT);
         expect(result.filepaths).toEqual([
             "/Volume/git/fern/my/docs/folder/path/to/outside1.png",
@@ -865,21 +874,24 @@ describe("streaming parser for large files", () => {
     });
 
     it("should ignore external URLs with streaming parser", () => {
-        const page = "This is a test page with an image ![image](https://external.com/image.png) and more content to exceed 100 bytes threshold for streaming";
+        const page =
+            "This is a test page with an image ![image](https://external.com/image.png) and more content to exceed 100 bytes threshold for streaming";
         const result = parseImagePaths(page, PATHS, CONTEXT);
         expect(result.filepaths).toEqual([]);
         expect(result.markdown).toContain("![image](https://external.com/image.png)");
     });
 
     it("should ignore data URLs with streaming parser", () => {
-        const page = "This is a test page with an image ![image](data:image/png;base64,abc) and more content to exceed 100 bytes threshold for streaming parser";
+        const page =
+            "This is a test page with an image ![image](data:image/png;base64,abc) and more content to exceed 100 bytes threshold for streaming parser";
         const result = parseImagePaths(page, PATHS, CONTEXT);
         expect(result.filepaths).toEqual([]);
         expect(result.markdown).toContain("![image](data:image/png;base64,abc)");
     });
 
     it("should handle anchors in image URLs with streaming parser", () => {
-        const page = "This is a test page with an image ![image](path/to/image.png#anchor) and more content to exceed 100 bytes threshold for streaming";
+        const page =
+            "This is a test page with an image ![image](path/to/image.png#anchor) and more content to exceed 100 bytes threshold for streaming";
         const result = parseImagePaths(page, PATHS, CONTEXT);
         expect(result.filepaths).toEqual(["/Volume/git/fern/my/docs/folder/path/to/image.png"]);
         expect(result.markdown).toContain("![image](/Volume/git/fern/my/docs/folder/path/to/image.png#anchor)");
@@ -902,7 +914,8 @@ describe("replaceImagePathsAndUrls with streaming parser for large files", () =>
     });
 
     it("should replace image paths with file IDs using streaming parser", () => {
-        const page = "This is a test page with an image ![image](path/to/image.png) and more content to exceed 100 bytes threshold for streaming";
+        const page =
+            "This is a test page with an image ![image](path/to/image.png) and more content to exceed 100 bytes threshold for streaming";
         const parseResult = parseImagePaths(page, PATHS, CONTEXT);
         const fileIdsMap = new Map([
             [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "test-file-id-123"]
@@ -912,7 +925,8 @@ describe("replaceImagePathsAndUrls with streaming parser for large files", () =>
     });
 
     it("should replace multiple image paths with file IDs using streaming parser", () => {
-        const page = "This is a test page with images ![image1](path/to/image1.png) and ![image2](path/to/image2.png) and more content to exceed threshold";
+        const page =
+            "This is a test page with images ![image1](path/to/image1.png) and ![image2](path/to/image2.png) and more content to exceed threshold";
         const parseResult = parseImagePaths(page, PATHS, CONTEXT);
         const fileIdsMap = new Map([
             [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image1.png"), "file-id-1"],
@@ -924,7 +938,8 @@ describe("replaceImagePathsAndUrls with streaming parser for large files", () =>
     });
 
     it("should replace HTML img src with file IDs using streaming parser", () => {
-        const page = "This is a test page with an image <img src='path/to/image.png' /> and more content to exceed 100 bytes threshold for streaming";
+        const page =
+            "This is a test page with an image <img src='path/to/image.png' /> and more content to exceed 100 bytes threshold for streaming";
         const parseResult = parseImagePaths(page, PATHS, CONTEXT);
         const fileIdsMap = new Map([
             [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "test-file-id-456"]
@@ -934,17 +949,25 @@ describe("replaceImagePathsAndUrls with streaming parser for large files", () =>
     });
 
     it("should replace markdown links with slugs using streaming parser", () => {
-        const page = "This is a test page with a link [text](../other/page.mdx) and more content to exceed 100 bytes threshold for streaming parser";
+        const page =
+            "This is a test page with a link [text](../other/page.mdx) and more content to exceed 100 bytes threshold for streaming parser";
         const parseResult = parseImagePaths(page, PATHS, CONTEXT);
         const markdownFilesToPathName = {
             "/Volume/git/fern/my/docs/other/page.mdx": "/other/page"
         };
-        const replaced = replaceImagePathsAndUrls(parseResult.markdown, new Map(), markdownFilesToPathName, PATHS, CONTEXT);
+        const replaced = replaceImagePathsAndUrls(
+            parseResult.markdown,
+            new Map(),
+            markdownFilesToPathName,
+            PATHS,
+            CONTEXT
+        );
         expect(replaced).toContain("[text](/other/page)");
     });
 
     it("should preserve anchors when replacing image paths using streaming parser", () => {
-        const page = "This is a test page with an image ![image](path/to/image.png#anchor) and more content to exceed 100 bytes threshold for streaming";
+        const page =
+            "This is a test page with an image ![image](path/to/image.png#anchor) and more content to exceed 100 bytes threshold for streaming";
         const parseResult = parseImagePaths(page, PATHS, CONTEXT);
         const fileIdsMap = new Map([
             [AbsoluteFilePath.of("/Volume/git/fern/my/docs/folder/path/to/image.png"), "test-file-id-789"]
@@ -966,7 +989,8 @@ describe("consistency between AST and streaming parsers", () => {
     });
 
     it("should produce same results for markdown images with both parsers", () => {
-        const page = "This is a test page with an image ![image](path/to/image.png) and another ![image2](path/to/image2.png) with more content";
+        const page =
+            "This is a test page with an image ![image](path/to/image.png) and another ![image2](path/to/image2.png) with more content";
 
         process.env.FERN_DOCS_LARGE_FILE_BYTES = "10000000"; // 10MB threshold
         const astResult = parseImagePaths(page, PATHS, CONTEXT);
@@ -979,7 +1003,8 @@ describe("consistency between AST and streaming parsers", () => {
     });
 
     it("should produce same results for HTML img tags with both parsers", () => {
-        const page = "This is a test page with an image <img src='path/to/image.png' /> and another <img src='path/to/image2.png' />";
+        const page =
+            "This is a test page with an image <img src='path/to/image.png' /> and another <img src='path/to/image2.png' />";
 
         process.env.FERN_DOCS_LARGE_FILE_BYTES = "10000000";
         const astResult = parseImagePaths(page, PATHS, CONTEXT);
@@ -992,7 +1017,8 @@ describe("consistency between AST and streaming parsers", () => {
     });
 
     it("should produce same results for mixed content with both parsers", () => {
-        const page = "![md](path/to/md.png) and <img src='path/to/html.png' /> and <img src={'path/to/jsx.png'} /> with more content";
+        const page =
+            "![md](path/to/md.png) and <img src='path/to/html.png' /> and <img src={'path/to/jsx.png'} /> with more content";
 
         process.env.FERN_DOCS_LARGE_FILE_BYTES = "10000000";
         const astResult = parseImagePaths(page, PATHS, CONTEXT);
@@ -1005,7 +1031,8 @@ describe("consistency between AST and streaming parsers", () => {
     });
 
     it("should produce same results for code fence handling with both parsers", () => {
-        const page = "![outside](path/to/outside.png)\n```\n![inside](path/to/inside.png)\n```\n![outside2](path/to/outside2.png)";
+        const page =
+            "![outside](path/to/outside.png)\n```\n![inside](path/to/inside.png)\n```\n![outside2](path/to/outside2.png)";
 
         process.env.FERN_DOCS_LARGE_FILE_BYTES = "10000000";
         const astResult = parseImagePaths(page, PATHS, CONTEXT);
