@@ -1,12 +1,15 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { AbstractRubyGeneratorCli } from "@fern-api/ruby-base";
+import { AbstractRubyGeneratorCli, AsIsFiles } from "@fern-api/ruby-base";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
 import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { mkdir, readFile, writeFile } from "fs/promises";
+import { template } from "lodash-es";
+import path from "path";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
 import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
@@ -45,6 +48,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
     }
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
+        await this.generateGithubWorkflow(context);
         await this.generate(context);
     }
 
@@ -229,4 +233,45 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
         );
     }
+
+    private async generateGithubWorkflow(context: SdkGeneratorContext): Promise<void> {
+        const outputMode = context.config.output.mode;
+        if (outputMode.type !== "github") {
+            return;
+        }
+
+        const gemName = context.getRootFolderName();
+        const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.GithubCiYml))).toString();
+
+        let shouldWritePublishBlock = false;
+        let registryUrl = "https://rubygems.org";
+        let gemHostApiKeyEnvVar = "RUBYGEMS_AUTH_TOKEN";
+
+        if (outputMode.publishInfo != null) {
+            const publishInfo = outputMode.publishInfo;
+            if (publishInfo.type === "rubygems") {
+                shouldWritePublishBlock = true;
+                registryUrl = publishInfo.registryUrl;
+                gemHostApiKeyEnvVar = publishInfo.apiKeyEnvironmentVariable ?? "RUBYGEMS_AUTH_TOKEN";
+            }
+        }
+
+        const githubWorkflow = template(githubWorkflowTemplate)({
+            gemName,
+            shouldWritePublishBlock,
+            registryUrl,
+            gemHostApiKeyEnvVar
+        });
+
+        const ghDir = join(
+            AbsoluteFilePath.of(context.project.absolutePathToOutputDirectory),
+            RelativeFilePath.of(".github/workflows")
+        );
+        await mkdir(ghDir, { recursive: true });
+        await writeFile(join(ghDir, RelativeFilePath.of("ci.yml")), githubWorkflow);
+    }
+}
+
+function getAsIsFilepath(filename: string): AbsoluteFilePath {
+    return AbsoluteFilePath.of(path.join(__dirname, "..", "..", "base", "src", "asIs", filename));
 }
