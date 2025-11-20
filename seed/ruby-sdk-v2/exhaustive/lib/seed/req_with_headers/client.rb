@@ -10,10 +10,9 @@ module Seed
         @client = client
       end
 
-      # @option params [String] :x_test_endpoint_header
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :x_test_endpoint_header
       #
       # @return [untyped]
       def get_with_custom_header(request_options: {}, **params)

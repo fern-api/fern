@@ -36,10 +36,9 @@ module Seed
 
       # GET request with custom api key
       #
-      # @option params [String] :x_endpoint_header
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :x_endpoint_header
       #
       # @return [String]
       def get_with_header(request_options: {}, **_params)

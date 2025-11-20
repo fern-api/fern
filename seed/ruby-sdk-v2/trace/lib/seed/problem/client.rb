@@ -39,10 +39,9 @@ module Seed
 
       # Updates a problem
       #
-      # @option params [Seed::Commons::Types::ProblemId] :problem_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Problem::Types::CreateProblemRequest]
+      # @option params [Seed::Commons::Types::ProblemId] :problem_id
       #
       # @return [Seed::Problem::Types::UpdateProblemResponse]
       def update_problem(request_options: {}, **params)
@@ -68,10 +67,9 @@ module Seed
 
       # Soft deletes a problem
       #
-      # @option params [Seed::Commons::Types::ProblemId] :problem_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [Seed::Commons::Types::ProblemId] :problem_id
       #
       # @return [untyped]
       def delete_problem(request_options: {}, **params)

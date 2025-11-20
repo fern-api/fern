@@ -13,10 +13,9 @@ module Seed
       # Retrieve a user.
       # This endpoint is used to retrieve a user.
       #
-      # @option params [String] :user_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :user_id
       #
       # @return [untyped]
       def get_user(request_options: {}, **params)

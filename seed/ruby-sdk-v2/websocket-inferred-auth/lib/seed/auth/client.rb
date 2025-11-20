@@ -10,10 +10,9 @@ module Seed
         @client = client
       end
 
-      # @option params [String] :x_api_key
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Auth::Types::GetTokenRequest]
+      # @option params [String] :x_api_key
       #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token_with_client_credentials(request_options: {}, **params)
@@ -40,10 +39,9 @@ module Seed
         end
       end
 
-      # @option params [String] :x_api_key
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Auth::Types::RefreshTokenRequest]
+      # @option params [String] :x_api_key
       #
       # @return [Seed::Auth::Types::TokenResponse]
       def refresh_token(request_options: {}, **params)

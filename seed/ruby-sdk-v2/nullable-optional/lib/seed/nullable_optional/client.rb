@@ -12,10 +12,9 @@ module Seed
 
       # Get a user by ID
       #
-      # @option params [String] :user_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :user_id
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
       def get_user(request_options: {}, **params)
@@ -67,10 +66,9 @@ module Seed
 
       # Update a user (partial update)
       #
-      # @option params [String] :user_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::NullableOptional::Types::UpdateUserRequest]
+      # @option params [String] :user_id
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
       def update_user(request_options: {}, **params)
@@ -96,13 +94,12 @@ module Seed
 
       # List all users
       #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [Integer | nil] :limit
       # @option params [Integer | nil] :offset
       # @option params [bool | nil] :include_deleted
       # @option params [String | nil | nil] :sort_by
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def list_users(request_options: {}, **params)
@@ -135,13 +132,12 @@ module Seed
 
       # Search users
       #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [String] :query
       # @option params [String | nil] :department
       # @option params [String | nil] :role
       # @option params [bool | nil | nil] :is_active
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def search_users(request_options: {}, **params)
@@ -201,10 +197,9 @@ module Seed
 
       # Get a complex profile by ID
       #
-      # @option params [String] :profile_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :profile_id
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def get_complex_profile(request_options: {}, **params)
@@ -229,10 +224,9 @@ module Seed
 
       # Update complex profile to test nullable field updates
       #
-      # @option params [String] :profile_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::NullableOptional::Types::UpdateComplexProfileRequest]
+      # @option params [String] :profile_id
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def update_complex_profile(request_options: {}, **params)
@@ -290,12 +284,11 @@ module Seed
 
       # Filter users by role with nullable enum
       #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [Seed::NullableOptional::Types::UserRole | nil] :role
       # @option params [Seed::NullableOptional::Types::UserStatus | nil] :status
       # @option params [Seed::NullableOptional::Types::UserRole | nil | nil] :secondary_role
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def filter_by_role(request_options: {}, **params)
@@ -327,10 +320,9 @@ module Seed
 
       # Get notification settings which may be null
       #
-      # @option params [String] :user_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :user_id
       #
       # @return [Seed::NullableOptional::Types::NotificationMethod | nil]
       def get_notification_settings(request_options: {}, **params)
@@ -353,10 +345,9 @@ module Seed
 
       # Update tags to test array handling
       #
-      # @option params [String] :user_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::NullableOptional::Types::UpdateTagsRequest]
+      # @option params [String] :user_id
       #
       # @return [Array[String]]
       def update_tags(request_options: {}, **params)

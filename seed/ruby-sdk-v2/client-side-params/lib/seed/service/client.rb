@@ -12,6 +12,8 @@ module Seed
 
       # List resources with pagination
       #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [Integer] :page
       # @option params [Integer] :per_page
       # @option params [String] :sort
@@ -19,9 +21,6 @@ module Seed
       # @option params [bool] :include_totals
       # @option params [String | nil] :fields
       # @option params [String | nil] :search
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::Types::Types::Resource]]
       def list_resources(request_options: {}, **params)
@@ -57,12 +56,11 @@ module Seed
 
       # Get a single resource
       #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [String] :resource_id
       # @option params [bool] :include_metadata
       # @option params [String] :format
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::Resource]
       def get_resource(request_options: {}, **params)
@@ -95,11 +93,10 @@ module Seed
 
       # Search resources with complex parameters
       #
-      # @option params [Integer] :limit
-      # @option params [Integer] :offset
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Service::Types::SearchResourcesRequest]
+      # @option params [Integer] :limit
+      # @option params [Integer] :offset
       #
       # @return [Seed::Types::Types::SearchResponse]
       def search_resources(request_options: {}, **params)
@@ -136,6 +133,8 @@ module Seed
 
       # List or search for users
       #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [Integer | nil] :page
       # @option params [Integer | nil] :per_page
       # @option params [bool | nil] :include_totals
@@ -144,9 +143,6 @@ module Seed
       # @option params [String | nil] :q
       # @option params [String | nil] :search_engine
       # @option params [String | nil] :fields
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::PaginatedUserResponse]
       def list_users(request_options: {}, **params)
@@ -185,12 +181,11 @@ module Seed
 
       # Get a user by ID
       #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [String] :user_id
       # @option params [String | nil] :fields
       # @option params [bool | nil] :include_fields
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::User]
       def get_user_by_id(request_options: {}, **params)
@@ -250,10 +245,9 @@ module Seed
 
       # Update a user
       #
-      # @option params [String] :user_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Types::Types::UpdateUserRequest]
+      # @option params [String] :user_id
       #
       # @return [Seed::Types::Types::User]
       def update_user(request_options: {}, **params)
@@ -279,10 +273,9 @@ module Seed
 
       # Delete a user
       #
-      # @option params [String] :user_id
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :user_id
       #
       # @return [untyped]
       def delete_user(request_options: {}, **params)
@@ -305,12 +298,11 @@ module Seed
 
       # List all connections
       #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [String | nil] :strategy
       # @option params [String | nil] :name
       # @option params [String | nil] :fields
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::Types::Types::Connection]]
       def list_connections(request_options: {}, **params)
@@ -342,11 +334,10 @@ module Seed
 
       # Get a connection by ID
       #
-      # @option params [String] :connection_id
-      # @option params [String | nil] :fields
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :connection_id
+      # @option params [String | nil] :fields
       #
       # @return [Seed::Types::Types::Connection]
       def get_connection(request_options: {}, **params)
@@ -378,6 +369,8 @@ module Seed
 
       # List all clients/applications
       #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [String | nil] :fields
       # @option params [bool | nil] :include_fields
       # @option params [Integer | nil] :page
@@ -386,9 +379,6 @@ module Seed
       # @option params [bool | nil] :is_global
       # @option params [bool | nil] :is_first_party
       # @option params [Array[String] | nil] :app_type
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::PaginatedClientResponse]
       def list_clients(request_options: {}, **params)
@@ -427,12 +417,11 @@ module Seed
 
       # Get a client by ID
       #
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [String] :client_id
       # @option params [String | nil] :fields
       # @option params [bool | nil] :include_fields
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::Client]
       def get_client(request_options: {}, **params)

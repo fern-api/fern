@@ -32,10 +32,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @option params [Integer] :limit
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
+      # @option params [Integer] :limit
       #
       # @return [Array[Seed::User::Types::User]]
       def list(request_options: {}, **params)

@@ -10,10 +10,9 @@ module Seed
         @client = client
       end
 
-      # @option params [Seed::Foo::Types::OptionalString] :optional_string
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Foo::Types::FindRequest]
+      # @option params [Seed::Foo::Types::OptionalString] :optional_string
       #
       # @return [Seed::Foo::Types::ImportingType]
       def find(request_options: {}, **params)

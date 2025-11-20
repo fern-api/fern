@@ -10,10 +10,9 @@ module Seed
         @client = client
       end
 
-      # @option params [Array[String]] :tags
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::User::Types::CreateUsernameRequest]
+      # @option params [Array[String]] :tags
       #
       # @return [untyped]
       def create_username(request_options: {}, **params)
@@ -45,10 +44,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @option params [Array[String]] :tags
-      #
       # @param request_options [Seed::RequestOptions]
       # @param params [Seed::User::Types::CreateUsernameBody]
+      # @option params [Array[String]] :tags
       #
       # @return [untyped]
       def create_username_with_referenced_type(request_options: {}, **params)
@@ -100,6 +98,8 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Seed::RequestOptions]
+      # @param params [Hash[untyped, untyped]]
       # @option params [Integer] :limit
       # @option params [String] :id
       # @option params [String] :date
@@ -116,9 +116,6 @@ module Seed
       # @option params [String] :filter
       # @option params [Integer] :long_param
       # @option params [String] :big_int_param
-      #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::User::Types::User]
       def get_username(request_options: {}, **params)
