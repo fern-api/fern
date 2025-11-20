@@ -276,24 +276,122 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 return;
             }
             const responseBodyType = getResponseBodyType({ context: this.context, body: responseBody });
-            // Unwrap pointer type to get base type for generic parameter
-            // (PayrocPager already has a pointer field, so we don't want *T in the generic)
-            const baseType = responseBodyType.isOptional() ? responseBodyType.underlying() : responseBodyType;
 
             // Extract response body
             writer.write("var responseBody ");
             writer.writeNode(responseBodyType);
             writer.write(" = response.Body");
             writer.newLine();
+            writer.newLine();
+
+            // Build error decoder if needed
+            const errorDecoder = this.buildErrorDecoder({ endpoint });
+            const hasErrorDecoder = errorDecoder != null && endpoint.errors.length > 0;
+
+            // Create fetcher function
+            writer.write("// Create a fetcher function that uses the raw client's caller to fetch pages");
+            writer.newLine();
+            writer.write("fetcher := func(ctx context.Context, href string) (");
+            writer.writeNode(responseBodyType);
+            writer.write(", error) {");
+            writer.newLine();
+            writer.indent();
+
+            // Create request options inside fetcher
+            writer.write("options := ");
+            writer.writeNode(
+                endpoint.idempotent
+                    ? this.context.callNewIdempotentRequestOptions(go.codeblock("opts..."))
+                    : this.context.callNewRequestOptions(go.codeblock("opts..."))
+            );
+            writer.newLine();
+
+            // Merge headers
+            writer.write("headers := ");
+            writer.writeNode(
+                this.context.callMergeHeaders([
+                    go.selector({
+                        on: this.getReceiverCodeBlock({ subpackage }),
+                        selector: go.codeblock("options.ToHeader()")
+                    }),
+                    go.codeblock("options.ToHeader()")
+                ])
+            );
+            writer.newLine();
+
+            // Create pageResponse variable
+            writer.write("var pageResponse ");
+            writer.writeNode(responseBodyType);
+            writer.newLine();
+
+            // Build error decoder if needed
+            if (hasErrorDecoder) {
+                writer.writeNode(errorDecoder);
+                writer.newLine();
+            }
+
+            // Call caller.Call
+            writer.write("_, err := ");
+            writer.writeNode(
+                go.selector({
+                    on: this.getCallerFieldReference({ subpackage }),
+                    selector: go.codeblock("Call")
+                })
+            );
+            writer.write("(");
+            writer.newLine();
+            writer.indent();
+            writer.write("ctx,");
+            writer.newLine();
+            writer.write("&internal.CallParams{");
+            writer.newLine();
+            writer.indent();
+            writer.write("URL:             href,");
+            writer.newLine();
+            writer.write(`Method:          "${endpoint.method}",`);
+            writer.newLine();
+            writer.write("Headers:         headers,");
+            writer.newLine();
+            writer.write("MaxAttempts:     options.MaxAttempts,");
+            writer.newLine();
+            writer.write("BodyProperties:  options.BodyProperties,");
+            writer.newLine();
+            writer.write("QueryParameters: options.QueryParameters,");
+            writer.newLine();
+            writer.write("Client:          options.HTTPClient,");
+            writer.newLine();
+            writer.write("Response:        &pageResponse,");
+            if (hasErrorDecoder) {
+                writer.newLine();
+                writer.write("ErrorDecoder:    internal.NewErrorDecoder(errorCodes),");
+            }
+            writer.newLine();
+            writer.dedent();
+            writer.write("},");
+            writer.newLine();
+            writer.dedent();
+            writer.write(")");
+            writer.newLine();
+            writer.writeLine("if err != nil {");
+            writer.indent();
+            writer.writeLine("return nil, err");
+            writer.dedent();
+            writer.writeLine("}");
+            writer.writeLine("return pageResponse, nil");
+            writer.dedent();
+            writer.writeLine("}");
+            writer.newLine();
+            writer.newLine();
 
             // Create pager
+            // Generic type constraints are implied by the function signature, so we don't need to specify them
             const customPagerName = this.context.customConfig.customPagerName ?? "CustomPager";
-            writer.write(`pager := core.New${customPagerName}[`);
-            writer.writeNode(baseType);
-            writer.write("](");
+            writer.write(`pager := core.New${customPagerName}(`);
             writer.newLine();
             writer.indent();
             writer.write("responseBody,");
+            writer.newLine();
+            writer.write("fetcher,");
             writer.newLine();
             writer.dedent();
             writer.write(")");
@@ -1138,7 +1236,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (signature.returnType == null) {
             return [go.Type.error()];
         }
-        if (this.context.isEnabledPaginationEndpoint(endpoint) && signature.pageReturnType != null) {
+        // Use pageReturnType for enabled pagination or custom pagination
+        const pagination = this.context.getPagination(endpoint);
+        const isCustomPagination = pagination?.type === "custom" && this.context.customConfig.customPagerName != null;
+        if (
+            (this.context.isEnabledPaginationEndpoint(endpoint) || isCustomPagination) &&
+            signature.pageReturnType != null
+        ) {
             return [signature.pageReturnType, go.Type.error()];
         }
         return [signature.returnType, go.Type.error()];

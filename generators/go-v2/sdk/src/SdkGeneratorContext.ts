@@ -22,6 +22,7 @@ import {
     Subpackage
 } from "@fern-fern/ir-sdk/api";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
+import { getEndpointPageReturnType } from "./endpoint/utils/getEndpointPageReturnType";
 import { GoGeneratorAgent } from "./GoGeneratorAgent";
 import { Caller } from "./internal/Caller";
 import { Streamer } from "./internal/Streamer";
@@ -791,27 +792,14 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
         const pagination = this.getPagination(httpEndpoint);
         if (pagination?.type === "custom" && this.customConfig.customPagerName != null) {
-            let baseResponseType: go.Type;
-            switch (responseBody.type) {
-                case "json":
-                    baseResponseType = this.goTypeMapper.convert({ reference: responseBody.value.responseBodyType });
-                    break;
-                case "fileDownload":
-                case "text":
-                    baseResponseType = go.Type.string();
-                    break;
-                case "bytes":
-                    throw new Error("Returning bytes is not supported");
-                case "streaming":
-                case "streamParameter":
-                    throw new Error("Custom pagination with streaming is not supported");
-                default:
-                    assertNever(responseBody);
+            // For custom pagination, delegate to getEndpointPageReturnType which handles all three generics
+            // This avoids code duplication and ensures consistency
+            const pageReturnType = getEndpointPageReturnType({ context: this, endpoint: httpEndpoint });
+            if (pageReturnType != null) {
+                return pageReturnType;
             }
-            // Unwrap pointer type to get base type for generic parameter
-            // (PayrocPager already has a pointer field, so we don't want *T in the generic)
-            const unwrappedType = baseResponseType.isOptional() ? baseResponseType.underlying() : baseResponseType;
-            return go.Type.pointer(go.Type.reference(this.getCustomPagerTypeReference(unwrappedType)));
+            // Fallback to error if pageReturnType is undefined
+            return go.Type.error();
         }
 
         switch (responseBody.type) {
