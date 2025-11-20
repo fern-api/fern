@@ -215,7 +215,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<
                     writer.writeLine();
                 }
 
-                writer.writeTextStatement("return [");
+                writer.writeLine("return [");
                 for (const header of this.authScheme.tokenEndpoint.authenticatedRequestHeaders) {
                     writer.write("    '");
                     writer.write(header.headerName);
@@ -224,7 +224,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<
                         writer.write(`'${header.valuePrefix}' . `);
                     }
                     writer.write(this.getResponsePropertyAccess("$response", header.responseProperty));
-                    writer.writeTextStatement(",");
+                    writer.writeLine(",");
                 }
                 writer.writeTextStatement("]");
             })
