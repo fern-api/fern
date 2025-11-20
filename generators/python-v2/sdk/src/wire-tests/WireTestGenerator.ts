@@ -101,6 +101,13 @@ export class WireTestGenerator {
     ): python.PythonFile {
         const statements: python.AstNode[] = [];
 
+        // Add raw imports that the AST doesn't support (simple "import X" statements)
+        statements.push(python.codeBlock("import pytest"));
+        statements.push(python.codeBlock("import requests"));
+
+        // Add an import registration statement (for "from X import Y" style imports)
+        statements.push(this.createImportRegistration());
+
         // Add setup fixture
         statements.push(this.generateSetupFixture());
 
@@ -120,6 +127,26 @@ export class WireTestGenerator {
             path: ["tests", "wire", `test_${serviceName}`],
             statements
         });
+    }
+
+    /**
+     * Creates a special node that registers imports without rendering anything.
+     * This is a workaround for using codeBlock while still getting automatic "from X import Y" imports.
+     */
+    private createImportRegistration(): python.AstNode {
+        // Create an empty code block
+        const node = python.codeBlock("");
+
+        // Manually add references for "from X import Y" style imports
+        // Note: simple "import X" statements are added as raw code blocks separately
+        node.addReference(python.reference({ name: "Optional", modulePath: ["typing"] }));
+        node.addReference(python.reference({ name: "Dict", modulePath: ["typing"] }));
+
+        const clientModulePath = this.getClientModulePath();
+        const clientName = this.getClientClassName();
+        node.addReference(python.reference({ name: clientName, modulePath: clientModulePath }));
+
+        return node;
     }
 
     // =============================================================================
@@ -218,13 +245,12 @@ export class WireTestGenerator {
             const testName = this.getTestFunctionName(serviceName, endpoint);
             const basePath = this.buildBasePath(endpoint);
             const queryParamsCode = this.buildQueryParamsCode(endpoint);
+            const clientName = this.getClientClassName();
 
             const statements: python.AstNode[] = [];
 
             // Create client
-            statements.push(
-                python.codeBlock(`client = ${this.context.config.organization}_${this.context.config.workspaceName}(base_url="http://localhost:8080")`)
-            );
+            statements.push(python.codeBlock(`client = ${clientName}(base_url="http://localhost:8080")`));
 
             // Generate the API call
             const apiCall = this.generateApiCall(endpoint, example);
@@ -385,6 +411,31 @@ export class WireTestGenerator {
     private getTestFunctionName(serviceName: string, endpoint: HttpEndpoint): string {
         const endpointName = endpoint.name.snakeCase.safeName;
         return `test_${serviceName}_${endpointName}`;
+    }
+
+    private getClientModulePath(): string[] {
+        // The client is typically at the root of the package
+        // For seed_exhaustive, it would be just ["seed"]
+        const orgName = this.context.config.organization;
+        const workspaceName = this.context.config.workspaceName;
+        return [orgName, workspaceName];
+    }
+
+    private getClientClassName(): string {
+        // The client class name follows the pattern: OrganizationWorkspace
+        // For seed_exhaustive, it would be SeedExhaustive
+        const orgName = this.context.config.organization;
+        const workspaceName = this.context.config.workspaceName;
+
+        // Convert to PascalCase
+        const toPascalCase = (str: string) => {
+            return str
+                .split(/[-_]/)
+                .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+                .join("");
+        };
+
+        return toPascalCase(orgName) + toPascalCase(workspaceName);
     }
 
     // =============================================================================

@@ -1,3 +1,12 @@
+from typing import Optional, Dict
+from seed.exhaustive import SeedExhaustive
+
+import pytest
+
+import requests
+
+
+
 @pytest.fixture(autouse=True)
 def setup_client() -> None:
     """Reset WireMock before each test"""
@@ -33,7 +42,7 @@ def verify_request_count(
 @pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_string() -> None:
     """Test getAndReturnString endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_string()
     verify_request_count("POST", "/primitive/string", None, 1)
 
@@ -41,7 +50,7 @@ def test_endpoints_primitive_get_and_return_string() -> None:
 @pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_int() -> None:
     """Test getAndReturnInt endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_int()
     verify_request_count("POST", "/primitive/integer", None, 1)
 
@@ -49,7 +58,7 @@ def test_endpoints_primitive_get_and_return_int() -> None:
 @pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_long() -> None:
     """Test getAndReturnLong endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_long()
     verify_request_count("POST", "/primitive/long", None, 1)
 
@@ -57,7 +66,7 @@ def test_endpoints_primitive_get_and_return_long() -> None:
 @pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_double() -> None:
     """Test getAndReturnDouble endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_double()
     verify_request_count("POST", "/primitive/double", None, 1)
 
@@ -65,7 +74,7 @@ def test_endpoints_primitive_get_and_return_double() -> None:
 @pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_bool() -> None:
     """Test getAndReturnBool endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_bool()
     verify_request_count("POST", "/primitive/boolean", None, 1)
 
@@ -73,7 +82,7 @@ def test_endpoints_primitive_get_and_return_bool() -> None:
 @pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_datetime() -> None:
     """Test getAndReturnDatetime endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_datetime()
     verify_request_count("POST", "/primitive/datetime", None, 1)
 
@@ -81,7 +90,7 @@ def test_endpoints_primitive_get_and_return_datetime() -> None:
 @pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_date() -> None:
     """Test getAndReturnDate endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_date()
     verify_request_count("POST", "/primitive/date", None, 1)
 
@@ -89,7 +98,7 @@ def test_endpoints_primitive_get_and_return_date() -> None:
 @pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_uuid() -> None:
     """Test getAndReturnUUID endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_uuid()
     verify_request_count("POST", "/primitive/uuid", None, 1)
 
@@ -97,7 +106,7 @@ def test_endpoints_primitive_get_and_return_uuid() -> None:
 @pytest.mark.asyncio
 def test_endpoints_primitive_get_and_return_base_64() -> None:
     """Test getAndReturnBase64 endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_base_64()
     verify_request_count("POST", "/primitive/base64", None, 1)
 

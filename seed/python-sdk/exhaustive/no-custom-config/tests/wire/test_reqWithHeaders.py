@@ -1,3 +1,12 @@
+from typing import Optional, Dict
+from seed.exhaustive import SeedExhaustive
+
+import pytest
+
+import requests
+
+
+
 @pytest.fixture(autouse=True)
 def setup_client() -> None:
     """Reset WireMock before each test"""
@@ -33,7 +42,7 @@ def verify_request_count(
 @pytest.mark.asyncio
 def test_reqWithHeaders_get_with_custom_header() -> None:
     """Test getWithCustomHeader endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_with_custom_header()
     verify_request_count("POST", "/test-headers/custom-header", None, 1)
 

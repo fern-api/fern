@@ -1,3 +1,12 @@
+from typing import Optional, Dict
+from seed.exhaustive import SeedExhaustive
+
+import pytest
+
+import requests
+
+
+
 @pytest.fixture(autouse=True)
 def setup_client() -> None:
     """Reset WireMock before each test"""
@@ -33,7 +42,7 @@ def verify_request_count(
 @pytest.mark.asyncio
 def test_endpoints_params_get_with_path() -> None:
     """Test getWithPath endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_with_path("param")
     verify_request_count("GET", "/params/path/param", None, 1)
 
@@ -41,7 +50,7 @@ def test_endpoints_params_get_with_path() -> None:
 @pytest.mark.asyncio
 def test_endpoints_params_get_with_inline_path() -> None:
     """Test getWithInlinePath endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_with_inline_path("param")
     verify_request_count("GET", "/params/path/param", None, 1)
 
@@ -49,7 +58,7 @@ def test_endpoints_params_get_with_inline_path() -> None:
 @pytest.mark.asyncio
 def test_endpoints_params_get_with_query() -> None:
     """Test getWithQuery endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_with_query(query="query", number=1)
     verify_request_count("GET", "/params", {"query": "query", "number": "1"}, 1)
 
@@ -57,7 +66,7 @@ def test_endpoints_params_get_with_query() -> None:
 @pytest.mark.asyncio
 def test_endpoints_params_get_with_allow_multiple_query() -> None:
     """Test getWithAllowMultipleQuery endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_with_allow_multiple_query(query="query", number=1)
     verify_request_count("GET", "/params", {"query": "query", "number": "1"}, 1)
 
@@ -65,7 +74,7 @@ def test_endpoints_params_get_with_allow_multiple_query() -> None:
 @pytest.mark.asyncio
 def test_endpoints_params_get_with_path_and_query() -> None:
     """Test getWithPathAndQuery endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_with_path_and_query("param", query="query")
     verify_request_count("GET", "/params/path-query/param", {"query": "query"}, 1)
 
@@ -73,7 +82,7 @@ def test_endpoints_params_get_with_path_and_query() -> None:
 @pytest.mark.asyncio
 def test_endpoints_params_get_with_inline_path_and_query() -> None:
     """Test getWithInlinePathAndQuery endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_with_inline_path_and_query("param", query="query")
     verify_request_count("GET", "/params/path-query/param", {"query": "query"}, 1)
 
@@ -81,7 +90,7 @@ def test_endpoints_params_get_with_inline_path_and_query() -> None:
 @pytest.mark.asyncio
 def test_endpoints_params_modify_with_path() -> None:
     """Test modifyWithPath endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.modify_with_path("param")
     verify_request_count("PUT", "/params/path/param", None, 1)
 
@@ -89,7 +98,7 @@ def test_endpoints_params_modify_with_path() -> None:
 @pytest.mark.asyncio
 def test_endpoints_params_modify_with_inline_path() -> None:
     """Test modifyWithInlinePath endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.modify_with_inline_path("param")
     verify_request_count("PUT", "/params/path/param", None, 1)
 

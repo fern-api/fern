@@ -1,3 +1,12 @@
+from typing import Optional, Dict
+from seed.exhaustive import SeedExhaustive
+
+import pytest
+
+import requests
+
+
+
 @pytest.fixture(autouse=True)
 def setup_client() -> None:
     """Reset WireMock before each test"""
@@ -33,7 +42,7 @@ def verify_request_count(
 @pytest.mark.asyncio
 def test_noAuth_post_with_no_auth() -> None:
     """Test postWithNoAuth endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.post_with_no_auth(request={"key":"value"})
     verify_request_count("POST", "/no-auth", None, 1)
 

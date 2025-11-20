@@ -1,3 +1,12 @@
+from typing import Optional, Dict
+from seed.exhaustive import SeedExhaustive
+
+import pytest
+
+import requests
+
+
+
 @pytest.fixture(autouse=True)
 def setup_client() -> None:
     """Reset WireMock before each test"""
@@ -33,7 +42,7 @@ def verify_request_count(
 @pytest.mark.asyncio
 def test_endpoints_urls_with_mixed_case() -> None:
     """Test withMixedCase endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.with_mixed_case()
     verify_request_count("GET", "/urls/MixedCase", None, 1)
 
@@ -41,7 +50,7 @@ def test_endpoints_urls_with_mixed_case() -> None:
 @pytest.mark.asyncio
 def test_endpoints_urls_no_ending_slash() -> None:
     """Test noEndingSlash endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.no_ending_slash()
     verify_request_count("GET", "/urls/no-ending-slash", None, 1)
 
@@ -49,7 +58,7 @@ def test_endpoints_urls_no_ending_slash() -> None:
 @pytest.mark.asyncio
 def test_endpoints_urls_with_ending_slash() -> None:
     """Test withEndingSlash endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.with_ending_slash()
     verify_request_count("GET", "/urls/with-ending-slash/", None, 1)
 
@@ -57,7 +66,7 @@ def test_endpoints_urls_with_ending_slash() -> None:
 @pytest.mark.asyncio
 def test_endpoints_urls_with_underscores() -> None:
     """Test withUnderscores endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.with_underscores()
     verify_request_count("GET", "/urls/with_underscores", None, 1)
 

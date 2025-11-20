@@ -1,3 +1,12 @@
+from typing import Optional, Dict
+from seed.exhaustive import SeedExhaustive
+
+import pytest
+
+import requests
+
+
+
 @pytest.fixture(autouse=True)
 def setup_client() -> None:
     """Reset WireMock before each test"""
@@ -33,7 +42,7 @@ def verify_request_count(
 @pytest.mark.asyncio
 def test_endpoints_container_get_and_return_list_of_primitives() -> None:
     """Test getAndReturnListOfPrimitives endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_list_of_primitives(request=["string","string"])
     verify_request_count("POST", "/container/list-of-primitives", None, 1)
 
@@ -41,7 +50,7 @@ def test_endpoints_container_get_and_return_list_of_primitives() -> None:
 @pytest.mark.asyncio
 def test_endpoints_container_get_and_return_list_of_objects() -> None:
     """Test getAndReturnListOfObjects endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_list_of_objects(request=[{"string":"string"},{"string":"string"}])
     verify_request_count("POST", "/container/list-of-objects", None, 1)
 
@@ -49,7 +58,7 @@ def test_endpoints_container_get_and_return_list_of_objects() -> None:
 @pytest.mark.asyncio
 def test_endpoints_container_get_and_return_set_of_primitives() -> None:
     """Test getAndReturnSetOfPrimitives endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_set_of_primitives(request=["string"])
     verify_request_count("POST", "/container/set-of-primitives", None, 1)
 
@@ -57,7 +66,7 @@ def test_endpoints_container_get_and_return_set_of_primitives() -> None:
 @pytest.mark.asyncio
 def test_endpoints_container_get_and_return_set_of_objects() -> None:
     """Test getAndReturnSetOfObjects endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_set_of_objects(request=[{"string":"string"}])
     verify_request_count("POST", "/container/set-of-objects", None, 1)
 
@@ -65,7 +74,7 @@ def test_endpoints_container_get_and_return_set_of_objects() -> None:
 @pytest.mark.asyncio
 def test_endpoints_container_get_and_return_map_prim_to_prim() -> None:
     """Test getAndReturnMapPrimToPrim endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_map_prim_to_prim(request={"string":"string"})
     verify_request_count("POST", "/container/map-prim-to-prim", None, 1)
 
@@ -73,7 +82,7 @@ def test_endpoints_container_get_and_return_map_prim_to_prim() -> None:
 @pytest.mark.asyncio
 def test_endpoints_container_get_and_return_map_of_prim_to_object() -> None:
     """Test getAndReturnMapOfPrimToObject endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_map_of_prim_to_object(request={"string":{"string":"string"}})
     verify_request_count("POST", "/container/map-prim-to-object", None, 1)
 
@@ -81,7 +90,7 @@ def test_endpoints_container_get_and_return_map_of_prim_to_object() -> None:
 @pytest.mark.asyncio
 def test_endpoints_container_get_and_return_optional() -> None:
     """Test getAndReturnOptional endpoint with WireMock"""
-    client = seed_exhaustive(base_url="http://localhost:8080")
+    client = SeedExhaustive(base_url="http://localhost:8080")
     result = client.get_and_return_optional(request={"string":"string"})
     verify_request_count("POST", "/container/opt-objects", None, 1)
 
