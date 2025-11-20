@@ -16,6 +16,7 @@ import {
     ImportsManager,
     NpmPackage,
     Reference,
+    removeUndefinedAndNullFromTypeNode,
     TypeReferenceNode
 } from "@fern-typescript/commons";
 import { BaseContext, GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
@@ -626,9 +627,10 @@ export class TypeContextImpl implements TypeContext {
                 ? responseType
                 : this.getReferenceToType(rootNotInlinePropertyPathItem.type).typeNode;
         for (const inlinePropertyPathItem of inlinePropertyPathItems) {
+            const parentTypeName = getTextOfTsNode(removeUndefinedAndNullFromTypeNode(currentParentTypeNode));
             const ref = this.getReferenceToInlinePropertyType(
                 inlinePropertyPathItem.type,
-                getTextOfTsNode(currentParentTypeNode),
+                parentTypeName,
                 inlinePropertyPathItem.name.pascalCase.safeName
             );
             currentParentTypeNode = ref.responseTypeNode ?? ref.typeNode;
