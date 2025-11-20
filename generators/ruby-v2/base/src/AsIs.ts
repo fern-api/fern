@@ -2,8 +2,6 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import path from "path";
 
 export const AsIsFiles = {
-    GithubCiYml: "github-ci.yml",
-
     // Public-facing error classes
     ApiError: "errors/api_error.Template.rb",
     ClientError: "errors/client_error.Template.rb",

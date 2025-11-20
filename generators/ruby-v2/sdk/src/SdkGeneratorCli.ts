@@ -1,7 +1,7 @@
 import { File, GeneratorNotificationService } from "@fern-api/base-generator";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { loggingExeca } from "@fern-api/logging-execa";
-import { AbstractRubyGeneratorCli, AsIsFiles, getAsIsFilepath } from "@fern-api/ruby-base";
+import { AbstractRubyGeneratorCli, getAsIsFilepath } from "@fern-api/ruby-base";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
 import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
@@ -240,18 +240,19 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         }
 
         const gemName = context.getRootFolderName();
-        const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.GithubCiYml))).toString();
+        const githubWorkflowTemplate = (await readFile(getAsIsFilepath("github-ci.yml"))).toString();
 
         let shouldWritePublishBlock = false;
         let registryUrl = "https://rubygems.org";
-        let gemHostApiKeyEnvVar = "RUBYGEMS_AUTH_TOKEN";
+        let gemHostApiKeySecret = "";
 
         if (outputMode.publishInfo != null) {
             const publishInfo = outputMode.publishInfo;
             if (publishInfo.type === "rubygems") {
                 shouldWritePublishBlock = true;
                 registryUrl = publishInfo.registryUrl;
-                gemHostApiKeyEnvVar = publishInfo.apiKeyEnvironmentVariable ?? "RUBYGEMS_AUTH_TOKEN";
+                const gemHostApiKeyEnvVar = publishInfo.apiKeyEnvironmentVariable ?? "RUBYGEMS_AUTH_TOKEN";
+                gemHostApiKeySecret = `\${{ secrets.${gemHostApiKeyEnvVar} }}`;
             }
         }
 
@@ -259,7 +260,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             gemName,
             shouldWritePublishBlock,
             registryUrl,
-            gemHostApiKeyEnvVar
+            gemHostApiKeySecret
         });
 
         const ghDir = join(

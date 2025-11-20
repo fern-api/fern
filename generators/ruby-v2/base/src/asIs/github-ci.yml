@@ -62,7 +62,7 @@ jobs:
 
       - name: Build and publish gem
         env:
-          GEM_HOST_API_KEY: ${{ secrets.<%= gemHostApiKeyEnvVar %> }}
+          GEM_HOST_API_KEY: <%= gemHostApiKeySecret %>
         run: |
           gem build <%= gemName %>.gemspec
           gem push <%= gemName %>-*.gem --host <%= registryUrl %>
