@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.38.3
+- version: 4.38.3-rc0
   changelogEntry:
     - summary: Add support for custom pagination
       type: feat
