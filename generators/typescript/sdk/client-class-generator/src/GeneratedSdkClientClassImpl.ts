@@ -870,7 +870,24 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 true
                             )
                         ]
-                      : [];
+                      : this.bearerAuthScheme != null
+                        ? [
+                              ts.factory.createObjectLiteralExpression(
+                                  [
+                                      ts.factory.createPropertyAssignment(
+                                          ts.factory.createIdentifier(this.bearerAuthScheme.token.camelCase.safeName),
+                                          ts.factory.createPropertyAccessExpression(
+                                              ts.factory.createIdentifier("this._options"),
+                                              ts.factory.createIdentifier(
+                                                  this.getBearerAuthOptionKey(this.bearerAuthScheme)
+                                              )
+                                          )
+                                      )
+                                  ],
+                                  true
+                              )
+                          ]
+                        : [];
             const statements = code`
                 ${this.getCtorOptionsStatements(context)}
                 ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = ${getTextOfTsNode(
@@ -1856,6 +1873,28 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         if (!this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
             statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier("undefined")));
+        } else {
+            statements.push(
+                ts.factory.createThrowStatement(
+                    ts.factory.createNewExpression(
+                        context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression(),
+                        undefined,
+                        [
+                            ts.factory.createObjectLiteralExpression(
+                                [
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier("message"),
+                                        ts.factory.createStringLiteral(
+                                            "Authorization is required but no auth header is available."
+                                        )
+                                    )
+                                ],
+                                false
+                            )
+                        ]
+                    )
+                )
+            );
         }
 
         return statements;
