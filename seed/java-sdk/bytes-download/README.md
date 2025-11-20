@@ -1,7 +1,7 @@
 # Seed Java Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FJava)
-[![Maven Central](https://img.shields.io/maven-central/v/com.fern/bytes-upload)](https://central.sonatype.com/artifact/com.fern/bytes-upload)
+[![Maven Central](https://img.shields.io/maven-central/v/com.fern/bytes-download)](https://central.sonatype.com/artifact/com.fern/bytes-download)
 
 The Seed Java library provides convenient access to the Seed APIs from Java.
 
@@ -28,7 +28,7 @@ Add the dependency in your `build.gradle` file:
 
 ```groovy
 dependencies {
-  implementation 'com.fern:bytes-upload'
+  implementation 'com.fern:bytes-download'
 }
 ```
 
@@ -39,7 +39,7 @@ Add the dependency in your `pom.xml` file:
 ```xml
 <dependency>
   <groupId>com.fern</groupId>
-  <artifactId>bytes-upload</artifactId>
+  <artifactId>bytes-download</artifactId>
   <version>0.0.1</version>
 </dependency>
 ```
@@ -55,15 +55,15 @@ Instantiate and use the client with the following:
 ```java
 package com.example.usage;
 
-import com.seed.bytesUpload.SeedBytesUploadClient;
+import com.seed.bytesDownload.SeedBytesDownloadClient;
 
 public class Example {
     public static void main(String[] args) {
-        SeedBytesUploadClient client = SeedBytesUploadClient
+        SeedBytesDownloadClient client = SeedBytesDownloadClient
             .builder()
             .build();
 
-        client.service().upload("".getBytes());
+        client.service().simple();
     }
 }
 ```
@@ -73,9 +73,9 @@ public class Example {
 You can set a custom base URL when constructing the client.
 
 ```java
-import com.seed.bytesUpload.SeedBytesUploadClient;
+import com.seed.bytesDownload.SeedBytesDownloadClient;
 
-SeedBytesUploadClient client = SeedBytesUploadClient
+SeedBytesDownloadClient client = SeedBytesDownloadClient
     .builder()
     .url("https://example.com")
     .build();
@@ -86,11 +86,11 @@ SeedBytesUploadClient client = SeedBytesUploadClient
 When the API returns a non-success status code (4xx or 5xx response), an API exception will be thrown.
 
 ```java
-import com.seed.bytesUpload.core.SeedBytesUploadApiException;
+import com.seed.bytesDownload.core.SeedBytesDownloadApiException;
 
 try{
-    client.service().upload(...);
-} catch (SeedBytesUploadApiException e){
+    client.service().simple(...);
+} catch (SeedBytesDownloadApiException e){
     // Do something with the API exception...
 }
 ```
@@ -103,12 +103,12 @@ This SDK is built to work with any instance of `OkHttpClient`. By default, if no
 However, you can pass your own client like so:
 
 ```java
-import com.seed.bytesUpload.SeedBytesUploadClient;
+import com.seed.bytesDownload.SeedBytesDownloadClient;
 import okhttp3.OkHttpClient;
 
 OkHttpClient customClient = ...;
 
-SeedBytesUploadClient client = SeedBytesUploadClient
+SeedBytesDownloadClient client = SeedBytesDownloadClient
     .builder()
     .httpClient(customClient)
     .build();
@@ -131,9 +131,9 @@ A request is deemed retryable when any of the following HTTP status codes is ret
 Use the `maxRetries` client option to configure this behavior.
 
 ```java
-import com.seed.bytesUpload.SeedBytesUploadClient;
+import com.seed.bytesDownload.SeedBytesDownloadClient;
 
-SeedBytesUploadClient client = SeedBytesUploadClient
+SeedBytesDownloadClient client = SeedBytesDownloadClient
     .builder()
     .maxRetries(1)
     .build();
@@ -144,17 +144,17 @@ SeedBytesUploadClient client = SeedBytesUploadClient
 The SDK defaults to a 60 second timeout. You can configure this with a timeout option at the client or request level.
 
 ```java
-import com.seed.bytesUpload.SeedBytesUploadClient;
-import com.seed.bytesUpload.core.RequestOptions;
+import com.seed.bytesDownload.SeedBytesDownloadClient;
+import com.seed.bytesDownload.core.RequestOptions;
 
 // Client level
-SeedBytesUploadClient client = SeedBytesUploadClient
+SeedBytesDownloadClient client = SeedBytesDownloadClient
     .builder()
     .timeout(10)
     .build();
 
 // Request level
-client.service().upload(
+client.service().simple(
     ...,
     RequestOptions
         .builder()
@@ -168,11 +168,11 @@ client.service().upload(
 The SDK allows you to add custom headers to requests. You can configure headers at the client level or at the request level.
 
 ```java
-import com.seed.bytesUpload.SeedBytesUploadClient;
-import com.seed.bytesUpload.core.RequestOptions;
+import com.seed.bytesDownload.SeedBytesDownloadClient;
+import com.seed.bytesDownload.core.RequestOptions;
 
 // Client level
-SeedBytesUploadClient client = SeedBytesUploadClient
+SeedBytesDownloadClient client = SeedBytesDownloadClient
     .builder()
     .addHeader("X-Custom-Header", "custom-value")
     .addHeader("X-Request-Id", "abc-123")
@@ -180,7 +180,7 @@ SeedBytesUploadClient client = SeedBytesUploadClient
 ;
 
 // Request level
-client.service().upload(
+client.service().simple(
     ...,
     RequestOptions
         .builder()
@@ -196,7 +196,7 @@ The `withRawResponse()` method returns a raw client that wraps all responses wit
 (A normal client's `response` is identical to a raw client's `response.body()`.)
 
 ```java
-UploadHttpResponse response = client.service().withRawResponse().upload(...);
+SimpleHttpResponse response = client.service().withRawResponse().simple(...);
 
 System.out.println(response.body());
 System.out.println(response.headers().get("X-My-Header"));
