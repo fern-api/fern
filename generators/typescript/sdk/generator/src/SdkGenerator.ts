@@ -19,6 +19,7 @@ import {
     BundledTypescriptProject,
     CoreUtilitiesManager,
     DependencyManager,
+    DependencyType,
     ExportedDirectory,
     ExportedFilePath,
     ExportsManager,
@@ -35,6 +36,7 @@ import { BaseClientContext, GeneratorContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
 import { EnvironmentsGenerator } from "@fern-typescript/environments-generator";
 import { GenericAPISdkErrorGenerator, TimeoutSdkErrorGenerator } from "@fern-typescript/generic-sdk-error-generators";
+import { ReactQueryHooksGenerator, ReactQueryProviderGenerator } from "@fern-typescript/react-query-generator";
 import { RequestWrapperGenerator } from "@fern-typescript/request-wrapper-generator";
 import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/resolvers";
 import {
@@ -160,6 +162,7 @@ export declare namespace SdkGenerator {
         formatter: "prettier" | "biome" | "oxfmt";
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
+        generateReactQueryHooks: boolean;
     }
 }
 
@@ -231,6 +234,8 @@ export class SdkGenerator {
     private readonly asIsManager: AsIsManager;
     private websocketSocketDeclarationReferencer: WebsocketSocketDeclarationReferencer;
     private websocketTypeSchemaDeclarationReferencer: WebsocketTypeSchemaDeclarationReferencer;
+    private reactQueryHooksGenerator: ReactQueryHooksGenerator | undefined;
+    private reactQueryProviderGenerator: ReactQueryProviderGenerator | undefined;
 
     private rootDirectoryPath: string;
     private defaultSrcDirectory: string;
@@ -549,6 +554,19 @@ export class SdkGenerator {
             namespaceExport,
             packageResolver: this.packageResolver
         });
+
+        if (config.generateReactQueryHooks) {
+            this.reactQueryHooksGenerator = new ReactQueryHooksGenerator({
+                intermediateRepresentation,
+                packageResolver: this.packageResolver,
+                namespaceExport
+            });
+            this.reactQueryProviderGenerator = new ReactQueryProviderGenerator({
+                intermediateRepresentation,
+                namespaceExport,
+                clientClassName: `${namespaceExport}Client`
+            });
+        }
     }
 
     public async generate(): Promise<TypescriptProject> {
@@ -623,6 +641,11 @@ export class SdkGenerator {
                 packagePathDirectory: this.packagePathDirectory
             });
             versionFileGenerator.generate();
+        }
+
+        if (this.config.generateReactQueryHooks) {
+            this.generateReactQueryHooks();
+            this.context.logger.debug("Generated React Query hooks");
         }
 
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
@@ -1810,5 +1833,55 @@ export class SdkGenerator {
                 }
             });
         }
+    }
+
+    private generateReactQueryHooks(): void {
+        if (!this.reactQueryHooksGenerator || !this.reactQueryProviderGenerator) {
+            return;
+        }
+
+        // Create react-query directory
+        const reactQueryDirectory = this.packagePathDirectory.createDirectory("react-query");
+
+        this.withSourceFile({
+            filepath: {
+                directories: [{ nameOnDisk: "react-query", exportDeclaration: { exportAll: true } }],
+                file: { nameOnDisk: "index.ts" }
+            },
+            run: ({ sourceFile, importsManager }) => {
+                this.reactQueryProviderGenerator?.generateProvider({
+                    file: sourceFile,
+                    importsManager
+                });
+            }
+        });
+
+        this.forEachService((service, packageId) => {
+            const serviceName = service.name.fernFilepath.allParts.map((part) => part.camelCase.safeName).join("");
+
+            this.withSourceFile({
+                filepath: {
+                    directories: [{ nameOnDisk: "react-query", exportDeclaration: { exportAll: true } }],
+                    file: { nameOnDisk: `${serviceName || "service"}.ts` }
+                },
+                run: ({ sourceFile, importsManager }) => {
+                    this.reactQueryHooksGenerator?.generateHooksForService({
+                        service,
+                        packageId,
+                        file: sourceFile,
+                        importsManager,
+                        exportsManager: this.exportsManager,
+                        context: this.generateSdkContext({ sourceFile, importsManager })
+                    });
+                }
+            });
+        });
+
+        this.exportsManager.addExportsForDirectories([
+            { nameOnDisk: "react-query", exportDeclaration: { exportAll: true } }
+        ]);
+
+        this.dependencyManager.addDependency("@tanstack/react-query", "^5.0.0", { type: DependencyType.PEER });
+        this.dependencyManager.addDependency("react", "^18.0.0", { type: DependencyType.PEER });
     }
 }

@@ -1,0 +1,28 @@
+{
+  "extends": "../../../../tsconfig.base.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "./lib",
+    "rootDir": "./src"
+  },
+  "include": [
+    "./src"
+  ],
+  "references": [
+    {
+      "path": "../../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../../../packages/ir-sdk"
+    },
+    {
+      "path": "../../utils/commons"
+    },
+    {
+      "path": "../../utils/contexts"
+    },
+    {
+      "path": "../../utils/resolvers"
+    }
+  ]
+}

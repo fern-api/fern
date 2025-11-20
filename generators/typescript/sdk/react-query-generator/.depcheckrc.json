@@ -1,0 +1,10 @@
+{
+    "ignores": [
+        "@types/*",
+        "depcheck",
+        "organize-imports-cli",
+        "prettier",
+        "typescript",
+        "vitest"
+    ]
+}

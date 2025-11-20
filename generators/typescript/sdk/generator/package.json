@@ -43,6 +43,7 @@
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/endpoint-error-union-generator": "workspace:*",
     "@fern-typescript/environments-generator": "workspace:*",
+    "@fern-typescript/react-query-generator": "workspace:*",
     "@fern-typescript/generic-sdk-error-generators": "workspace:*",
     "@fern-typescript/request-wrapper-generator": "workspace:*",
     "@fern-typescript/resolvers": "workspace:*",
