@@ -1,6 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix CLI build script to read runtime dependencies from both dependencies and devDependencies sections, preventing missing dependencies in published packages. Adds validation to fail the build if required dependencies are not found.
+      type: fix
+    - summary: |
+        Add `fern upgrade` command to live-test script to ensure upgrade functionality is tested before publishing.
+      type: fix
+    - summary: |
+        Update live-test to test the actual published tarball in a production-like environment, catching packaging issues that only manifest when users install from npm.
+      type: fix
+    - summary: |
+        Re-enable gating so live-test must pass before publishing to production, preventing faulty CLI versions from being released.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.0.4
+
+- changelogEntry:
+    - summary: |
         Updates CLI dependencies to fix `fern` commands.
       type: fix
   irVersion: 61
