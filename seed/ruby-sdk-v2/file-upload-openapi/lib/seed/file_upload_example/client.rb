@@ -13,7 +13,6 @@ module Seed
       # Upload a file to the database
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [void]
       #
       # @return [String]

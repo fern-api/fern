@@ -11,7 +11,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Simple::Types::FooRequest]
       #
       # @return [Seed::Simple::Types::FooResponse]
@@ -37,7 +36,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Simple::Types::FooRequest]
       #
       # @return [Seed::Simple::Types::FooResponse]
@@ -63,7 +61,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Simple::Types::FooRequest]
       #
       # @return [Seed::Simple::Types::FooResponse]

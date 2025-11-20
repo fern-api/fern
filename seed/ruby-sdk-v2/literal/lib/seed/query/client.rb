@@ -11,8 +11,16 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
+      # @option params [String] :prompt
+      # @option params [String | nil] :optional_prompt
+      # @option params [Seed::Query::Types::AliasToPrompt] :alias_prompt
+      # @option params [String | nil] :alias_optional_prompt
+      # @option params [String] :query
+      # @option params [bool] :stream
+      # @option params [bool | nil] :optional_stream
+      # @option params [Seed::Query::Types::AliasToStream] :alias_stream
+      # @option params [bool | nil] :alias_optional_stream
       #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)

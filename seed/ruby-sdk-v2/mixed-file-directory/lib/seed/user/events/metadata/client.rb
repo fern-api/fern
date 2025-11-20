@@ -15,8 +15,8 @@ module Seed
           # Get event metadata.
           #
           # @param request_options [Seed::RequestOptions]
-          #
           # @param params [Hash[untyped, untyped]]
+          # @option params [Seed::Types::Id] :id
           #
           # @return [Seed::User::Events::Metadata::Types::Metadata]
           def get_metadata(request_options: {}, **params)

@@ -1,3 +1,11 @@
+- version: 3.18.1
+  changelogEntry:
+    - summary: |
+        Fix bytes response support and snippet generation. Bytes responses now return `byte[]` instead of throwing exceptions. Empty bytes request bodies in snippets now generate valid default arguments.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 3.18.0
   changelogEntry:
     - summary: |

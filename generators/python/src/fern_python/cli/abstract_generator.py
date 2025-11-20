@@ -469,7 +469,8 @@ jobs:
       name: pypi
       url: https://pypi.org/p/${{{{ github.event.repository.name }}}}
     permissions:
-      id-token: write
+      contents: read   # Required for checkout
+      id-token: write  # Required for OIDC
     steps:
       - name: Download all the dists
         uses: actions/download-artifact@v4

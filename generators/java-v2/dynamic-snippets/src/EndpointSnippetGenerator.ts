@@ -533,6 +533,9 @@ export class EndpointSnippetGenerator {
     }
 
     private getBytesBodyRequestArg({ value }: { value: unknown }): java.TypeLiteral {
+        if (value === undefined || value === null) {
+            return java.TypeLiteral.bytes("");
+        }
         if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,

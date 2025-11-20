@@ -71,6 +71,9 @@ export class HttpEndpointGenerator {
 
         let requestStatements = this.generateRequestProcedure({ endpoint, sendRequestCodeBlock });
 
+        const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
+        const splatOptionDocs = this.generateSplatOptionDocs({ endpoint });
+
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
                 case "custom":
@@ -164,7 +167,7 @@ export class HttpEndpointGenerator {
 
         return ruby.method({
             name: endpoint.name.snakeCase.safeName,
-            docstring: endpoint.docs,
+            docstring: enhancedDocstring,
             returnType,
             parameters: {
                 keyword: [
@@ -179,6 +182,7 @@ export class HttpEndpointGenerator {
                     type: request?.getParameterType() ?? ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped())
                 })
             },
+            splatOptionDocs,
             statements
         });
     }
@@ -291,5 +295,51 @@ export class HttpEndpointGenerator {
             default:
                 break;
         }
+    }
+
+    private generateEnhancedDocstring({
+        endpoint
+    }: {
+        endpoint: HttpEndpoint;
+        request: ReturnType<typeof getEndpointRequest>;
+    }): string {
+        return endpoint.docs ?? "";
+    }
+
+    private generateSplatOptionDocs({ endpoint }: { endpoint: HttpEndpoint }): string[] {
+        const optionTags: string[] = [];
+
+        for (const pathParam of endpoint.allPathParameters) {
+            const paramName = pathParam.name.snakeCase.safeName;
+            const typeString = this.typeReferenceToYardString(pathParam.valueType);
+            optionTags.push(`@option params [${typeString}] :${paramName}`);
+        }
+
+        for (const queryParam of endpoint.queryParameters) {
+            const paramName = queryParam.name.name.snakeCase.safeName;
+            const typeString = this.typeReferenceToYardString(queryParam.valueType);
+            optionTags.push(`@option params [${typeString}] :${paramName}`);
+        }
+
+        for (const headerParam of endpoint.headers) {
+            const paramName = headerParam.name.name.snakeCase.safeName;
+            const typeString = this.typeReferenceToYardString(headerParam.valueType);
+            optionTags.push(`@option params [${typeString}] :${paramName}`);
+        }
+
+        return optionTags;
+    }
+
+    private typeReferenceToYardString(typeReference: TypeReference): string {
+        if (typeReference.type === "named") {
+            const classRef = this.context.getClassReferenceForTypeId(typeReference.typeId);
+            const modules = classRef.modules.length > 0 ? `${classRef.modules.join("::")}::` : "";
+            return `${modules}${classRef.name}`;
+        }
+
+        const rubyType = this.context.typeMapper.convert({ reference: typeReference });
+        const writer = new ruby.Writer({ customConfig: this.context.customConfig });
+        rubyType.writeTypeDefinition(writer);
+        return writer.toString();
     }
 }
