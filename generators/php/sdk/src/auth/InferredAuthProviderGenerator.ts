@@ -205,6 +205,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<
             body: php.codeblock((writer) => {
                 const requestClassName = this.getRequestClassName();
                 
+                writer.writeLine("/** @phpstan-ignore-next-line */");
                 writer.write("$request = new ");
                 writer.write(requestClassName);
                 writer.writeTextStatement("($this->authTokenParameters)");
