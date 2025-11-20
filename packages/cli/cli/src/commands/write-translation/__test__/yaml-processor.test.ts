@@ -29,7 +29,14 @@ navigation:
     path: ./hello.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             type PageItem = { page: string; path: string; slug?: string };
             type PageDoc = { navigation: PageItem[] };
             const parsed = yaml.load(result) as PageDoc;
@@ -47,7 +54,14 @@ navigation:
     slug: custom-slug
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("custom-slug");
@@ -62,7 +76,14 @@ navigation:
     path: ./api-reference.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("getting-started");
@@ -80,7 +101,14 @@ navigation:
         path: ./overview.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.section).toBe("[TRANSLATED] API Guide");
@@ -102,7 +130,14 @@ navigation:
         path: ./overview.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBeUndefined();
@@ -123,7 +158,14 @@ navigation:
         path: ./overview.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("custom-section-slug");
@@ -137,7 +179,14 @@ navigation:
   - api: My API
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.api).toBe("[TRANSLATED] My API");
@@ -151,7 +200,14 @@ navigation:
     api-name: Custom API Name
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("custom-api-name");
@@ -164,7 +220,14 @@ navigation:
     skip-slug: true
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBeUndefined();
@@ -177,7 +240,14 @@ navigation:
     slug: custom-api-slug
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("custom-api-slug");
@@ -192,7 +262,14 @@ navigation:
     title: Release Notes
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.title).toBe("[TRANSLATED] Release Notes");
@@ -205,7 +282,14 @@ navigation:
   - changelog: ./docs/changelog
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("changelog");
@@ -219,7 +303,14 @@ navigation:
     slug: custom-changelog-slug
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("custom-changelog-slug");
@@ -234,7 +325,14 @@ navigation:
     href: https://example.com
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.link).toBe("[TRANSLATED] External Link");
@@ -257,7 +355,14 @@ navigation:
             path: ./overview.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect(
@@ -290,7 +395,14 @@ navigation:
             path: ./deep.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("level-1");
@@ -319,10 +431,37 @@ navigation:
     path: ./hello.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("hello-world-2024");
+        });
+
+        it("should handle camelCasing", async () => {
+            const sourceYaml = `
+navigation:
+- page: "DeepSeek"
+  path: ./hello.mdx
+`;
+
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
+            const parsed = yaml.load(result) as Record<string, unknown>;
+
+            expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("deep-seek");
         });
 
         it("should handle multiple spaces and hyphens", async () => {
@@ -332,7 +471,14 @@ navigation:
     path: ./test.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("multiple-spaces-and-hyphens");
@@ -345,7 +491,14 @@ navigation:
     path: ./test.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             expect((parsed.navigation as Array<Record<string, unknown>>)[0]?.slug).toBe("trimmed-title");
@@ -361,7 +514,14 @@ tabs:
     icon: fa-solid fa-book
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "docs.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             type TabsRecord = Record<string, { "display-name": string; icon: string; slug?: string }>;
@@ -378,7 +538,14 @@ tabs:
     slug: custom-api-slug
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "docs.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             type TabsRecord = Record<string, { "display-name": string; slug?: string }>;
@@ -394,7 +561,14 @@ tabs:
     skip-slug: true
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "docs.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             type TabsRecord = Record<string, { "display-name": string; slug?: string }>;
@@ -411,12 +585,19 @@ tabs:
     display-name: Documentation
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "docs.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             type TabsRecord = Record<string, { "display-name": string; slug?: string }>;
             const tabs = parsed.tabs as TabsRecord;
-            expect(tabs["api-v1"]?.slug).toBe("v1-api-reference");
+            expect(tabs["api-v1"]?.slug).toBe("v-1-api-reference");
             expect(tabs.documentation?.slug).toBe("documentation");
         });
     });
@@ -430,7 +611,14 @@ products:
     path: ./products/core-platform.yml
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "docs.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             type ProductItem = { "display-name": string; icon: string; path: string; slug?: string };
@@ -448,7 +636,14 @@ products:
     slug: custom-analytics-slug
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "docs.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             type ProductItem = { "display-name": string; path: string; slug?: string };
@@ -468,7 +663,14 @@ products:
     path: ./products/enterprise-features.yml
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "docs.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             type ProductItem = { "display-name": string; path: string; slug?: string };
@@ -488,7 +690,14 @@ navigation:
     path: ./hello.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "en", "en", "nav.yml", mockCliContext);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
 
             expect(result).toBe(sourceYaml);
         });
@@ -502,7 +711,14 @@ navigation:
     path: ./hello.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext, true);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             // In stub mode, content should not be translated
@@ -519,7 +735,14 @@ navigation:
     path: ./hello.mdx
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "nav.yml", mockCliContext, true);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             // Content should not be translated
@@ -537,7 +760,14 @@ products:
     icon: house
 `;
 
-            const result = await translateYamlContent(sourceYaml, "es", "en", "docs.yml", mockCliContext, true);
+            const result = await translateYamlContent({
+                yamlContent: sourceYaml,
+                language: "es",
+                sourceLanguage: "en",
+                filePath: "nav.yml",
+                cliContext: mockCliContext,
+                stub: true
+            });
             const parsed = yaml.load(result) as Record<string, unknown>;
 
             // Content should not be translated

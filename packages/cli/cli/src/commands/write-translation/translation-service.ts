@@ -175,14 +175,14 @@ export async function translateText({
 
                 const error = new Error(`HTTP ${response.status}: ${errorDetail}`) as NetworkError;
                 if (!isRetriableError(error, response)) {
-                    cliContext.logger.error(`[TRANSLATE] Non-retriable error ${response.status}: ${errorDetail}`);
+                    cliContext.logger.debug(`[TRANSLATE] Non-retriable error ${response.status}: ${errorDetail}`);
                     return text;
                 }
 
                 // If this is a retriable error and we have attempts left, continue to retry logic
                 lastError = error;
                 if (attempt <= config.maxRetries) {
-                    cliContext.logger.warn(
+                    cliContext.logger.debug(
                         `[TRANSLATE] Attempt ${attempt} failed with status ${response.status}: ${errorDetail}. Retrying...`
                     );
                     const delay = calculateDelay(attempt, config.baseDelay, config.maxDelay);
@@ -190,7 +190,7 @@ export async function translateText({
                     continue;
                 } else {
                     // Final attempt failed
-                    cliContext.logger.error(
+                    cliContext.logger.debug(
                         `[TRANSLATE] All ${config.maxRetries + 1} attempts failed. Final error: ${errorDetail}`
                     );
                     return text;
@@ -201,7 +201,7 @@ export async function translateText({
 
             // Success - log if this was a retry
             if (attempt > 1) {
-                cliContext.logger.info(`[TRANSLATE] Succeeded on attempt ${attempt} after ${attempt - 1} retries`);
+                cliContext.logger.debug(`[TRANSLATE] Succeeded on attempt ${attempt} after ${attempt - 1} retries`);
             }
 
             // small delay to avoid timeout issues
@@ -219,14 +219,14 @@ export async function translateText({
             // Check if this is a retriable error
             if (error instanceof Error && !isRetriableError(error as NetworkError)) {
                 const errorMessage = error instanceof Error ? error.message : String(error);
-                cliContext.logger.error(`[TRANSLATE] Non-retriable error: ${errorMessage}`);
+                cliContext.logger.debug(`[TRANSLATE] Non-retriable error: ${errorMessage}`);
                 return text;
             }
 
             // If this is our final attempt, don't retry
             if (attempt > config.maxRetries) {
                 const errorMessage = error instanceof Error ? error.message : String(error);
-                cliContext.logger.error(
+                cliContext.logger.debug(
                     `[TRANSLATE] All ${config.maxRetries + 1} attempts failed. Final error: ${errorMessage}`
                 );
                 return text;
@@ -234,7 +234,7 @@ export async function translateText({
 
             // Log retry attempt and wait before retrying
             const errorMessage = error instanceof Error ? error.message : String(error);
-            cliContext.logger.warn(`[TRANSLATE] Attempt ${attempt} failed: ${errorMessage}. Retrying...`);
+            cliContext.logger.debug(`[TRANSLATE] Attempt ${attempt} failed: ${errorMessage}. Retrying...`);
             const delay = calculateDelay(attempt, config.baseDelay, config.maxDelay);
             await new Promise((resolve) => setTimeout(resolve, delay));
         }
@@ -243,6 +243,6 @@ export async function translateText({
     // This should never be reached, but just in case
     const lastErrorMessage =
         lastError instanceof Error ? lastError.message : lastError ? String(lastError) : "Unknown error";
-    cliContext.logger.error(`[TRANSLATE] Unexpected end of retry loop. Last error: ${lastErrorMessage}`);
+    cliContext.logger.debug(`[TRANSLATE] Unexpected end of retry loop. Last error: ${lastErrorMessage}`);
     return text;
 }

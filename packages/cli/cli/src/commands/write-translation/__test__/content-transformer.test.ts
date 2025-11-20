@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { CliContext } from "../../../cli-context/CliContext";
-import { transformContentForLanguage } from "../content-transformer";
+import { isAssetFile, shouldProcessFile, transformContentForLanguage } from "../content-transformer";
 import { ContentTransformation } from "../types";
 
 vi.mock("../translation-service", () => ({
@@ -59,7 +59,11 @@ describe("content-transformer", () => {
                 originalContent
             };
 
-            const result = await transformContentForLanguage(transformation, mockCliContext, true);
+            const result = await transformContentForLanguage({
+                transformation,
+                cliContext: mockCliContext,
+                stub: true
+            });
 
             // YAML files should be processed in stub mode to add slugs
             expect(result).toContain("slug: hello-world");
@@ -79,7 +83,11 @@ describe("content-transformer", () => {
                 originalContent
             };
 
-            const result = await transformContentForLanguage(transformation, mockCliContext, true);
+            const result = await transformContentForLanguage({
+                transformation,
+                cliContext: mockCliContext,
+                stub: true
+            });
 
             expect(result).toBe(originalContent);
             expect(mockCliContext.logger.debug).toHaveBeenCalledWith(
@@ -101,7 +109,11 @@ This is a test document.`;
                 originalContent
             };
 
-            const result = await transformContentForLanguage(transformation, mockCliContext, true);
+            const result = await transformContentForLanguage({
+                transformation,
+                cliContext: mockCliContext,
+                stub: true
+            });
 
             expect(result).toBe(originalContent);
             expect(mockCliContext.logger.debug).toHaveBeenCalledWith(
@@ -119,7 +131,11 @@ This is a test document.`;
                 originalContent
             };
 
-            const result = await transformContentForLanguage(transformation, mockCliContext, false);
+            const result = await transformContentForLanguage({
+                transformation,
+                cliContext: mockCliContext,
+                stub: false
+            });
 
             expect(result).toBe("[TRANSLATED] # Hello World");
         });
@@ -136,12 +152,98 @@ This is a test document.`;
                 originalContent
             };
 
-            const result = await transformContentForLanguage(transformation, mockCliContext, false);
+            const result = await transformContentForLanguage({
+                transformation,
+                cliContext: mockCliContext,
+                stub: false
+            });
 
             expect(result).toBe(originalContent);
-            expect(mockCliContext.logger.info).toHaveBeenCalledWith(
+            expect(mockCliContext.logger.debug).toHaveBeenCalledWith(
                 '[SKIP] Skipping file "test.txt" - unsupported file type for translation.'
             );
+        });
+    });
+
+    describe("isAssetFile", () => {
+        it("should correctly identify image files as assets", () => {
+            expect(isAssetFile("logo.png")).toBe(true);
+            expect(isAssetFile("icon.jpg")).toBe(true);
+            expect(isAssetFile("image.jpeg")).toBe(true);
+            expect(isAssetFile("banner.gif")).toBe(true);
+            expect(isAssetFile("graphic.svg")).toBe(true);
+            expect(isAssetFile("photo.webp")).toBe(true);
+            expect(isAssetFile("favicon.ico")).toBe(true);
+        });
+
+        it("should correctly identify font files as assets", () => {
+            expect(isAssetFile("font.woff")).toBe(true);
+            expect(isAssetFile("font.woff2")).toBe(true);
+            expect(isAssetFile("font.ttf")).toBe(true);
+            expect(isAssetFile("font.otf")).toBe(true);
+        });
+
+        it("should correctly identify other binary files as assets", () => {
+            expect(isAssetFile("document.pdf")).toBe(true);
+            expect(isAssetFile("archive.zip")).toBe(true);
+            expect(isAssetFile("video.mp4")).toBe(true);
+        });
+
+        it("should not identify text files as assets", () => {
+            expect(isAssetFile("document.md")).toBe(false);
+            expect(isAssetFile("config.yml")).toBe(false);
+            expect(isAssetFile("data.json")).toBe(false);
+            expect(isAssetFile("script.js")).toBe(false);
+            expect(isAssetFile("style.css")).toBe(false);
+            expect(isAssetFile("readme.txt")).toBe(false);
+        });
+
+        it("should be case insensitive", () => {
+            expect(isAssetFile("Logo.PNG")).toBe(true);
+            expect(isAssetFile("ICON.JPG")).toBe(true);
+            expect(isAssetFile("Document.PDF")).toBe(true);
+        });
+    });
+
+    describe("shouldProcessFile", () => {
+        it("should NOT process asset files", () => {
+            expect(shouldProcessFile("logo.png", false)).toBe(false);
+            expect(shouldProcessFile("icon.jpg", true)).toBe(false);
+        });
+
+        it("should process YAML files", () => {
+            expect(shouldProcessFile("config.yml", false)).toBe(true);
+            expect(shouldProcessFile("config.yaml", false)).toBe(true);
+            expect(shouldProcessFile("config.yml", true)).toBe(true); // YAML always processed
+        });
+
+        it("should process markdown files when not in stub mode", () => {
+            expect(shouldProcessFile("readme.md", false)).toBe(true);
+            expect(shouldProcessFile("guide.mdx", false)).toBe(true);
+        });
+
+        it("should not process markdown files in stub mode", () => {
+            expect(shouldProcessFile("readme.md", true)).toBe(false);
+            expect(shouldProcessFile("guide.mdx", true)).toBe(false);
+        });
+
+        it("should process JSON files when not in stub mode", () => {
+            expect(shouldProcessFile("data.json", false)).toBe(true);
+        });
+
+        it("should not process JSON files in stub mode", () => {
+            expect(shouldProcessFile("data.json", true)).toBe(false);
+        });
+
+        it("should never process fern.config.json", () => {
+            expect(shouldProcessFile("fern.config.json", false)).toBe(false);
+            expect(shouldProcessFile("fern.config.json", true)).toBe(false);
+        });
+
+        it("should not process unknown file types", () => {
+            expect(shouldProcessFile("script.js", false)).toBe(false);
+            expect(shouldProcessFile("style.css", false)).toBe(false);
+            expect(shouldProcessFile("readme.txt", false)).toBe(false);
         });
     });
 });

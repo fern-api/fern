@@ -12,3 +12,4 @@ navigation:
     slug: welcome
 settings:
   language: de
+  search-text: Suchen

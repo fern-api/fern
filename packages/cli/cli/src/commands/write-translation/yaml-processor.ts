@@ -1,22 +1,20 @@
 import * as yaml from "js-yaml";
+import { kebabCase } from "lodash-es";
 import { CliContext } from "../../cli-context/CliContext";
 import { shouldTranslateValue } from "./translatable-keys";
 import { translateText } from "./translation-service";
 
 /**
  * Converts a string to a slug format (lowercase, hyphenated)
+ * Uses the same kebabCase logic as the CLI's docs slug generation
  * @param text - The text to convert to a slug
  * @returns The slugified text
  * @example "Hello World" -> "hello-world"
+ * @example "DeepSeek" -> "deep-seek"
  */
-function generateSlug(text: string): string {
-    return text
-        .toLowerCase()
-        .trim()
-        .replace(/[^\w\s-]/g, "")
-        .replace(/\s+/g, "-")
-        .replace(/-+/g, "-")
-        .replace(/^-+|-+$/g, "");
+export function generateSlug({ name }: { name: string }): string {
+    const withoutExtension = name.replace(/\.(md|mdx)$/i, "");
+    return kebabCase(withoutExtension);
 }
 
 function isPageConfiguration(obj: unknown): obj is Record<string, unknown> {
@@ -86,57 +84,65 @@ function computeSlugForNavigationItem(sourceRecord: unknown): string | undefined
     }
 
     if (isPageConfiguration(sourceRecord)) {
-        return generateSlug(sourceRecord["page"] as string);
+        return generateSlug({ name: sourceRecord["page"] as string });
     }
 
     if (isSectionConfiguration(sourceRecord)) {
-        return generateSlug(sourceRecord["section"] as string);
+        return generateSlug({ name: sourceRecord["section"] as string });
     }
 
     if (isApiReferenceConfiguration(sourceRecord)) {
         const apiName = sourceRecord["api-name"];
         const api = sourceRecord["api"];
-        return generateSlug((typeof apiName === "string" ? apiName : api) as string);
+        return generateSlug({ name: (typeof apiName === "string" ? apiName : api) as string });
     }
 
     if (isChangelogConfiguration(sourceRecord)) {
         const title = sourceRecord["title"];
         if (typeof title === "string") {
-            return generateSlug(title);
+            return generateSlug({ name: title });
         }
         const changelog = sourceRecord["changelog"];
         if (typeof changelog === "string") {
             const basename = changelog.split("/").pop() || changelog;
-            return generateSlug(basename);
+            return generateSlug({ name: basename });
         }
     }
 
     if (isTabConfiguration(sourceRecord)) {
         const displayName = sourceRecord["display-name"] || sourceRecord["displayName"];
         if (typeof displayName === "string") {
-            return generateSlug(displayName);
+            return generateSlug({ name: displayName });
         }
     }
 
     if (isProductConfiguration(sourceRecord)) {
         const displayName = sourceRecord["display-name"] || sourceRecord["displayName"];
         if (typeof displayName === "string") {
-            return generateSlug(displayName);
+            return generateSlug({ name: displayName });
         }
     }
 
     return undefined;
 }
 
-export async function translateYamlObject(
-    obj: unknown,
-    language: string,
-    sourceLanguage: string,
-    filePath: string,
-    cliContext: CliContext,
-    stub: boolean,
-    sourceObj?: unknown
-): Promise<unknown> {
+export async function translateYamlObject({
+    obj,
+    language,
+    sourceLanguage,
+    filePath,
+    cliContext,
+    stub,
+    sourceObj
+}: {
+    obj: unknown;
+    language: string;
+    sourceLanguage: string;
+    filePath: string;
+    cliContext: CliContext;
+    stub: boolean;
+    sourceObj?: unknown;
+}): Promise<unknown> {
     if (obj === null || obj === undefined) {
         return obj;
     }
@@ -149,7 +155,15 @@ export async function translateYamlObject(
         const sourceArray = Array.isArray(sourceObj) ? sourceObj : undefined;
         return await Promise.all(
             obj.map((item, index) =>
-                translateYamlObject(item, language, sourceLanguage, filePath, cliContext, stub, sourceArray?.[index])
+                translateYamlObject({
+                    obj: item,
+                    language,
+                    sourceLanguage,
+                    filePath,
+                    cliContext,
+                    stub,
+                    sourceObj: sourceArray?.[index]
+                })
             )
         );
     }
@@ -175,15 +189,15 @@ export async function translateYamlObject(
 
                 result[key] = await translateText({ text: value as string, language, sourceLanguage, cliContext });
             } else {
-                result[key] = await translateYamlObject(
-                    value,
+                result[key] = await translateYamlObject({
+                    obj: value,
                     language,
                     sourceLanguage,
                     filePath,
                     cliContext,
                     stub,
-                    sourceRecord?.[key]
-                );
+                    sourceObj: sourceRecord?.[key]
+                });
             }
         }
 
@@ -197,14 +211,21 @@ export async function translateYamlObject(
     return obj;
 }
 
-export async function translateYamlContent(
-    yamlContent: string,
-    language: string,
-    sourceLanguage: string,
-    filePath: string,
-    cliContext: CliContext,
-    stub: boolean = false
-): Promise<string> {
+export async function translateYamlContent({
+    yamlContent,
+    language,
+    sourceLanguage,
+    filePath,
+    cliContext,
+    stub = false
+}: {
+    yamlContent: string;
+    language: string;
+    sourceLanguage: string;
+    filePath: string;
+    cliContext: CliContext;
+    stub: boolean;
+}): Promise<string> {
     // preserve the source material
     if (language === sourceLanguage) {
         return yamlContent;
@@ -217,15 +238,15 @@ export async function translateYamlContent(
             return yamlContent;
         }
 
-        const translatedYaml = await translateYamlObject(
-            parsedYaml,
+        const translatedYaml = await translateYamlObject({
+            obj: parsedYaml,
             language,
             sourceLanguage,
             filePath,
             cliContext,
             stub,
-            parsedYaml
-        );
+            sourceObj: parsedYaml
+        });
 
         const translatedYamlContent = yaml.dump(translatedYaml, {
             indent: 2,
