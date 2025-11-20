@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc41
+  createdAt: "2025-11-20"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Remove dead code in RawClient and honor max_retries parameter. The max_retries parameter is now properly used instead of being hardcoded to 0.
+  irVersion: 61
+
 - version: 1.0.0-rc40
   createdAt: "2025-11-20"
   changelogEntry:
