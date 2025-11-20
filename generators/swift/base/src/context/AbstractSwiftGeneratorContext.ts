@@ -1,5 +1,5 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
-import { assertDefined, assertNever } from "@fern-api/core-utils";
+import { assertDefined, assertNever, entries } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { BaseSwiftCustomConfigSchema, Referencer, swift, UndiscriminatedUnion } from "@fern-api/swift-codegen";
 import {
@@ -17,7 +17,6 @@ import {
     TypeId,
     TypeReference
 } from "@fern-fern/ir-sdk/api";
-
 import { AsIsFileDefinition, SourceAsIsFiles, TestAsIsFiles } from "../AsIs";
 import { SwiftProject } from "../project";
 import { CycleDetector } from "./cycle-detector";
@@ -69,18 +68,30 @@ export abstract class AbstractSwiftGeneratorContext<
 
     private registerSourceSymbols(project: SwiftProject, ir: IntermediateRepresentation) {
         const { nameRegistry } = project;
-        nameRegistry.registerSourceModuleSymbol({
+        const registeredSourceModuleSymbol = nameRegistry.registerSourceModuleSymbol({
             configModuleName: this.customConfig.moduleName,
             apiNamePascalCase: ir.apiName.pascalCase.unsafeName,
             asIsSymbols: Object.values(SourceAsIsFiles).flatMap((file) => file.symbols)
         });
         nameRegistry.registerRootClientSymbol({
             configClientClassName: this.customConfig.clientClassName,
-            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+            registeredSourceModuleName: registeredSourceModuleSymbol.name
+        });
+        entries(swift.SourceTemplateFileSpecs).forEach(([templateId]) => {
+            switch (templateId) {
+                case "ClientError":
+                    nameRegistry.registerErrorEnumSymbol(registeredSourceModuleSymbol.name);
+                    break;
+                case "HTTPClient":
+                    nameRegistry.registerSourceStaticSymbol(templateId, { type: "class" });
+                    break;
+                default:
+                    assertNever(templateId);
+            }
         });
         nameRegistry.registerEnvironmentSymbol({
             configEnvironmentEnumName: this.customConfig.environmentEnumName,
-            apiNamePascalCase: ir.apiName.pascalCase.unsafeName
+            registeredSourceModuleName: registeredSourceModuleSymbol.name
         });
 
         // Must first register top-level symbols
@@ -169,7 +180,6 @@ export abstract class AbstractSwiftGeneratorContext<
             sourceModuleName: sourceModuleSymbol.name,
             asIsSymbols: Object.values(TestAsIsFiles).flatMap((file) => file.symbols)
         });
-        nameRegistry.registerRetryTestSuiteSymbol();
         nameRegistry.getAllSubClientSymbols().forEach((s) => {
             nameRegistry.registerWireTestSuiteSymbol(s.name);
         });
@@ -205,10 +215,6 @@ export abstract class AbstractSwiftGeneratorContext<
 
     public get schemasDirectory(): RelativeFilePath {
         return RelativeFilePath.of("Schemas");
-    }
-
-    public get hasTests(): boolean {
-        return !!this.customConfig.enableWireTests;
     }
 
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
