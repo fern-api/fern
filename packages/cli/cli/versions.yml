@@ -1,11 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Improve error messaging when remote job creation fails. The CLI now extracts and displays HTTP status codes, error messages, and provides actionable guidance including suggesting the --local flag for rate limits (429) and server errors (5xx).
-      type: feat
+        Fix error messaging for invalid generator versions. When a user provides an invalid version format (e.g., "0.31" instead of "0.31.0"), the CLI now displays a helpful error message explaining that versions must use SemVer MAJOR.MINOR.PATCH format and suggests the correct format.
+      type: fix
   irVersion: 61
-  createdAt: "2025-11-19"
-  version: 1.12.0
+  createdAt: "2025-11-20"
+  version: 1.11.1
 
 - changelogEntry:
     - summary: |

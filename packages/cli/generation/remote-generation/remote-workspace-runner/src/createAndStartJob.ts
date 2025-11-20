@@ -218,8 +218,12 @@ async function createJob({
             illegalApiNameError: () => {
                 return context.failAndThrow("API name is invalid: " + workspace.definition.rootApiFile.contents.name);
             },
-            illegalApiVersionError: () => {
-                return context.failAndThrow("API version is invalid: " + version);
+            illegalApiVersionError: (details) => {
+                const remote = details?.message && details.message.trim() ? ` – ${details.message.trim()}` : "";
+                const patchHint = /^\d+\.\d+$/.test(version) ? ` Did you mean "${version}.0"?` : "";
+                return context.failAndThrow(
+                    `Invalid generator version "${version}". Versions must use SemVer MAJOR.MINOR.PATCH (e.g., 0.31.0).${patchHint}${remote}`
+                );
             },
             cannotPublishToNpmScope: ({ validScope, invalidScope }) => {
                 return context.failAndThrow(
@@ -376,14 +380,20 @@ function convertCreateJobError(error: any): FernFiddle.remoteGen.createJobV3.Err
         switch (body?._error) {
             case "IllegalApiNameError":
                 return FernFiddle.remoteGen.createJobV3.Error.illegalApiNameError();
+            case "IllegalApiVersionError":
+                return FernFiddle.remoteGen.createJobV3.Error.illegalApiVersionError(body.body);
             case "GeneratorsDoNotExistError":
                 return FernFiddle.remoteGen.createJobV3.Error.generatorsDoNotExistError(body.body);
             case "CannotPublishToNpmScope":
                 return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToNpmScope(body.body);
             case "CannotPublishToMavenScope":
                 return FernFiddle.remoteGen.createJobV3.Error.cannotPublishToMavenGroup(body.body);
+            case "CannotPublishPypiPackage":
+                return FernFiddle.remoteGen.createJobV3.Error.cannotPublishPypiPackage(body.body);
             case "InsufficientPermissions":
                 return FernFiddle.remoteGen.createJobV3.Error.insufficientPermissions(body.body);
+            case "OrgNotConfiguredForWhitelabel":
+                return FernFiddle.remoteGen.createJobV3.Error.orgNotConfiguredForWhitelabel(body.body);
         }
     }
     return error;
@@ -438,7 +448,6 @@ function summarizeCreateJobError(err: unknown): { summary: string; details: unkn
                 };
             }
             case "unknown": {
-                // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                 const msg =
                     // biome-ignore lint/suspicious/noExplicitAny: allow explicit any
                     typeof (err as any).errorMessage === "string" ? truncate((err as any).errorMessage) : undefined;
