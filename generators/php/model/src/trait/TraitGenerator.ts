@@ -61,7 +61,11 @@ export class TraitGenerator extends FileGenerator<PhpFile, ModelCustomConfigSche
     }
 
     protected getFilepath(): RelativeFilePath {
-        const location = this.context.getTraitLocationForTypeId(this.typeDeclaration.name.typeId);
-        return RelativeFilePath.of(`${location.directory}/${this.classReference.name}`);
+        return this.context.getTraitLocationForTypeId(this.typeDeclaration.name.typeId).directory;
+    }
+
+    protected getLogLabel(): string {
+        const dir = this.context.getTraitLocationForTypeId(this.typeDeclaration.name.typeId).directory;
+        return dir ? `${dir}/${this.classReference.name}` : this.classReference.name;
     }
 }
