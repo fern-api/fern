@@ -118,6 +118,7 @@ jobs:
         useOidc
             ? `
     permissions:
+      contents: read
       id-token: write  # Required for OIDC`
             : ""
     }
