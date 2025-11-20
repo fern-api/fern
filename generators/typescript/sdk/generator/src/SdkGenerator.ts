@@ -1391,6 +1391,9 @@ export class SdkGenerator {
     }
 
     private generateAuthProviders(): void {
+        if (this.intermediateRepresentation.auth.requirement === "ANY") {
+            return;
+        }
         for (const authScheme of this.intermediateRepresentation.auth.schemes) {
             const authProvidersGenerator = new AuthProvidersGenerator({
                 ir: this.intermediateRepresentation,

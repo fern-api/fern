@@ -422,15 +422,20 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
 
         this.authHeaders = [];
+        const isAnyAuth = intermediateRepresentation.auth.requirement === "ANY";
         for (const authScheme of intermediateRepresentation.auth.schemes) {
             AuthScheme._visit(authScheme, {
                 basic: (basicAuthScheme) => {
                     this.basicAuthScheme = basicAuthScheme;
-                    this.authProvider = new BasicAuthProviderInstance();
+                    if (!isAnyAuth) {
+                        this.authProvider = new BasicAuthProviderInstance();
+                    }
                 },
                 bearer: (bearerAuthScheme) => {
                     this.bearerAuthScheme = bearerAuthScheme;
-                    this.authProvider = new BearerAuthProviderInstance();
+                    if (!isAnyAuth) {
+                        this.authProvider = new BearerAuthProviderInstance();
+                    }
                 },
                 header: (header) => {
                     this.authHeaders.push(header);
@@ -440,7 +445,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 },
                 inferred: (inferredAuthScheme) => {
                     this.inferredAuthScheme = inferredAuthScheme;
-                    this.authProvider = new InferredAuthProviderInstance();
+                    if (!isAnyAuth) {
+                        this.authProvider = new InferredAuthProviderInstance();
+                    }
                 },
                 _other: () => {
                     throw new Error("Unknown auth scheme: " + authScheme.type);
@@ -920,9 +927,82 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             : undefined
                 }
             ];
+            const authProviderParams =
+                this.inferredAuthScheme != null
+                    ? [
+                          ts.factory.createObjectLiteralExpression(
+                              [
+                                  ts.factory.createPropertyAssignment(
+                                      ts.factory.createIdentifier("client"),
+                                      ts.factory.createThis()
+                                  ),
+                                  ts.factory.createPropertyAssignment(
+                                      ts.factory.createIdentifier("authTokenParameters"),
+                                      ts.factory.createObjectLiteralExpression(
+                                          [
+                                              ts.factory.createSpreadAssignment(
+                                                  ts.factory.createIdentifier("this._options")
+                                              )
+                                          ],
+                                          false
+                                      )
+                                  )
+                              ],
+                              true
+                          )
+                      ]
+                    : this.basicAuthScheme != null
+                      ? [
+                            ts.factory.createObjectLiteralExpression(
+                                [
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier(this.basicAuthScheme.username.camelCase.safeName),
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier("this._options"),
+                                            ts.factory.createIdentifier(
+                                                this.getBasicAuthUsernameOptionKey(this.basicAuthScheme)
+                                            )
+                                        )
+                                    ),
+                                    ts.factory.createPropertyAssignment(
+                                        ts.factory.createIdentifier(this.basicAuthScheme.password.camelCase.safeName),
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier("this._options"),
+                                            ts.factory.createIdentifier(
+                                                this.getBasicAuthPasswordOptionKey(this.basicAuthScheme)
+                                            )
+                                        )
+                                    )
+                                ],
+                                true
+                            )
+                        ]
+                      : this.bearerAuthScheme != null
+                        ? [
+                              ts.factory.createObjectLiteralExpression(
+                                  [
+                                      ts.factory.createPropertyAssignment(
+                                          ts.factory.createIdentifier(this.bearerAuthScheme.token.camelCase.safeName),
+                                          ts.factory.createPropertyAccessExpression(
+                                              ts.factory.createIdentifier("this._options"),
+                                              ts.factory.createIdentifier(
+                                                  this.getBearerAuthOptionKey(this.bearerAuthScheme)
+                                              )
+                                          )
+                                      )
+                                  ],
+                                  true
+                              )
+                          ]
+                        : [];
             const statements = code`
                 ${this.getCtorOptionsStatements(context)}
-                ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = options.${AuthProviderInstance.OPTIONS_PROPERTY_NAME};
+                ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = ${getTextOfTsNode(
+                    this.authProvider.instantiate({
+                        context,
+                        params: authProviderParams
+                    })
+                )};
             `;
             serviceClass.ctors.push({
                 parameters,
@@ -1415,7 +1495,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ),
                 hasQuestionToken: this.oauthAuthScheme.configuration.clientSecretEnvVar != null
             });
-        } else if (this.isRoot && this.inferredAuthScheme != null) {
+        } else if (this.inferredAuthScheme != null) {
             const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
                 FernIr.AuthScheme.inferred(this.inferredAuthScheme)
             );
@@ -1426,7 +1506,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     hasQuestionToken: param.isOptional
                 }))
             );
-        } else if (this.isRoot && this.basicAuthScheme != null) {
+        } else if (this.basicAuthScheme != null) {
             const hasUsernameEnv = this.basicAuthScheme.usernameEnvVar != null;
             const hasPasswordEnv = this.basicAuthScheme.passwordEnvVar != null;
 
@@ -1458,7 +1538,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ),
                 hasQuestionToken: hasPasswordEnv
             });
-        } else if (this.isRoot && this.bearerAuthScheme != null) {
+        } else if (
+            this.bearerAuthScheme != null &&
+            !(this.oauthAuthScheme != null && !this.isRoot && context.generateOAuthClients)
+        ) {
             const hasTokenEnv = this.bearerAuthScheme.tokenEnvVar != null;
 
             properties.push({
@@ -1496,13 +1579,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     )
                 ),
                 hasQuestionToken: true
-            });
-        }
-
-        if (this.authProvider && this.anyEndpointWithAuth && !this.isRoot) {
-            properties.push({
-                name: AuthProviderInstance.OPTIONS_PROPERTY_NAME,
-                type: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())
             });
         }
 
