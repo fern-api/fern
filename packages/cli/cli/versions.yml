@@ -2,6 +2,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add detailed output to `fern generator upgrade` showing which generators were upgraded, their version changes, and changelog links. The command now displays a summary grouped by workspace and group, or reports "All generators are already up to date" when no upgrades are applied.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.1.0
+
+- changelogEntry:
+    - summary: |
         Optimize docs generation and image path parsing and replacement for large markdown files (>5MB) using batched edits, precomputed line positions, and filtered AST traversal.
       type: fix
   irVersion: 61
