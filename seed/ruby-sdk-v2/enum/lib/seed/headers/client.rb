@@ -10,8 +10,12 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Seed::Types::Operand] :operand
+      # @option params [Seed::Types::Operand | nil] :maybe_operand
+      # @option params [Seed::Types::ColorOrOperand] :operand_or_color
+      # @option params [Seed::Types::ColorOrOperand | nil] :maybe_operand_or_color
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]

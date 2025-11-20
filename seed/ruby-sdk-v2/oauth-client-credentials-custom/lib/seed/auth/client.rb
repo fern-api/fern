@@ -11,7 +11,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Auth::Types::GetTokenRequest]
       #
       # @return [Seed::Auth::Types::TokenResponse]
@@ -40,7 +39,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Auth::Types::RefreshTokenRequest]
       #
       # @return [Seed::Auth::Types::TokenResponse]

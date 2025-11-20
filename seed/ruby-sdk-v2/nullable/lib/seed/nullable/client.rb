@@ -10,8 +10,13 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String | nil] :usernames
+      # @option params [String | nil] :avatar
+      # @option params [bool | nil] :activated
+      # @option params [String | nil | nil] :tags
+      # @option params [bool | nil | nil] :extra
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::Nullable::Types::User]]
@@ -45,7 +50,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Nullable::Types::CreateUserRequest]
       #
       # @return [Seed::Nullable::Types::User]
@@ -74,7 +78,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Nullable::Types::DeleteUserRequest]
       #
       # @return [bool]

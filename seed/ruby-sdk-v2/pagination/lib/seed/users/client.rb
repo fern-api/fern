@@ -10,8 +10,12 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer | nil] :page
+      # @option params [Integer | nil] :per_page
+      # @option params [Seed::Users::Types::Order | nil] :order
+      # @option params [String | nil] :starting_after
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
@@ -52,8 +56,9 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String | nil] :cursor
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Users::Types::ListUsersMixedTypePaginationResponse]
@@ -92,7 +97,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Users::Types::ListUsersBodyCursorPaginationRequest]
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
@@ -127,8 +131,12 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer | nil] :page
+      # @option params [Integer | nil] :per_page
+      # @option params [Seed::Users::Types::Order | nil] :order
+      # @option params [String | nil] :starting_after
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
@@ -170,8 +178,12 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer | nil] :page
+      # @option params [Integer | nil] :per_page
+      # @option params [Seed::Users::Types::Order | nil] :order
+      # @option params [String | nil] :starting_after
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
@@ -214,7 +226,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Users::Types::ListUsersBodyOffsetPaginationRequest]
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
@@ -250,8 +261,11 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer | nil] :page
+      # @option params [Integer | nil] :limit
+      # @option params [Seed::Users::Types::Order | nil] :order
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
@@ -292,8 +306,11 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer | nil] :page
+      # @option params [Integer | nil] :limit
+      # @option params [Seed::Users::Types::Order | nil] :order
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Users::Types::ListUsersPaginationResponse]
@@ -334,8 +351,9 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String | nil] :cursor
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Users::Types::ListUsersExtendedResponse]
@@ -373,8 +391,9 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String | nil] :cursor
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Users::Types::ListUsersExtendedOptionalListResponse]
@@ -412,8 +431,9 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String | nil] :starting_after
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::UsernameCursor]
@@ -451,8 +471,9 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer | nil] :offset
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Users::Types::UsernameContainer]

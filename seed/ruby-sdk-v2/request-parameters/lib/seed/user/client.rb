@@ -10,8 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Array[String]] :tags
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::User::Types::CreateUsernameRequest]
       #
       # @return [untyped]
@@ -44,8 +45,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Array[String]] :tags
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::User::Types::CreateUsernameBody]
       #
       # @return [untyped]
@@ -76,7 +78,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]
@@ -99,8 +100,24 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer] :limit
+      # @option params [String] :id
+      # @option params [String] :date
+      # @option params [String] :deadline
+      # @option params [String] :bytes
+      # @option params [Seed::User::Types::User] :user
+      # @option params [Array[Seed::User::Types::User]] :user_list
+      # @option params [String | nil] :optional_deadline
+      # @option params [Hash[String, String]] :key_value
+      # @option params [String | nil] :optional_string
+      # @option params [Seed::User::Types::NestedUser] :nested_user
+      # @option params [Seed::User::Types::User | nil] :optional_user
+      # @option params [Seed::User::Types::User] :exclude_user
+      # @option params [String] :filter
+      # @option params [Integer] :long_param
+      # @option params [String] :big_int_param
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::User::Types::User]

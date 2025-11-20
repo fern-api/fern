@@ -10,8 +10,10 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::User::Types::User]
@@ -35,8 +37,9 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :tenant_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::User::Types::User]
       #
       # @return [Seed::User::Types::User]
@@ -61,8 +64,10 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::User::Types::User]
       #
       # @return [Seed::User::Types::User]
@@ -90,8 +95,11 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
+      # @option params [Integer | nil] :limit
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::User::Types::User]]
@@ -122,8 +130,11 @@ module Seed
 
       # Test endpoint with path parameter that has a text prefix (v{version})
       #
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
+      # @option params [Integer] :version
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::User::Types::User]
@@ -149,8 +160,12 @@ module Seed
 
       # Test endpoint with path parameters listed in different order than found in path
       #
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :tenant_id
+      # @option params [String] :user_id
+      # @option params [Integer] :version
+      # @option params [String] :thought
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::User::Types::User]

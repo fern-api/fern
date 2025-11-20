@@ -10,8 +10,12 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :path_param
+      # @option params [String] :service_param
+      # @option params [Integer] :endpoint_param
+      # @option params [String] :resource_param
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]

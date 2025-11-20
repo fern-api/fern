@@ -11,7 +11,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Union::Types::MyUnion]
       #
       # @return [Seed::Union::Types::MyUnion]
@@ -37,7 +36,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Hash[Seed::Union::Types::Key, String]]
@@ -62,7 +60,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Union::Types::MetadataUnion]
       #
       # @return [bool]
@@ -86,7 +83,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Union::Types::Request]
       #
       # @return [bool]
@@ -110,7 +106,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Union::Types::UnionWithDuplicateTypes]
       #
       # @return [Seed::Union::Types::UnionWithDuplicateTypes]
@@ -136,7 +131,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Union::Types::NestedUnionRoot]
       #
       # @return [String]
@@ -160,7 +154,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Union::Types::PaymentRequest]
       #
       # @return [String]

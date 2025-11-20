@@ -13,7 +13,6 @@ module Seed
       # POST with custom object in request body, response is an object
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::InlinedRequests::Types::PostWithObjectBody]
       #
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]

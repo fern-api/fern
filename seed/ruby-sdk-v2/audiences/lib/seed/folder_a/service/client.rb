@@ -11,8 +11,10 @@ module Seed
           @client = client
         end
 
-        # @param request_options [Seed::RequestOptions]
+        # @option params [String] :ids
+        # @option params [String] :tags
         #
+        # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
         #
         # @return [Seed::FolderA::Service::Types::Response]

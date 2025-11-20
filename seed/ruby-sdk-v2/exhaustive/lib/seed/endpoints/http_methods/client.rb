@@ -11,8 +11,9 @@ module Seed
           @client = client
         end
 
-        # @param request_options [Seed::RequestOptions]
+        # @option params [String] :id
         #
+        # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
         #
         # @return [String]
@@ -35,7 +36,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
@@ -60,8 +60,9 @@ module Seed
           end
         end
 
-        # @param request_options [Seed::RequestOptions]
+        # @option params [String] :id
         #
+        # @param request_options [Seed::RequestOptions]
         # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
@@ -86,8 +87,9 @@ module Seed
           end
         end
 
-        # @param request_options [Seed::RequestOptions]
+        # @option params [String] :id
         #
+        # @param request_options [Seed::RequestOptions]
         # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
@@ -112,8 +114,9 @@ module Seed
           end
         end
 
-        # @param request_options [Seed::RequestOptions]
+        # @option params [String] :id
         #
+        # @param request_options [Seed::RequestOptions]
         # @param params [Hash[untyped, untyped]]
         #
         # @return [bool]

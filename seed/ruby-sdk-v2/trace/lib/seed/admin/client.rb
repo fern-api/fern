@@ -10,8 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Submission::Types::TestSubmissionStatus]
       #
       # @return [untyped]
@@ -34,8 +35,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Submission::Types::TestSubmissionUpdate]
       #
       # @return [untyped]
@@ -58,8 +60,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Submission::Types::WorkspaceSubmissionStatus]
       #
       # @return [untyped]
@@ -82,8 +85,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Submission::Types::WorkspaceSubmissionUpdate]
       #
       # @return [untyped]
@@ -106,8 +110,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
+      # @option params [String] :test_case_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Admin::Types::StoreTracedTestCaseRequest]
       #
       # @return [untyped]
@@ -135,8 +141,10 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
+      # @option params [Seed::V2::Problem::Types::TestCaseId] :test_case_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]
@@ -159,8 +167,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Admin::Types::StoreTracedWorkspaceRequest]
       #
       # @return [untyped]
@@ -188,8 +197,9 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Seed::Submission::Types::SubmissionId] :submission_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]

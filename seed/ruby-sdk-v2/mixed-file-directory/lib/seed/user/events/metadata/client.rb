@@ -14,8 +14,9 @@ module Seed
 
           # Get event metadata.
           #
-          # @param request_options [Seed::RequestOptions]
+          # @option params [Seed::Types::Id] :id
           #
+          # @param request_options [Seed::RequestOptions]
           # @param params [Hash[untyped, untyped]]
           #
           # @return [Seed::User::Events::Metadata::Types::Metadata]

@@ -12,7 +12,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
         #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
@@ -38,7 +37,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
         #
         # @return [Seed::Types::Object_::Types::ObjectWithRequiredField]
@@ -64,7 +62,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Seed::Types::Object_::Types::ObjectWithMapOfMap]
         #
         # @return [Seed::Types::Object_::Types::ObjectWithMapOfMap]
@@ -90,7 +87,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Seed::Types::Object_::Types::NestedObjectWithOptionalField]
         #
         # @return [Seed::Types::Object_::Types::NestedObjectWithOptionalField]
@@ -115,8 +111,9 @@ module Seed
           end
         end
 
-        # @param request_options [Seed::RequestOptions]
+        # @option params [String] :string
         #
+        # @param request_options [Seed::RequestOptions]
         # @param params [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
         #
         # @return [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
@@ -142,7 +139,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Hash[untyped, untyped]]
         #
         # @return [Seed::Types::Object_::Types::NestedObjectWithRequiredField]

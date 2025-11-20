@@ -10,8 +10,10 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :endpoint_version
+      # @option params [bool] :async
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Headers::Types::SendLiteralsInHeadersRequest]
       #
       # @return [Seed::Types::SendResponse]

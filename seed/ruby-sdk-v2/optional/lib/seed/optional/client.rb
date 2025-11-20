@@ -11,7 +11,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [String]
@@ -35,7 +34,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [String]
@@ -61,8 +59,10 @@ module Seed
       # Tests optional(nullable(T)) where T has only optional properties.
       # This should not generate wire tests expecting {} when Optional.empty() is passed.
       #
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :action_id
+      # @option params [String] :id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Optional::Types::DeployResponse]

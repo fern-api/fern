@@ -10,8 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Seed::Types::Types::MovieId] :movie_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::Movie]
@@ -36,7 +37,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Types::Types::Movie]
       #
       # @return [String]
@@ -61,8 +61,11 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [bool | nil] :shallow
+      # @option params [String | nil] :tag
+      # @option params [String] :x_api_version
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Types::Types::Metadata]
@@ -95,7 +98,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Types::Types::BigEntity]
       #
       # @return [Seed::Types::Types::Response]
@@ -121,7 +123,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]

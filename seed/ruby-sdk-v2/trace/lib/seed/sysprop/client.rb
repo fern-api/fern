@@ -10,8 +10,10 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Seed::Commons::Types::Language] :language
+      # @option params [Integer] :num_warm_instances
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]
@@ -34,7 +36,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Hash[Seed::Commons::Types::Language, Integer]]

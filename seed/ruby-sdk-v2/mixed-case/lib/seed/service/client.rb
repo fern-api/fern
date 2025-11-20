@@ -10,8 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :resource_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Service::Types::Resource]
@@ -35,8 +36,10 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer] :page_limit
+      # @option params [String] :before_date
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::Service::Types::Resource]]

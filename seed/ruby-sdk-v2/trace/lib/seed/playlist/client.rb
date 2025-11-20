@@ -12,8 +12,11 @@ module Seed
 
       # Create a new playlist
       #
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer] :service_param
+      # @option params [String] :datetime
+      # @option params [String | nil] :optional_datetime
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Playlist::Types::PlaylistCreateRequest]
       #
       # @return [Seed::Playlist::Types::Playlist]
@@ -51,8 +54,14 @@ module Seed
 
       # Returns the user's playlists
       #
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer] :service_param
+      # @option params [Integer | nil] :limit
+      # @option params [String] :other_field
+      # @option params [String] :multi_line_docs
+      # @option params [String | nil] :optional_multiple_field
+      # @option params [String] :multiple_field
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::Playlist::Types::Playlist]]
@@ -87,8 +96,10 @@ module Seed
 
       # Returns a playlist
       #
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer] :service_param
+      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Playlist::Types::Playlist]
@@ -114,8 +125,10 @@ module Seed
 
       # Updates a playlist
       #
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer] :service_param
+      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Playlist::Types::Playlist | nil]
@@ -140,8 +153,10 @@ module Seed
 
       # Deletes a playlist
       #
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Integer] :service_param
+      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]

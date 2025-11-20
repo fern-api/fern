@@ -10,8 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [Seed::Foo::Types::OptionalString] :optional_string
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Foo::Types::FindRequest]
       #
       # @return [Seed::Foo::Types::ImportingType]

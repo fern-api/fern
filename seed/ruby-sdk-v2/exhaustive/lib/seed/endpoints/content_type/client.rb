@@ -12,7 +12,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
         #
         # @return [untyped]
@@ -36,7 +35,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
         #
         # @return [untyped]

@@ -13,7 +13,6 @@ module Seed
       # GET request with basic auth scheme
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [bool]
@@ -38,7 +37,6 @@ module Seed
       # POST request with basic auth scheme
       #
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [bool]

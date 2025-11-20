@@ -12,7 +12,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Hash[untyped, untyped]]
         #
         # @return [Array[String]]
@@ -36,7 +35,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Hash[untyped, untyped]]
         #
         # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
@@ -60,7 +58,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Hash[untyped, untyped]]
         #
         # @return [Array[String]]
@@ -84,7 +81,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Hash[untyped, untyped]]
         #
         # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
@@ -108,7 +104,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Hash[untyped, untyped]]
         #
         # @return [Hash[String, String]]
@@ -132,7 +127,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Hash[untyped, untyped]]
         #
         # @return [Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]]
@@ -156,7 +150,6 @@ module Seed
         end
 
         # @param request_options [Seed::RequestOptions]
-        #
         # @param params [Hash[untyped, untyped]]
         #
         # @return [Seed::Types::Object_::Types::ObjectWithRequiredField | nil]

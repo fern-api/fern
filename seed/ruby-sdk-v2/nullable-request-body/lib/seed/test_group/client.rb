@@ -12,8 +12,11 @@ module Seed
 
       # Post a nullable request body
       #
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :path_param
+      # @option params [Seed::Types::PlainObject | nil | nil] :query_param_object
+      # @option params [Integer | nil | nil] :query_param_integer
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Hash[String, Object]]

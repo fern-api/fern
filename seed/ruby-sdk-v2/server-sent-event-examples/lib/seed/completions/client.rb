@@ -11,7 +11,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Seed::Completions::Types::StreamCompletionRequest]
       #
       # @return [untyped]

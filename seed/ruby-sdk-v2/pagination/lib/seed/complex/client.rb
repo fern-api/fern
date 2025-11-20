@@ -10,8 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :index
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Complex::Types::SearchRequest]
       #
       # @return [Seed::Complex::Types::PaginatedConversationResponse]

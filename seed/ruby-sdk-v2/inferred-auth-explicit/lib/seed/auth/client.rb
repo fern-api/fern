@@ -10,8 +10,9 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :x_api_key
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Auth::Types::GetTokenRequest]
       #
       # @return [Seed::Auth::Types::TokenResponse]
@@ -39,8 +40,9 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :x_api_key
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Seed::Auth::Types::RefreshTokenRequest]
       #
       # @return [Seed::Auth::Types::TokenResponse]

@@ -12,8 +12,9 @@ module Seed
             @client = client
           end
 
-          # @param request_options [Seed::RequestOptions]
+          # @option params [String] :notification_id
           #
+          # @param request_options [Seed::RequestOptions]
           # @param params [Hash[untyped, untyped]]
           #
           # @return [Seed::Types::Types::Exception]

@@ -10,8 +10,10 @@ module Seed
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :tenant_id
+      # @option params [String] :organization_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::Organizations::Types::Organization]
@@ -35,8 +37,11 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :tenant_id
+      # @option params [String] :organization_id
+      # @option params [String] :user_id
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Seed::User::Types::User]
@@ -60,8 +65,11 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String] :tenant_id
+      # @option params [String] :organization_id
+      # @option params [Integer | nil] :limit
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [Hash[untyped, untyped]]
       #
       # @return [Array[Seed::Organizations::Types::Organization]]

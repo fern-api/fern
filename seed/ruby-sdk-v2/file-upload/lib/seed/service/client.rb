@@ -11,7 +11,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [void]
       #
       # @return [untyped]
@@ -107,7 +106,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [void]
       #
       # @return [untyped]
@@ -133,8 +131,13 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @option params [String | nil] :maybe_string
+      # @option params [Integer] :integer
+      # @option params [Integer | nil] :maybe_integer
+      # @option params [String] :list_of_strings
+      # @option params [String | nil] :optional_list_of_strings
       #
+      # @param request_options [Seed::RequestOptions]
       # @param params [void]
       #
       # @return [untyped]
@@ -161,7 +164,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [void]
       #
       # @return [untyped]
@@ -208,7 +210,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [void]
       #
       # @return [untyped]
@@ -247,7 +248,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [void]
       #
       # @return [untyped]
@@ -349,7 +349,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [void]
       #
       # @return [String]
@@ -383,7 +382,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [void]
       #
       # @return [String]
@@ -416,7 +414,6 @@ module Seed
       end
 
       # @param request_options [Seed::RequestOptions]
-      #
       # @param params [Hash[untyped, untyped]]
       #
       # @return [untyped]
