@@ -489,9 +489,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                     )
                 ],
                 v2_nodes=[
-                    AST.Expression(
-                        f'return self.root.{self._get_discriminant_attr_name()} == "{discriminant_value}"'
-                    )
+                    AST.Expression(f'return self.root.{self._get_discriminant_attr_name()} == "{discriminant_value}"')
                 ],
                 write_node=writer.write_node,
             )
@@ -519,7 +517,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
         return_type = single_union_type.shape.visit(
             same_properties_as_object=lambda declared_type_name: external_pydantic_model.get_type_hint_for_type_reference(
-                ir_types.TypeReference.factory.named(declared_type_name_to_named_type(declared_type_name=declared_type_name))
+                ir_types.TypeReference.factory.named(
+                    declared_type_name_to_named_type(declared_type_name=declared_type_name)
+                )
             ),
             single_property=lambda property: external_pydantic_model.get_type_hint_for_type_reference(property.type),
             no_properties=lambda: AST.TypeHint.none(),
