@@ -503,7 +503,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             // Validate that code samples were converted to examples
             const getUserEndpoint = serviceWithEndpoints.endpoints?.[0];
             expect(getUserEndpoint).toBeDefined();
-            
+
             if (getUserEndpoint?.examples) {
                 // Should have 3 code samples: Python, TypeScript, Go
                 expect(getUserEndpoint.examples.length).toBeGreaterThanOrEqual(3);
