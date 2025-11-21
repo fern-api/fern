@@ -14,6 +14,7 @@ export const GithubSelfhostedSchema: core.serialization.ObjectSchema<
     uri: core.serialization.string(),
     token: core.serialization.string(),
     mode: core.serialization.stringLiteral("pull-request").optional(),
+    branch: core.serialization.string().optional(),
     license: GithubLicenseSchema.optional(),
 });
 
@@ -22,6 +23,7 @@ export declare namespace GithubSelfhostedSchema {
         uri: string;
         token: string;
         mode?: "pull-request" | null;
+        branch?: string | null;
         license?: GithubLicenseSchema.Raw | null;
     }
 }

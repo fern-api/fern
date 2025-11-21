@@ -310,6 +310,9 @@ async function postProcessGithubSelfHosted(
         if (selfhostedGithubConfig.mode === "pull-request") {
             context.logger.debug(`Checking out new branch ${prBranch}`);
             await repository.checkout(prBranch);
+        } else if (selfhostedGithubConfig.branch != null) {
+            context.logger.debug(`Checking out branch ${selfhostedGithubConfig.branch}`);
+            await repository.checkout(selfhostedGithubConfig.branch);
         }
 
         context.logger.debug("Checking for .fernignore file...");
@@ -334,7 +337,7 @@ async function postProcessGithubSelfHosted(
         }
 
         if (selfhostedGithubConfig.mode === "pull-request") {
-            const baseBranch = await repository.getDefaultBranch();
+            const baseBranch = selfhostedGithubConfig.branch ?? (await repository.getDefaultBranch());
 
             const octokit = new Octokit({
                 auth: selfhostedGithubConfig.token
