@@ -8,11 +8,7 @@ export interface BaseClientOptions {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    apiKey?: core.Supplier<string | undefined>;
-    /** Override the X-Another-Header header */
-    xAnotherHeader: core.Supplier<string>;
-    /** Override the X-API-Version header */
-    xApiVersion?: "01-01-2000";
+    headerTokenAuth: core.Supplier<string>;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -32,10 +28,6 @@ export interface BaseRequestOptions {
     maxRetries?: number;
     /** A hook to abort the request. */
     abortSignal?: AbortSignal;
-    /** Override the X-Another-Header header */
-    xAnotherHeader?: string;
-    /** Override the X-API-Version header */
-    xApiVersion?: "01-01-2000";
     /** Additional query string parameters to include in the request. */
     queryParams?: Record<string, unknown>;
     /** Additional headers to include in the request. */
@@ -55,13 +47,11 @@ export function normalizeClientOptions<T extends BaseClientOptions>(options: T):
     const headers = mergeHeaders(
         {
             "X-Fern-Language": "JavaScript",
-            "X-Fern-SDK-Name": "@fern/auth-environment-variables",
+            "X-Fern-SDK-Name": "@fern/header-auth",
             "X-Fern-SDK-Version": "0.0.1",
-            "User-Agent": "@fern/auth-environment-variables/0.0.1",
+            "User-Agent": "@fern/header-auth/0.0.1",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
-            "X-Another-Header": options?.xAnotherHeader,
-            "X-API-Version": options?.xApiVersion ?? "01-01-2000",
         },
         options?.headers,
     );

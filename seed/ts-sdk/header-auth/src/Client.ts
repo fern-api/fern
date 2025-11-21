@@ -4,17 +4,17 @@ import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
-export declare namespace SeedAuthEnvironmentVariablesClient {
+export declare namespace SeedHeaderTokenClient {
     export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class SeedAuthEnvironmentVariablesClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<SeedAuthEnvironmentVariablesClient.Options>;
+export class SeedHeaderTokenClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedHeaderTokenClient.Options>;
     protected _service: ServiceClient | undefined;
 
-    constructor(options: SeedAuthEnvironmentVariablesClient.Options) {
+    constructor(options: SeedHeaderTokenClient.Options) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
