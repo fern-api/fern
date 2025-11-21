@@ -437,4 +437,86 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/grpc-comments-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/grpc-comments-ir.snap");
     });
+
+    it("should handle OpenAPI with x-codeSamples extension", async () => {
+        // Test OpenAPI spec with x-codeSamples extension (Redocly format)
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/x-code-samples")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "x-code-samples"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that x-codeSamples were parsed into IR
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        const service = services[0];
+        expect(service).toBeDefined();
+        if (service && typeof service === "object" && "endpoints" in service) {
+            const serviceWithEndpoints = service as { endpoints?: Array<{ examples?: unknown[] }> };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBeGreaterThan(0);
+
+            // Validate that code samples were converted to examples
+            const getUserEndpoint = serviceWithEndpoints.endpoints?.[0];
+            expect(getUserEndpoint).toBeDefined();
+            
+            if (getUserEndpoint?.examples) {
+                // Should have 3 code samples: Python, TypeScript, Go
+                expect(getUserEndpoint.examples.length).toBeGreaterThanOrEqual(3);
+            }
+        }
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/x-code-samples-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/x-code-samples-ir.snap");
+    });
 });
