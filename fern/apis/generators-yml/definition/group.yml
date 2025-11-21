@@ -76,6 +76,7 @@ types:
       uri: string
       token: string
       mode: optional<literal<"pull-request">>
+      branch: optional<string>
       license: optional<license.GithubLicenseSchema>
 
   GeneratorSnippetsSchema:

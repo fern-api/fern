@@ -8,5 +8,6 @@ export interface GithubSelfhostedSchema {
     uri: string;
     token: string;
     mode?: "pull-request";
+    branch?: string;
     license?: FernDefinition.GithubLicenseSchema;
 }
