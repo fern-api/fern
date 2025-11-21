@@ -66,8 +66,7 @@ jobs:
 
       - name: Build PHP SDK Docker image
         run: |
-          cd generators/php/sdk
-          docker build -t fernapi/fern-php-sdk:latest .
+          docker build -f generators/php/sdk/Dockerfile -t fernapi/fern-php-sdk:latest .
 
       - name: Generate PHP SDK for test definition
         env:
