@@ -307,6 +307,16 @@ async function postProcessGithubSelfHosted(
         const now = new Date();
         const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace("Z", "").replace(".", "_");
         const prBranch = `fern-bot/${formattedDate}`;
+        // Ensure git commits are attributed to a bot user so pushes/PRs have a consistent author.
+        try {
+            // Use repository helper to set git user/email if available
+            await repository.setUserAndEmail({
+                name: "fern-api",
+                email: "115122769+fern-api[bot]@users.noreply.github.com"
+            });
+        } catch (_other) {
+            // pass
+        }
 
         const mode = selfhostedGithubConfig.mode ?? "push";
         switch (mode) {
@@ -396,7 +406,8 @@ async function postProcessGithubSelfHosted(
                 );
 
                 if (!selfhostedGithubConfig.previewMode) {
-                    await repository.push();
+                    await repository.pushWithRebasingRemote();
+
                     const pushedBranch = await repository.getCurrentBranch();
                     context.logger.info(
                         `Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`
