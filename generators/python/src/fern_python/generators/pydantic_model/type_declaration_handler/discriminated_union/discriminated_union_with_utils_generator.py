@@ -540,6 +540,7 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 )
                 writer.write("return ")
                 writer.write_node(instantiation)
+                writer.write_line("")
 
             def write_v1_logic(writer: AST.NodeWriter) -> None:
                 writer.write_line(f'if self.__root__.{discriminant_attr_name} != "{discriminant_value}":')
@@ -580,7 +581,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 )
 
             if self._custom_config.version == PydanticVersionCompatibility.Both:
-                writer.write_line(f"if {self._context.core_utilities.get_is_pydantic_v2()}:")
+                writer.write("if ")
+                writer.write_node(self._context.core_utilities.get_is_pydantic_v2())
+                writer.write_line(":")
                 writer.indent()
                 write_v2_logic(writer)
                 writer.outdent()
