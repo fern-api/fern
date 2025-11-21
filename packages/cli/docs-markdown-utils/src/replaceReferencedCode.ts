@@ -27,11 +27,11 @@ export async function replaceReferencedCode({
     context: TaskContext;
     fileLoader?: (filepath: AbsoluteFilePath) => Promise<string>;
 }): Promise<string> {
-    if (!markdown.includes("<Code ")) {
+    if (!markdown.includes("<Code")) {
         return markdown;
     }
 
-    const regex = /([ \t]*)<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
+    const regex = /([ \t]*)<Code(?![a-zA-Z])[\s\S]*?src={?['"]([^'"]+)['"](?! \+)}?([\s\S]*?)\/>/g;
 
     let newMarkdown = markdown;
 
