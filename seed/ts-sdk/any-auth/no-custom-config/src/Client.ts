@@ -3,7 +3,7 @@
 import { AuthClient } from "./api/resources/auth/client/Client.js";
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
 export declare namespace SeedAnyAuthClient {
@@ -16,7 +16,7 @@ export declare namespace SeedAnyAuthClient {
 }
 
 export class SeedAnyAuthClient {
-    protected readonly _options: SeedAnyAuthClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedAnyAuthClient.Options>;
     private readonly _oauthTokenProvider: core.OAuthTokenProvider;
     protected _auth: AuthClient | undefined;
     protected _user: UserClient | undefined;

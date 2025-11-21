@@ -2,7 +2,7 @@
 
 import { CustomAuthClient } from "./api/resources/customAuth/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedCustomAuthClient {
     export interface Options extends BaseClientOptions {}
@@ -11,7 +11,7 @@ export declare namespace SeedCustomAuthClient {
 }
 
 export class SeedCustomAuthClient {
-    protected readonly _options: SeedCustomAuthClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedCustomAuthClient.Options>;
     protected _customAuth: CustomAuthClient | undefined;
 
     constructor(options: SeedCustomAuthClient.Options) {

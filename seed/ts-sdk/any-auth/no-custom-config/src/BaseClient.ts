@@ -34,7 +34,16 @@ export interface BaseRequestOptions {
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
 }
 
-export function normalizeClientOptions<T extends BaseClientOptions>(options: T): T {
+export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
+    logging: core.logging.Logger;
+    authProvider?: core.AuthProvider;
+};
+
+export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
+    authProvider: core.AuthProvider;
+};
+
+export function normalizeClientOptions<T extends BaseClientOptions>(options: T): NormalizedClientOptions<T> {
     const headers = mergeHeaders(
         {
             "X-Fern-Language": "JavaScript",
@@ -51,5 +60,5 @@ export function normalizeClientOptions<T extends BaseClientOptions>(options: T):
         ...options,
         logging: core.logging.createLogger(options?.logging),
         headers,
-    } as T;
+    } as NormalizedClientOptions<T>;
 }

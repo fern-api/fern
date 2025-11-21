@@ -6,7 +6,7 @@ import { NestedNoAuthClient } from "./api/resources/nestedNoAuth/client/Client.j
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import { SimpleClient } from "./api/resources/simple/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
 export declare namespace SeedOauthClientCredentialsWithVariablesClient {
@@ -19,7 +19,7 @@ export declare namespace SeedOauthClientCredentialsWithVariablesClient {
 }
 
 export class SeedOauthClientCredentialsWithVariablesClient {
-    protected readonly _options: SeedOauthClientCredentialsWithVariablesClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedOauthClientCredentialsWithVariablesClient.Options>;
     private readonly _oauthTokenProvider: core.OAuthTokenProvider;
     protected _auth: AuthClient | undefined;
     protected _nestedNoAuth: NestedNoAuthClient | undefined;

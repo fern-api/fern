@@ -4,10 +4,10 @@ import { InlinedRequestsClient } from "./api/resources/inlinedRequests/client/Cl
 import { NoAuthClient } from "./api/resources/noAuth/client/Client.mjs";
 import { NoReqBodyClient } from "./api/resources/noReqBody/client/Client.mjs";
 import { ReqWithHeadersClient } from "./api/resources/reqWithHeaders/client/Client.mjs";
-import { normalizeClientOptions } from "./BaseClient.mjs";
+import { normalizeClientOptionsWithAuth } from "./BaseClient.mjs";
 export class SeedExhaustiveClient {
     constructor(options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
     get endpoints() {
         var _a;

@@ -5,7 +5,7 @@ import { NestedClient } from "./api/resources/nested/client/Client.js";
 import { NestedNoAuthClient } from "./api/resources/nestedNoAuth/client/Client.js";
 import { SimpleClient } from "./api/resources/simple/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import * as core from "./core/index.js";
 
 export declare namespace SeedOauthClientCredentialsDefaultClient {
@@ -18,7 +18,7 @@ export declare namespace SeedOauthClientCredentialsDefaultClient {
 }
 
 export class SeedOauthClientCredentialsDefaultClient {
-    protected readonly _options: SeedOauthClientCredentialsDefaultClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedOauthClientCredentialsDefaultClient.Options>;
     private readonly _oauthTokenProvider: core.OAuthTokenProvider;
     protected _auth: AuthClient | undefined;
     protected _nestedNoAuth: NestedNoAuthClient | undefined;
