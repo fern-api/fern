@@ -19,6 +19,7 @@ export declare namespace ParsedSingleUnionTypeForUnion {
     export interface Init {
         singleUnionType: SingleUnionType;
         union: UnionTypeDeclaration;
+        unionTypeName: string;
         includeUtilsOnUnionMembers: boolean;
         includeSerdeLayer: boolean;
         retainOriginalCasing: boolean;
@@ -33,10 +34,12 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     private includeSerdeLayer: boolean;
     private retainOriginalCasing: boolean;
     protected union: UnionTypeDeclaration;
+    private unionTypeName: string;
 
     constructor({
         singleUnionType,
         union,
+        unionTypeName,
         includeUtilsOnUnionMembers,
         includeSerdeLayer,
         retainOriginalCasing,
@@ -78,6 +81,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
         this.singleUnionTypeFromUnion = singleUnionType;
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
+        this.unionTypeName = unionTypeName;
     }
 
     public getDocs(): string | null | undefined {
@@ -85,7 +89,23 @@ export class ParsedSingleUnionTypeForUnion<Context extends BaseContext> extends 
     }
 
     public getTypeName(): string {
-        return this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.safeName;
+        return SingleUnionTypeProperties._visit(this.singleUnionTypeFromUnion.shape, {
+            samePropertiesAsObject: (typeRef) => this.stripUnionTypeNamePrefix(typeRef.name.pascalCase.safeName),
+            singleProperty: () => this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.safeName,
+            noProperties: () => this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.safeName,
+            _other: () => this.singleUnionTypeFromUnion.discriminantValue.name.pascalCase.safeName
+        });
+    }
+
+    // Strip the union type name prefix from shape type names (e.g., "UnionTypeNameFieldName" -> "FieldName")
+    private stripUnionTypeNamePrefix(shapeTypeName: string): string {
+        if (shapeTypeName.startsWith(this.unionTypeName)) {
+            const withoutPrefix = shapeTypeName.substring(this.unionTypeName.length);
+            if (withoutPrefix.length > 0 && withoutPrefix.charAt(0) === withoutPrefix.charAt(0).toUpperCase()) {
+                return withoutPrefix;
+            }
+        }
+        return shapeTypeName;
     }
 
     public needsRequestResponse(context: Context): { request: boolean; response: boolean } {
