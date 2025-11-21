@@ -9,6 +9,7 @@ import {
 import { generateRustTypeForTypeReference } from "../converters/getRustTypeForTypeReference";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 import { typeSupportsHashAndEq, typeSupportsPartialEq } from "../utils/primitiveTypeUtils";
+import { isFieldRecursive } from "../utils/recursiveTypeUtils";
 
 export class UndiscriminatedUnionGenerator {
     private readonly typeDeclaration: TypeDeclaration;
@@ -100,7 +101,15 @@ export class UndiscriminatedUnionGenerator {
     }
 
     private generateUnionMember(writer: rust.Writer, member: UndiscriminatedUnionMember, index: number): void {
-        const memberType = generateRustTypeForTypeReference(member.type, this.context);
+        // Find the typeId for this union to detect recursive fields
+        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
+
+        // Check if this member creates a recursive reference
+        // Only apply Box wrapping for named types, not containers (Vec, HashMap are already heap-allocated)
+        const isRecursive =
+            member.type.type === "named" && typeId ? isFieldRecursive(typeId, member.type, this.context.ir) : false;
+
+        const memberType = generateRustTypeForTypeReference(member.type, this.context, isRecursive);
 
         // Generate variant name based on the type or index
         const variantName = this.getVariantNameForMember(member, index);
@@ -206,10 +215,18 @@ export class UndiscriminatedUnionGenerator {
 
     private generateConversionMethods(writer: rust.Writer): void {
         const generatedMethods = new Set<string>();
+        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
 
         this.undiscriminatedUnionTypeDeclaration.members.forEach((member, index) => {
             const variantName = this.getVariantNameForMember(member, index);
-            const memberType = generateRustTypeForTypeReference(member.type, this.context);
+            // Only apply Box wrapping for named types, not containers
+            const isRecursive =
+                member.type.type === "named" && typeId ? isFieldRecursive(typeId, member.type, this.context.ir) : false;
+            const memberType = generateRustTypeForTypeReference(member.type, this.context, isRecursive);
+
+            // For the return type of into_*, use the unboxed type
+            const unboxedMemberType = generateRustTypeForTypeReference(member.type, this.context, false);
+
             const methodName = `as_${variantName.toLowerCase()}`;
             const ownedMethodName = `into_${variantName.toLowerCase()}`;
 
@@ -227,9 +244,12 @@ export class UndiscriminatedUnionGenerator {
                 writer.newLine();
 
                 // Also generate owned conversion
-                writer.writeBlock(`pub fn ${ownedMethodName}(self) -> Option<${memberType.toString()}>`, () => {
+                // For boxed named types, return unboxed type and dereference: Some(*value)
+                // For containers (Vec, HashMap), just return the value as-is
+                const returnValue = isRecursive ? "Some(*value)" : "Some(value)";
+                writer.writeBlock(`pub fn ${ownedMethodName}(self) -> Option<${unboxedMemberType.toString()}>`, () => {
                     writer.writeLine("match self {");
-                    writer.writeLine(`            Self::${variantName}(value) => Some(value),`);
+                    writer.writeLine(`            Self::${variantName}(value) => ${returnValue},`);
                     writer.writeLine("            _ => None,");
                     writer.writeLine("        }");
                 });
