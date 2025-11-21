@@ -1,5 +1,24 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.39.0
+  changelogEntry:
+    - summary: |
+        Add type-safe casting methods for discriminated union types. For each union variant, generates `is_*()` methods to check the variant type and `as_*()` methods to cast to the specific type with runtime validation.
+        
+        ```python
+        animal: Animal = Animal.factory.dog(Dog(name="Fido"))
+        
+        if animal.is_dog():
+            dog = animal.as_dog()  # Returns Dog type
+            print(dog.name)
+        
+        # Raises ValueError if wrong type
+        cat = animal.as_cat()  # ValueError: Expected cat; got dog
+        ```
+      type: feat
+  createdAt: "2025-11-21"
+  irVersion: 61
+
 - version: 4.38.3-rc0
   changelogEntry:
     - summary: Add support for custom pagination
