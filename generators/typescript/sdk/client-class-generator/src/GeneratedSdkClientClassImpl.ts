@@ -1916,10 +1916,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             }
         }
 
-        for (const header of this.authHeaders) {
-            headers.push({ type: "authScheme", header });
-        }
-
         return headers;
     }
 
