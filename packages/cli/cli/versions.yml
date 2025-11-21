@@ -1,7 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Re-publish CLI. 
+        Revert "fix(openapi): handle situations where discriminated unions reference unknown variants"
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.2.5
+
+- changelogEntry:
+    - summary: |
+        Re-publish CLI.
       type: fix
   irVersion: 61
   createdAt: "2025-11-21"
