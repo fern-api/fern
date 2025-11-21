@@ -53,6 +53,7 @@ import {
     AuthProviderInstance,
     BasicAuthProviderInstance,
     BearerAuthProviderInstance,
+    HeaderAuthProviderInstance,
     InferredAuthProviderInstance
 } from "./auth-provider";
 import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest";
@@ -438,6 +439,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 },
                 header: (header) => {
                     this.authHeaders.push(header);
+                    if (!isAnyAuth) {
+                        this.authProvider = new HeaderAuthProviderInstance();
+                    }
                 },
                 oauth: (oauthScheme) => {
                     this.oauthAuthScheme = oauthScheme;

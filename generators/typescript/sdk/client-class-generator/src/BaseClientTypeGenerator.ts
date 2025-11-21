@@ -175,6 +175,14 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                     });
                     authProviderCreation = "new BasicAuthProvider(options)";
                     break;
+                } else if (authScheme.type === "header") {
+                    // Import HeaderAuthProvider
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/HeaderAuthProvider.js",
+                        namedImports: ["HeaderAuthProvider"]
+                    });
+                    authProviderCreation = "new HeaderAuthProvider(options)";
+                    break;
                 } else if (authScheme.type === "inferred") {
                     // Import InferredAuthProvider
                     context.sourceFile.addImportDeclaration({
