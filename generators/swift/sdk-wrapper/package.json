@@ -1,0 +1,41 @@
+{
+  "name": "@fern-api/swift-sdk-wrapper",
+  "version": "0.0.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fern-api/fern.git",
+    "directory": "generators/swift/sdk-wrapper"
+  },
+  "sideEffects": false,
+  "type": "module",
+  "main": "lib/cli.js",
+  "source": "src/cli.ts",
+  "types": "lib/cli.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
+    "compile": "tsc --build",
+    "compile:debug": "tsc --build --sourceMap",
+    "depcheck": "depcheck",
+    "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap",
+    "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
+    "test": "vitest --passWithNoTests --run",
+    "test:debug": "pnpm run test --inspect --no-file-parallelism",
+    "test:update": "vitest --passWithNoTests --run -u"
+  },
+  "devDependencies": {
+    "@fern-api/base-generator": "workspace:*",
+    "@fern-api/configs": "workspace:*",
+    "@fern-api/core-utils": "workspace:*",
+    "@fern-api/fs-utils": "workspace:*",
+    "@fern-api/logger": "workspace:*",
+    "@fern-api/swift-sdk": "workspace:*",
+    "@types/node": "18.15.3",
+    "depcheck": "^1.4.7",
+    "tsup": "^8.5.0",
+    "typescript": "5.9.2",
+    "vitest": "^4.0.8"
+  }
+}
