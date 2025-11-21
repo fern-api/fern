@@ -123,6 +123,7 @@ export async function runLocalGenerationForWorkspace({
                         }
                         intermediateRepresentation.readmeConfig.whiteLabel = true;
                     }
+                    intermediateRepresentation.selfHosted = organization.body.selfHostedSdKs;
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
