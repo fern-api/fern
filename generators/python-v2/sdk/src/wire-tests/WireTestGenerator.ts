@@ -230,13 +230,13 @@ export class WireTestGenerator {
             python.codeBlock(`if query_params:
         query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}
         request_body["queryParameters"] = query_parameters`),
-            python.codeBlock(
-                `response = requests.post(f"{wiremock_admin_url}/requests/find", json=request_body)`
-            ),
+            python.codeBlock(`response = requests.post(f"{wiremock_admin_url}/requests/find", json=request_body)`),
             python.codeBlock(`assert response.status_code == 200, "Failed to query WireMock requests"`),
             python.codeBlock(`result = response.json()`),
             python.codeBlock(`requests_found = len(result.get("requests", []))`),
-            python.codeBlock(`assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"`)
+            python.codeBlock(
+                `assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"`
+            )
         ];
 
         const method = python.method({
