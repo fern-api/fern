@@ -173,16 +173,6 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         zipFilename: OUTPUT_ZIP_FILENAME,
                         unzipOutput: options?.unzipOutput
                     });
-                    if (ir.selfHosted) {
-                        const tmpDir = await tmp.dir();
-                        await typescriptProject.copyProjectTo({
-                            destinationPath: AbsoluteFilePath.of(tmpDir.path),
-                            zipFilename: OUTPUT_ZIP_FILENAME,
-                            unzipOutput: true,
-                            logger
-                        });
-                        await this.pushToGitHub(ir, tmpDir.path, logger);
-                    }
                 },
                 downloadFiles: async () => {
                     await typescriptProject.installDependencies(logger);
