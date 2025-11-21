@@ -333,4 +333,79 @@ describe("replaceReferencedCode", () => {
 
         `);
     });
+
+    it("should handle formatted on multiple lines", async () => {
+        const markdown = `
+            <Code
+                src="./example.js"
+                title={"Hello"}
+            />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/example.js")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`js title={"Hello"}
+            test content
+            \`\`\`
+
+        `);
+    });
+
+    it("should not replace CodeBlock components", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" />
+            <CodeBlock src="../snippets/should-not-replace.js" />
+            <CodeGroup>
+                <Code src="../snippets/test.ts" />
+                <CodeBlock language="javascript">
+                    console.log("inline code");
+                </CodeBlock>
+            </CodeGroup>
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "python content";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.ts")) {
+                    return "typescript content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            python content
+            \`\`\`
+
+            <CodeBlock src="../snippets/should-not-replace.js" />
+            <CodeGroup>
+                \`\`\`ts title={"test.ts"}
+                typescript content
+                \`\`\`
+
+                <CodeBlock language="javascript">
+                    console.log("inline code");
+                </CodeBlock>
+            </CodeGroup>
+        `);
+    });
 });
