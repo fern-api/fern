@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Support x-code-samples in OpenAPI specs on the latest version of the OpenAPI parser.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.2.0
+
 - changelogEntry:
     - summary: |
         Add detailed output to `fern generator upgrade` showing which generators were upgraded, their version changes, and changelog links. The command now displays a summary grouped by workspace and group, or reports "All generators are already up to date" when no upgrades are applied.
