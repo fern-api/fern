@@ -29,6 +29,12 @@ interface AppliedUpgrade {
     newVersion: string;
 }
 
+interface AlreadyUpToDate {
+    generatorName: string;
+    groupName: string;
+    version: string;
+}
+
 function getChangelogUrl(generatorName: string): string | undefined {
     const changelogMap: Record<string, string> = {
         "fernapi/fern-typescript-sdk": "https://buildwithfern.com/learn/sdks/generators/typescript/changelog",
@@ -65,11 +71,12 @@ export async function loadAndUpdateGenerators({
     updatedConfiguration: string | undefined;
     skippedMajorUpgrades: SkippedMajorUpgrade[];
     appliedUpgrades: AppliedUpgrade[];
+    alreadyUpToDate: AlreadyUpToDate[];
 }> {
     const filepath = await getPathToGeneratorsConfiguration({ absolutePathToWorkspace });
     if (filepath == null || !(await doesPathExist(filepath))) {
         context.logger.debug("Generators configuration file was not found, no generators to upgrade.");
-        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [] };
+        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [], alreadyUpToDate: [] };
     }
     const contents = await readFile(filepath);
     context.logger.debug(`Found generators: ${contents.toString()}`);
@@ -80,16 +87,17 @@ export async function loadAndUpdateGenerators({
     const generatorGroups = parsedDocument.get("groups");
     if (generatorGroups == null) {
         context.logger.debug("No groups were found within the generators configuration, no generators to upgrade.");
-        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [] };
+        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [], alreadyUpToDate: [] };
     }
     if (!YAML.isMap(generatorGroups)) {
         context.failAndThrow(`Expected 'groups' to be a map in ${path.relative(process.cwd(), filepath)}`);
-        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [] };
+        return { updatedConfiguration: undefined, skippedMajorUpgrades: [], appliedUpgrades: [], alreadyUpToDate: [] };
     }
     context.logger.debug(`Groups found: ${generatorGroups.toString()}`);
 
     const skippedMajorUpgrades: SkippedMajorUpgrade[] = [];
     const appliedUpgrades: AppliedUpgrade[] = [];
+    const alreadyUpToDate: AlreadyUpToDate[] = [];
 
     for (const groupBlock of generatorGroups.items) {
         // The typing appears to be off in this lib, but BLOCK.key.value is meant to always be available
@@ -151,16 +159,28 @@ export async function loadAndUpdateGenerators({
             const versionToUse = latestVersion ?? currentGeneratorVersion;
 
             if (latestVersion != null) {
-                context.logger.debug(
-                    chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
-                );
-                generator.set("version", latestVersion);
-                appliedUpgrades.push({
-                    generatorName,
-                    groupName,
-                    previousVersion: currentGeneratorVersion,
-                    newVersion: latestVersion
-                });
+                if (latestVersion !== currentGeneratorVersion) {
+                    context.logger.debug(
+                        chalk.green(`Upgrading ${generatorName} from ${currentGeneratorVersion} to ${latestVersion}`)
+                    );
+                    generator.set("version", latestVersion);
+                    appliedUpgrades.push({
+                        generatorName,
+                        groupName,
+                        previousVersion: currentGeneratorVersion,
+                        newVersion: latestVersion
+                    });
+                } else {
+                    // Generator is already on the latest version
+                    context.logger.debug(
+                        chalk.gray(`${generatorName} is already on the latest version: ${currentGeneratorVersion}`)
+                    );
+                    alreadyUpToDate.push({
+                        generatorName,
+                        groupName,
+                        version: currentGeneratorVersion
+                    });
+                }
             }
 
             if (!includeMajor) {
@@ -189,7 +209,7 @@ export async function loadAndUpdateGenerators({
         }
     }
 
-    return { updatedConfiguration: parsedDocument.toString(), skippedMajorUpgrades, appliedUpgrades };
+    return { updatedConfiguration: parsedDocument.toString(), skippedMajorUpgrades, appliedUpgrades, alreadyUpToDate };
 }
 
 export async function upgradeGenerator({
@@ -209,6 +229,7 @@ export async function upgradeGenerator({
 }): Promise<void> {
     const allSkippedMajorUpgrades: SkippedMajorUpgrade[] = [];
     const allAppliedUpgrades: Array<{ workspace: string | undefined; upgrades: AppliedUpgrade[] }> = [];
+    const allAlreadyUpToDate: Array<{ workspace: string | undefined; upToDate: AlreadyUpToDate[] }> = [];
 
     await Promise.all(
         apiWorkspaces.map(async (workspace) => {
@@ -256,6 +277,12 @@ export async function upgradeGenerator({
                         upgrades: result.appliedUpgrades
                     });
                 }
+                if (result.alreadyUpToDate.length > 0) {
+                    allAlreadyUpToDate.push({
+                        workspace: workspace.workspaceName,
+                        upToDate: result.alreadyUpToDate
+                    });
+                }
             });
         })
     );
@@ -289,11 +316,36 @@ export async function upgradeGenerator({
                 }
             }
         }
-    } else {
+    }
+
+    if (allAlreadyUpToDate.length > 0) {
+        cliContext.logger.info("");
+        cliContext.logger.info(chalk.dim("Generators already on latest version:"));
+
+        for (const { workspace, upToDate } of allAlreadyUpToDate) {
+            const upToDateByGroup = new Map<string, AlreadyUpToDate[]>();
+            for (const item of upToDate) {
+                const existing = upToDateByGroup.get(item.groupName) ?? [];
+                existing.push(item);
+                upToDateByGroup.set(item.groupName, existing);
+            }
+
+            for (const [groupName, groupItems] of upToDateByGroup) {
+                const workspacePrefix = workspace != null ? `[${workspace}] ` : "";
+                cliContext.logger.info(chalk.dim(`${workspacePrefix}Group ${groupName}:`));
+
+                for (const item of groupItems) {
+                    cliContext.logger.info(chalk.dim(`  - ${item.generatorName}: ${item.version} (latest)`));
+                }
+            }
+        }
+    }
+
+    if (allAppliedUpgrades.length === 0 && allAlreadyUpToDate.length === 0) {
         const filterMessage =
             group != null ? ` for group ${group}` : generator != null ? ` for generator ${generator}` : "";
         cliContext.logger.info("");
-        cliContext.logger.info(chalk.gray(`All generators are already up to date${filterMessage}.`));
+        cliContext.logger.info(chalk.gray(`No generators found${filterMessage}.`));
     }
 
     if (allSkippedMajorUpgrades.length > 0) {
