@@ -384,14 +384,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)
                     ];
 
-                    if (isMultiUrl && subpackage.service != null) {
-                        const service = this.context.getHttpServiceOrThrow(subpackage.service);
-                        const firstEndpoint = service.endpoints[0];
-                        if (firstEndpoint?.baseUrl != null) {
-                            subClientArgs.push(php.codeblock(`$this->environment`));
-                        } else {
-                            subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
-                        }
+                    if (isMultiUrl) {
+                        subClientArgs.push(php.codeblock(`$this->environment`));
                     } else {
                         subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
                     }

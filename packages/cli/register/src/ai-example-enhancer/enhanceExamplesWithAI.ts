@@ -3,6 +3,8 @@ import { FdrAPI as FdrCjsSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { type EndpointSelector, type HttpMethod, OpenAPIPruner } from "@fern-api/openapi-pruner";
 import { TaskContext } from "@fern-api/task-context";
+import boxen from "boxen";
+import chalk from "chalk";
 import { readFile, writeFile } from "fs/promises";
 import * as yaml from "js-yaml";
 import { OpenAPIV3 } from "openapi-types";
@@ -15,6 +17,41 @@ import {
     loadExistingOverrideCoverage,
     writeAiExamplesOverride
 } from "./writeAiExamplesOverride";
+
+// Circuit breaker for AI enhancement to prevent excessive failures
+class CircuitBreaker {
+    private failureCount = 0;
+    private readonly failureThreshold = 30;
+    private isOpen = false;
+
+    public recordFailure(): void {
+        this.failureCount++;
+        if (this.failureCount >= this.failureThreshold) {
+            this.isOpen = true;
+        }
+    }
+
+    public recordSuccess(): void {
+        // Reset on success to allow recovery
+        this.failureCount = 0;
+        this.isOpen = false;
+    }
+
+    public shouldSkip(): boolean {
+        return this.isOpen;
+    }
+
+    public getFailureCount(): number {
+        return this.failureCount;
+    }
+
+    public getThreshold(): number {
+        return this.failureThreshold;
+    }
+}
+
+// Static flag to ensure the informative message is only logged once per process
+let hasLoggedInfoMessage = false;
 
 interface BodyV3 {
     type?: "json" | "stream" | "sse" | "filename";
@@ -92,7 +129,7 @@ async function writeSpecToFile(spec: string, filename: string, context: TaskCont
         await writeFile(filePath, yamlContent, "utf-8");
         context.logger.debug(`Wrote pruned OpenAPI spec to: ${filePath}`);
     } catch (error) {
-        context.logger.warn(`Failed to write pruned spec to file: ${error}`);
+        context.logger.debug(`Failed to write pruned spec to file: ${error}`);
     }
 }
 
@@ -219,8 +256,26 @@ export async function enhanceExamplesWithAI(
         return apiDefinition;
     }
 
-    context.logger.info("Starting AI-powered example enhancement...");
+    // Log informative message only once per process
+    if (!hasLoggedInfoMessage) {
+        const message =
+            chalk.blue("Notice: new feature added (experimental)!\n\n") +
+            "We are generating realistic examples for endpoints in your spec.\n" +
+            "This will not override your current examples. Please wait a moment.\n\n" +
+            "Future runs will use saved examples. If you wish to override the content of the\n" +
+            "examples, please edit and commit auto-generated `ai_examples_override.yml` files.";
+        const boxedMessage = boxen(message, {
+            padding: 1,
+            textAlignment: "left",
+            borderColor: "blue",
+            borderStyle: "round"
+        });
+        context.logger.info("\n" + boxedMessage + "\n");
+        hasLoggedInfoMessage = true;
+    }
+
     const enhancer = new LambdaExampleEnhancer(config, context, token);
+    const circuitBreaker = new CircuitBreaker();
 
     const coveredEndpoints =
         sourceFilePath != null ? await loadExistingOverrideCoverage(sourceFilePath, context) : new Set<string>();
@@ -232,7 +287,7 @@ export async function enhanceExamplesWithAI(
 
             // Check if it's an OpenAPI spec
             if (!isOpenApiSpec(specContent)) {
-                context.logger.info("Non-OpenAPI spec detected, skipping AI example enhancement");
+                context.logger.debug("Non-OpenAPI spec detected, skipping AI example enhancement");
                 return apiDefinition;
             }
 
@@ -256,7 +311,8 @@ export async function enhanceExamplesWithAI(
         coveredEndpoints,
         openApiSpec,
         sourceFilePath,
-        apiName
+        apiName,
+        circuitBreaker
     );
 
     if (enhancedExampleRecords.length > 0 && sourceFilePath != null) {
@@ -267,7 +323,7 @@ export async function enhanceExamplesWithAI(
                 context
             });
         } catch (error) {
-            context.logger.warn(`Failed to write AI examples override file: ${error}`);
+            context.logger.debug(`Failed to write AI examples override file: ${error}`);
         }
     }
 
@@ -284,7 +340,8 @@ async function enhancePackageExamples(
     coveredEndpoints: Set<string>,
     openApiSpec?: string,
     sourceFilePath?: AbsoluteFilePath,
-    apiName?: string
+    apiName?: string,
+    circuitBreaker?: CircuitBreaker
 ): Promise<FdrCjsSdk.api.v1.register.ApiDefinition> {
     // Collect all work items from all packages first
     const allWorkItems: (EndpointWorkItem & { packageId?: string })[] = [];
@@ -320,7 +377,8 @@ async function enhancePackageExamples(
         openApiSpec,
         sourceFilePath,
         statusId,
-        apiStats
+        apiStats,
+        circuitBreaker
     );
 
     coordinator.finish(statusId);
@@ -394,7 +452,8 @@ async function processEndpointsConcurrently(
     openApiSpec?: string,
     sourceFilePath?: AbsoluteFilePath,
     statusId?: string,
-    apiStats?: { count: number; total: number }
+    apiStats?: { count: number; total: number },
+    circuitBreaker?: CircuitBreaker
 ): Promise<Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>> {
     const enhancementResults = new Map<string, { enhancedReq?: unknown; enhancedRes?: unknown }>();
 
@@ -405,12 +464,26 @@ async function processEndpointsConcurrently(
         `Processing ${allWorkItems.length} endpoints with max ${maxConcurrentRequests} concurrent Lambda calls`
     );
 
+    // Check circuit breaker before processing
+    if (circuitBreaker?.shouldSkip()) {
+        context.logger.debug(
+            `Circuit breaker is open after ${circuitBreaker.getFailureCount()} failures (threshold: ${circuitBreaker.getThreshold()}). Skipping AI enhancement for remaining endpoints.`
+        );
+        return enhancementResults;
+    }
+
     // Process all work items concurrently in chunks
     for (let i = 0; i < allWorkItems.length; i += maxConcurrentRequests) {
         const chunk = allWorkItems.slice(i, i + maxConcurrentRequests);
         const chunkNumber = Math.floor(i / maxConcurrentRequests) + 1;
 
         context.logger.debug(`Processing chunk ${chunkNumber} with ${chunk.length} endpoints concurrently`);
+
+        // Check circuit breaker before processing each chunk
+        if (circuitBreaker?.shouldSkip()) {
+            context.logger.debug(`Circuit breaker opened during processing. Stopping at chunk ${chunkNumber}.`);
+            break;
+        }
 
         // Process each endpoint concurrently
         const endpointPromises = chunk.map((workItem, index) =>
@@ -425,7 +498,8 @@ async function processEndpointsConcurrently(
                 sourceFilePath,
                 statusId,
                 apiStats,
-                i + index + 1
+                i + index + 1,
+                circuitBreaker
             )
         );
 
@@ -443,7 +517,7 @@ async function processEndpointsConcurrently(
                 const { endpointKey, enhancedReq, enhancedRes } = result.value;
                 enhancementResults.set(endpointKey, { enhancedReq, enhancedRes });
             } else if (result.status === "rejected") {
-                context.logger.warn(`Endpoint ${i + j + 1} failed: ${result.reason}`);
+                context.logger.debug(`Endpoint ${i + j + 1} failed: ${result.reason}`);
             }
         }
 
@@ -457,7 +531,7 @@ async function processEndpointsConcurrently(
                 });
                 context.logger.debug(`Saved ${enhancedExampleRecords.length} examples after chunk ${chunkNumber}`);
             } catch (error) {
-                context.logger.warn(`Failed to save incremental results: ${error}`);
+                context.logger.debug(`Failed to save incremental results: ${error}`);
             }
         }
     }
@@ -476,7 +550,8 @@ async function processEndpoint(
     sourceFilePath?: AbsoluteFilePath,
     statusId?: string,
     apiStats?: { count: number; total: number },
-    endpointNumber?: number
+    endpointNumber?: number,
+    circuitBreaker?: CircuitBreaker
 ): Promise<{ endpointKey: string; enhancedReq?: unknown; enhancedRes?: unknown } | null> {
     const endpointKey = workItem.endpointKey;
 
@@ -511,6 +586,9 @@ async function processEndpoint(
     for (let attempt = 1; attempt <= 2; attempt++) {
         try {
             const result = await enhancer.enhanceExample(request);
+
+            // Record success in circuit breaker
+            circuitBreaker?.recordSuccess();
 
             // Check if anything was actually enhanced
             const requestChanged = result.enhancedRequestExample !== request.originalRequestExample;
@@ -556,7 +634,10 @@ async function processEndpoint(
                 enhancedRes: result.enhancedResponseExample
             };
         } catch (error) {
-            context.logger.warn(
+            // Record failure in circuit breaker
+            circuitBreaker?.recordFailure();
+
+            context.logger.debug(
                 `Endpoint ${workItem.endpoint.method} ${workItem.example.path} attempt ${attempt} failed: ${error}`
             );
 
@@ -568,7 +649,7 @@ async function processEndpoint(
     }
 
     // All attempts failed
-    context.logger.warn(`Failed to enhance ${workItem.endpoint.method} ${workItem.example.path} after all attempts`);
+    context.logger.debug(`Failed to enhance ${workItem.endpoint.method} ${workItem.example.path} after all attempts`);
     return null;
 }
 

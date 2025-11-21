@@ -1,0 +1,108 @@
+name: PHP SDK Test Definitions
+
+on:
+  workflow_dispatch:
+    inputs:
+      test-definition:
+        description: 'Name of the test definition to generate (e.g., exhaustive, streaming, trace)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  build-and-generate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Build Fern CLI (dev)
+        run: pnpm fern-dev:build
+
+      - name: Build PHP SDK generator
+        run: pnpm --filter @fern-api/php-sdk dist:cli
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build PHP SDK Docker image
+        run: |
+          docker build -f generators/php/sdk/Dockerfile -t fernapi/fern-php-sdk:latest .
+
+      - name: Generate PHP SDK for test definition
+        env:
+          FORCE_COLOR: "2"
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs"
+          cd test-definitions
+          FERN_NO_VERSION_REDIRECTION=true node $cli_path generate --local --group php-sdk --api ${{ inputs.test-definition }}
+
+      - name: Get updated branch name
+        id: get-branch
+        run: |
+          # Read the generators.yml file for the test definition to find the branch name
+          if [ -f "test-definitions/fern/apis/${{ inputs.test-definition }}/generators.yml" ]; then
+            branch=$(grep -A 10 "php-sdk:" test-definitions/fern/apis/${{ inputs.test-definition }}/generators.yml | grep "branch:" | head -1 | awk '{print $2}')
+            echo "branch=$branch" >> $GITHUB_OUTPUT
+            echo "Found branch: $branch"
+          else
+            echo "branch=unknown" >> $GITHUB_OUTPUT
+            echo "Could not find generators.yml file"
+          fi
+
+      - name: Comment on PR with branch info
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const testDefinition = '${{ inputs.test-definition }}';
+            const branch = '${{ steps.get-branch.outputs.branch }}';
+            const runUrl = `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`;
+            
+            const body = `## 🚀 PHP SDK Generation Complete
+            
+            **Test Definition:** \`${testDefinition}\`
+            **Updated Branch:** \`${branch}\`
+            **Repository:** https://github.com/fern-api/php-sdk-tests
+            
+            The PHP SDK has been generated and pushed to the branch \`${branch}\` in the php-sdk-tests repository.
+            
+            [View workflow run](${runUrl})`;
+            
+            // Try to find an open PR for this branch
+            const { data: pulls } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              head: `${context.repo.owner}:${context.ref.replace('refs/heads/', '')}`
+            });
+            
+            if (pulls.length > 0) {
+              // Comment on the PR
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: pulls[0].number,
+                body
+              });
+              console.log(`Posted comment to PR #${pulls[0].number}`);
+            } else {
+              console.log('No open PR found for this branch');
+              console.log(body);
+            }
