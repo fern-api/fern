@@ -519,4 +519,94 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/x-code-samples-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/x-code-samples-ir.snap");
     });
+
+    it("should prefer x-fern-examples code-samples over x-codeSamples when both are present", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/x-code-samples-override")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "x-code-samples-override"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that x-fern-examples code-samples are present in IR
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        const service = services[0];
+        expect(service).toBeDefined();
+        if (service && typeof service === "object" && "endpoints" in service) {
+            const serviceWithEndpoints = service as { endpoints?: Array<{ examples?: unknown[] }> };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBeGreaterThan(0);
+
+            const getUserEndpoint = serviceWithEndpoints.endpoints?.[0];
+            expect(getUserEndpoint).toBeDefined();
+        }
+
+        // Verify that FDR contains Fern code samples (Go, Ruby) and NOT OpenAPI code samples (Python, TypeScript)
+        const fdrString = JSON.stringify(fdrApiDefinition);
+
+        // Should contain Fern code samples
+        expect(fdrString).toContain("Go SDK (Fern)");
+        expect(fdrString).toContain("Ruby SDK (Fern)");
+        expect(fdrString).toContain("go");
+        expect(fdrString).toContain("ruby");
+
+        // Should NOT contain OpenAPI code samples (they should be overridden)
+        expect(fdrString).not.toContain("Python SDK (OpenAPI)");
+        expect(fdrString).not.toContain("TypeScript SDK (OpenAPI)");
+        expect(fdrString).not.toContain("openapi-key");
+        expect(fdrString).not.toContain("openapi_sdk");
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/x-code-samples-override-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/x-code-samples-override-ir.snap");
+    });
 });

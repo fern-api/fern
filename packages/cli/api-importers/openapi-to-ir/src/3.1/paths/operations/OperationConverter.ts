@@ -510,7 +510,10 @@ export class OperationConverter extends AbstractOperationConverter {
         });
         const redoclyCodeSamples = redoclyCodeSamplesExtension.convert() ?? [];
 
-        const allExamples = [...fernExamples, ...redoclyCodeSamples];
+        const hasFernCodeSamples = fernExamples.some(
+            (example) => Array.isArray(example["code-samples"]) && example["code-samples"].length > 0
+        );
+        const allExamples = hasFernCodeSamples ? fernExamples : [...fernExamples, ...redoclyCodeSamples];
 
         if (allExamples.length === 0) {
             return { examples: {}, streamExamples: {} };
