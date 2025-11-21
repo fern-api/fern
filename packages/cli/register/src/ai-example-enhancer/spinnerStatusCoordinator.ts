@@ -70,7 +70,7 @@ export class SpinnerStatusCoordinator {
 
         const apiProgress = this.progress.get(this.currentApiId);
         if (apiProgress) {
-            let statusMessage = `generating AI examples for ${apiProgress.apiName}`;
+            let statusMessage = `auto-generating examples for endpoints - ${apiProgress.apiName}`;
 
             // Add endpoint information if available
             if (apiProgress.endpointsSample) {
