@@ -20,6 +20,11 @@ yargs(hideBin(process.argv))
         "Generate the Swift SDK for the API.",
         (y) =>
             y
+                .option("api", {
+                    type: "string",
+                    description: "The API to generate.",
+                    demandOption: false
+                })
                 .option("group", {
                     type: "string",
                     description: "The group to generate.",
@@ -36,11 +41,11 @@ yargs(hideBin(process.argv))
                     demandOption: false
                 }),
         async (args) => {
-            const { group: groupName, outDir, version: versionOverride } = args;
+            const { api, group: groupName, outDir, version: versionOverride } = args;
             const cli = new SdkGeneratorCLI();
 
             const project = await initProject({
-                commandLineApiWorkspace: undefined,
+                commandLineApiWorkspace: api,
                 defaultToAllApiWorkspaces: true
             });
 
@@ -48,12 +53,7 @@ yargs(hideBin(process.argv))
             const taskContext: TaskContext = createMockTaskContext(); // TODO: Update
 
             await Promise.all(
-                project.apiWorkspaces.map(async (workspace, index) => {
-                    if (index > 0) {
-                        // TODO: Fix this
-                        return;
-                    }
-
+                project.apiWorkspaces.map(async (workspace) => {
                     const findGroup = () => {
                         const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration?.defaultGroup;
                         if (groupNameOrDefault == null) {
