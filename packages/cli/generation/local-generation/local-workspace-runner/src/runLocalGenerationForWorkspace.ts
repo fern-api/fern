@@ -3,7 +3,7 @@ import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
-import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
+import { assertNever, ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ClonedRepository, cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -308,68 +308,104 @@ async function postProcessGithubSelfHosted(
         const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace("Z", "").replace(".", "_");
         const prBranch = `fern-bot/${formattedDate}`;
 
-        if (selfhostedGithubConfig.mode === "pull-request") {
-            context.logger.debug(`Checking out new branch ${prBranch}`);
-            await repository.checkout(prBranch);
-        } else if (selfhostedGithubConfig.mode === "push" || selfhostedGithubConfig.mode == null) {
-            if (selfhostedGithubConfig.branch != null) {
-                context.logger.debug(`Checking out branch ${selfhostedGithubConfig.branch}`);
-                await repository.checkout(selfhostedGithubConfig.branch);
-            }
-        }
+        const mode = selfhostedGithubConfig.mode ?? "push";
+        switch (mode) {
+            case "pull-request": {
+                context.logger.debug(`Checking out new branch ${prBranch}`);
+                await repository.checkout(prBranch);
 
-        context.logger.debug("Checking for .fernignore file...");
-        const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
-        try {
-            await fs.access(fernignorePath);
-            context.logger.debug(".fernignore already exists");
-        } catch {
-            context.logger.debug("Creating .fernignore file...");
-            await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
-        }
-
-        context.logger.debug("Committing changes...");
-        const finalCommitMessage = commitMessage ?? "SDK Generation";
-        await repository.commitAllChanges(finalCommitMessage);
-        context.logger.debug(`Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`);
-
-        if (!selfhostedGithubConfig.previewMode) {
-            await repository.push();
-            const pushedBranch = await repository.getCurrentBranch();
-            context.logger.info(`Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`);
-        }
-
-        if (selfhostedGithubConfig.mode === "pull-request") {
-            const baseBranch = selfhostedGithubConfig.branch ?? (await repository.getDefaultBranch());
-
-            const octokit = new Octokit({
-                auth: selfhostedGithubConfig.token
-            });
-            // Use octokit directly to create the pull request
-            const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
-            const { owner, repo } = parsedRepo;
-            const head = `${owner}:${prBranch}`;
-
-            const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
-
-            try {
-                await octokit.pulls.create({
-                    owner,
-                    repo,
-                    title: prTitle,
-                    body: prBody,
-                    head,
-                    base: baseBranch,
-                    draft: false
-                });
-
-                context.logger.info(`Created pull request ${head} -> ${baseBranch} on ${selfhostedGithubConfig.uri}`);
-            } catch (error) {
-                const message = error instanceof Error ? error.message : String(error);
-                if (message.includes("A pull request already exists for")) {
-                    context.failWithoutThrowing(`A pull request already exists for ${head}`);
+                context.logger.debug("Checking for .fernignore file...");
+                const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
+                try {
+                    await fs.access(fernignorePath);
+                    context.logger.debug(".fernignore already exists");
+                } catch {
+                    context.logger.debug("Creating .fernignore file...");
+                    await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
                 }
+
+                context.logger.debug("Committing changes...");
+                const finalCommitMessage = commitMessage ?? "SDK Generation";
+                await repository.commitAllChanges(finalCommitMessage);
+                context.logger.debug(
+                    `Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`
+                );
+
+                if (!selfhostedGithubConfig.previewMode) {
+                    await repository.push();
+                    const pushedBranch = await repository.getCurrentBranch();
+                    context.logger.info(
+                        `Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`
+                    );
+                }
+
+                const baseBranch = selfhostedGithubConfig.branch ?? (await repository.getDefaultBranch());
+
+                const octokit = new Octokit({
+                    auth: selfhostedGithubConfig.token
+                });
+                const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
+                const { owner, repo } = parsedRepo;
+                const head = `${owner}:${prBranch}`;
+
+                const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
+
+                try {
+                    await octokit.pulls.create({
+                        owner,
+                        repo,
+                        title: prTitle,
+                        body: prBody,
+                        head,
+                        base: baseBranch,
+                        draft: false
+                    });
+
+                    context.logger.info(
+                        `Created pull request ${head} -> ${baseBranch} on ${selfhostedGithubConfig.uri}`
+                    );
+                } catch (error) {
+                    const message = error instanceof Error ? error.message : String(error);
+                    if (message.includes("A pull request already exists for")) {
+                        context.failWithoutThrowing(`A pull request already exists for ${head}`);
+                    }
+                }
+                break;
             }
+            case "push": {
+                if (selfhostedGithubConfig.branch != null) {
+                    context.logger.debug(`Checking out branch ${selfhostedGithubConfig.branch}`);
+                    await repository.checkout(selfhostedGithubConfig.branch);
+                }
+
+                context.logger.debug("Checking for .fernignore file...");
+                const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
+                try {
+                    await fs.access(fernignorePath);
+                    context.logger.debug(".fernignore already exists");
+                } catch {
+                    context.logger.debug("Creating .fernignore file...");
+                    await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
+                }
+
+                context.logger.debug("Committing changes...");
+                const finalCommitMessage = commitMessage ?? "SDK Generation";
+                await repository.commitAllChanges(finalCommitMessage);
+                context.logger.debug(
+                    `Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`
+                );
+
+                if (!selfhostedGithubConfig.previewMode) {
+                    await repository.push();
+                    const pushedBranch = await repository.getCurrentBranch();
+                    context.logger.info(
+                        `Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`
+                    );
+                }
+                break;
+            }
+            default:
+                assertNever(mode);
         }
     } catch (error) {
         context.failAndThrow(`Error during GitHub self-hosted flow: ${String(error)}`);
