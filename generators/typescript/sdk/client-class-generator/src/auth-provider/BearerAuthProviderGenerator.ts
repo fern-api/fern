@@ -9,6 +9,7 @@ export declare namespace BearerAuthProviderGenerator {
     export interface Init {
         authScheme: FernIr.BearerAuthScheme;
         neverThrowErrors: boolean;
+        isAuthMandatory: boolean;
     }
 }
 
@@ -20,10 +21,12 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
     private readonly authScheme: FernIr.BearerAuthScheme;
     private readonly neverThrowErrors: boolean;
+    private readonly isAuthMandatory: boolean;
 
     constructor(init: BearerAuthProviderGenerator.Init) {
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;
+        this.isAuthMandatory = init.isAuthMandatory;
     }
 
     public getFilePath(): ExportedFilePath {
@@ -62,19 +65,21 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     private writeClass(context: SdkContext): void {
         const hasTokenEnv = this.authScheme.tokenEnvVar != null;
 
+        // Match the same logic as BaseClientOptions and Options interface
+        const tokenType =
+            this.isAuthMandatory && !hasTokenEnv
+                ? context.coreUtilities.auth.BearerToken._getReferenceToType()
+                : ts.factory.createUnionTypeNode([
+                      context.coreUtilities.auth.BearerToken._getReferenceToType(),
+                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                  ]);
+
         const tokenFieldType = hasTokenEnv
             ? ts.factory.createUnionTypeNode([
-                  context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                      ts.factory.createUnionTypeNode([
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                      ])
-                  ),
+                  context.coreUtilities.fetcher.Supplier._getReferenceToType(tokenType),
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
-            : context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-              );
+            : context.coreUtilities.fetcher.Supplier._getReferenceToType(tokenType);
 
         context.sourceFile.addClass({
             name: CLASS_NAME,
@@ -184,20 +189,23 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     private writeOptions(context: SdkContext): void {
         const hasTokenEnv = this.authScheme.tokenEnvVar != null;
 
+        // Match the same logic as BaseClientOptions:
+        // - token is optional when auth is not mandatory OR when there's an env var
+        // - token type includes undefined when auth is not mandatory OR when there's an env var
+        const isTokenOptional = !this.isAuthMandatory || hasTokenEnv;
+        const tokenType =
+            this.isAuthMandatory && !hasTokenEnv
+                ? context.coreUtilities.auth.BearerToken._getReferenceToType()
+                : ts.factory.createUnionTypeNode([
+                      context.coreUtilities.auth.BearerToken._getReferenceToType(),
+                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                  ]);
+
         const tokenProperty: PropertySignatureStructure = {
             kind: StructureKind.PropertySignature,
             name: getPropertyKey(this.authScheme.token.camelCase.safeName),
-            hasQuestionToken: hasTokenEnv,
-            type: getTextOfTsNode(
-                context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                    hasTokenEnv
-                        ? ts.factory.createUnionTypeNode([
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                          ])
-                        : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                )
-            ),
+            hasQuestionToken: isTokenOptional,
+            type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(tokenType)),
             docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
         };
 
