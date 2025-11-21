@@ -5,15 +5,20 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::Problem::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
       # Creates a problem
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::Problem::Types::CreateProblemRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Problem::Types::CreateProblemResponse]
       def create_problem(request_options: {}, **params)
@@ -39,8 +44,13 @@ module Seed
 
       # Updates a problem
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::Problem::Types::CreateProblemRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Commons::Types::ProblemId] :problem_id
       #
       # @return [Seed::Problem::Types::UpdateProblemResponse]
@@ -67,8 +77,13 @@ module Seed
 
       # Soft deletes a problem
       #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Commons::Types::ProblemId] :problem_id
       #
       # @return [untyped]
@@ -92,8 +107,13 @@ module Seed
 
       # Returns default starter files for problem
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::Problem::Types::GetDefaultStarterFilesRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Problem::Types::GetDefaultStarterFilesResponse]
       def get_default_starter_files(request_options: {}, **params)
