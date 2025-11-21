@@ -2,44 +2,51 @@
 groups:
   java-sdk:
     generators:
-      - name: fernapi/fern-java-sdk
-        version: latest
-        output:
-          location: local-file-system
-          path: ../../../seed/java-sdk/nullable-optional
-        config:
-          use-nullable-annotation: true
-          package-prefix: com.nullable.optional
-
+    - name: fernapi/fern-java-sdk
+      version: latest
+      output:
+        location: local-file-system
+        path: ../../../seed/java-sdk/nullable-optional
+      config:
+        use-nullable-annotation: true
+        package-prefix: com.nullable.optional
   java-sdk-legacy:
     generators:
-      - name: fernapi/fern-java-sdk
-        version: latest
-        output:
-          location: local-file-system
-          path: ../../../seed/java-sdk/nullable-optional-legacy
-        config:
-          use-nullable-annotation: false # Current behavior
-          package-prefix: com.nullable.optional.legacy
-
+    - name: fernapi/fern-java-sdk
+      version: latest
+      output:
+        location: local-file-system
+        path: ../../../seed/java-sdk/nullable-optional-legacy
+      config:
+        use-nullable-annotation: false
+        package-prefix: com.nullable.optional.legacy
   java-spring:
     generators:
-      - name: fernapi/fern-java-spring
-        version: latest
-        output:
-          location: local-file-system
-          path: ../../../seed/java-spring/nullable-optional
-        config:
-          use-nullable-annotation: true
-          package-prefix: com.nullable.optional.spring
-
+    - name: fernapi/fern-java-spring
+      version: latest
+      output:
+        location: local-file-system
+        path: ../../../seed/java-spring/nullable-optional
+      config:
+        use-nullable-annotation: true
+        package-prefix: com.nullable.optional.spring
   java-spring-legacy:
     generators:
-      - name: fernapi/fern-java-spring
-        version: latest
-        output:
-          location: local-file-system
-          path: ../../../seed/java-spring/nullable-optional-legacy
-        config:
-          use-nullable-annotation: false # Current behavior
-          package-prefix: com.nullable.optional.spring.legacy
+    - name: fernapi/fern-java-spring
+      version: latest
+      output:
+        location: local-file-system
+        path: ../../../seed/java-spring/nullable-optional-legacy
+      config:
+        use-nullable-annotation: false
+        package-prefix: com.nullable.optional.spring.legacy
+  php-sdk:
+    generators:
+    - name: fernapi/fern-php-sdk
+      version: latest
+      ir-version: v61
+      output:
+        location: github
+        mode: push
+        uri: https://github.com/fern-api/php-sdk-tests
+        branch: nullable-optional

@@ -1,8 +1,19 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 api:
   specs:
-    - proto:
-        root: proto
-        target: proto/user/v1/user.proto
-        overrides: overrides.yml
-        local-generation: true
+  - proto:
+      root: proto
+      target: proto/user/v1/user.proto
+      overrides: overrides.yml
+      local-generation: true
+groups:
+  php-sdk:
+    generators:
+    - name: fernapi/fern-php-sdk
+      version: latest
+      ir-version: v61
+      output:
+        location: github
+        mode: push
+        uri: https://github.com/fern-api/php-sdk-tests
+        branch: csharp-grpc-proto
