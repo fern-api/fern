@@ -1,3 +1,5 @@
 navigation:
   - page: Platform Overview
     path: ../core/overview.mdx
+  - page: Component Examples
+    path: ../core/components.mdx
