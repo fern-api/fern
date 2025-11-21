@@ -48,7 +48,12 @@ yargs(hideBin(process.argv))
             const taskContext: TaskContext = createMockTaskContext(); // TODO: Update
 
             await Promise.all(
-                project.apiWorkspaces.map(async (workspace) => {
+                project.apiWorkspaces.map(async (workspace, index) => {
+                    if (index > 0) {
+                        // TODO: Fix this
+                        return;
+                    }
+
                     const findGroup = () => {
                         const groupNameOrDefault = groupName ?? workspace.generatorsConfiguration?.defaultGroup;
                         if (groupNameOrDefault == null) {
@@ -129,7 +134,7 @@ yargs(hideBin(process.argv))
                                 paths: {
                                     snippetPath: undefined, // TODO: Implement
                                     snippetTemplatePath: undefined, // TODO: Implement
-                                    irPath: AbsoluteFilePath.of(""), // TODO: Aim to remove this. It shouldn't be needed.
+                                    irPath: AbsoluteFilePath.of(resolve(process.cwd(), "ir.json")), // TODO: Aim to remove this. It shouldn't be needed.
                                     outputDirectory: AbsoluteFilePath.of(resolve(process.cwd(), outDir))
                                 }
                             });
