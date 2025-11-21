@@ -58,16 +58,17 @@ export class RedoclyCodeSamplesExtension extends AbstractExtension<RedoclyCodeSa
     }
 
     public convert(): RedoclyCodeSamplesExtension.Output | undefined {
-        const extensionValueCamel = this.getExtensionValue(this.operation);
-        const extensionValueKebab = this.getExtensionValue(this.operation, "x-code-samples");
+        const operationRecord = isPlainObject(this.operation) ? (this.operation as Record<string, unknown>) : {};
+        const extensionValueCamel = operationRecord["x-codeSamples"];
+        const extensionValueKebab = operationRecord["x-code-samples"];
 
-        const extensionValue = extensionValueCamel ?? extensionValueKebab;
+        const camelArray = Array.isArray(extensionValueCamel) ? extensionValueCamel : [];
+        const kebabArray = Array.isArray(extensionValueKebab) ? extensionValueKebab : [];
+        const codeSamplesArray = [...camelArray, ...kebabArray];
 
-        if (extensionValue == null) {
+        if (codeSamplesArray.length === 0) {
             return undefined;
         }
-
-        const codeSamplesArray = Array.isArray(extensionValue) ? extensionValue : [];
 
         const resolvedCodeSamples: RawSchemas.ExampleCodeSampleSchema[] = [];
 
