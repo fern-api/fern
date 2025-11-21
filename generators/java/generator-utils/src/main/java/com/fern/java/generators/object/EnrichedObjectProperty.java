@@ -152,7 +152,8 @@ public interface EnrichedObjectProperty {
                         .addMember("value", "$S", wireKey().get())
                         .build());
             } else {
-                getterBuilder.addAnnotation(AnnotationSpec.builder(JsonIgnore.class).build());
+                getterBuilder.addAnnotation(
+                        AnnotationSpec.builder(JsonIgnore.class).build());
             }
         }
         if (fromInterface() && !inline()) {
