@@ -1,20 +1,19 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 api:
   specs:
-  - openapi: ./openapi.yml
-    settings:
-      title-as-schema-name: false
-      inline-path-parameters: true
-      respect-nullable-schemas: true
-      idiomatic-request-names: true
+    - openapi: ./openapi.yml
+      settings:
+        title-as-schema-name: false
+        inline-path-parameters: true
+        respect-nullable-schemas: true
+        idiomatic-request-names: true
 groups:
   php-sdk:
     generators:
-    - name: fernapi/fern-php-sdk
-      version: latest
-      ir-version: v61
-      output:
-        location: github
-        mode: push
-        uri: https://github.com/fern-api/php-sdk-tests
-        branch: java-nullable-named-request-types
+      - name: fernapi/fern-php-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: '{{ GITHUB_TOKEN }}'
+          mode: pull-request
+          uri: https://github.com/fern-api/php-sdk-tests

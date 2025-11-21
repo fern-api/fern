@@ -20,7 +20,7 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -52,6 +52,9 @@ jobs:
       - name: Build Fern CLI (dev)
         run: pnpm fern-dev:build
 
+      - name: Build PHP SDK generator
+        run: pnpm --filter @fern-api/php-sdk dist:cli
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -63,8 +66,7 @@ jobs:
 
       - name: Build PHP SDK Docker image
         run: |
-          cd generators/php/sdk
-          docker build -t fernapi/fern-php-sdk:latest .
+          docker build -f generators/php/sdk/Dockerfile -t fernapi/fern-php-sdk:latest .
 
       - name: Generate PHP SDK for test definition
         env:
