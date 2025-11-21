@@ -27,8 +27,18 @@ import {
     replaceReferencedMarkdown
 } from "../../docs-markdown-utils/src";
 
+// Caches for hot reload change detection: frontmatter properties and resolved slugs
 const frontmatterPositionCache = new Map<string, number | undefined>();
 const frontmatterNavigationCache = new Map<string, Record<string, unknown>>();
+const resolvedSlugsCache = new Map<string, string>(); // Main cache: final resolved slugs
+// Track all page nodes by their unique navigation node IDs
+const pageNodeSlugsCache = new Map<string, string>();
+const previousPageNodeSlugsCache = new Map<string, string>();
+
+/**
+ * Exported caches for external slug change detection
+ */
+export { frontmatterNavigationCache, resolvedSlugsCache };
 
 /**
  * Properties in frontmatter that, when changed, require a full refresh
@@ -102,6 +112,264 @@ function hasNavigationAffectingFrontmatterChanged(
     }
 
     return false;
+}
+
+// Extracts already-resolved slugs from navigation structure
+function extractResolvedSlugsFromNavigation(
+    navigation: FernNavigation.V1.NavigationNode,
+    docsWorkspacePath: AbsoluteFilePath,
+    slugMap: Map<string, string> = new Map()
+): Map<string, string> {
+    switch (navigation.type) {
+        case "page":
+            if (navigation.pageId && navigation.slug && navigation.id) {
+                // Convert pageId to absolute path for consistency
+                const cleanPageId = navigation.pageId.replace("api/", "");
+                const absolutePath = AbsoluteFilePath.of(`${docsWorkspacePath}/${cleanPageId}`);
+
+                // Track slugs by navigation node ID to handle duplicates properly
+                pageNodeSlugsCache.set(navigation.id, navigation.slug);
+
+                // For the main slug map, use the absolute path - last one wins for file-based tracking
+                slugMap.set(absolutePath, navigation.slug);
+            }
+            break;
+        case "section":
+        case "sidebarRoot":
+        case "sidebarGroup":
+        case "productgroup":
+        case "versioned":
+            if (navigation.children) {
+                for (const child of navigation.children) {
+                    extractResolvedSlugsFromNavigation(child, docsWorkspacePath, slugMap);
+                }
+            }
+            break;
+        case "root":
+        case "unversioned":
+            if (navigation.child) {
+                extractResolvedSlugsFromNavigation(navigation.child, docsWorkspacePath, slugMap);
+            }
+            break;
+        case "apiReference":
+            // API reference might have different structure, skip for now
+            break;
+        default:
+            break;
+    }
+
+    return slugMap;
+}
+
+// Compares resolved slugs to detect if exactly one page's slug changed
+function checkForResolvedSlugOnlyChange(
+    currentSlugs: Map<string, string>,
+    editedAbsoluteFilepaths: AbsoluteFilePath[]
+): { oldSlug: string | undefined; newSlug: string | undefined; filePath: string } | null {
+    const changedSlugs = new Map<string, { oldSlug: string | undefined; newSlug: string | undefined }>();
+
+    // Find changed slugs
+    for (const [filePath, newSlug] of currentSlugs) {
+        const oldSlug = resolvedSlugsCache.get(filePath);
+        if (oldSlug !== newSlug) {
+            changedSlugs.set(filePath, { oldSlug, newSlug });
+        }
+    }
+
+    // Check for removed pages
+    for (const [filePath, oldSlug] of resolvedSlugsCache) {
+        if (!currentSlugs.has(filePath)) {
+            changedSlugs.set(filePath, { oldSlug, newSlug: undefined });
+        }
+    }
+
+    // Only proceed if exactly one slug changed
+    if (changedSlugs.size !== 1) {
+        return null;
+    }
+
+    const [filePath, { oldSlug, newSlug }] = Array.from(changedSlugs)[0]!;
+
+    // Allow navigation for YAML or markdown changes
+    const isNavigationYamlChange = editedAbsoluteFilepaths.some(
+        (path) => path.endsWith("docs.yml") || path.endsWith("nav.yml")
+    );
+    const isMarkdownFileChange = editedAbsoluteFilepaths.some((path) => path.endsWith(".md") || path.endsWith(".mdx"));
+
+    if (isNavigationYamlChange || isMarkdownFileChange) {
+        return { oldSlug, newSlug, filePath };
+    }
+
+    return null;
+}
+
+// Legacy frontmatter-only check for optimization. Main logic is in checkForSlugOnlyChangeAfterReload()
+export async function checkForSlugOnlyChange(
+    editedAbsoluteFilepaths: AbsoluteFilePath[]
+): Promise<{ oldSlug: string | undefined; newSlug: string | undefined } | null> {
+    // Only handle single file changes for potential slug navigation optimization
+    if (editedAbsoluteFilepaths.length !== 1) {
+        return null;
+    }
+
+    const filePath = editedAbsoluteFilepaths[0];
+    if (filePath == null) {
+        return null;
+    }
+
+    // Only check markdown files for frontmatter slug changes
+    if (filePath.endsWith(".md") || filePath.endsWith(".mdx")) {
+        try {
+            if (!(await doesPathExist(filePath))) {
+                return null;
+            }
+
+            const currentMarkdown = (await readFile(filePath)).toString();
+            const currentProperties = extractNavigationAffectingFrontmatter(currentMarkdown);
+            const previousProperties = frontmatterNavigationCache.get(filePath) ?? {};
+
+            // Check if only frontmatter slug changed
+            const currentSlug = currentProperties.slug as string | undefined;
+            const previousSlug = previousProperties.slug as string | undefined;
+
+            if (currentSlug !== previousSlug) {
+                // Verify no other properties changed
+                const currentWithoutSlug = { ...currentProperties };
+                const previousWithoutSlug = { ...previousProperties };
+                delete currentWithoutSlug.slug;
+                delete previousWithoutSlug.slug;
+
+                if (!hasNavigationAffectingFrontmatterChanged(previousWithoutSlug, currentWithoutSlug)) {
+                    // Return raw frontmatter values - resolved slugs checked later
+                    return {
+                        oldSlug: previousSlug,
+                        newSlug: currentSlug
+                    };
+                }
+            }
+
+            return null;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    return null;
+}
+
+// Check for slug changes at the navigation node level
+function checkForNodeSlugOnlyChange(
+    editedAbsoluteFilepaths: AbsoluteFilePath[]
+): { oldSlug: string | undefined; newSlug: string | undefined } | null {
+    const changedNodes = new Map<string, { oldSlug: string; newSlug: string }>();
+
+    // Compare previous vs current node slugs
+    for (const [nodeId, currentSlug] of pageNodeSlugsCache) {
+        const previousSlug = previousPageNodeSlugsCache.get(nodeId);
+        if (previousSlug && previousSlug !== currentSlug) {
+            changedNodes.set(nodeId, { oldSlug: previousSlug, newSlug: currentSlug });
+        }
+    }
+
+    // Check for nodes that disappeared
+    for (const [nodeId, previousSlug] of previousPageNodeSlugsCache) {
+        if (!pageNodeSlugsCache.has(nodeId)) {
+            changedNodes.set(nodeId, { oldSlug: previousSlug, newSlug: "" });
+        }
+    }
+
+    // Only proceed if exactly one node changed
+    if (changedNodes.size !== 1) {
+        return null;
+    }
+
+    const [nodeId, { oldSlug, newSlug }] = Array.from(changedNodes)[0]!;
+
+    // Allow navigation for YAML or markdown changes
+    const isNavigationYamlChange = editedAbsoluteFilepaths.some(
+        (path) => path.endsWith("docs.yml") || path.endsWith("nav.yml")
+    );
+    const isMarkdownFileChange = editedAbsoluteFilepaths.some((path) => path.endsWith(".md") || path.endsWith(".mdx"));
+
+    if (isNavigationYamlChange || isMarkdownFileChange) {
+        return { oldSlug, newSlug };
+    }
+
+    return null;
+}
+
+// Main slug detection using deterministic resolved slugs (works for all slug sources)
+export function checkForSlugOnlyChangeAfterReload(
+    newDefinition: DocsV1Read.DocsDefinition,
+    navigationNode: FernNavigation.V1.NavigationNode,
+    docsWorkspacePath: AbsoluteFilePath,
+    editedAbsoluteFilepaths: AbsoluteFilePath[]
+): { oldSlug: string | undefined; newSlug: string | undefined } | null {
+    // Copy current node cache to previous before extracting new ones
+    previousPageNodeSlugsCache.clear();
+    for (const [nodeId, slug] of pageNodeSlugsCache) {
+        previousPageNodeSlugsCache.set(nodeId, slug);
+    }
+
+    // Clear and rebuild current node cache
+    pageNodeSlugsCache.clear();
+
+    // Extract resolved slugs from the navigation node
+    const currentSlugs = extractResolvedSlugsFromNavigation(navigationNode, docsWorkspacePath);
+
+    // First try node-level slug change detection
+    const nodeResult = checkForNodeSlugOnlyChange(editedAbsoluteFilepaths);
+    if (nodeResult) {
+        // Update cache with current slugs after comparison
+        resolvedSlugsCache.clear();
+        for (const [filePath, slug] of currentSlugs) {
+            resolvedSlugsCache.set(filePath, slug);
+        }
+
+        return {
+            oldSlug: nodeResult.oldSlug,
+            newSlug: nodeResult.newSlug
+        };
+    }
+
+    // Fallback to file-level comparison
+    const result = checkForResolvedSlugOnlyChange(currentSlugs, editedAbsoluteFilepaths);
+
+    // Update cache with current slugs after comparison
+    resolvedSlugsCache.clear();
+    for (const [filePath, slug] of currentSlugs) {
+        resolvedSlugsCache.set(filePath, slug);
+    }
+
+    if (result) {
+        return {
+            oldSlug: result.oldSlug,
+            newSlug: result.newSlug
+        };
+    }
+
+    return null;
+}
+
+// Store navigation node for slug change detection
+let cachedNavigationNode: FernNavigation.V1.NavigationNode | null = null;
+
+// Wrapper function that uses cached navigation node
+export function checkForSlugOnlyChangeAfterReloadFromDefinition(
+    newDefinition: DocsV1Read.DocsDefinition,
+    docsWorkspacePath: AbsoluteFilePath,
+    editedAbsoluteFilepaths: AbsoluteFilePath[]
+): { oldSlug: string | undefined; newSlug: string | undefined } | null {
+    if (!cachedNavigationNode) {
+        return null; // No navigation available for slug detection
+    }
+
+    return checkForSlugOnlyChangeAfterReload(
+        newDefinition,
+        cachedNavigationNode,
+        docsWorkspacePath,
+        editedAbsoluteFilepaths
+    );
 }
 
 export async function getPreviewDocsDefinition({
@@ -260,6 +528,20 @@ export async function getPreviewDocsDefinition({
     });
 
     const writeDocsDefinition = await resolver.resolve();
+
+    // Cache navigation node if available in writeDocsDefinition
+    if ((writeDocsDefinition as any).rootNode) {
+        cachedNavigationNode = (writeDocsDefinition as any).rootNode;
+    } else if ((writeDocsDefinition as any).root) {
+        cachedNavigationNode = (writeDocsDefinition as any).root;
+    } else if ((writeDocsDefinition as any).config?.root) {
+        cachedNavigationNode = (writeDocsDefinition as any).config.root;
+    } else if ((writeDocsDefinition as any).navigation) {
+        cachedNavigationNode = (writeDocsDefinition as any).navigation;
+    } else {
+        cachedNavigationNode = null;
+    }
+
     const dbDocsDefinition = convertDocsDefinitionToDb({
         writeShape: writeDocsDefinition,
         files: {}
@@ -268,25 +550,8 @@ export async function getPreviewDocsDefinition({
         dbShape: dbDocsDefinition.config
     });
 
-    // Clear and repopulate both frontmatter caches
-    frontmatterPositionCache.clear();
-    frontmatterNavigationCache.clear();
-
-    for (const [pageId, page] of Object.entries(dbDocsDefinition.pages)) {
-        if (page.rawMarkdown != null) {
-            const absolutePath = AbsoluteFilePath.of(`${docsWorkspace.absoluteFilePath}/${pageId.replace("api/", "")}`);
-
-            // Cache position for backward compatibility
-            const position = extractFrontmatterPosition(page.rawMarkdown);
-            frontmatterPositionCache.set(absolutePath, position);
-
-            // Cache all navigation-affecting frontmatter properties
-            const navigationProperties = extractNavigationAffectingFrontmatter(page.rawMarkdown);
-            frontmatterNavigationCache.set(absolutePath, navigationProperties);
-        }
-    }
-
-    return {
+    // Build the final result
+    const result = {
         apis: apiCollector.getAPIsForDefinition(),
         apisV2: apiCollectorV2.getAPIsForDefinition(),
         config: readDocsConfig,
@@ -296,6 +561,32 @@ export async function getPreviewDocsDefinition({
         jsFiles: dbDocsDefinition.jsFiles,
         id: undefined
     };
+
+    // Clear and repopulate caches
+    frontmatterPositionCache.clear();
+    frontmatterNavigationCache.clear();
+
+    // Initialize resolved slugs cache on first run
+    if (resolvedSlugsCache.size === 0 && cachedNavigationNode) {
+        const initialSlugs = extractResolvedSlugsFromNavigation(cachedNavigationNode, docsWorkspace.absoluteFilePath);
+        for (const [filePath, slug] of initialSlugs) {
+            resolvedSlugsCache.set(filePath, slug);
+        }
+    }
+
+    for (const [pageId, page] of Object.entries(dbDocsDefinition.pages)) {
+        if (page.rawMarkdown != null) {
+            const absolutePath = AbsoluteFilePath.of(`${docsWorkspace.absoluteFilePath}/${pageId.replace("api/", "")}`);
+
+            const position = extractFrontmatterPosition(page.rawMarkdown);
+            frontmatterPositionCache.set(absolutePath, position);
+
+            const navigationProperties = extractNavigationAffectingFrontmatter(page.rawMarkdown);
+            frontmatterNavigationCache.set(absolutePath, navigationProperties);
+        }
+    }
+
+    return result;
 }
 
 type APIDefinitionID = string;

@@ -14,7 +14,7 @@ import Watcher from "watcher";
 import { WebSocket, WebSocketServer } from "ws";
 
 import { downloadBundle, getPathToBundleFolder } from "./downloadLocalDocsBundle";
-import { getPreviewDocsDefinition } from "./previewDocs";
+import { checkForSlugOnlyChangeAfterReloadFromDefinition, getPreviewDocsDefinition } from "./previewDocs";
 
 const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
     pages: {},
@@ -622,15 +622,47 @@ export async function runAppPreviewServer({
                     );
                 }
 
+                // Slug detection: reload first, then compare resolved slugs deterministically
+                const reloadedDocsDefinition = await reloadDocsDefinition(filesToReload);
+                if (reloadedDocsDefinition != null) {
+                    // Compare resolved slugs for slug-only changes
+                    const resolvedSlugResult = checkForSlugOnlyChangeAfterReloadFromDefinition(
+                        reloadedDocsDefinition,
+                        project.docsWorkspaces?.absoluteFilePath ?? AbsoluteFilePath.of(""),
+                        editedAbsoluteFilepaths
+                    );
+
+                    if (resolvedSlugResult != null) {
+                        context.logger.info(
+                            `Detected slug-only change: ${resolvedSlugResult.oldSlug} → ${resolvedSlugResult.newSlug}`
+                        );
+
+                        docsDefinition = reloadedDocsDefinition;
+
+                        // Send navigation instead of full reload
+                        sendData({
+                            version: 1,
+                            type: "navigateToSlug",
+                            oldSlug: resolvedSlugResult.oldSlug,
+                            newSlug: resolvedSlugResult.newSlug
+                        });
+
+                        editedAbsoluteFilepaths.length = 0;
+                        isReloading = false;
+                        return;
+                    }
+
+                    // No slug-only change - proceed with full reload
+                    docsDefinition = reloadedDocsDefinition;
+                }
+
+                // Proceed with full reload since no slug-only change detected
                 sendData({
                     version: 1,
                     type: "startReload"
                 });
 
-                const reloadedDocsDefinition = await reloadDocsDefinition(filesToReload);
-                if (reloadedDocsDefinition != null) {
-                    docsDefinition = reloadedDocsDefinition;
-                }
+                // docsDefinition already updated from reload above
 
                 editedAbsoluteFilepaths.length = 0;
 
