@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Re-publish CLI. 
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.2.4
+
+- changelogEntry:
+    - summary: |
         Support `<Code />` components with props formatted on multiple lines.
       type: fix
   irVersion: 61
