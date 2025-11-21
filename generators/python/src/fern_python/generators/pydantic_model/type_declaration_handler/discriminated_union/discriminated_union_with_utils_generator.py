@@ -526,6 +526,21 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         )
 
         def write_as_method(writer: AST.NodeWriter) -> None:
+            def write_return_instantiation(root_expr: str, declared_type_name: ir_types.DeclaredTypeName) -> None:
+                instantiation = AST.FunctionInvocation(
+                    function_definition=self._context.get_class_reference_for_type_id(
+                        declared_type_name.type_id, as_request=False
+                    ),
+                    args=[
+                        AST.Expression(
+                            f'{root_expr}.dict(exclude_unset=True, exclude={{"{self._union.discriminant.wire_value}"}})',
+                            spread=AST.ExpressionSpread.TWO_ASTERISKS,
+                        )
+                    ],
+                )
+                writer.write("return ")
+                writer.write_node(instantiation)
+
             def write_v1_logic(writer: AST.NodeWriter) -> None:
                 writer.write_line(f'if self.__root__.{discriminant_attr_name} != "{discriminant_value}":')
                 writer.indent()
@@ -536,8 +551,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 writer.write_line("")
 
                 single_union_type.shape.visit(
-                    same_properties_as_object=lambda declared_type_name: writer.write_line(
-                        f'return {self._context.get_class_reference_for_type_id(declared_type_name.type_id, as_request=False).write(writer=writer)}(**self.__root__.dict(exclude_unset=True, exclude={{"{self._union.discriminant.wire_value}"}}))'
+                    same_properties_as_object=lambda declared_type_name: write_return_instantiation(
+                        "self.__root__", declared_type_name
                     ),
                     single_property=lambda property: writer.write_line(
                         f"return self.__root__.{get_field_name_for_single_property(property)}"
@@ -555,8 +570,8 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 writer.write_line("")
 
                 single_union_type.shape.visit(
-                    same_properties_as_object=lambda declared_type_name: writer.write_line(
-                        f'return {self._context.get_class_reference_for_type_id(declared_type_name.type_id, as_request=False).write(writer=writer)}(**self.root.dict(exclude_unset=True, exclude={{"{self._union.discriminant.wire_value}"}}))'
+                    same_properties_as_object=lambda declared_type_name: write_return_instantiation(
+                        "self.root", declared_type_name
                     ),
                     single_property=lambda property: writer.write_line(
                         f"return self.root.{get_field_name_for_single_property(property)}"
