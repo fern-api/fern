@@ -307,12 +307,15 @@ async function postProcessGithubSelfHosted(
         const now = new Date();
         const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace("Z", "").replace(".", "_");
         const prBranch = `fern-bot/${formattedDate}`;
+
         if (selfhostedGithubConfig.mode === "pull-request") {
             context.logger.debug(`Checking out new branch ${prBranch}`);
             await repository.checkout(prBranch);
-        } else if (selfhostedGithubConfig.branch != null) {
-            context.logger.debug(`Checking out branch ${selfhostedGithubConfig.branch}`);
-            await repository.checkout(selfhostedGithubConfig.branch);
+        } else if (selfhostedGithubConfig.mode === "push" || selfhostedGithubConfig.mode == null) {
+            if (selfhostedGithubConfig.branch != null) {
+                context.logger.debug(`Checking out branch ${selfhostedGithubConfig.branch}`);
+                await repository.checkout(selfhostedGithubConfig.branch);
+            }
         }
 
         context.logger.debug("Checking for .fernignore file...");
