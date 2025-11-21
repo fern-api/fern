@@ -361,6 +361,10 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                 )
             )
 
+            for single_union_type in self._union.types:
+                self._add_is_method(external_pydantic_model, single_union_type, internal_single_union_types)
+                self._add_as_method(external_pydantic_model, single_union_type, internal_single_union_types)
+
             if self._custom_config.version in (PydanticVersionCompatibility.V1, PydanticVersionCompatibility.V1_ON_V2):
                 external_pydantic_model.set_root_type_unsafe_v1_or_v2_only(
                     is_forward_ref=True,
@@ -467,6 +471,126 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
         single_union_type: ir_types.SingleUnionType,
     ) -> AST.Expression:
         return AST.Expression(f'"{single_union_type.discriminant_value.wire_value}"')
+
+    def _add_is_method(
+        self,
+        external_pydantic_model: FernAwarePydanticModel,
+        single_union_type: ir_types.SingleUnionType,
+        internal_single_union_types: List[LocalClassReference],
+    ) -> None:
+        method_name = f"is_{single_union_type.discriminant_value.name.snake_case.safe_name}"
+        discriminant_value = single_union_type.discriminant_value.wire_value
+
+        def write_is_method(writer: AST.NodeWriter) -> None:
+            self.add_statements_v1_v2_or_both(
+                v1_nodes=[
+                    AST.Expression(
+                        f'return self.__root__.{self._get_discriminant_attr_name()} == "{discriminant_value}"'
+                    )
+                ],
+                v2_nodes=[
+                    AST.Expression(
+                        f'return self.root.{self._get_discriminant_attr_name()} == "{discriminant_value}"'
+                    )
+                ],
+                write_node=writer.write_node,
+            )
+
+        external_pydantic_model.add_method_unsafe(
+            declaration=AST.FunctionDeclaration(
+                name=method_name,
+                signature=AST.FunctionSignature(
+                    parameters=[AST.FunctionParameter(name="self")],
+                    return_type=AST.TypeHint.bool_(),
+                ),
+                body=AST.CodeWriter(write_is_method),
+            )
+        )
+
+    def _add_as_method(
+        self,
+        external_pydantic_model: FernAwarePydanticModel,
+        single_union_type: ir_types.SingleUnionType,
+        internal_single_union_types: List[LocalClassReference],
+    ) -> None:
+        method_name = f"as_{single_union_type.discriminant_value.name.snake_case.safe_name}"
+        discriminant_value = single_union_type.discriminant_value.wire_value
+        discriminant_attr_name = self._get_discriminant_attr_name()
+
+        return_type = single_union_type.shape.visit(
+            same_properties_as_object=lambda declared_type_name: external_pydantic_model.get_type_hint_for_type_reference(
+                ir_types.TypeReference.factory.named(declared_type_name_to_named_type(declared_type_name=declared_type_name))
+            ),
+            single_property=lambda property: external_pydantic_model.get_type_hint_for_type_reference(property.type),
+            no_properties=lambda: AST.TypeHint.none(),
+        )
+
+        def write_as_method(writer: AST.NodeWriter) -> None:
+            def write_v1_logic(writer: AST.NodeWriter) -> None:
+                writer.write_line(f'if self.__root__.{discriminant_attr_name} != "{discriminant_value}":')
+                writer.indent()
+                writer.write_line(
+                    f'raise ValueError(f"Expected {discriminant_value}; got {{self.__root__.{discriminant_attr_name}}}")'
+                )
+                writer.outdent()
+                writer.write_line("")
+
+                single_union_type.shape.visit(
+                    same_properties_as_object=lambda declared_type_name: writer.write_line(
+                        f'return {self._context.get_class_reference_for_type_id(declared_type_name.type_id, as_request=False).write(writer=writer)}(**self.__root__.dict(exclude_unset=True, exclude={{"{self._union.discriminant.wire_value}"}}))'
+                    ),
+                    single_property=lambda property: writer.write_line(
+                        f"return self.__root__.{get_field_name_for_single_property(property)}"
+                    ),
+                    no_properties=lambda: writer.write_line("return None"),
+                )
+
+            def write_v2_logic(writer: AST.NodeWriter) -> None:
+                writer.write_line(f'if self.root.{discriminant_attr_name} != "{discriminant_value}":')
+                writer.indent()
+                writer.write_line(
+                    f'raise ValueError(f"Expected {discriminant_value}; got {{self.root.{discriminant_attr_name}}}")'
+                )
+                writer.outdent()
+                writer.write_line("")
+
+                single_union_type.shape.visit(
+                    same_properties_as_object=lambda declared_type_name: writer.write_line(
+                        f'return {self._context.get_class_reference_for_type_id(declared_type_name.type_id, as_request=False).write(writer=writer)}(**self.root.dict(exclude_unset=True, exclude={{"{self._union.discriminant.wire_value}"}}))'
+                    ),
+                    single_property=lambda property: writer.write_line(
+                        f"return self.root.{get_field_name_for_single_property(property)}"
+                    ),
+                    no_properties=lambda: writer.write_line("return None"),
+                )
+
+            if self._custom_config.version == PydanticVersionCompatibility.Both:
+                writer.write_line(f"if {self._context.core_utilities.get_is_pydantic_v2()}:")
+                writer.indent()
+                write_v2_logic(writer)
+                writer.outdent()
+                writer.write_line("else:")
+                writer.indent()
+                write_v1_logic(writer)
+                writer.outdent()
+            elif self._custom_config.version in (
+                PydanticVersionCompatibility.V1,
+                PydanticVersionCompatibility.V1_ON_V2,
+            ):
+                write_v1_logic(writer)
+            elif self._custom_config.version == PydanticVersionCompatibility.V2:
+                write_v2_logic(writer)
+
+        external_pydantic_model.add_method_unsafe(
+            declaration=AST.FunctionDeclaration(
+                name=method_name,
+                signature=AST.FunctionSignature(
+                    parameters=[AST.FunctionParameter(name="self")],
+                    return_type=return_type,
+                ),
+                body=AST.CodeWriter(write_as_method),
+            )
+        )
 
     def add_statements_v1_v2_or_both(
         self,
