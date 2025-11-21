@@ -1,13 +1,29 @@
-FROM python:3.8.19-slim-bookworm
+FROM docker:28.4.0-dind-alpine3.22
+
+# Install Python 3 and pip (Alpine 3.22 comes with Python 3.12)
+# Note: docker and docker-compose are already installed in the base image
+RUN apk add --no-cache \
+    python3 \
+    py3-pip \
+    nodejs \
+    npm \
+    && ln -sf python3 /usr/bin/python
+
+# Ensure docker binaries are in PATH
+ENV PATH="/usr/local/bin:${PATH}"
 
 # renovate: datasource=pypi depName=poetry versioning=semver
-ENV POETRY_VERSION 1.8.5
+ENV POETRY_VERSION=1.8.5
+RUN pip install --no-cache-dir --break-system-packages poetry==${POETRY_VERSION}
 
-RUN set -ex; pip install --no-cache-dir poetry==$POETRY_VERSION;
-
-
-RUN apt update && apt upgrade -y
-RUN apt install nodejs npm -y
 RUN npm install -g fern-api
 
-CMD [ "poetry" ]
+# Create entrypoint script to start dockerd and execute commands
+RUN echo '#!/bin/sh' > /entrypoint.sh && \
+    echo 'dockerd &' >> /entrypoint.sh && \
+    echo 'sleep 5' >> /entrypoint.sh && \
+    echo 'exec "$@"' >> /entrypoint.sh && \
+    chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["tail", "-f", "/dev/null"]
