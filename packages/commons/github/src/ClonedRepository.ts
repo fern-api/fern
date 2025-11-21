@@ -17,6 +17,12 @@ export class ClonedRepository {
         this.git = git;
     }
 
+    public async setUserAndEmail({ name, email }: { name: string; email: string }): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.addConfig("user.name", name);
+        await this.git.addConfig("user.email", email);
+    }
+
     public static createAtPath(clonePath: string): ClonedRepository {
         return new ClonedRepository({
             clonePath,
@@ -100,9 +106,75 @@ export class ClonedRepository {
         await this.git.pull("origin", branch);
     }
 
+    public async pullWithMerge(branch: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        await this.git.raw(["pull", "origin", branch, "--no-rebase"]);
+    }
+
     public async push(): Promise<void> {
         await this.git.cwd(this.clonePath);
         await this.git.push();
+    }
+
+    public async pushWithMergingRemote(): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        const currentBranch = await this.getCurrentBranch();
+
+        const isRemoteReject = (msg: string) => msg.includes("fetch first") || msg.includes("Updates were rejected");
+        const isDivergent = (msg: string) =>
+            msg.includes("divergent branches") || msg.includes("You have divergent branches");
+
+        try {
+            await this.push();
+        } catch (err) {
+            const errMsg = String(err);
+            if (isRemoteReject(errMsg)) {
+                try {
+                    await this.pull(currentBranch);
+                    await this.push();
+                    return;
+                } catch (pullErr) {
+                    const pullMsg = String(pullErr);
+                    if (isDivergent(pullMsg)) {
+                        try {
+                            await this.pullWithMerge(currentBranch);
+                            await this.push();
+                            return;
+                        } catch (mergeErr) {
+                            throw err; // rethrow original push error
+                        }
+                    } else {
+                        throw err; // rethrow original push error
+                    }
+                }
+            } else {
+                throw err; // rethrow non-remote-reject errors
+            }
+        }
+    }
+
+    public async pushWithRebasingRemote(): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        const currentBranch = await this.getCurrentBranch();
+
+        const isRemoteReject = (msg: string) => msg.includes("fetch first") || msg.includes("Updates were rejected");
+
+        try {
+            await this.push();
+        } catch (err) {
+            const errMsg = String(err);
+            if (isRemoteReject(errMsg)) {
+                try {
+                    await this.git.raw(["pull", "origin", currentBranch, "--rebase"]);
+                    await this.push();
+                    return;
+                } catch (pullErr) {
+                    throw err; // rethrow original push error
+                }
+            } else {
+                throw err; // rethrow non-remote-reject errors
+            }
+        }
     }
 
     public async isRemoteEmpty(): Promise<boolean> {
