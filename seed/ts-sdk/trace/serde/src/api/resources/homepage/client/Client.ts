@@ -7,7 +7,7 @@ import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedTrace from "../../../index.js";
+import type { ProblemId } from "../../commons/types/ProblemId.js";
 
 export declare namespace HomepageClient {
     export interface Options extends BaseClientOptions {}
@@ -28,15 +28,13 @@ export class HomepageClient {
      * @example
      *     await client.homepage.getHomepageProblems()
      */
-    public getHomepageProblems(
-        requestOptions?: HomepageClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.ProblemId[]> {
+    public getHomepageProblems(requestOptions?: HomepageClient.RequestOptions): core.HttpResponsePromise<ProblemId[]> {
         return core.HttpResponsePromise.fromPromise(this.__getHomepageProblems(requestOptions));
     }
 
     private async __getHomepageProblems(
         requestOptions?: HomepageClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.ProblemId[]>> {
+    ): Promise<core.WithRawResponse<ProblemId[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -99,21 +97,21 @@ export class HomepageClient {
     }
 
     /**
-     * @param {SeedTrace.ProblemId[]} request
+     * @param {ProblemId[]} request
      * @param {HomepageClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.homepage.setHomepageProblems(["string", "string"])
      */
     public setHomepageProblems(
-        request: SeedTrace.ProblemId[],
+        request: ProblemId[],
         requestOptions?: HomepageClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__setHomepageProblems(request, requestOptions));
     }
 
     private async __setHomepageProblems(
-        request: SeedTrace.ProblemId[],
+        request: ProblemId[],
         requestOptions?: HomepageClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

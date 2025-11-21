@@ -6,7 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import * as SeedExhaustive from "../../../index.js";
+import { BadRequestBody } from "../../generalErrors/errors/BadRequestBody.js";
 
 export declare namespace NoAuthClient {
     export interface Options extends BaseClientOptions {}
@@ -27,7 +27,7 @@ export class NoAuthClient {
      * @param {unknown} request
      * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link BadRequestBody}
      *
      * @example
      *     await client.noAuth.postWithNoAuth({
@@ -80,7 +80,7 @@ export class NoAuthClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new SeedExhaustive.BadRequestBody(
+                    throw new BadRequestBody(
                         serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,

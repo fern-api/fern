@@ -69,7 +69,7 @@ export class HttpMethodsClient {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -99,10 +99,7 @@ export class HttpMethodsClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -130,7 +127,7 @@ export class HttpMethodsClient {
     }
     /**
      * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -160,10 +157,7 @@ export class HttpMethodsClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -191,7 +185,7 @@ export class HttpMethodsClient {
     }
     /**
      * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -235,10 +229,7 @@ export class HttpMethodsClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({

@@ -3,7 +3,7 @@
 import type * as SeedQueryParameters from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { User } from "./User.js";
+import type { User } from "./User.js";
 
 export const NestedUser: core.serialization.ObjectSchema<serializers.NestedUser.Raw, SeedQueryParameters.NestedUser> =
     core.serialization.object({

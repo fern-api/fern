@@ -23,6 +23,7 @@ export declare namespace RequestWrapperContextImpl {
         enableInlineTypes: boolean;
         formDataSupport: "Node16" | "Node18";
         flattenRequestParameters: boolean;
+        isForSnippet: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     }
 }
@@ -41,6 +42,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
     private enableInlineTypes: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly flattenRequestParameters: boolean;
+    private readonly isForSnippet: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
 
     constructor({
@@ -57,6 +59,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         enableInlineTypes,
         formDataSupport,
         flattenRequestParameters,
+        isForSnippet,
         parameterNaming
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
@@ -72,6 +75,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         this.enableInlineTypes = enableInlineTypes;
         this.formDataSupport = formDataSupport;
         this.flattenRequestParameters = flattenRequestParameters;
+        this.isForSnippet = isForSnippet;
         this.parameterNaming = parameterNaming;
     }
 
@@ -134,15 +138,25 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
-        return this.requestWrapperDeclarationReferencer.getReferenceToRequestWrapperType({
-            name: { packageId, endpoint },
-            importsManager: this.importsManager,
-            exportsManager: this.exportsManager,
-            importStrategy: {
-                type: "fromRoot",
-                namespaceImport: this.requestWrapperDeclarationReferencer.namespaceExport
-            },
-            referencedIn: this.sourceFile
-        });
+        if (this.isForSnippet) {
+            return this.requestWrapperDeclarationReferencer.getReferenceToRequestWrapperType({
+                name: { packageId, endpoint },
+                importsManager: this.importsManager,
+                exportsManager: this.exportsManager,
+                importStrategy: {
+                    type: "fromRoot",
+                    namespaceImport: this.requestWrapperDeclarationReferencer.namespaceExport
+                },
+                referencedIn: this.sourceFile
+            });
+        } else {
+            return this.requestWrapperDeclarationReferencer.getReferenceToRequestWrapperType({
+                name: { packageId, endpoint },
+                importsManager: this.importsManager,
+                exportsManager: this.exportsManager,
+                importStrategy: { type: "direct" },
+                referencedIn: this.sourceFile
+            });
+        }
     }
 }

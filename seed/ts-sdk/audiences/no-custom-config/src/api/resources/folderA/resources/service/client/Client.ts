@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedAudiences from "../../../../../index.js";
+import type { Response } from "../types/Response.js";
+import type { GetDirectThreadRequest } from "./requests/GetDirectThreadRequest.js";
 
 export declare namespace ServiceClient {
     export interface Options extends BaseClientOptions {}
@@ -21,7 +22,7 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedAudiences.folderA.GetDirectThreadRequest} request
+     * @param {GetDirectThreadRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -31,16 +32,16 @@ export class ServiceClient {
      *     })
      */
     public getDirectThread(
-        request: SeedAudiences.folderA.GetDirectThreadRequest,
+        request: GetDirectThreadRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedAudiences.folderA.Response> {
+    ): core.HttpResponsePromise<Response> {
         return core.HttpResponsePromise.fromPromise(this.__getDirectThread(request, requestOptions));
     }
 
     private async __getDirectThread(
-        request: SeedAudiences.folderA.GetDirectThreadRequest,
+        request: GetDirectThreadRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedAudiences.folderA.Response>> {
+    ): Promise<core.WithRawResponse<Response>> {
         const { ids, tags } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (Array.isArray(ids)) {
@@ -70,7 +71,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedAudiences.folderA.Response, rawResponse: _response.rawResponse };
+            return { data: _response.body as Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

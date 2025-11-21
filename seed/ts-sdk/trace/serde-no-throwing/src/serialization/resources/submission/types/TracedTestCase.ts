@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { TestCaseResultWithStdout } from "./TestCaseResultWithStdout.js";
+import type { TestCaseResultWithStdout } from "./TestCaseResultWithStdout.js";
 
 export const TracedTestCase: core.serialization.ObjectSchema<serializers.TracedTestCase.Raw, SeedTrace.TracedTestCase> =
     core.serialization.object({

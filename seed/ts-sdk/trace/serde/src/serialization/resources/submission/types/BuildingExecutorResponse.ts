@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ExecutionSessionStatus } from "./ExecutionSessionStatus.js";
-import { SubmissionId } from "./SubmissionId.js";
+import type { ExecutionSessionStatus } from "./ExecutionSessionStatus.js";
+import type { SubmissionId } from "./SubmissionId.js";
 
 export const BuildingExecutorResponse: core.serialization.ObjectSchema<
     serializers.BuildingExecutorResponse.Raw,

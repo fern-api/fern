@@ -6,7 +6,24 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedClientSideParams from "../../../index.js";
+import type { Client } from "../../types/types/Client.js";
+import type { Connection } from "../../types/types/Connection.js";
+import type { CreateUserRequest } from "../../types/types/CreateUserRequest.js";
+import type { PaginatedClientResponse } from "../../types/types/PaginatedClientResponse.js";
+import type { PaginatedUserResponse } from "../../types/types/PaginatedUserResponse.js";
+import type { Resource } from "../../types/types/Resource.js";
+import type { SearchResponse } from "../../types/types/SearchResponse.js";
+import type { UpdateUserRequest } from "../../types/types/UpdateUserRequest.js";
+import type { User } from "../../types/types/User.js";
+import type { GetClientRequest } from "./requests/GetClientRequest.js";
+import type { GetConnectionRequest } from "./requests/GetConnectionRequest.js";
+import type { GetResourceRequest } from "./requests/GetResourceRequest.js";
+import type { GetUserRequest } from "./requests/GetUserRequest.js";
+import type { ListClientsRequest } from "./requests/ListClientsRequest.js";
+import type { ListConnectionsRequest } from "./requests/ListConnectionsRequest.js";
+import type { ListResourcesRequest } from "./requests/ListResourcesRequest.js";
+import type { ListUsersRequest } from "./requests/ListUsersRequest.js";
+import type { SearchResourcesRequest } from "./requests/SearchResourcesRequest.js";
 
 export declare namespace ServiceClient {
     export interface Options extends BaseClientOptions {}
@@ -24,7 +41,7 @@ export class ServiceClient {
     /**
      * List resources with pagination
      *
-     * @param {SeedClientSideParams.ListResourcesRequest} request
+     * @param {ListResourcesRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -39,16 +56,16 @@ export class ServiceClient {
      *     })
      */
     public listResources(
-        request: SeedClientSideParams.ListResourcesRequest,
+        request: ListResourcesRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.Resource[]> {
+    ): core.HttpResponsePromise<Resource[]> {
         return core.HttpResponsePromise.fromPromise(this.__listResources(request, requestOptions));
     }
 
     private async __listResources(
-        request: SeedClientSideParams.ListResourcesRequest,
+        request: ListResourcesRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Resource[]>> {
+    ): Promise<core.WithRawResponse<Resource[]>> {
         const { page, per_page: perPage, sort, order, include_totals: includeTotals, fields, search } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.page = page.toString();
@@ -81,7 +98,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.Resource[], rawResponse: _response.rawResponse };
+            return { data: _response.body as Resource[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -113,7 +130,7 @@ export class ServiceClient {
      * Get a single resource
      *
      * @param {string} resourceId
-     * @param {SeedClientSideParams.GetResourceRequest} request
+     * @param {GetResourceRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -124,17 +141,17 @@ export class ServiceClient {
      */
     public getResource(
         resourceId: string,
-        request: SeedClientSideParams.GetResourceRequest,
+        request: GetResourceRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.Resource> {
+    ): core.HttpResponsePromise<Resource> {
         return core.HttpResponsePromise.fromPromise(this.__getResource(resourceId, request, requestOptions));
     }
 
     private async __getResource(
         resourceId: string,
-        request: SeedClientSideParams.GetResourceRequest,
+        request: GetResourceRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Resource>> {
+    ): Promise<core.WithRawResponse<Resource>> {
         const { include_metadata: includeMetadata, format } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.include_metadata = includeMetadata.toString();
@@ -156,7 +173,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.Resource, rawResponse: _response.rawResponse };
+            return { data: _response.body as Resource, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -189,7 +206,7 @@ export class ServiceClient {
     /**
      * Search resources with complex parameters
      *
-     * @param {SeedClientSideParams.SearchResourcesRequest} request
+     * @param {SearchResourcesRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -205,16 +222,16 @@ export class ServiceClient {
      *     })
      */
     public searchResources(
-        request: SeedClientSideParams.SearchResourcesRequest,
+        request: SearchResourcesRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.SearchResponse> {
+    ): core.HttpResponsePromise<SearchResponse> {
         return core.HttpResponsePromise.fromPromise(this.__searchResources(request, requestOptions));
     }
 
     private async __searchResources(
-        request: SeedClientSideParams.SearchResourcesRequest,
+        request: SearchResourcesRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.SearchResponse>> {
+    ): Promise<core.WithRawResponse<SearchResponse>> {
         const { limit, offset, ..._body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.limit = limit.toString();
@@ -239,7 +256,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.SearchResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SearchResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -272,7 +289,7 @@ export class ServiceClient {
     /**
      * List or search for users
      *
-     * @param {SeedClientSideParams.ListUsersRequest} request
+     * @param {ListUsersRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -288,16 +305,16 @@ export class ServiceClient {
      *     })
      */
     public listUsers(
-        request: SeedClientSideParams.ListUsersRequest = {},
+        request: ListUsersRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.PaginatedUserResponse> {
+    ): core.HttpResponsePromise<PaginatedUserResponse> {
         return core.HttpResponsePromise.fromPromise(this.__listUsers(request, requestOptions));
     }
 
     private async __listUsers(
-        request: SeedClientSideParams.ListUsersRequest = {},
+        request: ListUsersRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.PaginatedUserResponse>> {
+    ): Promise<core.WithRawResponse<PaginatedUserResponse>> {
         const {
             page,
             per_page: perPage,
@@ -358,10 +375,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedClientSideParams.PaginatedUserResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as PaginatedUserResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -393,7 +407,7 @@ export class ServiceClient {
      * Get a user by ID
      *
      * @param {string} userId
-     * @param {SeedClientSideParams.GetUserRequest} request
+     * @param {GetUserRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -404,17 +418,17 @@ export class ServiceClient {
      */
     public getUserById(
         userId: string,
-        request: SeedClientSideParams.GetUserRequest = {},
+        request: GetUserRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.User> {
+    ): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__getUserById(userId, request, requestOptions));
     }
 
     private async __getUserById(
         userId: string,
-        request: SeedClientSideParams.GetUserRequest = {},
+        request: GetUserRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
+    ): Promise<core.WithRawResponse<User>> {
         const { fields, include_fields: includeFields } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (fields != null) {
@@ -442,7 +456,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -475,7 +489,7 @@ export class ServiceClient {
     /**
      * Create a new user
      *
-     * @param {SeedClientSideParams.CreateUserRequest} request
+     * @param {CreateUserRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -500,16 +514,16 @@ export class ServiceClient {
      *     })
      */
     public createUser(
-        request: SeedClientSideParams.CreateUserRequest,
+        request: CreateUserRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.User> {
+    ): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(
-        request: SeedClientSideParams.CreateUserRequest,
+        request: CreateUserRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
+    ): Promise<core.WithRawResponse<User>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -530,7 +544,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -562,7 +576,7 @@ export class ServiceClient {
      * Update a user
      *
      * @param {string} userId
-     * @param {SeedClientSideParams.UpdateUserRequest} request
+     * @param {UpdateUserRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -588,17 +602,17 @@ export class ServiceClient {
      */
     public updateUser(
         userId: string,
-        request: SeedClientSideParams.UpdateUserRequest,
+        request: UpdateUserRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.User> {
+    ): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__updateUser(userId, request, requestOptions));
     }
 
     private async __updateUser(
         userId: string,
-        request: SeedClientSideParams.UpdateUserRequest,
+        request: UpdateUserRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.User>> {
+    ): Promise<core.WithRawResponse<User>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -619,7 +633,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -716,7 +730,7 @@ export class ServiceClient {
     /**
      * List all connections
      *
-     * @param {SeedClientSideParams.ListConnectionsRequest} request
+     * @param {ListConnectionsRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -727,16 +741,16 @@ export class ServiceClient {
      *     })
      */
     public listConnections(
-        request: SeedClientSideParams.ListConnectionsRequest = {},
+        request: ListConnectionsRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.Connection[]> {
+    ): core.HttpResponsePromise<Connection[]> {
         return core.HttpResponsePromise.fromPromise(this.__listConnections(request, requestOptions));
     }
 
     private async __listConnections(
-        request: SeedClientSideParams.ListConnectionsRequest = {},
+        request: ListConnectionsRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Connection[]>> {
+    ): Promise<core.WithRawResponse<Connection[]>> {
         const { strategy, name, fields } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (strategy != null) {
@@ -768,7 +782,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.Connection[], rawResponse: _response.rawResponse };
+            return { data: _response.body as Connection[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -802,7 +816,7 @@ export class ServiceClient {
      * Get a connection by ID
      *
      * @param {string} connectionId
-     * @param {SeedClientSideParams.GetConnectionRequest} request
+     * @param {GetConnectionRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -812,17 +826,17 @@ export class ServiceClient {
      */
     public getConnection(
         connectionId: string,
-        request: SeedClientSideParams.GetConnectionRequest = {},
+        request: GetConnectionRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.Connection> {
+    ): core.HttpResponsePromise<Connection> {
         return core.HttpResponsePromise.fromPromise(this.__getConnection(connectionId, request, requestOptions));
     }
 
     private async __getConnection(
         connectionId: string,
-        request: SeedClientSideParams.GetConnectionRequest = {},
+        request: GetConnectionRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Connection>> {
+    ): Promise<core.WithRawResponse<Connection>> {
         const { fields } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (fields != null) {
@@ -846,7 +860,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.Connection, rawResponse: _response.rawResponse };
+            return { data: _response.body as Connection, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -879,7 +893,7 @@ export class ServiceClient {
     /**
      * List all clients/applications
      *
-     * @param {SeedClientSideParams.ListClientsRequest} request
+     * @param {ListClientsRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -895,16 +909,16 @@ export class ServiceClient {
      *     })
      */
     public listClients(
-        request: SeedClientSideParams.ListClientsRequest = {},
+        request: ListClientsRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.PaginatedClientResponse> {
+    ): core.HttpResponsePromise<PaginatedClientResponse> {
         return core.HttpResponsePromise.fromPromise(this.__listClients(request, requestOptions));
     }
 
     private async __listClients(
-        request: SeedClientSideParams.ListClientsRequest = {},
+        request: ListClientsRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.PaginatedClientResponse>> {
+    ): Promise<core.WithRawResponse<PaginatedClientResponse>> {
         const {
             fields,
             include_fields: includeFields,
@@ -965,10 +979,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedClientSideParams.PaginatedClientResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as PaginatedClientResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -1000,7 +1011,7 @@ export class ServiceClient {
      * Get a client by ID
      *
      * @param {string} clientId
-     * @param {SeedClientSideParams.GetClientRequest} request
+     * @param {GetClientRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -1011,17 +1022,17 @@ export class ServiceClient {
      */
     public getClient(
         clientId: string,
-        request: SeedClientSideParams.GetClientRequest = {},
+        request: GetClientRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedClientSideParams.Client> {
+    ): core.HttpResponsePromise<Client> {
         return core.HttpResponsePromise.fromPromise(this.__getClient(clientId, request, requestOptions));
     }
 
     private async __getClient(
         clientId: string,
-        request: SeedClientSideParams.GetClientRequest = {},
+        request: GetClientRequest = {},
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedClientSideParams.Client>> {
+    ): Promise<core.WithRawResponse<Client>> {
         const { fields, include_fields: includeFields } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (fields != null) {
@@ -1049,7 +1060,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedClientSideParams.Client, rawResponse: _response.rawResponse };
+            return { data: _response.body as Client, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

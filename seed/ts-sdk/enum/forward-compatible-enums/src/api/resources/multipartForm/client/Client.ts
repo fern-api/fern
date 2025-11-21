@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedEnum from "../../../index.js";
+import type { MultipartFormRequest } from "./requests/MultipartFormRequest.js";
 
 export declare namespace MultipartFormClient {
     export interface Options extends BaseClientOptions {}
@@ -21,18 +21,18 @@ export class MultipartFormClient {
     }
 
     /**
-     * @param {SeedEnum.MultipartFormRequest} request
+     * @param {MultipartFormRequest} request
      * @param {MultipartFormClient.RequestOptions} requestOptions - Request-specific configuration.
      */
     public multipartForm(
-        request: SeedEnum.MultipartFormRequest,
+        request: MultipartFormRequest,
         requestOptions?: MultipartFormClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__multipartForm(request, requestOptions));
     }
 
     private async __multipartForm(
-        request: SeedEnum.MultipartFormRequest,
+        request: MultipartFormRequest,
         requestOptions?: MultipartFormClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _request = await core.newFormData();

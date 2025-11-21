@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedLiteral from "../../../index.js";
+import type { SendResponse } from "../../../types/SendResponse.js";
+import type { SendLiteralsInQueryRequest } from "./requests/SendLiteralsInQueryRequest.js";
 
 export declare namespace QueryClient {
     export interface Options extends BaseClientOptions {}
@@ -21,7 +22,7 @@ export class QueryClient {
     }
 
     /**
-     * @param {SeedLiteral.SendLiteralsInQueryRequest} request
+     * @param {SendLiteralsInQueryRequest} request
      * @param {QueryClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -38,16 +39,16 @@ export class QueryClient {
      *     })
      */
     public send(
-        request: SeedLiteral.SendLiteralsInQueryRequest,
+        request: SendLiteralsInQueryRequest,
         requestOptions?: QueryClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+    ): core.HttpResponsePromise<SendResponse> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedLiteral.SendLiteralsInQueryRequest,
+        request: SendLiteralsInQueryRequest,
         requestOptions?: QueryClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
+    ): Promise<core.WithRawResponse<SendResponse>> {
         const {
             prompt,
             optional_prompt: optionalPrompt,
@@ -105,7 +106,7 @@ export class QueryClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SendResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

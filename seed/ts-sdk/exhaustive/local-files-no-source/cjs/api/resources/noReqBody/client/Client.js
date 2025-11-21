@@ -77,10 +77,7 @@ class NoReqBodyClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({

@@ -1,6 +1,7 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
-import type * as SeedExhaustive from "../../../../../index.mjs";
+import type { ObjectWithOptionalField } from "../../../../types/resources/object/types/ObjectWithOptionalField.mjs";
+import type { ObjectWithRequiredField } from "../../../../types/resources/object/types/ObjectWithRequiredField.mjs";
 export declare namespace HttpMethodsClient {
     interface Options extends BaseClientOptions {
     }
@@ -20,7 +21,7 @@ export declare class HttpMethodsClient {
     testGet(id: string, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<string>;
     private __testGet;
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -28,11 +29,11 @@ export declare class HttpMethodsClient {
      *         string: "string"
      *     })
      */
-    testPost(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    testPost(request: ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
     private __testPost;
     /**
      * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -40,11 +41,11 @@ export declare class HttpMethodsClient {
      *         string: "string"
      *     })
      */
-    testPut(id: string, request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    testPut(id: string, request: ObjectWithRequiredField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
     private __testPut;
     /**
      * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -66,7 +67,7 @@ export declare class HttpMethodsClient {
      *         bigint: "1000000"
      *     })
      */
-    testPatch(id: string, request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    testPatch(id: string, request: ObjectWithOptionalField, requestOptions?: HttpMethodsClient.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
     private __testPatch;
     /**
      * @param {string} id

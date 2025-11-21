@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
-import type * as SeedExhaustive from "../../../../../index.mjs";
+import type { ObjectWithOptionalField } from "../../../../types/resources/object/types/ObjectWithOptionalField.mjs";
 export declare namespace ContentTypeClient {
     interface Options extends BaseClientOptions {
     }
@@ -11,7 +11,7 @@ export declare class ContentTypeClient {
     protected readonly _options: ContentTypeClient.Options;
     constructor(options: ContentTypeClient.Options);
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -33,10 +33,10 @@ export declare class ContentTypeClient {
      *         bigint: "1000000"
      *     })
      */
-    postJsonPatchContentType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): core.HttpResponsePromise<void>;
+    postJsonPatchContentType(request: ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): core.HttpResponsePromise<void>;
     private __postJsonPatchContentType;
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -58,7 +58,7 @@ export declare class ContentTypeClient {
      *         bigint: "1000000"
      *     })
      */
-    postJsonPatchContentWithCharsetType(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): core.HttpResponsePromise<void>;
+    postJsonPatchContentWithCharsetType(request: ObjectWithOptionalField, requestOptions?: ContentTypeClient.RequestOptions): core.HttpResponsePromise<void>;
     private __postJsonPatchContentWithCharsetType;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

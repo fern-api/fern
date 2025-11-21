@@ -48,7 +48,7 @@ const BaseClient_js_1 = require("../../../../BaseClient.js");
 const headers_js_1 = require("../../../../core/headers.js");
 const core = __importStar(require("../../../../core/index.js"));
 const errors = __importStar(require("../../../../errors/index.js"));
-const SeedExhaustive = __importStar(require("../../../index.js"));
+const BadRequestBody_js_1 = require("../../generalErrors/errors/BadRequestBody.js");
 class NoAuthClient {
     constructor(options) {
         this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
@@ -59,7 +59,7 @@ class NoAuthClient {
      * @param {unknown} request
      * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link BadRequestBody}
      *
      * @example
      *     await client.noAuth.postWithNoAuth({
@@ -93,7 +93,7 @@ class NoAuthClient {
             if (_response.error.reason === "status-code") {
                 switch (_response.error.statusCode) {
                     case 400:
-                        throw new SeedExhaustive.BadRequestBody(_response.error.body, _response.rawResponse);
+                        throw new BadRequestBody_js_1.BadRequestBody(_response.error.body, _response.rawResponse);
                     default:
                         throw new errors.SeedExhaustiveError({
                             statusCode: _response.error.statusCode,

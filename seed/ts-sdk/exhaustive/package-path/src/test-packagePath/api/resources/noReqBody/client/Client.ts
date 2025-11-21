@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../index.js";
+import type { ObjectWithOptionalField } from "../../types/resources/object/types/ObjectWithOptionalField.js";
 
 export declare namespace NoReqBodyClient {
     export interface Options extends BaseClientOptions {}
@@ -28,13 +28,13 @@ export class NoReqBodyClient {
      */
     public getWithNoRequestBody(
         requestOptions?: NoReqBodyClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.HttpResponsePromise<ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__getWithNoRequestBody(requestOptions));
     }
 
     private async __getWithNoRequestBody(
         requestOptions?: NoReqBodyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+    ): Promise<core.WithRawResponse<ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -56,10 +56,7 @@ export class NoReqBodyClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as ObjectWithOptionalField, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

@@ -53,7 +53,7 @@ class PutClient {
         this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
-     * @param {SeedExhaustive.endpoints.PutRequest} request
+     * @param {PutRequest} request
      * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

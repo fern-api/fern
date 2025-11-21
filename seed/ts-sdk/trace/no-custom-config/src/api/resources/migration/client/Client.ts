@@ -6,7 +6,8 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedTrace from "../../../index.js";
+import type { Migration } from "../types/Migration.js";
+import type { GetAttemptedMigrationsRequest } from "./requests/GetAttemptedMigrationsRequest.js";
 
 export declare namespace MigrationClient {
     export interface Options extends BaseClientOptions {}
@@ -22,7 +23,7 @@ export class MigrationClient {
     }
 
     /**
-     * @param {SeedTrace.GetAttemptedMigrationsRequest} request
+     * @param {GetAttemptedMigrationsRequest} request
      * @param {MigrationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -31,16 +32,16 @@ export class MigrationClient {
      *     })
      */
     public getAttemptedMigrations(
-        request: SeedTrace.GetAttemptedMigrationsRequest,
+        request: GetAttemptedMigrationsRequest,
         requestOptions?: MigrationClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.Migration[]> {
+    ): core.HttpResponsePromise<Migration[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAttemptedMigrations(request, requestOptions));
     }
 
     private async __getAttemptedMigrations(
-        request: SeedTrace.GetAttemptedMigrationsRequest,
+        request: GetAttemptedMigrationsRequest,
         requestOptions?: MigrationClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.Migration[]>> {
+    ): Promise<core.WithRawResponse<Migration[]>> {
         const { "admin-key-header": adminKeyHeader } = request;
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
@@ -67,7 +68,7 @@ export class MigrationClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedTrace.Migration[], rawResponse: _response.rawResponse };
+            return { data: _response.body as Migration[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

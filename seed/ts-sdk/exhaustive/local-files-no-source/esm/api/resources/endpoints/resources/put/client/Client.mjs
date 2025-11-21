@@ -17,7 +17,7 @@ export class PutClient {
         this._options = normalizeClientOptions(options);
     }
     /**
-     * @param {SeedExhaustive.endpoints.PutRequest} request
+     * @param {PutRequest} request
      * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

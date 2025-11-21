@@ -5,6 +5,7 @@ import { normalizeClientOptions } from "../../../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import type { Animal } from "../../../../types/resources/union/types/Animal.js";
 
 export declare namespace UnionClient {
     export interface Options extends BaseClientOptions {}
@@ -20,7 +21,7 @@ export class UnionClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.Animal} request
+     * @param {Animal} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -31,22 +32,16 @@ export class UnionClient {
      *     })
      */
     public getAndReturnUnion(
-        request: SeedExhaustive.types.Animal,
+        request: Animal,
         requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<
-        core.APIResponse<SeedExhaustive.types.Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error>
-    > {
+    ): core.HttpResponsePromise<core.APIResponse<Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnUnion(request, requestOptions));
     }
 
     private async __getAndReturnUnion(
-        request: SeedExhaustive.types.Animal,
+        request: Animal,
         requestOptions?: UnionClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<
-            core.APIResponse<SeedExhaustive.types.Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error>
-        >
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<Animal, SeedExhaustive.endpoints.union.getAndReturnUnion.Error>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -74,7 +69,7 @@ export class UnionClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.Animal,
+                    body: _response.body as Animal,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

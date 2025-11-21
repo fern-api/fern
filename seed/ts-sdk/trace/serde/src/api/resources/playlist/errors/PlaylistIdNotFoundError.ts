@@ -2,10 +2,10 @@
 
 import type * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedTrace from "../../../index.js";
+import type { PlaylistIdNotFoundErrorBody } from "../types/PlaylistIdNotFoundErrorBody.js";
 
 export class PlaylistIdNotFoundError extends errors.SeedTraceError {
-    constructor(body: SeedTrace.PlaylistIdNotFoundErrorBody, rawResponse?: core.RawResponse) {
+    constructor(body: PlaylistIdNotFoundErrorBody, rawResponse?: core.RawResponse) {
         super({
             message: "PlaylistIdNotFoundError",
             statusCode: 404,

@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { NodeId } from "./NodeId.js";
+import type { NodeId } from "./NodeId.js";
 
 export const SinglyLinkedListNodeValue: core.serialization.ObjectSchema<
     serializers.SinglyLinkedListNodeValue.Raw,

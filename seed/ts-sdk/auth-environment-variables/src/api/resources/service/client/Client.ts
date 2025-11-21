@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedAuthEnvironmentVariables from "../../../index.js";
+import type { HeaderAuthRequest } from "./requests/HeaderAuthRequest.js";
 
 export declare namespace ServiceClient {
     export interface Options extends BaseClientOptions {}
@@ -91,7 +91,7 @@ export class ServiceClient {
     /**
      * GET request with custom api key
      *
-     * @param {SeedAuthEnvironmentVariables.HeaderAuthRequest} request
+     * @param {HeaderAuthRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -100,14 +100,14 @@ export class ServiceClient {
      *     })
      */
     public getWithHeader(
-        request: SeedAuthEnvironmentVariables.HeaderAuthRequest,
+        request: HeaderAuthRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getWithHeader(request, requestOptions));
     }
 
     private async __getWithHeader(
-        request: SeedAuthEnvironmentVariables.HeaderAuthRequest,
+        request: HeaderAuthRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const { "X-Endpoint-Header": xEndpointHeader } = request;

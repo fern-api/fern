@@ -137,6 +137,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly omitUndefined: boolean;
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly allowExtraFields: boolean;
+    private readonly importsManager: ImportsManager;
     private readonly exportsManager: ExportsManager;
     private readonly oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private oauthAuthScheme: OAuthScheme | undefined;
@@ -169,6 +170,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         inlineFileProperties,
         omitUndefined,
         allowExtraFields,
+        importsManager,
         oauthTokenProviderGenerator,
         exportsManager,
         streamType,
@@ -193,6 +195,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.omitUndefined = omitUndefined;
         this.allowExtraFields = allowExtraFields;
         this.formDataSupport = formDataSupport;
+        this.importsManager = importsManager;
         this.exportsManager = exportsManager;
         this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
         this.generateEndpointMetadata = generateEndpointMetadata;
@@ -588,6 +591,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public writeToFile(context: SdkContext): void {
+        // Reserve the client class name to prevent imports from using it
+        // This is done in writeToFile() rather than the constructor because
+        // we only want to reserve the name when actually writing the client class file,
+        // not when importing it in other files (like tests)
+        context.importsManager.reserveLocal(this.serviceClassName);
+
         const serviceModule: ModuleDeclarationStructure = {
             kind: StructureKind.Module,
             name: this.serviceClassName,

@@ -1,4 +1,4 @@
-import type * as SeedExhaustive from "../../../../../index.mjs";
+import type { OptionalAlias } from "./OptionalAlias.mjs";
 export interface DoubleOptional {
-    optionalAlias?: SeedExhaustive.types.OptionalAlias | undefined;
+    optionalAlias?: OptionalAlias | undefined;
 }

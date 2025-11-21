@@ -2,10 +2,10 @@
 
 import type * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../index.js";
+import type { BadObjectRequestInfo } from "../types/types.js";
 
 export class BadRequestBody extends errors.SeedExhaustiveError {
-    constructor(body: SeedExhaustive.BadObjectRequestInfo, rawResponse?: core.RawResponse) {
+    constructor(body: BadObjectRequestInfo, rawResponse?: core.RawResponse) {
         super({
             message: "BadRequestBody",
             statusCode: 400,

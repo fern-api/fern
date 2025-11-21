@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedServerSentEvents from "../../../index.js";
+import type { StreamedCompletion } from "../types/StreamedCompletion.js";
+import type { StreamCompletionRequest } from "./requests/StreamCompletionRequest.js";
 
 export declare namespace CompletionsClient {
     export interface Options extends BaseClientOptions {}
@@ -21,16 +22,16 @@ export class CompletionsClient {
     }
 
     public stream(
-        request: SeedServerSentEvents.StreamCompletionRequest,
+        request: StreamCompletionRequest,
         requestOptions?: CompletionsClient.RequestOptions,
-    ): core.HttpResponsePromise<core.Stream<SeedServerSentEvents.StreamedCompletion>> {
+    ): core.HttpResponsePromise<core.Stream<StreamedCompletion>> {
         return core.HttpResponsePromise.fromPromise(this.__stream(request, requestOptions));
     }
 
     private async __stream(
-        request: SeedServerSentEvents.StreamCompletionRequest,
+        request: StreamCompletionRequest,
         requestOptions?: CompletionsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.Stream<SeedServerSentEvents.StreamedCompletion>>> {
+    ): Promise<core.WithRawResponse<core.Stream<StreamedCompletion>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<ReadableStream>({
             url: core.url.join(

@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { SubmissionId } from "./SubmissionId.js";
-import { WorkspaceRunDetails } from "./WorkspaceRunDetails.js";
+import type { SubmissionId } from "./SubmissionId.js";
+import type { WorkspaceRunDetails } from "./WorkspaceRunDetails.js";
 
 export const WorkspaceRanResponse: core.serialization.ObjectSchema<
     serializers.WorkspaceRanResponse.Raw,

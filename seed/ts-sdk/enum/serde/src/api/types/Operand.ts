@@ -5,10 +5,10 @@
  * different.
  *
  * @example
- *     SeedEnum.Operand.GreaterThan
+ *     Operand.GreaterThan
  *
  * @example
- *     SeedEnum.Operand.LessThan
+ *     Operand.LessThan
  */
 export const Operand = {
     GreaterThan: ">",

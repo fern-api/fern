@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedCrossPackageTypeNames from "../../../index.js";
+import type { ImportingType } from "../types/ImportingType.js";
+import type { FindRequest } from "./requests/FindRequest.js";
 
 export declare namespace FooClient {
     export interface Options extends BaseClientOptions {}
@@ -21,7 +22,7 @@ export class FooClient {
     }
 
     /**
-     * @param {SeedCrossPackageTypeNames.FindRequest} request
+     * @param {FindRequest} request
      * @param {FooClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -32,16 +33,16 @@ export class FooClient {
      *     })
      */
     public find(
-        request: SeedCrossPackageTypeNames.FindRequest = {},
+        request: FindRequest = {},
         requestOptions?: FooClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedCrossPackageTypeNames.ImportingType> {
+    ): core.HttpResponsePromise<ImportingType> {
         return core.HttpResponsePromise.fromPromise(this.__find(request, requestOptions));
     }
 
     private async __find(
-        request: SeedCrossPackageTypeNames.FindRequest = {},
+        request: FindRequest = {},
         requestOptions?: FooClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedCrossPackageTypeNames.ImportingType>> {
+    ): Promise<core.WithRawResponse<ImportingType>> {
         const { optionalString, ..._body } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (optionalString != null) {
@@ -66,10 +67,7 @@ export class FooClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedCrossPackageTypeNames.ImportingType,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as ImportingType, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

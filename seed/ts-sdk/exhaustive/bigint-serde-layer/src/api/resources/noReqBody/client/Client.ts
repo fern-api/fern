@@ -6,7 +6,7 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedExhaustive from "../../../index.js";
+import type { ObjectWithOptionalField } from "../../types/resources/object/types/ObjectWithOptionalField.js";
 
 export declare namespace NoReqBodyClient {
     export interface Options extends BaseClientOptions {}
@@ -29,13 +29,13 @@ export class NoReqBodyClient {
      */
     public getWithNoRequestBody(
         requestOptions?: NoReqBodyClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField> {
+    ): core.HttpResponsePromise<ObjectWithOptionalField> {
         return core.HttpResponsePromise.fromPromise(this.__getWithNoRequestBody(requestOptions));
     }
 
     private async __getWithNoRequestBody(
         requestOptions?: NoReqBodyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithOptionalField>> {
+    ): Promise<core.WithRawResponse<ObjectWithOptionalField>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),

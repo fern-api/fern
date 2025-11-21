@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedMixedCase from "../../../index.js";
+import type { Resource } from "../types/Resource.js";
+import type { ListResourcesRequest } from "./requests/ListResourcesRequest.js";
 
 export declare namespace ServiceClient {
     export interface Options extends BaseClientOptions {}
@@ -30,14 +31,14 @@ export class ServiceClient {
     public getResource(
         ResourceID: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedCase.Resource> {
+    ): core.HttpResponsePromise<Resource> {
         return core.HttpResponsePromise.fromPromise(this.__getResource(ResourceID, requestOptions));
     }
 
     private async __getResource(
         ResourceID: string,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedCase.Resource>> {
+    ): Promise<core.WithRawResponse<Resource>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -55,7 +56,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedMixedCase.Resource, rawResponse: _response.rawResponse };
+            return { data: _response.body as Resource, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -84,7 +85,7 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedMixedCase.ListResourcesRequest} request
+     * @param {ListResourcesRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -94,16 +95,16 @@ export class ServiceClient {
      *     })
      */
     public listResources(
-        request: SeedMixedCase.ListResourcesRequest,
+        request: ListResourcesRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedCase.Resource[]> {
+    ): core.HttpResponsePromise<Resource[]> {
         return core.HttpResponsePromise.fromPromise(this.__listResources(request, requestOptions));
     }
 
     private async __listResources(
-        request: SeedMixedCase.ListResourcesRequest,
+        request: ListResourcesRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedCase.Resource[]>> {
+    ): Promise<core.WithRawResponse<Resource[]>> {
         const { page_limit: pageLimit, beforeDate } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         _queryParams.page_limit = pageLimit.toString();
@@ -125,7 +126,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedMixedCase.Resource[], rawResponse: _response.rawResponse };
+            return { data: _response.body as Resource[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

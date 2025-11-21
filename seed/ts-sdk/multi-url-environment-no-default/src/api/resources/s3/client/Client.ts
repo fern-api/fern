@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedMultiUrlEnvironmentNoDefault from "../../../index.js";
+import type { GetPresignedUrlRequest } from "./requests/GetPresignedUrlRequest.js";
 
 export declare namespace S3Client {
     export interface Options extends BaseClientOptions {}
@@ -21,7 +21,7 @@ export class S3Client {
     }
 
     /**
-     * @param {SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest} request
+     * @param {GetPresignedUrlRequest} request
      * @param {S3Client.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -30,14 +30,14 @@ export class S3Client {
      *     })
      */
     public getPresignedUrl(
-        request: SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest,
+        request: GetPresignedUrlRequest,
         requestOptions?: S3Client.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__getPresignedUrl(request, requestOptions));
     }
 
     private async __getPresignedUrl(
-        request: SeedMultiUrlEnvironmentNoDefault.GetPresignedUrlRequest,
+        request: GetPresignedUrlRequest,
         requestOptions?: S3Client.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

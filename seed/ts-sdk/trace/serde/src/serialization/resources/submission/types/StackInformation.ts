@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { StackFrame } from "./StackFrame.js";
+import type { StackFrame } from "./StackFrame.js";
 
 export const StackInformation: core.serialization.ObjectSchema<
     serializers.StackInformation.Raw,

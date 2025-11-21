@@ -1,6 +1,10 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
-import type * as SeedExhaustive from "../../../../../index.mjs";
+import type { NestedObjectWithOptionalField } from "../../../../types/resources/object/types/NestedObjectWithOptionalField.mjs";
+import type { NestedObjectWithRequiredField } from "../../../../types/resources/object/types/NestedObjectWithRequiredField.mjs";
+import type { ObjectWithMapOfMap } from "../../../../types/resources/object/types/ObjectWithMapOfMap.mjs";
+import type { ObjectWithOptionalField } from "../../../../types/resources/object/types/ObjectWithOptionalField.mjs";
+import type { ObjectWithRequiredField } from "../../../../types/resources/object/types/ObjectWithRequiredField.mjs";
 export declare namespace ObjectClient {
     interface Options extends BaseClientOptions {
     }
@@ -11,7 +15,7 @@ export declare class ObjectClient {
     protected readonly _options: ObjectClient.Options;
     constructor(options: ObjectClient.Options);
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -33,10 +37,10 @@ export declare class ObjectClient {
      *         bigint: "1000000"
      *     })
      */
-    getAndReturnWithOptionalField(request: SeedExhaustive.types.ObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    getAndReturnWithOptionalField(request: ObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
     private __getAndReturnWithOptionalField;
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -44,10 +48,10 @@ export declare class ObjectClient {
      *         string: "string"
      *     })
      */
-    getAndReturnWithRequiredField(request: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField>;
+    getAndReturnWithRequiredField(request: ObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<ObjectWithRequiredField>;
     private __getAndReturnWithRequiredField;
     /**
-     * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
+     * @param {ObjectWithMapOfMap} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -59,10 +63,10 @@ export declare class ObjectClient {
      *         }
      *     })
      */
-    getAndReturnWithMapOfMap(request: SeedExhaustive.types.ObjectWithMapOfMap, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithMapOfMap>;
+    getAndReturnWithMapOfMap(request: ObjectWithMapOfMap, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<ObjectWithMapOfMap>;
     private __getAndReturnWithMapOfMap;
     /**
-     * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
+     * @param {NestedObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -87,11 +91,11 @@ export declare class ObjectClient {
      *         }
      *     })
      */
-    getAndReturnNestedWithOptionalField(request: SeedExhaustive.types.NestedObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithOptionalField>;
+    getAndReturnNestedWithOptionalField(request: NestedObjectWithOptionalField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<NestedObjectWithOptionalField>;
     private __getAndReturnNestedWithOptionalField;
     /**
      * @param {string} string
-     * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
+     * @param {NestedObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -116,10 +120,10 @@ export declare class ObjectClient {
      *         }
      *     })
      */
-    getAndReturnNestedWithRequiredField(string: string, request: SeedExhaustive.types.NestedObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField>;
+    getAndReturnNestedWithRequiredField(string: string, request: NestedObjectWithRequiredField, requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<NestedObjectWithRequiredField>;
     private __getAndReturnNestedWithRequiredField;
     /**
-     * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
+     * @param {NestedObjectWithRequiredField[]} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -163,7 +167,7 @@ export declare class ObjectClient {
      *             }
      *         }])
      */
-    getAndReturnNestedWithRequiredFieldAsList(request: SeedExhaustive.types.NestedObjectWithRequiredField[], requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField>;
+    getAndReturnNestedWithRequiredFieldAsList(request: NestedObjectWithRequiredField[], requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<NestedObjectWithRequiredField>;
     private __getAndReturnNestedWithRequiredFieldAsList;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

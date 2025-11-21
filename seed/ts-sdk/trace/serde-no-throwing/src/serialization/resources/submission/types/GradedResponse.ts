@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { SubmissionId } from "./SubmissionId.js";
-import { TestCaseResultWithStdout } from "./TestCaseResultWithStdout.js";
+import type { SubmissionId } from "./SubmissionId.js";
+import type { TestCaseResultWithStdout } from "./TestCaseResultWithStdout.js";
 
 export const GradedResponse: core.serialization.ObjectSchema<serializers.GradedResponse.Raw, SeedTrace.GradedResponse> =
     core.serialization.object({

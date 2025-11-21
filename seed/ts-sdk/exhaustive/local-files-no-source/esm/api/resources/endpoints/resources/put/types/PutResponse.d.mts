@@ -1,4 +1,4 @@
-import type * as SeedExhaustive from "../../../../../index.mjs";
+import type { Error_ } from "./Error_.mjs";
 export interface PutResponse {
-    errors?: SeedExhaustive.endpoints.Error_[];
+    errors?: Error_[];
 }

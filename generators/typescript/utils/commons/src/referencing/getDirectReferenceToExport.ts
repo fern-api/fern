@@ -2,6 +2,7 @@ import { SourceFile, ts } from "ts-morph";
 
 import { ExportedFilePath, ExportsManager, NamedExport } from "../exports-manager";
 import { ImportsManager } from "../imports-manager/ImportsManager";
+import { getReferenceToExportFromRoot } from "./getReferenceToExportFromRoot";
 import { getRelativePathAsModuleSpecifierTo } from "./getRelativePathAsModuleSpecifierTo";
 import { GetReferenceOpts, Reference } from "./Reference";
 
@@ -12,7 +13,8 @@ export function getDirectReferenceToExport({
     exportsManager,
     referencedIn,
     importAlias,
-    subImport = []
+    subImport = [],
+    aliasPrefix
 }: {
     exportedName: NamedExport;
     exportedFromPath: ExportedFilePath;
@@ -21,49 +23,82 @@ export function getDirectReferenceToExport({
     referencedIn: SourceFile;
     importAlias: string | undefined;
     subImport?: string[];
+    aliasPrefix?: string;
 }): Reference {
+    const exportedFilePath = exportsManager.convertExportedFilePathToFilePath(exportedFromPath);
+    const referencedInPath = referencedIn.getFilePath();
+
+    const isSelfImport = exportedFilePath === referencedInPath;
+
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
         from: referencedIn,
-        to: exportsManager.convertExportedFilePathToFilePath(exportedFromPath)
+        to: exportedFilePath
     });
 
-    const addImport = () => {
-        importsManager.addImport(moduleSpecifier, {
-            namedImports: [
-                {
-                    name: NamedExport.getName(exportedName),
-                    alias: importAlias !== exportedName ? importAlias : undefined,
-                    type: NamedExport.isTypeExport(exportedName) ? "type" : undefined
-                }
-            ]
-        });
+    let localName: string | undefined;
+    let importAdded = false;
+
+    const ensureImportAdded = () => {
+        if (importAdded) {
+            return;
+        }
+        importAdded = true;
+
+        if (isSelfImport) {
+            localName = NamedExport.getName(exportedName);
+            return;
+        }
+
+        if (importAlias != null) {
+            importsManager.addImport(moduleSpecifier, {
+                namedImports: [
+                    {
+                        name: NamedExport.getName(exportedName),
+                        alias: importAlias !== exportedName ? importAlias : undefined,
+                        type: NamedExport.isTypeExport(exportedName) ? "type" : undefined
+                    }
+                ]
+            });
+            localName = importAlias;
+        } else {
+            const isTypeOnly = NamedExport.isTypeExport(exportedName);
+            localName = importsManager.ensureNamedImport({
+                moduleSpecifier,
+                name: NamedExport.getName(exportedName),
+                isTypeOnly,
+                aliasPrefix: isTypeOnly ? aliasPrefix : undefined
+            });
+        }
     };
 
-    const importedName = importAlias ?? exportedName;
+    const getImportedName = () => {
+        ensureImportAdded();
+        return localName!;
+    };
 
     const entityName = subImport.reduce<ts.EntityName>(
         (acc, subImport) => ts.factory.createQualifiedName(acc, subImport),
-        ts.factory.createIdentifier(NamedExport.getName(importedName))
+        ts.factory.createIdentifier(NamedExport.getName(getImportedName()))
     );
 
     return {
         getTypeNode: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport();
+                ensureImportAdded();
             }
             return ts.factory.createTypeReferenceNode(entityName);
         },
         getEntityName: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport();
+                ensureImportAdded();
             }
             return entityName;
         },
         getExpression: ({ isForComment = false }: GetReferenceOpts = {}) => {
             if (!isForComment) {
-                addImport();
+                ensureImportAdded();
             }
-            return ts.factory.createIdentifier(NamedExport.getName(importedName));
+            return ts.factory.createIdentifier(getImportedName());
         }
     };
 }

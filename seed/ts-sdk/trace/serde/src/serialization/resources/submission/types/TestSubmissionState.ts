@@ -3,9 +3,9 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ProblemId } from "../../commons/types/ProblemId.js";
-import { TestCase } from "../../commons/types/TestCase.js";
-import { TestSubmissionStatus } from "./TestSubmissionStatus.js";
+import type { ProblemId } from "../../commons/types/ProblemId.js";
+import type { TestCase } from "../../commons/types/TestCase.js";
+import type { TestSubmissionStatus } from "./TestSubmissionStatus.js";
 
 export const TestSubmissionState: core.serialization.ObjectSchema<
     serializers.TestSubmissionState.Raw,

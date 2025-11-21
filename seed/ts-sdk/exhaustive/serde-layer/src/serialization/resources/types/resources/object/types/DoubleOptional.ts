@@ -3,7 +3,7 @@
 import type * as SeedExhaustive from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { OptionalAlias } from "./OptionalAlias.js";
+import type { OptionalAlias } from "./OptionalAlias.js";
 
 export const DoubleOptional: core.serialization.ObjectSchema<
     serializers.types.DoubleOptional.Raw,

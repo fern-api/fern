@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedVersion from "../../../index.js";
+import type { User } from "../types/User.js";
+import type { UserId } from "../types/UserId.js";
 
 export declare namespace UserClient {
     export interface Options extends BaseClientOptions {}
@@ -21,23 +22,20 @@ export class UserClient {
     }
 
     /**
-     * @param {SeedVersion.UserId} userId
+     * @param {UserId} userId
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.user.getUser("userId")
      */
-    public getUser(
-        userId: SeedVersion.UserId,
-        requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedVersion.User> {
+    public getUser(userId: UserId, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__getUser(userId, requestOptions));
     }
 
     private async __getUser(
-        userId: SeedVersion.UserId,
+        userId: UserId,
         requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedVersion.User>> {
+    ): Promise<core.WithRawResponse<User>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ "X-API-Version": requestOptions?.xApiVersion }),
@@ -59,7 +57,7 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedVersion.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

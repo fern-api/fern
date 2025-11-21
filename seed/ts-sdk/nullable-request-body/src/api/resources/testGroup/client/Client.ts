@@ -6,7 +6,9 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedApi from "../../../index.js";
+import { UnprocessableEntityError } from "../../../errors/UnprocessableEntityError.js";
+import type { PlainObject } from "../../../types/PlainObject.js";
+import type { TestMethodNameTestGroupRequest } from "./requests/TestMethodNameTestGroupRequest.js";
 
 export declare namespace TestGroupClient {
     export interface Options extends BaseClientOptions {}
@@ -24,10 +26,10 @@ export class TestGroupClient {
     /**
      * Post a nullable request body
      *
-     * @param {SeedApi.TestMethodNameTestGroupRequest} request
+     * @param {TestMethodNameTestGroupRequest} request
      * @param {TestGroupClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedApi.UnprocessableEntityError}
+     * @throws {@link UnprocessableEntityError}
      *
      * @example
      *     await client.testGroup.testMethodName({
@@ -36,14 +38,14 @@ export class TestGroupClient {
      *     })
      */
     public testMethodName(
-        request: SeedApi.TestMethodNameTestGroupRequest,
+        request: TestMethodNameTestGroupRequest,
         requestOptions?: TestGroupClient.RequestOptions,
     ): core.HttpResponsePromise<unknown> {
         return core.HttpResponsePromise.fromPromise(this.__testMethodName(request, requestOptions));
     }
 
     private async __testMethodName(
-        request: SeedApi.TestMethodNameTestGroupRequest,
+        request: TestMethodNameTestGroupRequest,
         requestOptions?: TestGroupClient.RequestOptions,
     ): Promise<core.WithRawResponse<unknown>> {
         const {
@@ -87,10 +89,7 @@ export class TestGroupClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 422:
-                    throw new SeedApi.UnprocessableEntityError(
-                        _response.error.body as SeedApi.PlainObject,
-                        _response.rawResponse,
-                    );
+                    throw new UnprocessableEntityError(_response.error.body as PlainObject, _response.rawResponse);
                 default:
                     throw new errors.SeedApiError({
                         statusCode: _response.error.statusCode,

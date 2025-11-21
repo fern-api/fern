@@ -6,6 +6,7 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as SeedTrace from "../../../index.js";
+import type { ProblemId } from "../../commons/types/ProblemId.js";
 
 export declare namespace HomepageClient {
     export interface Options extends BaseClientOptions {}
@@ -28,15 +29,13 @@ export class HomepageClient {
      */
     public getHomepageProblems(
         requestOptions?: HomepageClient.RequestOptions,
-    ): core.HttpResponsePromise<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
+    ): core.HttpResponsePromise<core.APIResponse<ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getHomepageProblems(requestOptions));
     }
 
     private async __getHomepageProblems(
         requestOptions?: HomepageClient.RequestOptions,
-    ): Promise<
-        core.WithRawResponse<core.APIResponse<SeedTrace.ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>>
-    > {
+    ): Promise<core.WithRawResponse<core.APIResponse<ProblemId[], SeedTrace.homepage.getHomepageProblems.Error>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -70,7 +69,7 @@ export class HomepageClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedTrace.ProblemId[],
+                    body: _response.body as ProblemId[],
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -89,21 +88,21 @@ export class HomepageClient {
     }
 
     /**
-     * @param {SeedTrace.ProblemId[]} request
+     * @param {ProblemId[]} request
      * @param {HomepageClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.homepage.setHomepageProblems([SeedTrace.ProblemId("string"), SeedTrace.ProblemId("string")])
+     *     await client.homepage.setHomepageProblems([ProblemId("string"), ProblemId("string")])
      */
     public setHomepageProblems(
-        request: SeedTrace.ProblemId[],
+        request: ProblemId[],
         requestOptions?: HomepageClient.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__setHomepageProblems(request, requestOptions));
     }
 
     private async __setHomepageProblems(
-        request: SeedTrace.ProblemId[],
+        request: ProblemId[],
         requestOptions?: HomepageClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedTrace.homepage.setHomepageProblems.Error>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

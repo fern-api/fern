@@ -72,7 +72,7 @@ export class ContainerClient {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -104,10 +104,7 @@ export class ContainerClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -189,7 +186,7 @@ export class ContainerClient {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -219,10 +216,7 @@ export class ContainerClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -306,7 +300,7 @@ export class ContainerClient {
         });
     }
     /**
-     * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
+     * @param {Record<string, ObjectWithRequiredField>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -368,7 +362,7 @@ export class ContainerClient {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -398,10 +392,7 @@ export class ContainerClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({

@@ -6,7 +6,8 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedEnum from "../../../index.js";
+import type { ColorOrOperand } from "../../../types/ColorOrOperand.js";
+import type { Operand } from "../../../types/Operand.js";
 
 export declare namespace PathParamClient {
     export interface Options extends BaseClientOptions {}
@@ -22,24 +23,24 @@ export class PathParamClient {
     }
 
     /**
-     * @param {SeedEnum.Operand} operand
-     * @param {SeedEnum.ColorOrOperand} operandOrColor
+     * @param {Operand} operand
+     * @param {ColorOrOperand} operandOrColor
      * @param {PathParamClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.pathParam.send(">", "red")
      */
     public send(
-        operand: SeedEnum.Operand,
-        operandOrColor: SeedEnum.ColorOrOperand,
+        operand: Operand,
+        operandOrColor: ColorOrOperand,
         requestOptions?: PathParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__send(operand, operandOrColor, requestOptions));
     }
 
     private async __send(
-        operand: SeedEnum.Operand,
-        operandOrColor: SeedEnum.ColorOrOperand,
+        operand: Operand,
+        operandOrColor: ColorOrOperand,
         requestOptions?: PathParamClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

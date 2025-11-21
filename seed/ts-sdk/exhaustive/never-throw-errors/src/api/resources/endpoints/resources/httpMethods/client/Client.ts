@@ -5,6 +5,8 @@ import { normalizeClientOptions } from "../../../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import type { ObjectWithOptionalField } from "../../../../types/resources/object/types/ObjectWithOptionalField.js";
+import type { ObjectWithRequiredField } from "../../../../types/resources/object/types/ObjectWithRequiredField.js";
 
 export declare namespace HttpMethodsClient {
     export interface Options extends BaseClientOptions {}
@@ -80,7 +82,7 @@ export class HttpMethodsClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -89,26 +91,20 @@ export class HttpMethodsClient {
      *     })
      */
     public testPost(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: ObjectWithRequiredField,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.endpoints.httpMethods.testPost.Error
-        >
+        core.APIResponse<ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPost.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__testPost(request, requestOptions));
     }
 
     private async __testPost(
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: ObjectWithRequiredField,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithOptionalField,
-                SeedExhaustive.endpoints.httpMethods.testPost.Error
-            >
+            core.APIResponse<ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPost.Error>
         >
     > {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -138,7 +134,7 @@ export class HttpMethodsClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                    body: _response.body as ObjectWithOptionalField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -158,7 +154,7 @@ export class HttpMethodsClient {
 
     /**
      * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -168,27 +164,21 @@ export class HttpMethodsClient {
      */
     public testPut(
         id: string,
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: ObjectWithRequiredField,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.endpoints.httpMethods.testPut.Error
-        >
+        core.APIResponse<ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPut.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__testPut(id, request, requestOptions));
     }
 
     private async __testPut(
         id: string,
-        request: SeedExhaustive.types.ObjectWithRequiredField,
+        request: ObjectWithRequiredField,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithOptionalField,
-                SeedExhaustive.endpoints.httpMethods.testPut.Error
-            >
+            core.APIResponse<ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPut.Error>
         >
     > {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -218,7 +208,7 @@ export class HttpMethodsClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                    body: _response.body as ObjectWithOptionalField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -238,7 +228,7 @@ export class HttpMethodsClient {
 
     /**
      * @param {string} id
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {HttpMethodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -262,27 +252,21 @@ export class HttpMethodsClient {
      */
     public testPatch(
         id: string,
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: ObjectWithOptionalField,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithOptionalField,
-            SeedExhaustive.endpoints.httpMethods.testPatch.Error
-        >
+        core.APIResponse<ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPatch.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__testPatch(id, request, requestOptions));
     }
 
     private async __testPatch(
         id: string,
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: ObjectWithOptionalField,
         requestOptions?: HttpMethodsClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
-            core.APIResponse<
-                SeedExhaustive.types.ObjectWithOptionalField,
-                SeedExhaustive.endpoints.httpMethods.testPatch.Error
-            >
+            core.APIResponse<ObjectWithOptionalField, SeedExhaustive.endpoints.httpMethods.testPatch.Error>
         >
     > {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -312,7 +296,7 @@ export class HttpMethodsClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                    body: _response.body as ObjectWithOptionalField,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

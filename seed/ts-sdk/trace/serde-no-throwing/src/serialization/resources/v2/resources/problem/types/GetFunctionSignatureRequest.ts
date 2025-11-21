@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { FunctionSignature } from "./FunctionSignature.js";
+import type { FunctionSignature } from "./FunctionSignature.js";
 
 export const GetFunctionSignatureRequest: core.serialization.ObjectSchema<
     serializers.v2.GetFunctionSignatureRequest.Raw,

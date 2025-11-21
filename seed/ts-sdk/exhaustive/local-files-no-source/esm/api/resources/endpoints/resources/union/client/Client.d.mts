@@ -1,6 +1,6 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
-import type * as SeedExhaustive from "../../../../../index.mjs";
+import type { Animal } from "../../../../types/resources/union/types/Animal.mjs";
 export declare namespace UnionClient {
     interface Options extends BaseClientOptions {
     }
@@ -11,7 +11,7 @@ export declare class UnionClient {
     protected readonly _options: UnionClient.Options;
     constructor(options: UnionClient.Options);
     /**
-     * @param {SeedExhaustive.types.Animal} request
+     * @param {Animal} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -21,7 +21,7 @@ export declare class UnionClient {
      *         likesToWoof: true
      *     })
      */
-    getAndReturnUnion(request: SeedExhaustive.types.Animal, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.Animal>;
+    getAndReturnUnion(request: Animal, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<Animal>;
     private __getAndReturnUnion;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

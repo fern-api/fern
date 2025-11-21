@@ -3,7 +3,7 @@
 import type * as SeedExhaustive from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { ObjectWithOptionalField } from "./ObjectWithOptionalField.js";
+import type { ObjectWithOptionalField } from "./ObjectWithOptionalField.js";
 
 export const NestedObjectWithOptionalField: core.serialization.ObjectSchema<
     serializers.types.NestedObjectWithOptionalField.Raw,

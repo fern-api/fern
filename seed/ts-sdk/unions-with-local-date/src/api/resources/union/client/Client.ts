@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedUnions from "../../../index.js";
+import type { Shape } from "../types/Shape.js";
 
 export declare namespace UnionClient {
     export interface Options extends BaseClientOptions {}
@@ -27,14 +27,11 @@ export class UnionClient {
      * @example
      *     await client.union.get("id")
      */
-    public get(id: string, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<SeedUnions.Shape> {
+    public get(id: string, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<Shape> {
         return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
-    private async __get(
-        id: string,
-        requestOptions?: UnionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUnions.Shape>> {
+    private async __get(id: string, requestOptions?: UnionClient.RequestOptions): Promise<core.WithRawResponse<Shape>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -52,7 +49,7 @@ export class UnionClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedUnions.Shape, rawResponse: _response.rawResponse };
+            return { data: _response.body as Shape, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -81,7 +78,7 @@ export class UnionClient {
     }
 
     /**
-     * @param {SeedUnions.Shape} request
+     * @param {Shape} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -92,15 +89,12 @@ export class UnionClient {
      *         radius: 1.1
      *     })
      */
-    public update(
-        request: SeedUnions.Shape,
-        requestOptions?: UnionClient.RequestOptions,
-    ): core.HttpResponsePromise<boolean> {
+    public update(request: Shape, requestOptions?: UnionClient.RequestOptions): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__update(request, requestOptions));
     }
 
     private async __update(
-        request: SeedUnions.Shape,
+        request: Shape,
         requestOptions?: UnionClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

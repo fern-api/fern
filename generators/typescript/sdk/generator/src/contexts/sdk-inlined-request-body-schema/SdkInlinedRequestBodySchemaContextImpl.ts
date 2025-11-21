@@ -54,13 +54,16 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
         if (endpoint == null) {
             throw new Error(`Endpoint ${endpointName.originalName} does not exist`);
         }
+        const schemaTypeName = this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedName({
+            packageId,
+            endpoint
+        });
+        this.importsManager.reserveLocal(schemaTypeName);
+
         return this.sdkInlinedRequestBodySchemaGenerator.generateInlinedRequestBodySchema({
             packageId,
             endpoint,
-            typeName: this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedName({
-                packageId,
-                endpoint
-            })
+            typeName: schemaTypeName
         });
     }
 

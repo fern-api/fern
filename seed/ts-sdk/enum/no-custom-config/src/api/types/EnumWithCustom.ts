@@ -2,10 +2,10 @@
 
 /**
  * @example
- *     SeedEnum.EnumWithCustom.Safe
+ *     EnumWithCustom.Safe
  *
  * @example
- *     SeedEnum.EnumWithCustom.Custom
+ *     EnumWithCustom.Custom
  */
 export const EnumWithCustom = {
     Safe: "safe",

@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedExtraProperties from "../../../index.js";
+import type { User } from "../types/User.js";
+import type { CreateUserRequest } from "./requests/CreateUserRequest.js";
 
 export declare namespace UserClient {
     export interface Options extends BaseClientOptions {}
@@ -21,7 +22,7 @@ export class UserClient {
     }
 
     /**
-     * @param {SeedExtraProperties.CreateUserRequest} request
+     * @param {CreateUserRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -32,16 +33,16 @@ export class UserClient {
      *     })
      */
     public createUser(
-        request: SeedExtraProperties.CreateUserRequest,
+        request: CreateUserRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExtraProperties.User> {
+    ): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__createUser(request, requestOptions));
     }
 
     private async __createUser(
-        request: SeedExtraProperties.CreateUserRequest,
+        request: CreateUserRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExtraProperties.User>> {
+    ): Promise<core.WithRawResponse<User>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -62,7 +63,7 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExtraProperties.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

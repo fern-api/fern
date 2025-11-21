@@ -6,7 +6,7 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedMultiUrlEnvironment from "../../../index.js";
+import type { BootInstanceRequest } from "./requests/BootInstanceRequest.js";
 
 export declare namespace Ec2Client {
     export interface Options extends BaseClientOptions {}
@@ -22,7 +22,7 @@ export class Ec2Client {
     }
 
     /**
-     * @param {SeedMultiUrlEnvironment.BootInstanceRequest} request
+     * @param {BootInstanceRequest} request
      * @param {Ec2Client.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -31,14 +31,14 @@ export class Ec2Client {
      *     })
      */
     public bootInstance(
-        request: SeedMultiUrlEnvironment.BootInstanceRequest,
+        request: BootInstanceRequest,
         requestOptions?: Ec2Client.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__bootInstance(request, requestOptions));
     }
 
     private async __bootInstance(
-        request: SeedMultiUrlEnvironment.BootInstanceRequest,
+        request: BootInstanceRequest,
         requestOptions?: Ec2Client.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

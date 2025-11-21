@@ -6,7 +6,7 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedEnum from "../../../index.js";
+import type { SendEnumAsHeaderRequest } from "./requests/SendEnumAsHeaderRequest.js";
 
 export declare namespace HeadersClient {
     export interface Options extends BaseClientOptions {}
@@ -22,7 +22,7 @@ export class HeadersClient {
     }
 
     /**
-     * @param {SeedEnum.SendEnumAsHeaderRequest} request
+     * @param {SendEnumAsHeaderRequest} request
      * @param {HeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -34,14 +34,14 @@ export class HeadersClient {
      *     })
      */
     public send(
-        request: SeedEnum.SendEnumAsHeaderRequest,
+        request: SendEnumAsHeaderRequest,
         requestOptions?: HeadersClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedEnum.SendEnumAsHeaderRequest,
+        request: SendEnumAsHeaderRequest,
         requestOptions?: HeadersClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;

@@ -4,7 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { normalizeClientOptions } from "../../../../BaseClient.js";
 import * as environments from "../../../../environments.js";
 import * as core from "../../../../core/index.js";
-import * as SeedSimpleApi from "../../../index.js";
+import type { User } from "../types/User.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
 
@@ -31,11 +31,11 @@ export class UserClient {
      * @example
      *     await client.user.get("id")
      */
-    public get(id: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedSimpleApi.User> {
+    public get(id: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
-    private async __get(id: string, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedSimpleApi.User>> {
+    private async __get(id: string, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<User>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, mergeOnlyDefinedHeaders({ "Authorization": await this._getAuthorizationHeader() }), requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(await core.Supplier.get(this._options.baseUrl) ?? await core.Supplier.get(this._options.environment), `/users/${core.url.encodePathParam(id)}`),
@@ -49,7 +49,7 @@ export class UserClient {
             logging: this._options.logging
         });
         if (_response.ok) {
-            return { data: _response.body as SeedSimpleApi.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

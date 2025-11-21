@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type { FileId } from "../../../types/FileId.js";
+import type { UploadFileRequest } from "./requests/UploadFileRequest.js";
 
 export declare namespace FileUploadExampleClient {
     export interface Options extends BaseClientOptions {}
@@ -23,7 +24,7 @@ export class FileUploadExampleClient {
     /**
      * Upload a file to the database
      *
-     * @param {SeedApi.UploadFileRequest} request
+     * @param {UploadFileRequest} request
      * @param {FileUploadExampleClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -33,16 +34,16 @@ export class FileUploadExampleClient {
      *     })
      */
     public uploadFile(
-        request: SeedApi.UploadFileRequest,
+        request: UploadFileRequest,
         requestOptions?: FileUploadExampleClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedApi.FileId> {
+    ): core.HttpResponsePromise<FileId> {
         return core.HttpResponsePromise.fromPromise(this.__uploadFile(request, requestOptions));
     }
 
     private async __uploadFile(
-        request: SeedApi.UploadFileRequest,
+        request: UploadFileRequest,
         requestOptions?: FileUploadExampleClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedApi.FileId>> {
+    ): Promise<core.WithRawResponse<FileId>> {
         const _request = await core.newFormData();
         _request.append("name", request.name);
         if (request.file != null) {
@@ -74,7 +75,7 @@ export class FileUploadExampleClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedApi.FileId, rawResponse: _response.rawResponse };
+            return { data: _response.body as FileId, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

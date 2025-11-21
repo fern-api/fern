@@ -3,7 +3,7 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ExecutionSessionState } from "./ExecutionSessionState.js";
+import type { ExecutionSessionState } from "./ExecutionSessionState.js";
 
 export const GetExecutionSessionStateResponse: core.serialization.ObjectSchema<
     serializers.GetExecutionSessionStateResponse.Raw,

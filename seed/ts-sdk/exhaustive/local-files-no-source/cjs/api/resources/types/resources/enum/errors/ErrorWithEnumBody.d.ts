@@ -1,6 +1,6 @@
 import type * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type { WeatherReport } from "../types/WeatherReport.js";
 export declare class ErrorWithEnumBody extends errors.SeedExhaustiveError {
-    constructor(body: SeedExhaustive.types.WeatherReport, rawResponse?: core.RawResponse);
+    constructor(body: WeatherReport, rawResponse?: core.RawResponse);
 }

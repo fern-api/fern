@@ -5,6 +5,12 @@ import { normalizeClientOptions } from "../../../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import type { GetWithInlinePath } from "./requests/GetWithInlinePath.js";
+import type { GetWithInlinePathAndQuery } from "./requests/GetWithInlinePathAndQuery.js";
+import type { GetWithMultipleQuery } from "./requests/GetWithMultipleQuery.js";
+import type { GetWithPathAndQuery } from "./requests/GetWithPathAndQuery.js";
+import type { GetWithQuery } from "./requests/GetWithQuery.js";
+import type { ModifyResourceAtInlinedPath } from "./requests/ModifyResourceAtInlinedPath.js";
 
 export declare namespace ParamsClient {
     export interface Options extends BaseClientOptions {}
@@ -84,7 +90,7 @@ export class ParamsClient {
     /**
      * GET with path param
      *
-     * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
+     * @param {GetWithInlinePath} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -93,14 +99,14 @@ export class ParamsClient {
      *     })
      */
     public getWithInlinePath(
-        request: SeedExhaustive.endpoints.GetWithInlinePath,
+        request: GetWithInlinePath,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithInlinePath.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getWithInlinePath(request, requestOptions));
     }
 
     private async __getWithInlinePath(
-        request: SeedExhaustive.endpoints.GetWithInlinePath,
+        request: GetWithInlinePath,
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.getWithInlinePath.Error>>
@@ -151,7 +157,7 @@ export class ParamsClient {
     /**
      * GET with query param
      *
-     * @param {SeedExhaustive.endpoints.GetWithQuery} request
+     * @param {GetWithQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -161,14 +167,14 @@ export class ParamsClient {
      *     })
      */
     public getWithQuery(
-        request: SeedExhaustive.endpoints.GetWithQuery,
+        request: GetWithQuery,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithQuery.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getWithQuery(request, requestOptions));
     }
 
     private async __getWithQuery(
-        request: SeedExhaustive.endpoints.GetWithQuery,
+        request: GetWithQuery,
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithQuery.Error>>> {
         const { query, number: number_ } = request;
@@ -220,7 +226,7 @@ export class ParamsClient {
     /**
      * GET with multiple of same query param
      *
-     * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
+     * @param {GetWithMultipleQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -230,7 +236,7 @@ export class ParamsClient {
      *     })
      */
     public getWithAllowMultipleQuery(
-        request: SeedExhaustive.endpoints.GetWithMultipleQuery,
+        request: GetWithMultipleQuery,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<void, SeedExhaustive.endpoints.params.getWithAllowMultipleQuery.Error>
@@ -239,7 +245,7 @@ export class ParamsClient {
     }
 
     private async __getWithAllowMultipleQuery(
-        request: SeedExhaustive.endpoints.GetWithMultipleQuery,
+        request: GetWithMultipleQuery,
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithAllowMultipleQuery.Error>>
@@ -304,7 +310,7 @@ export class ParamsClient {
      * GET with path and query params
      *
      * @param {string} param
-     * @param {SeedExhaustive.endpoints.GetWithPathAndQuery} request
+     * @param {GetWithPathAndQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -314,7 +320,7 @@ export class ParamsClient {
      */
     public getWithPathAndQuery(
         param: string,
-        request: SeedExhaustive.endpoints.GetWithPathAndQuery,
+        request: GetWithPathAndQuery,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithPathAndQuery.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__getWithPathAndQuery(param, request, requestOptions));
@@ -322,7 +328,7 @@ export class ParamsClient {
 
     private async __getWithPathAndQuery(
         param: string,
-        request: SeedExhaustive.endpoints.GetWithPathAndQuery,
+        request: GetWithPathAndQuery,
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithPathAndQuery.Error>>
@@ -375,7 +381,7 @@ export class ParamsClient {
     /**
      * GET with path and query params
      *
-     * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
+     * @param {GetWithInlinePathAndQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -385,7 +391,7 @@ export class ParamsClient {
      *     })
      */
     public getWithInlinePathAndQuery(
-        request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
+        request: GetWithInlinePathAndQuery,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<void, SeedExhaustive.endpoints.params.getWithInlinePathAndQuery.Error>
@@ -394,7 +400,7 @@ export class ParamsClient {
     }
 
     private async __getWithInlinePathAndQuery(
-        request: SeedExhaustive.endpoints.GetWithInlinePathAndQuery,
+        request: GetWithInlinePathAndQuery,
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<core.APIResponse<void, SeedExhaustive.endpoints.params.getWithInlinePathAndQuery.Error>>
@@ -515,7 +521,7 @@ export class ParamsClient {
     /**
      * PUT to update with path param
      *
-     * @param {SeedExhaustive.endpoints.ModifyResourceAtInlinedPath} request
+     * @param {ModifyResourceAtInlinedPath} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -525,14 +531,14 @@ export class ParamsClient {
      *     })
      */
     public modifyWithInlinePath(
-        request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
+        request: ModifyResourceAtInlinedPath,
         requestOptions?: ParamsClient.RequestOptions,
     ): core.HttpResponsePromise<core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithInlinePath.Error>> {
         return core.HttpResponsePromise.fromPromise(this.__modifyWithInlinePath(request, requestOptions));
     }
 
     private async __modifyWithInlinePath(
-        request: SeedExhaustive.endpoints.ModifyResourceAtInlinedPath,
+        request: ModifyResourceAtInlinedPath,
         requestOptions?: ParamsClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<core.APIResponse<string, SeedExhaustive.endpoints.params.modifyWithInlinePath.Error>>

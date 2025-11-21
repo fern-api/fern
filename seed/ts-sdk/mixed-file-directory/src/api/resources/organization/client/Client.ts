@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedMixedFileDirectory from "../../../index.js";
+import type { CreateOrganizationRequest } from "../types/CreateOrganizationRequest.js";
+import type { Organization } from "../types/Organization.js";
 
 export declare namespace OrganizationClient {
     export interface Options extends BaseClientOptions {}
@@ -23,7 +24,7 @@ export class OrganizationClient {
     /**
      * Create a new organization.
      *
-     * @param {SeedMixedFileDirectory.CreateOrganizationRequest} request
+     * @param {CreateOrganizationRequest} request
      * @param {OrganizationClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -32,16 +33,16 @@ export class OrganizationClient {
      *     })
      */
     public create(
-        request: SeedMixedFileDirectory.CreateOrganizationRequest,
+        request: CreateOrganizationRequest,
         requestOptions?: OrganizationClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedFileDirectory.Organization> {
+    ): core.HttpResponsePromise<Organization> {
         return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
     }
 
     private async __create(
-        request: SeedMixedFileDirectory.CreateOrganizationRequest,
+        request: CreateOrganizationRequest,
         requestOptions?: OrganizationClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.Organization>> {
+    ): Promise<core.WithRawResponse<Organization>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -62,7 +63,7 @@ export class OrganizationClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedMixedFileDirectory.Organization, rawResponse: _response.rawResponse };
+            return { data: _response.body as Organization, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

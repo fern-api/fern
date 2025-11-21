@@ -1,6 +1,7 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
-import * as SeedExhaustive from "../../../index.js";
+import type { ObjectWithOptionalField } from "../../types/resources/object/types/ObjectWithOptionalField.js";
+import type { PostWithObjectBody } from "./requests/PostWithObjectBody.js";
 export declare namespace InlinedRequestsClient {
     interface Options extends BaseClientOptions {
     }
@@ -13,10 +14,10 @@ export declare class InlinedRequestsClient {
     /**
      * POST with custom object in request body, response is an object
      *
-     * @param {SeedExhaustive.PostWithObjectBody} request
+     * @param {PostWithObjectBody} request
      * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link BadRequestBody}
      *
      * @example
      *     await client.inlinedRequests.postWithObjectBodyandResponse({
@@ -41,6 +42,6 @@ export declare class InlinedRequestsClient {
      *         }
      *     })
      */
-    postWithObjectBodyandResponse(request: SeedExhaustive.PostWithObjectBody, requestOptions?: InlinedRequestsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
+    postWithObjectBodyandResponse(request: PostWithObjectBody, requestOptions?: InlinedRequestsClient.RequestOptions): core.HttpResponsePromise<ObjectWithOptionalField>;
     private __postWithObjectBodyandResponse;
 }

@@ -17,7 +17,7 @@ export class ContentTypeClient {
         this._options = normalizeClientOptions(options);
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -88,7 +88,7 @@ export class ContentTypeClient {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

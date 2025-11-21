@@ -3,9 +3,9 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Language } from "../../commons/types/Language.js";
-import { SubmissionFileInfo } from "./SubmissionFileInfo.js";
-import { SubmissionId } from "./SubmissionId.js";
+import type { Language } from "../../commons/types/Language.js";
+import type { SubmissionFileInfo } from "./SubmissionFileInfo.js";
+import type { SubmissionId } from "./SubmissionId.js";
 
 export const WorkspaceSubmitRequest: core.serialization.ObjectSchema<
     serializers.WorkspaceSubmitRequest.Raw,

@@ -3,21 +3,20 @@
 import * as core from "../../../../core/index.js";
 import { fromJson } from "../../../../core/json.js";
 import * as serializers from "../../../../serialization/index.js";
-import { SendEvent } from "../../../../serialization/resources/realtime/types/SendEvent.js";
-import { SendEvent2 } from "../../../../serialization/resources/realtime/types/SendEvent2.js";
-import { SendSnakeCase } from "../../../../serialization/resources/realtime/types/SendSnakeCase.js";
-import type * as SeedWebsocket from "../../../index.js";
+import type { ReceiveEvent } from "../types/ReceiveEvent.js";
+import type { ReceiveEvent2 } from "../types/ReceiveEvent2.js";
+import type { ReceiveEvent3 } from "../types/ReceiveEvent3.js";
+import type { ReceiveSnakeCase } from "../types/ReceiveSnakeCase.js";
+import type { SendEvent } from "../types/SendEvent.js";
+import type { SendEvent2 } from "../types/SendEvent2.js";
+import type { SendSnakeCase } from "../types/SendSnakeCase.js";
 
 export declare namespace RealtimeSocket {
     export interface Args {
         socket: core.ReconnectingWebSocket;
     }
 
-    export type Response =
-        | SeedWebsocket.ReceiveEvent
-        | SeedWebsocket.ReceiveSnakeCase
-        | SeedWebsocket.ReceiveEvent2
-        | SeedWebsocket.ReceiveEvent3;
+    export type Response = ReceiveEvent | ReceiveSnakeCase | ReceiveEvent2 | ReceiveEvent3;
     type EventHandlers = {
         open?: () => void;
         message?: (message: Response) => void;
@@ -83,9 +82,9 @@ export class RealtimeSocket {
         this.eventHandlers[event] = callback;
     }
 
-    public sendSend(message: SeedWebsocket.SendEvent): void {
+    public sendSend(message: SendEvent): void {
         this.assertSocketIsOpen();
-        const jsonPayload = SendEvent.jsonOrThrow(message, {
+        const jsonPayload = SeedWebsocket_SendEvent.jsonOrThrow(message, {
             unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,
@@ -95,9 +94,9 @@ export class RealtimeSocket {
         this.socket.send(JSON.stringify(jsonPayload));
     }
 
-    public sendSendSnakeCase(message: SeedWebsocket.SendSnakeCase): void {
+    public sendSendSnakeCase(message: SendSnakeCase): void {
         this.assertSocketIsOpen();
-        const jsonPayload = SendSnakeCase.jsonOrThrow(message, {
+        const jsonPayload = SeedWebsocket_SendSnakeCase.jsonOrThrow(message, {
             unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,
@@ -107,9 +106,9 @@ export class RealtimeSocket {
         this.socket.send(JSON.stringify(jsonPayload));
     }
 
-    public sendSend2(message: SeedWebsocket.SendEvent2): void {
+    public sendSend2(message: SendEvent2): void {
         this.assertSocketIsOpen();
-        const jsonPayload = SendEvent2.jsonOrThrow(message, {
+        const jsonPayload = SeedWebsocket_SendEvent2.jsonOrThrow(message, {
             unrecognizedObjectKeys: "passthrough",
             allowUnrecognizedUnionMembers: true,
             allowUnrecognizedEnumValues: true,

@@ -53,7 +53,7 @@ class ContentTypeClient {
         this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -124,7 +124,7 @@ class ContentTypeClient {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

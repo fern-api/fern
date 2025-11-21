@@ -3,13 +3,13 @@
 import type * as SeedTrace from "../../../../../../api/index.js";
 import * as core from "../../../../../../core/index.js";
 import type * as serializers from "../../../../../index.js";
-import { Language } from "../../../../commons/types/Language.js";
-import { ProblemId } from "../../../../commons/types/ProblemId.js";
-import { ProblemDescription } from "../../../../problem/types/ProblemDescription.js";
-import { CustomFiles } from "./CustomFiles.js";
-import { GeneratedFiles } from "./GeneratedFiles.js";
-import { TestCaseTemplate } from "./TestCaseTemplate.js";
-import { TestCaseV2 } from "./TestCaseV2.js";
+import type { Language } from "../../../../commons/types/Language.js";
+import type { ProblemId } from "../../../../commons/types/ProblemId.js";
+import type { ProblemDescription } from "../../../../problem/types/ProblemDescription.js";
+import type { CustomFiles } from "./CustomFiles.js";
+import type { GeneratedFiles } from "./GeneratedFiles.js";
+import type { TestCaseTemplate } from "./TestCaseTemplate.js";
+import type { TestCaseV2 } from "./TestCaseV2.js";
 
 export const ProblemInfoV2: core.serialization.ObjectSchema<
     serializers.v2.ProblemInfoV2.Raw,

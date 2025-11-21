@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedUnknownAsAny from "../../../index.js";
+import type { MyObject } from "../types/MyObject.js";
 
 export declare namespace UnknownClient {
     export interface Options extends BaseClientOptions {}
@@ -84,7 +84,7 @@ export class UnknownClient {
     }
 
     /**
-     * @param {SeedUnknownAsAny.MyObject} request
+     * @param {MyObject} request
      * @param {UnknownClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -95,14 +95,14 @@ export class UnknownClient {
      *     })
      */
     public postObject(
-        request: SeedUnknownAsAny.MyObject,
+        request: MyObject,
         requestOptions?: UnknownClient.RequestOptions,
     ): core.HttpResponsePromise<unknown[]> {
         return core.HttpResponsePromise.fromPromise(this.__postObject(request, requestOptions));
     }
 
     private async __postObject(
-        request: SeedUnknownAsAny.MyObject,
+        request: MyObject,
         requestOptions?: UnknownClient.RequestOptions,
     ): Promise<core.WithRawResponse<unknown[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedIdempotencyHeaders from "../../../index.js";
+import type { CreatePaymentRequest } from "./requests/CreatePaymentRequest.js";
 
 export declare namespace PaymentClient {
     export interface Options extends BaseClientOptions {}
@@ -23,7 +23,7 @@ export class PaymentClient {
     }
 
     /**
-     * @param {SeedIdempotencyHeaders.CreatePaymentRequest} request
+     * @param {CreatePaymentRequest} request
      * @param {PaymentClient.IdempotentRequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -33,14 +33,14 @@ export class PaymentClient {
      *     })
      */
     public create(
-        request: SeedIdempotencyHeaders.CreatePaymentRequest,
+        request: CreatePaymentRequest,
         requestOptions?: PaymentClient.IdempotentRequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
     }
 
     private async __create(
-        request: SeedIdempotencyHeaders.CreatePaymentRequest,
+        request: CreatePaymentRequest,
         requestOptions?: PaymentClient.IdempotentRequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

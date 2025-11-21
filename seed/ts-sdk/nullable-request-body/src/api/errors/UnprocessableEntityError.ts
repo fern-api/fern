@@ -2,10 +2,10 @@
 
 import type * as core from "../../core/index.js";
 import * as errors from "../../errors/index.js";
-import type * as SeedApi from "../index.js";
+import type { PlainObject } from "../types/PlainObject.js";
 
 export class UnprocessableEntityError extends errors.SeedApiError {
-    constructor(body: SeedApi.PlainObject, rawResponse?: core.RawResponse) {
+    constructor(body: PlainObject, rawResponse?: core.RawResponse) {
         super({
             message: "UnprocessableEntityError",
             statusCode: 422,

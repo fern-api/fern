@@ -5,6 +5,7 @@ import { normalizeClientOptions } from "../../../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as SeedExhaustive from "../../../../../index.js";
+import type { ObjectWithRequiredField } from "../../../../types/resources/object/types/ObjectWithRequiredField.js";
 
 export declare namespace ContainerClient {
     export interface Options extends BaseClientOptions {}
@@ -89,7 +90,7 @@ export class ContainerClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -100,24 +101,21 @@ export class ContainerClient {
      *         }])
      */
     public getAndReturnListOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: ObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithRequiredField[],
-            SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error
-        >
+        core.APIResponse<ObjectWithRequiredField[], SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfObjects(request, requestOptions));
     }
 
     private async __getAndReturnListOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: ObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.ObjectWithRequiredField[],
+                ObjectWithRequiredField[],
                 SeedExhaustive.endpoints.container.getAndReturnListOfObjects.Error
             >
         >
@@ -149,7 +147,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                    body: _response.body as ObjectWithRequiredField[],
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -237,7 +235,7 @@ export class ContainerClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -246,24 +244,21 @@ export class ContainerClient {
      *         }])
      */
     public getAndReturnSetOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: ObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<
-        core.APIResponse<
-            SeedExhaustive.types.ObjectWithRequiredField[],
-            SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error
-        >
+        core.APIResponse<ObjectWithRequiredField[], SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error>
     > {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfObjects(request, requestOptions));
     }
 
     private async __getAndReturnSetOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: ObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.ObjectWithRequiredField[],
+                ObjectWithRequiredField[],
                 SeedExhaustive.endpoints.container.getAndReturnSetOfObjects.Error
             >
         >
@@ -295,7 +290,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                    body: _response.body as ObjectWithRequiredField[],
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -385,7 +380,7 @@ export class ContainerClient {
     }
 
     /**
-     * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
+     * @param {Record<string, ObjectWithRequiredField>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -396,11 +391,11 @@ export class ContainerClient {
      *     })
      */
     public getAndReturnMapOfPrimToObject(
-        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+        request: Record<string, ObjectWithRequiredField>,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+            Record<string, ObjectWithRequiredField>,
             SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error
         >
     > {
@@ -408,12 +403,12 @@ export class ContainerClient {
     }
 
     private async __getAndReturnMapOfPrimToObject(
-        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+        request: Record<string, ObjectWithRequiredField>,
         requestOptions?: ContainerClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+                Record<string, ObjectWithRequiredField>,
                 SeedExhaustive.endpoints.container.getAndReturnMapOfPrimToObject.Error
             >
         >
@@ -445,7 +440,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+                    body: _response.body as Record<string, ObjectWithRequiredField>,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },
@@ -464,7 +459,7 @@ export class ContainerClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -473,11 +468,11 @@ export class ContainerClient {
      *     })
      */
     public getAndReturnOptional(
-        request?: SeedExhaustive.types.ObjectWithRequiredField,
+        request?: ObjectWithRequiredField,
         requestOptions?: ContainerClient.RequestOptions,
     ): core.HttpResponsePromise<
         core.APIResponse<
-            SeedExhaustive.types.ObjectWithRequiredField | undefined,
+            ObjectWithRequiredField | undefined,
             SeedExhaustive.endpoints.container.getAndReturnOptional.Error
         >
     > {
@@ -485,12 +480,12 @@ export class ContainerClient {
     }
 
     private async __getAndReturnOptional(
-        request?: SeedExhaustive.types.ObjectWithRequiredField,
+        request?: ObjectWithRequiredField,
         requestOptions?: ContainerClient.RequestOptions,
     ): Promise<
         core.WithRawResponse<
             core.APIResponse<
-                SeedExhaustive.types.ObjectWithRequiredField | undefined,
+                ObjectWithRequiredField | undefined,
                 SeedExhaustive.endpoints.container.getAndReturnOptional.Error
             >
         >
@@ -522,7 +517,7 @@ export class ContainerClient {
             return {
                 data: {
                     ok: true,
-                    body: _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined,
+                    body: _response.body as ObjectWithRequiredField | undefined,
                     headers: _response.headers,
                     rawResponse: _response.rawResponse,
                 },

@@ -7,7 +7,7 @@ import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedTrace from "../../../index.js";
+import type { Language } from "../../commons/types/Language.js";
 
 export declare namespace SyspropClient {
     export interface Options extends BaseClientOptions {}
@@ -23,7 +23,7 @@ export class SyspropClient {
     }
 
     /**
-     * @param {SeedTrace.Language} language
+     * @param {Language} language
      * @param {number} numWarmInstances
      * @param {SyspropClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -31,7 +31,7 @@ export class SyspropClient {
      *     await client.sysprop.setNumWarmInstances("JAVA", 1)
      */
     public setNumWarmInstances(
-        language: SeedTrace.Language,
+        language: Language,
         numWarmInstances: number,
         requestOptions?: SyspropClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
@@ -41,7 +41,7 @@ export class SyspropClient {
     }
 
     private async __setNumWarmInstances(
-        language: SeedTrace.Language,
+        language: Language,
         numWarmInstances: number,
         requestOptions?: SyspropClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
@@ -107,13 +107,13 @@ export class SyspropClient {
      */
     public getNumWarmInstances(
         requestOptions?: SyspropClient.RequestOptions,
-    ): core.HttpResponsePromise<Record<SeedTrace.Language, number | undefined>> {
+    ): core.HttpResponsePromise<Record<Language, number | undefined>> {
         return core.HttpResponsePromise.fromPromise(this.__getNumWarmInstances(requestOptions));
     }
 
     private async __getNumWarmInstances(
         requestOptions?: SyspropClient.RequestOptions,
-    ): Promise<core.WithRawResponse<Record<SeedTrace.Language, number | undefined>>> {
+    ): Promise<core.WithRawResponse<Record<Language, number | undefined>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({

@@ -5,6 +5,7 @@ import {
     getDirectReferenceToExport,
     getReferenceToExportFromPackage,
     getReferenceToExportFromRoot,
+    NamedExport,
     Reference
 } from "@fern-typescript/commons";
 
@@ -41,7 +42,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
     }
 
     protected getReferenceTo(
-        exportedName: string,
+        exportedName: NamedExport,
         {
             name,
             importsManager,
@@ -60,7 +61,8 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     importsManager,
                     exportsManager,
                     referencedIn,
-                    subImport
+                    subImport,
+                    aliasPrefix: this.namespaceExport
                 });
             case "fromRoot":
                 return getReferenceToExportFromRoot({

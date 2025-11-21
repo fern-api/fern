@@ -6,7 +6,8 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedEnum from "../../../index.js";
+import type { SendEnumAsQueryParamRequest } from "./requests/SendEnumAsQueryParamRequest.js";
+import type { SendEnumListAsQueryParamRequest } from "./requests/SendEnumListAsQueryParamRequest.js";
 
 export declare namespace QueryParamClient {
     export interface Options extends BaseClientOptions {}
@@ -22,7 +23,7 @@ export class QueryParamClient {
     }
 
     /**
-     * @param {SeedEnum.SendEnumAsQueryParamRequest} request
+     * @param {SendEnumAsQueryParamRequest} request
      * @param {QueryParamClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -32,14 +33,14 @@ export class QueryParamClient {
      *     })
      */
     public send(
-        request: SeedEnum.SendEnumAsQueryParamRequest,
+        request: SendEnumAsQueryParamRequest,
         requestOptions?: QueryParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedEnum.SendEnumAsQueryParamRequest,
+        request: SendEnumAsQueryParamRequest,
         requestOptions?: QueryParamClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;
@@ -101,7 +102,7 @@ export class QueryParamClient {
     }
 
     /**
-     * @param {SeedEnum.SendEnumListAsQueryParamRequest} request
+     * @param {SendEnumListAsQueryParamRequest} request
      * @param {QueryParamClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -113,14 +114,14 @@ export class QueryParamClient {
      *     })
      */
     public sendList(
-        request: SeedEnum.SendEnumListAsQueryParamRequest,
+        request: SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParamClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__sendList(request, requestOptions));
     }
 
     private async __sendList(
-        request: SeedEnum.SendEnumListAsQueryParamRequest,
+        request: SendEnumListAsQueryParamRequest,
         requestOptions?: QueryParamClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { operand, maybeOperand, operandOrColor, maybeOperandOrColor } = request;

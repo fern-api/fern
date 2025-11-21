@@ -5,7 +5,9 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedPagination from "../../../index.js";
+import type { Conversation } from "../types/Conversation.js";
+import type { PaginatedConversationResponse } from "../types/PaginatedConversationResponse.js";
+import type { SearchRequest } from "../types/SearchRequest.js";
 
 export declare namespace ComplexClient {
     export interface Options extends BaseClientOptions {}
@@ -22,7 +24,7 @@ export class ComplexClient {
 
     /**
      * @param {string} index
-     * @param {SeedPagination.SearchRequest} request
+     * @param {SearchRequest} request
      * @param {ComplexClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -40,13 +42,11 @@ export class ComplexClient {
      */
     public async search(
         index: string,
-        request: SeedPagination.SearchRequest,
+        request: SearchRequest,
         requestOptions?: ComplexClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse>> {
+    ): Promise<core.Page<Conversation, PaginatedConversationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.SearchRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.PaginatedConversationResponse>> => {
+            async (request: SearchRequest): Promise<core.WithRawResponse<PaginatedConversationResponse>> => {
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -72,7 +72,7 @@ export class ComplexClient {
                 });
                 if (_response.ok) {
                     return {
-                        data: _response.body as SeedPagination.PaginatedConversationResponse,
+                        data: _response.body as PaginatedConversationResponse,
                         rawResponse: _response.rawResponse,
                     };
                 }
@@ -103,7 +103,7 @@ export class ComplexClient {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.Conversation, SeedPagination.PaginatedConversationResponse>({
+        return new core.Page<Conversation, PaginatedConversationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>

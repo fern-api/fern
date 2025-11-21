@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../BaseClient";
 import * as core from "../../../../core";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers";
 import * as errors from "../../../../errors/index";
-import type * as SeedSimpleApi from "../../../index";
+import type { User } from "../types/User";
 
 export declare namespace UserClient {
     export interface Options extends BaseClientOptions {}
@@ -27,14 +27,11 @@ export class UserClient {
      * @example
      *     await client.user.get("id")
      */
-    public get(id: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<SeedSimpleApi.User> {
+    public get(id: string, requestOptions?: UserClient.RequestOptions): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
-    private async __get(
-        id: string,
-        requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedSimpleApi.User>> {
+    private async __get(id: string, requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<User>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -56,7 +53,7 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedSimpleApi.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

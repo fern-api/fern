@@ -53,7 +53,7 @@ class EnumClient {
         this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
-     * @param {SeedExhaustive.types.WeatherReport} request
+     * @param {WeatherReport} request
      * @param {EnumClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

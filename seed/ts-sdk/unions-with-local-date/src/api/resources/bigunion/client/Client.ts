@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedUnions from "../../../index.js";
+import type { BigUnion } from "../types/BigUnion.js";
 
 export declare namespace BigunionClient {
     export interface Options extends BaseClientOptions {}
@@ -27,17 +27,14 @@ export class BigunionClient {
      * @example
      *     await client.bigunion.get("id")
      */
-    public get(
-        id: string,
-        requestOptions?: BigunionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedUnions.BigUnion> {
+    public get(id: string, requestOptions?: BigunionClient.RequestOptions): core.HttpResponsePromise<BigUnion> {
         return core.HttpResponsePromise.fromPromise(this.__get(id, requestOptions));
     }
 
     private async __get(
         id: string,
         requestOptions?: BigunionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedUnions.BigUnion>> {
+    ): Promise<core.WithRawResponse<BigUnion>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -55,7 +52,7 @@ export class BigunionClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedUnions.BigUnion, rawResponse: _response.rawResponse };
+            return { data: _response.body as BigUnion, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -84,7 +81,7 @@ export class BigunionClient {
     }
 
     /**
-     * @param {SeedUnions.BigUnion} request
+     * @param {BigUnion} request
      * @param {BigunionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -97,14 +94,14 @@ export class BigunionClient {
      *     })
      */
     public update(
-        request: SeedUnions.BigUnion,
+        request: BigUnion,
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<boolean> {
         return core.HttpResponsePromise.fromPromise(this.__update(request, requestOptions));
     }
 
     private async __update(
-        request: SeedUnions.BigUnion,
+        request: BigUnion,
         requestOptions?: BigunionClient.RequestOptions,
     ): Promise<core.WithRawResponse<boolean>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -154,7 +151,7 @@ export class BigunionClient {
     }
 
     /**
-     * @param {SeedUnions.BigUnion[]} request
+     * @param {BigUnion[]} request
      * @param {BigunionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -173,14 +170,14 @@ export class BigunionClient {
      *         }])
      */
     public updateMany(
-        request: SeedUnions.BigUnion[],
+        request: BigUnion[],
         requestOptions?: BigunionClient.RequestOptions,
     ): core.HttpResponsePromise<Record<string, boolean>> {
         return core.HttpResponsePromise.fromPromise(this.__updateMany(request, requestOptions));
     }
 
     private async __updateMany(
-        request: SeedUnions.BigUnion[],
+        request: BigUnion[],
         requestOptions?: BigunionClient.RequestOptions,
     ): Promise<core.WithRawResponse<Record<string, boolean>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

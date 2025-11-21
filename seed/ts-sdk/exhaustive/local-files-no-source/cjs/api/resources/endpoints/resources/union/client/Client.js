@@ -53,7 +53,7 @@ class UnionClient {
         this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
-     * @param {SeedExhaustive.types.Animal} request
+     * @param {Animal} request
      * @param {UnionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

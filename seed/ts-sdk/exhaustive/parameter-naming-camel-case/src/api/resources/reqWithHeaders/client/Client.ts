@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../index.js";
+import type { ReqWithHeaders } from "./requests/ReqWithHeaders.js";
 
 export declare namespace ReqWithHeadersClient {
     export interface Options extends BaseClientOptions {}
@@ -21,7 +21,7 @@ export class ReqWithHeadersClient {
     }
 
     /**
-     * @param {SeedExhaustive.ReqWithHeaders} request
+     * @param {ReqWithHeaders} request
      * @param {ReqWithHeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -32,14 +32,14 @@ export class ReqWithHeadersClient {
      *     })
      */
     public getWithCustomHeader(
-        request: SeedExhaustive.ReqWithHeaders,
+        request: ReqWithHeaders,
         requestOptions?: ReqWithHeadersClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__getWithCustomHeader(request, requestOptions));
     }
 
     private async __getWithCustomHeader(
-        request: SeedExhaustive.ReqWithHeaders,
+        request: ReqWithHeaders,
         requestOptions?: ReqWithHeadersClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const { xTestServiceHeader, xTestEndpointHeader, body: _body } = request;

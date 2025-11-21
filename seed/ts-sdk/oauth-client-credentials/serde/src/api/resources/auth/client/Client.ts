@@ -6,7 +6,9 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedOauthClientCredentials from "../../../index.js";
+import type { TokenResponse } from "../types/TokenResponse.js";
+import type { GetTokenRequest } from "./requests/GetTokenRequest.js";
+import type { RefreshTokenRequest } from "./requests/RefreshTokenRequest.js";
 
 export declare namespace AuthClient {
     export interface Options extends BaseClientOptions {
@@ -24,7 +26,7 @@ export class AuthClient {
     }
 
     /**
-     * @param {SeedOauthClientCredentials.GetTokenRequest} request
+     * @param {GetTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -35,16 +37,16 @@ export class AuthClient {
      *     })
      */
     public getTokenWithClientCredentials(
-        request: SeedOauthClientCredentials.GetTokenRequest,
+        request: GetTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedOauthClientCredentials.TokenResponse> {
+    ): core.HttpResponsePromise<TokenResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getTokenWithClientCredentials(request, requestOptions));
     }
 
     private async __getTokenWithClientCredentials(
-        request: SeedOauthClientCredentials.GetTokenRequest,
+        request: GetTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedOauthClientCredentials.TokenResponse>> {
+    ): Promise<core.WithRawResponse<TokenResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -110,7 +112,7 @@ export class AuthClient {
     }
 
     /**
-     * @param {SeedOauthClientCredentials.RefreshTokenRequest} request
+     * @param {RefreshTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -122,16 +124,16 @@ export class AuthClient {
      *     })
      */
     public refreshToken(
-        request: SeedOauthClientCredentials.RefreshTokenRequest,
+        request: RefreshTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedOauthClientCredentials.TokenResponse> {
+    ): core.HttpResponsePromise<TokenResponse> {
         return core.HttpResponsePromise.fromPromise(this.__refreshToken(request, requestOptions));
     }
 
     private async __refreshToken(
-        request: SeedOauthClientCredentials.RefreshTokenRequest,
+        request: RefreshTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedOauthClientCredentials.TokenResponse>> {
+    ): Promise<core.WithRawResponse<TokenResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(

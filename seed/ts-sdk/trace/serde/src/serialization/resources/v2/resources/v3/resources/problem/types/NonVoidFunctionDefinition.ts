@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../../../../../api/index.js";
 import * as core from "../../../../../../../../core/index.js";
 import type * as serializers from "../../../../../../../index.js";
-import { FunctionImplementationForMultipleLanguages } from "./FunctionImplementationForMultipleLanguages.js";
-import { NonVoidFunctionSignature } from "./NonVoidFunctionSignature.js";
+import type { FunctionImplementationForMultipleLanguages } from "./FunctionImplementationForMultipleLanguages.js";
+import type { NonVoidFunctionSignature } from "./NonVoidFunctionSignature.js";
 
 export const NonVoidFunctionDefinition: core.serialization.ObjectSchema<
     serializers.v2.v3.NonVoidFunctionDefinition.Raw,

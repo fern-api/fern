@@ -7,7 +7,9 @@ import * as core from "../../../../../../core/index.js";
 import * as environments from "../../../../../../environments.js";
 import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
-import type * as SeedTrace from "../../../../../index.js";
+import type { ProblemId } from "../../../../commons/types/ProblemId.js";
+import type { LightweightProblemInfoV2 } from "../types/LightweightProblemInfoV2.js";
+import type { ProblemInfoV2 } from "../types/ProblemInfoV2.js";
 
 export declare namespace ProblemClient {
     export interface Options extends BaseClientOptions {}
@@ -32,13 +34,13 @@ export class ProblemClient {
      */
     public getLightweightProblems(
         requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.v2.LightweightProblemInfoV2[]> {
+    ): core.HttpResponsePromise<LightweightProblemInfoV2[]> {
         return core.HttpResponsePromise.fromPromise(this.__getLightweightProblems(requestOptions));
     }
 
     private async __getLightweightProblems(
         requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.v2.LightweightProblemInfoV2[]>> {
+    ): Promise<core.WithRawResponse<LightweightProblemInfoV2[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -110,15 +112,13 @@ export class ProblemClient {
      * @example
      *     await client.v2.problem.getProblems()
      */
-    public getProblems(
-        requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.v2.ProblemInfoV2[]> {
+    public getProblems(requestOptions?: ProblemClient.RequestOptions): core.HttpResponsePromise<ProblemInfoV2[]> {
         return core.HttpResponsePromise.fromPromise(this.__getProblems(requestOptions));
     }
 
     private async __getProblems(
         requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.v2.ProblemInfoV2[]>> {
+    ): Promise<core.WithRawResponse<ProblemInfoV2[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -183,23 +183,23 @@ export class ProblemClient {
     /**
      * Returns latest version of a problem
      *
-     * @param {SeedTrace.ProblemId} problemId
+     * @param {ProblemId} problemId
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.v2.problem.getLatestProblem("problemId")
      */
     public getLatestProblem(
-        problemId: SeedTrace.ProblemId,
+        problemId: ProblemId,
         requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.v2.ProblemInfoV2> {
+    ): core.HttpResponsePromise<ProblemInfoV2> {
         return core.HttpResponsePromise.fromPromise(this.__getLatestProblem(problemId, requestOptions));
     }
 
     private async __getLatestProblem(
-        problemId: SeedTrace.ProblemId,
+        problemId: ProblemId,
         requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.v2.ProblemInfoV2>> {
+    ): Promise<core.WithRawResponse<ProblemInfoV2>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -266,7 +266,7 @@ export class ProblemClient {
     /**
      * Returns requested version of a problem
      *
-     * @param {SeedTrace.ProblemId} problemId
+     * @param {ProblemId} problemId
      * @param {number} problemVersion
      * @param {ProblemClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -274,20 +274,20 @@ export class ProblemClient {
      *     await client.v2.problem.getProblemVersion("problemId", 1)
      */
     public getProblemVersion(
-        problemId: SeedTrace.ProblemId,
+        problemId: ProblemId,
         problemVersion: number,
         requestOptions?: ProblemClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.v2.ProblemInfoV2> {
+    ): core.HttpResponsePromise<ProblemInfoV2> {
         return core.HttpResponsePromise.fromPromise(
             this.__getProblemVersion(problemId, problemVersion, requestOptions),
         );
     }
 
     private async __getProblemVersion(
-        problemId: SeedTrace.ProblemId,
+        problemId: ProblemId,
         problemVersion: number,
         requestOptions?: ProblemClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.v2.ProblemInfoV2>> {
+    ): Promise<core.WithRawResponse<ProblemInfoV2>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({

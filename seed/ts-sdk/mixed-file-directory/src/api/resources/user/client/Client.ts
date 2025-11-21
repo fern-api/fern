@@ -5,8 +5,9 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedMixedFileDirectory from "../../../index.js";
 import { EventsClient } from "../resources/events/client/Client.js";
+import type { User } from "../types/User.js";
+import type { ListUsersRequest } from "./requests/ListUsersRequest.js";
 
 export declare namespace UserClient {
     export interface Options extends BaseClientOptions {}
@@ -29,7 +30,7 @@ export class UserClient {
     /**
      * List all users.
      *
-     * @param {SeedMixedFileDirectory.ListUsersRequest} request
+     * @param {ListUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -38,16 +39,16 @@ export class UserClient {
      *     })
      */
     public list(
-        request: SeedMixedFileDirectory.ListUsersRequest = {},
+        request: ListUsersRequest = {},
         requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedFileDirectory.User[]> {
+    ): core.HttpResponsePromise<User[]> {
         return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
     }
 
     private async __list(
-        request: SeedMixedFileDirectory.ListUsersRequest = {},
+        request: ListUsersRequest = {},
         requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.User[]>> {
+    ): Promise<core.WithRawResponse<User[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -71,7 +72,7 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedMixedFileDirectory.User[], rawResponse: _response.rawResponse };
+            return { data: _response.body as User[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

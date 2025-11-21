@@ -2,18 +2,20 @@
 
 import * as core from "../../../../core/index.js";
 import { fromJson, toJson } from "../../../../core/json.js";
-import type * as SeedWebsocketAuth from "../../../index.js";
+import type { ReceiveEvent } from "../types/ReceiveEvent.js";
+import type { ReceiveEvent2 } from "../types/ReceiveEvent2.js";
+import type { ReceiveEvent3 } from "../types/ReceiveEvent3.js";
+import type { ReceiveSnakeCase } from "../types/ReceiveSnakeCase.js";
+import type { SendEvent } from "../types/SendEvent.js";
+import type { SendEvent2 } from "../types/SendEvent2.js";
+import type { SendSnakeCase } from "../types/SendSnakeCase.js";
 
 export declare namespace RealtimeSocket {
     export interface Args {
         socket: core.ReconnectingWebSocket;
     }
 
-    export type Response =
-        | SeedWebsocketAuth.ReceiveEvent
-        | SeedWebsocketAuth.ReceiveSnakeCase
-        | SeedWebsocketAuth.ReceiveEvent2
-        | SeedWebsocketAuth.ReceiveEvent3;
+    export type Response = ReceiveEvent | ReceiveSnakeCase | ReceiveEvent2 | ReceiveEvent3;
     type EventHandlers = {
         open?: () => void;
         message?: (message: Response) => void;
@@ -68,17 +70,17 @@ export class RealtimeSocket {
         this.eventHandlers[event] = callback;
     }
 
-    public sendSend(message: SeedWebsocketAuth.SendEvent): void {
+    public sendSend(message: SendEvent): void {
         this.assertSocketIsOpen();
         this.sendJson(message);
     }
 
-    public sendSendSnakeCase(message: SeedWebsocketAuth.SendSnakeCase): void {
+    public sendSendSnakeCase(message: SendSnakeCase): void {
         this.assertSocketIsOpen();
         this.sendJson(message);
     }
 
-    public sendSend2(message: SeedWebsocketAuth.SendEvent2): void {
+    public sendSend2(message: SendEvent2): void {
         this.assertSocketIsOpen();
         this.sendJson(message);
     }
@@ -141,9 +143,7 @@ export class RealtimeSocket {
     }
 
     /** Send a JSON payload to the websocket. */
-    protected sendJson(
-        payload: SeedWebsocketAuth.SendEvent | SeedWebsocketAuth.SendSnakeCase | SeedWebsocketAuth.SendEvent2,
-    ): void {
+    protected sendJson(payload: SendEvent | SendSnakeCase | SendEvent2): void {
         const jsonPayload = toJson(payload);
         this.socket.send(jsonPayload);
     }

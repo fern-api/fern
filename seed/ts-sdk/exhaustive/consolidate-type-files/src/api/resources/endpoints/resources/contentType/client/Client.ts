@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type { ObjectWithOptionalField } from "../../../../types/resources/object/types/types.js";
 
 export declare namespace ContentTypeClient {
     export interface Options extends BaseClientOptions {}
@@ -21,7 +21,7 @@ export class ContentTypeClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -44,14 +44,14 @@ export class ContentTypeClient {
      *     })
      */
     public postJsonPatchContentType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: ObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__postJsonPatchContentType(request, requestOptions));
     }
 
     private async __postJsonPatchContentType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: ObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -107,7 +107,7 @@ export class ContentTypeClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ContentTypeClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -130,7 +130,7 @@ export class ContentTypeClient {
      *     })
      */
     public postJsonPatchContentWithCharsetType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: ObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(
@@ -139,7 +139,7 @@ export class ContentTypeClient {
     }
 
     private async __postJsonPatchContentWithCharsetType(
-        request: SeedExhaustive.types.ObjectWithOptionalField,
+        request: ObjectWithOptionalField,
         requestOptions?: ContentTypeClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

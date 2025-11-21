@@ -2,6 +2,7 @@
 
 import type * as core from "../../../../core/index.js";
 import * as SeedTrace from "../../../index.js";
+import type { PlaylistIdNotFoundErrorBody } from "../types/PlaylistIdNotFoundErrorBody.js";
 
 export type Error =
     | SeedTrace.playlist.updatePlaylist.Error.PlaylistIdNotFoundError
@@ -10,7 +11,7 @@ export type Error =
 export namespace Error {
     export interface PlaylistIdNotFoundError extends _Utils {
         errorName: "PlaylistIdNotFoundError";
-        content: SeedTrace.PlaylistIdNotFoundErrorBody;
+        content: PlaylistIdNotFoundErrorBody;
     }
 
     export interface _Unknown extends _Utils {
@@ -23,14 +24,14 @@ export namespace Error {
     }
 
     export interface _Visitor<_Result> {
-        playlistIdNotFoundError: (value: SeedTrace.PlaylistIdNotFoundErrorBody) => _Result;
+        playlistIdNotFoundError: (value: PlaylistIdNotFoundErrorBody) => _Result;
         _other: (value: core.Fetcher.Error) => _Result;
     }
 }
 
 export const Error = {
     playlistIdNotFoundError: (
-        value: SeedTrace.PlaylistIdNotFoundErrorBody,
+        value: PlaylistIdNotFoundErrorBody,
     ): SeedTrace.playlist.updatePlaylist.Error.PlaylistIdNotFoundError => {
         return {
             content: value,

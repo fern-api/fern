@@ -1,6 +1,7 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
-import type * as SeedExhaustive from "../../../../../index.mjs";
+import type { PutResponse } from "../types/PutResponse.mjs";
+import type { PutRequest } from "./requests/PutRequest.mjs";
 export declare namespace PutClient {
     interface Options extends BaseClientOptions {
     }
@@ -11,7 +12,7 @@ export declare class PutClient {
     protected readonly _options: PutClient.Options;
     constructor(options: PutClient.Options);
     /**
-     * @param {SeedExhaustive.endpoints.PutRequest} request
+     * @param {PutRequest} request
      * @param {PutClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -19,7 +20,7 @@ export declare class PutClient {
      *         id: "id"
      *     })
      */
-    add(request: SeedExhaustive.endpoints.PutRequest, requestOptions?: PutClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.endpoints.PutResponse>;
+    add(request: PutRequest, requestOptions?: PutClient.RequestOptions): core.HttpResponsePromise<PutResponse>;
     private __add;
     protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

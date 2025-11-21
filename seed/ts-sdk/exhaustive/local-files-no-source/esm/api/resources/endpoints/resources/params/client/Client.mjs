@@ -73,7 +73,7 @@ export class ParamsClient {
     /**
      * GET with path param
      *
-     * @param {SeedExhaustive.endpoints.GetWithInlinePath} request
+     * @param {GetWithInlinePath} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -130,7 +130,7 @@ export class ParamsClient {
     /**
      * GET with query param
      *
-     * @param {SeedExhaustive.endpoints.GetWithQuery} request
+     * @param {GetWithQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -191,7 +191,7 @@ export class ParamsClient {
     /**
      * GET with multiple of same query param
      *
-     * @param {SeedExhaustive.endpoints.GetWithMultipleQuery} request
+     * @param {GetWithMultipleQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -263,7 +263,7 @@ export class ParamsClient {
      * GET with path and query params
      *
      * @param {string} param
-     * @param {SeedExhaustive.endpoints.GetWithPathAndQuery} request
+     * @param {GetWithPathAndQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -322,7 +322,7 @@ export class ParamsClient {
     /**
      * GET with path and query params
      *
-     * @param {SeedExhaustive.endpoints.GetWithInlinePathAndQuery} request
+     * @param {GetWithInlinePathAndQuery} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -440,7 +440,7 @@ export class ParamsClient {
     /**
      * PUT to update with path param
      *
-     * @param {SeedExhaustive.endpoints.ModifyResourceAtInlinedPath} request
+     * @param {ModifyResourceAtInlinedPath} request
      * @param {ParamsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

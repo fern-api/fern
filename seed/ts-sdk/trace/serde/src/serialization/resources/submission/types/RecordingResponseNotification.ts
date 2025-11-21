@@ -3,9 +3,9 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { LightweightStackframeInformation } from "./LightweightStackframeInformation.js";
-import { SubmissionId } from "./SubmissionId.js";
-import { TracedFile } from "./TracedFile.js";
+import type { LightweightStackframeInformation } from "./LightweightStackframeInformation.js";
+import type { SubmissionId } from "./SubmissionId.js";
+import type { TracedFile } from "./TracedFile.js";
 
 export const RecordingResponseNotification: core.serialization.ObjectSchema<
     serializers.RecordingResponseNotification.Raw,

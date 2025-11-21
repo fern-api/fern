@@ -773,6 +773,11 @@ export class SdkGenerator {
             this.withSourceFile({
                 filepath: this.typeDeclarationReferencer.getExportedFilepath(typeDeclaration.name),
                 run: ({ sourceFile, importsManager }) => {
+                    if (typeDeclaration.shape.type === "union") {
+                        for (const unionMember of typeDeclaration.shape.types) {
+                            importsManager.reserveLocal(unionMember.discriminantValue.name.pascalCase.safeName);
+                        }
+                    }
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
                 }
@@ -796,6 +801,13 @@ export class SdkGenerator {
             this.withSourceFile({
                 filepath: JSON.parse(filepathKey),
                 run: ({ sourceFile, importsManager }) => {
+                    for (const typeDeclaration of typeDeclarations) {
+                        if (typeDeclaration.shape.type === "union") {
+                            for (const unionMember of typeDeclaration.shape.types) {
+                                importsManager.reserveLocal(unionMember.discriminantValue.name.pascalCase.safeName);
+                            }
+                        }
+                    }
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     for (const typeDeclaration of typeDeclarations) {
                         const currentStatementCount = context.sourceFile.getStatements().length;

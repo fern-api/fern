@@ -5,10 +5,10 @@
  * different.
  *
  * @example
- *     SeedMultiLineDocs.Operand.GreaterThan
+ *     Operand.GreaterThan
  *
  * @example
- *     SeedMultiLineDocs.Operand.LessThan
+ *     Operand.LessThan
  */
 export const Operand = {
     GreaterThan: ">",

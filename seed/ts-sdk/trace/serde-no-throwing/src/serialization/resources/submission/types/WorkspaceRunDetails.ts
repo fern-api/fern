@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ExceptionInfo } from "./ExceptionInfo.js";
-import { ExceptionV2 } from "./ExceptionV2.js";
+import type { ExceptionInfo } from "./ExceptionInfo.js";
+import type { ExceptionV2 } from "./ExceptionV2.js";
 
 export const WorkspaceRunDetails: core.serialization.ObjectSchema<
     serializers.WorkspaceRunDetails.Raw,

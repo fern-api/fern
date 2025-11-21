@@ -3,8 +3,8 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { InvalidRequestCause } from "./InvalidRequestCause.js";
-import { SubmissionRequest } from "./SubmissionRequest.js";
+import type { InvalidRequestCause } from "./InvalidRequestCause.js";
+import type { SubmissionRequest } from "./SubmissionRequest.js";
 
 export const InvalidRequestResponse: core.serialization.ObjectSchema<
     serializers.InvalidRequestResponse.Raw,

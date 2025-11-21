@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedNoRetries from "../../../index.js";
+import type { User } from "../types/User.js";
 
 export declare namespace RetriesClient {
     export interface Options extends BaseClientOptions {}
@@ -26,13 +26,11 @@ export class RetriesClient {
      * @example
      *     await client.retries.getUsers()
      */
-    public getUsers(requestOptions?: RetriesClient.RequestOptions): core.HttpResponsePromise<SeedNoRetries.User[]> {
+    public getUsers(requestOptions?: RetriesClient.RequestOptions): core.HttpResponsePromise<User[]> {
         return core.HttpResponsePromise.fromPromise(this.__getUsers(requestOptions));
     }
 
-    private async __getUsers(
-        requestOptions?: RetriesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedNoRetries.User[]>> {
+    private async __getUsers(requestOptions?: RetriesClient.RequestOptions): Promise<core.WithRawResponse<User[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -50,7 +48,7 @@ export class RetriesClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedNoRetries.User[], rawResponse: _response.rawResponse };
+            return { data: _response.body as User[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

@@ -7,7 +7,9 @@ import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as SeedTrace from "../../../index.js";
+import type { Language } from "../../commons/types/Language.js";
+import type { ExecutionSessionResponse } from "../types/ExecutionSessionResponse.js";
+import type { GetExecutionSessionStateResponse } from "../types/GetExecutionSessionStateResponse.js";
 
 export declare namespace SubmissionClient {
     export interface Options extends BaseClientOptions {}
@@ -28,23 +30,23 @@ export class SubmissionClient {
     /**
      * Returns sessionId and execution server URL for session. Spins up server.
      *
-     * @param {SeedTrace.Language} language
+     * @param {Language} language
      * @param {SubmissionClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.submission.createExecutionSession("JAVA")
      */
     public createExecutionSession(
-        language: SeedTrace.Language,
+        language: Language,
         requestOptions?: SubmissionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.ExecutionSessionResponse> {
+    ): core.HttpResponsePromise<ExecutionSessionResponse> {
         return core.HttpResponsePromise.fromPromise(this.__createExecutionSession(language, requestOptions));
     }
 
     private async __createExecutionSession(
-        language: SeedTrace.Language,
+        language: Language,
         requestOptions?: SubmissionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.ExecutionSessionResponse>> {
+    ): Promise<core.WithRawResponse<ExecutionSessionResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -120,14 +122,14 @@ export class SubmissionClient {
     public getExecutionSession(
         sessionId: string,
         requestOptions?: SubmissionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.ExecutionSessionResponse | undefined> {
+    ): core.HttpResponsePromise<ExecutionSessionResponse | undefined> {
         return core.HttpResponsePromise.fromPromise(this.__getExecutionSession(sessionId, requestOptions));
     }
 
     private async __getExecutionSession(
         sessionId: string,
         requestOptions?: SubmissionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.ExecutionSessionResponse | undefined>> {
+    ): Promise<core.WithRawResponse<ExecutionSessionResponse | undefined>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -271,13 +273,13 @@ export class SubmissionClient {
      */
     public getExecutionSessionsState(
         requestOptions?: SubmissionClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedTrace.GetExecutionSessionStateResponse> {
+    ): core.HttpResponsePromise<GetExecutionSessionStateResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getExecutionSessionsState(requestOptions));
     }
 
     private async __getExecutionSessionsState(
         requestOptions?: SubmissionClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedTrace.GetExecutionSessionStateResponse>> {
+    ): Promise<core.WithRawResponse<GetExecutionSessionStateResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({

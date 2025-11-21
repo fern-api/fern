@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedOauthClientCredentialsDefault from "../../../index.js";
+import type { TokenResponse } from "../types/TokenResponse.js";
+import type { GetTokenRequest } from "./requests/GetTokenRequest.js";
 
 export declare namespace AuthClient {
     export interface Options extends BaseClientOptions {
@@ -23,7 +24,7 @@ export class AuthClient {
     }
 
     /**
-     * @param {SeedOauthClientCredentialsDefault.GetTokenRequest} request
+     * @param {GetTokenRequest} request
      * @param {AuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -33,16 +34,16 @@ export class AuthClient {
      *     })
      */
     public getToken(
-        request: SeedOauthClientCredentialsDefault.GetTokenRequest,
+        request: GetTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedOauthClientCredentialsDefault.TokenResponse> {
+    ): core.HttpResponsePromise<TokenResponse> {
         return core.HttpResponsePromise.fromPromise(this.__getToken(request, requestOptions));
     }
 
     private async __getToken(
-        request: SeedOauthClientCredentialsDefault.GetTokenRequest,
+        request: GetTokenRequest,
         requestOptions?: AuthClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedOauthClientCredentialsDefault.TokenResponse>> {
+    ): Promise<core.WithRawResponse<TokenResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -63,10 +64,7 @@ export class AuthClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedOauthClientCredentialsDefault.TokenResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as TokenResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

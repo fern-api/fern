@@ -5,7 +5,9 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedObjectsWithImports from "../../../index.js";
+import type { DeployParams } from "../types/DeployParams.js";
+import type { DeployResponse } from "../types/DeployResponse.js";
+import type { SendOptionalBodyRequest } from "../types/SendOptionalBodyRequest.js";
 
 export declare namespace OptionalClient {
     export interface Options extends BaseClientOptions {}
@@ -93,7 +95,7 @@ export class OptionalClient {
     }
 
     /**
-     * @param {SeedObjectsWithImports.SendOptionalBodyRequest} request
+     * @param {SendOptionalBodyRequest} request
      * @param {OptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -102,14 +104,14 @@ export class OptionalClient {
      *     })
      */
     public sendOptionalTypedBody(
-        request?: SeedObjectsWithImports.SendOptionalBodyRequest,
+        request?: SendOptionalBodyRequest,
         requestOptions?: OptionalClient.RequestOptions,
     ): core.HttpResponsePromise<string> {
         return core.HttpResponsePromise.fromPromise(this.__sendOptionalTypedBody(request, requestOptions));
     }
 
     private async __sendOptionalTypedBody(
-        request?: SeedObjectsWithImports.SendOptionalBodyRequest,
+        request?: SendOptionalBodyRequest,
         requestOptions?: OptionalClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
@@ -168,7 +170,7 @@ export class OptionalClient {
      *
      * @param {string} actionId
      * @param {string} id
-     * @param {SeedObjectsWithImports.DeployParams | null} request
+     * @param {DeployParams | null} request
      * @param {OptionalClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -179,9 +181,9 @@ export class OptionalClient {
     public sendOptionalNullableWithAllOptionalProperties(
         actionId: string,
         id: string,
-        request?: SeedObjectsWithImports.DeployParams | null,
+        request?: DeployParams | null,
         requestOptions?: OptionalClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedObjectsWithImports.DeployResponse> {
+    ): core.HttpResponsePromise<DeployResponse> {
         return core.HttpResponsePromise.fromPromise(
             this.__sendOptionalNullableWithAllOptionalProperties(actionId, id, request, requestOptions),
         );
@@ -190,9 +192,9 @@ export class OptionalClient {
     private async __sendOptionalNullableWithAllOptionalProperties(
         actionId: string,
         id: string,
-        request?: SeedObjectsWithImports.DeployParams | null,
+        request?: DeployParams | null,
         requestOptions?: OptionalClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedObjectsWithImports.DeployResponse>> {
+    ): Promise<core.WithRawResponse<DeployResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -213,10 +215,7 @@ export class OptionalClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedObjectsWithImports.DeployResponse,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as DeployResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

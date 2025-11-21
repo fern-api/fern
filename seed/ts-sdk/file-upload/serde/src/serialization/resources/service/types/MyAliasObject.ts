@@ -3,7 +3,7 @@
 import type * as SeedFileUpload from "../../../../api/index.js";
 import type * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { MyObject } from "./MyObject.js";
+import type { MyObject } from "./MyObject.js";
 
 export const MyAliasObject: core.serialization.ObjectSchema<
     serializers.MyAliasObject.Raw,

@@ -3,10 +3,10 @@
 import type * as SeedTrace from "../../../../../../../../api/index.js";
 import * as core from "../../../../../../../../core/index.js";
 import type * as serializers from "../../../../../../../index.js";
-import { Language } from "../../../../../../commons/types/Language.js";
-import { BasicTestCaseTemplate } from "./BasicTestCaseTemplate.js";
-import { Files } from "./Files.js";
-import { NonVoidFunctionSignature } from "./NonVoidFunctionSignature.js";
+import type { Language } from "../../../../../../commons/types/Language.js";
+import type { BasicTestCaseTemplate } from "./BasicTestCaseTemplate.js";
+import type { Files } from "./Files.js";
+import type { NonVoidFunctionSignature } from "./NonVoidFunctionSignature.js";
 
 export const BasicCustomFiles: core.serialization.ObjectSchema<
     serializers.v2.v3.BasicCustomFiles.Raw,

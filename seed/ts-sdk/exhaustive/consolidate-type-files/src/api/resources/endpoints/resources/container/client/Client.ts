@@ -5,7 +5,7 @@ import { normalizeClientOptions } from "../../../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedExhaustive from "../../../../../index.js";
+import type { ObjectWithRequiredField } from "../../../../types/resources/object/types/types.js";
 
 export declare namespace ContainerClient {
     export interface Options extends BaseClientOptions {}
@@ -93,7 +93,7 @@ export class ContainerClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -104,16 +104,16 @@ export class ContainerClient {
      *         }])
      */
     public getAndReturnListOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: ObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+    ): core.HttpResponsePromise<ObjectWithRequiredField[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnListOfObjects(request, requestOptions));
     }
 
     private async __getAndReturnListOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: ObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
+    ): Promise<core.WithRawResponse<ObjectWithRequiredField[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -138,10 +138,7 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as ObjectWithRequiredField[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -244,7 +241,7 @@ export class ContainerClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField[]} request
+     * @param {ObjectWithRequiredField[]} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -253,16 +250,16 @@ export class ContainerClient {
      *         }])
      */
     public getAndReturnSetOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: ObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField[]> {
+    ): core.HttpResponsePromise<ObjectWithRequiredField[]> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfObjects(request, requestOptions));
     }
 
     private async __getAndReturnSetOfObjects(
-        request: SeedExhaustive.types.ObjectWithRequiredField[],
+        request: ObjectWithRequiredField[],
         requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField[]>> {
+    ): Promise<core.WithRawResponse<ObjectWithRequiredField[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -287,10 +284,7 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as ObjectWithRequiredField[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -395,7 +389,7 @@ export class ContainerClient {
     }
 
     /**
-     * @param {Record<string, SeedExhaustive.types.ObjectWithRequiredField>} request
+     * @param {Record<string, ObjectWithRequiredField>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -406,16 +400,16 @@ export class ContainerClient {
      *     })
      */
     public getAndReturnMapOfPrimToObject(
-        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+        request: Record<string, ObjectWithRequiredField>,
         requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<Record<string, SeedExhaustive.types.ObjectWithRequiredField>> {
+    ): core.HttpResponsePromise<Record<string, ObjectWithRequiredField>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnMapOfPrimToObject(request, requestOptions));
     }
 
     private async __getAndReturnMapOfPrimToObject(
-        request: Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+        request: Record<string, ObjectWithRequiredField>,
         requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<core.WithRawResponse<Record<string, SeedExhaustive.types.ObjectWithRequiredField>>> {
+    ): Promise<core.WithRawResponse<Record<string, ObjectWithRequiredField>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -441,7 +435,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+                data: _response.body as Record<string, ObjectWithRequiredField>,
                 rawResponse: _response.rawResponse,
             };
         }
@@ -474,7 +468,7 @@ export class ContainerClient {
     }
 
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -483,16 +477,16 @@ export class ContainerClient {
      *     })
      */
     public getAndReturnOptional(
-        request?: SeedExhaustive.types.ObjectWithRequiredField,
+        request?: ObjectWithRequiredField,
         requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined> {
+    ): core.HttpResponsePromise<ObjectWithRequiredField | undefined> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnOptional(request, requestOptions));
     }
 
     private async __getAndReturnOptional(
-        request?: SeedExhaustive.types.ObjectWithRequiredField,
+        request?: ObjectWithRequiredField,
         requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExhaustive.types.ObjectWithRequiredField | undefined>> {
+    ): Promise<core.WithRawResponse<ObjectWithRequiredField | undefined>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -517,10 +511,7 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return {
-                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined,
-                rawResponse: _response.rawResponse,
-            };
+            return { data: _response.body as ObjectWithRequiredField | undefined, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

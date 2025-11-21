@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedPagination from "../../../index.js";
+import type { UsernameCursor } from "../../../types/UsernameCursor.js";
+import type { ListUsernamesRequestCustom } from "./requests/ListUsernamesRequestCustom.js";
 
 export declare namespace UsersClient {
     export interface Options extends BaseClientOptions {}
@@ -21,7 +22,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsernamesRequestCustom} request
+     * @param {ListUsernamesRequestCustom} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -30,16 +31,16 @@ export class UsersClient {
      *     })
      */
     public listUsernamesCustom(
-        request: SeedPagination.ListUsernamesRequestCustom = {},
+        request: ListUsernamesRequestCustom = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedPagination.UsernameCursor> {
+    ): core.HttpResponsePromise<UsernameCursor> {
         return core.HttpResponsePromise.fromPromise(this.__listUsernamesCustom(request, requestOptions));
     }
 
     private async __listUsernamesCustom(
-        request: SeedPagination.ListUsernamesRequestCustom = {},
+        request: ListUsernamesRequestCustom = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> {
+    ): Promise<core.WithRawResponse<UsernameCursor>> {
         const { starting_after: startingAfter } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (startingAfter != null) {
@@ -63,7 +64,7 @@ export class UsersClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedPagination.UsernameCursor, rawResponse: _response.rawResponse };
+            return { data: _response.body as UsernameCursor, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

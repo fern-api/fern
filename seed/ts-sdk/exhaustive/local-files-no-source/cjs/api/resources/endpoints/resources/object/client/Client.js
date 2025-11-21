@@ -53,7 +53,7 @@ class ObjectClient {
         this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithOptionalField} request
+     * @param {ObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -97,10 +97,7 @@ class ObjectClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -127,7 +124,7 @@ class ObjectClient {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithRequiredField} request
+     * @param {ObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -157,10 +154,7 @@ class ObjectClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -187,7 +181,7 @@ class ObjectClient {
         });
     }
     /**
-     * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
+     * @param {ObjectWithMapOfMap} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -221,10 +215,7 @@ class ObjectClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -251,7 +242,7 @@ class ObjectClient {
         });
     }
     /**
-     * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
+     * @param {NestedObjectWithOptionalField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -298,10 +289,7 @@ class ObjectClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -329,7 +317,7 @@ class ObjectClient {
     }
     /**
      * @param {string} string
-     * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
+     * @param {NestedObjectWithRequiredField} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -376,10 +364,7 @@ class ObjectClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({
@@ -406,7 +391,7 @@ class ObjectClient {
         });
     }
     /**
-     * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
+     * @param {NestedObjectWithRequiredField[]} request
      * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -472,10 +457,7 @@ class ObjectClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 throw new errors.SeedExhaustiveError({

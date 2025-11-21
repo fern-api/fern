@@ -5,7 +5,25 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedPagination from "../../../index.js";
+import type { UsernameCursor } from "../../../types/UsernameCursor.js";
+import type { ListUsersExtendedOptionalListResponse } from "../types/ListUsersExtendedOptionalListResponse.js";
+import type { ListUsersExtendedResponse } from "../types/ListUsersExtendedResponse.js";
+import type { ListUsersMixedTypePaginationResponse } from "../types/ListUsersMixedTypePaginationResponse.js";
+import type { ListUsersPaginationResponse } from "../types/ListUsersPaginationResponse.js";
+import type { User } from "../types/User.js";
+import type { UsernameContainer } from "../types/UsernameContainer.js";
+import type { ListUsernamesRequest } from "./requests/ListUsernamesRequest.js";
+import type { ListUsersBodyCursorPaginationRequest } from "./requests/ListUsersBodyCursorPaginationRequest.js";
+import type { ListUsersBodyOffsetPaginationRequest } from "./requests/ListUsersBodyOffsetPaginationRequest.js";
+import type { ListUsersCursorPaginationRequest } from "./requests/ListUsersCursorPaginationRequest.js";
+import type { ListUsersDoubleOffsetPaginationRequest } from "./requests/ListUsersDoubleOffsetPaginationRequest.js";
+import type { ListUsersExtendedRequest } from "./requests/ListUsersExtendedRequest.js";
+import type { ListUsersExtendedRequestForOptionalData } from "./requests/ListUsersExtendedRequestForOptionalData.js";
+import type { ListUsersMixedTypeCursorPaginationRequest } from "./requests/ListUsersMixedTypeCursorPaginationRequest.js";
+import type { ListUsersOffsetPaginationRequest } from "./requests/ListUsersOffsetPaginationRequest.js";
+import type { ListUsersOffsetStepPaginationRequest } from "./requests/ListUsersOffsetStepPaginationRequest.js";
+import type { ListWithGlobalConfigRequest } from "./requests/ListWithGlobalConfigRequest.js";
+import type { ListWithOffsetPaginationHasNextPageRequest } from "./requests/ListWithOffsetPaginationHasNextPageRequest.js";
 
 export declare namespace UsersClient {
     export interface Options extends BaseClientOptions {}
@@ -21,7 +39,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsersCursorPaginationRequest} request
+     * @param {ListUsersCursorPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -33,13 +51,13 @@ export class UsersClient {
      *     })
      */
     public async listWithCursorPagination(
-        request: SeedPagination.ListUsersCursorPaginationRequest = {},
+        request: ListUsersCursorPaginationRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
+    ): Promise<core.Page<User, ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
-                request: SeedPagination.ListUsersCursorPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                request: ListUsersCursorPaginationRequest,
+            ): Promise<core.WithRawResponse<ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
                 const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
                 if (page != null) {
@@ -74,10 +92,7 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
+                    return { data: _response.body as ListUsersPaginationResponse, rawResponse: _response.rawResponse };
                 }
                 if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
@@ -104,7 +119,7 @@ export class UsersClient {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
+        return new core.Page<User, ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -121,7 +136,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsersMixedTypeCursorPaginationRequest} request
+     * @param {ListUsersMixedTypeCursorPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -130,13 +145,13 @@ export class UsersClient {
      *     })
      */
     public async listWithMixedTypeCursorPagination(
-        request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest = {},
+        request: ListUsersMixedTypeCursorPaginationRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersMixedTypePaginationResponse>> {
+    ): Promise<core.Page<User, ListUsersMixedTypePaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
-                request: SeedPagination.ListUsersMixedTypeCursorPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersMixedTypePaginationResponse>> => {
+                request: ListUsersMixedTypeCursorPaginationRequest,
+            ): Promise<core.WithRawResponse<ListUsersMixedTypePaginationResponse>> => {
                 const { cursor } = request;
                 const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
                 if (cursor != null) {
@@ -163,7 +178,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     return {
-                        data: _response.body as SeedPagination.ListUsersMixedTypePaginationResponse,
+                        data: _response.body as ListUsersMixedTypePaginationResponse,
                         rawResponse: _response.rawResponse,
                     };
                 }
@@ -192,7 +207,7 @@ export class UsersClient {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersMixedTypePaginationResponse>({
+        return new core.Page<User, ListUsersMixedTypePaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -205,7 +220,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsersBodyCursorPaginationRequest} request
+     * @param {ListUsersBodyCursorPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -216,13 +231,13 @@ export class UsersClient {
      *     })
      */
     public async listWithBodyCursorPagination(
-        request: SeedPagination.ListUsersBodyCursorPaginationRequest = {},
+        request: ListUsersBodyCursorPaginationRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
+    ): Promise<core.Page<User, ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
-                request: SeedPagination.ListUsersBodyCursorPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                request: ListUsersBodyCursorPaginationRequest,
+            ): Promise<core.WithRawResponse<ListUsersPaginationResponse>> => {
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -246,10 +261,7 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
+                    return { data: _response.body as ListUsersPaginationResponse, rawResponse: _response.rawResponse };
                 }
                 if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
@@ -276,7 +288,7 @@ export class UsersClient {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
+        return new core.Page<User, ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -293,7 +305,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsersOffsetPaginationRequest} request
+     * @param {ListUsersOffsetPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -305,13 +317,13 @@ export class UsersClient {
      *     })
      */
     public async listWithOffsetPagination(
-        request: SeedPagination.ListUsersOffsetPaginationRequest = {},
+        request: ListUsersOffsetPaginationRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
+    ): Promise<core.Page<User, ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
-                request: SeedPagination.ListUsersOffsetPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                request: ListUsersOffsetPaginationRequest,
+            ): Promise<core.WithRawResponse<ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
                 const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
                 if (page != null) {
@@ -346,10 +358,7 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
+                    return { data: _response.body as ListUsersPaginationResponse, rawResponse: _response.rawResponse };
                 }
                 if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
@@ -377,7 +386,7 @@ export class UsersClient {
         );
         let _offset = request?.page != null ? request?.page : 0;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
+        return new core.Page<User, ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.data ?? []).length > 0,
@@ -390,7 +399,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsersDoubleOffsetPaginationRequest} request
+     * @param {ListUsersDoubleOffsetPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -402,13 +411,13 @@ export class UsersClient {
      *     })
      */
     public async listWithDoubleOffsetPagination(
-        request: SeedPagination.ListUsersDoubleOffsetPaginationRequest = {},
+        request: ListUsersDoubleOffsetPaginationRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
+    ): Promise<core.Page<User, ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
-                request: SeedPagination.ListUsersDoubleOffsetPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                request: ListUsersDoubleOffsetPaginationRequest,
+            ): Promise<core.WithRawResponse<ListUsersPaginationResponse>> => {
                 const { page, per_page: perPage, order, starting_after: startingAfter } = request;
                 const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
                 if (page != null) {
@@ -443,10 +452,7 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
+                    return { data: _response.body as ListUsersPaginationResponse, rawResponse: _response.rawResponse };
                 }
                 if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
@@ -474,7 +480,7 @@ export class UsersClient {
         );
         let _offset = request?.page != null ? request?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
+        return new core.Page<User, ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.data ?? []).length > 0,
@@ -487,7 +493,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsersBodyOffsetPaginationRequest} request
+     * @param {ListUsersBodyOffsetPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -498,13 +504,13 @@ export class UsersClient {
      *     })
      */
     public async listWithBodyOffsetPagination(
-        request: SeedPagination.ListUsersBodyOffsetPaginationRequest = {},
+        request: ListUsersBodyOffsetPaginationRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
+    ): Promise<core.Page<User, ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
-                request: SeedPagination.ListUsersBodyOffsetPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                request: ListUsersBodyOffsetPaginationRequest,
+            ): Promise<core.WithRawResponse<ListUsersPaginationResponse>> => {
                 const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
                     this._options?.headers,
                     requestOptions?.headers,
@@ -528,10 +534,7 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
+                    return { data: _response.body as ListUsersPaginationResponse, rawResponse: _response.rawResponse };
                 }
                 if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
@@ -559,7 +562,7 @@ export class UsersClient {
         );
         let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
+        return new core.Page<User, ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.data ?? []).length > 0,
@@ -572,7 +575,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsersOffsetStepPaginationRequest} request
+     * @param {ListUsersOffsetStepPaginationRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -583,13 +586,13 @@ export class UsersClient {
      *     })
      */
     public async listWithOffsetStepPagination(
-        request: SeedPagination.ListUsersOffsetStepPaginationRequest = {},
+        request: ListUsersOffsetStepPaginationRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
+    ): Promise<core.Page<User, ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
-                request: SeedPagination.ListUsersOffsetStepPaginationRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                request: ListUsersOffsetStepPaginationRequest,
+            ): Promise<core.WithRawResponse<ListUsersPaginationResponse>> => {
                 const { page, limit, order } = request;
                 const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
                 if (page != null) {
@@ -621,10 +624,7 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
+                    return { data: _response.body as ListUsersPaginationResponse, rawResponse: _response.rawResponse };
                 }
                 if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
@@ -652,7 +652,7 @@ export class UsersClient {
         );
         let _offset = request?.page != null ? request?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
+        return new core.Page<User, ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.data ?? []).length >= Math.floor(request?.limit ?? 1),
@@ -665,7 +665,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListWithOffsetPaginationHasNextPageRequest} request
+     * @param {ListWithOffsetPaginationHasNextPageRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -676,13 +676,13 @@ export class UsersClient {
      *     })
      */
     public async listWithOffsetPaginationHasNextPage(
-        request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest = {},
+        request: ListWithOffsetPaginationHasNextPageRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>> {
+    ): Promise<core.Page<User, ListUsersPaginationResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
-                request: SeedPagination.ListWithOffsetPaginationHasNextPageRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersPaginationResponse>> => {
+                request: ListWithOffsetPaginationHasNextPageRequest,
+            ): Promise<core.WithRawResponse<ListUsersPaginationResponse>> => {
                 const { page, limit, order } = request;
                 const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
                 if (page != null) {
@@ -714,10 +714,7 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersPaginationResponse,
-                        rawResponse: _response.rawResponse,
-                    };
+                    return { data: _response.body as ListUsersPaginationResponse, rawResponse: _response.rawResponse };
                 }
                 if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
@@ -745,7 +742,7 @@ export class UsersClient {
         );
         let _offset = request?.page != null ? request?.page : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersPaginationResponse>({
+        return new core.Page<User, ListUsersPaginationResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -759,7 +756,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsersExtendedRequest} request
+     * @param {ListUsersExtendedRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -768,13 +765,11 @@ export class UsersClient {
      *     })
      */
     public async listWithExtendedResults(
-        request: SeedPagination.ListUsersExtendedRequest = {},
+        request: ListUsersExtendedRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedResponse>> {
+    ): Promise<core.Page<User, ListUsersExtendedResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsersExtendedRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersExtendedResponse>> => {
+            async (request: ListUsersExtendedRequest): Promise<core.WithRawResponse<ListUsersExtendedResponse>> => {
                 const { cursor } = request;
                 const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
                 if (cursor != null) {
@@ -800,10 +795,7 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.ListUsersExtendedResponse,
-                        rawResponse: _response.rawResponse,
-                    };
+                    return { data: _response.body as ListUsersExtendedResponse, rawResponse: _response.rawResponse };
                 }
                 if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
@@ -830,7 +822,7 @@ export class UsersClient {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedResponse>({
+        return new core.Page<User, ListUsersExtendedResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -843,7 +835,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsersExtendedRequestForOptionalData} request
+     * @param {ListUsersExtendedRequestForOptionalData} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -852,13 +844,13 @@ export class UsersClient {
      *     })
      */
     public async listWithExtendedResultsAndOptionalData(
-        request: SeedPagination.ListUsersExtendedRequestForOptionalData = {},
+        request: ListUsersExtendedRequestForOptionalData = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedOptionalListResponse>> {
+    ): Promise<core.Page<User, ListUsersExtendedOptionalListResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
-                request: SeedPagination.ListUsersExtendedRequestForOptionalData,
-            ): Promise<core.WithRawResponse<SeedPagination.ListUsersExtendedOptionalListResponse>> => {
+                request: ListUsersExtendedRequestForOptionalData,
+            ): Promise<core.WithRawResponse<ListUsersExtendedOptionalListResponse>> => {
                 const { cursor } = request;
                 const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
                 if (cursor != null) {
@@ -885,7 +877,7 @@ export class UsersClient {
                 });
                 if (_response.ok) {
                     return {
-                        data: _response.body as SeedPagination.ListUsersExtendedOptionalListResponse,
+                        data: _response.body as ListUsersExtendedOptionalListResponse,
                         rawResponse: _response.rawResponse,
                     };
                 }
@@ -914,7 +906,7 @@ export class UsersClient {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<SeedPagination.User, SeedPagination.ListUsersExtendedOptionalListResponse>({
+        return new core.Page<User, ListUsersExtendedOptionalListResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -927,7 +919,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListUsernamesRequest} request
+     * @param {ListUsernamesRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -936,13 +928,11 @@ export class UsersClient {
      *     })
      */
     public async listUsernames(
-        request: SeedPagination.ListUsernamesRequest = {},
+        request: ListUsernamesRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<string, SeedPagination.UsernameCursor>> {
+    ): Promise<core.Page<string, UsernameCursor>> {
         const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListUsernamesRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor>> => {
+            async (request: ListUsernamesRequest): Promise<core.WithRawResponse<UsernameCursor>> => {
                 const { starting_after: startingAfter } = request;
                 const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
                 if (startingAfter != null) {
@@ -968,10 +958,7 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.UsernameCursor,
-                        rawResponse: _response.rawResponse,
-                    };
+                    return { data: _response.body as UsernameCursor, rawResponse: _response.rawResponse };
                 }
                 if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
@@ -998,7 +985,7 @@ export class UsersClient {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<string, SeedPagination.UsernameCursor>({
+        return new core.Page<string, UsernameCursor>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
@@ -1012,7 +999,7 @@ export class UsersClient {
     }
 
     /**
-     * @param {SeedPagination.ListWithGlobalConfigRequest} request
+     * @param {ListWithGlobalConfigRequest} request
      * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -1021,13 +1008,11 @@ export class UsersClient {
      *     })
      */
     public async listWithGlobalConfig(
-        request: SeedPagination.ListWithGlobalConfigRequest = {},
+        request: ListWithGlobalConfigRequest = {},
         requestOptions?: UsersClient.RequestOptions,
-    ): Promise<core.Page<string, SeedPagination.UsernameContainer>> {
+    ): Promise<core.Page<string, UsernameContainer>> {
         const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: SeedPagination.ListWithGlobalConfigRequest,
-            ): Promise<core.WithRawResponse<SeedPagination.UsernameContainer>> => {
+            async (request: ListWithGlobalConfigRequest): Promise<core.WithRawResponse<UsernameContainer>> => {
                 const { offset } = request;
                 const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
                 if (offset != null) {
@@ -1053,10 +1038,7 @@ export class UsersClient {
                     logging: this._options.logging,
                 });
                 if (_response.ok) {
-                    return {
-                        data: _response.body as SeedPagination.UsernameContainer,
-                        rawResponse: _response.rawResponse,
-                    };
+                    return { data: _response.body as UsernameContainer, rawResponse: _response.rawResponse };
                 }
                 if (_response.error.reason === "status-code") {
                     throw new errors.SeedPaginationError({
@@ -1084,7 +1066,7 @@ export class UsersClient {
         );
         let _offset = request?.offset != null ? request?.offset : 1;
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Page<string, SeedPagination.UsernameContainer>({
+        return new core.Page<string, UsernameContainer>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) => (response?.results ?? []).length > 0,

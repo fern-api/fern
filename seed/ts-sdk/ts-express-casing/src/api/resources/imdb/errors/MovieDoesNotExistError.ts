@@ -2,10 +2,10 @@
 
 import type * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedApi from "../../../index.js";
+import type { MovieId } from "../types/MovieId.js";
 
 export class MovieDoesNotExistError extends errors.SeedApiError {
-    constructor(body: SeedApi.MovieId, rawResponse?: core.RawResponse) {
+    constructor(body: MovieId, rawResponse?: core.RawResponse) {
         super({
             message: "MovieDoesNotExistError",
             statusCode: 404,

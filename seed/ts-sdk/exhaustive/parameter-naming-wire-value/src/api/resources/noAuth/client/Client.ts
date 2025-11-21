@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import * as SeedExhaustive from "../../../index.js";
+import { BadRequestBody } from "../../generalErrors/errors/BadRequestBody.js";
+import type { BadObjectRequestInfo } from "../../generalErrors/types/BadObjectRequestInfo.js";
 
 export declare namespace NoAuthClient {
     export interface Options extends BaseClientOptions {}
@@ -26,7 +27,7 @@ export class NoAuthClient {
      * @param {unknown} request
      * @param {NoAuthClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link BadRequestBody}
      *
      * @example
      *     await client.noAuth.postWithNoAuth({
@@ -70,10 +71,7 @@ export class NoAuthClient {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
-                    throw new SeedExhaustive.BadRequestBody(
-                        _response.error.body as SeedExhaustive.BadObjectRequestInfo,
-                        _response.rawResponse,
-                    );
+                    throw new BadRequestBody(_response.error.body as BadObjectRequestInfo, _response.rawResponse);
                 default:
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,

@@ -6,7 +6,8 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedQueryParameters from "../../../index.js";
+import type { User } from "../types/User.js";
+import type { GetUsersRequest } from "./requests/GetUsersRequest.js";
 
 export declare namespace UserClient {
     export interface Options extends BaseClientOptions {}
@@ -22,7 +23,7 @@ export class UserClient {
     }
 
     /**
-     * @param {SeedQueryParameters.GetUsersRequest} request
+     * @param {GetUsersRequest} request
      * @param {UserClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -67,16 +68,16 @@ export class UserClient {
      *     })
      */
     public getUsername(
-        request: SeedQueryParameters.GetUsersRequest,
+        request: GetUsersRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedQueryParameters.User> {
+    ): core.HttpResponsePromise<User> {
         return core.HttpResponsePromise.fromPromise(this.__getUsername(request, requestOptions));
     }
 
     private async __getUsername(
-        request: SeedQueryParameters.GetUsersRequest,
+        request: GetUsersRequest,
         requestOptions?: UserClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedQueryParameters.User>> {
+    ): Promise<core.WithRawResponse<User>> {
         const {
             limit,
             id,
@@ -144,7 +145,7 @@ export class UserClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedQueryParameters.User, rawResponse: _response.rawResponse };
+            return { data: _response.body as User, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

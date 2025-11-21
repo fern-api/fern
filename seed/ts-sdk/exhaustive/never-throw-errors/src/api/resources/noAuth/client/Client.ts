@@ -5,6 +5,7 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as SeedExhaustive from "../../../index.js";
+import type { BadObjectRequestInfo } from "../../generalErrors/types/BadObjectRequestInfo.js";
 
 export declare namespace NoAuthClient {
     export interface Options extends BaseClientOptions {}
@@ -79,7 +80,7 @@ export class NoAuthClient {
                         data: {
                             ok: false,
                             error: SeedExhaustive.noAuth.postWithNoAuth.Error.badRequestBody(
-                                _response.error.body as SeedExhaustive.BadObjectRequestInfo,
+                                _response.error.body as BadObjectRequestInfo,
                             ),
                             rawResponse: _response.rawResponse,
                         },

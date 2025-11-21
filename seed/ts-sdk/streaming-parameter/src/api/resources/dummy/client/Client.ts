@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedStreaming from "../../../index.js";
+import type { StreamResponse } from "../types/StreamResponse.js";
+import type { GenerateRequest } from "./requests/GenerateRequest.js";
 
 export declare namespace DummyClient {
     export interface Options extends BaseClientOptions {}
@@ -21,16 +22,16 @@ export class DummyClient {
     }
 
     public generate(
-        request: SeedStreaming.GenerateRequest,
+        request: GenerateRequest,
         requestOptions?: DummyClient.RequestOptions,
-    ): core.HttpResponsePromise<core.Stream<SeedStreaming.StreamResponse>> {
+    ): core.HttpResponsePromise<core.Stream<StreamResponse>> {
         return core.HttpResponsePromise.fromPromise(this.__generate(request, requestOptions));
     }
 
     private async __generate(
-        request: SeedStreaming.GenerateRequest,
+        request: GenerateRequest,
         requestOptions?: DummyClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.Stream<SeedStreaming.StreamResponse>>> {
+    ): Promise<core.WithRawResponse<core.Stream<StreamResponse>>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher<ReadableStream>({
             url: core.url.join(

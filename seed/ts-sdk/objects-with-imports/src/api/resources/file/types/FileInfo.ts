@@ -2,10 +2,10 @@
 
 /**
  * @example
- *     SeedObjectsWithImports.FileInfo.Regular
+ *     FileInfo.Regular
  *
  * @example
- *     SeedObjectsWithImports.FileInfo.Directory
+ *     FileInfo.Directory
  */
 export const FileInfo = {
     /**

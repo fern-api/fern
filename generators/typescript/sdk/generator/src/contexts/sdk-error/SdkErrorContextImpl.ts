@@ -45,7 +45,7 @@ export class SdkErrorContextImpl implements SdkErrorContext {
     public getReferenceToError(errorName: DeclaredErrorName): Reference {
         return this.errorDeclarationReferencer.getReferenceToError({
             name: errorName,
-            importStrategy: { type: "fromRoot", namespaceImport: this.errorDeclarationReferencer.namespaceExport },
+            importStrategy: { type: "direct" },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             exportsManager: this.exportsManager

@@ -17,7 +17,7 @@ export class ReqWithHeadersClient {
         this._options = normalizeClientOptions(options);
     }
     /**
-     * @param {SeedExhaustive.ReqWithHeaders} request
+     * @param {ReqWithHeaders} request
      * @param {ReqWithHeadersClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example

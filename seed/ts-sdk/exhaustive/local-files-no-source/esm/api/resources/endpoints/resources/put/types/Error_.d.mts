@@ -1,7 +1,8 @@
-import type * as SeedExhaustive from "../../../../../index.mjs";
+import type { ErrorCategory } from "./ErrorCategory.mjs";
+import type { ErrorCode } from "./ErrorCode.mjs";
 export interface Error_ {
-    category: SeedExhaustive.endpoints.ErrorCategory;
-    code: SeedExhaustive.endpoints.ErrorCode;
+    category: ErrorCategory;
+    code: ErrorCode;
     detail?: string;
     field?: string;
 }

@@ -1,4 +1,4 @@
-import type * as SeedExhaustive from "../../../../index.js";
+import type { ObjectWithOptionalField } from "../../../types/resources/object/types/ObjectWithOptionalField.js";
 /**
  * @example
  *     {
@@ -26,5 +26,5 @@ import type * as SeedExhaustive from "../../../../index.js";
 export interface PostWithObjectBody {
     string: string;
     integer: number;
-    NestedObject: SeedExhaustive.types.ObjectWithOptionalField;
+    NestedObject: ObjectWithOptionalField;
 }

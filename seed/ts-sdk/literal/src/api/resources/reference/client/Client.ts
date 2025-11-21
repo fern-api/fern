@@ -5,7 +5,8 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedLiteral from "../../../index.js";
+import type { SendResponse } from "../../../types/SendResponse.js";
+import type { SendRequest } from "../types/SendRequest.js";
 
 export declare namespace ReferenceClient {
     export interface Options extends BaseClientOptions {}
@@ -21,7 +22,7 @@ export class ReferenceClient {
     }
 
     /**
-     * @param {SeedLiteral.SendRequest} request
+     * @param {SendRequest} request
      * @param {ReferenceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -40,16 +41,16 @@ export class ReferenceClient {
      *     })
      */
     public send(
-        request: SeedLiteral.SendRequest,
+        request: SendRequest,
         requestOptions?: ReferenceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedLiteral.SendResponse> {
+    ): core.HttpResponsePromise<SendResponse> {
         return core.HttpResponsePromise.fromPromise(this.__send(request, requestOptions));
     }
 
     private async __send(
-        request: SeedLiteral.SendRequest,
+        request: SendRequest,
         requestOptions?: ReferenceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedLiteral.SendResponse>> {
+    ): Promise<core.WithRawResponse<SendResponse>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({
@@ -77,7 +78,7 @@ export class ReferenceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedLiteral.SendResponse, rawResponse: _response.rawResponse };
+            return { data: _response.body as SendResponse, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

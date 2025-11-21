@@ -1,6 +1,6 @@
-import { SourceFile } from "ts-morph";
+import type { SourceFile } from "ts-morph";
 
-import { ModuleSpecifier } from "../referencing/ModuleSpecifier";
+import type { ModuleSpecifier } from "../referencing/ModuleSpecifier";
 
 export interface ImportDeclaration {
     namespaceImport?: string;
@@ -30,9 +30,90 @@ export class ImportsManager {
     private packagePath: string | undefined;
 
     private imports: Record<ModuleSpecifier, CombinedImportDeclarations> = {};
+    private reservedIdentifiers: Set<string> = new Set();
+    private allocatedLocalNames: Set<string> = new Set();
 
     public constructor({ packagePath }: { packagePath?: string }) {
         this.packagePath = packagePath;
+    }
+
+    /**
+     * Reserve a local identifier to prevent imports from using it.
+     * This should be called for top-level declarations like client class names.
+     */
+    public reserveLocal(name: string): void {
+        this.reservedIdentifiers.add(name);
+        this.allocatedLocalNames.add(name);
+    }
+
+    /**
+     * Ensure a named import is added and return the local name to use.
+     * If the name conflicts with a reserved identifier, an alias will be used.
+     */
+    public ensureNamedImport({
+        moduleSpecifier,
+        name,
+        isTypeOnly,
+        aliasPrefix
+    }: {
+        moduleSpecifier: ModuleSpecifier;
+        name: string;
+        isTypeOnly?: boolean;
+        aliasPrefix?: string;
+    }): string {
+        const existingImports = this.imports[moduleSpecifier];
+        if (existingImports != null) {
+            const existingImport = existingImports.namedImports.find((namedImport) => namedImport.name === name);
+            if (existingImport != null) {
+                return existingImport.alias ?? name;
+            }
+        }
+
+        const localName = this.getAvailableLocalName(name, { aliasPrefix });
+        const alias = localName !== name ? localName : undefined;
+
+        this.addImport(moduleSpecifier, {
+            namedImports: [
+                {
+                    name,
+                    alias,
+                    type: isTypeOnly ? "type" : undefined
+                }
+            ]
+        });
+
+        return localName;
+    }
+
+    /**
+     * Get an available local name, adding a prefix or suffix if needed to avoid conflicts.
+     * Priority: preferredName > namespacePrefix_preferredName > numbered fallbacks
+     */
+    private getAvailableLocalName(preferredName: string, options?: { aliasPrefix?: string }): string {
+        const { aliasPrefix } = options ?? {};
+
+        if (!this.reservedIdentifiers.has(preferredName) && !this.allocatedLocalNames.has(preferredName)) {
+            this.allocatedLocalNames.add(preferredName);
+            return preferredName;
+        }
+
+        if (aliasPrefix != null) {
+            const prefixedVariant = `${aliasPrefix}_${preferredName}`;
+            if (!this.reservedIdentifiers.has(prefixedVariant) && !this.allocatedLocalNames.has(prefixedVariant)) {
+                this.allocatedLocalNames.add(prefixedVariant);
+                return prefixedVariant;
+            }
+        }
+
+        let counter = 1;
+        while (true) {
+            const numberedVariant = `${preferredName}${counter}`;
+            if (!this.reservedIdentifiers.has(numberedVariant) && !this.allocatedLocalNames.has(numberedVariant)) {
+                this.allocatedLocalNames.add(numberedVariant);
+                return numberedVariant;
+            }
+            counter++;
+        }
     }
 
     public addImportFromRoot(modulePath: string, importDeclaration: ImportDeclaration, packagePath?: string): void {

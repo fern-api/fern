@@ -5,7 +5,13 @@ import { normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
-import type * as SeedExamples from "../../../index.js";
+import type { BigEntity } from "../../types/types/BigEntity.js";
+import type { Metadata } from "../../types/types/Metadata.js";
+import type { Movie } from "../../types/types/Movie.js";
+import type { MovieId } from "../../types/types/MovieId.js";
+import type { RefreshTokenRequest } from "../../types/types/RefreshTokenRequest.js";
+import type { Response } from "../../types/types/Response.js";
+import type { GetMetadataRequest } from "./requests/GetMetadataRequest.js";
 
 export declare namespace ServiceClient {
     export interface Options extends BaseClientOptions {}
@@ -21,23 +27,20 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedExamples.MovieId} movieId
+     * @param {MovieId} movieId
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.service.getMovie("movie-c06a4ad7")
      */
-    public getMovie(
-        movieId: SeedExamples.MovieId,
-        requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.Movie> {
+    public getMovie(movieId: MovieId, requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<Movie> {
         return core.HttpResponsePromise.fromPromise(this.__getMovie(movieId, requestOptions));
     }
 
     private async __getMovie(
-        movieId: SeedExamples.MovieId,
+        movieId: MovieId,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.Movie>> {
+    ): Promise<core.WithRawResponse<Movie>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -55,7 +58,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExamples.Movie, rawResponse: _response.rawResponse };
+            return { data: _response.body as Movie, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -84,7 +87,7 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedExamples.Movie} request
+     * @param {Movie} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -112,16 +115,16 @@ export class ServiceClient {
      *     })
      */
     public createMovie(
-        request: SeedExamples.Movie,
+        request: Movie,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.MovieId> {
+    ): core.HttpResponsePromise<MovieId> {
         return core.HttpResponsePromise.fromPromise(this.__createMovie(request, requestOptions));
     }
 
     private async __createMovie(
-        request: SeedExamples.Movie,
+        request: Movie,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.MovieId>> {
+    ): Promise<core.WithRawResponse<MovieId>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -142,7 +145,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExamples.MovieId, rawResponse: _response.rawResponse };
+            return { data: _response.body as MovieId, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -171,7 +174,7 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedExamples.GetMetadataRequest} request
+     * @param {GetMetadataRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -182,16 +185,16 @@ export class ServiceClient {
      *     })
      */
     public getMetadata(
-        request: SeedExamples.GetMetadataRequest,
+        request: GetMetadataRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.Metadata> {
+    ): core.HttpResponsePromise<Metadata> {
         return core.HttpResponsePromise.fromPromise(this.__getMetadata(request, requestOptions));
     }
 
     private async __getMetadata(
-        request: SeedExamples.GetMetadataRequest,
+        request: GetMetadataRequest,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.Metadata>> {
+    ): Promise<core.WithRawResponse<Metadata>> {
         const { shallow, tag, "X-API-Version": xApiVersion } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (shallow != null) {
@@ -227,7 +230,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExamples.Metadata, rawResponse: _response.rawResponse };
+            return { data: _response.body as Metadata, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -256,7 +259,7 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedExamples.BigEntity} request
+     * @param {BigEntity} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -439,16 +442,16 @@ export class ServiceClient {
      *     })
      */
     public createBigEntity(
-        request: SeedExamples.BigEntity,
+        request: BigEntity,
         requestOptions?: ServiceClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedExamples.Response> {
+    ): core.HttpResponsePromise<Response> {
         return core.HttpResponsePromise.fromPromise(this.__createBigEntity(request, requestOptions));
     }
 
     private async __createBigEntity(
-        request: SeedExamples.BigEntity,
+        request: BigEntity,
         requestOptions?: ServiceClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedExamples.Response>> {
+    ): Promise<core.WithRawResponse<Response>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url: core.url.join(
@@ -469,7 +472,7 @@ export class ServiceClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExamples.Response, rawResponse: _response.rawResponse };
+            return { data: _response.body as Response, rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {
@@ -498,7 +501,7 @@ export class ServiceClient {
     }
 
     /**
-     * @param {SeedExamples.RefreshTokenRequest} request
+     * @param {RefreshTokenRequest} request
      * @param {ServiceClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -510,14 +513,14 @@ export class ServiceClient {
      *     })
      */
     public refreshToken(
-        request?: SeedExamples.RefreshTokenRequest,
+        request?: RefreshTokenRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__refreshToken(request, requestOptions));
     }
 
     private async __refreshToken(
-        request?: SeedExamples.RefreshTokenRequest,
+        request?: RefreshTokenRequest,
         requestOptions?: ServiceClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);

@@ -5,8 +5,9 @@ import { normalizeClientOptions } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import * as errors from "../../../../../../errors/index.js";
-import type * as SeedMixedFileDirectory from "../../../../../index.js";
 import { MetadataClient } from "../resources/metadata/client/Client.js";
+import type { Event } from "../types/Event.js";
+import type { ListUserEventsRequest } from "./requests/ListUserEventsRequest.js";
 
 export declare namespace EventsClient {
     export interface Options extends BaseClientOptions {}
@@ -29,7 +30,7 @@ export class EventsClient {
     /**
      * List all user events.
      *
-     * @param {SeedMixedFileDirectory.user.ListUserEventsRequest} request
+     * @param {ListUserEventsRequest} request
      * @param {EventsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
@@ -38,16 +39,16 @@ export class EventsClient {
      *     })
      */
     public listEvents(
-        request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
+        request: ListUserEventsRequest = {},
         requestOptions?: EventsClient.RequestOptions,
-    ): core.HttpResponsePromise<SeedMixedFileDirectory.user.Event[]> {
+    ): core.HttpResponsePromise<Event[]> {
         return core.HttpResponsePromise.fromPromise(this.__listEvents(request, requestOptions));
     }
 
     private async __listEvents(
-        request: SeedMixedFileDirectory.user.ListUserEventsRequest = {},
+        request: ListUserEventsRequest = {},
         requestOptions?: EventsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<SeedMixedFileDirectory.user.Event[]>> {
+    ): Promise<core.WithRawResponse<Event[]>> {
         const { limit } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -71,7 +72,7 @@ export class EventsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedMixedFileDirectory.user.Event[], rawResponse: _response.rawResponse };
+            return { data: _response.body as Event[], rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

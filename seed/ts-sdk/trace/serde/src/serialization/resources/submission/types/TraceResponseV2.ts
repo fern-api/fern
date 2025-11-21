@@ -3,10 +3,10 @@
 import type * as SeedTrace from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import * as serializers from "../../../index.js";
-import { ExpressionLocation } from "./ExpressionLocation.js";
-import { StackInformation } from "./StackInformation.js";
-import { SubmissionId } from "./SubmissionId.js";
-import { TracedFile } from "./TracedFile.js";
+import type { ExpressionLocation } from "./ExpressionLocation.js";
+import type { StackInformation } from "./StackInformation.js";
+import type { SubmissionId } from "./SubmissionId.js";
+import type { TracedFile } from "./TracedFile.js";
 
 export const TraceResponseV2: core.serialization.ObjectSchema<
     serializers.TraceResponseV2.Raw,

@@ -12,7 +12,7 @@ import { normalizeClientOptions } from "../../../../BaseClient.mjs";
 import { mergeHeaders } from "../../../../core/headers.mjs";
 import * as core from "../../../../core/index.mjs";
 import * as errors from "../../../../errors/index.mjs";
-import * as SeedExhaustive from "../../../index.mjs";
+import { BadRequestBody } from "../../generalErrors/errors/BadRequestBody.mjs";
 export class InlinedRequestsClient {
     constructor(options) {
         this._options = normalizeClientOptions(options);
@@ -20,10 +20,10 @@ export class InlinedRequestsClient {
     /**
      * POST with custom object in request body, response is an object
      *
-     * @param {SeedExhaustive.PostWithObjectBody} request
+     * @param {PostWithObjectBody} request
      * @param {InlinedRequestsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link SeedExhaustive.BadRequestBody}
+     * @throws {@link BadRequestBody}
      *
      * @example
      *     await client.inlinedRequests.postWithObjectBodyandResponse({
@@ -70,15 +70,12 @@ export class InlinedRequestsClient {
                 logging: this._options.logging,
             });
             if (_response.ok) {
-                return {
-                    data: _response.body,
-                    rawResponse: _response.rawResponse,
-                };
+                return { data: _response.body, rawResponse: _response.rawResponse };
             }
             if (_response.error.reason === "status-code") {
                 switch (_response.error.statusCode) {
                     case 400:
-                        throw new SeedExhaustive.BadRequestBody(_response.error.body, _response.rawResponse);
+                        throw new BadRequestBody(_response.error.body, _response.rawResponse);
                     default:
                         throw new errors.SeedExhaustiveError({
                             statusCode: _response.error.statusCode,
