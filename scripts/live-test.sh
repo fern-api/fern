@@ -37,29 +37,6 @@ node "$cli_path" init --organization fern
 
 node "$cli_path" add fern-java-sdk
 node "$cli_path" add fern-python-sdk
-node "$cli_path" add fern-postman
-
-cat > fern/generators.yml << 'EOF'
-default-group: local
-groups:
-  local:
-    generators:
-      - name: fernapi/fern-java-sdk
-        version: 0.0.1
-        output:
-          location: local-file-system
-          path: ../generated/java
-      - name: fernapi/fern-python-sdk
-        version: 0.0.1
-        output:
-          location: local-file-system
-          path: ../generated/python
-      - name: fernapi/fern-postman
-        version: 0.0.1
-        output:
-          location: local-file-system
-          path: ../generated/postman
-EOF
 
 echo "Testing fern upgrade command..."
 node "$cli_path" upgrade --yes --log-level debug

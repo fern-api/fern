@@ -2,7 +2,23 @@
 - changelogEntry:
     - summary: |
         Revert "fix(openapi): handle situations where discriminated unions reference unknown variants"
-      type: feat
+      type: chore
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.2.5
+
+- changelogEntry:
+    - summary: |
+        Re-publish CLI.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.2.4
+
+- changelogEntry:
+    - summary: |
+        Support `<Code />` components with props formatted on multiple lines.
+      type: fix
   irVersion: 61
   createdAt: "2025-11-21"
   version: 2.2.3
@@ -10,7 +26,7 @@
 - changelogEntry:
     - summary: |
         Add messaging about AI example generation to the CLI.
-      type: feat
+      type: fix
   irVersion: 61
   createdAt: "2025-11-20"
   version: 2.2.2
