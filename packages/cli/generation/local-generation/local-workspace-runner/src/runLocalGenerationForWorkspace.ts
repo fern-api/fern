@@ -442,12 +442,14 @@ function getPublishConfig({
             );
         }
 
+        const irMode = generatorInvocation.raw.github.mode === "pull-request" ? "pull-request" : undefined;
+
         return FernIr.PublishingConfig.github({
             owner,
             repo,
             uri: generatorInvocation.raw.github.uri,
             token: generatorInvocation.raw.github.token,
-            mode: generatorInvocation.raw.github.mode,
+            mode: irMode,
             target: getPublishTarget({ outputSchema: generatorInvocation.raw.output, version, packageName })
         });
     }
