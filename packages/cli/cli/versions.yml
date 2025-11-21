@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Fix propagation of selfHosted flag into intermediate represenation.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.1.1
+
 - changelogEntry:
     - summary: |
         Add detailed output to `fern generator upgrade` showing which generators were upgraded, their version changes, and changelog links. The command now displays a summary grouped by workspace and group, or reports "All generators are already up to date" when no upgrades are applied.
