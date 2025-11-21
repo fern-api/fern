@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- changelogEntry:
+    - summary: |
+        Add messaging about AI example generation to the CLI.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.2.2
+
 - changelogEntry:
     - summary: |
         Support `<Code />` components with props formatted on multiple lines.
