@@ -362,7 +362,7 @@ describe("replaceReferencedCode", () => {
 
         `);
     });
-    
+
     it("should handle weird formatting", async () => {
         const markdown = `
             <Code title={"Hello 1"}
@@ -398,7 +398,7 @@ describe("replaceReferencedCode", () => {
 
         `);
     });
-    
+
     it("should handle more weird formatting", async () => {
         const markdown = `
             <Code title={"Hello 1"} maxLines={20}
