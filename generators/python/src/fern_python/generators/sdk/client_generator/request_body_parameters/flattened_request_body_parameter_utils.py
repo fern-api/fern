@@ -23,24 +23,12 @@ def get_json_body_for_inlined_request(
             for property in properties:
                 property_name = property.name
                 possible_literal_value = (
-                    context.get_literal_value(property.raw_type)
-                    if property.raw_type is not None
-                    else None
+                    context.get_literal_value(property.raw_type) if property.raw_type is not None else None
                 )
-                if (
-                    possible_literal_value is not None
-                    and type(possible_literal_value) is str
-                ):
-                    writer.write_line(
-                        f'"{property.raw_name}": "{possible_literal_value}",'
-                    )
-                elif (
-                    possible_literal_value is not None
-                    and type(possible_literal_value) is bool
-                ):
-                    writer.write_line(
-                        f'"{property.raw_name}": {str(possible_literal_value).lower()},'
-                    )
+                if possible_literal_value is not None and type(possible_literal_value) is str:
+                    writer.write_line(f'"{property.raw_name}": "{possible_literal_value}",')
+                elif possible_literal_value is not None and type(possible_literal_value) is bool:
+                    writer.write_line(f'"{property.raw_name}": {str(possible_literal_value).lower()},')
                 else:
                     writer.write(f'"{property.raw_name}": ')
                     if (
@@ -52,9 +40,7 @@ def get_json_body_for_inlined_request(
                         and can_tr_be_fern_model(property.raw_type, context.get_types())
                     ):
                         # We don't need any optional wrappings for the coercion here.
-                        unwrapped_tr = context.unwrap_optional_type_reference(
-                            property.raw_type
-                        )
+                        unwrapped_tr = context.unwrap_optional_type_reference(property.raw_type)
                         type_hint = context.pydantic_generator_context.get_type_hint_for_type_reference(
                             unwrapped_tr,
                             in_endpoint=True,
@@ -65,9 +51,7 @@ def get_json_body_for_inlined_request(
                                 object_=AST.Expression(property_name),
                                 annotation=type_hint,
                             )
-                            if can_tr_be_fern_model(
-                                property.raw_type, context.get_types()
-                            )
+                            if can_tr_be_fern_model(property.raw_type, context.get_types())
                             else AST.Expression(property_name)
                         )
                         writer.write_node(reference)

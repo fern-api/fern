@@ -59,23 +59,15 @@ class WebsocketConnectMethodGenerator:
         self._client_wrapper_member_name = client_wrapper_member_name
         self._is_async = is_async
 
-        self._named_parameters_raw = self._get_websocket_named_parameters(
-            websocket=self._websocket
-        )
+        self._named_parameters_raw = self._get_websocket_named_parameters(websocket=self._websocket)
 
         self._path_parameter_names: Dict[str, str] = dict()
-        _named_parameter_names: List[str] = [
-            param.name for param in self._named_parameters_raw
-        ]
+        _named_parameter_names: List[str] = [param.name for param in self._named_parameters_raw]
         for path_parameter in self._websocket.path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
-                name = self.deconflict_parameter_name(
-                    get_parameter_name(path_parameter.name), _named_parameter_names
-                )
+                name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
                 _named_parameter_names.append(name)
-                self._path_parameter_names[get_parameter_name(path_parameter.name)] = (
-                    name
-                )
+                self._path_parameter_names[get_parameter_name(path_parameter.name)] = name
 
     def generate(self) -> GeneratedConnectMethod:
         unnamed_parameters = self._get_websocket_path_parameters()
@@ -95,11 +87,7 @@ class WebsocketConnectMethodGenerator:
                 named_parameters=named_parameters,
                 return_type=self._get_websocket_return_type(),
             ),
-            decorators=[
-                decorator
-                for decorator in [self._get_decorator()]
-                if decorator is not None
-            ],
+            decorators=[decorator for decorator in [self._get_decorator()] if decorator is not None],
             body=(
                 self._create_websocket_body_writer(
                     websocket=self._websocket,
@@ -124,14 +112,10 @@ class WebsocketConnectMethodGenerator:
             reference = self._context.get_async_socket_client_class_reference_for_subpackage_service(
                 subpackage_id=self._subpackage_id
             )
-            return AST.TypeHint.async_iterator(
-                wrapped_type=AST.TypeHint(type=reference)
-            )
+            return AST.TypeHint.async_iterator(wrapped_type=AST.TypeHint(type=reference))
         else:
-            reference = (
-                self._context.get_socket_client_class_reference_for_subpackage_service(
-                    subpackage_id=self._subpackage_id
-                )
+            reference = self._context.get_socket_client_class_reference_for_subpackage_service(
+                subpackage_id=self._subpackage_id
             )
             return AST.TypeHint.iterator(wrapped_type=AST.TypeHint(type=reference))
 
@@ -144,9 +128,7 @@ class WebsocketConnectMethodGenerator:
         parameters: List[AST.FunctionParameter] = []
         for path_parameter in self._websocket.path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
-                name = self._path_parameter_names[
-                    get_parameter_name(path_parameter.name)
-                ]
+                name = self._path_parameter_names[get_parameter_name(path_parameter.name)]
                 parameters.append(
                     AST.FunctionParameter(
                         name=name,
@@ -175,9 +157,7 @@ class WebsocketConnectMethodGenerator:
                     AST.NamedFunctionParameter(
                         name=get_parameter_name(query_parameter.name.name),
                         docs=query_parameter.docs,
-                        type_hint=self._get_typehint_for_query_param(
-                            query_parameter, query_parameter_type_hint
-                        ),
+                        type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
                         initializer=self._context.pydantic_generator_context.get_initializer_for_type_reference(
                             query_parameter.value_type
                         ),
@@ -200,9 +180,7 @@ class WebsocketConnectMethodGenerator:
                             AST.Expression(
                                 AST.FunctionInvocation(
                                     function_definition=AST.Reference(
-                                        import_=AST.ReferenceImport(
-                                            module=AST.Module.built_in(("os",))
-                                        ),
+                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
                                         qualified_name_excluding_import=("getenv",),
                                     ),
                                     args=[AST.Expression(f'"{header.env}"')],
@@ -229,9 +207,7 @@ class WebsocketConnectMethodGenerator:
                 ),
                 docs="Request-specific configuration.",
                 type_hint=AST.TypeHint.optional(
-                    AST.TypeHint(
-                        self._context.core_utilities.get_reference_to_request_options()
-                    )
+                    AST.TypeHint(self._context.core_utilities.get_reference_to_request_options())
                 ),
             ),
         )
@@ -243,9 +219,7 @@ class WebsocketConnectMethodGenerator:
 
         for path_parameter in self._websocket.path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
-                name = self._path_parameter_names[
-                    get_parameter_name(path_parameter.name)
-                ]
+                name = self._path_parameter_names[get_parameter_name(path_parameter.name)]
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=name,
@@ -266,9 +240,7 @@ class WebsocketConnectMethodGenerator:
                     AST.NamedFunctionParameter(
                         name=get_parameter_name(query_parameter.name.name),
                         docs=query_parameter.docs,
-                        type_hint=self._get_typehint_for_query_param(
-                            query_parameter, query_parameter_type_hint
-                        ),
+                        type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
                         initializer=self._context.pydantic_generator_context.get_initializer_for_type_reference(
                             query_parameter.value_type
                         ),
@@ -291,36 +263,23 @@ class WebsocketConnectMethodGenerator:
         parameters: List[AST.NamedFunctionParameter],
     ) -> AST.CodeWriter:
         def write(writer: AST.NodeWriter) -> None:
-            environment_url = self._get_multiple_base_url_environment_as_string(
-                websocket=websocket
-            )
+            environment_url = self._get_multiple_base_url_environment_as_string(websocket=websocket)
             url_prefix = (
                 environment_url
                 if environment_url
                 else f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_BASE_URL_METHOD_NAME}()"
             )
-            writer.write_line(
-                f'{self.WS_URL_VARIABLE} = {url_prefix} + "{websocket.path.head}"'
-            )
+            writer.write_line(f'{self.WS_URL_VARIABLE} = {url_prefix} + "{websocket.path.head}"')
             if len(parameters) > 0:
                 writer.write("query_params = ")
                 writer.write_node(HttpX.query_params())
                 writer.write_line()
-                query_params_expr = self._build_query_parameters(
-                    channel=websocket, parent_writer=writer
-                )
+                query_params_expr = self._build_query_parameters(channel=websocket, parent_writer=writer)
                 if query_params_expr is not None:
                     writer.write_node(query_params_expr)
-                writer.write_line(
-                    f"{self.WS_URL_VARIABLE} = {self.WS_URL_VARIABLE} + f"
-                    + "'?{query_params}'"
-                )
-            writer.write_line(
-                f"headers = {self._get_client_wrapper_headers_expression()}"
-            )
-            headers_expr = self._extend_headers_with_websocket_headers(
-                websocket=websocket
-            )
+                writer.write_line(f"{self.WS_URL_VARIABLE} = {self.WS_URL_VARIABLE} + f" + "'?{query_params}'")
+            writer.write_line(f"headers = {self._get_client_wrapper_headers_expression()}")
+            headers_expr = self._extend_headers_with_websocket_headers(websocket=websocket)
             if websocket.headers and headers_expr is not None:
                 writer.write_node(headers_expr)
 
@@ -350,9 +309,7 @@ class WebsocketConnectMethodGenerator:
                     AST.WithStatement(
                         context_managers=[
                             AST.WithContextManager(
-                                expression=Websockets.async_connect(
-                                    url=self.WS_URL_VARIABLE, headers="headers"
-                                ),
+                                expression=Websockets.async_connect(url=self.WS_URL_VARIABLE, headers="headers"),
                                 as_variable="protocol",
                             )
                         ],
@@ -372,9 +329,7 @@ class WebsocketConnectMethodGenerator:
                     AST.WithStatement(
                         context_managers=[
                             AST.WithContextManager(
-                                expression=Websockets.sync_connect(
-                                    url=self.WS_URL_VARIABLE, headers="headers"
-                                ),
+                                expression=Websockets.sync_connect(url=self.WS_URL_VARIABLE, headers="headers"),
                                 as_variable="protocol",
                             )
                         ],
@@ -396,9 +351,7 @@ class WebsocketConnectMethodGenerator:
                     handlers=[
                         AST.ExceptHandler(
                             exception_type=AST.Expression(
-                                AST.ReferenceNode(
-                                    reference=Websockets.get_invalid_status_code_exception()
-                                ),
+                                AST.ReferenceNode(reference=Websockets.get_invalid_status_code_exception()),
                             ),
                             name="exc",
                             body=[
@@ -410,21 +363,15 @@ class WebsocketConnectMethodGenerator:
                                 AST.ConditionalTree(
                                     conditions=[
                                         AST.IfConditionLeaf(
-                                            condition=AST.Expression(
-                                                "status_code == 401"
-                                            ),
+                                            condition=AST.Expression("status_code == 401"),
                                             code=[
                                                 AST.RaiseStatement(
                                                     exception=self._context.core_utilities.instantiate_api_error(
-                                                        headers=AST.Expression(
-                                                            "headers"
-                                                        ),
+                                                        headers=AST.Expression("headers"),
                                                         body=AST.Expression(
                                                             '"Websocket initialized with invalid credentials."'
                                                         ),
-                                                        status_code=AST.Expression(
-                                                            "status_code"
-                                                        ),
+                                                        status_code=AST.Expression("status_code"),
                                                     )
                                                 )
                                             ],
@@ -457,11 +404,7 @@ class WebsocketConnectMethodGenerator:
         named_parameters: List[AST.NamedFunctionParameter],
         path_parameters: List[ir_types.PathParameter],
     ) -> Optional[AST.CodeWriter]:
-        if (
-            websocket.docs is None
-            and len(named_parameters) == 0
-            and len(path_parameters) == 0
-        ):
+        if websocket.docs is None and len(named_parameters) == 0 and len(path_parameters) == 0:
             return None
 
         # Consolidate the named parameters and path parameters in a single list.
@@ -507,16 +450,10 @@ class WebsocketConnectMethodGenerator:
             components += [package.fern_filepath.file]
         if len(components) == 0:
             return ""
-        return (
-            ".".join([component.snake_case.safe_name for component in components]) + "."
-        )
+        return ".".join([component.snake_case.safe_name for component in components]) + "."
 
-    def _named_parameters_have_docs(
-        self, named_parameters: List[AST.NamedFunctionParameter]
-    ) -> bool:
-        return named_parameters is not None and any(
-            param.docs is not None for param in named_parameters
-        )
+    def _named_parameters_have_docs(self, named_parameters: List[AST.NamedFunctionParameter]) -> bool:
+        return named_parameters is not None and any(param.docs is not None for param in named_parameters)
 
     def _named_parameters_from_path_parameters(
         self, path_parameters: List[ir_types.PathParameter]
@@ -524,9 +461,7 @@ class WebsocketConnectMethodGenerator:
         named_parameters: List[AST.NamedFunctionParameter] = []
         for path_parameter in path_parameters:
             if not self._is_type_literal(path_parameter.value_type):
-                name = self._path_parameter_names[
-                    get_parameter_name(path_parameter.name)
-                ]
+                name = self._path_parameter_names[get_parameter_name(path_parameter.name)]
                 named_parameters.append(
                     AST.NamedFunctionParameter(
                         name=name,
@@ -539,9 +474,7 @@ class WebsocketConnectMethodGenerator:
                 )
         return named_parameters
 
-    def _get_path_for_websocket(
-        self, websocket: ir_types.WebSocketChannel
-    ) -> AST.Expression:
+    def _get_path_for_websocket(self, websocket: ir_types.WebSocketChannel) -> AST.Expression:
         head = websocket.path.head.lstrip("/")
 
         if len(websocket.path.parts) == 0:
@@ -552,9 +485,7 @@ class WebsocketConnectMethodGenerator:
             writer.write(head)
             for i, part in enumerate(websocket.path.parts):
                 parameter_obj = websocket.path_parameters[i]
-                possible_path_part_literal = self._context.get_literal_value(
-                    parameter_obj.value_type
-                )
+                possible_path_part_literal = self._context.get_literal_value(parameter_obj.value_type)
                 if possible_path_part_literal is not None:
                     writer.write_node(AST.Expression(f"{possible_path_part_literal}"))
                 else:
@@ -564,9 +495,7 @@ class WebsocketConnectMethodGenerator:
                             path_parameter_name=part.path_parameter,
                         )
                     )
-                    if (
-                        self._context.custom_config.pydantic_config.use_pydantic_field_aliases
-                    ):
+                    if self._context.custom_config.pydantic_config.use_pydantic_field_aliases:
                         parameter = self.convert_and_respect_annotation_metadata_raw(
                             context=self._context,
                             object_=parameter,
@@ -596,16 +525,12 @@ class WebsocketConnectMethodGenerator:
         path_parameter_name: str,
     ) -> str:
         for websocket_path_parameter in websocket.path_parameters:
-            websocket_path_parameter_name = get_parameter_name(
-                websocket_path_parameter.name
-            )
+            websocket_path_parameter_name = get_parameter_name(websocket_path_parameter.name)
             if websocket_path_parameter_name == path_parameter_name:
                 return self._path_parameter_names[websocket_path_parameter_name]
         raise RuntimeError("Path parameter does not exist: " + path_parameter_name)
 
-    def _unwrap_container_types(
-        self, type_reference: ir_types.TypeReference
-    ) -> Optional[ir_types.TypeReference]:
+    def _unwrap_container_types(self, type_reference: ir_types.TypeReference) -> Optional[ir_types.TypeReference]:
         unwrapped_type: Union[ir_types.TypeReference, None] = type_reference
         maybe_wrapped_type: Union[ir_types.TypeReference, None] = type_reference
         if maybe_wrapped_type is not None:
@@ -632,9 +557,7 @@ class WebsocketConnectMethodGenerator:
             )
         else:
             writer.write_line(
-                self._context.get_socket_client_class_name_for_subpackage_service(
-                    subpackage_id=self._subpackage_id
-                )
+                self._context.get_socket_client_class_name_for_subpackage_service(subpackage_id=self._subpackage_id)
             )
 
     def _write_docs(self, writer: NodeWriter, docs: str) -> None:
@@ -645,26 +568,20 @@ class WebsocketConnectMethodGenerator:
                 if i < len(split) - 1:
                     writer.write_line()
 
-    def _get_reference_to_query_parameter(
-        self, query_parameter: ir_types.QueryParameter
-    ) -> AST.Expression:
+    def _get_reference_to_query_parameter(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
         parameter_name = get_parameter_name(query_parameter.name.name)
         reference = AST.Expression(parameter_name)
 
         if self._is_datetime(query_parameter.value_type, allow_optional=True):
             reference = self._context.core_utilities.serialize_datetime(reference)
 
-            is_optional = not self._is_datetime(
-                query_parameter.value_type, allow_optional=False
-            )
+            is_optional = not self._is_datetime(query_parameter.value_type, allow_optional=False)
             if is_optional:
                 existing_reference = reference
 
                 def write_ternary(writer: AST.NodeWriter) -> None:
                     writer.write_node(existing_reference)
-                    writer.write(
-                        f" if {get_parameter_name(query_parameter.name.name)} is not None else None"
-                    )
+                    writer.write(f" if {get_parameter_name(query_parameter.name.name)} is not None else None")
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
 
@@ -678,36 +595,25 @@ class WebsocketConnectMethodGenerator:
 
             reference = AST.Expression(AST.CodeWriter(write_strftime))
 
-            is_optional = not self._is_date(
-                query_parameter.value_type, allow_optional=False
-            )
+            is_optional = not self._is_date(query_parameter.value_type, allow_optional=False)
             if is_optional:
                 existing_reference2 = reference
 
                 def write_ternary(writer: AST.NodeWriter) -> None:
                     writer.write_node(existing_reference2)
-                    writer.write(
-                        f" if {get_parameter_name(query_parameter.name.name)} is not None else None"
-                    )
+                    writer.write(f" if {get_parameter_name(query_parameter.name.name)} is not None else None")
 
                 reference = AST.Expression(AST.CodeWriter(write_ternary))
 
-        elif (
-            self._context.custom_config.pydantic_config.use_typeddict_requests
-            and can_tr_be_fern_model(
-                query_parameter.value_type, self._context.get_types()
-            )
+        elif self._context.custom_config.pydantic_config.use_typeddict_requests and can_tr_be_fern_model(
+            query_parameter.value_type, self._context.get_types()
         ):
-            unwrapped_tr = self._context.unwrap_optional_type_reference(
-                query_parameter.value_type
-            )
+            unwrapped_tr = self._context.unwrap_optional_type_reference(query_parameter.value_type)
             type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 unwrapped_tr, in_endpoint=True, for_typeddict=True
             )
-            reference = (
-                self._context.core_utilities.convert_and_respect_annotation_metadata(
-                    object_=reference, annotation=type_hint
-                )
+            reference = self._context.core_utilities.convert_and_respect_annotation_metadata(
+                object_=reference, annotation=type_hint
             )
 
         return self.convert_and_respect_annotation_metadata_raw(
@@ -716,21 +622,15 @@ class WebsocketConnectMethodGenerator:
             type_reference=query_parameter.value_type,
         )
 
-    def _get_multiple_base_url_environment_as_string(
-        self, *, websocket: ir_types.WebSocketChannel
-    ) -> Optional[str]:
+    def _get_multiple_base_url_environment_as_string(self, *, websocket: ir_types.WebSocketChannel) -> Optional[str]:
         if self._context.ir.environments is not None:
-            environments_as_union = (
-                self._context.ir.environments.environments.get_as_union()
-            )
+            environments_as_union = self._context.ir.environments.environments.get_as_union()
             if environments_as_union.type == "multipleBaseUrls":
                 base_url = websocket.base_url
                 if base_url is None:
                     raise RuntimeError("Channel is missing base_url")
                 url_reference = get_base_url_property_name(
-                    get_base_url(
-                        environments=environments_as_union, base_url_id=base_url
-                    )
+                    get_base_url(environments=environments_as_union, base_url_id=base_url)
                 )
                 return f"self.{self._client_wrapper_member_name}.{ClientWrapperGenerator.GET_ENVIRONMENT_METHOD_NAME}().{url_reference}"
         return None  # single base URL or no environment
@@ -754,9 +654,7 @@ class WebsocketConnectMethodGenerator:
                         AST.Expression(f'"{literal_header_value}"'),
                     )
                 )
-            elif (
-                literal_header_value is not None and type(literal_header_value) is bool
-            ):
+            elif literal_header_value is not None and type(literal_header_value) is bool:
                 headers.append(
                     (
                         header.name.wire_value,
@@ -787,17 +685,11 @@ class WebsocketConnectMethodGenerator:
 
         return AST.Expression(AST.CodeWriter(write_headers_dict))
 
-    def _get_query_parameter_reference(
-        self, query_parameter: ir_types.QueryParameter
-    ) -> AST.Expression:
-        possible_query_literal = self._context.get_literal_value(
-            query_parameter.value_type
-        )
+    def _get_query_parameter_reference(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
+        possible_query_literal = self._context.get_literal_value(query_parameter.value_type)
         if possible_query_literal is not None and type(possible_query_literal) is str:
             return AST.Expression(f'"{possible_query_literal}"')
-        elif (
-            possible_query_literal is not None and type(possible_query_literal) is bool
-        ):
+        elif possible_query_literal is not None and type(possible_query_literal) is bool:
             return AST.Expression(f'"{str(possible_query_literal).lower()}"')
         return self._get_reference_to_query_parameter(query_parameter)
 
@@ -861,9 +753,7 @@ class WebsocketConnectMethodGenerator:
             allow_enum=False,
         )
 
-    def _is_httpx_primitive_data(
-        self, type_reference: ir_types.TypeReference, *, allow_optional: bool
-    ) -> bool:
+    def _is_httpx_primitive_data(self, type_reference: ir_types.TypeReference, *, allow_optional: bool) -> bool:
         return self._does_type_reference_match_primitives(
             type_reference,
             expected=HTTPX_PRIMITIVE_DATA_TYPES,
@@ -880,11 +770,7 @@ class WebsocketConnectMethodGenerator:
         allow_enum: bool,
     ) -> bool:
         def visit_named_type(type_name: ir_types.NamedType) -> bool:
-            type_declaration = (
-                self._context.pydantic_generator_context.get_declaration_for_type_id(
-                    type_name.type_id
-                )
-            )
+            type_declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(type_name.type_id)
             return type_declaration.shape.visit(
                 alias=lambda alias: self._does_type_reference_match_primitives(
                     alias.alias_of,
@@ -995,9 +881,7 @@ class WebsocketConnectMethodGenerator:
         type_hint = context.pydantic_generator_context.get_type_hint_for_type_reference(
             unwrapped_tr, in_endpoint=True, for_typeddict=True
         )
-        return context.core_utilities.convert_and_respect_annotation_metadata(
-            object_=object_, annotation=type_hint
-        )
+        return context.core_utilities.convert_and_respect_annotation_metadata(object_=object_, annotation=type_hint)
 
 
 def get_websocket_name(endpoint: ir_types.WebSocketChannel) -> str:
