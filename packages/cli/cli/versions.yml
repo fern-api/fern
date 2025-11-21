@@ -3,7 +3,7 @@
 - changelogEntry:
     - summary: |
         Add messaging about AI example generation to the CLI.
-      type: feat
+      type: fix
   irVersion: 61
   createdAt: "2025-11-20"
   version: 2.2.2
