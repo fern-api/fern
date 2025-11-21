@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
+import { GithubSelfhostedMode } from "./GithubSelfhostedMode";
 import { GithubLicenseSchema } from "../../license/types/GithubLicenseSchema";
 
 export const GithubSelfhostedSchema: core.serialization.ObjectSchema<
@@ -13,7 +14,8 @@ export const GithubSelfhostedSchema: core.serialization.ObjectSchema<
 > = core.serialization.object({
     uri: core.serialization.string(),
     token: core.serialization.string(),
-    mode: core.serialization.stringLiteral("pull-request").optional(),
+    mode: GithubSelfhostedMode.optional(),
+    branch: core.serialization.string().optional(),
     license: GithubLicenseSchema.optional(),
 });
 
@@ -21,7 +23,8 @@ export declare namespace GithubSelfhostedSchema {
     export interface Raw {
         uri: string;
         token: string;
-        mode?: "pull-request" | null;
+        mode?: GithubSelfhostedMode.Raw | null;
+        branch?: string | null;
         license?: GithubLicenseSchema.Raw | null;
     }
 }
