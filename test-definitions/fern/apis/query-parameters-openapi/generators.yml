@@ -8,8 +8,7 @@ groups:
     - name: fernapi/fern-php-sdk
       version: latest
       ir-version: v61
-      output:
-        location: github
-        mode: push
+      github:
+        token: ${GITHUB_TOKEN}
         uri: https://github.com/fern-api/php-sdk-tests
-        branch: query-parameters-openapi
+        # branch: query-parameters-openapi
