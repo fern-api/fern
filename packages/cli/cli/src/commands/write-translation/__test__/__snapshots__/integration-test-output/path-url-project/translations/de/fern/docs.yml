@@ -1,0 +1,15 @@
+instances:
+  - url: https://example-de.docs.buildwithfern.com/de
+    custom-domain: de.custom.example.com/de/api
+languages:
+  - en
+  - de
+  - es
+title: Path URL Test Documentation
+navigation:
+  - page: Welcome
+    path: ./welcome.md
+    slug: welcome
+settings:
+  language: de
+  search-text: Suchen

@@ -3,11 +3,21 @@
 module Seed
   module Inlined
     class Client
-      # @return [Seed::Inlined::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Inlined::Types::SendLiteralsInlinedRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
         _body_prop_names = %i[prompt context query temperature stream aliased_context maybe_context object_with_literal]

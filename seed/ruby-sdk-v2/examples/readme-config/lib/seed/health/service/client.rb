@@ -4,12 +4,23 @@ module Seed
   module Health
     module Service
       class Client
-        # @return [Seed::Health::Service::Client]
+        # @param client [Seed::Internal::Http::RawClient]
+        #
+        # @return [void]
         def initialize(client:)
           @client = client
         end
 
         # This endpoint checks the health of a resource.
+        #
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String] :id
         #
         # @return [untyped]
         def check(request_options: {}, **params)
@@ -32,7 +43,15 @@ module Seed
 
         # This endpoint checks the health of the service.
         #
-        # @return [bool]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
+        # @return [Boolean]
         def ping(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],

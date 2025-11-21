@@ -5,7 +5,7 @@ groups:
       - name: fernapi/fern-go-sdk
         config:
           module:
-            path: github.com/fern-api/test-remote-local-sdk
+            path: github.com/fern-api/empty
         version: 1.16.0
         github:
           repository: fern-api/empty
@@ -15,7 +15,7 @@ groups:
       - name: fernapi/fern-go-sdk
         config:
           module:
-            path: github.com/fern-api/test-remote-local-sdk
+            path: github.com/fern-api/empty
         version: 1.16.0
         github:
           uri: fern-api/empty

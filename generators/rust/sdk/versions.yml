@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.13.0
+  createdAt: "2025-11-19"
+  changelogEntry:
+    - type: feat
+      summary: |
+        enable custom Cargo features and conditional dependency management
+  irVersion: 61
+
 - version: 0.12.1
   createdAt: "2025-11-19"
   changelogEntry:

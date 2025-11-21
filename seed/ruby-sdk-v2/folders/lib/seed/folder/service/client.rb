@@ -4,11 +4,21 @@ module Seed
   module Folder
     module Service
       class Client
-        # @return [Seed::Folder::Service::Client]
+        # @param client [Seed::Internal::Http::RawClient]
+        #
+        # @return [void]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
         # @return [untyped]
         def endpoint(request_options: {}, **_params)
           _request = Seed::Internal::JSON::Request.new(
@@ -28,6 +38,14 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
         # @return [untyped]
         def unknown_request(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(

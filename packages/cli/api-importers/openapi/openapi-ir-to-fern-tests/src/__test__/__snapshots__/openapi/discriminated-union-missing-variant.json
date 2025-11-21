@@ -1,0 +1,312 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "changeConnectorStatus": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "name": "aws_example",
+                  "request": {
+                    "compute_properties": {
+                      "compute_type": "AWS",
+                    },
+                    "deployment_metadata": {
+                      "connector_type": "AWS",
+                    },
+                  },
+                  "response": {
+                    "body": {
+                      "compute_properties": {
+                        "compute_type": "AWS",
+                      },
+                      "deployment_metadata": {
+                        "connector_type": "AWS",
+                      },
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/connectors",
+              "request": {
+                "body": "ConnectorRequest",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "ConnectorResponse",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "ApiAwsDeploymentMetadata": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "connector_type": "ApiAwsDeploymentMetadataConnectorType",
+              "region": "string",
+              "vpc_id": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ApiAwsDeploymentMetadataConnectorType": {
+            "enum": [
+              "AWS",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ApiAzureDeploymentMetadata": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "connector_type": "ApiAzureDeploymentMetadataConnectorType",
+              "resource_group": "string",
+              "subscription_id": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ApiAzureDeploymentMetadataConnectorType": {
+            "enum": [
+              "AZURE",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ApiComputeConnectorPropertiesAws": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "account_id": "string",
+              "compute_type": "ApiComputeConnectorPropertiesAwsComputeType",
+              "credentials_secret_arn": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ApiComputeConnectorPropertiesAwsComputeType": {
+            "enum": [
+              "AWS",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ApiComputeConnectorPropertiesAzure": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "compute_type": "ApiComputeConnectorPropertiesAzureComputeType",
+              "resource_group": "string",
+              "subscription_id": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ApiComputeConnectorPropertiesAzureComputeType": {
+            "enum": [
+              "AZURE",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConnectorRequest": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "compute_properties": "ConnectorRequestComputeProperties",
+              "deployment_metadata": "ConnectorRequestDeploymentMetadata",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "ConnectorRequestComputeProperties": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": "compute_type",
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "AWS": "unknown",
+              "AZURE": "unknown",
+            },
+          },
+          "ConnectorRequestDeploymentMetadata": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": "connector_type",
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "AWS": "unknown",
+              "AZURE": "unknown",
+            },
+          },
+          "ConnectorResponse": "ConnectorRequest",
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    changeConnectorStatus:
+      path: /connectors
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: ConnectorRequest
+        content-type: application/json
+      response:
+        docs: Success
+        type: ConnectorResponse
+        status-code: 200
+      examples:
+        - name: aws_example
+          request:
+            compute_properties:
+              compute_type: AWS
+            deployment_metadata:
+              connector_type: AWS
+          response:
+            body:
+              compute_properties:
+                compute_type: AWS
+              deployment_metadata:
+                connector_type: AWS
+  source:
+    openapi: ../openapi.yml
+types:
+  ApiComputeConnectorPropertiesAwsComputeType:
+    enum:
+      - AWS
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  ApiComputeConnectorPropertiesAws:
+    properties:
+      compute_type: ApiComputeConnectorPropertiesAwsComputeType
+      credentials_secret_arn: string
+      account_id: string
+    source:
+      openapi: ../openapi.yml
+  ApiComputeConnectorPropertiesAzureComputeType:
+    enum:
+      - AZURE
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  ApiComputeConnectorPropertiesAzure:
+    properties:
+      compute_type: ApiComputeConnectorPropertiesAzureComputeType
+      subscription_id: string
+      resource_group: string
+    source:
+      openapi: ../openapi.yml
+  ApiAwsDeploymentMetadataConnectorType:
+    enum:
+      - AWS
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  ApiAwsDeploymentMetadata:
+    properties:
+      connector_type: ApiAwsDeploymentMetadataConnectorType
+      region: string
+      vpc_id: string
+    source:
+      openapi: ../openapi.yml
+  ApiAzureDeploymentMetadataConnectorType:
+    enum:
+      - AZURE
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  ApiAzureDeploymentMetadata:
+    properties:
+      connector_type: ApiAzureDeploymentMetadataConnectorType
+      subscription_id: string
+      resource_group: string
+    source:
+      openapi: ../openapi.yml
+  ConnectorRequestComputeProperties:
+    discriminant: compute_type
+    base-properties: {}
+    union:
+      AWS: unknown
+      AZURE: unknown
+    source:
+      openapi: ../openapi.yml
+  ConnectorRequestDeploymentMetadata:
+    discriminant: connector_type
+    base-properties: {}
+    union:
+      AWS: unknown
+      AZURE: unknown
+    source:
+      openapi: ../openapi.yml
+  ConnectorRequest:
+    properties:
+      compute_properties: ConnectorRequestComputeProperties
+      deployment_metadata: ConnectorRequestDeploymentMetadata
+    source:
+      openapi: ../openapi.yml
+  ConnectorResponse: ConnectorRequest
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Discriminated Union with Missing Discriminant Properties",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Discriminated Union with Missing Discriminant Properties
+",
+  },
+}

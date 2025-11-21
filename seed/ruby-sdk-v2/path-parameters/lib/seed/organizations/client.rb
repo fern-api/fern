@@ -3,11 +3,23 @@
 module Seed
   module Organizations
     class Client
-      # @return [Seed::Organizations::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :tenant_id
+      # @option params [String] :organization_id
+      #
       # @return [Seed::Organizations::Types::Organization]
       def get_organization(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -29,6 +41,17 @@ module Seed
         end
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :tenant_id
+      # @option params [String] :organization_id
+      # @option params [String] :user_id
+      #
       # @return [Seed::User::Types::User]
       def get_organization_user(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -50,6 +73,17 @@ module Seed
         end
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :tenant_id
+      # @option params [String] :organization_id
+      # @option params [Integer, nil] :limit
+      #
       # @return [Array[Seed::Organizations::Types::Organization]]
       def search_organizations(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)

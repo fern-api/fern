@@ -3,11 +3,22 @@
 module Seed
   module Bigunion
     class Client
-      # @return [Seed::Bigunion::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      #
       # @return [Seed::Bigunion::Types::BigUnion]
       def get(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -29,7 +40,15 @@ module Seed
         end
       end
 
-      # @return [bool]
+      # @param request_options [Hash]
+      # @param params [Seed::Bigunion::Types::BigUnion]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @return [Boolean]
       def update(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -49,7 +68,15 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @return [Hash[String, bool]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
+      # @return [Hash[String, Boolean]]
       def update_many(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

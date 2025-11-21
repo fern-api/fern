@@ -35,7 +35,7 @@ impl TestGroupClient {
                 Some(serde_json::to_value(&request.body).unwrap_or_default()),
                 QueryBuilder::new()
                     .serialize("query_param_object", request.query_param_object.clone())
-                    .int("query_param_integer", request.query_param_integer.clone())
+                    .serialize("query_param_integer", request.query_param_integer.clone())
                     .build(),
                 options,
             )

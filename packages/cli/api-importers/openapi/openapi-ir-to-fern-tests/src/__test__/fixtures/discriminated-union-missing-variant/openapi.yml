@@ -1,0 +1,128 @@
+openapi: 3.0.0
+info:
+  title: Discriminated Union with Missing Discriminant Properties
+  version: 1.0.0
+  description: Test case for discriminated union with discriminator mapping references that don't match actual schema names
+
+paths:
+  /connectors:
+    post:
+      operationId: changeConnectorStatus
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ConnectorRequest"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ConnectorResponse"
+              examples:
+                aws_example:
+                  value:
+                    compute_type: "AWS"
+                    connector_type: "AWS"
+                    credentials_secret_arn: "arn:aws:secretsmanager:us-east-1:123456789012:secret:MySecret"
+                    account_id: "123456789012"
+
+components:
+  schemas:
+    # Schemas with API prefix (actual schemas)
+    api_ComputeConnectorPropertiesAWS:
+      type: object
+      properties:
+        compute_type:
+          type: string
+          const: "AWS"
+          enum: ["AWS"]
+        credentials_secret_arn:
+          type: string
+        account_id:
+          type: string
+      required:
+        - compute_type
+        - credentials_secret_arn
+        - account_id
+
+    api_ComputeConnectorPropertiesAzure:
+      type: object
+      properties:
+        compute_type:
+          type: string
+          const: "AZURE"
+          enum: ["AZURE"]
+        subscription_id:
+          type: string
+        resource_group:
+          type: string
+      required:
+        - compute_type
+        - subscription_id
+        - resource_group
+
+    api_AWSDeploymentMetadata:
+      type: object
+      properties:
+        connector_type:
+          type: string
+          const: "AWS"
+          enum: ["AWS"]
+        region:
+          type: string
+        vpc_id:
+          type: string
+      required:
+        - connector_type
+        - region
+        - vpc_id
+
+    api_AzureDeploymentMetadata:
+      type: object
+      properties:
+        connector_type:
+          type: string
+          const: "AZURE"
+          enum: ["AZURE"]
+        subscription_id:
+          type: string
+        resource_group:
+          type: string
+      required:
+        - connector_type
+        - subscription_id
+        - resource_group
+
+    # Main schemas with discriminator mapping mismatches
+    ConnectorRequest:
+      type: object
+      properties:
+        compute_properties:
+          oneOf:
+            - $ref: "#/components/schemas/api_ComputeConnectorPropertiesAWS"
+            - $ref: "#/components/schemas/api_ComputeConnectorPropertiesAzure"
+          discriminator:
+            propertyName: compute_type
+            mapping:
+              # BUG: These references point to schemas without "api_" prefix that don't exist
+              AWS: "#/components/schemas/ComputeConnectorPropertiesAWS"
+              AZURE: "#/components/schemas/ComputeConnectorPropertiesAzure"
+        deployment_metadata:
+          oneOf:
+            - $ref: "#/components/schemas/api_AWSDeploymentMetadata"
+            - $ref: "#/components/schemas/api_AzureDeploymentMetadata"
+          discriminator:
+            propertyName: connector_type
+            mapping:
+              # BUG: These references point to schemas without "api_" prefix that don't exist
+              AWS: "#/components/schemas/AWSDeploymentMetadata"
+              AZURE: "#/components/schemas/AzureDeploymentMetadata"
+      required:
+        - compute_properties
+        - deployment_metadata
+
+    ConnectorResponse:
+      allOf:
+        - $ref: "#/components/schemas/ConnectorRequest"

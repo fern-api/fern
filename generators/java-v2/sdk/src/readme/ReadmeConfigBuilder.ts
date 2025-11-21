@@ -33,10 +33,22 @@ export class ReadmeConfigBuilder {
             }
 
             const addendumForFeature = addendumsByFeatureId[feature.id];
+
+            // Customize description for Pagination when using custom pagination
+            let description = feature.description;
+            if (feature.id === FernGeneratorCli.StructuredFeatureId.Pagination) {
+                const hasCustomPagination = Object.values(context.ir.services).some((service) =>
+                    service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
+                );
+                if (hasCustomPagination) {
+                    description = "Paginated endpoints return a pager that supports navigation in both directions.";
+                }
+            }
+
             features.push({
                 id: feature.id,
                 advanced: feature.advanced,
-                description: feature.description,
+                description,
                 snippets: snippetsForFeature,
                 addendum: addendumForFeature,
                 snippetsAreOptional: false

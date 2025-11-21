@@ -40,16 +40,17 @@ export class FileUploadEndpointRequest extends EndpointRequest {
             writer.writeLine();
             for (const property of this.fileUploadRequest.properties) {
                 if (property.type === "file") {
+                    const snakeCaseName = property.value.key.name.snakeCase.safeName;
                     writer.writeNode(
                         ruby.ifElse({
                             if: {
                                 condition: ruby.codeblock((writer) => {
-                                    writer.write(`params[:${property.value.key.wireValue}]`);
+                                    writer.write(`params[:${snakeCaseName}]`);
                                 }),
                                 thenBody: [
                                     ruby.codeblock((writer) => {
                                         writer.writeLine(
-                                            `body.add_part(params[:${property.value.key.wireValue}].to_form_data_part(name: "${property.value.key.wireValue}"))`
+                                            `body.add_part(params[:${snakeCaseName}].to_form_data_part(name: "${property.value.key.wireValue}"))`
                                         );
                                     })
                                 ]
@@ -57,11 +58,12 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                         })
                     );
                 } else {
+                    const snakeCaseName = property.name.name.snakeCase.safeName;
                     writer.writeNode(
                         ruby.ifElse({
                             if: {
                                 condition: ruby.codeblock((writer) => {
-                                    writer.write(`params[:${property.name.wireValue}]`);
+                                    writer.write(`params[:${snakeCaseName}]`);
                                 }),
                                 thenBody: [
                                     ruby.codeblock((writer) => {
@@ -109,6 +111,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
     }
 
     private getFormDataPartForNonFileProperty(property: FileUploadBodyProperty): ruby.CodeBlock | undefined {
+        const snakeCaseName = property.name.name.snakeCase.safeName;
         switch (property.style) {
             case "json":
                 return ruby.codeblock((writer) => {
@@ -116,11 +119,11 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                     if (property.valueType.type === "named") {
                         writer.writeNode(this.context.getClassReferenceForTypeId(property.valueType.typeId));
                         writer.write(".new(");
-                        writer.write(`params[:${property.name.wireValue}]`);
+                        writer.write(`params[:${snakeCaseName}]`);
                         writer.write(")");
                         writer.write(".to_h");
                     } else {
-                        writer.write(`params[:${property.name.wireValue}]`);
+                        writer.write(`params[:${snakeCaseName}]`);
                     }
                     writer.write(")");
                 });
@@ -128,7 +131,7 @@ export class FileUploadEndpointRequest extends EndpointRequest {
                 return undefined;
         }
         return ruby.codeblock((writer) => {
-            writer.write(`params[:${property.name.wireValue}]`);
+            writer.write(`params[:${snakeCaseName}]`);
         });
     }
 

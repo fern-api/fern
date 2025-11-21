@@ -226,6 +226,7 @@ export async function runLocalGenerationForWorkspace({
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
                     ir: intermediateRepresentation,
+                    whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
                     runner,
                     ai
                 });
@@ -285,6 +286,14 @@ function resolveAbsolutePathToLocalPreview(
 
     return absolutePathToPreview ? join(absolutePathToPreview, RelativeFilePath.of(subfolderName)) : undefined;
 }
+
+function parseCommitMessageForPR(commitMessage: string): { prTitle: string; prBody: string } {
+    const lines = commitMessage.split("\n");
+    const prTitle = lines[0]?.trim() || "SDK Generation";
+    const prBody = lines.slice(1).join("\n").trim() || "Automated SDK generation by Fern";
+    return { prTitle, prBody };
+}
+
 async function postProcessGithubSelfHosted(
     context: TaskContext,
     selfhostedGithubConfig: SelhostedGithubConfig,
@@ -295,11 +304,21 @@ async function postProcessGithubSelfHosted(
         context.logger.debug("Starting GitHub self-hosted flow in directory: " + absolutePathToLocalOutput);
         const repository = ClonedRepository.createAtPath(absolutePathToLocalOutput);
         const now = new Date();
-        const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace(/\..+/, "");
+        const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace("Z", "").replace(".", "_");
         const prBranch = `fern-bot/${formattedDate}`;
         if (selfhostedGithubConfig.mode === "pull-request") {
             context.logger.debug(`Checking out new branch ${prBranch}`);
             await repository.checkout(prBranch);
+        }
+
+        context.logger.debug("Checking for .fernignore file...");
+        const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
+        try {
+            await fs.access(fernignorePath);
+            context.logger.debug(".fernignore already exists");
+        } catch {
+            context.logger.debug("Creating .fernignore file...");
+            await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
         }
 
         context.logger.debug("Committing changes...");
@@ -324,12 +343,14 @@ async function postProcessGithubSelfHosted(
             const { owner, repo } = parsedRepo;
             const head = `${owner}:${prBranch}`;
 
+            const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
+
             try {
                 await octokit.pulls.create({
                     owner,
                     repo,
-                    title: "SDK Generation",
-                    body: "Automated SDK generation by Fern",
+                    title: prTitle,
+                    body: prBody,
                     head,
                     base: baseBranch,
                     draft: false

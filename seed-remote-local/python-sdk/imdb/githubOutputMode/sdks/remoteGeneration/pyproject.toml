@@ -3,7 +3,7 @@ name = "test-remote-local-sdk"
 
 [tool.poetry]
 name = "test-remote-local-sdk"
-version = "0.0.17559"
+version = "7.7.7"
 description = ""
 readme = "README.md"
 authors = []

@@ -3,11 +3,21 @@
 module Seed
   module MultipartForm
     class Client
-      # @return [Seed::MultipartForm::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [void]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [untyped]
       def multipart_form(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -18,22 +28,22 @@ module Seed
             value: params[:color]
           )
         end
-        if params[:maybeColor]
+        if params[:maybe_color]
           body.add(
             name: "maybeColor",
-            value: params[:maybeColor]
+            value: params[:maybe_color]
           )
         end
-        if params[:colorList]
+        if params[:color_list]
           body.add(
             name: "colorList",
-            value: params[:colorList]
+            value: params[:color_list]
           )
         end
-        if params[:maybeColorList]
+        if params[:maybe_color_list]
           body.add(
             name: "maybeColorList",
-            value: params[:maybeColorList]
+            value: params[:maybe_color_list]
           )
         end
 

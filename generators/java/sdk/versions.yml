@@ -1,3 +1,49 @@
+- version: 3.18.4
+  changelogEntry:
+    - summary: |
+        Fix missing @JsonInclude header on certain instances of `OptionalNullable<>`.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.3
+  changelogEntry:
+    - summary: |
+        Fix OptionalNullable compilation errors when collapse-optional-nullable is enabled. Corrected type witness syntax to generate `OptionalNullable.<Type>absent()` and prevented double-wrapping of OptionalNullable types.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.2
+  changelogEntry:
+    - summary: |
+        Fix bugs in 3.17.0's addition of InputStream-based method overloads.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.1
+  changelogEntry:
+    - summary: |
+        Fix bytes response support and snippet generation. Bytes responses now return `byte[]` instead of throwing exceptions. Empty bytes request bodies in snippets now generate valid default arguments.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.0
+  changelogEntry:
+    - summary: |
+        Add support for custom bidirectional pagination. APIs using custom pagination (e.g., HATEOAS links) can configure a custom pager name and receive skeleton classes with bidirectional navigation methods (`nextPage()`, `previousPage()`, `hasNext()`, `hasPrevious()`).
+
+        Configuration:
+        ```yaml
+        customConfig:
+          custom-pager-name: MyCustomPaginator
+        ```
+      type: feat
+  createdAt: "2025-11-19"
+  irVersion: 61
+
 - version: 3.17.1
   changelogEntry:
     - summary: |

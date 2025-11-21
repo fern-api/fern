@@ -41,18 +41,20 @@ public class AsyncRawMultipartFormClient {
                 .newBuilder()
                 .addPathSegments("multipart")
                 .build();
-        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        MultipartBody.Builder multipartBodyBuilder = new MultipartBody.Builder().setType(MultipartBody.FORM);
         try {
-            body.addFormDataPart("color", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getColor()));
+            multipartBodyBuilder.addFormDataPart(
+                    "color", ObjectMappers.JSON_MAPPER.writeValueAsString(request.getColor()));
             if (request.getMaybeColor().isPresent()) {
-                body.addFormDataPart(
+                multipartBodyBuilder.addFormDataPart(
                         "maybeColor",
                         ObjectMappers.JSON_MAPPER.writeValueAsString(
                                 request.getMaybeColor().get()));
             }
             request.getColorList().forEach(item -> {
                 try {
-                    body.addFormDataPart("colorList", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
+                    multipartBodyBuilder.addFormDataPart(
+                            "colorList", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
                 } catch (JsonProcessingException e) {
                     throw new RuntimeException("Failed to write value as JSON", e);
                 }
@@ -60,7 +62,8 @@ public class AsyncRawMultipartFormClient {
             if (request.getMaybeColorList().isPresent()) {
                 request.getMaybeColorList().get().forEach(item -> {
                     try {
-                        body.addFormDataPart("maybeColorList", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
+                        multipartBodyBuilder.addFormDataPart(
+                                "maybeColorList", ObjectMappers.JSON_MAPPER.writeValueAsString(item));
                     } catch (JsonProcessingException e) {
                         throw new RuntimeException("Failed to write value as JSON", e);
                     }
@@ -71,7 +74,7 @@ public class AsyncRawMultipartFormClient {
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
-                .method("POST", body.build())
+                .method("POST", multipartBodyBuilder.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
         OkHttpClient client = clientOptions.httpClient();

@@ -50,7 +50,7 @@ import {
     ts
 } from "ts-morph";
 import { Code, code } from "ts-poet";
-import { AuthProviderInstance, InferredAuthProviderInstance } from "./auth-provider";
+import { AuthProviderInstance, BasicAuthProviderInstance, InferredAuthProviderInstance } from "./auth-provider";
 import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
 import { GeneratedFileUploadEndpointRequest } from "./endpoint-request/GeneratedFileUploadEndpointRequest";
@@ -421,6 +421,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             AuthScheme._visit(authScheme, {
                 basic: (basicAuthScheme) => {
                     this.basicAuthScheme = basicAuthScheme;
+                    this.authProvider = new BasicAuthProviderInstance();
                 },
                 bearer: (bearerAuthScheme) => {
                     this.bearerAuthScheme = bearerAuthScheme;
@@ -813,33 +814,63 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             : undefined
                 }
             ];
-            const statements = code`
-                ${this.getCtorOptionsStatements(context)}
-                ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = ${getTextOfTsNode(
-                    this.authProvider.instantiate({
-                        context,
-                        params: [
+            const authProviderParams =
+                this.inferredAuthScheme != null
+                    ? [
+                          ts.factory.createObjectLiteralExpression(
+                              [
+                                  ts.factory.createPropertyAssignment(
+                                      ts.factory.createIdentifier("client"),
+                                      ts.factory.createThis()
+                                  ),
+                                  ts.factory.createPropertyAssignment(
+                                      ts.factory.createIdentifier("authTokenParameters"),
+                                      ts.factory.createObjectLiteralExpression(
+                                          [
+                                              ts.factory.createSpreadAssignment(
+                                                  ts.factory.createIdentifier("this._options")
+                                              )
+                                          ],
+                                          false
+                                      )
+                                  )
+                              ],
+                              true
+                          )
+                      ]
+                    : this.basicAuthScheme != null
+                      ? [
                             ts.factory.createObjectLiteralExpression(
                                 [
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier("client"),
-                                        ts.factory.createThis()
+                                        ts.factory.createIdentifier(this.basicAuthScheme.username.camelCase.safeName),
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier("this._options"),
+                                            ts.factory.createIdentifier(
+                                                this.getBasicAuthUsernameOptionKey(this.basicAuthScheme)
+                                            )
+                                        )
                                     ),
                                     ts.factory.createPropertyAssignment(
-                                        ts.factory.createIdentifier("authTokenParameters"),
-                                        ts.factory.createObjectLiteralExpression(
-                                            [
-                                                ts.factory.createSpreadAssignment(
-                                                    ts.factory.createIdentifier("this._options")
-                                                )
-                                            ],
-                                            false
+                                        ts.factory.createIdentifier(this.basicAuthScheme.password.camelCase.safeName),
+                                        ts.factory.createPropertyAccessExpression(
+                                            ts.factory.createIdentifier("this._options"),
+                                            ts.factory.createIdentifier(
+                                                this.getBasicAuthPasswordOptionKey(this.basicAuthScheme)
+                                            )
                                         )
                                     )
                                 ],
                                 true
                             )
                         ]
+                      : [];
+            const statements = code`
+                ${this.getCtorOptionsStatements(context)}
+                ${getTextOfTsNode(AuthProviderInstance.getReferenceToField())} = ${getTextOfTsNode(
+                    this.authProvider.instantiate({
+                        context,
+                        params: authProviderParams
                     })
                 )};
             `;
@@ -1100,7 +1131,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 packageResolver: this.packageResolver
             })
         ) {
-            return this.oauthAuthScheme != null || this.bearerAuthScheme != null || this.basicAuthScheme != null;
+            return this.oauthAuthScheme != null || this.bearerAuthScheme != null;
         }
         return false;
     }
@@ -1372,6 +1403,38 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     hasQuestionToken: param.isOptional
                 }))
             );
+        } else if (this.isRoot && this.basicAuthScheme != null) {
+            const hasUsernameEnv = this.basicAuthScheme.usernameEnvVar != null;
+            const hasPasswordEnv = this.basicAuthScheme.passwordEnvVar != null;
+
+            properties.push({
+                name: getPropertyKey(this.getBasicAuthUsernameOptionKey(this.basicAuthScheme)),
+                type: getTextOfTsNode(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        hasUsernameEnv
+                            ? ts.factory.createUnionTypeNode([
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                              ])
+                            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                    )
+                ),
+                hasQuestionToken: hasUsernameEnv
+            });
+            properties.push({
+                name: getPropertyKey(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme)),
+                type: getTextOfTsNode(
+                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        hasPasswordEnv
+                            ? ts.factory.createUnionTypeNode([
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                              ])
+                            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                    )
+                ),
+                hasQuestionToken: hasPasswordEnv
+            });
         }
 
         if (
@@ -1795,211 +1858,70 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             }
         }
 
-        if (this.basicAuthScheme != null) {
-            const usernameExpression =
-                this.basicAuthScheme.usernameEnvVar != null
-                    ? ts.factory.createBinaryExpression(
-                          ts.factory.createParenthesizedExpression(
-                              context.coreUtilities.fetcher.Supplier.get(
-                                  this.getReferenceToOption(this.getBasicAuthUsernameOptionKey(this.basicAuthScheme))
-                              )
-                          ),
-                          ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                          ts.factory.createElementAccessExpression(
-                              ts.factory.createPropertyAccessChain(
-                                  ts.factory.createIdentifier("process"),
-                                  ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                  ts.factory.createIdentifier("env")
-                              ),
-                              ts.factory.createStringLiteral(this.basicAuthScheme.usernameEnvVar)
-                          )
-                      )
-                    : context.coreUtilities.fetcher.Supplier.get(
-                          this.getReferenceToOption(this.getBasicAuthUsernameOptionKey(this.basicAuthScheme))
-                      );
-
-            const passwordExpression =
-                this.basicAuthScheme.passwordEnvVar != null
-                    ? ts.factory.createBinaryExpression(
-                          ts.factory.createParenthesizedExpression(
-                              context.coreUtilities.fetcher.Supplier.get(
-                                  this.getReferenceToOption(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme))
-                              )
-                          ),
-                          ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
-                          ts.factory.createElementAccessExpression(
-                              ts.factory.createPropertyAccessChain(
-                                  ts.factory.createIdentifier("process"),
-                                  ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
-                                  ts.factory.createIdentifier("env")
-                              ),
-                              ts.factory.createStringLiteral(this.basicAuthScheme.passwordEnvVar)
-                          )
-                      )
-                    : context.coreUtilities.fetcher.Supplier.get(
-                          this.getReferenceToOption(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme))
-                      );
-            if (this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
-                if (this.basicAuthScheme.usernameEnvVar != null) {
-                    const USERNAME_VARIABLE_NAME = this.basicAuthScheme.username.camelCase.unsafeName;
-                    statements.push(
-                        ts.factory.createVariableStatement(
-                            undefined,
-                            ts.factory.createVariableDeclarationList(
-                                [
-                                    ts.factory.createVariableDeclaration(
-                                        USERNAME_VARIABLE_NAME,
+        if (this.basicAuthScheme != null && this.authProvider != null) {
+            const AUTH_REQUEST_VAR = "authRequest";
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier(AUTH_REQUEST_VAR),
+                                undefined,
+                                undefined,
+                                ts.factory.createAwaitExpression(
+                                    ts.factory.createCallExpression(
+                                        ts.factory.createPropertyAccessExpression(
+                                            this.getReferenceToAuthProviderOrThrow(),
+                                            ts.factory.createIdentifier("getAuthRequest")
+                                        ),
                                         undefined,
-                                        undefined,
-                                        usernameExpression
+                                        []
                                     )
-                                ],
-                                ts.NodeFlags.Const
-                            )
-                        ),
-                        ts.factory.createIfStatement(
-                            ts.factory.createBinaryExpression(
-                                ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
-                                ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
-                                ts.factory.createNull()
-                            ),
-                            ts.factory.createBlock(
-                                [
-                                    ts.factory.createThrowStatement(
-                                        context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                                            message: ts.factory.createStringLiteral(
-                                                `Please specify a ${USERNAME_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.usernameEnvVar} environment variable`
-                                            ),
-                                            statusCode: undefined,
-                                            responseBody: undefined,
-                                            rawResponse: undefined
-                                        })
-                                    )
-                                ],
-                                true
-                            )
-                        )
-                    );
-                    const PASSWORD_VARIABLE_NAME = this.basicAuthScheme.password.camelCase.unsafeName;
-                    statements.push(
-                        ts.factory.createVariableStatement(
-                            undefined,
-                            ts.factory.createVariableDeclarationList(
-                                [
-                                    ts.factory.createVariableDeclaration(
-                                        PASSWORD_VARIABLE_NAME,
-                                        undefined,
-                                        undefined,
-                                        passwordExpression
-                                    )
-                                ],
-                                ts.NodeFlags.Const
-                            )
-                        ),
-                        ts.factory.createIfStatement(
-                            ts.factory.createBinaryExpression(
-                                ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME),
-                                ts.factory.createToken(ts.SyntaxKind.EqualsEqualsToken),
-                                ts.factory.createNull()
-                            ),
-                            ts.factory.createBlock(
-                                [
-                                    ts.factory.createThrowStatement(
-                                        context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                                            message: ts.factory.createStringLiteral(
-                                                `Please specify a ${PASSWORD_VARIABLE_NAME} by either passing it in to the constructor or initializing a ${this.basicAuthScheme.passwordEnvVar} environment variable`
-                                            ),
-                                            statusCode: undefined,
-                                            responseBody: undefined,
-                                            rawResponse: undefined
-                                        })
-                                    )
-                                ],
-                                true
-                            )
-                        )
-                    );
-                    statements.push(
-                        ts.factory.createReturnStatement(
-                            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                                ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
-                                ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME)
-                            )
-                        )
-                    );
-                } else {
-                    statements.push(
-                        ts.factory.createReturnStatement(
-                            context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                                usernameExpression,
-                                passwordExpression
-                            )
-                        )
-                    );
-                }
-            } else {
-                const USERNAME_VARIABLE_NAME = this.basicAuthScheme.username.camelCase.unsafeName;
-                const PASSWORD_VARIABLE_NAME = this.basicAuthScheme.password.camelCase.unsafeName;
-                statements.push(
-                    ts.factory.createVariableStatement(
-                        undefined,
-                        ts.factory.createVariableDeclarationList(
-                            [
-                                ts.factory.createVariableDeclaration(
-                                    USERNAME_VARIABLE_NAME,
-                                    undefined,
-                                    undefined,
-                                    usernameExpression
                                 )
-                            ],
-                            ts.NodeFlags.Const
-                        )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+
+            statements.push(
+                ts.factory.createVariableStatement(
+                    undefined,
+                    ts.factory.createVariableDeclarationList(
+                        [
+                            ts.factory.createVariableDeclaration(
+                                ts.factory.createIdentifier("authHeader"),
+                                undefined,
+                                undefined,
+                                ts.factory.createElementAccessExpression(
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createIdentifier(AUTH_REQUEST_VAR),
+                                        ts.factory.createIdentifier("headers")
+                                    ),
+                                    ts.factory.createStringLiteral("Authorization")
+                                )
+                            )
+                        ],
+                        ts.NodeFlags.Const
+                    )
+                )
+            );
+
+            statements.push(
+                ts.factory.createIfStatement(
+                    ts.factory.createBinaryExpression(
+                        ts.factory.createIdentifier("authHeader"),
+                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
+                        ts.factory.createNull()
                     ),
-                    ts.factory.createVariableStatement(
-                        undefined,
-                        ts.factory.createVariableDeclarationList(
-                            [
-                                ts.factory.createVariableDeclaration(
-                                    PASSWORD_VARIABLE_NAME,
-                                    undefined,
-                                    undefined,
-                                    passwordExpression
-                                )
-                            ],
-                            ts.NodeFlags.Const
-                        )
+                    ts.factory.createBlock(
+                        [ts.factory.createReturnStatement(ts.factory.createIdentifier("authHeader"))],
+                        true
                     )
-                );
-
-                statements.push(
-                    ts.factory.createIfStatement(
-                        ts.factory.createBinaryExpression(
-                            ts.factory.createBinaryExpression(
-                                ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
-                                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                                ts.factory.createNull()
-                            ),
-                            ts.factory.createToken(ts.SyntaxKind.AmpersandAmpersandToken),
-                            ts.factory.createBinaryExpression(
-                                ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME),
-                                ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                                ts.factory.createNull()
-                            )
-                        ),
-                        ts.factory.createBlock(
-                            [
-                                ts.factory.createReturnStatement(
-                                    context.coreUtilities.auth.BasicAuth.toAuthorizationHeader(
-                                        ts.factory.createIdentifier(USERNAME_VARIABLE_NAME),
-                                        ts.factory.createIdentifier(PASSWORD_VARIABLE_NAME)
-                                    )
-                                )
-                            ],
-                            true
-                        )
-                    )
-                );
-            }
+                )
+            );
         }
 
         if (!this.intermediateRepresentation.sdkConfig.isAuthMandatory) {

@@ -3,8 +3,8 @@
 package api
 
 import (
-	core "github.com/fern-api/test-remote-local-sdk/core"
-	internal "github.com/fern-api/test-remote-local-sdk/internal"
+	core "github.com/fern-api/empty/v7/core"
+	internal "github.com/fern-api/empty/v7/internal"
 )
 
 var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{

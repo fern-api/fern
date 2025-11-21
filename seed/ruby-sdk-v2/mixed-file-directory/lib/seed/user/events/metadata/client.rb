@@ -5,12 +5,23 @@ module Seed
     module Events
       module Metadata
         class Client
-          # @return [Seed::User::Events::Metadata::Client]
+          # @param client [Seed::Internal::Http::RawClient]
+          #
+          # @return [void]
           def initialize(client:)
             @client = client
           end
 
           # Get event metadata.
+          #
+          # @param request_options [Hash]
+          # @param params [Hash]
+          # @option request_options [String] :base_url
+          # @option request_options [Hash{String => Object}] :additional_headers
+          # @option request_options [Hash{String => Object}] :additional_query_parameters
+          # @option request_options [Hash{String => Object}] :additional_body_parameters
+          # @option request_options [Integer] :timeout_in_seconds
+          # @option params [Seed::Types::Id] :id
           #
           # @return [Seed::User::Events::Metadata::Types::Metadata]
           def get_metadata(request_options: {}, **params)

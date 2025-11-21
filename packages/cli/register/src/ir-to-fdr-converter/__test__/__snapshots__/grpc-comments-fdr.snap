@@ -158,6 +158,7 @@
           },
           "response": {
             "description": "OK",
+            "isWildcard": undefined,
             "statusCode": 200,
             "type": {
               "type": "reference",
@@ -172,6 +173,7 @@
             "responses": [
               {
                 "description": "OK",
+                "isWildcard": undefined,
                 "statusCode": 200,
                 "type": {
                   "type": "reference",

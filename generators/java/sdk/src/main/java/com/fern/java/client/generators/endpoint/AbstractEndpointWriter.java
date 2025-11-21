@@ -290,6 +290,11 @@ public abstract class AbstractEndpointWriter {
                     .get(0);
             if (typeNameIsOptional(bodyParameterSpec.type)) {
                 paramNamesWoBody.add("Optional.empty()");
+            } else if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
+                // Handle parameterized types with type witness syntax
+                // E.g., OptionalNullable<SomeType> becomes OptionalNullable.<SomeType>absent()
+                // We use $1T to refer to rawType and $2T to refer to the type argument
+                paramNamesWoBody.add("$1T.<$2T>absent()");
             } else {
                 paramNamesWoBody.add("$T.builder().build()");
             }
@@ -480,20 +485,26 @@ public abstract class AbstractEndpointWriter {
                             httpEndpoint.getMethod().toString(),
                             variables.getOkhttpRequestBodyName());
                     methodBody.addStatement(
-                            "$L.headers($T.of(this.$L.$L($L)))",
+                            "$L.headers($T.of(this.$L.$L(null)))",
                             "_requestBuilder",
                             ClassName.get("okhttp3", "Headers"),
                             clientOptionsField.name,
-                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                            ClientOptionsGenerator.HEADERS_METHOD_NAME);
                     methodBody.addStatement(
                             "$T $L = $L.build()",
                             ClassName.get("okhttp3", "Request"),
                             variables.getOkhttpRequestName(),
                             "_requestBuilder");
 
-                    // Add response parsing
-                    methodBody.add(responseParserGenerator.getResponseParserCodeBlock(baseMethodBuilder));
+                    // Add response parsing without requestOptions check
+                    methodBody.addStatement(
+                            "$T $L = $N.$N()",
+                            ClassName.get("okhttp3", "OkHttpClient"),
+                            variables.getDefaultedClientName(),
+                            clientOptionsField,
+                            generatedClientOptions.httpClient());
+                    methodBody.add(
+                            responseParserGenerator.getResponseParserCodeBlockWithoutRequestOptions(baseMethodBuilder));
 
                     baseMethodBuilder.addCode(methodBody.build());
                     inputStreamMethodSpec = baseMethodBuilder.build();
@@ -545,18 +556,26 @@ public abstract class AbstractEndpointWriter {
                             httpEndpoint.getMethod().toString(),
                             variables.getOkhttpRequestBodyName());
                     withMediaTypeBody.addStatement(
-                            "$L.headers($T.of(this.$L.$L($L)))",
+                            "$L.headers($T.of(this.$L.$L(null)))",
                             "_requestBuilder",
                             ClassName.get("okhttp3", "Headers"),
                             clientOptionsField.name,
-                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                            ClientOptionsGenerator.HEADERS_METHOD_NAME);
                     withMediaTypeBody.addStatement(
                             "$T $L = $L.build()",
                             ClassName.get("okhttp3", "Request"),
                             variables.getOkhttpRequestName(),
                             "_requestBuilder");
-                    withMediaTypeBody.add(responseParserGenerator.getResponseParserCodeBlock(withMediaTypeBuilder));
+
+                    // Add response parsing without requestOptions check
+                    withMediaTypeBody.addStatement(
+                            "$T $L = $N.$N()",
+                            ClassName.get("okhttp3", "OkHttpClient"),
+                            variables.getDefaultedClientName(),
+                            clientOptionsField,
+                            generatedClientOptions.httpClient());
+                    withMediaTypeBody.add(responseParserGenerator.getResponseParserCodeBlockWithoutRequestOptions(
+                            withMediaTypeBuilder));
 
                     withMediaTypeBuilder.addCode(withMediaTypeBody.build());
                     inputStreamWithMediaTypeMethodSpec = withMediaTypeBuilder.build();

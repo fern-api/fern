@@ -3,7 +3,9 @@
 module Seed
   module FolderA
     class Client
-      # @return [Seed::FolderA::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end

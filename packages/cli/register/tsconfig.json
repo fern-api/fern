@@ -12,6 +12,9 @@
       "path": "../task-context"
     },
     {
+      "path": "../api-importers/openapi-pruner"
+    },
+    {
       "path": "../workspace/lazy-fern-workspace"
     },
     {
@@ -45,7 +48,7 @@
       "path": "../workspace/commons"
     },
     {
-      "path": "../api-importers/openapi-pruner"
+      "path": "../workspace/loader"
     }
   ]
 }
