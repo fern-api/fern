@@ -1,7 +1,20 @@
-import { ExampleClient } from "@example/sdk";
+interface ClientOptions {
+    apiKey: string;
+}
 
-const client = new ExampleClient({
-    apiKey: "your-api-key"
-});
+declare class ExampleClient {
+    constructor(options: ClientOptions);
+    users: {
+        get: (id: string) => Promise<unknown>;
+    };
+}
 
-await client.users.get("123");
+async function run() {
+    const client = new ExampleClient({
+        apiKey: "your-api-key"
+    });
+
+    await client.users.get("123");
+}
+
+void run();

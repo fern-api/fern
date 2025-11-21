@@ -758,7 +758,7 @@
                   {
                     "name": "Typescript (SDK)",
                     "language": "typescript",
-                    "code": "import { ExampleClient } from \"@example/sdk\";\n\nconst client = new ExampleClient({\n    apiKey: \"your-api-key\"\n});\n\nawait client.users.get(\"123\");\n"
+                    "code": "interface ClientOptions {\n    apiKey: string;\n}\n\ndeclare class ExampleClient {\n    constructor(options: ClientOptions);\n    users: {\n        get: (id: string) => Promise<unknown>;\n    };\n}\n\nasync function run() {\n    const client = new ExampleClient({\n        apiKey: \"your-api-key\"\n    });\n\n    await client.users.get(\"123\");\n}\n\nvoid run();\n"
                   },
                   {
                     "name": "go",
