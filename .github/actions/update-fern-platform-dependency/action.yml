@@ -40,8 +40,11 @@ runs:
         # Configure git to use the token for push operations
         git remote set-url origin https://x-access-token:${{ inputs.github-token }}@github.com/fern-api/fern-platform.git
 
+        # Sanitize package name for branch name (replace special characters)
+        SANITIZED_PKG=$(echo "${{ inputs.package-name }}" | sed 's/[^a-zA-Z0-9._-]/-/g')
+
         # Create branch
-        BRANCH_NAME="devin/update-${{ inputs.package-name }}-to-${{ inputs.version }}"
+        BRANCH_NAME="devin/update-${SANITIZED_PKG}-to-${{ inputs.version }}"
         git checkout -b "$BRANCH_NAME"
 
         # Update the dependency in the snippets package
@@ -55,8 +58,8 @@ runs:
           exit 0
         fi
 
-        # Commit and push
-        git add packages/snippets/package.json
+        # Commit and push (include lockfile)
+        git add packages/snippets/package.json pnpm-lock.yaml
         git commit -m "chore: update ${{ inputs.package-name }} to ${{ inputs.version }}"
         git push origin "$BRANCH_NAME"
 

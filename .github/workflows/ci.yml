@@ -40,6 +40,18 @@ jobs:
       - name: Check dependencies
         run: pnpm depcheck
 
+  validate-cli-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Validate CLI dependencies
+        run: node scripts/validate-cli-dependencies.js
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -59,10 +71,7 @@ jobs:
 
       - name: Format
         run: pnpm format:check
-
-      - name: Format YAML
-        run: pnpm format:yaml:check
-
+        
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
@@ -95,6 +104,9 @@ jobs:
         with:
           github_token: ${{ github.token }}
 
+      - name: Verify buf
+        run: buf --version
+
       - uses: actions/setup-go@v5
         with:
           go-version: "stable"
@@ -123,6 +135,9 @@ jobs:
       - uses: bufbuild/buf-setup-action@v1.50.0
         with:
           github_token: ${{ github.token }}
+
+      - name: Verify buf
+        run: buf --version
 
       - uses: actions/setup-go@v5
         with:

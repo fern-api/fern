@@ -166,6 +166,25 @@ public abstract class AbstractHttpResponseParserGenerator {
         return httpResponseBuilder.build();
     }
 
+    public CodeBlock getResponseParserCodeBlockWithoutRequestOptions(MethodSpec.Builder endpointMethodBuilder) {
+        CodeBlock.Builder httpResponseBuilder = CodeBlock.builder();
+        // Note: OkHttpClient is already initialized by the caller, so we skip that here
+        maybeInitializeFuture(httpResponseBuilder, getResponseType(httpEndpoint, clientGeneratorContext));
+
+        addResponseHandlingCode(
+                httpResponseBuilder,
+                builder -> {
+                    beginResponseProcessingTryBlock(builder);
+                    addSuccessResponseCodeBlock(builder, endpointMethodBuilder);
+                    httpResponseBuilder.endControlFlow();
+                    addMappedFailuresCodeBlock(builder);
+                    httpResponseBuilder.endControlFlow();
+                },
+                this::addGenericFailureCodeBlock);
+
+        return httpResponseBuilder.build();
+    }
+
     public void addSuccessResponseCodeBlock(
             CodeBlock.Builder httpResponseBuilder, MethodSpec.Builder endpointMethodBuilder) {
         if (httpEndpoint.getResponse().isPresent()
