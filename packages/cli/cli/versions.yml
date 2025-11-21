@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-# yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Support x-code-samples in OpenAPI specs on the latest version of the OpenAPI parser.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.2.0
+
 - changelogEntry:
     - summary: |
         Add branch support to self-hosted GitHub generation. Users can now specify a target branch in their generators.yml configuration using the `branch` field. When specified, generated code will be pushed to that branch instead of the default branch.
