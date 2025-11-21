@@ -1,17 +1,16 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 api:
   specs:
-  - openapi: ../query-parameters-openapi/openapi.yml
-    settings:
-      object-query-parameters: true
+    - openapi: ../query-parameters-openapi/openapi.yml
+      settings:
+        object-query-parameters: true
 groups:
   php-sdk:
     generators:
-    - name: fernapi/fern-php-sdk
-      version: latest
-      ir-version: v61
-      output:
-        location: github
-        mode: push
-        uri: https://github.com/fern-api/php-sdk-tests
-        branch: query-parameters-openapi-as-objects
+      - name: fernapi/fern-php-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: '{{ GITHUB_TOKEN }}'
+          mode: pull-request
+          uri: https://github.com/fern-api/php-sdk-tests
