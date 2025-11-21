@@ -6,6 +6,7 @@
  *
  */
 
+import { spawnSync } from "node:child_process";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -13,6 +14,8 @@ import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import assert from "assert";
 
 import { convertIrToFdrApi } from "../convertIrToFdrApi";
+
+const hasBuf = spawnSync("buf", ["--version"], { stdio: "ignore" }).status === 0;
 
 describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
     it("should replicate complete `fern fdr {file} --from-openapi` pipeline and produce S3-ready output", async () => {
@@ -375,7 +378,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(rootApi).toBeDefined();
     });
 
-    it("should handle gRPC proto with comments service", async () => {
+    it.skipIf(!hasBuf)("should handle gRPC proto with comments service", async () => {
         const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace: join(

@@ -1,15 +1,18 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc42
+  createdAt: "2025-11-20"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Improve YARD documentation syntax in generated Ruby SDK code.
+  irVersion: 61
+
 - version: 1.0.0-rc41
   createdAt: "2025-11-20"
   changelogEntry:
     - type: fix
       summary: |
-        Fix YARD documentation syntax in generated Ruby SDK code:
-        - Convert union type syntax from pipes (|) to commas (,) for YARD compatibility
-        - Replace 'bool' with 'Boolean' in type annotations
-        - Document request_options parameter as [Hash] with @option tags instead of undefined RequestOptions class
-        - Fix initialize methods to return [void] instead of class type
-        - Deduplicate nil in union types (e.g., "Boolean | nil | nil" → "Boolean, nil")
+        Remove dead code in RawClient and honor max_retries parameter. The max_retries parameter is now properly used instead of being hardcoded to 0.
   irVersion: 61
 
 - version: 1.0.0-rc40
