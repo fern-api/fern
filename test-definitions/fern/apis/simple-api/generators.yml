@@ -2,10 +2,19 @@
 groups:
   java-sdk:
     generators:
-      - name: fernapi/fern-java-sdk
-        version: local
-        config: {}
-        output:
-          location: local-file-system
-          path: ../../../../../../seed/java-sdk/simple-api
-          # Downloads SDK locally without full project scaffolding
+    - name: fernapi/fern-java-sdk
+      version: local
+      config: {}
+      output:
+        location: local-file-system
+        path: ../../../../../../seed/java-sdk/simple-api
+  php-sdk:
+    generators:
+    - name: fernapi/fern-php-sdk
+      version: latest
+      ir-version: v61
+      output:
+        location: github
+        mode: push
+        uri: https://github.com/fern-api/php-sdk-tests
+        branch: simple-api

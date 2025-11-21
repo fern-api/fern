@@ -3,10 +3,20 @@ default-group: local
 groups:
   local:
     generators:
-      - name: fernapi/fern-java-sdk
-        version: 2.38.1
-        output:
-          location: local-file-system
-          path: ../../../../../../seed/java-sdk/builder-extension
-        config:
-          client-class-name: BaseClient
+    - name: fernapi/fern-java-sdk
+      version: 2.38.1
+      output:
+        location: local-file-system
+        path: ../../../../../../seed/java-sdk/builder-extension
+      config:
+        client-class-name: BaseClient
+  php-sdk:
+    generators:
+    - name: fernapi/fern-php-sdk
+      version: latest
+      ir-version: v61
+      output:
+        location: github
+        mode: push
+        uri: https://github.com/fern-api/php-sdk-tests
+        branch: java-builder-extension
