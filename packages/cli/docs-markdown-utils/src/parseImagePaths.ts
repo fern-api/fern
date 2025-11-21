@@ -245,7 +245,7 @@ function parseJsxTag(
                 const value = content.slice(valueStart, i);
                 i++;
 
-                if (attrName === "src") {
+                if (attrName === "src" || attrName === "icon") {
                     const src = trimAnchor(value);
                     const resolvedPath = resolvePath(src, metadata);
                     if (src && resolvedPath) {
@@ -269,7 +269,7 @@ function parseJsxTag(
 
                 if ((expr.startsWith('"') && expr.endsWith('"')) || (expr.startsWith("'") && expr.endsWith("'"))) {
                     const value = expr.slice(1, -1);
-                    if (attrName === "src") {
+                    if (attrName === "src" || attrName === "icon") {
                         const src = trimAnchor(value);
                         const resolvedPath = resolvePath(src, metadata);
                         if (src && resolvedPath) {
@@ -283,7 +283,7 @@ function parseJsxTag(
                     }
                 } else if (expr.startsWith("`") && expr.endsWith("`") && !expr.includes("${")) {
                     const value = expr.slice(1, -1);
-                    if (attrName === "src") {
+                    if (attrName === "src" || attrName === "icon") {
                         const src = trimAnchor(value);
                         const resolvedPath = resolvePath(src, metadata);
                         if (src && resolvedPath) {
@@ -456,6 +456,15 @@ export function parseImagePaths(
                             replaced = replaced.replaceAll(src, resolvedPath);
                         }
                         return;
+                    },
+                    icon: (attr) => {
+                        const icon = trimAnchor(extractSingleLiteral(attr.value));
+                        const resolvedPath = resolvePath(icon, metadata);
+                        if (icon && resolvedPath) {
+                            filepaths.add(resolvedPath);
+                            replaced = replaced.replaceAll(icon, resolvedPath);
+                        }
+                        return;
                     }
                 });
             }
@@ -469,6 +478,17 @@ export function parseImagePaths(
                     if (resolvedPath != null) {
                         filepaths.add(resolvedPath);
                         replaced = replaced.replaceAll(src, resolvedPath);
+                    }
+                }
+
+                const iconAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "icon");
+                const icon = trimAnchor(extractAttributeValueLiteral(iconAttr?.value));
+
+                if (iconAttr && icon) {
+                    const resolvedPath = resolvePath(icon, metadata);
+                    if (resolvedPath != null) {
+                        filepaths.add(resolvedPath);
+                        replaced = replaced.replaceAll(icon, resolvedPath);
                     }
                 }
 
@@ -709,7 +729,7 @@ export function replaceImagePathsAndUrls(
                             }
                             const value = content.slice(valueStart, j);
                             j++;
-                            if (attrName === "src") {
+                            if (attrName === "src" || attrName === "icon") {
                                 const imageSrc = mapImage(value);
                                 if (imageSrc) {
                                     edits.push({
@@ -791,6 +811,7 @@ export function replaceImagePathsAndUrls(
             function walkEstreeForSrcAndHref(estree: EstreeNode) {
                 walkEstreeJsxAttributes(estree, {
                     src: (attr) => replaceSrc(trimAnchor(extractSingleLiteral(attr.value))),
+                    icon: (attr) => replaceSrc(trimAnchor(extractSingleLiteral(attr.value))),
                     href: (attr) => replaceHref(trimAnchor(extractSingleLiteral(attr.value)))
                 });
             }
@@ -807,6 +828,9 @@ export function replaceImagePathsAndUrls(
             if (isMdxJsxElement(node)) {
                 const srcAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "src");
                 replaceSrc(trimAnchor(extractAttributeValueLiteral(srcAttr?.value)));
+
+                const iconAttr = node.attributes.filter(isMdxJsxAttribute).find((attr) => attr.name === "icon");
+                replaceSrc(trimAnchor(extractAttributeValueLiteral(iconAttr?.value)));
 
                 const hrefAttr = node.attributes.find(
                     (attr) => attr.type === "mdxJsxAttribute" && attr.name === "href"
