@@ -1,4 +1,4 @@
-import { File, GeneratorNotificationService } from "@fern-api/base-generator";
+import { File, GeneratorNotificationService, NopGeneratorNotificationService } from "@fern-api/base-generator";
 import { assertNever, entries, extractErrorMessage, noop } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractSwiftGeneratorCli, SourceTemplateFiles, TestTemplateFiles } from "@fern-api/swift-base";
@@ -648,5 +648,30 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
                 ]
             });
         });
+    }
+
+    public async runDirectly(ir: IntermediateRepresentation, generatorConfig: FernGeneratorExec.GeneratorConfig) {
+        const customConfig = this.parseCustomConfigOrThrow(generatorConfig.customConfig);
+        const generatorNotificationService = new NopGeneratorNotificationService() as GeneratorNotificationService;
+        const context = this.constructContext({
+            ir,
+            customConfig,
+            generatorConfig,
+            generatorNotificationService
+        });
+        await this.generateMetadata(context);
+        switch (generatorConfig.output.mode.type) {
+            case "publish":
+                await this.publishPackage(context);
+                break;
+            case "github":
+                await this.writeForGithub(context);
+                break;
+            case "downloadFiles":
+                await this.writeForDownload(context);
+                break;
+            default:
+                assertNever(generatorConfig.output.mode);
+        }
     }
 }
