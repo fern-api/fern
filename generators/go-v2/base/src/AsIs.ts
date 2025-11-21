@@ -4,6 +4,11 @@ export enum AsIsFiles {
     ExtraPropertiesTest = "internal/extra_properties_test.go_",
     Stringer = "internal/stringer.go_",
     Time = "internal/time.go_",
+    HttpInternal = "internal/http.go_",
+    Query = "internal/query.go_",
+    QueryTest = "internal/query_test.go_",
+    Multipart = "internal/multipart.go_",
+    MultipartTest = "internal/multipart_test.go_",
     MainTest = "test/main_test.go_",
     ErrorCodes = "error_codes.go_",
     ErrorDecoder = "internal/error_decoder.go_",
@@ -16,5 +21,9 @@ export enum AsIsFiles {
     Pager = "internal/pager.go_",
     PagerTest = "internal/pager_test.go_",
     Stream = "core/stream.go_",
-    Streamer = "internal/streamer.go_"
+    Streamer = "internal/streamer.go_",
+    // Core files.
+    HttpCore = "core/http.go_",
+    // Root files.
+    FileParam = "file_param.go_"
 }

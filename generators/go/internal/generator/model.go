@@ -1,7 +1,6 @@
 package generator
 
 import (
-	_ "embed"
 	"fmt"
 	"path"
 	"strconv"
@@ -11,14 +10,6 @@ import (
 	"github.com/fern-api/fern-go/internal/fern/ir"
 	"github.com/fern-api/fern-go/internal/fern/ir/common"
 	"github.com/fern-api/fern-go/internal/gospec"
-)
-
-var (
-	//go:embed model/internal/stringer.go
-	stringerFile string
-
-	//go:embed model/internal/time.go
-	timeFile string
 )
 
 // WriteType writes a complete type, including all of its properties.

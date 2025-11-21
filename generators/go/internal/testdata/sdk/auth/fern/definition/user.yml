@@ -1,9 +1,0 @@
-# Simple test for generating a client with authorization options.
-service:
-  base-path: /
-  auth: true
-  endpoints:
-    get:
-      method: GET
-      path: ""
-      response: string

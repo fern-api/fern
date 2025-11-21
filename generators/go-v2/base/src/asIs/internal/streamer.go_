@@ -39,10 +39,10 @@ type StreamParams struct {
 	Terminator      string
 	MaxAttempts     uint
 	Headers         http.Header
-	BodyProperties  map[string]interface{}
+	BodyProperties  map[string]any
 	QueryParameters url.Values
 	Client          HTTPClient
-	Request         interface{}
+	Request         any
 	ErrorDecoder    ErrorDecoder
 	Format          core.StreamFormat
 }

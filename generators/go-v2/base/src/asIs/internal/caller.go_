@@ -55,11 +55,11 @@ type CallParams struct {
 	Method             string
 	MaxAttempts        uint
 	Headers            http.Header
-	BodyProperties     map[string]interface{}
+	BodyProperties     map[string]any
 	QueryParameters    url.Values
 	Client             core.HTTPClient
-	Request            interface{}
-	Response           interface{}
+	Request            any
+	Response           any
 	ResponseIsOptional bool
 	ErrorDecoder       ErrorDecoder
 }
@@ -177,8 +177,8 @@ func newRequest(
 	url string,
 	method string,
 	endpointHeaders http.Header,
-	request interface{},
-	bodyProperties map[string]interface{},
+	request any,
+	bodyProperties map[string]any,
 ) (*http.Request, error) {
 	requestBody, err := newRequestBody(request, bodyProperties)
 	if err != nil {
@@ -197,7 +197,7 @@ func newRequest(
 }
 
 // newRequestBody returns a new io.Reader that represents the HTTP request body.
-func newRequestBody(request interface{}, bodyProperties map[string]interface{}) (io.Reader, error) {
+func newRequestBody(request any, bodyProperties map[string]any) (io.Reader, error) {
 	if isNil(request) {
 		if len(bodyProperties) == 0 {
 			return nil, nil
@@ -245,6 +245,6 @@ func decodeError(response *http.Response, errorDecoder ErrorDecoder) error {
 
 // isNil is used to determine if the request value is equal to nil (i.e. an interface
 // value that holds a nil concrete value is itself non-nil).
-func isNil(value interface{}) bool {
+func isNil(value any) bool {
 	return value == nil || reflect.ValueOf(value).IsNil()
 }

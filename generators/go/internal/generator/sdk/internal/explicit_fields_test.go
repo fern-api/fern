@@ -77,7 +77,7 @@ type testStructWithoutExplicitFields struct {
 func TestHandleExplicitFields(t *testing.T) {
 	tests := []struct {
 		desc      string
-		giveInput interface{}
+		giveInput any
 		wantBytes []byte
 		wantError string
 	}{
@@ -98,7 +98,7 @@ func TestHandleExplicitFields(t *testing.T) {
 		},
 		{
 			desc:      "map input",
-			giveInput: map[string]interface{}{"key": "value"},
+			giveInput: map[string]any{"key": "value"},
 			wantBytes: []byte(`{"key":"value"}`),
 		},
 		{
@@ -213,7 +213,7 @@ func TestHandleExplicitFields(t *testing.T) {
 			assert.JSONEq(t, string(tt.wantBytes), string(bytes))
 
 			// Verify it's valid JSON
-			var value interface{}
+			var value any
 			require.NoError(t, json.Unmarshal(bytes, &value))
 		})
 	}
@@ -476,7 +476,7 @@ func TestHandleExplicitFieldsNestedStruct(t *testing.T) {
 			assert.JSONEq(t, string(tt.wantBytes), string(bytes))
 
 			// Verify it's valid JSON
-			var value interface{}
+			var value any
 			require.NoError(t, json.Unmarshal(bytes, &value))
 		})
 	}
