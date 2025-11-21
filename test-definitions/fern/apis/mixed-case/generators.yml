@@ -2,7 +2,16 @@
 groups:
   java-sdk:
     generators:
-      - name: fernapi/fern-java-sdk
-        version: latest
-        config:
-          use-default-request-parameter-values: true
+    - name: fernapi/fern-java-sdk
+      version: latest
+      config:
+        use-default-request-parameter-values: true
+  php-sdk:
+    generators:
+    - name: fernapi/fern-php-sdk
+      version: latest
+      ir-version: v61
+      output:
+        location: github
+        mode: push
+        repo: https://github.com/fern-api/php-sdk-tests

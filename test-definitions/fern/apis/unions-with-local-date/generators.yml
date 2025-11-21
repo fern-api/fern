@@ -2,11 +2,20 @@
 groups:
   java-sdk:
     generators:
-      - name: fernapi/fern-java-sdk
-        version: latest
-        output:
-          location: local-file-system
-          path: ../../../seed/java-sdk/unions-with-local-date
-        config:
-          use-local-date-for-dates: true
-          package-prefix: com.unions.localdate
+    - name: fernapi/fern-java-sdk
+      version: latest
+      output:
+        location: local-file-system
+        path: ../../../seed/java-sdk/unions-with-local-date
+      config:
+        use-local-date-for-dates: true
+        package-prefix: com.unions.localdate
+  php-sdk:
+    generators:
+    - name: fernapi/fern-php-sdk
+      version: latest
+      ir-version: v61
+      output:
+        location: github
+        mode: push
+        repo: https://github.com/fern-api/php-sdk-tests
