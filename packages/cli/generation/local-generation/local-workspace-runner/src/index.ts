@@ -8,6 +8,7 @@ export * from "./ExecutionEnvironment";
 export { type ExecutionEnvironment } from "./ExecutionEnvironment";
 export * from "./GenerationRunner";
 export { GenerationRunner } from "./GenerationRunner";
+export { getGeneratorConfig } from "./getGeneratorConfig";
 export * from "./NativeExecutionEnvironment";
 export { NativeExecutionEnvironment } from "./NativeExecutionEnvironment";
 export {

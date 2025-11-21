@@ -250,7 +250,7 @@ export async function runLocalGenerationForWorkspace({
     }
 }
 
-function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocation): string | undefined {
+export function getPackageNameFromGeneratorConfig(generatorInvocation: GeneratorInvocation): string | undefined {
     // Check output.package-name for npm/PyPI/etc.
     if (typeof generatorInvocation.raw?.output === "object" && generatorInvocation.raw?.output !== null) {
         const packageName = (generatorInvocation.raw.output as { ["package-name"]?: string })["package-name"];

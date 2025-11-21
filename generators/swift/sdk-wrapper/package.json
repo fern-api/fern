@@ -11,9 +11,7 @@
   "main": "lib/cli.js",
   "source": "src/cli.ts",
   "types": "lib/cli.d.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
@@ -26,16 +24,24 @@
     "test:update": "vitest --passWithNoTests --run -u"
   },
   "devDependencies": {
-    "@fern-api/base-generator": "workspace:*",
+    "@fern-api/api-workspace-commons": "workspace:*",
+    "@fern-api/cli-source-resolver": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",
-    "@fern-api/logger": "workspace:*",
+    "@fern-api/ir-generator": "workspace:*",
+    "@fern-api/local-workspace-runner": "workspace:*",
+    "@fern-api/project-loader": "workspace:*",
+    "@fern-api/remote-workspace-runner": "workspace:*",
     "@fern-api/swift-sdk": "workspace:*",
+    "@fern-api/task-context": "workspace:*",
+    "@fern-api/workspace-loader": "workspace:*",
     "@types/node": "18.15.3",
+    "@types/yargs": "^17.0.28",
     "depcheck": "^1.4.7",
     "tsup": "^8.5.0",
     "typescript": "5.9.2",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.8",
+    "yargs": "^17.4.1"
   }
 }

@@ -2337,9 +2337,12 @@ importers:
 
   generators/swift/sdk-wrapper:
     devDependencies:
-      '@fern-api/base-generator':
+      '@fern-api/api-workspace-commons':
         specifier: workspace:*
-        version: link:../../base
+        version: link:../../../packages/cli/workspace/commons
+      '@fern-api/cli-source-resolver':
+        specifier: workspace:*
+        version: link:../../../packages/cli/cli-source-resolver
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
@@ -2349,15 +2352,33 @@ importers:
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
-      '@fern-api/logger':
+      '@fern-api/ir-generator':
         specifier: workspace:*
-        version: link:../../../packages/cli/logger
+        version: link:../../../packages/cli/generation/ir-generator
+      '@fern-api/local-workspace-runner':
+        specifier: workspace:*
+        version: link:../../../packages/cli/generation/local-generation/local-workspace-runner
+      '@fern-api/project-loader':
+        specifier: workspace:*
+        version: link:../../../packages/cli/project-loader
+      '@fern-api/remote-workspace-runner':
+        specifier: workspace:*
+        version: link:../../../packages/cli/generation/remote-generation/remote-workspace-runner
       '@fern-api/swift-sdk':
         specifier: workspace:*
         version: link:../sdk
+      '@fern-api/task-context':
+        specifier: workspace:*
+        version: link:../../../packages/cli/task-context
+      '@fern-api/workspace-loader':
+        specifier: workspace:*
+        version: link:../../../packages/cli/workspace/loader
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
+      '@types/yargs':
+        specifier: ^17.0.28
+        version: 17.0.35
       depcheck:
         specifier: ^1.4.7
         version: 1.4.7
@@ -2370,6 +2391,9 @@ importers:
       vitest:
         specifier: ^4.0.8
         version: 4.0.8(@types/debug@4.1.12)(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.2))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
+      yargs:
+        specifier: ^17.4.1
+        version: 17.7.2
 
   generators/typescript-mcp/base:
     devDependencies:
