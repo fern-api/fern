@@ -28,7 +28,7 @@ def get_json_body_for_inlined_request(
                 if possible_literal_value is not None and type(possible_literal_value) is str:
                     writer.write_line(f'"{property.raw_name}": "{possible_literal_value}",')
                 elif possible_literal_value is not None and type(possible_literal_value) is bool:
-                    writer.write_line(f'"{property.raw_name}": {str(possible_literal_value).lower()},')
+                    writer.write_line(f'"{property.raw_name}": {possible_literal_value},')
                 else:
                     writer.write(f'"{property.raw_name}": ')
                     if (
