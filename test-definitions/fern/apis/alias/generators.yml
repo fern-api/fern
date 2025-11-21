@@ -8,4 +8,5 @@ groups:
       output:
         location: github
         mode: push
-        repo: https://github.com/fern-api/php-sdk-tests
+        uri: https://github.com/fern-api/php-sdk-tests
+        branch: alias
