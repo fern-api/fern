@@ -5,7 +5,15 @@
       type: fix
   irVersion: 61
   createdAt: "2025-11-21"
-  version: 2.1.1
+  version: 2.2.1
+
+- changelogEntry:
+    - summary: |
+        Support x-code-samples in OpenAPI specs on the latest version of the OpenAPI parser.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.2.0
 
 - changelogEntry:
     - summary: |

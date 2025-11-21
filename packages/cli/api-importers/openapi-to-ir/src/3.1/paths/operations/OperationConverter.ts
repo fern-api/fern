@@ -12,6 +12,7 @@ import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
+import { RedoclyCodeSamplesExtension } from "../../../extensions/x-code-samples";
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernExplorerExtension } from "../../../extensions/x-fern-explorer";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
@@ -499,15 +500,29 @@ export class OperationConverter extends AbstractOperationConverter {
             operation: this.operation as object,
             baseDir: this.context.documentBaseDir
         });
-        const fernExamples = fernExamplesExtension.convert();
-        if (fernExamples == null) {
+        const fernExamples = fernExamplesExtension.convert() ?? [];
+
+        const redoclyCodeSamplesExtension = new RedoclyCodeSamplesExtension({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation as object,
+            baseDir: this.context.documentBaseDir
+        });
+        const redoclyCodeSamples = redoclyCodeSamplesExtension.convert() ?? [];
+
+        const hasFernCodeSamples = fernExamples.some(
+            (example) => Array.isArray(example["code-samples"]) && example["code-samples"].length > 0
+        );
+        const allExamples = hasFernCodeSamples ? fernExamples : [...fernExamples, ...redoclyCodeSamples];
+
+        if (allExamples.length === 0) {
             return { examples: {}, streamExamples: {} };
         }
         if (this.streamingExtension?.type === "streamCondition") {
-            return this.convertStreamConditionExamples({ httpPath, httpMethod, baseUrl, fernExamples });
+            return this.convertStreamConditionExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples });
         }
         return {
-            examples: this.convertEndpointExamples({ httpPath, httpMethod, baseUrl, fernExamples }),
+            examples: this.convertEndpointExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples }),
             streamExamples: {}
         };
     }
