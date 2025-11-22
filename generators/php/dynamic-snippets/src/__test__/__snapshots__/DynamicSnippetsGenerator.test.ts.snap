@@ -377,7 +377,7 @@ exports[`snippets (default) > multi-url-environment > 'Custom environment' 1`] =
   {
     "severity": "WARNING",
     "path": [],
-    "message": "The PHP SDK doesn't support a multi-environment client option yet; use the baseUrl option instead"
+    "message": "Invalid multi url environment"
   }
 ]"
 `;
@@ -387,7 +387,7 @@ exports[`snippets (default) > multi-url-environment > 'Invalid multi url environ
   {
     "severity": "WARNING",
     "path": [],
-    "message": "The PHP SDK doesn't support a multi-environment client option yet; use the baseUrl option instead"
+    "message": "Invalid multi url environment"
   }
 ]"
 `;
@@ -403,9 +403,7 @@ use Acme\\S3\\Requests\\GetPresignedURLRequest;
 
 $client = new AcmeClient(
     token: '<YOUR_API_KEY>',
-    options: [
-        'baseUrl' => Environments::Production->value,
-    ],
+    environment: Environments::Production(),
 );
 $client->s3->getPresignedURL(
     new GetPresignedURLRequest([
@@ -426,9 +424,7 @@ use Acme\\S3\\Requests\\GetPresignedURLRequest;
 
 $client = new AcmeClient(
     token: '<YOUR_API_KEY>',
-    options: [
-        'baseUrl' => Environments::Staging->value,
-    ],
+    environment: Environments::Staging(),
 );
 $client->s3->getPresignedURL(
     new GetPresignedURLRequest([

@@ -5,16 +5,21 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::User::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
       # List all users.
       #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
-      # @option params [Integer | nil] :limit
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer, nil] :limit
       #
       # @return [Array[Seed::User::Types::User]]
       def list(request_options: {}, **params)

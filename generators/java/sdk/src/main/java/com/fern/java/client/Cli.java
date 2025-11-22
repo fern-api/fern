@@ -1,5 +1,7 @@
 package com.fern.java.client;
 
+import static com.fern.java.GeneratorLogging.log;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
@@ -230,6 +232,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             IntermediateRepresentation ir,
             DefaultGeneratorExecClient generatorExecClient) {
 
+        log(generatorExecClient, "Generating core SDK files");
+
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
         GeneratedObjectMapper objectMapper = objectMappersGenerator.generateFile();
@@ -382,6 +386,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         this.addGeneratedFile(generatedMediaTypesFile);
 
         // types
+        log(generatorExecClient, "Generating data types and models");
         TypesGenerator typesGenerator = new TypesGenerator(context);
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
@@ -415,6 +420,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         generatedOAuthTokenSupplier.ifPresent(this::addGeneratedFile);
 
         // subpackage clients and their WebSocket channels
+        log(generatorExecClient, "Generating API client classes");
         ir.getSubpackages().values().forEach(subpackage -> {
             // Generate subpackage clients if there are endpoints or WebSocket channels
             if (subpackage.getHasEndpointsInTree() || subpackage.getWebsocket().isPresent()) {

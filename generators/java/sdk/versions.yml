@@ -1,3 +1,35 @@
+- version: 3.18.5
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 3.18.4
+  changelogEntry:
+    - summary: |
+        Fix missing @JsonInclude header on certain instances of `OptionalNullable<>`.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.3
+  changelogEntry:
+    - summary: |
+        Fix OptionalNullable compilation errors when collapse-optional-nullable is enabled. Corrected type witness syntax to generate `OptionalNullable.<Type>absent()` and prevented double-wrapping of OptionalNullable types.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.2
+  changelogEntry:
+    - summary: |
+        Fix bugs in 3.17.0's addition of InputStream-based method overloads.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 3.18.1
   changelogEntry:
     - summary: |

@@ -333,4 +333,144 @@ describe("replaceReferencedCode", () => {
 
         `);
     });
+
+    it("should handle formatted on multiple lines", async () => {
+        const markdown = `
+            <Code
+                src="./example.js"
+                title={"Hello"}
+            />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/example.js")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`js title={"Hello"}
+            test content
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle weird formatting", async () => {
+        const markdown = `
+            <Code title={"Hello 1"}
+                src="./example.js"
+            />
+
+            <Code title={"Hello 2"} src="./example.js"
+            />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/example.js")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`js title={"Hello 1"}
+            test content
+            \`\`\`
+
+
+            \`\`\`js title={"Hello 2"}
+            test content
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle more weird formatting", async () => {
+        const markdown = `
+            <Code title={"Hello 1"} maxLines={20}
+                src="./example.js"
+                highlight={40}
+            />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/example.js")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`js title={"Hello 1"} maxLines={20} highlight={40}
+            test content
+            \`\`\`
+
+        `);
+    });
+
+    it("should not replace CodeBlock components", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" />
+            <CodeBlock src="../snippets/should-not-replace.js" />
+            <CodeGroup>
+                <Code src="../snippets/test.ts" />
+                <CodeBlock language="javascript">
+                    console.log("inline code");
+                </CodeBlock>
+            </CodeGroup>
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "python content";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.ts")) {
+                    return "typescript content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            python content
+            \`\`\`
+
+            <CodeBlock src="../snippets/should-not-replace.js" />
+            <CodeGroup>
+                \`\`\`ts title={"test.ts"}
+                typescript content
+                \`\`\`
+
+                <CodeBlock language="javascript">
+                    console.log("inline code");
+                </CodeBlock>
+            </CodeGroup>
+        `);
+    });
 });

@@ -75,7 +75,13 @@ export async function runRemoteGenerationForDocsWorkspace({
         }
     }
 
+    context.logger.info(`Starting docs publishing for ${preview ? "preview" : "production"}: ${maybeInstance.url}`);
+    context.logger.debug(
+        `Organization: ${organization}, Preview: ${preview}, APIs: ${apiWorkspaces.length}, OSS: ${ossWorkspaces.length}`
+    );
+
     await context.runInteractiveTask({ name: maybeInstance.url }, async () => {
+        const publishStart = performance.now();
         await publishDocs({
             docsWorkspace,
             customDomains,
@@ -97,6 +103,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                     : [maybeInstance.audiences]
                 : undefined
         });
+        const publishTime = performance.now() - publishStart;
+        context.logger.debug(`Docs publishing completed in ${publishTime.toFixed(0)}ms`);
     });
     return;
 }

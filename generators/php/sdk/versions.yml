@@ -1,5 +1,29 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.19.2
+  changelogEntry:
+    - summary: |
+        Fix environment passing in PHP SDK sub-clients for multi-URL environments. Sub-clients now properly receive the environment instance instead of options, ensuring correct URL resolution when APIs have different base URLs per service.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 1.19.1
+  changelogEntry:
+    - summary: |
+        Add support for multi-URL environments. Generated SDKs now use a class-based Environments with readonly properties for each service URL, enabling APIs with different base URLs per service (e.g., EC2 and S3). Sub-clients receive the full Environments instance and access their specific URL via property access.
+      type: feat
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 1.18.3
+  changelogEntry:
+    - summary: |
+        Fix duplicate logging in PHP SDK generator by including class names in log messages. Previously, multiple types in the same directory would log identical "Generating {directory}" messages, causing log spam. Now each type logs a unique "Generating {directory}/{className}" message.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 1.18.2
   changelogEntry:
     - summary: |

@@ -1,5 +1,8 @@
 package com.fern.java;
 
+import static com.fern.java.GeneratorLogging.log;
+import static com.fern.java.GeneratorLogging.logError;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -241,11 +244,35 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
     private static void runCommandBlocking(String[] command, Path workingDirectory, Map<String, String> environment) {
         try {
-            Process process = runCommandAsync(command, workingDirectory, environment);
+            ProcessBuilder pb = new ProcessBuilder(command).directory(workingDirectory.toFile());
+            pb.environment().putAll(environment);
+            Process process = pb.start();
+            StreamGobbler errorGobbler = new StreamGobbler(process.getErrorStream());
+            StreamGobbler outputGobbler = new StreamGobbler(process.getInputStream());
+            errorGobbler.start();
+            outputGobbler.start();
+
             int exitCode = process.waitFor();
+            errorGobbler.join();
+            outputGobbler.join();
+
             if (exitCode != 0) {
-                throw new RuntimeException("Command failed with non-zero exit code: " + Arrays.toString(command));
+                List<String> allOutput = new ArrayList<>();
+                allOutput.addAll(outputGobbler.getCapturedLines());
+                allOutput.addAll(errorGobbler.getCapturedLines());
+
+                int startIndex = Math.max(0, allOutput.size() - 100);
+                String outputTail =
+                        allOutput.subList(startIndex, allOutput.size()).stream().collect(Collectors.joining("\n"));
+
+                String errorMessage = "Command failed with exit code " + exitCode + ": " + Arrays.toString(command);
+                if (!outputTail.isEmpty()) {
+                    errorMessage += "\n\nLast " + (allOutput.size() - startIndex) + " lines of output:\n" + outputTail;
+                }
+                throw new RuntimeException(errorMessage);
             }
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to start command: " + Arrays.toString(command), e);
         } catch (InterruptedException e) {
             throw new RuntimeException("Failed to run command", e);
         }
@@ -309,6 +336,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
         GeneratorConfig generatorConfig = getGeneratorConfig(pluginPath);
         DefaultGeneratorExecClient generatorExecClient = new DefaultGeneratorExecClient(generatorConfig);
         try {
+            log(generatorExecClient, "Starting Java SDK generation");
             IntermediateRepresentation ir = getIr(generatorConfig);
             this.outputDirectory = Paths.get(generatorConfig.getOutput().getPath());
             generatorConfig
@@ -318,6 +346,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
                         @Override
                         public Void visitPublish(GeneratorPublishConfig value) {
+                            log(generatorExecClient, "Generating Java SDK in publish mode");
                             T customConfig = getCustomConfig(generatorConfig);
                             runInPublishMode(generatorExecClient, generatorConfig, ir, customConfig, value);
                             return null;
@@ -325,6 +354,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
                         @Override
                         public Void visitDownloadFiles() {
+                            log(generatorExecClient, "Generating Java SDK in download files mode");
                             K customConfig = getDownloadFilesCustomConfig(generatorConfig);
                             runInDownloadFilesMode(generatorExecClient, generatorConfig, ir, customConfig);
                             return null;
@@ -332,6 +362,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
 
                         @Override
                         public Void visitGithub(GithubOutputMode value) {
+                            log(generatorExecClient, "Generating Java SDK in GitHub mode");
                             T customConfig = getCustomConfig(generatorConfig);
                             runInGithubMode(generatorExecClient, generatorConfig, ir, customConfig, value);
                             return null;
@@ -342,13 +373,17 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                             throw new RuntimeException("Encountered unknown output mode: " + unknownType);
                         }
                     });
+            log(generatorExecClient, "Completed Java v1 SDK generation");
             runV2Generator(generatorExecClient, args);
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(
                     ExitStatusUpdate.successful(SuccessfulStatusUpdate.builder().build())));
         } catch (Exception e) {
             log.error("Encountered fatal error", e);
+            String errorMessage =
+                    e.getMessage() != null ? e.getMessage() : e.getClass().getSimpleName();
+            logError(generatorExecClient, "Java SDK generation failed: " + errorMessage);
             generatorExecClient.sendUpdate(GeneratorUpdate.exitStatusUpdate(ExitStatusUpdate.error(
-                    ErrorExitStatusUpdate.builder().message(e.getMessage()).build())));
+                    ErrorExitStatusUpdate.builder().message(errorMessage).build())));
             throw new RuntimeException(e);
         }
     }
@@ -582,7 +617,7 @@ public abstract class AbstractGeneratorCli<T extends ICustomConfig, K extends ID
                     Paths.get(generatorConfig.getOutput().getPath()),
                     publishEnvVars);
             runCommandBlocking(
-                    new String[] {"./gradlew", "publish", "--stacktrace", "--info", "--no-daemon"},
+                    new String[] {"./gradlew", "publish", "--stacktrace", "--info", "--console=plain", "--no-daemon"},
                     Paths.get(generatorConfig.getOutput().getPath()),
                     publishEnvVars);
         }
