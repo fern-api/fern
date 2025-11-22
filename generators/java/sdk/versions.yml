@@ -1,3 +1,19 @@
+- version: 3.18.7
+  changelogEntry:
+    - summary: |
+        Skip InputStream overload generation for file upload endpoints with query parameters. This prevents compilation errors where InputStream methods would reference non-existent request parameters when accessing query parameters.
+      type: fix
+  createdAt: "2025-11-22"
+  irVersion: 61
+
+- version: 3.18.6
+  changelogEntry:
+    - summary: |
+        Fix compilation errors in raw clients when inlinePathParameters is enabled. Raw client methods now correctly use path parameters directly instead of attempting to access non-existent request objects.
+      type: fix
+  createdAt: "2025-11-22"
+  irVersion: 61
+
 - version: 3.18.5
   changelogEntry:
     - summary: |

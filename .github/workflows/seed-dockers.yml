@@ -323,7 +323,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   merge-manifests:
-    if: ${{ !cancelled() && (needs.changes.outputs.ts == 'true' || needs.changes.outputs.java == 'true' || needs.changes.outputs.python == 'true' || needs.changes.outputs.csharp == 'true')  }}
+    if: ${{ !cancelled() && (needs.changes.outputs.ts == 'true' || needs.changes.outputs.java == 'true' || needs.changes.outputs.python == 'true' || needs.changes.outputs.csharp == 'true') }}
     needs: [changes, build-ts, build-java, build-python, build-csharp, generate-sha]
     runs-on: ubuntu-latest
     steps:
