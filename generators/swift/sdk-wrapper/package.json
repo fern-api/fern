@@ -17,6 +17,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
+    "dist:api": "pnpm compile && tsup ./src/api.ts --format cjs --sourcemap --external @boundaryml/baml && cp -R ../base/src/asIs dist && cp -R ../base/src/template dist",
     "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap --external @boundaryml/baml && cp -R ../base/src/asIs dist && cp -R ../base/src/template dist",
     "publish:cli": "pnpm dist:cli && cd dist && yarn npm publish",
     "test": "vitest --passWithNoTests --run",

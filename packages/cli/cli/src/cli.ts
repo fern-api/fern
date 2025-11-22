@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { resolve as resolvePath } from "node:path";
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
@@ -1608,9 +1609,58 @@ function addExpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         yargs.command(
             "generate-swift",
             "Experimental Swift SDK generation",
-            (subYargs) => subYargs,
-            async () => {
-                // TODO(kafkas): Implement
+            (subYargs) =>
+                subYargs
+                    .option("api", {
+                        type: "string",
+                        description: "The API to generate.",
+                        demandOption: false
+                    })
+                    .option("group", {
+                        type: "string",
+                        description: "The group to generate.",
+                        demandOption: true
+                    })
+                    .option("outDir", {
+                        type: "string",
+                        description: "The path to the output directory.",
+                        demandOption: true
+                    })
+                    .option("version", {
+                        type: "string",
+                        description: "The version to use for the output.",
+                        demandOption: false
+                    }),
+            async (argv) => {
+                // For now, pretend this module was downloaded from the registry and extracted locally.
+                // We import the programmatic Swift generator API from the dedicated dist bundle.
+                // TODO(kafkas): Replace this with real registry download + cache resolution.
+                const pathToGeneratorBundle = resolvePath(
+                    __dirname,
+                    "../../../../../generators/swift/sdk-wrapper/dist/api.cjs"
+                );
+
+                const module = (await import(pathToGeneratorBundle)) as {
+                    generateSwiftSdk: (args: {
+                        api: string | undefined;
+                        group: string;
+                        outDir: string;
+                        version: string | undefined;
+                    }) => Promise<void>;
+                };
+
+                if (typeof module.generateSwiftSdk !== "function") {
+                    cliContext.failAndThrow(
+                        "Failed to load experimental Swift generator: missing generateSwiftSdk export."
+                    );
+                }
+
+                await module.generateSwiftSdk({
+                    api: argv.api as string | undefined,
+                    group: argv.group as string,
+                    outDir: argv.outDir as string,
+                    version: argv.version as string | undefined
+                });
             }
         );
         return yargs;
