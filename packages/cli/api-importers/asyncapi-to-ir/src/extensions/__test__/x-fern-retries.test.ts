@@ -1,3 +1,4 @@
+import type { AbstractConverterContext } from "@fern-api/v3-importer-commons";
 import { describe, expect, it, vi } from "vitest";
 import { FernRetriesExtension } from "../x-fern-retries";
 
@@ -8,7 +9,7 @@ describe("FernRetriesExtension", () => {
 
     const mockContext = {
         errorCollector: mockErrorCollector
-    } as any;
+    } as unknown as AbstractConverterContext<object>;
 
     const breadcrumbs = ["channels", "myChannel"];
 
@@ -47,7 +48,9 @@ describe("FernRetriesExtension", () => {
             path: breadcrumbs
         });
         expect(mockErrorCollector.collect).toHaveBeenCalledWith({
-            message: expect.stringContaining("https://docs.buildwithfern.com/api-definition/openapi/extensions/retries"),
+            message: expect.stringContaining(
+                "https://docs.buildwithfern.com/api-definition/openapi/extensions/retries"
+            ),
             path: breadcrumbs
         });
     });
