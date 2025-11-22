@@ -1,0 +1,41 @@
+openapi: 3.1.0
+info:
+  title: Example Summaries Test
+  version: 1.0.0
+servers:
+  - url: https://httpbin.org/anything
+paths:
+  /something:
+    post:
+      summary: Do something
+      operationId: doSomething
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Foo'
+            examples:
+              partner_token:
+                summary: Partner token
+                value:
+                  foo: partner
+              user_token:
+                summary: User token
+                value:
+                  foo: user
+      responses:
+        '200':
+          description: ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Foo'
+
+components:
+  schemas:
+    Foo:
+      type: object
+      required: [foo]
+      properties:
+        foo:
+          type: string
