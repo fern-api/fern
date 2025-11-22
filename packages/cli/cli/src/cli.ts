@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-import { resolve as resolvePath } from "node:path";
 import type { ReadStream, WriteStream } from "node:tty";
 import { fromBinary, toBinary } from "@bufbuild/protobuf";
 import { CodeGeneratorRequestSchema, CodeGeneratorResponseSchema } from "@bufbuild/protobuf/wkt";
@@ -1609,17 +1608,17 @@ function addExpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("exp", "Experimental commands", (yargs) => {
         yargs.command(
             ["generate-sdks"],
-            "Generate SDKs for the specified API without Docker",
+            "Generate SDKs for the specified APIs.",
             (yargs) =>
                 yargs
+                    .option("remote", {
+                        boolean: true,
+                        default: false,
+                        description: "Run the generator(s) remotely."
+                    })
                     .option("api", {
                         string: true,
                         description: "If multiple APIs, specify the name with --api <name>. Otherwise, just --api."
-                    })
-                    .option("preview", {
-                        boolean: true,
-                        default: false,
-                        description: "Whether to generate a preview link for the docs"
                     })
                     .option("group", {
                         type: "string",
@@ -1638,140 +1637,55 @@ function addExpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         hidden: true,
                         default: false
                     })
-                    .option("local", {
-                        boolean: true,
-                        default: false,
-                        description: "Run the generator(s) locally."
-                    })
                     .option("keepDocker", {
                         boolean: true,
                         default: false,
                         description: "Prevent auto-deletion of the Docker containers."
-                    })
-                    .option("force", {
-                        boolean: true,
-                        default: false,
-                        description: "Ignore prompts to confirm generation, defaults to false"
-                    })
-                    .option("broken-links", {
-                        boolean: true,
-                        description: "Log a warning if there are broken links in the docs.",
-                        default: false
-                    })
-                    .option("strict-broken-links", {
-                        boolean: true,
-                        description:
-                            "Throw an error (rather than logging a warning) if there are broken links in the docs.",
-                        default: false
-                    })
-                    .option("disable-snippets", {
-                        boolean: true,
-                        description: "Disable snippets in docs generation.",
-                        default: false
                     })
                     .option("lfs-override", {
                         type: "string",
                         hidden: true,
                         description: "Override output mode to local-file-system with the specified path"
                     })
-                    .option("disable-dynamic-snippets", {
+                    .option("preview", {
                         boolean: true,
-                        description: "Disable dynamic SDK snippets in docs generation",
-                        default: false
+                        default: false,
+                        description: "Whether to generate a preview version of the SDK"
                     })
-                    .option("prompt", {
+                    .option("force", {
                         boolean: true,
-                        description: "Prompt for confirmation before generating (use --no-prompt to skip)",
-                        default: true
+                        default: false,
+                        description: "Ignore prompts to confirm generation, defaults to false"
                     }),
             async (argv) => {
                 const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: false
                 });
-                if (argv.local) {
-                    return await generateAPIWorkspacesLocal({
+                if (argv.remote) {
+                    return await generateAPIWorkspaces({
                         project,
                         cliContext,
-                        groupName: argv.group,
-                        api: argv.api,
                         version: argv.version,
-                        force: argv.force,
-                        lfsOverride: argv.lfsOverride
+                        groupName: argv.group,
+                        shouldLogS3Url: argv.printZipUrl,
+                        keepDocker: argv.keepDocker,
+                        useLocalDocker: false,
+                        mode: argv.mode,
+                        runner: "docker",
+                        inspect: false,
+                        lfsOverride: argv.lfsOverride,
+                        preview: argv.preview,
+                        force: argv.force
                     });
                 }
-                return await generateAPIWorkspaces({
+                return await generateAPIWorkspacesLocal({
                     project,
                     cliContext,
-                    version: argv.version,
                     groupName: argv.group,
-                    shouldLogS3Url: argv.printZipUrl,
-                    keepDocker: argv.keepDocker,
-                    useLocalDocker: false,
-                    preview: argv.preview,
-                    mode: argv.mode,
+                    version: argv.version,
                     force: argv.force,
-                    runner: "docker",
-                    inspect: false,
                     lfsOverride: argv.lfsOverride
-                });
-            }
-        );
-
-        yargs.command(
-            "generate-swift",
-            "Experimental Swift SDK generation",
-            (subYargs) =>
-                subYargs
-                    .option("api", {
-                        type: "string",
-                        description: "The API to generate.",
-                        demandOption: false
-                    })
-                    .option("group", {
-                        type: "string",
-                        description: "The group to generate.",
-                        demandOption: true
-                    })
-                    .option("outDir", {
-                        type: "string",
-                        description: "The path to the output directory.",
-                        demandOption: true
-                    })
-                    .option("version", {
-                        type: "string",
-                        description: "The version to use for the output.",
-                        demandOption: false
-                    }),
-            async (argv) => {
-                // For now, pretend this module was downloaded from the registry and extracted locally.
-                // We import the programmatic Swift generator API from the dedicated dist bundle.
-                // TODO(kafkas): Replace this with real registry download + cache resolution.
-                const pathToGeneratorBundle = resolvePath(
-                    __dirname,
-                    "../../../../../generators/swift/sdk-wrapper/dist/api.cjs"
-                );
-
-                const module = (await import(pathToGeneratorBundle)) as {
-                    generateSwiftSdk: (args: {
-                        api: string | undefined;
-                        group: string;
-                        outDir: string;
-                        version: string | undefined;
-                    }) => Promise<void>;
-                };
-
-                if (typeof module.generateSwiftSdk !== "function") {
-                    cliContext.failAndThrow(
-                        "Failed to load experimental Swift generator: missing generateSwiftSdk export."
-                    );
-                }
-
-                await module.generateSwiftSdk({
-                    api: argv.api,
-                    group: argv.group,
-                    outDir: argv.outDir,
-                    version: argv.version
                 });
             }
         );

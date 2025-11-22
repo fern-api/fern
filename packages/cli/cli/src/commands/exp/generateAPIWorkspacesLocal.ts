@@ -46,7 +46,6 @@ export async function generateAPIWorkspacesLocal({
     project,
     cliContext,
     groupName,
-    api,
     version,
     force,
     lfsOverride
@@ -54,7 +53,6 @@ export async function generateAPIWorkspacesLocal({
     project: Project;
     cliContext: CliContext;
     groupName: string | undefined;
-    api: string | undefined;
     version: string | undefined;
     force: boolean;
     lfsOverride: string | undefined;
