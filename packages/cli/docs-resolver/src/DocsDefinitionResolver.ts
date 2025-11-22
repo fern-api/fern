@@ -886,7 +886,6 @@ export class DocsDefinitionResolver {
                 viewers: product.viewers,
                 orphaned: product.orphaned,
                 featureFlags: product.featureFlags
-                // announcement: product.announcement != null ? { text: product.announcement.message } : undefined
             };
         } else {
             return {
@@ -937,7 +936,6 @@ export class DocsDefinitionResolver {
             icon: undefined,
             pointsTo: undefined,
             featureFlags: version.featureFlags
-            // announcement: version.announcement != null ? { text: version.announcement.message } : undefined
         };
     }
 
