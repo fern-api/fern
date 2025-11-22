@@ -174,8 +174,66 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
         let isOAuth = false;
         const isAnyAuth = this.ir.auth.requirement === "ANY";
 
-        // Only generate auth provider for non-ANY auth schemes
-        if (!isAnyAuth) {
+        // Handle ANY auth case - create AnyAuthProvider that aggregates all schemes
+        if (isAnyAuth) {
+            context.sourceFile.addImportDeclaration({
+                moduleSpecifier: "./auth/AnyAuthProvider.js",
+                namedImports: ["AnyAuthProvider"]
+            });
+
+            // Import all auth provider classes
+            const providerImports: string[] = [];
+            const providerInstantiations: string[] = [];
+
+            for (const authScheme of this.ir.auth.schemes) {
+                if (authScheme.type === "bearer") {
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/BearerAuthProvider.js",
+                        namedImports: ["BearerAuthProvider"]
+                    });
+                    providerImports.push("BearerAuthProvider");
+                    providerInstantiations.push(
+                        "if (BearerAuthProvider.canCreate(options)) { authProviders.push(new BearerAuthProvider(options)); }"
+                    );
+                } else if (authScheme.type === "basic") {
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/BasicAuthProvider.js",
+                        namedImports: ["BasicAuthProvider"]
+                    });
+                    providerImports.push("BasicAuthProvider");
+                    providerInstantiations.push(
+                        "if (BasicAuthProvider.canCreate(options)) { authProviders.push(new BasicAuthProvider(options)); }"
+                    );
+                } else if (authScheme.type === "header") {
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/HeaderAuthProvider.js",
+                        namedImports: ["HeaderAuthProvider"]
+                    });
+                    providerImports.push("HeaderAuthProvider");
+                    providerInstantiations.push(
+                        "if (HeaderAuthProvider.canCreate(options)) { authProviders.push(new HeaderAuthProvider(options)); }"
+                    );
+                } else if (authScheme.type === "oauth") {
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/OAuthAuthProvider.js",
+                        namedImports: ["OAuthAuthProvider"]
+                    });
+                    providerImports.push("OAuthAuthProvider");
+                    providerInstantiations.push(
+                        "if (OAuthAuthProvider.canCreate(options)) { authProviders.push(new OAuthAuthProvider(options)); }"
+                    );
+                }
+            }
+
+            // Generate code to instantiate providers array and pass to AnyAuthProvider
+            const providerArrayCode = `
+    const authProviders: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())}[] = [];
+    ${providerInstantiations.join("\n    ")}`;
+
+            authProviderCreation = `${providerArrayCode}
+    new AnyAuthProvider(authProviders)`;
+        } else {
+            // Only generate auth provider for non-ANY auth schemes
             for (const authScheme of this.ir.auth.schemes) {
                 if (authScheme.type === "bearer") {
                     // Import BearerAuthProvider

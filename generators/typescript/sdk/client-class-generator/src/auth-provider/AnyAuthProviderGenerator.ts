@@ -1,0 +1,122 @@
+import { FernIr } from "@fern-fern/ir-sdk";
+import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
+import { SdkContext } from "@fern-typescript/contexts";
+import { Scope, StructureKind, ts } from "ts-morph";
+import { AuthProviderGenerator } from "./AuthProviderGenerator";
+
+export declare namespace AnyAuthProviderGenerator {
+    export interface Init {
+        ir: FernIr.IntermediateRepresentation;
+    }
+}
+
+const CLASS_NAME = "AnyAuthProvider";
+
+export class AnyAuthProviderGenerator implements AuthProviderGenerator {
+    public static readonly CLASS_NAME = CLASS_NAME;
+    private readonly ir: FernIr.IntermediateRepresentation;
+
+    constructor(init: AnyAuthProviderGenerator.Init) {
+        this.ir = init.ir;
+    }
+
+    public getFilePath(): ExportedFilePath {
+        return {
+            directories: [{ nameOnDisk: "auth" }],
+            file: {
+                nameOnDisk: `${CLASS_NAME}.ts`,
+                exportDeclaration: { namedExports: [CLASS_NAME] }
+            }
+        };
+    }
+
+    public getAuthProviderClassType(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(CLASS_NAME);
+    }
+
+    public getOptionsType(): ts.TypeNode {
+        // AnyAuthProvider doesn't have an Options type - it takes an array of providers
+        throw new Error("AnyAuthProvider does not have an Options type");
+    }
+
+    public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
+        return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
+    }
+
+    public writeToFile(context: SdkContext): void {
+        this.writeClass(context);
+    }
+
+    private writeClass(context: SdkContext): void {
+        // AnyAuthProvider now accepts an array of auth providers
+        context.sourceFile.addClass({
+            name: CLASS_NAME,
+            isExported: true,
+            implements: [getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())],
+            properties: [
+                {
+                    name: "authProviders",
+                    type: getTextOfTsNode(
+                        ts.factory.createArrayTypeNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())
+                    ),
+                    hasQuestionToken: false,
+                    isReadonly: true,
+                    scope: Scope.Private
+                }
+            ],
+            ctors: [
+                {
+                    parameters: [
+                        {
+                            name: "authProviders",
+                            type: getTextOfTsNode(
+                                ts.factory.createArrayTypeNode(
+                                    context.coreUtilities.auth.AuthProvider._getReferenceToType()
+                                )
+                            )
+                        }
+                    ],
+                    statements: ["this.authProviders = authProviders;"]
+                }
+            ],
+            methods: [
+                {
+                    kind: StructureKind.Method,
+                    scope: Scope.Public,
+                    name: "getAuthRequest",
+                    isAsync: true,
+                    returnType: getTextOfTsNode(
+                        ts.factory.createTypeReferenceNode("Promise", [
+                            context.coreUtilities.auth.AuthRequest._getReferenceToType()
+                        ])
+                    ),
+                    statements: this.generateGetAuthRequestStatements()
+                }
+            ]
+        });
+    }
+
+    private generateGetAuthRequestStatements(): string {
+        const providerArray = "this.authProviders";
+        const errorHandling = this.ir.sdkConfig.isAuthMandatory
+            ? `throw new Error("No authentication credentials provided. Please provide one of the supported authentication methods.");`
+            : `return { headers: {} };`;
+
+        return `
+        const availableProviders = ${providerArray};
+
+        for (const provider of availableProviders) {
+            try {
+                const authRequest = await provider.getAuthRequest();
+                if (authRequest.headers.Authorization != null || Object.keys(authRequest.headers).length > 0) {
+                    return authRequest;
+                }
+            } catch (e) {
+                // Continue to next auth provider
+            }
+        }
+
+        // No auth credentials found
+        ${errorHandling}`;
+    }
+}

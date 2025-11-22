@@ -1,9 +1,9 @@
-import { FernIr } from "@fern-fern/ir-sdk";
-import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import type { FernIr } from "@fern-fern/ir-sdk";
+import { type ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
+import type { SdkContext } from "@fern-typescript/contexts";
 import { Scope, StructureKind, ts } from "ts-morph";
 
-import { AuthProviderGenerator } from "./AuthProviderGenerator";
+import type { AuthProviderGenerator } from "./AuthProviderGenerator";
 
 export declare namespace OAuthAuthProviderGenerator {
     export interface Init {
@@ -131,45 +131,23 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
 
-        // Generate constructor with validation
-        let constructorStatements = "";
-
-        if (clientIdIsOptional) {
-            constructorStatements += `
-        const clientId = options.clientId ?? process.env?.["${oauthConfig.clientIdEnvVar}"];
-        if (clientId == null) {
-            throw new ${errorConstructor}({
-                message: "clientId is required; either pass it as an argument or set the ${oauthConfig.clientIdEnvVar} environment variable"
-            });
-        }
-        this._clientId = clientId;
-`;
-        } else {
-            constructorStatements += `
+        // Generate constructor - just assign the values from options
+        // Validation and environment variable fallback happens in the refresh method
+        let constructorStatements = `
         this._clientId = options.clientId;
-`;
-        }
-
-        if (clientSecretIsOptional) {
-            constructorStatements += `
-        const clientSecret = options.clientSecret ?? process.env?.["${oauthConfig.clientSecretEnvVar}"];
-        if (clientSecret == null) {
-            throw new ${errorConstructor}({
-                message: "clientSecret is required; either pass it as an argument or set the ${oauthConfig.clientSecretEnvVar} environment variable"
-            });
-        }
-        this._clientSecret = clientSecret;
-`;
-        } else {
-            constructorStatements += `
-        this._clientSecret = options.clientSecret;
-`;
-        }
+        this._clientSecret = options.clientSecret;`;
 
         constructorStatements += `
         this._authClient = new ${authClientType}(options);
         this._expiresAt = new Date();
         `;
+
+        // Get the appropriate supplier type (Supplier or EndpointSupplier based on generateEndpointMetadata)
+        const supplierType = getTextOfTsNode(
+            context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+            )
+        ).replace(/<any>/, "");
 
         const properties: Array<{
             name: string;
@@ -181,13 +159,13 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }> = [
             {
                 name: "_clientId",
-                type: `core.Supplier<${clientIdType}>`,
+                type: `${supplierType}<${clientIdType}> | undefined`,
                 isReadonly: true,
                 scope: Scope.Private
             },
             {
                 name: "_clientSecret",
-                type: `core.Supplier<${clientSecretType}>`,
+                type: `${supplierType}<${clientSecretType}> | undefined`,
                 isReadonly: true,
                 scope: Scope.Private
             },
@@ -249,17 +227,40 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this._getToken();
         `;
 
-        // Constructor validates credentials, so fields are always defined
-        const clientIdExpression = `await core.Supplier.get(this._clientId)`;
-        const clientSecretExpression = `await core.Supplier.get(this._clientSecret)`;
+        // Validation and environment variable fallback happens here
+        const clientIdValidation =
+            clientIdIsOptional && oauthConfig.clientIdEnvVar != null
+                ? `
+        const clientId = (await core.Supplier.get(this._clientId)) ?? process.env?.["${oauthConfig.clientIdEnvVar}"];
+        if (clientId == null) {
+            throw new ${errorConstructor}({
+                message: "clientId is required; either pass it as an argument or set the ${oauthConfig.clientIdEnvVar} environment variable"
+            });
+        }`
+                : `
+        const clientId = await core.Supplier.get(this._clientId);`;
+
+        const clientSecretValidation =
+            clientSecretIsOptional && oauthConfig.clientSecretEnvVar != null
+                ? `
+        const clientSecret = (await core.Supplier.get(this._clientSecret)) ?? process.env?.["${oauthConfig.clientSecretEnvVar}"];
+        if (clientSecret == null) {
+            throw new ${errorConstructor}({
+                message: "clientSecret is required; either pass it as an argument or set the ${oauthConfig.clientSecretEnvVar} environment variable"
+            });
+        }`
+                : `
+        const clientSecret = await core.Supplier.get(this._clientSecret);`;
 
         const refreshMethodStatements = hasExpiration
             ? `
         this._refreshPromise = (async () => {
             try {
+                ${clientIdValidation}
+                ${clientSecretValidation}
                 const tokenResponse = await this._authClient.${endpointName}({
-                    ${clientIdProperty}: ${clientIdExpression},
-                    ${clientSecretProperty}: ${clientSecretExpression},
+                    ${clientIdProperty}: clientId,
+                    ${clientSecretProperty}: clientSecret,
                 });
                 ${neverThrowErrorHandler}
                 this._accessToken = ${accessTokenProperty};
@@ -274,9 +275,11 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             : `
         this._refreshPromise = (async () => {
             try {
+                ${clientIdValidation}
+                ${clientSecretValidation}
                 const tokenResponse = await this._authClient.${endpointName}({
-                    ${clientIdProperty}: ${clientIdExpression},
-                    ${clientSecretProperty}: ${clientSecretExpression},
+                    ${clientIdProperty}: clientId,
+                    ${clientSecretProperty}: clientSecret,
                 });
                 ${neverThrowErrorHandler}
                 this._accessToken = ${accessTokenProperty};
@@ -288,15 +291,37 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this._refreshPromise;
         `;
 
+        // Generate canCreate static method
+        const canCreateStatements = this.generatecanCreateStatements(
+            oauthConfig.clientIdEnvVar,
+            oauthConfig.clientSecretEnvVar
+        );
+
         const methods: Array<{
             kind: StructureKind.Method;
             scope: Scope;
             name: string;
-            isAsync: boolean;
+            isAsync?: boolean;
+            isStatic?: boolean;
             returnType: string;
             statements: string;
             parameters?: Array<{ name: string; type: string }>;
         }> = [
+            {
+                kind: StructureKind.Method,
+                scope: Scope.Public,
+                isStatic: true,
+                name: "canCreate",
+                isAsync: false,
+                returnType: "boolean",
+                statements: canCreateStatements,
+                parameters: [
+                    {
+                        name: "options",
+                        type: getTextOfTsNode(this.getOptionsType())
+                    }
+                ]
+            },
             {
                 kind: StructureKind.Method,
                 scope: Scope.Public,
@@ -391,6 +416,23 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             }`;
     }
 
+    private generatecanCreateStatements(
+        clientIdEnvVar: string | undefined,
+        clientSecretEnvVar: string | undefined
+    ): string {
+        const clientIdCheck =
+            clientIdEnvVar != null
+                ? `(options.clientId != null || process.env?.["${clientIdEnvVar}"] != null)`
+                : `options.clientId != null`;
+
+        const clientSecretCheck =
+            clientSecretEnvVar != null
+                ? `(options.clientSecret != null || process.env?.["${clientSecretEnvVar}"] != null)`
+                : `options.clientSecret != null`;
+
+        return `return ${clientIdCheck} && ${clientSecretCheck};`;
+    }
+
     private getName(name: FernIr.Name | FernIr.NameAndWireValue): string {
         if (this.includeSerdeLayer) {
             if ("name" in name) {
@@ -416,39 +458,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             return;
         }
 
-        const properties: Array<{
-            kind: StructureKind.PropertySignature;
-            name: string;
-            type: string;
-            hasQuestionToken?: boolean;
-        }> = [];
-
-        // Add clientId property
-        const clientIdProperty = oauthConfig.tokenEndpoint.requestProperties.clientId;
-        properties.push({
-            kind: StructureKind.PropertySignature,
-            name: "clientId",
-            type: getTextOfTsNode(
-                context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                    context.type.getReferenceToType(clientIdProperty.property.valueType).typeNode
-                )
-            ),
-            hasQuestionToken: oauthConfig.clientIdEnvVar != null
-        });
-
-        // Add clientSecret property
-        const clientSecretProperty = oauthConfig.tokenEndpoint.requestProperties.clientSecret;
-        properties.push({
-            kind: StructureKind.PropertySignature,
-            name: "clientSecret",
-            type: getTextOfTsNode(
-                context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                    context.type.getReferenceToType(clientSecretProperty.property.valueType).typeNode
-                )
-            ),
-            hasQuestionToken: oauthConfig.clientSecretEnvVar != null
-        });
-
+        // OAuthAuthProvider.Options extends BaseClientOptions, which already includes
+        // clientId and clientSecret with the correct types (Supplier or EndpointSupplier
+        // based on generateEndpointMetadata). We don't need to redeclare them here.
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
@@ -458,8 +470,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    extends: ["BaseClientOptions"],
-                    properties
+                    extends: ["BaseClientOptions"]
                 }
             ]
         });

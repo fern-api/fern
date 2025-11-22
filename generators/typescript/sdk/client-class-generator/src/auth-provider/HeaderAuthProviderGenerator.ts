@@ -1,9 +1,9 @@
-import { FernIr } from "@fern-fern/ir-sdk";
-import { ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
-import { PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
+import type { FernIr } from "@fern-fern/ir-sdk";
+import { type ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import type { SdkContext } from "@fern-typescript/contexts";
+import { type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
-import { AuthProviderGenerator } from "./AuthProviderGenerator";
+import type { AuthProviderGenerator } from "./AuthProviderGenerator";
 
 export declare namespace HeaderAuthProviderGenerator {
     export interface Init {
@@ -76,10 +76,10 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
 
         const headerFieldType = hasHeaderEnv
             ? ts.factory.createUnionTypeNode([
-                  context.coreUtilities.fetcher.Supplier._getReferenceToType(headerValueType),
+                  context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerValueType),
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
-            : context.coreUtilities.fetcher.Supplier._getReferenceToType(headerValueType);
+            : context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerValueType);
 
         context.sourceFile.addClass({
             name: CLASS_NAME,
@@ -95,6 +95,20 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                 }
             ],
             methods: [
+                {
+                    kind: StructureKind.Method,
+                    scope: Scope.Public,
+                    isStatic: true,
+                    name: "canCreate",
+                    parameters: [
+                        {
+                            name: "options",
+                            type: getTextOfTsNode(this.getOptionsType())
+                        }
+                    ],
+                    returnType: "boolean",
+                    statements: this.generatecanCreateStatements()
+                },
                 {
                     kind: StructureKind.Method,
                     scope: Scope.Public,
@@ -120,6 +134,17 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
                 }
             ]
         });
+    }
+
+    private generatecanCreateStatements(): string {
+        const headerFieldName = this.authScheme.name.name.camelCase.safeName;
+        const headerEnvVar = this.authScheme.headerEnvVar;
+
+        if (headerEnvVar != null) {
+            return `return options.${headerFieldName} != null || process.env?.["${headerEnvVar}"] != null;`;
+        }
+
+        return `return options.${headerFieldName} != null;`;
     }
 
     private generateGetAuthRequestStatements(context: SdkContext): string {
@@ -209,7 +234,9 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
             kind: StructureKind.PropertySignature,
             name: getPropertyKey(this.authScheme.name.name.camelCase.safeName),
             hasQuestionToken: isHeaderOptional,
-            type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(headerType)),
+            type: getTextOfTsNode(
+                context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerType)
+            ),
             docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
         };
 

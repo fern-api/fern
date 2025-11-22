@@ -1,10 +1,16 @@
-import { SetRequired } from "@fern-api/core-utils";
+import type { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import type { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import { BaseClientContext, SdkContext } from "@fern-typescript/contexts";
+import type { BaseClientContext, SdkContext } from "@fern-typescript/contexts";
 import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
-import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, StructureKind, ts } from "ts-morph";
+import {
+    type InterfaceDeclarationStructure,
+    type OptionalKind,
+    type PropertySignatureStructure,
+    StructureKind,
+    ts
+} from "ts-morph";
 
 export declare namespace BaseClientContextImpl {
     export interface Init {
@@ -266,7 +272,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                     kind: StructureKind.PropertySignature,
                     name: getPropertyKey("clientId"),
                     type: getTextOfTsNode(
-                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        supplier._getReferenceToType(
                             context.type.getReferenceToType(clientIdProperty.property.valueType).typeNode
                         )
                     ),
@@ -277,7 +283,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                     kind: StructureKind.PropertySignature,
                     name: getPropertyKey("clientSecret"),
                     type: getTextOfTsNode(
-                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                        supplier._getReferenceToType(
                             context.type.getReferenceToType(clientSecretProperty.property.valueType).typeNode
                         )
                     ),

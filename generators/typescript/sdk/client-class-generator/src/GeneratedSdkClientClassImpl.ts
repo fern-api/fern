@@ -49,6 +49,7 @@ import {
 } from "ts-morph";
 import { Code, code } from "ts-poet";
 import {
+    AnyAuthProviderInstance,
     AuthProviderInstance,
     BasicAuthProviderInstance,
     BearerAuthProviderInstance,
@@ -452,6 +453,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                     throw new Error("Unknown auth scheme: " + authScheme.type);
                 }
             });
+        }
+
+        // After the loop, if isAnyAuth, create AnyAuthProviderInstance
+        if (isAnyAuth && intermediateRepresentation.auth.schemes.length > 0) {
+            this.authProvider = new AnyAuthProviderInstance();
         }
     }
 

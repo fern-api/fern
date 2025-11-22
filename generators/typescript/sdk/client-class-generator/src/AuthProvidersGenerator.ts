@@ -4,6 +4,7 @@ import { ExportedFilePath } from "@fern-typescript/commons";
 import { GeneratedFile, SdkContext } from "@fern-typescript/contexts";
 
 import {
+    AnyAuthProviderGenerator,
     AuthProviderGenerator,
     BasicAuthProviderGenerator,
     BearerAuthProviderGenerator,
@@ -15,7 +16,7 @@ import {
 export declare namespace AuthProvidersGenerator {
     export interface Init {
         ir: IntermediateRepresentation;
-        authScheme: AuthScheme;
+        authScheme: AuthScheme | { type: "any" };
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
     }
@@ -26,6 +27,10 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
     constructor({ ir, authScheme, neverThrowErrors, includeSerdeLayer }: AuthProvidersGenerator.Init) {
         this.authProviderGenerator = (() => {
             switch (authScheme.type) {
+                case "any":
+                    return new AnyAuthProviderGenerator({
+                        ir
+                    });
                 case "inferred":
                     return new InferredAuthProviderGenerator({
                         ir,
