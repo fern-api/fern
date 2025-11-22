@@ -344,42 +344,48 @@ public abstract class AbstractEndpointWriter {
                 httpEndpoint.getRequestBody().flatMap(HttpRequestBody::getFileUpload);
         if (maybeFileUpload.isPresent()) {
             FileUploadRequest fileUpload = maybeFileUpload.get();
-            List<FileProperty> fileProperties = fileUpload.getProperties().stream()
-                    .filter(prop -> prop.visit(new FileUploadRequestProperty.Visitor<Boolean>() {
-                        @Override
-                        public Boolean visitFile(FileProperty file) {
-                            return true;
-                        }
+            
+            // Check if endpoint has query parameters - if so, skip InputStream generation
+            // to avoid compilation errors from referencing non-existent request parameter
+            boolean hasQueryParameters = !httpEndpoint.getQueryParameters().isEmpty();
+            
+            if (!hasQueryParameters) {
+                List<FileProperty> fileProperties = fileUpload.getProperties().stream()
+                        .filter(prop -> prop.visit(new FileUploadRequestProperty.Visitor<Boolean>() {
+                            @Override
+                            public Boolean visitFile(FileProperty file) {
+                                return true;
+                            }
 
-                        @Override
-                        public Boolean visitBodyProperty(FileUploadBodyProperty bodyProperty) {
-                            return false;
-                        }
+                            @Override
+                            public Boolean visitBodyProperty(FileUploadBodyProperty bodyProperty) {
+                                return false;
+                            }
 
-                        @Override
-                        public Boolean _visitUnknown(Object unknownType) {
-                            return false;
-                        }
-                    }))
-                    .map(prop -> prop.visit(new FileUploadRequestProperty.Visitor<FileProperty>() {
-                        @Override
-                        public FileProperty visitFile(FileProperty file) {
-                            return file;
-                        }
+                            @Override
+                            public Boolean _visitUnknown(Object unknownType) {
+                                return false;
+                            }
+                        }))
+                        .map(prop -> prop.visit(new FileUploadRequestProperty.Visitor<FileProperty>() {
+                            @Override
+                            public FileProperty visitFile(FileProperty file) {
+                                return file;
+                            }
 
-                        @Override
-                        public FileProperty visitBodyProperty(FileUploadBodyProperty bodyProperty) {
-                            throw new RuntimeException("Expected file property");
-                        }
+                            @Override
+                            public FileProperty visitBodyProperty(FileUploadBodyProperty bodyProperty) {
+                                throw new RuntimeException("Expected file property");
+                            }
 
-                        @Override
-                        public FileProperty _visitUnknown(Object unknownType) {
-                            throw new RuntimeException("Unknown property type");
-                        }
-                    }))
-                    .collect(Collectors.toList());
+                            @Override
+                            public FileProperty _visitUnknown(Object unknownType) {
+                                throw new RuntimeException("Unknown property type");
+                            }
+                        }))
+                        .collect(Collectors.toList());
 
-            if (fileProperties.size() == 1) {
+                if (fileProperties.size() == 1) {
                 FileProperty fileProperty = fileProperties.get(0);
                 boolean isSingleFile = fileProperty.visit(new FileProperty.Visitor<Boolean>() {
                     @Override
@@ -709,6 +715,7 @@ public abstract class AbstractEndpointWriter {
                     withBothBuilder.addCode(withBothBody.build());
                     inputStreamWithMediaTypeAndRequestOptionsMethodSpec = withBothBuilder.build();
                 }
+            }
             }
         }
 
