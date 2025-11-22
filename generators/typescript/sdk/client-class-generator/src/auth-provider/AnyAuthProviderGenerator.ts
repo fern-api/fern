@@ -85,6 +85,22 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
                     scope: Scope.Public,
                     name: "getAuthRequest",
                     isAsync: true,
+                    parameters: [
+                        {
+                            name: "arg",
+                            hasQuestionToken: true,
+                            type: getTextOfTsNode(
+                                ts.factory.createTypeLiteralNode([
+                                    ts.factory.createPropertySignature(
+                                        undefined,
+                                        "endpointMetadata",
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                        context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                    )
+                                ])
+                            )
+                        }
+                    ],
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode("Promise", [
                             context.coreUtilities.auth.AuthRequest._getReferenceToType()
@@ -107,7 +123,7 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
 
         for (const provider of availableProviders) {
             try {
-                const authRequest = await provider.getAuthRequest();
+                const authRequest = await provider.getAuthRequest(arg);
                 if (authRequest.headers.Authorization != null || Object.keys(authRequest.headers).length > 0) {
                     return authRequest;
                 }

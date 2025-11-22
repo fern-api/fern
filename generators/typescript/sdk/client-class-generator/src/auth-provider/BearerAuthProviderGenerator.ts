@@ -114,6 +114,22 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                     scope: Scope.Public,
                     name: "getAuthRequest",
                     isAsync: true,
+                    parameters: [
+                        {
+                            name: "arg",
+                            hasQuestionToken: true,
+                            type: getTextOfTsNode(
+                                ts.factory.createTypeLiteralNode([
+                                    ts.factory.createPropertySignature(
+                                        undefined,
+                                        "endpointMetadata",
+                                        ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                        context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                    )
+                                ])
+                            )
+                        }
+                    ],
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
                             context.coreUtilities.auth.AuthRequest._getReferenceToType()
@@ -154,19 +170,47 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         const tokenExpression =
             this.authScheme.tokenEnvVar != null
                 ? `(${getTextOfTsNode(
-                      context.coreUtilities.fetcher.Supplier.get(
+                      context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
                           ts.factory.createPropertyAccessExpression(
                               ts.factory.createThis(),
                               ts.factory.createIdentifier(TOKEN_FIELD_NAME)
-                          )
+                          ),
+                          ts.factory.createObjectLiteralExpression([
+                              ts.factory.createPropertyAssignment(
+                                  "endpointMetadata",
+                                  ts.factory.createBinaryExpression(
+                                      ts.factory.createPropertyAccessChain(
+                                          ts.factory.createIdentifier("arg"),
+                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                          "endpointMetadata"
+                                      ),
+                                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                      ts.factory.createObjectLiteralExpression([])
+                                  )
+                              )
+                          ])
                       )
                   )}) ?? process.env?.["${this.authScheme.tokenEnvVar}"]`
                 : getTextOfTsNode(
-                      context.coreUtilities.fetcher.Supplier.get(
+                      context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
                           ts.factory.createPropertyAccessExpression(
                               ts.factory.createThis(),
                               ts.factory.createIdentifier(TOKEN_FIELD_NAME)
-                          )
+                          ),
+                          ts.factory.createObjectLiteralExpression([
+                              ts.factory.createPropertyAssignment(
+                                  "endpointMetadata",
+                                  ts.factory.createBinaryExpression(
+                                      ts.factory.createPropertyAccessChain(
+                                          ts.factory.createIdentifier("arg"),
+                                          ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                          "endpointMetadata"
+                                      ),
+                                      ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                      ts.factory.createObjectLiteralExpression([])
+                                  )
+                              )
+                          ])
                       )
                   );
 

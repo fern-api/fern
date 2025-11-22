@@ -26,7 +26,7 @@ export interface Auth {
     AuthProvider: {
         _getReferenceToType: () => ts.TypeNode;
         getAuthRequest: {
-            invoke: (instanceExpression: ts.Expression) => ts.Expression;
+            invoke: (instanceExpression: ts.Expression, metadata?: ts.Expression) => ts.Expression;
             getReturnTypeNode: () => ts.TypeNode;
         };
     };
@@ -141,7 +141,7 @@ export class AuthImpl extends CoreUtility implements Auth {
     public readonly AuthProvider = {
         _getReferenceToType: this.withExportedName("AuthProvider", (AuthProvider) => () => AuthProvider.getTypeNode()),
         getAuthRequest: {
-            invoke: (instanceExpression: ts.Expression) => {
+            invoke: (instanceExpression: ts.Expression, metadata?: ts.Expression) => {
                 return ts.factory.createAwaitExpression(
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
@@ -149,7 +149,7 @@ export class AuthImpl extends CoreUtility implements Auth {
                             ts.factory.createIdentifier("getAuthRequest")
                         ),
                         undefined,
-                        []
+                        metadata ? [metadata] : []
                     )
                 );
             },

@@ -331,6 +331,15 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         const authProviderStatements = [];
         const mergeOnlyDefinedHeaders: (ts.PropertyAssignment | ts.SpreadAssignment)[] = [];
         if (this.generatedSdkClientClass.hasAuthProvider()) {
+            const metadataArg = this.generatedSdkClientClass.getGenerateEndpointMetadata()
+                ? ts.factory.createObjectLiteralExpression([
+                      ts.factory.createPropertyAssignment(
+                          "endpointMetadata",
+                          this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
+                      )
+                  ])
+                : undefined;
+
             authProviderStatements.push(
                 ts.factory.createVariableStatement(
                     undefined,
@@ -341,7 +350,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                                 undefined,
                                 context.coreUtilities.auth.AuthRequest._getReferenceToType(),
                                 context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
-                                    this.generatedSdkClientClass.getReferenceToAuthProviderOrThrow()
+                                    this.generatedSdkClientClass.getReferenceToAuthProviderOrThrow(),
+                                    metadataArg
                                 )
                             )
                         ],

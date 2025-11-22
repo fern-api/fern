@@ -47,6 +47,15 @@ export function generateHeaders({
         endpoint.auth &&
         context.authProvider.isAuthEndpoint(endpoint) === false
     ) {
+        const metadataArg = generatedSdkClientClass.getGenerateEndpointMetadata()
+            ? ts.factory.createObjectLiteralExpression([
+                  ts.factory.createPropertyAssignment(
+                      "endpointMetadata",
+                      generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
+                  )
+              ])
+            : undefined;
+
         statements.push(
             ts.factory.createVariableStatement(
                 undefined,
@@ -57,7 +66,8 @@ export function generateHeaders({
                             undefined,
                             context.coreUtilities.auth.AuthRequest._getReferenceToType(),
                             context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
-                                generatedSdkClientClass.getReferenceToAuthProviderOrThrow()
+                                generatedSdkClientClass.getReferenceToAuthProviderOrThrow(),
+                                metadataArg
                             )
                         )
                     ],

@@ -214,7 +214,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         if (this._refreshPromise != null) {
             return this._refreshPromise;
         }
-        return this.refresh();
+        return this.refresh(arg);
         `
             : `
         if (this._accessToken) {
@@ -224,33 +224,71 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         if (this._refreshPromise != null) {
             return this._refreshPromise;
         }
-        return this._getToken();
+        return this._getToken(arg);
         `;
 
         // Validation and environment variable fallback happens here
+        const clientIdSupplierCall = getTextOfTsNode(
+            context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
+                ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientId"),
+                ts.factory.createObjectLiteralExpression([
+                    ts.factory.createPropertyAssignment(
+                        "endpointMetadata",
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createPropertyAccessChain(
+                                ts.factory.createIdentifier("arg"),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                "endpointMetadata"
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                            ts.factory.createObjectLiteralExpression([])
+                        )
+                    )
+                ])
+            )
+        );
         const clientIdValidation =
             clientIdIsOptional && oauthConfig.clientIdEnvVar != null
                 ? `
-        const clientId = (await core.Supplier.get(this._clientId)) ?? process.env?.["${oauthConfig.clientIdEnvVar}"];
+        const clientId = (${clientIdSupplierCall}) ?? process.env?.["${oauthConfig.clientIdEnvVar}"];
         if (clientId == null) {
             throw new ${errorConstructor}({
                 message: "clientId is required; either pass it as an argument or set the ${oauthConfig.clientIdEnvVar} environment variable"
             });
         }`
                 : `
-        const clientId = await core.Supplier.get(this._clientId);`;
+        const clientId = ${clientIdSupplierCall};`;
 
+        const clientSecretSupplierCall = getTextOfTsNode(
+            context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
+                ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientSecret"),
+                ts.factory.createObjectLiteralExpression([
+                    ts.factory.createPropertyAssignment(
+                        "endpointMetadata",
+                        ts.factory.createBinaryExpression(
+                            ts.factory.createPropertyAccessChain(
+                                ts.factory.createIdentifier("arg"),
+                                ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                "endpointMetadata"
+                            ),
+                            ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                            ts.factory.createObjectLiteralExpression([])
+                        )
+                    )
+                ])
+            )
+        );
         const clientSecretValidation =
             clientSecretIsOptional && oauthConfig.clientSecretEnvVar != null
                 ? `
-        const clientSecret = (await core.Supplier.get(this._clientSecret)) ?? process.env?.["${oauthConfig.clientSecretEnvVar}"];
+        const clientSecret = (${clientSecretSupplierCall}) ?? process.env?.["${oauthConfig.clientSecretEnvVar}"];
         if (clientSecret == null) {
             throw new ${errorConstructor}({
                 message: "clientSecret is required; either pass it as an argument or set the ${oauthConfig.clientSecretEnvVar} environment variable"
             });
         }`
                 : `
-        const clientSecret = await core.Supplier.get(this._clientSecret);`;
+        const clientSecret = ${clientSecretSupplierCall};`;
 
         const refreshMethodStatements = hasExpiration
             ? `
@@ -327,13 +365,28 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 scope: Scope.Public,
                 name: "getAuthRequest",
                 isAsync: true,
+                parameters: [
+                    {
+                        name: "arg?",
+                        type: getTextOfTsNode(
+                            ts.factory.createTypeLiteralNode([
+                                ts.factory.createPropertySignature(
+                                    undefined,
+                                    "endpointMetadata",
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                    context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                )
+                            ])
+                        )
+                    }
+                ],
                 returnType: getTextOfTsNode(
                     ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
                         context.coreUtilities.auth.AuthRequest._getReferenceToType()
                     ])
                 ),
                 statements: `
-        const token = await this.getToken();
+        const token = await this.getToken(arg);
 
         return {
             headers: {
@@ -348,6 +401,21 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 name: "getToken",
                 isAsync: true,
                 returnType: "Promise<string>",
+                parameters: [
+                    {
+                        name: "arg?",
+                        type: getTextOfTsNode(
+                            ts.factory.createTypeLiteralNode([
+                                ts.factory.createPropertySignature(
+                                    undefined,
+                                    "endpointMetadata",
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                    context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                )
+                            ])
+                        )
+                    }
+                ],
                 statements: getTokenStatements
             },
             {
@@ -356,6 +424,21 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 name: hasExpiration ? "refresh" : "_getToken",
                 isAsync: true,
                 returnType: "Promise<string>",
+                parameters: [
+                    {
+                        name: "arg?",
+                        type: getTextOfTsNode(
+                            ts.factory.createTypeLiteralNode([
+                                ts.factory.createPropertySignature(
+                                    undefined,
+                                    "endpointMetadata",
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                    context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                )
+                            ])
+                        )
+                    }
+                ],
                 statements: refreshMethodStatements
             }
         ];

@@ -226,12 +226,11 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
             }
 
             // Generate code to instantiate providers array and pass to AnyAuthProvider
-            const providerArrayCode = `
-    const authProviders: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())}[] = [];
-    ${providerInstantiations.join("\n    ")}`;
-
-            authProviderCreation = `${providerArrayCode}
-    new AnyAuthProvider(authProviders)`;
+            authProviderCreation = `(() => {
+        const authProviders: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())}[] = [];
+        ${providerInstantiations.join("\n        ")}
+        return new AnyAuthProvider(authProviders);
+    })()`;
         } else {
             // Only generate auth provider for non-ANY auth schemes
             for (const authScheme of this.ir.auth.schemes) {
