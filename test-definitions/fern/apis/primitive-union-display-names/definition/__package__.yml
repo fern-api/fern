@@ -1,0 +1,72 @@
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getPrimitiveUnion:
+      path: /primitive-union
+      method: GET
+      response: PrimitiveUnion
+      examples:
+        - response:
+            body: "hello"
+
+    sendPrimitiveUnion:
+      path: /primitive-union
+      method: POST
+      request: PrimitiveUnion
+      response: PrimitiveUnion
+      examples:
+        - request: 42
+          response:
+            body: 42
+
+    getComplexPrimitiveUnion:
+      path: /complex-primitive-union
+      method: GET
+      response: ComplexPrimitiveUnion
+      examples:
+        - response:
+            body: true
+
+types:
+  PrimitiveUnion:
+    docs: |
+      An undiscriminated union of primitive types to test display-names.
+      Each primitive type should have a proper display-name set.
+    discriminated: false
+    union:
+      - string
+      - integer
+      - boolean
+      - double
+      - long
+      - uuid
+      - date
+      - datetime
+
+  ComplexPrimitiveUnion:
+    docs: |
+      An undiscriminated union with container types wrapping primitives.
+      Tests that display-names are properly generated for complex types.
+    discriminated: false
+    union:
+      - string
+      - list<string>
+      - optional<integer>
+      - map<string, boolean>
+      - set<double>
+
+  MixedUnion:
+    docs: |
+      An undiscriminated union mixing primitives and named types.
+      Tests that both primitive and named type display-names work correctly.
+    discriminated: false
+    union:
+      - string
+      - integer
+      - NamedType
+
+  NamedType:
+    properties:
+      value: string
+      count: integer
