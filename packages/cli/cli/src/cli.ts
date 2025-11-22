@@ -1690,8 +1690,13 @@ function addExpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     defaultToAllApiWorkspaces: false
                 });
                 if (argv.local) {
-                    // TODO(kafkas): Implement
-                    return await generateAPIWorkspacesLocal();
+                    return await generateAPIWorkspacesLocal({
+                        project,
+                        cliContext,
+                        groupName: argv.group,
+                        api: argv.api,
+                        version: argv.version
+                    });
                 }
                 return await generateAPIWorkspaces({
                     project,
