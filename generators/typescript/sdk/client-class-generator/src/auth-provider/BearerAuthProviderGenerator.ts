@@ -148,13 +148,9 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
         if (this.neverThrowErrors) {
             return `
         const ${tokenVar} = ${tokenExpression};
-        
-        const authHeader = ${tokenVar} != null ? ${getTextOfTsNode(
-            context.coreUtilities.auth.BearerToken.toAuthorizationHeader(ts.factory.createIdentifier(tokenVar))
-        )} : undefined;
-        
+
         return {
-            headers: authHeader != null ? { Authorization: authHeader } : {}
+            headers: { Authorization: \`Bearer \${${tokenVar}}\` }
         };
         `;
         }
@@ -175,13 +171,9 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                 message: "${tokenErrorMessage}"
             });
         }
-        
-        const authHeader = ${getTextOfTsNode(
-            context.coreUtilities.auth.BearerToken.toAuthorizationHeader(ts.factory.createIdentifier(tokenVar))
-        )};
-        
+
         return {
-            headers: authHeader != null ? { Authorization: authHeader } : {}
+            headers: { Authorization: \`Bearer \${${tokenVar}}\` }
         };
         `;
     }
