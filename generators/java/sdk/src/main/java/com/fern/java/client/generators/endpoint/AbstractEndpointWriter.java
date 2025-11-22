@@ -344,11 +344,11 @@ public abstract class AbstractEndpointWriter {
                 httpEndpoint.getRequestBody().flatMap(HttpRequestBody::getFileUpload);
         if (maybeFileUpload.isPresent()) {
             FileUploadRequest fileUpload = maybeFileUpload.get();
-            
+
             // Check if endpoint has query parameters - if so, skip InputStream generation
             // to avoid compilation errors from referencing non-existent request parameter
             boolean hasQueryParameters = !httpEndpoint.getQueryParameters().isEmpty();
-            
+
             if (!hasQueryParameters) {
                 List<FileProperty> fileProperties = fileUpload.getProperties().stream()
                         .filter(prop -> prop.visit(new FileUploadRequestProperty.Visitor<Boolean>() {
@@ -386,336 +386,338 @@ public abstract class AbstractEndpointWriter {
                         .collect(Collectors.toList());
 
                 if (fileProperties.size() == 1) {
-                FileProperty fileProperty = fileProperties.get(0);
-                boolean isSingleFile = fileProperty.visit(new FileProperty.Visitor<Boolean>() {
-                    @Override
-                    public Boolean visitFile(FilePropertySingle file) {
-                        return true;
+                    FileProperty fileProperty = fileProperties.get(0);
+                    boolean isSingleFile = fileProperty.visit(new FileProperty.Visitor<Boolean>() {
+                        @Override
+                        public Boolean visitFile(FilePropertySingle file) {
+                            return true;
+                        }
+
+                        @Override
+                        public Boolean visitFileArray(FilePropertyArray fileArray) {
+                            return false;
+                        }
+
+                        @Override
+                        public Boolean _visitUnknown(Object unknownType) {
+                            return false;
+                        }
+                    });
+
+                    if (isSingleFile) {
+                        com.fern.ir.model.commons.NameAndWireValue filePropertyKey =
+                                fileProperty.visit(new com.fern.java.client.generators.visitors.GetFilePropertyKey());
+                        String wireKey = filePropertyKey.getWireValue();
+
+                        // Filter out both the request body parameter and the file parameter
+                        List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
+                                .filter(parameterSpec -> {
+                                    // Exclude the request body parameter
+                                    if (variables.sdkRequest().isPresent()
+                                            && parameterSpec.name.equals(variables
+                                                    .sdkRequest()
+                                                    .get()
+                                                    .getRequestParameterName()
+                                                    .getCamelCase()
+                                                    .getUnsafeName())) {
+                                        return false;
+                                    }
+                                    if (parameterSpec.type.equals(ClassName.get(java.io.File.class))) {
+                                        return false;
+                                    }
+                                    return true;
+                                })
+                                .collect(Collectors.toList());
+
+                        ClassName fileStreamClassName =
+                                clientGeneratorContext.getPoetClassNameFactory().getFileStreamClassName();
+                        ClassName mediaTypeClassName =
+                                clientGeneratorContext.getPoetClassNameFactory().getOkhttp3MediaTypeClassName();
+                        ClassName multipartBodyClassName =
+                                clientGeneratorContext.getPoetClassNameFactory().getOkhttp3MultipartBodyClassName();
+                        ClassName requestBodyClassName =
+                                clientGeneratorContext.getPoetClassNameFactory().getOkhttp3RequestBodyClassName();
+                        ClassName inputStreamClassName = ClassName.get(java.io.InputStream.class);
+
+                        ParameterSpec streamParam = ParameterSpec.builder(inputStreamClassName, "stream")
+                                .build();
+                        ParameterSpec filenameParam =
+                                ParameterSpec.builder(String.class, "filename").build();
+                        ParameterSpec mediaTypeParam = ParameterSpec.builder(mediaTypeClassName, "mediaType")
+                                .build();
+
+                        MethodSpec.Builder baseMethodBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+                                .addModifiers(Modifier.PUBLIC)
+                                .addParameters(variables.pathParameters)
+                                .addParameters(additionalParamsWithoutBody)
+                                .addParameter(streamParam)
+                                .addParameter(filenameParam)
+                                .returns(endpointWithRequestOptions.returnType);
+
+                        CodeBlock.Builder methodBody = CodeBlock.builder()
+                                .add(generatedHttpUrl.initialization())
+                                .addStatement(
+                                        "$T fs = new $T($N, $N, null)",
+                                        fileStreamClassName,
+                                        fileStreamClassName,
+                                        streamParam,
+                                        filenameParam)
+                                .addStatement(
+                                        "$T $L = new $T().setType($T.FORM)",
+                                        multipartBodyClassName.nestedClass("Builder"),
+                                        variables.getMultipartBodyPropertiesName(),
+                                        multipartBodyClassName.nestedClass("Builder"),
+                                        multipartBodyClassName)
+                                .addStatement(
+                                        "$L.addFormDataPart($S, $N, fs.toRequestBody())",
+                                        variables.getMultipartBodyPropertiesName(),
+                                        wireKey,
+                                        filenameParam)
+                                .addStatement(
+                                        "$T $L = $L.build()",
+                                        requestBodyClassName,
+                                        variables.getOkhttpRequestBodyName(),
+                                        variables.getMultipartBodyPropertiesName());
+
+                        methodBody.addStatement(
+                                "$T.Builder $L = new $T.Builder()",
+                                ClassName.get("okhttp3", "Request"),
+                                "_requestBuilder",
+                                ClassName.get("okhttp3", "Request"));
+                        methodBody.addStatement("$L.url($L)", "_requestBuilder", generatedHttpUrl.inlineableBuild());
+                        methodBody.addStatement(
+                                "$L.method($S, $L)",
+                                "_requestBuilder",
+                                httpEndpoint.getMethod().toString(),
+                                variables.getOkhttpRequestBodyName());
+                        methodBody.addStatement(
+                                "$L.headers($T.of(this.$L.$L(null)))",
+                                "_requestBuilder",
+                                ClassName.get("okhttp3", "Headers"),
+                                clientOptionsField.name,
+                                ClientOptionsGenerator.HEADERS_METHOD_NAME);
+                        methodBody.addStatement(
+                                "$T $L = $L.build()",
+                                ClassName.get("okhttp3", "Request"),
+                                variables.getOkhttpRequestName(),
+                                "_requestBuilder");
+
+                        // Add response parsing without requestOptions check
+                        methodBody.addStatement(
+                                "$T $L = $N.$N()",
+                                ClassName.get("okhttp3", "OkHttpClient"),
+                                variables.getDefaultedClientName(),
+                                clientOptionsField,
+                                generatedClientOptions.httpClient());
+                        methodBody.add(responseParserGenerator.getResponseParserCodeBlockWithoutRequestOptions(
+                                baseMethodBuilder));
+
+                        baseMethodBuilder.addCode(methodBody.build());
+                        inputStreamMethodSpec = baseMethodBuilder.build();
+
+                        MethodSpec.Builder withMediaTypeBuilder = MethodSpec.methodBuilder(
+                                        endpointWithRequestOptions.name)
+                                .addModifiers(Modifier.PUBLIC)
+                                .addParameters(variables.pathParameters)
+                                .addParameters(additionalParamsWithoutBody)
+                                .addParameter(streamParam)
+                                .addParameter(filenameParam)
+                                .addParameter(mediaTypeParam)
+                                .returns(endpointWithRequestOptions.returnType);
+
+                        CodeBlock.Builder withMediaTypeBody = CodeBlock.builder()
+                                .add(generatedHttpUrl.initialization())
+                                .addStatement(
+                                        "$T fs = new $T($N, $N, $N)",
+                                        fileStreamClassName,
+                                        fileStreamClassName,
+                                        streamParam,
+                                        filenameParam,
+                                        mediaTypeParam)
+                                .addStatement(
+                                        "$T $L = new $T().setType($T.FORM)",
+                                        multipartBodyClassName.nestedClass("Builder"),
+                                        variables.getMultipartBodyPropertiesName(),
+                                        multipartBodyClassName.nestedClass("Builder"),
+                                        multipartBodyClassName)
+                                .addStatement(
+                                        "$L.addFormDataPart($S, $N, fs.toRequestBody())",
+                                        variables.getMultipartBodyPropertiesName(),
+                                        wireKey,
+                                        filenameParam)
+                                .addStatement(
+                                        "$T $L = $L.build()",
+                                        requestBodyClassName,
+                                        variables.getOkhttpRequestBodyName(),
+                                        variables.getMultipartBodyPropertiesName());
+
+                        withMediaTypeBody.addStatement(
+                                "$T.Builder $L = new $T.Builder()",
+                                ClassName.get("okhttp3", "Request"),
+                                "_requestBuilder",
+                                ClassName.get("okhttp3", "Request"));
+                        withMediaTypeBody.addStatement(
+                                "$L.url($L)", "_requestBuilder", generatedHttpUrl.inlineableBuild());
+                        withMediaTypeBody.addStatement(
+                                "$L.method($S, $L)",
+                                "_requestBuilder",
+                                httpEndpoint.getMethod().toString(),
+                                variables.getOkhttpRequestBodyName());
+                        withMediaTypeBody.addStatement(
+                                "$L.headers($T.of(this.$L.$L(null)))",
+                                "_requestBuilder",
+                                ClassName.get("okhttp3", "Headers"),
+                                clientOptionsField.name,
+                                ClientOptionsGenerator.HEADERS_METHOD_NAME);
+                        withMediaTypeBody.addStatement(
+                                "$T $L = $L.build()",
+                                ClassName.get("okhttp3", "Request"),
+                                variables.getOkhttpRequestName(),
+                                "_requestBuilder");
+
+                        // Add response parsing without requestOptions check
+                        withMediaTypeBody.addStatement(
+                                "$T $L = $N.$N()",
+                                ClassName.get("okhttp3", "OkHttpClient"),
+                                variables.getDefaultedClientName(),
+                                clientOptionsField,
+                                generatedClientOptions.httpClient());
+                        withMediaTypeBody.add(responseParserGenerator.getResponseParserCodeBlockWithoutRequestOptions(
+                                withMediaTypeBuilder));
+
+                        withMediaTypeBuilder.addCode(withMediaTypeBody.build());
+                        inputStreamWithMediaTypeMethodSpec = withMediaTypeBuilder.build();
+
+                        MethodSpec.Builder withRequestOptionsBuilder = MethodSpec.methodBuilder(
+                                        endpointWithRequestOptions.name)
+                                .addModifiers(Modifier.PUBLIC)
+                                .addParameters(variables.pathParameters)
+                                .addParameters(additionalParamsWithoutBody)
+                                .addParameter(streamParam)
+                                .addParameter(filenameParam)
+                                .addParameter(requestOptionsParameterSpec())
+                                .returns(endpointWithRequestOptions.returnType);
+
+                        CodeBlock.Builder withRequestOptionsBody = CodeBlock.builder()
+                                .add(generatedHttpUrl.initialization())
+                                .addStatement(
+                                        "$T fs = new $T($N, $N, null)",
+                                        fileStreamClassName,
+                                        fileStreamClassName,
+                                        streamParam,
+                                        filenameParam)
+                                .addStatement(
+                                        "$T $L = new $T().setType($T.FORM)",
+                                        multipartBodyClassName.nestedClass("Builder"),
+                                        variables.getMultipartBodyPropertiesName(),
+                                        multipartBodyClassName.nestedClass("Builder"),
+                                        multipartBodyClassName)
+                                .addStatement(
+                                        "$L.addFormDataPart($S, $N, fs.toRequestBody())",
+                                        variables.getMultipartBodyPropertiesName(),
+                                        wireKey,
+                                        filenameParam)
+                                .addStatement(
+                                        "$T $L = $L.build()",
+                                        requestBodyClassName,
+                                        variables.getOkhttpRequestBodyName(),
+                                        variables.getMultipartBodyPropertiesName());
+
+                        withRequestOptionsBody.addStatement(
+                                "$T.Builder $L = new $T.Builder()",
+                                ClassName.get("okhttp3", "Request"),
+                                "_requestBuilder",
+                                ClassName.get("okhttp3", "Request"));
+                        withRequestOptionsBody.addStatement(
+                                "$L.url($L)", "_requestBuilder", generatedHttpUrl.inlineableBuild());
+                        withRequestOptionsBody.addStatement(
+                                "$L.method($S, $L)",
+                                "_requestBuilder",
+                                httpEndpoint.getMethod().toString(),
+                                variables.getOkhttpRequestBodyName());
+                        withRequestOptionsBody.addStatement(
+                                "$L.headers($T.of(this.$L.$L($L)))",
+                                "_requestBuilder",
+                                ClassName.get("okhttp3", "Headers"),
+                                clientOptionsField.name,
+                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                        withRequestOptionsBody.addStatement(
+                                "$T $L = $L.build()",
+                                ClassName.get("okhttp3", "Request"),
+                                variables.getOkhttpRequestName(),
+                                "_requestBuilder");
+                        withRequestOptionsBody.add(
+                                responseParserGenerator.getResponseParserCodeBlock(withRequestOptionsBuilder));
+
+                        withRequestOptionsBuilder.addCode(withRequestOptionsBody.build());
+                        inputStreamWithRequestOptionsMethodSpec = withRequestOptionsBuilder.build();
+
+                        MethodSpec.Builder withBothBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
+                                .addModifiers(Modifier.PUBLIC)
+                                .addParameters(variables.pathParameters)
+                                .addParameters(additionalParamsWithoutBody)
+                                .addParameter(streamParam)
+                                .addParameter(filenameParam)
+                                .addParameter(mediaTypeParam)
+                                .addParameter(requestOptionsParameterSpec())
+                                .returns(endpointWithRequestOptions.returnType);
+
+                        CodeBlock.Builder withBothBody = CodeBlock.builder()
+                                .add(generatedHttpUrl.initialization())
+                                .addStatement(
+                                        "$T fs = new $T($N, $N, $N)",
+                                        fileStreamClassName,
+                                        fileStreamClassName,
+                                        streamParam,
+                                        filenameParam,
+                                        mediaTypeParam)
+                                .addStatement(
+                                        "$T $L = new $T().setType($T.FORM)",
+                                        multipartBodyClassName.nestedClass("Builder"),
+                                        variables.getMultipartBodyPropertiesName(),
+                                        multipartBodyClassName.nestedClass("Builder"),
+                                        multipartBodyClassName)
+                                .addStatement(
+                                        "$L.addFormDataPart($S, $N, fs.toRequestBody())",
+                                        variables.getMultipartBodyPropertiesName(),
+                                        wireKey,
+                                        filenameParam)
+                                .addStatement(
+                                        "$T $L = $L.build()",
+                                        requestBodyClassName,
+                                        variables.getOkhttpRequestBodyName(),
+                                        variables.getMultipartBodyPropertiesName());
+
+                        withBothBody.addStatement(
+                                "$T.Builder $L = new $T.Builder()",
+                                ClassName.get("okhttp3", "Request"),
+                                "_requestBuilder",
+                                ClassName.get("okhttp3", "Request"));
+                        withBothBody.addStatement("$L.url($L)", "_requestBuilder", generatedHttpUrl.inlineableBuild());
+                        withBothBody.addStatement(
+                                "$L.method($S, $L)",
+                                "_requestBuilder",
+                                httpEndpoint.getMethod().toString(),
+                                variables.getOkhttpRequestBodyName());
+                        withBothBody.addStatement(
+                                "$L.headers($T.of(this.$L.$L($L)))",
+                                "_requestBuilder",
+                                ClassName.get("okhttp3", "Headers"),
+                                clientOptionsField.name,
+                                ClientOptionsGenerator.HEADERS_METHOD_NAME,
+                                AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
+                        withBothBody.addStatement(
+                                "$T $L = $L.build()",
+                                ClassName.get("okhttp3", "Request"),
+                                variables.getOkhttpRequestName(),
+                                "_requestBuilder");
+                        withBothBody.add(responseParserGenerator.getResponseParserCodeBlock(withBothBuilder));
+
+                        withBothBuilder.addCode(withBothBody.build());
+                        inputStreamWithMediaTypeAndRequestOptionsMethodSpec = withBothBuilder.build();
                     }
-
-                    @Override
-                    public Boolean visitFileArray(FilePropertyArray fileArray) {
-                        return false;
-                    }
-
-                    @Override
-                    public Boolean _visitUnknown(Object unknownType) {
-                        return false;
-                    }
-                });
-
-                if (isSingleFile) {
-                    com.fern.ir.model.commons.NameAndWireValue filePropertyKey =
-                            fileProperty.visit(new com.fern.java.client.generators.visitors.GetFilePropertyKey());
-                    String wireKey = filePropertyKey.getWireValue();
-
-                    // Filter out both the request body parameter and the file parameter
-                    List<ParameterSpec> additionalParamsWithoutBody = additionalParameters.stream()
-                            .filter(parameterSpec -> {
-                                // Exclude the request body parameter
-                                if (variables.sdkRequest().isPresent()
-                                        && parameterSpec.name.equals(variables
-                                                .sdkRequest()
-                                                .get()
-                                                .getRequestParameterName()
-                                                .getCamelCase()
-                                                .getUnsafeName())) {
-                                    return false;
-                                }
-                                if (parameterSpec.type.equals(ClassName.get(java.io.File.class))) {
-                                    return false;
-                                }
-                                return true;
-                            })
-                            .collect(Collectors.toList());
-
-                    ClassName fileStreamClassName =
-                            clientGeneratorContext.getPoetClassNameFactory().getFileStreamClassName();
-                    ClassName mediaTypeClassName =
-                            clientGeneratorContext.getPoetClassNameFactory().getOkhttp3MediaTypeClassName();
-                    ClassName multipartBodyClassName =
-                            clientGeneratorContext.getPoetClassNameFactory().getOkhttp3MultipartBodyClassName();
-                    ClassName requestBodyClassName =
-                            clientGeneratorContext.getPoetClassNameFactory().getOkhttp3RequestBodyClassName();
-                    ClassName inputStreamClassName = ClassName.get(java.io.InputStream.class);
-
-                    ParameterSpec streamParam = ParameterSpec.builder(inputStreamClassName, "stream")
-                            .build();
-                    ParameterSpec filenameParam =
-                            ParameterSpec.builder(String.class, "filename").build();
-                    ParameterSpec mediaTypeParam = ParameterSpec.builder(mediaTypeClassName, "mediaType")
-                            .build();
-
-                    MethodSpec.Builder baseMethodBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
-                            .addModifiers(Modifier.PUBLIC)
-                            .addParameters(variables.pathParameters)
-                            .addParameters(additionalParamsWithoutBody)
-                            .addParameter(streamParam)
-                            .addParameter(filenameParam)
-                            .returns(endpointWithRequestOptions.returnType);
-
-                    CodeBlock.Builder methodBody = CodeBlock.builder()
-                            .add(generatedHttpUrl.initialization())
-                            .addStatement(
-                                    "$T fs = new $T($N, $N, null)",
-                                    fileStreamClassName,
-                                    fileStreamClassName,
-                                    streamParam,
-                                    filenameParam)
-                            .addStatement(
-                                    "$T $L = new $T().setType($T.FORM)",
-                                    multipartBodyClassName.nestedClass("Builder"),
-                                    variables.getMultipartBodyPropertiesName(),
-                                    multipartBodyClassName.nestedClass("Builder"),
-                                    multipartBodyClassName)
-                            .addStatement(
-                                    "$L.addFormDataPart($S, $N, fs.toRequestBody())",
-                                    variables.getMultipartBodyPropertiesName(),
-                                    wireKey,
-                                    filenameParam)
-                            .addStatement(
-                                    "$T $L = $L.build()",
-                                    requestBodyClassName,
-                                    variables.getOkhttpRequestBodyName(),
-                                    variables.getMultipartBodyPropertiesName());
-
-                    methodBody.addStatement(
-                            "$T.Builder $L = new $T.Builder()",
-                            ClassName.get("okhttp3", "Request"),
-                            "_requestBuilder",
-                            ClassName.get("okhttp3", "Request"));
-                    methodBody.addStatement("$L.url($L)", "_requestBuilder", generatedHttpUrl.inlineableBuild());
-                    methodBody.addStatement(
-                            "$L.method($S, $L)",
-                            "_requestBuilder",
-                            httpEndpoint.getMethod().toString(),
-                            variables.getOkhttpRequestBodyName());
-                    methodBody.addStatement(
-                            "$L.headers($T.of(this.$L.$L(null)))",
-                            "_requestBuilder",
-                            ClassName.get("okhttp3", "Headers"),
-                            clientOptionsField.name,
-                            ClientOptionsGenerator.HEADERS_METHOD_NAME);
-                    methodBody.addStatement(
-                            "$T $L = $L.build()",
-                            ClassName.get("okhttp3", "Request"),
-                            variables.getOkhttpRequestName(),
-                            "_requestBuilder");
-
-                    // Add response parsing without requestOptions check
-                    methodBody.addStatement(
-                            "$T $L = $N.$N()",
-                            ClassName.get("okhttp3", "OkHttpClient"),
-                            variables.getDefaultedClientName(),
-                            clientOptionsField,
-                            generatedClientOptions.httpClient());
-                    methodBody.add(
-                            responseParserGenerator.getResponseParserCodeBlockWithoutRequestOptions(baseMethodBuilder));
-
-                    baseMethodBuilder.addCode(methodBody.build());
-                    inputStreamMethodSpec = baseMethodBuilder.build();
-
-                    MethodSpec.Builder withMediaTypeBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
-                            .addModifiers(Modifier.PUBLIC)
-                            .addParameters(variables.pathParameters)
-                            .addParameters(additionalParamsWithoutBody)
-                            .addParameter(streamParam)
-                            .addParameter(filenameParam)
-                            .addParameter(mediaTypeParam)
-                            .returns(endpointWithRequestOptions.returnType);
-
-                    CodeBlock.Builder withMediaTypeBody = CodeBlock.builder()
-                            .add(generatedHttpUrl.initialization())
-                            .addStatement(
-                                    "$T fs = new $T($N, $N, $N)",
-                                    fileStreamClassName,
-                                    fileStreamClassName,
-                                    streamParam,
-                                    filenameParam,
-                                    mediaTypeParam)
-                            .addStatement(
-                                    "$T $L = new $T().setType($T.FORM)",
-                                    multipartBodyClassName.nestedClass("Builder"),
-                                    variables.getMultipartBodyPropertiesName(),
-                                    multipartBodyClassName.nestedClass("Builder"),
-                                    multipartBodyClassName)
-                            .addStatement(
-                                    "$L.addFormDataPart($S, $N, fs.toRequestBody())",
-                                    variables.getMultipartBodyPropertiesName(),
-                                    wireKey,
-                                    filenameParam)
-                            .addStatement(
-                                    "$T $L = $L.build()",
-                                    requestBodyClassName,
-                                    variables.getOkhttpRequestBodyName(),
-                                    variables.getMultipartBodyPropertiesName());
-
-                    withMediaTypeBody.addStatement(
-                            "$T.Builder $L = new $T.Builder()",
-                            ClassName.get("okhttp3", "Request"),
-                            "_requestBuilder",
-                            ClassName.get("okhttp3", "Request"));
-                    withMediaTypeBody.addStatement("$L.url($L)", "_requestBuilder", generatedHttpUrl.inlineableBuild());
-                    withMediaTypeBody.addStatement(
-                            "$L.method($S, $L)",
-                            "_requestBuilder",
-                            httpEndpoint.getMethod().toString(),
-                            variables.getOkhttpRequestBodyName());
-                    withMediaTypeBody.addStatement(
-                            "$L.headers($T.of(this.$L.$L(null)))",
-                            "_requestBuilder",
-                            ClassName.get("okhttp3", "Headers"),
-                            clientOptionsField.name,
-                            ClientOptionsGenerator.HEADERS_METHOD_NAME);
-                    withMediaTypeBody.addStatement(
-                            "$T $L = $L.build()",
-                            ClassName.get("okhttp3", "Request"),
-                            variables.getOkhttpRequestName(),
-                            "_requestBuilder");
-
-                    // Add response parsing without requestOptions check
-                    withMediaTypeBody.addStatement(
-                            "$T $L = $N.$N()",
-                            ClassName.get("okhttp3", "OkHttpClient"),
-                            variables.getDefaultedClientName(),
-                            clientOptionsField,
-                            generatedClientOptions.httpClient());
-                    withMediaTypeBody.add(responseParserGenerator.getResponseParserCodeBlockWithoutRequestOptions(
-                            withMediaTypeBuilder));
-
-                    withMediaTypeBuilder.addCode(withMediaTypeBody.build());
-                    inputStreamWithMediaTypeMethodSpec = withMediaTypeBuilder.build();
-
-                    MethodSpec.Builder withRequestOptionsBuilder = MethodSpec.methodBuilder(
-                                    endpointWithRequestOptions.name)
-                            .addModifiers(Modifier.PUBLIC)
-                            .addParameters(variables.pathParameters)
-                            .addParameters(additionalParamsWithoutBody)
-                            .addParameter(streamParam)
-                            .addParameter(filenameParam)
-                            .addParameter(requestOptionsParameterSpec())
-                            .returns(endpointWithRequestOptions.returnType);
-
-                    CodeBlock.Builder withRequestOptionsBody = CodeBlock.builder()
-                            .add(generatedHttpUrl.initialization())
-                            .addStatement(
-                                    "$T fs = new $T($N, $N, null)",
-                                    fileStreamClassName,
-                                    fileStreamClassName,
-                                    streamParam,
-                                    filenameParam)
-                            .addStatement(
-                                    "$T $L = new $T().setType($T.FORM)",
-                                    multipartBodyClassName.nestedClass("Builder"),
-                                    variables.getMultipartBodyPropertiesName(),
-                                    multipartBodyClassName.nestedClass("Builder"),
-                                    multipartBodyClassName)
-                            .addStatement(
-                                    "$L.addFormDataPart($S, $N, fs.toRequestBody())",
-                                    variables.getMultipartBodyPropertiesName(),
-                                    wireKey,
-                                    filenameParam)
-                            .addStatement(
-                                    "$T $L = $L.build()",
-                                    requestBodyClassName,
-                                    variables.getOkhttpRequestBodyName(),
-                                    variables.getMultipartBodyPropertiesName());
-
-                    withRequestOptionsBody.addStatement(
-                            "$T.Builder $L = new $T.Builder()",
-                            ClassName.get("okhttp3", "Request"),
-                            "_requestBuilder",
-                            ClassName.get("okhttp3", "Request"));
-                    withRequestOptionsBody.addStatement(
-                            "$L.url($L)", "_requestBuilder", generatedHttpUrl.inlineableBuild());
-                    withRequestOptionsBody.addStatement(
-                            "$L.method($S, $L)",
-                            "_requestBuilder",
-                            httpEndpoint.getMethod().toString(),
-                            variables.getOkhttpRequestBodyName());
-                    withRequestOptionsBody.addStatement(
-                            "$L.headers($T.of(this.$L.$L($L)))",
-                            "_requestBuilder",
-                            ClassName.get("okhttp3", "Headers"),
-                            clientOptionsField.name,
-                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
-                    withRequestOptionsBody.addStatement(
-                            "$T $L = $L.build()",
-                            ClassName.get("okhttp3", "Request"),
-                            variables.getOkhttpRequestName(),
-                            "_requestBuilder");
-                    withRequestOptionsBody.add(
-                            responseParserGenerator.getResponseParserCodeBlock(withRequestOptionsBuilder));
-
-                    withRequestOptionsBuilder.addCode(withRequestOptionsBody.build());
-                    inputStreamWithRequestOptionsMethodSpec = withRequestOptionsBuilder.build();
-
-                    MethodSpec.Builder withBothBuilder = MethodSpec.methodBuilder(endpointWithRequestOptions.name)
-                            .addModifiers(Modifier.PUBLIC)
-                            .addParameters(variables.pathParameters)
-                            .addParameters(additionalParamsWithoutBody)
-                            .addParameter(streamParam)
-                            .addParameter(filenameParam)
-                            .addParameter(mediaTypeParam)
-                            .addParameter(requestOptionsParameterSpec())
-                            .returns(endpointWithRequestOptions.returnType);
-
-                    CodeBlock.Builder withBothBody = CodeBlock.builder()
-                            .add(generatedHttpUrl.initialization())
-                            .addStatement(
-                                    "$T fs = new $T($N, $N, $N)",
-                                    fileStreamClassName,
-                                    fileStreamClassName,
-                                    streamParam,
-                                    filenameParam,
-                                    mediaTypeParam)
-                            .addStatement(
-                                    "$T $L = new $T().setType($T.FORM)",
-                                    multipartBodyClassName.nestedClass("Builder"),
-                                    variables.getMultipartBodyPropertiesName(),
-                                    multipartBodyClassName.nestedClass("Builder"),
-                                    multipartBodyClassName)
-                            .addStatement(
-                                    "$L.addFormDataPart($S, $N, fs.toRequestBody())",
-                                    variables.getMultipartBodyPropertiesName(),
-                                    wireKey,
-                                    filenameParam)
-                            .addStatement(
-                                    "$T $L = $L.build()",
-                                    requestBodyClassName,
-                                    variables.getOkhttpRequestBodyName(),
-                                    variables.getMultipartBodyPropertiesName());
-
-                    withBothBody.addStatement(
-                            "$T.Builder $L = new $T.Builder()",
-                            ClassName.get("okhttp3", "Request"),
-                            "_requestBuilder",
-                            ClassName.get("okhttp3", "Request"));
-                    withBothBody.addStatement("$L.url($L)", "_requestBuilder", generatedHttpUrl.inlineableBuild());
-                    withBothBody.addStatement(
-                            "$L.method($S, $L)",
-                            "_requestBuilder",
-                            httpEndpoint.getMethod().toString(),
-                            variables.getOkhttpRequestBodyName());
-                    withBothBody.addStatement(
-                            "$L.headers($T.of(this.$L.$L($L)))",
-                            "_requestBuilder",
-                            ClassName.get("okhttp3", "Headers"),
-                            clientOptionsField.name,
-                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
-                            AbstractEndpointWriterVariableNameContext.REQUEST_OPTIONS_PARAMETER_NAME);
-                    withBothBody.addStatement(
-                            "$T $L = $L.build()",
-                            ClassName.get("okhttp3", "Request"),
-                            variables.getOkhttpRequestName(),
-                            "_requestBuilder");
-                    withBothBody.add(responseParserGenerator.getResponseParserCodeBlock(withBothBuilder));
-
-                    withBothBuilder.addCode(withBothBody.build());
-                    inputStreamWithMediaTypeAndRequestOptionsMethodSpec = withBothBuilder.build();
                 }
-            }
             }
         }
 
