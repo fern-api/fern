@@ -30,6 +30,7 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { downgrade } from "./commands/downgrade/downgrade";
+import { generateAPIWorkspacesLocal } from "./commands/exp/generateAPIWorkspacesLocal";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
@@ -1607,6 +1608,110 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
 function addExpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("exp", "Experimental commands", (yargs) => {
         yargs.command(
+            ["generate-sdks"],
+            "Generate SDKs for the specified API without Docker",
+            (yargs) =>
+                yargs
+                    .option("api", {
+                        string: true,
+                        description: "If multiple APIs, specify the name with --api <name>. Otherwise, just --api."
+                    })
+                    .option("preview", {
+                        boolean: true,
+                        default: false,
+                        description: "Whether to generate a preview link for the docs"
+                    })
+                    .option("group", {
+                        type: "string",
+                        description: "The group to generate"
+                    })
+                    .option("mode", {
+                        choices: Object.values(GenerationMode),
+                        description: "Defaults to the mode specified in generators.yml"
+                    })
+                    .option("version", {
+                        type: "string",
+                        description: "The version for the generated packages"
+                    })
+                    .option("printZipUrl", {
+                        boolean: true,
+                        hidden: true,
+                        default: false
+                    })
+                    .option("local", {
+                        boolean: true,
+                        default: false,
+                        description: "Run the generator(s) locally."
+                    })
+                    .option("keepDocker", {
+                        boolean: true,
+                        default: false,
+                        description: "Prevent auto-deletion of the Docker containers."
+                    })
+                    .option("force", {
+                        boolean: true,
+                        default: false,
+                        description: "Ignore prompts to confirm generation, defaults to false"
+                    })
+                    .option("broken-links", {
+                        boolean: true,
+                        description: "Log a warning if there are broken links in the docs.",
+                        default: false
+                    })
+                    .option("strict-broken-links", {
+                        boolean: true,
+                        description:
+                            "Throw an error (rather than logging a warning) if there are broken links in the docs.",
+                        default: false
+                    })
+                    .option("disable-snippets", {
+                        boolean: true,
+                        description: "Disable snippets in docs generation.",
+                        default: false
+                    })
+                    .option("lfs-override", {
+                        type: "string",
+                        hidden: true,
+                        description: "Override output mode to local-file-system with the specified path"
+                    })
+                    .option("disable-dynamic-snippets", {
+                        boolean: true,
+                        description: "Disable dynamic SDK snippets in docs generation",
+                        default: false
+                    })
+                    .option("prompt", {
+                        boolean: true,
+                        description: "Prompt for confirmation before generating (use --no-prompt to skip)",
+                        default: true
+                    }),
+            async (argv) => {
+                const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                });
+                if (argv.local) {
+                    // TODO(kafkas): Implement
+                    return await generateAPIWorkspacesLocal();
+                }
+                return await generateAPIWorkspaces({
+                    project,
+                    cliContext,
+                    version: argv.version,
+                    groupName: argv.group,
+                    shouldLogS3Url: argv.printZipUrl,
+                    keepDocker: argv.keepDocker,
+                    useLocalDocker: false,
+                    preview: argv.preview,
+                    mode: argv.mode,
+                    force: argv.force,
+                    runner: "docker",
+                    inspect: false,
+                    lfsOverride: argv.lfsOverride
+                });
+            }
+        );
+
+        yargs.command(
             "generate-swift",
             "Experimental Swift SDK generation",
             (subYargs) =>
@@ -1656,10 +1761,10 @@ function addExpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 }
 
                 await module.generateSwiftSdk({
-                    api: argv.api as string | undefined,
-                    group: argv.group as string,
-                    outDir: argv.outDir as string,
-                    version: argv.version as string | undefined
+                    api: argv.api,
+                    group: argv.group,
+                    outDir: argv.outDir,
+                    version: argv.version
                 });
             }
         );
