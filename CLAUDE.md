@@ -185,7 +185,7 @@ Multi-stage process: API Schema → IR Updates → Generator Updates → Release
 
 When creating pull requests in this repository:
 
-1. **PR Title**: Must follow semantic commit message rules (see `.github/workflows/lint-pr-title.yml`)
+1. **PR Title**: Must follow semantic commit message rules with format `<type>(<scope>): <description>`. The type and scope must match those defined in `.github/workflows/lint-pr-title.yml`. For example: `chore(docs): update guidelines` or `feat(python): add new feature`.
 2. **Assignee**: Always assign the person who prompted you to create the PR as the assignee
 3. **Description**: Follow the PR template in `.github/pull_request_template.md`
 4. **Testing**: Ensure all tests pass before marking PR as ready for review
