@@ -10,23 +10,25 @@ export declare namespace OAuthAuthProviderGenerator {
         ir: FernIr.IntermediateRepresentation;
         authScheme: FernIr.OAuthScheme;
         neverThrowErrors: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
 const CLASS_NAME = "OAuthAuthProvider";
 const OPTIONS_TYPE_NAME = "Options";
-const TOKEN_PROVIDER_FIELD_NAME = "_tokenProvider";
 
 export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.OAuthScheme;
     private readonly neverThrowErrors: boolean;
+    private readonly includeSerdeLayer: boolean;
 
     constructor(init: OAuthAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;
+        this.includeSerdeLayer = init.includeSerdeLayer;
     }
 
     public getFilePath(): ExportedFilePath {
@@ -58,19 +60,11 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public writeToFile(context: SdkContext): void {
-        // Import OAuthTokenProvider from core
-        context.importsManager.addImportFromRoot("core/auth", {
-            namedImports: ["OAuthTokenProvider"]
-        });
-
-        // AuthClient will be imported automatically when the provider is generated
-
         this.writeOptions(context);
         this.writeClass(context);
     }
 
     private writeClass(context: SdkContext): void {
-        const tokenProviderType = context.coreUtilities.auth.OAuthTokenProvider._getReferenceToType();
         const oauthConfig = this.authScheme.configuration;
 
         if (oauthConfig.type !== "clientCredentials") {
@@ -83,44 +77,261 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             : { isRoot: true as const };
         const authClientReference = context.sdkClientClass.getReferenceToClientClass(packageId);
         const authClientExpression = authClientReference.getExpression();
+        const authClientType = getTextOfTsNode(authClientExpression);
 
-        const constructorStatements = `
-        const authClient = new ${getTextOfTsNode(authClientExpression)}(options);
+        // Get the endpoint to access request/response properties
+        const endpoint = Object.values(this.ir.services)
+            .flatMap((service: FernIr.HttpService) => service.endpoints)
+            .find(
+                (endpoint: FernIr.HttpEndpoint) =>
+                    endpoint.id === oauthConfig.tokenEndpoint.endpointReference.endpointId
+            );
 
-        this.${TOKEN_PROVIDER_FIELD_NAME} = new core.OAuthTokenProvider({
-            clientId: options.clientId,
-            clientSecret: options.clientSecret,
-            authClient
+        if (endpoint == null) {
+            throw new Error(
+                `failed to find endpoint with id ${oauthConfig.tokenEndpoint.endpointReference.endpointId}`
+            );
+        }
+
+        const requestProperties = oauthConfig.tokenEndpoint.requestProperties;
+        const responseProperties = oauthConfig.tokenEndpoint.responseProperties;
+
+        const clientIdType = getTextOfTsNode(
+            context.type.getReferenceToType(requestProperties.clientId.property.valueType).typeNode
+        );
+        const clientSecretType = getTextOfTsNode(
+            context.type.getReferenceToType(requestProperties.clientSecret.property.valueType).typeNode
+        );
+
+        const clientIdProperty = this.getName(requestProperties.clientId.property.name);
+        const clientSecretProperty = this.getName(requestProperties.clientSecret.property.name);
+        const endpointName = this.getName(endpoint.name);
+
+        const accessTokenProperty = context.type.generateGetterForResponsePropertyAsString({
+            property: responseProperties.accessToken,
+            variable: this.neverThrowErrors ? "tokenResponse.body" : "tokenResponse"
         });
+
+        const hasExpiration = responseProperties.expiresIn != null;
+        const expiresInProperty =
+            hasExpiration && responseProperties.expiresIn != null
+                ? context.type.generateGetterForResponsePropertyAsString({
+                      property: responseProperties.expiresIn,
+                      variable: this.neverThrowErrors ? "tokenResponse.body" : "tokenResponse"
+                  })
+                : "";
+
+        const neverThrowErrorHandler = this.getNeverThrowErrorsHandler(context);
+
+        const clientIdIsOptional = oauthConfig.clientIdEnvVar != null;
+        const clientSecretIsOptional = oauthConfig.clientSecretEnvVar != null;
+
+        // Generate constructor with validation
+        let constructorStatements = "";
+
+        if (clientIdIsOptional) {
+            constructorStatements += `
+        const clientId = options.clientId ?? process.env?.["${oauthConfig.clientIdEnvVar}"];
+        if (clientId == null) {
+            throw new Error(
+                "clientId is required; either pass it as an argument or set the ${oauthConfig.clientIdEnvVar} environment variable"
+            );
+        }
+        this._clientId = clientId;
+`;
+        } else {
+            constructorStatements += `
+        this._clientId = options.clientId;
+`;
+        }
+
+        if (clientSecretIsOptional) {
+            constructorStatements += `
+        const clientSecret = options.clientSecret ?? process.env?.["${oauthConfig.clientSecretEnvVar}"];
+        if (clientSecret == null) {
+            throw new Error(
+                "clientSecret is required; either pass it as an argument or set the ${oauthConfig.clientSecretEnvVar} environment variable"
+            );
+        }
+        this._clientSecret = clientSecret;
+`;
+        } else {
+            constructorStatements += `
+        this._clientSecret = options.clientSecret;
+`;
+        }
+
+        constructorStatements += `
+        this._authClient = new ${authClientType}(options);
+        this._expiresAt = new Date();
         `;
+
+        const properties: Array<{
+            name: string;
+            type: string;
+            hasQuestionToken?: boolean;
+            isReadonly: boolean;
+            scope: Scope;
+            initializer?: string;
+        }> = [
+            {
+                name: "_clientId",
+                type: `core.Supplier<${clientIdType}>`,
+                isReadonly: true,
+                scope: Scope.Private
+            },
+            {
+                name: "_clientSecret",
+                type: `core.Supplier<${clientSecretType}>`,
+                isReadonly: true,
+                scope: Scope.Private
+            },
+            {
+                name: "_authClient",
+                type: authClientType,
+                isReadonly: true,
+                scope: Scope.Private
+            },
+            {
+                name: "_accessToken",
+                type: "string | undefined",
+                isReadonly: false,
+                scope: Scope.Private
+            },
+            {
+                name: "_expiresAt",
+                type: "Date",
+                isReadonly: false,
+                scope: Scope.Private
+            }
+        ];
+
+        if (hasExpiration) {
+            properties.unshift({
+                name: "BUFFER_IN_MINUTES",
+                type: "number",
+                isReadonly: true,
+                scope: Scope.Private,
+                initializer: "2"
+            });
+        }
+
+        const getTokenStatements = hasExpiration
+            ? `
+        if (this._accessToken && this._expiresAt > new Date()) {
+            return this._accessToken;
+        }
+        return this.refresh();
+        `
+            : `
+        if (this._accessToken) {
+            return this._accessToken;
+        }
+        return this._getToken();
+        `;
+
+        // Constructor validates credentials, so fields are always defined
+        const clientIdExpression = `await core.Supplier.get(this._clientId)`;
+        const clientSecretExpression = `await core.Supplier.get(this._clientSecret)`;
+
+        const refreshMethodStatements = hasExpiration
+            ? `
+        const tokenResponse = await this._authClient.${endpointName}({
+            ${clientIdProperty}: ${clientIdExpression},
+            ${clientSecretProperty}: ${clientSecretExpression},
+        });
+        ${neverThrowErrorHandler}
+        this._accessToken = ${accessTokenProperty};
+        this._expiresAt = this.getExpiresAt(${expiresInProperty}, this.BUFFER_IN_MINUTES);
+        return this._accessToken;
+        `
+            : `
+        const tokenResponse = await this._authClient.${endpointName}({
+            ${clientIdProperty}: ${clientIdExpression},
+            ${clientSecretProperty}: ${clientSecretExpression},
+        });
+        ${neverThrowErrorHandler}
+        this._accessToken = ${accessTokenProperty};
+        return this._accessToken;
+        `;
+
+        const methods: Array<{
+            kind: StructureKind.Method;
+            scope: Scope;
+            name: string;
+            isAsync: boolean;
+            returnType: string;
+            statements: string;
+            parameters?: Array<{ name: string; type: string }>;
+        }> = [
+            {
+                kind: StructureKind.Method,
+                scope: Scope.Public,
+                name: "getAuthRequest",
+                isAsync: true,
+                returnType: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
+                        context.coreUtilities.auth.AuthRequest._getReferenceToType()
+                    ])
+                ),
+                statements: `
+        const token = await this.getToken();
+
+        return {
+            headers: {
+                Authorization: \`Bearer \${token}\`
+            }
+        };
+        `
+            },
+            {
+                kind: StructureKind.Method,
+                scope: Scope.Private,
+                name: "getToken",
+                isAsync: true,
+                returnType: "Promise<string>",
+                statements: getTokenStatements
+            },
+            {
+                kind: StructureKind.Method,
+                scope: Scope.Private,
+                name: hasExpiration ? "refresh" : "_getToken",
+                isAsync: true,
+                returnType: "Promise<string>",
+                statements: refreshMethodStatements
+            }
+        ];
+
+        if (hasExpiration) {
+            methods.push({
+                kind: StructureKind.Method,
+                scope: Scope.Private,
+                name: "getExpiresAt",
+                isAsync: false,
+                returnType: "Date",
+                parameters: [
+                    {
+                        name: "expiresInSeconds",
+                        type: "number"
+                    },
+                    {
+                        name: "bufferInMinutes",
+                        type: "number"
+                    }
+                ],
+                statements: `
+        const now = new Date();
+        return new Date(now.getTime() + expiresInSeconds * 1000 - bufferInMinutes * 60 * 1000);
+        `
+            });
+        }
 
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,
             implements: [getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())],
-            properties: [
-                {
-                    name: TOKEN_PROVIDER_FIELD_NAME,
-                    type: getTextOfTsNode(tokenProviderType),
-                    hasQuestionToken: false,
-                    isReadonly: true,
-                    scope: Scope.Private
-                }
-            ],
-            methods: [
-                {
-                    kind: StructureKind.Method,
-                    scope: Scope.Public,
-                    name: "getAuthRequest",
-                    isAsync: true,
-                    returnType: getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
-                            context.coreUtilities.auth.AuthRequest._getReferenceToType()
-                        ])
-                    ),
-                    statements: this.generateGetAuthRequestStatements(context)
-                }
-            ],
+            properties,
+            methods,
             ctors: [
                 {
                     parameters: [
@@ -135,16 +346,29 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         });
     }
 
-    private generateGetAuthRequestStatements(context: SdkContext): string {
-        return `
-        const token = await this.${TOKEN_PROVIDER_FIELD_NAME}.getToken();
+    private getNeverThrowErrorsHandler(context: SdkContext): string {
+        if (!this.neverThrowErrors) {
+            return "";
+        }
+        const errorType = getTextOfTsNode(
+            context.genericAPISdkError.getReferenceToGenericAPISdkError().getEntityName()
+        );
+        return `if (!tokenResponse.ok) {
+                throw new ${errorType}({ body: tokenResponse.error });
+            }`;
+    }
 
-        return {
-            headers: {
-                Authorization: \`Bearer \${token}\`
+    private getName(name: FernIr.Name | FernIr.NameAndWireValue): string {
+        if (this.includeSerdeLayer) {
+            if ("name" in name) {
+                return name.name.camelCase.unsafeName;
             }
-        };
-        `;
+            return name.camelCase.unsafeName;
+        }
+        if ("name" in name) {
+            return name.name.originalName;
+        }
+        return name.originalName;
     }
 
     private writeOptions(context: SdkContext): void {

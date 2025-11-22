@@ -18,11 +18,6 @@ export interface Auth {
         fromAuthorizationHeader: (header: ts.Expression) => ts.Expression;
     };
 
-    OAuthTokenProvider: {
-        _getExpression: () => ts.Expression;
-        _getReferenceToType: () => ts.TypeNode;
-    };
-
     AuthRequest: {
         _getReferenceToType: () => ts.TypeNode;
         getHeaders: (instanceExpression: ts.Expression) => ts.Expression;
@@ -124,17 +119,6 @@ export class AuthImpl extends CoreUtility implements Auth {
                         [header]
                     );
                 }
-        )
-    };
-
-    public readonly OAuthTokenProvider = {
-        _getExpression: this.withExportedName(
-            "OAuthTokenProvider",
-            (OAuthTokenProvider) => () => OAuthTokenProvider.getExpression()
-        ),
-        _getReferenceToType: this.withExportedName(
-            "OAuthTokenProvider",
-            (OAuthTokenProvider) => () => OAuthTokenProvider.getTypeNode()
         )
     };
 

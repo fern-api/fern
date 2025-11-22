@@ -33,10 +33,7 @@ export class UserClient {
     private async __get(requestOptions?: UserClient.RequestOptions): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                ...(await this._getCustomAuthorizationHeaders()),
-            }),
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -98,10 +95,7 @@ export class UserClient {
     ): Promise<core.WithRawResponse<SeedAnyAuth.User[]>> {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(),
-                ...(await this._getCustomAuthorizationHeaders()),
-            }),
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -155,10 +149,5 @@ export class UserClient {
         }
 
         return undefined;
-    }
-
-    protected async _getCustomAuthorizationHeaders(): Promise<Record<string, string | undefined>> {
-        const apiKeyValue = (await core.Supplier.get(this._options.apiKey)) ?? process?.env.MY_API_KEY;
-        return { "X-API-Key": apiKeyValue };
     }
 }

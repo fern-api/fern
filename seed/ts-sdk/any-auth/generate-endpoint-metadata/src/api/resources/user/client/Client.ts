@@ -34,10 +34,7 @@ export class UserClient {
         const _metadata: core.EndpointMetadata = { security: [{ Bearer: [] }, { ApiKey: [] }, { OAuth: [] }] };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(_metadata),
-                ...(await this._getCustomAuthorizationHeaders(_metadata)),
-            }),
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader(_metadata) }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -101,10 +98,7 @@ export class UserClient {
         const _metadata: core.EndpointMetadata = { security: [{ OAuth: ["admin"] }] };
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
-            mergeOnlyDefinedHeaders({
-                Authorization: await this._getAuthorizationHeader(_metadata),
-                ...(await this._getCustomAuthorizationHeaders(_metadata)),
-            }),
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader(_metadata) }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -159,13 +153,5 @@ export class UserClient {
         }
 
         return undefined;
-    }
-
-    protected async _getCustomAuthorizationHeaders(
-        endpointMetadata: core.EndpointMetadata,
-    ): Promise<Record<string, string | undefined>> {
-        const apiKeyValue =
-            (await core.EndpointSupplier.get(this._options.apiKey, { endpointMetadata })) ?? process?.env.MY_API_KEY;
-        return { "X-API-Key": apiKeyValue };
     }
 }

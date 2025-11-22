@@ -40,7 +40,6 @@ import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/r
 import {
     AuthProvidersGenerator,
     BaseClientTypeGenerator,
-    OAuthTokenProviderGenerator,
     SdkClientClassGenerator,
     WebsocketClassGenerator
 } from "@fern-typescript/sdk-client-class-generator";
@@ -223,7 +222,6 @@ export class SdkGenerator {
     private baseClientTypeGenerator: BaseClientTypeGenerator;
     private genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
-    private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private testGenerator: TestGenerator;
     private websocketGenerator: WebsocketClassGenerator;
     private referenceConfigBuilder: ReferenceConfigBuilder;
@@ -441,11 +439,6 @@ export class SdkGenerator {
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
-        this.oauthTokenProviderGenerator = new OAuthTokenProviderGenerator({
-            intermediateRepresentation,
-            neverThrowErrors: this.config.neverThrowErrors,
-            includeSerdeLayer: this.config.includeSerdeLayer
-        });
         this.sdkClientClassGenerator = new SdkClientClassGenerator({
             intermediateRepresentation,
             errorResolver: this.errorResolver,
@@ -606,13 +599,6 @@ export class SdkGenerator {
                     { nameOnDisk: "serialization", exportDeclaration: { namespaceExport: "serialization" } }
                 ]);
                 this.context.logger.debug("Generated serde layer.");
-            }
-        }
-
-        if (this.generateOAuthClients) {
-            const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
-            if (oauthScheme != null && oauthScheme.type === "oauth") {
-                this.generateOAuthTokenProvider(oauthScheme);
             }
         }
 
@@ -1045,25 +1031,6 @@ export class SdkGenerator {
         }
     }
 
-    private generateOAuthTokenProvider(oauthScheme: OAuthScheme) {
-        this.context.logger.debug("Generating OAuth token provider...");
-        this.withSourceFile({
-            filepath: this.oauthTokenProviderGenerator.getExportedFilePath(),
-            run: ({ sourceFile, importsManager }) => {
-                const context = this.generateSdkContext({ sourceFile, importsManager });
-                const file = this.oauthTokenProviderGenerator.buildFile({
-                    context,
-                    oauthScheme
-                });
-                sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
-            }
-        });
-        this.coreUtilitiesManager.addAuthOverride({
-            filepath: RelativeFilePath.of("index.ts"),
-            content: this.oauthTokenProviderGenerator.buildIndexFile().toString()
-        });
-    }
-
     private generateTestFiles() {
         this.context.logger.debug("Generating test files...");
         if (this.config.generateWireTests) {
@@ -1397,7 +1364,8 @@ export class SdkGenerator {
             const authProvidersGenerator = new AuthProvidersGenerator({
                 ir: this.intermediateRepresentation,
                 authScheme,
-                neverThrowErrors: this.config.neverThrowErrors
+                neverThrowErrors: this.config.neverThrowErrors,
+                includeSerdeLayer: this.config.includeSerdeLayer
             });
             if (!authProvidersGenerator.shouldWriteFile()) {
                 continue;

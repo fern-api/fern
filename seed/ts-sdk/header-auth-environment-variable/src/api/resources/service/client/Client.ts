@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 
@@ -38,7 +38,6 @@ export class ServiceClient {
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
-            mergeOnlyDefinedHeaders({ ...(await this._getCustomAuthorizationHeaders()) }),
             requestOptions?.headers,
         );
         const _response = await core.fetcher({
@@ -85,11 +84,5 @@ export class ServiceClient {
                     rawResponse: _response.rawResponse,
                 });
         }
-    }
-
-    protected async _getCustomAuthorizationHeaders(): Promise<Record<string, string | undefined>> {
-        const headerTokenAuthValue =
-            (await core.Supplier.get(this._options.headerTokenAuth)) ?? process?.env.HEADER_TOKEN_ENV_VAR;
-        return { "x-api-key": `test_prefix ${headerTokenAuthValue}` };
     }
 }

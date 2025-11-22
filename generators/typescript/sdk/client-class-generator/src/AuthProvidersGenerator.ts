@@ -17,12 +17,13 @@ export declare namespace AuthProvidersGenerator {
         ir: IntermediateRepresentation;
         authScheme: AuthScheme;
         neverThrowErrors: boolean;
+        includeSerdeLayer: boolean;
     }
 }
 
 export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
     private readonly authProviderGenerator: AuthProviderGenerator | undefined;
-    constructor({ ir, authScheme, neverThrowErrors }: AuthProvidersGenerator.Init) {
+    constructor({ ir, authScheme, neverThrowErrors, includeSerdeLayer }: AuthProvidersGenerator.Init) {
         this.authProviderGenerator = (() => {
             switch (authScheme.type) {
                 case "inferred":
@@ -50,7 +51,8 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
                     return new OAuthAuthProviderGenerator({
                         ir,
                         authScheme,
-                        neverThrowErrors
+                        neverThrowErrors,
+                        includeSerdeLayer
                     });
                 default:
                     assertNever(authScheme);
