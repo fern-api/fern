@@ -41,7 +41,7 @@
             "codeSamples": undefined,
             "description": "",
             "headers": {},
-            "name": undefined,
+            "name": "createEventExample",
             "path": "/events",
             "pathParameters": {},
             "queryParameters": {},
