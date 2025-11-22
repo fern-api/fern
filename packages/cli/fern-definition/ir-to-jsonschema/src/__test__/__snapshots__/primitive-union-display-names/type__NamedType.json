@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "value": {
+      "type": "string"
+    },
+    "count": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "value",
+    "count"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

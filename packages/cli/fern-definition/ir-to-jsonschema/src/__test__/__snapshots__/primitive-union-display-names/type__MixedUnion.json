@@ -1,0 +1,31 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "type": "integer"
+    },
+    {
+      "$ref": "#/definitions/NamedType"
+    }
+  ],
+  "definitions": {
+    "NamedType": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "string"
+        },
+        "count": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "value",
+        "count"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

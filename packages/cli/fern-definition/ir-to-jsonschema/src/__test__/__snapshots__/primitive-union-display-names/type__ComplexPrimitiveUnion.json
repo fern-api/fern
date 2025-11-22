@@ -1,0 +1,37 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "uniqueItems": true
+    }
+  ],
+  "definitions": {}
+}
