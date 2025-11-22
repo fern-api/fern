@@ -25,10 +25,8 @@ export class BearerAuthProvider implements core.AuthProvider {
             });
         }
 
-        const authHeader = core.BearerToken.toAuthorizationHeader(apiKey);
-
         return {
-            headers: authHeader != null ? { Authorization: authHeader } : {},
+            headers: { Authorization: `Bearer ${apiKey}` },
         };
     }
 }

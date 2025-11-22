@@ -42,11 +42,6 @@ export interface BaseRequestOptions {
 
 export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
     logging: core.logging.Logger;
-    authProvider?: core.AuthProvider;
-};
-
-export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
-    authProvider: core.AuthProvider;
 };
 
 export function normalizeClientOptions<T extends BaseClientOptions>(options: T): NormalizedClientOptions<T> {

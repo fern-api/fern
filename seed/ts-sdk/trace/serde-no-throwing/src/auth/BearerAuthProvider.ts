@@ -18,10 +18,8 @@ export class BearerAuthProvider implements core.AuthProvider {
     public async getAuthRequest(): Promise<core.AuthRequest> {
         const token = await core.Supplier.get(this.token);
 
-        const authHeader = token != null ? core.BearerToken.toAuthorizationHeader(token) : undefined;
-
         return {
-            headers: authHeader != null ? { Authorization: authHeader } : {},
+            headers: { Authorization: `Bearer ${token}` },
         };
     }
 }

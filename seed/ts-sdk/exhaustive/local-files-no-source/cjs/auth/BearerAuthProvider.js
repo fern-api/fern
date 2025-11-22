@@ -58,9 +58,8 @@ class BearerAuthProvider {
                     message: "Please specify a token by passing it in to the constructor",
                 });
             }
-            const authHeader = core.BearerToken.toAuthorizationHeader(token);
             return {
-                headers: authHeader != null ? { Authorization: authHeader } : {},
+                headers: { Authorization: `Bearer ${token}` },
             };
         });
     }
