@@ -256,7 +256,8 @@ public final class HttpUrlBuilder {
                 }
             } else {
                 String paramName = poetPathParameter.poetParam().name;
-                if (inlinePathParams && poetPathParameter.irParam().getLocation().equals(PathParameterLocation.ENDPOINT)) {
+                if (inlinePathParams
+                        && poetPathParameter.irParam().getLocation().equals(PathParameterLocation.ENDPOINT)) {
                     paramName = requestName
                             + ".get" + paramName.substring(0, 1).toUpperCase(Locale.ROOT) + paramName.substring(1)
                             + "()";
