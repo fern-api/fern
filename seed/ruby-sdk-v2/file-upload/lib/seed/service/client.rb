@@ -3,11 +3,21 @@
 module Seed
   module Service
     class Client
-      # @return [Seed::Service::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [void]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [untyped]
       def post(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -100,6 +110,14 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash]
+      # @param params [void]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [untyped]
       def just_file(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -123,6 +141,19 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash]
+      # @param params [void]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String, nil] :maybe_string
+      # @option params [Integer] :integer
+      # @option params [Integer, nil] :maybe_integer
+      # @option params [String] :list_of_strings
+      # @option params [String, nil] :optional_list_of_strings
+      #
       # @return [untyped]
       def just_file_with_query_params(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -146,6 +177,14 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash]
+      # @param params [void]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [untyped]
       def with_content_type(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -189,6 +228,14 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash]
+      # @param params [void]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [untyped]
       def with_form_encoding(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -224,6 +271,14 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash]
+      # @param params [void]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [untyped]
       def with_form_encoded_containers(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -322,6 +377,14 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash]
+      # @param params [void]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [String]
       def optional_args(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -352,6 +415,14 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash]
+      # @param params [void]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [String]
       def with_inline_type(request_options: {}, **params)
         body = Internal::Multipart::FormData.new
@@ -381,6 +452,14 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [untyped]
       def simple(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(

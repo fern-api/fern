@@ -43,17 +43,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Object_ = void 0;
+exports.ObjectClient = void 0;
+const BaseClient_js_1 = require("../../../../../../BaseClient.js");
 const headers_js_1 = require("../../../../../../core/headers.js");
 const core = __importStar(require("../../../../../../core/index.js"));
 const errors = __importStar(require("../../../../../../errors/index.js"));
-class Object_ {
-    constructor(_options) {
-        this._options = _options;
+class ObjectClient {
+    constructor(options) {
+        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithOptionalField({
@@ -127,7 +128,7 @@ class Object_ {
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithRequiredField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithRequiredField({
@@ -187,7 +188,7 @@ class Object_ {
     }
     /**
      * @param {SeedExhaustive.types.ObjectWithMapOfMap} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnWithMapOfMap({
@@ -251,7 +252,7 @@ class Object_ {
     }
     /**
      * @param {SeedExhaustive.types.NestedObjectWithOptionalField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
@@ -329,7 +330,7 @@ class Object_ {
     /**
      * @param {string} string
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
@@ -406,7 +407,7 @@ class Object_ {
     }
     /**
      * @param {SeedExhaustive.types.NestedObjectWithRequiredField[]} request
-     * @param {Object_.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {ObjectClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
@@ -510,4 +511,4 @@ class Object_ {
         });
     }
 }
-exports.Object_ = Object_;
+exports.ObjectClient = ObjectClient;

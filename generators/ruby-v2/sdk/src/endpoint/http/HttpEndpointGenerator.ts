@@ -71,6 +71,10 @@ export class HttpEndpointGenerator {
 
         let requestStatements = this.generateRequestProcedure({ endpoint, sendRequestCodeBlock });
 
+        const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
+        const splatOptionDocs = this.generateSplatOptionDocs({ endpoint });
+        const requestOptionsDocs = this.generateRequestOptionsDocs();
+
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
                 case "custom":
@@ -164,19 +168,22 @@ export class HttpEndpointGenerator {
 
         return ruby.method({
             name: endpoint.name.snakeCase.safeName,
-            docstring: endpoint.docs,
+            docstring: enhancedDocstring,
             returnType,
             parameters: {
                 keyword: [
                     ruby.parameters.keyword({
                         name: "request_options",
+                        type: ruby.Type.class_({ name: "Hash" }),
                         initializer: ruby.TypeLiteral.hash([])
                     })
                 ],
                 keywordSplat: ruby.parameters.keywordSplat({
-                    name: PARAMS_VN
+                    name: PARAMS_VN,
+                    type: request?.getParameterType() ?? ruby.Type.hash(ruby.Type.untyped(), ruby.Type.untyped())
                 })
             },
+            splatOptionDocs: [...requestOptionsDocs, ...splatOptionDocs],
             statements
         });
     }
@@ -270,7 +277,7 @@ export class HttpEndpointGenerator {
     }
 
     private getPathParameterName({ pathParameter }: { pathParameter: PathParameter }): string {
-        return pathParameter.name.originalName;
+        return pathParameter.name.snakeCase.safeName;
     }
 
     private loadResponseBodyFromJson({
@@ -289,5 +296,69 @@ export class HttpEndpointGenerator {
             default:
                 break;
         }
+    }
+
+    private generateEnhancedDocstring({
+        endpoint
+    }: {
+        endpoint: HttpEndpoint;
+        request: ReturnType<typeof getEndpointRequest>;
+    }): string {
+        return endpoint.docs ?? "";
+    }
+
+    private generateRequestOptionsDocs(): string[] {
+        const optionTags: string[] = [];
+        optionTags.push("@option request_options [String] :base_url");
+        optionTags.push("@option request_options [Hash{String => Object}] :additional_headers");
+        optionTags.push("@option request_options [Hash{String => Object}] :additional_query_parameters");
+        optionTags.push("@option request_options [Hash{String => Object}] :additional_body_parameters");
+        optionTags.push("@option request_options [Integer] :timeout_in_seconds");
+        return optionTags;
+    }
+
+    private generateSplatOptionDocs({ endpoint }: { endpoint: HttpEndpoint }): string[] {
+        const optionTags: string[] = [];
+
+        for (const pathParam of endpoint.allPathParameters) {
+            const paramName = pathParam.name.snakeCase.safeName;
+            const typeString = this.typeReferenceToYardString(pathParam.valueType);
+            optionTags.push(`@option params [${typeString}] :${paramName}`);
+        }
+
+        for (const queryParam of endpoint.queryParameters) {
+            const paramName = queryParam.name.name.snakeCase.safeName;
+            const typeString = this.typeReferenceToYardString(queryParam.valueType);
+            optionTags.push(`@option params [${typeString}] :${paramName}`);
+        }
+
+        for (const headerParam of endpoint.headers) {
+            const paramName = headerParam.name.name.snakeCase.safeName;
+            const typeString = this.typeReferenceToYardString(headerParam.valueType);
+            optionTags.push(`@option params [${typeString}] :${paramName}`);
+        }
+
+        return optionTags;
+    }
+
+    private typeReferenceToYardString(typeReference: TypeReference): string {
+        if (typeReference.type === "named") {
+            const classRef = this.context.getClassReferenceForTypeId(typeReference.typeId);
+            const modules = classRef.modules.length > 0 ? `${classRef.modules.join("::")}::` : "";
+            return `${modules}${classRef.name}`;
+        }
+
+        const rubyType = this.context.typeMapper.convert({ reference: typeReference });
+        const writer = new ruby.Writer({ customConfig: this.context.customConfig });
+        rubyType.writeTypeDefinition(writer);
+        return this.normalizeForYard(writer.toString());
+    }
+
+    private normalizeForYard(typeString: string): string {
+        let normalized = typeString.replace(/\s*\|\s*/g, ", ");
+        normalized = normalized.replace(/\bbool\b/g, "Boolean");
+        normalized = normalized.replace(/(^|,\s*)nil(?:,\s*nil)+(?=,|\]|$)/g, "$1nil");
+        normalized = normalized.replace(/Hash\[untyped,\s*untyped\]/g, "Hash");
+        return normalized;
     }
 }

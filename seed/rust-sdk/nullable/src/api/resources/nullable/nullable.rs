@@ -24,10 +24,10 @@ impl NullableClient2 {
                 "/users",
                 None,
                 QueryBuilder::new()
-                    .string("usernames", request.usernames.clone())
+                    .string_array("usernames", request.usernames.clone())
                     .string("avatar", request.avatar.clone())
-                    .bool("activated", request.activated.clone())
-                    .serialize("tags", request.tags.clone())
+                    .bool_array("activated", request.activated.clone())
+                    .serialize_array("tags", request.tags.clone())
                     .serialize("extra", request.extra.clone())
                     .build(),
                 options,

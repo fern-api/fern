@@ -27,11 +27,11 @@ export async function replaceReferencedCode({
     context: TaskContext;
     fileLoader?: (filepath: AbsoluteFilePath) => Promise<string>;
 }): Promise<string> {
-    if (!markdown.includes("<Code ")) {
+    if (!markdown.includes("<Code")) {
         return markdown;
     }
 
-    const regex = /([ \t]*)<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
+    const regex = /([ \t]*)<Code(?![a-zA-Z])[\s\S]*?src={?['"]([^'"]+)['"](?! \+)}?([\s\S]*?)\/>/g;
 
     let newMarkdown = markdown;
 
@@ -84,7 +84,7 @@ export async function replaceReferencedCode({
             }
 
             // Parse all properties from the Code component
-            const allProps = new Map<string, string>();
+            const allProps = new Map<string, { value: string; fromCurlyBraces: boolean }>();
             const propsRegex = /(\w+)=(?:{([^}]+)}|"([^"]+)")/g;
 
             // Extract props before src
@@ -93,8 +93,9 @@ export async function replaceReferencedCode({
             while ((propMatch = propsRegex.exec(beforeSrcProps)) !== null) {
                 const propName = propMatch[1];
                 const propValue = propMatch[2] || propMatch[3];
+                const fromCurlyBraces = propMatch[2] !== undefined;
                 if (propName && propValue) {
-                    allProps.set(propName, propValue);
+                    allProps.set(propName, { value: propValue, fromCurlyBraces });
                 }
             }
 
@@ -104,20 +105,23 @@ export async function replaceReferencedCode({
             while ((propMatch = propsRegex.exec(afterSrcProps)) !== null) {
                 const propName = propMatch[1];
                 const propValue = propMatch[2] || propMatch[3];
+                const fromCurlyBraces = propMatch[2] !== undefined;
                 if (propName && propValue) {
-                    allProps.set(propName, propValue);
+                    allProps.set(propName, { value: propValue, fromCurlyBraces });
                 }
             }
 
             allProps.delete("src");
 
-            if (allProps.has("language")) {
-                language = allProps.get("language");
+            let languageProp = allProps.get("language");
+            if (languageProp) {
+                language = languageProp.value;
                 allProps.delete("language");
             }
 
-            if (allProps.has("title")) {
-                title = allProps.get("title");
+            let titleProp = allProps.get("title");
+            if (titleProp) {
+                title = titleProp.value;
                 allProps.delete("title");
             }
 
@@ -127,12 +131,16 @@ export async function replaceReferencedCode({
                 metastring += language;
             }
             if (title != null) {
-                metastring += ` title={"${title}"}`;
+                if (titleProp?.fromCurlyBraces) {
+                    metastring += ` title={${title}}`;
+                } else {
+                    metastring += ` title={"${title}"}`;
+                }
             }
 
             // Add remaining properties as-is to metastring
-            for (const [propName, propValue] of allProps) {
-                metastring += ` ${propName}={${propValue}}`;
+            for (const [propName, propData] of allProps) {
+                metastring += ` ${propName}={${propData.value}}`;
             }
 
             // TODO: if the code content includes ```, add more backticks to avoid conflicts

@@ -3,7 +3,9 @@
 module Seed
   module NestedNoAuth
     class Client
-      # @return [Seed::NestedNoAuth::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end

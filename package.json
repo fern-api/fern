@@ -12,6 +12,7 @@
   },
   "scripts": {
     "bootstrap": "./scripts/bootstrap.sh",
+    "sparse-checkout": "./scripts/sparse-checkout.sh",
     "clean": "turbo clean",
     "compile": "turbo compile",
     "compile:debug": "turbo compile:debug",
@@ -26,15 +27,15 @@
     "lint:style:fix": "pnpm lint:style --fix",
     "lint:spelling": "cspell **",
     "lint:versions-yml": "ajv validate -s fern-versions-yml.schema.json -d \"**/versions.yml\" --strict=false",
-    "format": "biome format --fix",
-    "format:fix": "biome format --fix",
+    "format": "biome format --write",
+    "format:fix": "biome format --write",
     "format:check": "biome format",
     "format:yaml:fix": "prettier --write \"**/*.{yml,yaml}\" --cache",
     "format:yaml:check": "prettier --check \"**/*.{yml,yaml}\" --cache",
     "format:package-json": "sort-package-json \"generators/**/package.json\" \"packages/**/package.json\" --ignore \"**/dist\" --ignore \"**lib\" --ignore \"**/node_modules\"",
     "check:biome": "biome check",
     "check": "biome check",
-    "check:fix": "biome check --fix",
+    "check:fix": "biome check --write",
     "depcheck": "turbo depcheck --continue=always",
     "codegen:local": "pnpm fern:local generate",
     "fern": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/prod/cli.cjs",
@@ -57,6 +58,7 @@
     "generators-yml:jsonschema": "pnpm fern jsonschema generators-yml.schema.json --api generators-yml --type generators.GeneratorsConfigurationSchema",
     "check-cli-release-blockers": "pnpm fern-script check-cli-release-blockers",
     "check-docs-release-blockers": "pnpm fern-script check-docs-release-blockers",
+    "validate-cli-dependencies": "node scripts/validate-cli-dependencies.js",
     "root-package:check": "pnpm fern-script check-root-package",
     "root-package:fix": "pnpm root-package:check --fix",
     "seed": "node --enable-source-maps packages/seed/dist/cli.cjs",
@@ -125,7 +127,7 @@
       "node-fetch@2.x>whatwg-url": "^14.0.0",
       "qs": "6.13.0",
       "url-join": "^4.0.1",
-      "@fern-api/fdr-sdk": "0.140.3-057adfab3",
+      "@fern-api/fdr-sdk": "0.141.0-5b515bbf0",
       "es-toolkit": "^1.39.10",
       "ts-essentials": "^10.1.1",
       "form-data": "^4.0.4"
@@ -136,5 +138,8 @@
     "qs": "^6.13.0",
     "ts-essentials": "^10.1.1",
     "url-join": "^4.0.1"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.1"
   }
 }

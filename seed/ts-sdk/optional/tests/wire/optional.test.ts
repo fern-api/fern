@@ -3,10 +3,10 @@
 import { SeedObjectsWithImportsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Optional", () => {
+describe("OptionalClient", () => {
     test("sendOptionalBody", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedObjectsWithImportsClient({ environment: server.baseUrl });
+        const client = new SeedObjectsWithImportsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { string: { key: "value" } };
         const rawResponseBody = "string";
         server
@@ -28,7 +28,7 @@ describe("Optional", () => {
 
     test("sendOptionalTypedBody", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedObjectsWithImportsClient({ environment: server.baseUrl });
+        const client = new SeedObjectsWithImportsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { message: "message" };
         const rawResponseBody = "string";
         server
@@ -48,7 +48,7 @@ describe("Optional", () => {
 
     test("sendOptionalNullableWithAllOptionalProperties", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedObjectsWithImportsClient({ environment: server.baseUrl });
+        const client = new SeedObjectsWithImportsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { updateDraft: true };
         const rawResponseBody = { success: true };
         server

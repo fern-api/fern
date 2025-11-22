@@ -577,7 +577,7 @@ function getPointerHelperFuncName({ type }: { type: TypeInstantiation }): string
 }
 
 function invokeMustParseDate({ writer, type }: { writer: Writer; type: Date | DateTime }): FuncInvocation {
-    const funcName = type instanceof Date ? "MustParseDate" : "MustParseDateTime";
+    const funcName = type.type === "date" ? "MustParseDate" : "MustParseDateTime";
     return new FuncInvocation({
         func: new GoTypeReference({
             name: funcName,

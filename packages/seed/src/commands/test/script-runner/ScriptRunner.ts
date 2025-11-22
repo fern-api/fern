@@ -1,6 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { DockerScriptConfig } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
 import { Semaphore } from "../../../Semaphore";
 

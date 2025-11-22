@@ -3,11 +3,22 @@
 module Seed
   module Complex
     class Client
-      # @return [Seed::Complex::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Complex::Types::SearchRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :index
+      #
       # @return [Seed::Complex::Types::PaginatedConversationResponse]
       def search(request_options: {}, **params)
         Seed::Internal::CursorItemIterator.new(

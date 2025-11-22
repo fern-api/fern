@@ -18,6 +18,10 @@ publish:
     file: ./generators/ruby-v2/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk
     context: .
+  podman:
+    file: ./generators/ruby-v2/sdk/Dockerfile
+    image: fernapi/fern-ruby-sdk
+    context: .
 test:
   docker:
     image: fernapi/fern-ruby-sdk:latest
@@ -169,6 +173,6 @@ features:
   whitelabel: false
   apiReferenceGeneration: false
 scripts:
-  - docker: ruby:2.7
+  - image: ruby:2.7
     commands:
       - bundle install && bundle exec rake test

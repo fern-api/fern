@@ -174,16 +174,6 @@ export class SubClientGenerator {
             );
         }
 
-        // Add futures::Stream if we have JSON streaming endpoints (they return impl Stream<...>)
-        if (hasJsonStreamingEndpoints) {
-            imports.push(
-                new UseStatement({
-                    path: "futures",
-                    items: ["Stream"]
-                })
-            );
-        }
-
         // Add std::collections imports for HashMap, HashSet, BTreeMap, etc.
         if (typeAnalysis.stdCollections.length > 0) {
             imports.push(
@@ -395,7 +385,7 @@ export class SubClientGenerator {
                 return true;
             },
             reference: (reference) => this.isCustomType(reference.requestBodyType),
-            fileUpload: () => false, // File uploads don't typically use custom types
+            fileUpload: () => true, // File upload request types are always custom generated types that need crate::api imports
             bytes: () => false, // Bytes are built-in
             _other: () => false
         });
@@ -992,7 +982,22 @@ export class SubClientGenerator {
     private getQueryBuilderMethod(queryParam: QueryParameter): string {
         const valueType = queryParam.valueType;
 
-        // Check for structured query parameter by name
+        // Handle allow-multiple query parameters first (repeating query params like ?tag=a&tag=b)
+        // These have type Vec<Option<T>> and need special array methods
+        // Note: The model generator wraps allowMultiple types in a list, so the actual type is Vec<Option<T>>
+        // But the SDK generator sees the original valueType before wrapping
+        if (queryParam.allowMultiple) {
+            // Get the base method for the underlying type (ignoring the list wrapper)
+            const baseMethod = this.getQueryBuilderMethodForType(valueType);
+            // Only add _array suffix for primitive types that have array methods
+            if (["string", "int", "float", "bool"].includes(baseMethod)) {
+                return `${baseMethod}_array`;
+            }
+            // Use serialize_array for complex types (enums, named types, etc.) with allow-multiple
+            return "serialize_array";
+        }
+
+        // Check for structured query parameter by name (only for non-array queries)
         if (queryParam.name.wireValue === "query" && this.isStringType(valueType)) {
             return "structured_query";
         }
@@ -1012,7 +1017,7 @@ export class SubClientGenerator {
                     bigInteger: () => "big_int",
                     date: () => "date",
                     dateTime: () => "datetime",
-                    base64: () => "string",
+                    base64: () => "serialize", // Vec<u8> needs serialization, not string conversion
                     uuid: () => "uuid",
                     _other: () => "serialize"
                 });
@@ -1020,8 +1025,54 @@ export class SubClientGenerator {
             named: () => "serialize", // User-defined types need serialization
             container: (container) => {
                 return container._visit({
-                    optional: (innerType) => this.getQueryBuilderMethodForType(innerType),
-                    nullable: (innerType) => this.getQueryBuilderMethodForType(innerType),
+                    optional: (innerType) => {
+                        // Check if the inner type is also optional/nullable (double optional)
+                        // Double optionals like Option<Option<T>> need serialize() method
+                        const isDoubleOptional = TypeReference._visit(innerType, {
+                            container: (innerContainer) =>
+                                innerContainer._visit({
+                                    optional: () => true,
+                                    nullable: () => true,
+                                    list: () => false,
+                                    map: () => false,
+                                    set: () => false,
+                                    literal: () => false,
+                                    _other: () => false
+                                }),
+                            primitive: () => false,
+                            named: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        });
+                        if (isDoubleOptional) {
+                            return "serialize";
+                        }
+                        return this.getQueryBuilderMethodForType(innerType);
+                    },
+                    nullable: (innerType) => {
+                        // Check if the inner type is also optional/nullable (double optional)
+                        // Double optionals like Option<Option<T>> need serialize() method
+                        const isDoubleOptional = TypeReference._visit(innerType, {
+                            container: (innerContainer) =>
+                                innerContainer._visit({
+                                    optional: () => true,
+                                    nullable: () => true,
+                                    list: () => false,
+                                    map: () => false,
+                                    set: () => false,
+                                    literal: () => false,
+                                    _other: () => false
+                                }),
+                            primitive: () => false,
+                            named: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        });
+                        if (isDoubleOptional) {
+                            return "serialize";
+                        }
+                        return this.getQueryBuilderMethodForType(innerType);
+                    },
                     map: () => "serialize",
                     set: () => "serialize",
                     list: () => "serialize",
@@ -1056,13 +1107,76 @@ export class SubClientGenerator {
                     bigInteger: () => "big_int",
                     date: () => "date",
                     dateTime: () => "datetime",
-                    base64: () => "string",
+                    base64: () => "serialize", // Vec<u8> needs serialization, not string conversion
                     uuid: () => "uuid",
                     _other: () => "serialize"
                 });
             },
             named: () => "serialize",
-            container: () => "serialize",
+            container: (container) => {
+                // Drill down into optional/nullable to get the underlying type
+                return container._visit({
+                    optional: (innerType) => {
+                        // Check if the inner type is also optional/nullable (double optional)
+                        // Double optionals like Option<Option<T>> need serialize() method
+                        const isDoubleOptional = TypeReference._visit(innerType, {
+                            container: (innerContainer) =>
+                                innerContainer._visit({
+                                    optional: () => true,
+                                    nullable: () => true,
+                                    list: () => false,
+                                    map: () => false,
+                                    set: () => false,
+                                    literal: () => false,
+                                    _other: () => false
+                                }),
+                            primitive: () => false,
+                            named: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        });
+                        if (isDoubleOptional) {
+                            return "serialize";
+                        }
+                        return this.getQueryBuilderMethodForType(innerType);
+                    },
+                    nullable: (innerType) => {
+                        // Check if the inner type is also optional/nullable (double optional)
+                        // Double optionals like Option<Option<T>> need serialize() method
+                        const isDoubleOptional = TypeReference._visit(innerType, {
+                            container: (innerContainer) =>
+                                innerContainer._visit({
+                                    optional: () => true,
+                                    nullable: () => true,
+                                    list: () => false,
+                                    map: () => false,
+                                    set: () => false,
+                                    literal: () => false,
+                                    _other: () => false
+                                }),
+                            primitive: () => false,
+                            named: () => false,
+                            unknown: () => false,
+                            _other: () => false
+                        });
+                        if (isDoubleOptional) {
+                            return "serialize";
+                        }
+                        return this.getQueryBuilderMethodForType(innerType);
+                    },
+                    map: () => "serialize",
+                    set: () => "serialize",
+                    list: () => "serialize",
+                    literal: (literal) => {
+                        return literal._visit({
+                            string: () => "string",
+                            boolean: () => "bool",
+                            _other: () => "serialize"
+                        });
+                    },
+                    _other: () => "serialize"
+                });
+            },
             unknown: () => "serialize",
             _other: () => "serialize"
         });
@@ -1313,13 +1427,10 @@ export class SubClientGenerator {
                 streaming: (streaming) => {
                     return streaming._visit({
                         json: (jsonChunk) => {
-                            // Newline-delimited JSON streaming - not yet fully implemented
+                            // Returns complete response at once (not streaming)
+                            // Note: Method name may suggest streaming, but execute_request returns complete response
                             const payloadType = generateRustTypeForTypeReference(jsonChunk.payload, this.context);
-                            return rust.Type.reference(
-                                rust.reference({
-                                    name: `impl Stream<Item = Result<${payloadType.toString()}, ApiError>>`
-                                })
-                            );
+                            return payloadType;
                         },
                         sse: (sseChunk) => {
                             // Server-Sent Events streaming
@@ -2026,7 +2137,7 @@ export class SubClientGenerator {
                 bytes: () => "Streaming byte response (use .into_bytes() to collect or stream chunks)",
                 streaming: (streaming) => {
                     return streaming._visit({
-                        json: () => "Newline-delimited JSON stream (use futures::StreamExt to iterate)",
+                        json: () => "Complete JSON response (fetched at once, not streaming)",
                         sse: () => "Server-Sent Events stream (use futures::StreamExt to iterate)",
                         text: () => "Text streaming response",
                         _other: () => "Streaming response"

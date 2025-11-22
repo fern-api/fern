@@ -4,10 +4,10 @@ import * as SeedErrors from "../../src/api/index";
 import { SeedErrorsClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Simple", () => {
+describe("SimpleClient", () => {
     test("fooWithoutEndpointError (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { bar: "bar" };
         server
@@ -29,7 +29,7 @@ describe("Simple", () => {
 
     test("fooWithoutEndpointError (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
         server
@@ -50,7 +50,7 @@ describe("Simple", () => {
 
     test("fooWithoutEndpointError (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
         server
@@ -71,7 +71,7 @@ describe("Simple", () => {
 
     test("fooWithoutEndpointError (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
         server
@@ -92,7 +92,7 @@ describe("Simple", () => {
 
     test("foo (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { bar: "bar" };
         server
@@ -114,7 +114,7 @@ describe("Simple", () => {
 
     test("foo (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
         server
@@ -135,7 +135,7 @@ describe("Simple", () => {
 
     test("foo (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
         server
@@ -156,7 +156,7 @@ describe("Simple", () => {
 
     test("foo (4)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
         server
@@ -177,7 +177,7 @@ describe("Simple", () => {
 
     test("foo (5)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
         server
@@ -198,7 +198,7 @@ describe("Simple", () => {
 
     test("foo (6)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "bar" };
         const rawResponseBody = { message: "message", code: 1 };
         server
@@ -219,7 +219,7 @@ describe("Simple", () => {
 
     test("fooWithExamples (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "hello" };
         const rawResponseBody = { bar: "hello" };
         server
@@ -241,7 +241,7 @@ describe("Simple", () => {
 
     test("fooWithExamples (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "hello" };
         const rawResponseBody = { message: "Too much foo", code: 1 };
         server
@@ -262,7 +262,7 @@ describe("Simple", () => {
 
     test("fooWithExamples (3)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedErrorsClient({ environment: server.baseUrl });
+        const client = new SeedErrorsClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { bar: "hello" };
         const rawResponseBody = { message: "Too little foo", code: 2 };
         server

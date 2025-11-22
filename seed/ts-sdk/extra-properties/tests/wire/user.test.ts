@@ -3,10 +3,10 @@
 import { SeedExtraPropertiesClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("User", () => {
+describe("UserClient", () => {
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExtraPropertiesClient({ environment: server.baseUrl });
+        const client = new SeedExtraPropertiesClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             age: 30,
             location: "Wonderland",

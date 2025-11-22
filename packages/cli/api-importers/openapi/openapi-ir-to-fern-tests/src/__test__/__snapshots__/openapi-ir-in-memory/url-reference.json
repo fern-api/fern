@@ -47,7 +47,7 @@
     "discriminatedUnionV2": false,
     "useTitlesAsName": false,
     "optionalAdditionalProperties": true,
-    "coerceEnumsToLiterals": true,
+    "coerceEnumsToLiterals": false,
     "respectReadonlySchemas": false,
     "respectNullableSchemas": true,
     "onlyIncludeReferencedSchemas": false,

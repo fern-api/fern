@@ -2,7 +2,9 @@
 
 module Seed
   class Client
-    # @return [Seed::Client]
+    # @param base_url [String, nil]
+    #
+    # @return [void]
     def initialize(base_url:)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,

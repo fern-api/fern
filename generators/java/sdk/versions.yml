@@ -1,3 +1,103 @@
+- version: 3.18.7
+  changelogEntry:
+    - summary: |
+        Skip InputStream overload generation for file upload endpoints with query parameters. This prevents compilation errors where InputStream methods would reference non-existent request parameters when accessing query parameters.
+      type: fix
+  createdAt: "2025-11-22"
+  irVersion: 61
+
+- version: 3.18.6
+  changelogEntry:
+    - summary: |
+        Fix compilation errors in raw clients when inlinePathParameters is enabled. Raw client methods now correctly use path parameters directly instead of attempting to access non-existent request objects.
+      type: fix
+  createdAt: "2025-11-22"
+  irVersion: 61
+
+- version: 3.18.5
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 3.18.4
+  changelogEntry:
+    - summary: |
+        Fix missing @JsonInclude header on certain instances of `OptionalNullable<>`.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.3
+  changelogEntry:
+    - summary: |
+        Fix OptionalNullable compilation errors when collapse-optional-nullable is enabled. Corrected type witness syntax to generate `OptionalNullable.<Type>absent()` and prevented double-wrapping of OptionalNullable types.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.2
+  changelogEntry:
+    - summary: |
+        Fix bugs in 3.17.0's addition of InputStream-based method overloads.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.1
+  changelogEntry:
+    - summary: |
+        Fix bytes response support and snippet generation. Bytes responses now return `byte[]` instead of throwing exceptions. Empty bytes request bodies in snippets now generate valid default arguments.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.0
+  changelogEntry:
+    - summary: |
+        Add support for custom bidirectional pagination. APIs using custom pagination (e.g., HATEOAS links) can configure a custom pager name and receive skeleton classes with bidirectional navigation methods (`nextPage()`, `previousPage()`, `hasNext()`, `hasPrevious()`).
+
+        Configuration:
+        ```yaml
+        customConfig:
+          custom-pager-name: MyCustomPaginator
+        ```
+      type: feat
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 3.17.1
+  changelogEntry:
+    - summary: |
+        Bump generator CLI version to publish new Docker image.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 3.17.0
+  changelogEntry:
+    - summary: |
+        Add InputStream-based method overloads for file upload endpoints. For each single-file upload endpoint, the generator now creates 4 additional overloads that accept InputStream + filename instead of File objects:
+        - method(InputStream stream, String filename)
+        - method(InputStream stream, String filename, MediaType mediaType)
+        - method(InputStream stream, String filename, RequestOptions requestOptions)
+        - method(InputStream stream, String filename, MediaType mediaType, RequestOptions requestOptions)
+
+        This enables streaming file uploads without requiring files to be written to disk first. The implementation uses the existing FileStream wrapper class and InputStreamRequestBody for OkHttp integration. Note: Okio automatically closes the stream after upload, but users should still use try-with-resources for proper resource management.
+      type: feat
+  createdAt: "2025-11-18"
+  irVersion: 61
+
+- version: 3.16.1
+  changelogEntry:
+    - summary: |
+        Fix OAuth client credentials token supplier to support custom properties and headers. OAuth token endpoints can now include custom headers (e.g., x-api-key) and custom body properties (e.g., entity_id) in addition to standard OAuth fields (client_id, client_secret, scopes). This enables authentication with non-standard OAuth implementations that require additional parameters.
+      type: fix
+  createdAt: "2025-11-18"
+  irVersion: 61
+
 - version: 3.16.0
   changelogEntry:
     - summary: |

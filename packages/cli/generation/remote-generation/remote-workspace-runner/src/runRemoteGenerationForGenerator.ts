@@ -104,6 +104,7 @@ export async function runRemoteGenerationForGenerator({
             }
             ir.readmeConfig.whiteLabel = true;
         }
+        ir.selfHosted = orgResponse.body.selfHostedSdKs;
     }
 
     const sources = workspace.getSources();

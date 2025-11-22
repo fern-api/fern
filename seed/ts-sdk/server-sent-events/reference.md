@@ -42,7 +42,7 @@ for await (const item of response) {
 <dl>
 <dd>
 
-**requestOptions:** `Completions.RequestOptions` 
+**requestOptions:** `CompletionsClient.RequestOptions` 
     
 </dd>
 </dl>

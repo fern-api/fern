@@ -6,7 +6,7 @@ pub struct GetUsernameQueryRequest {
     pub id: Uuid,
     pub date: NaiveDate,
     pub deadline: DateTime<Utc>,
-    pub bytes: String,
+    pub bytes: Vec<u8>,
     pub user: User,
     #[serde(rename = "userList")]
     pub user_list: Vec<User>,
@@ -24,8 +24,8 @@ pub struct GetUsernameQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_user: Option<User>,
     #[serde(rename = "excludeUser")]
-    pub exclude_user: User,
-    pub filter: String,
+    pub exclude_user: Vec<User>,
+    pub filter: Vec<String>,
     #[serde(rename = "longParam")]
     pub long_param: i64,
     #[serde(rename = "bigIntParam")]

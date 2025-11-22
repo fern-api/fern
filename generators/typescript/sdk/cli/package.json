@@ -22,12 +22,13 @@
   "types": "lib/index.d.ts",
   "files": ["lib"],
   "scripts": {
-    "clean": "rm -rf ./lib && rm -rf ./dist",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
     "dist:cli": "pnpm clean && pnpm compile && node build.mjs",
-    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../.."
+    "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../..",
+    "podmanTagLatest": "pnpm dist:cli && podman build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../.."
   },
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",

@@ -4,6 +4,7 @@
 
 from . import union
 from .union import (
+    ConvertToken,
     Key,
     KeyType,
     Metadata,
@@ -14,7 +15,10 @@ from .union import (
     NestedUnionL2,
     NestedUnionRoot,
     OptionalMetadata,
+    PaymentMethodUnion,
+    PaymentRequest,
     Request,
+    TokenizeCard,
     TypeWithOptionalUnion,
     UnionWithDuplicateTypes,
     UnionWithIdenticalPrimitives,
@@ -22,6 +26,7 @@ from .union import (
 )
 
 __all__ = [
+    "ConvertToken",
     "Key",
     "KeyType",
     "Metadata",
@@ -32,7 +37,10 @@ __all__ = [
     "NestedUnionL2",
     "NestedUnionRoot",
     "OptionalMetadata",
+    "PaymentMethodUnion",
+    "PaymentRequest",
     "Request",
+    "TokenizeCard",
     "TypeWithOptionalUnion",
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",

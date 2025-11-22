@@ -13,11 +13,10 @@
 <dd>
 
 ```go
+request := &upload.JustFileRequest{}
 client.Service.JustFile(
         context.TODO(),
-        strings.NewReader(
-            "",
-        ),
+        request,
     )
 }
 ```
@@ -47,9 +46,6 @@ client.Service.JustFile(
 request := &upload.OptionalArgsRequest{}
 client.Service.OptionalArgs(
         context.TODO(),
-        strings.NewReader(
-            "",
-        ),
         request,
     )
 }

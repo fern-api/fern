@@ -3,10 +3,10 @@
 import { SeedLiteralClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Inlined", () => {
+describe("InlinedClient", () => {
     test("send", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedLiteralClient({ environment: server.baseUrl });
+        const client = new SeedLiteralClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             temperature: 10.1,
             prompt: "You are a helpful assistant",

@@ -23,6 +23,12 @@ public class SeedOauthClientCredentialsClientBuilder {
 
     private String clientSecret = null;
 
+    private String audience = null;
+
+    private String grantType = null;
+
+    private String scope = null;
+
     private Environment environment;
 
     private OkHttpClient httpClient;
@@ -40,6 +46,30 @@ public class SeedOauthClientCredentialsClientBuilder {
      */
     public SeedOauthClientCredentialsClientBuilder clientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
+        return this;
+    }
+
+    /**
+     * Sets audience
+     */
+    public SeedOauthClientCredentialsClientBuilder audience(String audience) {
+        this.audience = audience;
+        return this;
+    }
+
+    /**
+     * Sets grantType
+     */
+    public SeedOauthClientCredentialsClientBuilder grantType(String grantType) {
+        this.grantType = grantType;
+        return this;
+    }
+
+    /**
+     * Sets scope
+     */
+    public SeedOauthClientCredentialsClientBuilder scope(String scope) {
+        this.scope = scope;
         return this;
     }
 
@@ -129,8 +159,8 @@ public class SeedOauthClientCredentialsClientBuilder {
             ClientOptions.Builder authClientOptionsBuilder =
                     ClientOptions.builder().environment(this.environment);
             AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
-            OAuthTokenSupplier oAuthTokenSupplier =
-                    new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
+            OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(
+                    this.clientId, this.clientSecret, this.audience, this.grantType, this.scope, authClient);
             builder.addHeader("Authorization", oAuthTokenSupplier);
         }
     }
