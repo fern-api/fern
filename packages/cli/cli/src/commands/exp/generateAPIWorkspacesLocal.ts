@@ -245,10 +245,6 @@ async function validateOutputDirectories({
     }
 }
 
-// function loadSdkGeneratorCli(lang: generatorsYml.GenerationLanguage): SdkGeneratorCliLoader | undefined {
-//     switch ()
-// }
-
 async function loadSwiftGeneratorCli(): Promise<SdkGeneratorCli> {
     const pathToGeneratorBundle = resolvePath(__dirname, "../../../../../generators/swift/sdk/dist/api.cjs");
     const { SdkGeneratorCLI } = (await import(pathToGeneratorBundle)) as {
