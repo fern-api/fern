@@ -8,7 +8,8 @@ import {
     BasicAuthProviderGenerator,
     BearerAuthProviderGenerator,
     HeaderAuthProviderGenerator,
-    InferredAuthProviderGenerator
+    InferredAuthProviderGenerator,
+    OAuthAuthProviderGenerator
 } from "./auth-provider";
 
 export declare namespace AuthProvidersGenerator {
@@ -46,7 +47,11 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
                         isAuthMandatory: ir.sdkConfig.isAuthMandatory
                     });
                 case "oauth":
-                    return undefined;
+                    return new OAuthAuthProviderGenerator({
+                        ir,
+                        authScheme,
+                        neverThrowErrors
+                    });
                 default:
                     assertNever(authScheme);
             }

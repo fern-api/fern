@@ -5,7 +5,6 @@ import { SdkContext } from "@fern-typescript/contexts";
 import { ClassDeclarationStructure, Scope, ts } from "ts-morph";
 
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
-import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 
 export declare namespace GeneratedWrappedService {
     interface Init {
@@ -51,69 +50,6 @@ export class GeneratedWrappedService {
                 ])
             )
         });
-
-        if (isRoot && context.generateOAuthClients) {
-            class_.getAccessors.push({
-                name: this.getGetterName(),
-                returnType: getTextOfTsNode(referenceToWrapped.getTypeNode()),
-                scope: Scope.Public,
-                statements: [
-                    getTextOfTsNode(
-                        ts.factory.createReturnStatement(
-                            ts.factory.createParenthesizedExpression(
-                                ts.factory.createBinaryExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createThis(),
-                                        this.getCachedMemberName()
-                                    ),
-                                    ts.SyntaxKind.QuestionQuestionEqualsToken,
-                                    ts.factory.createNewExpression(referenceToWrapped.getExpression(), undefined, [
-                                        ts.factory.createObjectLiteralExpression(
-                                            [
-                                                ts.factory.createSpreadAssignment(
-                                                    this.wrapperService.getReferenceToOptions()
-                                                ),
-                                                ts.factory.createPropertyAssignment(
-                                                    ts.factory.createIdentifier(
-                                                        OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME
-                                                    ),
-                                                    ts.factory.createArrowFunction(
-                                                        [ts.factory.createToken(ts.SyntaxKind.AsyncKeyword)],
-                                                        undefined,
-                                                        [],
-                                                        undefined,
-                                                        ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                                                        ts.factory.createAwaitExpression(
-                                                            ts.factory.createCallExpression(
-                                                                ts.factory.createPropertyAccessExpression(
-                                                                    ts.factory.createPropertyAccessExpression(
-                                                                        ts.factory.createThis(),
-                                                                        ts.factory.createIdentifier(
-                                                                            OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME
-                                                                        )
-                                                                    ),
-                                                                    ts.factory.createIdentifier(
-                                                                        OAuthTokenProviderGenerator.OAUTH_GET_TOKEN_METHOD_NAME
-                                                                    )
-                                                                ),
-                                                                undefined,
-                                                                []
-                                                            )
-                                                        )
-                                                    )
-                                                )
-                                            ],
-                                            true
-                                        )
-                                    ])
-                                )
-                            )
-                        )
-                    )
-                ]
-            });
-            return;
-        }
 
         class_.getAccessors.push({
             name: this.getGetterName(),

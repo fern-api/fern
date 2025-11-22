@@ -4,7 +4,6 @@ import { GeneratedSdkClientClass } from "@fern-typescript/contexts";
 import { ErrorResolver, PackageResolver } from "@fern-typescript/resolvers";
 
 import { GeneratedSdkClientClassImpl } from "./GeneratedSdkClientClassImpl";
-import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 
 export declare namespace SdkClientClassGenerator {
     export interface Init {
@@ -24,7 +23,6 @@ export declare namespace SdkClientClassGenerator {
         inlineFileProperties: boolean;
         omitUndefined: boolean;
         allowExtraFields: boolean;
-        oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
         formDataSupport: "Node16" | "Node18";
@@ -62,7 +60,6 @@ export class SdkClientClassGenerator {
     private readonly inlineFileProperties: boolean;
     private readonly omitUndefined: boolean;
     private readonly allowExtraFields: boolean;
-    private readonly oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private readonly streamType: "wrapper" | "web";
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly fileResponseType: "stream" | "binary-response";
@@ -87,7 +84,6 @@ export class SdkClientClassGenerator {
         includeSerdeLayer,
         retainOriginalCasing,
         inlineFileProperties,
-        oauthTokenProviderGenerator,
         omitUndefined,
         allowExtraFields,
         streamType,
@@ -113,7 +109,6 @@ export class SdkClientClassGenerator {
         this.includeSerdeLayer = includeSerdeLayer;
         this.retainOriginalCasing = retainOriginalCasing;
         this.inlineFileProperties = inlineFileProperties;
-        this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
         this.omitUndefined = omitUndefined;
         this.allowExtraFields = allowExtraFields;
         this.streamType = streamType;
@@ -152,7 +147,6 @@ export class SdkClientClassGenerator {
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
             inlineFileProperties: this.inlineFileProperties,
-            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: this.omitUndefined,
             allowExtraFields: this.allowExtraFields,
             streamType: this.streamType,

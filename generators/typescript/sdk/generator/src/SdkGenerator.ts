@@ -461,7 +461,6 @@ export class SdkGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
             inlineFileProperties: config.inlineFileProperties,
-            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: config.omitUndefined,
             allowExtraFields: config.allowExtraFields,
             streamType: config.streamType,

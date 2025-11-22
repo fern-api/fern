@@ -77,7 +77,9 @@ export class BaseClientContextImpl implements BaseClientContext {
                 header: (header) => {
                     this.authHeaders.push(header);
                 },
-                oauth: () => undefined,
+                oauth: () => {
+                    // OAuth is handled in the root client, not in BaseClient
+                },
                 inferred: (inferredAuthScheme) => {
                     this.inferredAuthScheme = inferredAuthScheme;
                 },
@@ -250,6 +252,38 @@ export class BaseClientContextImpl implements BaseClientContext {
                 ),
                 hasQuestionToken: isOptional
             });
+        }
+
+        // Add OAuth clientId and clientSecret to BaseClientOptions if OAuth is used
+        const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
+        if (oauthScheme != null && oauthScheme.type === "oauth" && context.generateOAuthClients) {
+            const oauthConfig = oauthScheme.configuration;
+            if (oauthConfig.type === "clientCredentials") {
+                const clientIdProperty = oauthConfig.tokenEndpoint.requestProperties.clientId;
+                const clientSecretProperty = oauthConfig.tokenEndpoint.requestProperties.clientSecret;
+
+                properties.push({
+                    kind: StructureKind.PropertySignature,
+                    name: getPropertyKey("clientId"),
+                    type: getTextOfTsNode(
+                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                            context.type.getReferenceToType(clientIdProperty.property.valueType).typeNode
+                        )
+                    ),
+                    hasQuestionToken: oauthConfig.clientIdEnvVar != null
+                });
+
+                properties.push({
+                    kind: StructureKind.PropertySignature,
+                    name: getPropertyKey("clientSecret"),
+                    type: getTextOfTsNode(
+                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                            context.type.getReferenceToType(clientSecretProperty.property.valueType).typeNode
+                        )
+                    ),
+                    hasQuestionToken: oauthConfig.clientSecretEnvVar != null
+                });
+            }
         }
 
         for (const header of this.intermediateRepresentation.headers) {

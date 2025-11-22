@@ -154,6 +154,7 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
 
         // Determine which auth provider to use
         let authProviderCreation = "";
+        let isOAuth = false;
         const isAnyAuth = this.ir.auth.requirement === "ANY";
 
         // Only generate auth provider for non-ANY auth schemes
@@ -183,6 +184,11 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                     });
                     authProviderCreation = "new HeaderAuthProvider(options)";
                     break;
+                } else if (authScheme.type === "oauth") {
+                    // OAuth requires special handling in root Client.ts with access to AuthClient
+                    // For BaseClient, generate a pass-through function for subclients
+                    isOAuth = true;
+                    break;
                 } else if (authScheme.type === "inferred") {
                     // Import InferredAuthProvider
                     context.sourceFile.addImportDeclaration({
@@ -195,8 +201,28 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
             }
         }
 
-        // If no auth provider creation code, don't generate the function
-        if (!authProviderCreation) {
+        // If no auth provider creation code and not OAuth, don't generate the function
+        if (!authProviderCreation && !isOAuth) {
+            return;
+        }
+
+        // For OAuth, generate the function that creates OAuthAuthProvider
+        if (isOAuth) {
+            // Import OAuthAuthProvider
+            context.sourceFile.addImportDeclaration({
+                moduleSpecifier: "./auth/OAuthAuthProvider.js",
+                namedImports: ["OAuthAuthProvider"]
+            });
+
+            const functionCode = `
+export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
+    ${OPTIONS_PARAMETER_NAME}: T
+): NormalizedClientOptionsWithAuth<T> {
+    const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
+    normalized.authProvider ??= new OAuthAuthProvider(options);
+    return normalized;
+}`;
+            context.sourceFile.addStatements(functionCode);
             return;
         }
 

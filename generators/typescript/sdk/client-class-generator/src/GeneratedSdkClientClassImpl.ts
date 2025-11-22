@@ -54,7 +54,8 @@ import {
     BasicAuthProviderInstance,
     BearerAuthProviderInstance,
     HeaderAuthProviderInstance,
-    InferredAuthProviderInstance
+    InferredAuthProviderInstance,
+    OAuthAuthProviderInstance
 } from "./auth-provider";
 import { GeneratedBytesEndpointRequest } from "./endpoint-request/GeneratedBytesEndpointRequest";
 import { GeneratedDefaultEndpointRequest } from "./endpoint-request/GeneratedDefaultEndpointRequest";
@@ -67,7 +68,6 @@ import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedS
 import { isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
 import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
-import { OAuthTokenProviderGenerator } from "./oauth-generator/OAuthTokenProviderGenerator";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation";
 
 export declare namespace GeneratedSdkClientClassImpl {
@@ -93,7 +93,6 @@ export declare namespace GeneratedSdkClientClassImpl {
         inlineFileProperties: boolean;
         omitUndefined: boolean;
         allowExtraFields: boolean;
-        oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
         streamType: "wrapper" | "web";
         fileResponseType: "stream" | "binary-response";
         formDataSupport: "Node16" | "Node18";
@@ -143,11 +142,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly formDataSupport: "Node16" | "Node18";
     private readonly allowExtraFields: boolean;
     private readonly exportsManager: ExportsManager;
-    private readonly oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private oauthAuthScheme: OAuthScheme | undefined;
     private bearerAuthScheme: BearerAuthScheme | undefined;
     private basicAuthScheme: BasicAuthScheme | undefined;
-    private inferredAuthScheme: InferredAuthScheme | undefined;
     private authProvider: AuthProviderInstance | undefined;
     private readonly authHeaders: HeaderAuthScheme[];
     private readonly anyEndpointWithAuth: boolean;
@@ -174,7 +171,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         inlineFileProperties,
         omitUndefined,
         allowExtraFields,
-        oauthTokenProviderGenerator,
         exportsManager,
         streamType,
         fileResponseType,
@@ -199,7 +195,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.allowExtraFields = allowExtraFields;
         this.formDataSupport = formDataSupport;
         this.exportsManager = exportsManager;
-        this.oauthTokenProviderGenerator = oauthTokenProviderGenerator;
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
@@ -445,9 +440,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 },
                 oauth: (oauthScheme) => {
                     this.oauthAuthScheme = oauthScheme;
+                    if (!isAnyAuth) {
+                        this.authProvider = new OAuthAuthProviderInstance();
+                    }
                 },
-                inferred: (inferredAuthScheme) => {
-                    this.inferredAuthScheme = inferredAuthScheme;
+                inferred: () => {
                     if (!isAnyAuth) {
                         this.authProvider = new InferredAuthProviderInstance();
                     }
@@ -628,9 +625,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const optionsType =
             this.authProvider && this.anyEndpointWithAuth
                 ? (() => {
-                      // Import NormalizedClientOptionsWithAuth from BaseClient
+                      // Import NormalizedClientOptionsWithAuth and normalizeClientOptionsWithAuth from BaseClient
                       context.importsManager.addImportFromRoot("BaseClient", {
-                          namedImports: ["NormalizedClientOptionsWithAuth"]
+                          namedImports: ["NormalizedClientOptionsWithAuth", "normalizeClientOptionsWithAuth"]
                       });
                       return ts.factory.createTypeReferenceNode(
                           ts.factory.createIdentifier("NormalizedClientOptionsWithAuth"),
@@ -669,160 +666,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             scope: Scope.Protected,
             isReadonly: true
         });
-        if (this.isRoot && context.generateOAuthClients) {
-            serviceClass.properties.push({
-                kind: StructureKind.Property,
-                name: OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME,
-                type: getTextOfTsNode(context.coreUtilities.auth.OAuthTokenProvider._getReferenceToType()),
-                scope: Scope.Private,
-                isReadonly: true
-            });
-        }
 
         // Note: _authProvider field is no longer needed as auth provider is now accessed via _options.authProvider
 
-        if (this.isRoot && context.generateOAuthClients && this.oauthAuthScheme != null) {
-            const authClientTypeName = this.oauthTokenProviderGenerator.getAuthClientTypeName({
-                context,
-                oauthScheme: this.oauthAuthScheme
-            });
-            const properties: ts.PropertyAssignment[] = [
-                ts.factory.createPropertyAssignment(
-                    OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME,
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createThis(),
-                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-                        ),
-                        OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME
-                    )
-                ),
-                ts.factory.createPropertyAssignment(
-                    OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME,
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createPropertyAccessExpression(
-                            ts.factory.createThis(),
-                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-                        ),
-                        OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME
-                    )
-                ),
-
-                ts.factory.createPropertyAssignment(
-                    ts.factory.createIdentifier(OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME),
-                    ts.factory.createNewExpression(ts.factory.createIdentifier(authClientTypeName), undefined, [
-                        ts.factory.createObjectLiteralExpression(
-                            [
-                                ts.factory.createPropertyAssignment(
-                                    ts.factory.createIdentifier(
-                                        GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME
-                                    ),
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createThis(),
-                                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-                                        ),
-                                        ts.factory.createIdentifier(
-                                            GeneratedSdkClientClassImpl.ENVIRONMENT_OPTION_PROPERTY_NAME
-                                        )
-                                    )
-                                ),
-                                ts.factory.createPropertyAssignment(
-                                    ts.factory.createIdentifier(
-                                        GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME
-                                    ),
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createThis(),
-                                            GeneratedSdkClientClassImpl.OPTIONS_PRIVATE_MEMBER
-                                        ),
-                                        ts.factory.createIdentifier(
-                                            GeneratedSdkClientClassImpl.BASE_URL_OPTION_PROPERTY_NAME
-                                        )
-                                    )
-                                )
-                            ],
-                            true
-                        )
-                    ])
-                )
-            ];
-            const parameters = [
-                {
-                    name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
-                    type: getTextOfTsNode(
-                        ts.factory.createTypeReferenceNode(
-                            ts.factory.createQualifiedName(
-                                ts.factory.createIdentifier(serviceModule.name),
-                                ts.factory.createIdentifier(optionsInterface.name)
-                            )
-                        )
-                    ),
-                    initializer:
-                        optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
-                        !context.baseClient.anyRequiredBaseClientOptions(context)
-                            ? "{}"
-                            : undefined
-                }
-            ];
-            const readClientId =
-                this.oauthAuthScheme.configuration.clientIdEnvVar != null
-                    ? code`
-                    const ${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} = this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} ?? process.env["${this.oauthAuthScheme.configuration.clientIdEnvVar}"];
-                    if (${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} == null) {
-                        throw new Error(
-                            "${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME} is required; either pass it as an argument or set the ${this.oauthAuthScheme.configuration.clientIdEnvVar} environment variable"
-                        );
-                    }
-                `
-                    : code``;
-            const setClientId =
-                this.oauthAuthScheme.configuration.clientIdEnvVar != null
-                    ? code`
-                ${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME}
-            `
-                    : code`
-                ${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME}: this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME}
-            `;
-            const readClientSecret =
-                this.oauthAuthScheme.configuration.clientSecretEnvVar != null
-                    ? code`
-                    const ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} = this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} ?? process.env["${this.oauthAuthScheme.configuration.clientSecretEnvVar}"];
-                    if (${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} == null) {
-                        throw new Error(
-                            "${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME} is required; either pass it as an argument or set the ${this.oauthAuthScheme.configuration.clientSecretEnvVar} environment variable"
-                        );
-                    }
-                `
-                    : code``;
-            const setClientSecret =
-                this.oauthAuthScheme.configuration.clientSecretEnvVar != null
-                    ? code`
-                ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}
-            `
-                    : code`
-                ${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}: this._options.${OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME}
-            `;
-            const statements = code`
-                ${this.getCtorOptionsStatements(context)}
-                ${readClientId}
-
-                ${readClientSecret}
-
-                this.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_PROPERTY_NAME} = new core.${OAuthTokenProviderGenerator.OAUTH_TOKEN_PROVIDER_CLASS_NAME}({
-                    ${setClientId},
-                    ${setClientSecret},
-                    ${OAuthTokenProviderGenerator.OAUTH_AUTH_CLIENT_PROPERTY_NAME}: new ${authClientTypeName}({
-                        ...this._options,
-                        environment: this._options.environment,
-                    }),
-                });
-            `;
-            serviceClass.ctors.push({
-                parameters,
-                statements: statements.toString({ dprintOptions: { indentWidth: 4 } })
-            });
-        } else if (this.isRoot && this.authProvider && this.anyEndpointWithAuth) {
+        if (this.isRoot && this.authProvider && this.anyEndpointWithAuth) {
             const parameters = [
                 {
                     name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
@@ -1253,14 +1100,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         if (this.oauthAuthScheme != null && context.generateOAuthClients) {
             properties.push(
-                ts.factory.createPropertyAssignment(
-                    OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME,
-                    ts.factory.createStringLiteral("YOUR_CLIENT_ID")
-                )
+                ts.factory.createPropertyAssignment("clientId", ts.factory.createStringLiteral("YOUR_CLIENT_ID"))
             );
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME,
+                    "clientSecret",
                     ts.factory.createStringLiteral("YOUR_CLIENT_SECRET")
                 )
             );
@@ -1344,35 +1188,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
         const supplier = context.coreUtilities.fetcher.SupplierOrEndpointSupplier;
 
-        if (this.isRoot && this.oauthAuthScheme != null && context.generateOAuthClients) {
-            properties.push({
-                name: getPropertyKey(OAuthTokenProviderGenerator.OAUTH_CLIENT_ID_PROPERTY_NAME),
-                type: getTextOfTsNode(
-                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        context.type.getReferenceToType(
-                            this.oauthAuthScheme.configuration.tokenEndpoint.requestProperties.clientId.property
-                                .valueType
-                        ).typeNode
-                    )
-                ),
-                hasQuestionToken: this.oauthAuthScheme.configuration.clientIdEnvVar != null
-            });
-            properties.push({
-                name: getPropertyKey(OAuthTokenProviderGenerator.OAUTH_CLIENT_SECRET_PROPERTY_NAME),
-                type: getTextOfTsNode(
-                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        context.type.getReferenceToType(
-                            this.oauthAuthScheme.configuration.tokenEndpoint.requestProperties.clientSecret.property
-                                .valueType
-                        ).typeNode
-                    )
-                ),
-                hasQuestionToken: this.oauthAuthScheme.configuration.clientSecretEnvVar != null
-            });
-        }
-
-        // Note: Basic auth, bearer auth, and inferred auth properties are no longer added to client Options interfaces
-        // They are inherited from BaseClientOptions for both root and subclients
+        // Note: All auth properties (basic, bearer, header, inferred, OAuth) are now in BaseClientOptions
+        // Client Options interfaces just extend BaseClientOptions for both root and subclients
         // Subclients receive the full options object from root clients via this._options
 
         if (
@@ -1382,7 +1199,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             context.generateOAuthClients
         ) {
             properties.push({
-                name: getPropertyKey(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME),
+                name: getPropertyKey("token"),
                 type: getTextOfTsNode(
                     supplier._getReferenceToType(
                         this.intermediateRepresentation.sdkConfig.isAuthMandatory
@@ -1601,7 +1418,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 undefined,
                                 undefined,
                                 context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                                    this.getReferenceToOption(OAuthTokenProviderGenerator.OAUTH_TOKEN_PROPERTY_NAME),
+                                    this.getReferenceToOption("token"),
                                     this.createEndpointSupplierArg()
                                 )
                             )
