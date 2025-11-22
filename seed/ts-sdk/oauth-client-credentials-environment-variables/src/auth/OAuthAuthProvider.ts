@@ -6,42 +6,30 @@ import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
 export namespace OAuthAuthProvider {
-    export interface Options extends BaseClientOptions {
-        clientId?: core.Supplier<string>;
-        clientSecret?: core.Supplier<string>;
-    }
+    export interface Options extends BaseClientOptions {}
 }
 
 export class OAuthAuthProvider implements core.AuthProvider {
     private readonly BUFFER_IN_MINUTES: number = 2;
-    private readonly _clientId: core.Supplier<string>;
-    private readonly _clientSecret: core.Supplier<string>;
+    private readonly _clientId: core.Supplier<string> | undefined;
+    private readonly _clientSecret: core.Supplier<string> | undefined;
     private readonly _authClient: AuthClient;
     private _accessToken: string | undefined;
     private _expiresAt: Date;
     private _refreshPromise: Promise<string> | undefined;
 
     constructor(options: OAuthAuthProvider.Options) {
-        const clientId = options.clientId ?? process.env?.CLIENT_ID;
-        if (clientId == null) {
-            throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-                message:
-                    "clientId is required; either pass it as an argument or set the CLIENT_ID environment variable",
-            });
-        }
-        this._clientId = clientId;
-
-        const clientSecret = options.clientSecret ?? process.env?.CLIENT_SECRET;
-        if (clientSecret == null) {
-            throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-                message:
-                    "clientSecret is required; either pass it as an argument or set the CLIENT_SECRET environment variable",
-            });
-        }
-        this._clientSecret = clientSecret;
-
+        this._clientId = options.clientId;
+        this._clientSecret = options.clientSecret;
         this._authClient = new AuthClient(options);
         this._expiresAt = new Date();
+    }
+
+    public static canCreate(options: OAuthAuthProvider.Options): boolean {
+        return (
+            (options.clientId != null || process.env?.CLIENT_ID != null) &&
+            (options.clientSecret != null || process.env?.CLIENT_SECRET != null)
+        );
     }
 
     public async getAuthRequest(): Promise<core.AuthRequest> {
@@ -68,9 +56,24 @@ export class OAuthAuthProvider implements core.AuthProvider {
     private async refresh(): Promise<string> {
         this._refreshPromise = (async () => {
             try {
+                const clientId = (await core.Supplier.get(this._clientId)) ?? process.env?.CLIENT_ID;
+                if (clientId == null) {
+                    throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
+                        message:
+                            "clientId is required; either pass it as an argument or set the CLIENT_ID environment variable",
+                    });
+                }
+
+                const clientSecret = (await core.Supplier.get(this._clientSecret)) ?? process.env?.CLIENT_SECRET;
+                if (clientSecret == null) {
+                    throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
+                        message:
+                            "clientSecret is required; either pass it as an argument or set the CLIENT_SECRET environment variable",
+                    });
+                }
                 const tokenResponse = await this._authClient.getTokenWithClientCredentials({
-                    client_id: await core.Supplier.get(this._clientId),
-                    client_secret: await core.Supplier.get(this._clientSecret),
+                    client_id: clientId,
+                    client_secret: clientSecret,
                 });
 
                 this._accessToken = tokenResponse.access_token;

@@ -5,26 +5,27 @@ import * as errors from "../errors/index.js";
 
 export namespace BearerAuthProvider {
     export interface Options {
-        token: core.Supplier<core.BearerToken>;
+        token?: core.Supplier<core.BearerToken | undefined>;
     }
 }
 
 export class BearerAuthProvider implements core.AuthProvider {
-    private readonly token: core.Supplier<core.BearerToken>;
+    private readonly token: core.Supplier<core.BearerToken | undefined> | undefined;
 
     constructor(options: BearerAuthProvider.Options) {
         this.token = options.token;
     }
 
     public static canCreate(options: BearerAuthProvider.Options): boolean {
-        return options.token != null;
+        return options.token != null || process.env?.MY_TOKEN != null;
     }
 
-    public async getAuthRequest(): Promise<core.AuthRequest> {
-        const token = await core.Supplier.get(this.token);
+    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
+        const token = (await core.Supplier.get(this.token)) ?? process.env?.MY_TOKEN;
         if (token == null) {
-            throw new errors.SeedSimpleApiError({
-                message: "Please specify a token by passing it in to the constructor",
+            throw new errors.SeedAnyAuthError({
+                message:
+                    "Please specify a token by either passing it in to the constructor or initializing a MY_TOKEN environment variable",
             });
         }
 

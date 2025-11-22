@@ -3,7 +3,7 @@
 import { AuthClient } from "./api/resources/auth/client/Client.js";
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedAnyAuthClient {
     export interface Options extends BaseClientOptions {}
@@ -12,12 +12,12 @@ export declare namespace SeedAnyAuthClient {
 }
 
 export class SeedAnyAuthClient {
-    protected readonly _options: NormalizedClientOptions<SeedAnyAuthClient.Options>;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedAnyAuthClient.Options>;
     protected _auth: AuthClient | undefined;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedAnyAuthClient.Options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get auth(): AuthClient {

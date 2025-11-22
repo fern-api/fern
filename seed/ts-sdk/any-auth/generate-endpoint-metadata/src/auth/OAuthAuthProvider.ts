@@ -3,6 +3,7 @@
 import { AuthClient } from "../api/resources/auth/client/Client.js";
 import type { BaseClientOptions } from "../BaseClient.js";
 import * as core from "../core/index.js";
+import * as errors from "../errors/index.js";
 
 export namespace OAuthAuthProvider {
     export interface Options extends BaseClientOptions {}
@@ -10,8 +11,8 @@ export namespace OAuthAuthProvider {
 
 export class OAuthAuthProvider implements core.AuthProvider {
     private readonly BUFFER_IN_MINUTES: number = 2;
-    private readonly _clientId: core.Supplier<string> | undefined;
-    private readonly _clientSecret: core.Supplier<string> | undefined;
+    private readonly _clientId: core.EndpointSupplier<string> | undefined;
+    private readonly _clientSecret: core.EndpointSupplier<string> | undefined;
     private readonly _authClient: AuthClient;
     private _accessToken: string | undefined;
     private _expiresAt: Date;
@@ -25,11 +26,14 @@ export class OAuthAuthProvider implements core.AuthProvider {
     }
 
     public static canCreate(options: OAuthAuthProvider.Options): boolean {
-        return options.clientId != null && options.clientSecret != null;
+        return (
+            (options.clientId != null || process.env?.MY_CLIENT_ID != null) &&
+            (options.clientSecret != null || process.env?.MY_CLIENT_SECRET != null)
+        );
     }
 
-    public async getAuthRequest(): Promise<core.AuthRequest> {
-        const token = await this.getToken();
+    public async getAuthRequest(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
+        const token = await this.getToken(arg);
 
         return {
             headers: {
@@ -38,7 +42,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
         };
     }
 
-    private async getToken(): Promise<string> {
+    private async getToken(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<string> {
         if (this._accessToken && this._expiresAt > new Date()) {
             return this._accessToken;
         }
@@ -46,15 +50,33 @@ export class OAuthAuthProvider implements core.AuthProvider {
         if (this._refreshPromise != null) {
             return this._refreshPromise;
         }
-        return this.refresh();
+        return this.refresh(arg);
     }
 
-    private async refresh(): Promise<string> {
+    private async refresh(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<string> {
         this._refreshPromise = (async () => {
             try {
-                const clientId = await core.Supplier.get(this._clientId);
+                const clientId =
+                    (await core.EndpointSupplier.get(this._clientId, {
+                        endpointMetadata: arg?.endpointMetadata ?? {},
+                    })) ?? process.env?.MY_CLIENT_ID;
+                if (clientId == null) {
+                    throw new errors.SeedAnyAuthError({
+                        message:
+                            "clientId is required; either pass it as an argument or set the MY_CLIENT_ID environment variable",
+                    });
+                }
 
-                const clientSecret = await core.Supplier.get(this._clientSecret);
+                const clientSecret =
+                    (await core.EndpointSupplier.get(this._clientSecret, {
+                        endpointMetadata: arg?.endpointMetadata ?? {},
+                    })) ?? process.env?.MY_CLIENT_SECRET;
+                if (clientSecret == null) {
+                    throw new errors.SeedAnyAuthError({
+                        message:
+                            "clientSecret is required; either pass it as an argument or set the MY_CLIENT_SECRET environment variable",
+                    });
+                }
                 const tokenResponse = await this._authClient.getToken({
                     client_id: clientId,
                     client_secret: clientSecret,

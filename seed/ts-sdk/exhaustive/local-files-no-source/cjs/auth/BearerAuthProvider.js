@@ -50,6 +50,9 @@ class BearerAuthProvider {
     constructor(options) {
         this.token = options.token;
     }
+    static canCreate(options) {
+        return options.token != null;
+    }
     getAuthRequest() {
         return __awaiter(this, void 0, void 0, function* () {
             const token = yield core.Supplier.get(this.token);

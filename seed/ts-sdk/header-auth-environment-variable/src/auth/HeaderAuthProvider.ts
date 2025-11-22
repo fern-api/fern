@@ -16,6 +16,10 @@ export class HeaderAuthProvider implements core.AuthProvider {
         this.headerValue = options.headerTokenAuth;
     }
 
+    public static canCreate(options: HeaderAuthProvider.Options): boolean {
+        return options.headerTokenAuth != null || process.env?.HEADER_TOKEN_ENV_VAR != null;
+    }
+
     public async getAuthRequest(): Promise<core.AuthRequest> {
         const headerTokenAuth = (await core.Supplier.get(this.headerValue)) ?? process.env?.HEADER_TOKEN_ENV_VAR;
         if (headerTokenAuth == null) {

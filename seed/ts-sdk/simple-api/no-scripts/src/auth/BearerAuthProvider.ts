@@ -16,6 +16,10 @@ export class BearerAuthProvider implements core.AuthProvider {
         this.token = options.token;
     }
 
+    public static canCreate(options: BearerAuthProvider.Options): boolean {
+        return options.token != null;
+    }
+
     public async getAuthRequest(): Promise<core.AuthRequest> {
 
                 const token = await core.Supplier.get(this.token);

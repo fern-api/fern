@@ -5,16 +5,13 @@ import type { BaseClientOptions } from "../BaseClient.js";
 import * as core from "../core/index.js";
 
 export namespace OAuthAuthProvider {
-    export interface Options extends BaseClientOptions {
-        clientId: core.Supplier<string>;
-        clientSecret: core.Supplier<string>;
-    }
+    export interface Options extends BaseClientOptions {}
 }
 
 export class OAuthAuthProvider implements core.AuthProvider {
     private readonly BUFFER_IN_MINUTES: number = 2;
-    private readonly _clientId: core.Supplier<string>;
-    private readonly _clientSecret: core.Supplier<string>;
+    private readonly _clientId: core.Supplier<string> | undefined;
+    private readonly _clientSecret: core.Supplier<string> | undefined;
     private readonly _authClient: AuthClient;
     private _accessToken: string | undefined;
     private _expiresAt: Date;
@@ -22,11 +19,13 @@ export class OAuthAuthProvider implements core.AuthProvider {
 
     constructor(options: OAuthAuthProvider.Options) {
         this._clientId = options.clientId;
-
         this._clientSecret = options.clientSecret;
-
         this._authClient = new AuthClient(options);
         this._expiresAt = new Date();
+    }
+
+    public static canCreate(options: OAuthAuthProvider.Options): boolean {
+        return options.clientId != null && options.clientSecret != null;
     }
 
     public async getAuthRequest(): Promise<core.AuthRequest> {
@@ -53,9 +52,12 @@ export class OAuthAuthProvider implements core.AuthProvider {
     private async refresh(): Promise<string> {
         this._refreshPromise = (async () => {
             try {
+                const clientId = await core.Supplier.get(this._clientId);
+
+                const clientSecret = await core.Supplier.get(this._clientSecret);
                 const tokenResponse = await this._authClient.getTokenWithClientCredentials({
-                    client_id: await core.Supplier.get(this._clientId),
-                    client_secret: await core.Supplier.get(this._clientSecret),
+                    client_id: clientId,
+                    client_secret: clientSecret,
                 });
 
                 this._accessToken = tokenResponse.access_token;

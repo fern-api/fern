@@ -16,6 +16,10 @@ export class BearerAuthProvider implements core.AuthProvider {
         this.token = options.apiKey;
     }
 
+    public static canCreate(options: BearerAuthProvider.Options): boolean {
+        return options.apiKey != null || process.env?.COURIER_API_KEY != null;
+    }
+
     public async getAuthRequest(): Promise<core.AuthRequest> {
         const apiKey = (await core.Supplier.get(this.token)) ?? process.env?.COURIER_API_KEY;
         if (apiKey == null) {
