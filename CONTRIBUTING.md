@@ -231,6 +231,42 @@ Below are some examples of using the command.
 - For a single generator, test definition, and skipping scripts: `pnpm seed test --generator python-sdk --fixture file-download --skip-scripts`
 - For running the generator locally (not on docker): `pnpm seed test --generator python-sdk --local`
 
+#### Important: Always Include Fixtures to Test Changes
+
+**When contributing code changes, you must always include a fixture to test your changes.** This is a critical requirement for maintaining code quality and preventing regressions.
+
+**When to add/update fixtures:**
+- Adding new generator features → Create a new test definition in `/test-definitions/fern/apis/` and reference it in `seed/<generator>/seed.yml`
+- Fixing bugs → Add a fixture that reproduces the bug and verify your fix resolves it
+- Modifying existing behavior → Update existing fixtures to reflect the changes
+- Changing IR structure → Update fixtures for all affected generators
+
+**Workflow for testing with fixtures:**
+1. Identify or create a test definition in `/test-definitions/fern/apis/`
+2. If new, add it to the appropriate `seed/<generator>/seed.yml`
+3. Run `pnpm seed test --generator <generator-id> --fixture <fixture-name>` to generate code
+4. Review the generated code with `git diff seed/<generator>/<fixture>/`
+5. Commit both your source changes and the generated fixture code together
+
+**Example workflow:**
+```sh
+# Create or identify test definition
+ls test-definitions/fern/apis/
+
+# Run seed test for your changes
+pnpm seed test --generator python-sdk --fixture my-feature
+
+# Review generated code changes
+git diff seed/python-sdk/my-feature/
+
+# Commit both source and generated code
+git add generators/python/
+git add seed/python-sdk/my-feature/
+git commit -m "feat(python): add new feature with fixture"
+```
+
+For more detailed guidance on fixture testing, see the "Testing Changes with Fixtures" section in [CLAUDE.md](./CLAUDE.md).
+
 ### Running seed against a custom fern definition
 
 It may be valuable to run seed on a particular Fern definition or OpenAPI spec. To do this,
