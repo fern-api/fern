@@ -1695,7 +1695,9 @@ function addExpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                         cliContext,
                         groupName: argv.group,
                         api: argv.api,
-                        version: argv.version
+                        version: argv.version,
+                        force: argv.force,
+                        lfsOverride: argv.lfsOverride
                     });
                 }
                 return await generateAPIWorkspaces({

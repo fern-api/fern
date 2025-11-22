@@ -106,22 +106,22 @@ export async function generateSwiftSdk({
                         workspaceName: fernWorkspace.definition.rootApiFile.contents.name,
                         outputVersion: versionOverride,
                         organization: project.config.organization,
-                        absolutePathToSnippet: undefined, // TODO: Implement
-                        absolutePathToSnippetTemplates: undefined, // TODO: Implement
+                        absolutePathToSnippet: undefined,
+                        absolutePathToSnippetTemplates: undefined,
                         absolutePathToFernConfig: project.config._absolutePath,
                         writeUnitTests: true,
-                        generateOauthClients: false, // TODO: Implement
-                        generatePaginatedClients: false, // TODO: Implement
-                        whiteLabel: false, // TODO: Implement
+                        generateOauthClients: false,
+                        generatePaginatedClients: false,
+                        whiteLabel: false,
                         paths: {
-                            snippetPath: undefined, // TODO: Implement
-                            snippetTemplatePath: undefined, // TODO: Implement
-                            irPath: AbsoluteFilePath.of(resolve(process.cwd(), "ir.json")), // TODO: Aim to remove this. It shouldn't be needed.
+                            snippetPath: undefined,
+                            snippetTemplatePath: undefined,
+                            irPath: AbsoluteFilePath.of(resolve(process.cwd(), "ir.json")),
                             outputDirectory: AbsoluteFilePath.of(resolve(process.cwd(), outDir))
                         }
                     });
 
-                    await cli.runDirectly(intermediateRepresentation, generatorConfig);
+                    await cli.runProgrammatically(intermediateRepresentation, generatorConfig);
                 })
             );
         })

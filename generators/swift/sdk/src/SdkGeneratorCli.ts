@@ -650,7 +650,10 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
         });
     }
 
-    public async runDirectly(ir: IntermediateRepresentation, generatorConfig: FernGeneratorExec.GeneratorConfig) {
+    public async runProgrammatically(
+        ir: IntermediateRepresentation,
+        generatorConfig: FernGeneratorExec.GeneratorConfig
+    ) {
         const customConfig = this.parseCustomConfigOrThrow(generatorConfig.customConfig);
         const generatorNotificationService = new NopGeneratorNotificationService() as GeneratorNotificationService;
         const context = this.constructContext({

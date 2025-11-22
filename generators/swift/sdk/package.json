@@ -26,6 +26,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
+    "dist:api": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/api.ts --format cjs --sourcemap && cp -R ../base/src/asIs dist && cp -R ../base/src/template dist",
     "dist:cli": "rm -rf ./lib && rm -rf ./dist && pnpm compile && tsup ./src/cli.ts --format cjs --sourcemap && cp -R ../base/src/asIs dist && cp -R ../base/src/template dist",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-swift-sdk:latest ../../..",
     "podmanTagLatest": "pnpm dist:cli && podman build -f ./Dockerfile -t fernapi/fern-swift-sdk:latest ../../..",
