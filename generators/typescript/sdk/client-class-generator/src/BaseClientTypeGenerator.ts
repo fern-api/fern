@@ -1,9 +1,9 @@
-import { FernIr } from "@fern-fern/ir-sdk";
+import type { FernIr } from "@fern-fern/ir-sdk";
 import { getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import { SdkContext } from "@fern-typescript/contexts";
+import type { SdkContext } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { getLiteralValueForHeader } from "./endpoints/utils";
-import { GeneratedHeader } from "./GeneratedHeader";
+import type { GeneratedHeader } from "./GeneratedHeader";
 
 export declare namespace BaseClientTypeGenerator {
     export interface Init {
@@ -27,10 +27,12 @@ export class BaseClientTypeGenerator {
     }
 
     public writeToFile(context: SdkContext): void {
-        // Add import for AuthProvider at the top of the file
-        context.importsManager.addImportFromRoot("core/auth", {
-            namedImports: ["AuthProvider"]
-        });
+        // Add import for AuthProvider only if auth is configured
+        if (this.shouldGenerateAuthCode()) {
+            context.importsManager.addImportFromRoot("core/auth", {
+                namedImports: ["AuthProvider"]
+            });
+        }
 
         context.sourceFile.addInterface(context.baseClient.generateBaseClientOptionsInterface(context));
         context.sourceFile.addInterface(context.baseClient.generateBaseRequestOptionsInterface(context));
@@ -133,16 +135,31 @@ export function normalizeClientOptions<T extends BaseClientOptions>(
         context.sourceFile.addStatements(functionCode);
     }
 
+    private shouldGenerateAuthCode(): boolean {
+        return this.ir.auth.schemes.length > 0;
+    }
+
     private generateNormalizedClientOptionsTypes(context: SdkContext): void {
-        const typesCode = `
+        const shouldGenerateAuthCode = this.shouldGenerateAuthCode();
+
+        // Generate NormalizedClientOptions with optional authProvider only if auth is configured
+        const authProviderProperty = shouldGenerateAuthCode
+            ? `\n    authProvider?: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};`
+            : "";
+
+        let typesCode = `
 export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
-    logging: ${getTextOfTsNode(context.coreUtilities.logging.Logger._getReferenceToType())};
-    authProvider?: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};
-}
+    logging: ${getTextOfTsNode(context.coreUtilities.logging.Logger._getReferenceToType())};${authProviderProperty}
+}`;
+
+        // Only generate NormalizedClientOptionsWithAuth if there are auth schemes
+        if (shouldGenerateAuthCode) {
+            typesCode += `
 
 export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
     authProvider: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};
 }`;
+        }
 
         context.sourceFile.addStatements(typesCode);
     }

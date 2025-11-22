@@ -10,7 +10,6 @@ import {
     HttpRequestBody,
     HttpResponseBody,
     HttpService,
-    InferredAuthScheme,
     IntermediateRepresentation,
     OAuthScheme,
     Package,
