@@ -668,25 +668,25 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
 
         const service = services[0];
         expect(service).toBeDefined();
-        
+
         if (service && typeof service === "object" && "endpoints" in service) {
-            const serviceWithEndpoints = service as { 
-                endpoints?: Array<{ 
+            const serviceWithEndpoints = service as {
+                endpoints?: Array<{
                     examples?: Array<{ name?: string }>;
-                    requestBody?: { 
+                    requestBody?: {
                         contentType?: string;
-                        shape?: { 
+                        shape?: {
                             type?: string;
-                            value?: { 
-                                jsonExample?: { 
+                            value?: {
+                                jsonExample?: {
                                     properties?: Record<string, unknown>;
                                 };
                             };
                         };
                     };
-                }> 
+                }>;
             };
-            
+
             expect(serviceWithEndpoints.endpoints).toBeDefined();
             expect(serviceWithEndpoints.endpoints?.length).toBeGreaterThan(0);
 
@@ -698,7 +698,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
             const irString = JSON.stringify(intermediateRepresentation);
             expect(irString).toContain("Partner token");
             expect(irString).toContain("User token");
-            
+
             // Should NOT contain generic example names
             expect(irString).not.toContain("Example 1");
             expect(irString).not.toContain("Example 2");
