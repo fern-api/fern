@@ -9,6 +9,125 @@ import (
 	big "math/big"
 )
 
+var (
+	paymentRequestFieldPaymentMethod = big.NewInt(1 << 0)
+)
+
+type PaymentRequest struct {
+	PaymentMethod *PaymentMethodUnion `json:"paymentMethod,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (p *PaymentRequest) require(field *big.Int) {
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
+	}
+	p.explicitFields.Or(p.explicitFields, field)
+}
+
+// SetPaymentMethod sets the PaymentMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PaymentRequest) SetPaymentMethod(paymentMethod *PaymentMethodUnion) {
+	p.PaymentMethod = paymentMethod
+	p.require(paymentRequestFieldPaymentMethod)
+}
+
+var (
+	convertTokenFieldMethod  = big.NewInt(1 << 0)
+	convertTokenFieldTokenId = big.NewInt(1 << 1)
+)
+
+type ConvertToken struct {
+	Method  string `json:"method" url:"method"`
+	TokenId string `json:"tokenId" url:"tokenId"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConvertToken) GetMethod() string {
+	if c == nil {
+		return ""
+	}
+	return c.Method
+}
+
+func (c *ConvertToken) GetTokenId() string {
+	if c == nil {
+		return ""
+	}
+	return c.TokenId
+}
+
+func (c *ConvertToken) GetExtraProperties() map[string]interface{} {
+	return c.extraProperties
+}
+
+func (c *ConvertToken) require(field *big.Int) {
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
+	}
+	c.explicitFields.Or(c.explicitFields, field)
+}
+
+// SetMethod sets the Method field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConvertToken) SetMethod(method string) {
+	c.Method = method
+	c.require(convertTokenFieldMethod)
+}
+
+// SetTokenId sets the TokenId field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConvertToken) SetTokenId(tokenId string) {
+	c.TokenId = tokenId
+	c.require(convertTokenFieldTokenId)
+}
+
+func (c *ConvertToken) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConvertToken
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConvertToken(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConvertToken) MarshalJSON() ([]byte, error) {
+	type embed ConvertToken
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConvertToken) String() string {
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 type Key struct {
 	KeyType              KeyType
 	DefaultStringLiteral string
@@ -676,6 +795,70 @@ func (n *NestedUnionRoot) Accept(visitor NestedUnionRootVisitor) error {
 
 type OptionalMetadata = map[string]interface{}
 
+// Tests that nested properties with camelCase wire names are properly
+// converted from snake_case Ruby keys when passed as Hash values.
+type PaymentMethodUnion struct {
+	TokenizeCard *TokenizeCard
+	ConvertToken *ConvertToken
+
+	typ string
+}
+
+func (p *PaymentMethodUnion) GetTokenizeCard() *TokenizeCard {
+	if p == nil {
+		return nil
+	}
+	return p.TokenizeCard
+}
+
+func (p *PaymentMethodUnion) GetConvertToken() *ConvertToken {
+	if p == nil {
+		return nil
+	}
+	return p.ConvertToken
+}
+
+func (p *PaymentMethodUnion) UnmarshalJSON(data []byte) error {
+	valueTokenizeCard := new(TokenizeCard)
+	if err := json.Unmarshal(data, &valueTokenizeCard); err == nil {
+		p.typ = "TokenizeCard"
+		p.TokenizeCard = valueTokenizeCard
+		return nil
+	}
+	valueConvertToken := new(ConvertToken)
+	if err := json.Unmarshal(data, &valueConvertToken); err == nil {
+		p.typ = "ConvertToken"
+		p.ConvertToken = valueConvertToken
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, p)
+}
+
+func (p PaymentMethodUnion) MarshalJSON() ([]byte, error) {
+	if p.typ == "TokenizeCard" || p.TokenizeCard != nil {
+		return json.Marshal(p.TokenizeCard)
+	}
+	if p.typ == "ConvertToken" || p.ConvertToken != nil {
+		return json.Marshal(p.ConvertToken)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", p)
+}
+
+type PaymentMethodUnionVisitor interface {
+	VisitTokenizeCard(*TokenizeCard) error
+	VisitConvertToken(*ConvertToken) error
+}
+
+func (p *PaymentMethodUnion) Accept(visitor PaymentMethodUnionVisitor) error {
+	if p.typ == "TokenizeCard" || p.TokenizeCard != nil {
+		return visitor.VisitTokenizeCard(p.TokenizeCard)
+	}
+	if p.typ == "ConvertToken" || p.ConvertToken != nil {
+		return visitor.VisitConvertToken(p.ConvertToken)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", p)
+}
+
 var (
 	requestFieldUnion = big.NewInt(1 << 0)
 )
@@ -752,6 +935,100 @@ func (r *Request) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	tokenizeCardFieldMethod     = big.NewInt(1 << 0)
+	tokenizeCardFieldCardNumber = big.NewInt(1 << 1)
+)
+
+type TokenizeCard struct {
+	Method     string `json:"method" url:"method"`
+	CardNumber string `json:"cardNumber" url:"cardNumber"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (t *TokenizeCard) GetMethod() string {
+	if t == nil {
+		return ""
+	}
+	return t.Method
+}
+
+func (t *TokenizeCard) GetCardNumber() string {
+	if t == nil {
+		return ""
+	}
+	return t.CardNumber
+}
+
+func (t *TokenizeCard) GetExtraProperties() map[string]interface{} {
+	return t.extraProperties
+}
+
+func (t *TokenizeCard) require(field *big.Int) {
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
+	}
+	t.explicitFields.Or(t.explicitFields, field)
+}
+
+// SetMethod sets the Method field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenizeCard) SetMethod(method string) {
+	t.Method = method
+	t.require(tokenizeCardFieldMethod)
+}
+
+// SetCardNumber sets the CardNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TokenizeCard) SetCardNumber(cardNumber string) {
+	t.CardNumber = cardNumber
+	t.require(tokenizeCardFieldCardNumber)
+}
+
+func (t *TokenizeCard) UnmarshalJSON(data []byte) error {
+	type unmarshaler TokenizeCard
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*t = TokenizeCard(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *t)
+	if err != nil {
+		return err
+	}
+	t.extraProperties = extraProperties
+	t.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (t *TokenizeCard) MarshalJSON() ([]byte, error) {
+	type embed TokenizeCard
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (t *TokenizeCard) String() string {
+	if len(t.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(t.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(t); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", t)
 }
 
 var (

@@ -24,6 +24,7 @@ export declare namespace GenerationRunner {
         shouldGenerateDynamicSnippetTests: boolean | undefined;
         skipUnstableDynamicSnippetTests?: boolean;
         inspect: boolean;
+        ai: generatorsYml.AiServicesSchema | undefined;
     }
 }
 
@@ -122,7 +123,12 @@ export class GenerationRunner {
         outputVersionOverride: string | undefined;
         absolutePathToFernConfig: AbsoluteFilePath | undefined;
         inspect: boolean;
-    }): Promise<{ ir: IntermediateRepresentation; generatorConfig: FernGeneratorExec.GeneratorConfig }> {
+    }): Promise<{
+        ir: IntermediateRepresentation;
+        generatorConfig: FernGeneratorExec.GeneratorConfig;
+        shouldCommit: boolean;
+        autoVersioningCommitMessage?: string;
+    }> {
         context.logger.info(`Starting generation for ${generatorInvocation.name}`);
 
         if (generatorInvocation.absolutePathToLocalOutput == null) {
@@ -156,7 +162,7 @@ export class GenerationRunner {
         const workspaceTempDir = await getWorkspaceTempDir();
 
         // Pass the generated IR to writeFilesToDiskAndRunGenerator
-        const { ir, generatorConfig } = await writeFilesToDiskAndRunGenerator({
+        return writeFilesToDiskAndRunGenerator({
             organization,
             absolutePathToFernConfig,
             workspace,
@@ -182,9 +188,8 @@ export class GenerationRunner {
             inspect,
             executionEnvironment: this.executionEnvironment,
             ir: rawIr,
-            runner: undefined
+            runner: undefined,
+            ai: workspace.generatorsConfiguration?.ai
         });
-
-        return { ir, generatorConfig };
     }
 }

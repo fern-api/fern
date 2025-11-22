@@ -20,6 +20,8 @@ import com.fern.java.output.GeneratedAuthFiles;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
 import com.fern.java.output.gradle.AbstractGradleDependency;
+import com.fern.java.output.gradle.GradleDependencyType;
+import com.fern.java.output.gradle.ParsedGradleDependency;
 import com.fern.java.spring.generators.ApiExceptionGenerator;
 import com.fern.java.spring.generators.ErrorBodyGenerator;
 import com.fern.java.spring.generators.ExceptionGenerator;
@@ -76,7 +78,12 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
             IntermediateRepresentation ir,
             SpringCustomConfig customConfig,
             GeneratorPublishConfig publishOutputMode) {
-        throw new RuntimeException("Publish mode is unsupported!");
+        SpringGeneratorContext context = new SpringGeneratorContext(
+                ir,
+                generatorConfig,
+                customConfig,
+                new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes());
+        generateClient(context, ir);
     }
 
     public void generateClient(SpringGeneratorContext context, IntermediateRepresentation ir) {
@@ -142,12 +149,71 @@ public final class Cli extends AbstractGeneratorCli<SpringCustomConfig, SpringCu
 
     @Override
     public List<AbstractGradleDependency> getBuildGradleDependencies() {
-        return List.of();
+        return List.of(
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
+                        .group("org.springframework.boot")
+                        .artifact("spring-boot-starter-jersey")
+                        .version("3.4.5")
+                        .build(),
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
+                        .group("org.glassfish.jersey.ext")
+                        .artifact("jersey-spring6")
+                        .version("3.1.9")
+                        .build(),
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
+                        .group("jakarta.annotation")
+                        .artifact("jakarta.annotation-api")
+                        .version("2.1.1")
+                        .build(),
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
+                        .group("jakarta.validation")
+                        .artifact("jakarta.validation-api")
+                        .version("3.0.2")
+                        .build(),
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
+                        .group("jakarta.ws.rs")
+                        .artifact("jakarta.ws.rs-api")
+                        .version("3.1.0")
+                        .build(),
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
+                        .group("com.fasterxml.jackson.core")
+                        .artifact("jackson-databind")
+                        .version(ParsedGradleDependency.JACKSON_DATABIND_VERSION)
+                        .build(),
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
+                        .group("com.fasterxml.jackson.datatype")
+                        .artifact("jackson-datatype-jdk8")
+                        .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
+                        .build(),
+                ParsedGradleDependency.builder()
+                        .type(GradleDependencyType.API)
+                        .group("com.fasterxml.jackson.datatype")
+                        .artifact("jackson-datatype-jsr310")
+                        .version(ParsedGradleDependency.JACKSON_JDK8_VERSION)
+                        .build());
     }
 
     @Override
     public List<String> getSubProjects() {
         return subprojects;
+    }
+
+    @Override
+    public List<String> getAdditionalBuildGradleBlocks() {
+        return List.of("java {\n"
+                + "    toolchain {\n"
+                + "        languageVersion = JavaLanguageVersion.of(17)\n"
+                + "    }\n"
+                + "    sourceCompatibility = JavaVersion.VERSION_17\n"
+                + "    targetCompatibility = JavaVersion.VERSION_17\n"
+                + "}");
     }
 
     @Override

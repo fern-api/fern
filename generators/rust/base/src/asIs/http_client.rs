@@ -166,6 +166,7 @@ impl HttpClient {
     ///     None,
     /// ).await?;
     /// ```
+    #[cfg(feature = "multipart")]
     pub async fn execute_multipart_request<T>(
         &self,
         method: Method,
@@ -451,6 +452,7 @@ impl HttpClient {
     ///     println!("Received: {:?}", chunk);
     /// }
     /// ```
+    #[cfg(feature = "sse")]
     pub async fn execute_sse_request<T>(
         &self,
         method: Method,

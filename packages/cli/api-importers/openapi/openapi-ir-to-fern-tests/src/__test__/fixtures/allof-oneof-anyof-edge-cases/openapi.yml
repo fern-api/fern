@@ -1,0 +1,175 @@
+openapi: 3.0.0
+info:
+  title: AllOf/OneOf/AnyOf Edge Cases
+  version: 1.0.0
+
+paths:
+  /extended:
+    post:
+      operationId: createExtended
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Extended"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Extended"
+
+  /pet:
+    post:
+      operationId: createPet
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Pet"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Pet"
+
+  /flexible:
+    post:
+      operationId: createFlexible
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/FlexibleValue"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/FlexibleValue"
+
+components:
+  schemas:
+    Base:
+      type: object
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+
+    Extended:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - type: object
+          properties:
+            name:
+              type: string
+            email:
+              type: string
+              format: email
+          required:
+            - name
+
+    Level1:
+      type: object
+      properties:
+        field1:
+          type: string
+
+    Level2:
+      allOf:
+        - $ref: "#/components/schemas/Level1"
+        - type: object
+          properties:
+            field2:
+              type: string
+
+    Level3:
+      allOf:
+        - $ref: "#/components/schemas/Level2"
+        - type: object
+          properties:
+            field3:
+              type: string
+
+    Dog:
+      type: object
+      properties:
+        petType:
+          type: string
+          enum:
+            - dog
+        bark:
+          type: boolean
+      required:
+        - petType
+
+    Cat:
+      type: object
+      properties:
+        petType:
+          type: string
+          enum:
+            - cat
+        meow:
+          type: boolean
+      required:
+        - petType
+
+    Pet:
+      oneOf:
+        - $ref: "#/components/schemas/Dog"
+        - $ref: "#/components/schemas/Cat"
+      discriminator:
+        propertyName: petType
+
+    Response:
+      oneOf:
+        - type: object
+          properties:
+            success:
+              type: boolean
+            data:
+              type: string
+        - type: object
+          properties:
+            error:
+              type: string
+            code:
+              type: integer
+
+    FlexibleValue:
+      anyOf:
+        - type: string
+        - type: number
+        - type: object
+          properties:
+            complex:
+              type: boolean
+
+    NullableAnyOf:
+      anyOf:
+        - type: string
+        - type: number
+      nullable: true
+
+    Complex:
+      allOf:
+        - $ref: "#/components/schemas/Base"
+        - oneOf:
+            - type: object
+              properties:
+                typeA:
+                  type: string
+            - type: object
+              properties:
+                typeB:
+                  type: number

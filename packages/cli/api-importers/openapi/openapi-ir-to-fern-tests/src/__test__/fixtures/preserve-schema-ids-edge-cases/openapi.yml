@@ -1,0 +1,52 @@
+openapi: 3.0.0
+info:
+  title: Preserve Schema IDs Edge Cases
+  version: 1.0.0
+
+paths:
+  /user:
+    post:
+      operationId: createUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserProfile"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+
+components:
+  schemas:
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        address:
+          $ref: "#/components/schemas/Address"
+      required:
+        - id
+        - name
+
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+        city:
+          type: string
+        country:
+          type: string
+      required:
+        - city
+        - country

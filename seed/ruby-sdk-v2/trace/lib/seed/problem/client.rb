@@ -3,12 +3,22 @@
 module Seed
   module Problem
     class Client
-      # @return [Seed::Problem::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
       # Creates a problem
+      #
+      # @param request_options [Hash]
+      # @param params [Seed::Problem::Types::CreateProblemRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Problem::Types::CreateProblemResponse]
       def create_problem(request_options: {}, **params)
@@ -34,12 +44,21 @@ module Seed
 
       # Updates a problem
       #
+      # @param request_options [Hash]
+      # @param params [Seed::Problem::Types::CreateProblemRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Seed::Commons::Types::ProblemId] :problem_id
+      #
       # @return [Seed::Problem::Types::UpdateProblemResponse]
       def update_problem(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
-          path: "/problem-crud/update/#{params[:problemId]}",
+          path: "/problem-crud/update/#{params[:problem_id]}",
           body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h
         )
         begin
@@ -58,12 +77,21 @@ module Seed
 
       # Soft deletes a problem
       #
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Seed::Commons::Types::ProblemId] :problem_id
+      #
       # @return [untyped]
       def delete_problem(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "DELETE",
-          path: "/problem-crud/delete/#{params[:problemId]}"
+          path: "/problem-crud/delete/#{params[:problem_id]}"
         )
         begin
           _response = @client.send(_request)
@@ -78,6 +106,14 @@ module Seed
       end
 
       # Returns default starter files for problem
+      #
+      # @param request_options [Hash]
+      # @param params [Seed::Problem::Types::GetDefaultStarterFilesRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Problem::Types::GetDefaultStarterFilesResponse]
       def get_default_starter_files(request_options: {}, **params)

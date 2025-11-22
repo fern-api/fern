@@ -18,6 +18,9 @@ test:
   docker:
     image: fernapi/fern-ruby-sdk-v2:latest
     command: pnpm --filter @fern-api/ruby-sdk dockerTagLatest
+  podman:
+    image: fernapi/fern-ruby-sdk-v2:latest
+    command: pnpm --filter @fern-api/ruby-sdk podmanTagLatest
 
 publish:
   preBuildCommands:
@@ -28,7 +31,7 @@ publish:
     context: .
 
 scripts:
-  - docker: ruby:3.3
+  - image: ruby:3.3
     commands:
       - bundle install
       - bundle exec rake test

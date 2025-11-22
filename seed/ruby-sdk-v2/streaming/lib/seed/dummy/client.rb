@@ -3,11 +3,21 @@
 module Seed
   module Dummy
     class Client
-      # @return [Seed::Dummy::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Dummy::Types::GenerateStreamRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [untyped]
       def generate_stream(request_options: {}, **params)
         _body_prop_names = %i[stream num_events]
@@ -31,6 +41,14 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Dummy::Types::Generateequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [Seed::Dummy::Types::StreamResponse]
       def generate(request_options: {}, **params)
         _body_prop_names = %i[stream num_events]

@@ -37,7 +37,7 @@ types:
           Configuration that will be used for any custom fixture specified by --custom-fixture
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
-      scripts: optional<list<DockerScriptConfig>>
+      scripts: optional<list<ContainerScriptConfig>>
       allowedFailures:
         type: optional<list<string>>
         docs: |
@@ -79,14 +79,15 @@ types:
       - PublishDocker
       - PublishCommand
 
-  TestDockerConfiguration:
+  TestContainerConfiguration:
     properties:
       image: string
       command: optional<DockerCommand>
 
   TestConfiguration:
     properties:
-      docker: TestDockerConfiguration
+      docker: TestContainerConfiguration
+      podman: optional<TestContainerConfiguration>
       local: optional<LocalBuildInfo>
 
   LocalBuildInfo:
@@ -131,10 +132,10 @@ types:
         type: optional<string>
       commands: list<string>
 
-  DockerScriptConfig:
+  ContainerScriptConfig:
     extends: Script
     properties:
-      docker: string
+      image: string
 
   Language:
     enum:

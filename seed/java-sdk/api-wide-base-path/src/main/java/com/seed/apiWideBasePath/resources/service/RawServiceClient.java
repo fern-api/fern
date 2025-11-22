@@ -25,12 +25,12 @@ public class RawServiceClient {
         this.clientOptions = clientOptions;
     }
 
-    public SeedApiWideBasePathHttpResponse<Void> post(String serviceParam, String resourceParam, int endpointParam) {
-        return post(serviceParam, resourceParam, endpointParam, null);
+    public SeedApiWideBasePathHttpResponse<Void> post(String serviceParam, int endpointParam, String resourceParam) {
+        return post(serviceParam, endpointParam, resourceParam, null);
     }
 
     public SeedApiWideBasePathHttpResponse<Void> post(
-            String serviceParam, String resourceParam, int endpointParam, RequestOptions requestOptions) {
+            String serviceParam, int endpointParam, String resourceParam, RequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("test")

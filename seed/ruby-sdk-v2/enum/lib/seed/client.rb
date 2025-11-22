@@ -2,7 +2,9 @@
 
 module Seed
   class Client
-    # @return [Seed::Client]
+    # @param base_url [String, nil]
+    #
+    # @return [void]
     def initialize(base_url:)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
@@ -21,6 +23,11 @@ module Seed
     # @return [Seed::InlinedRequest::Client]
     def inlined_request
       @inlined_request ||= Seed::InlinedRequest::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::MultipartForm::Client]
+    def multipart_form
+      @multipart_form ||= Seed::MultipartForm::Client.new(client: @raw_client)
     end
 
     # @return [Seed::PathParam::Client]

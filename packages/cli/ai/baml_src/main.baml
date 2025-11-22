@@ -13,7 +13,7 @@ client<llm> OpenAI {
 client<llm> Anthropic {
   provider anthropic
   options {
-    model claude-3-5-sonnet-20241022
+    model claude-sonnet-4-5-20250929
     api_key env.ANTHROPIC_API_KEY
   }
 }

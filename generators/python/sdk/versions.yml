@@ -1,5 +1,63 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.38.4
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 4.38.3-rc0
+  changelogEntry:
+    - summary: Add support for custom pagination
+      type: feat
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 4.38.2
+  changelogEntry:
+    - summary: Fix missing websocket services when using lazy imports
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 4.38.1
+  changelogEntry:
+    - summary: Add contents:read permission to generated publish workflow for OIDC authentication to fix actions/checkout@v4 requirements.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 4.38.0
+  changelogEntry:
+    - summary: Add pytest-xdist for parallel test execution and upgrade CI Python version to 3.9 in generated SDKs.
+      type: feat
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 4.37.1
+  changelogEntry:
+    - summary: Bump generator CLI version to publish new Docker image.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 4.37.0
+  changelogEntry:
+    - summary: |
+        Pagination: `page.response` is the typed API response object for each page (e.g., `ListUsersPaginationResponse`), not a raw HTTP wrapper. This is a typing-only improvement; no runtime behavior changes and existing code continues to work. If you explicitly type-annotate pagers, use two type parameters (`SyncPager[T, R]` / `AsyncPager[T, R]`).
+
+        ```python
+        # Iterate pages and access the typed response per page
+        pager = client.users.list(...)
+        for page in pager.iter_pages():
+            print(page.response)  # typed response object
+        ```
+      type: feat
+  createdAt: "2025-11-17"
+  irVersion: 61
+
 - version: 4.36.2
   changelogEntry:
     - summary: Fix circular reference issue for recursive types and unions.

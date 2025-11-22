@@ -1,0 +1,440 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createAnimal": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "animalType": "dog",
+                    "breed": "breed",
+                  },
+                  "response": {
+                    "body": {
+                      "animalType": "dog",
+                      "barkVolume": 1.1,
+                      "breed": "breed",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/animal",
+              "request": {
+                "body": "Animal",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "Animal",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createPayment": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "cardNumber": "cardNumber",
+                    "paymentMethod": "credit_card",
+                  },
+                  "response": {
+                    "body": {
+                      "cardNumber": "cardNumber",
+                      "cvv": "cvv",
+                      "expiryDate": "expiryDate",
+                      "paymentMethod": "credit_card",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/payment",
+              "request": {
+                "body": "Payment",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "Payment",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+            "createShape": {
+              "auth": undefined,
+              "docs": undefined,
+              "examples": [
+                {
+                  "request": {
+                    "radius": 1.1,
+                    "shapeType": "shapeType",
+                  },
+                  "response": {
+                    "body": {
+                      "radius": 1.1,
+                      "shapeType": "shapeType",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/shape",
+              "request": {
+                "body": "Shape",
+                "content-type": "application/json",
+              },
+              "response": {
+                "docs": "Success",
+                "status-code": 200,
+                "type": "Shape",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+        "types": {
+          "Animal": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": "animalType",
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "bird": "Bird",
+              "cat": "Cat",
+              "dog": "Dog",
+            },
+          },
+          "BankTransferPayment": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "accountNumber": "string",
+              "bankName": "optional<string>",
+              "routingNumber": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Bird": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "canFly": "boolean",
+              "wingspan": "optional<double>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Cat": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "color": "optional<string>",
+              "indoor": "optional<boolean>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Circle": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "radius": "double",
+              "shapeType": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CreditCardPayment": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "cardNumber": "string",
+              "cvv": "optional<string>",
+              "expiryDate": "optional<string>",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CryptoPayment": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "currency": "CryptoPaymentCurrency",
+              "network": "optional<string>",
+              "walletAddress": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CryptoPaymentCurrency": {
+            "enum": [
+              "BTC",
+              "ETH",
+              "USDT",
+            ],
+            "inline": true,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Dog": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "barkVolume": "optional<double>",
+              "breed": "string",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "Payment": {
+            "availability": undefined,
+            "base-properties": {},
+            "discriminant": "paymentMethod",
+            "docs": undefined,
+            "encoding": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": {
+              "bank_transfer": "BankTransferPayment",
+              "credit_card": "CreditCardPayment",
+              "crypto": "CryptoPayment",
+            },
+          },
+          "Shape": {
+            "discriminated": false,
+            "docs": undefined,
+            "encoding": undefined,
+            "inline": undefined,
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+            "union": [
+              "Circle",
+              "Square",
+            ],
+          },
+          "Square": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "shapeType": "string",
+              "sideLength": "double",
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createAnimal:
+      path: /animal
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: Animal
+        content-type: application/json
+      response:
+        docs: Success
+        type: Animal
+        status-code: 200
+      examples:
+        - request:
+            breed: breed
+            animalType: dog
+          response:
+            body:
+              breed: breed
+              barkVolume: 1.1
+              animalType: dog
+    createShape:
+      path: /shape
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: Shape
+        content-type: application/json
+      response:
+        docs: Success
+        type: Shape
+        status-code: 200
+      examples:
+        - request:
+            shapeType: shapeType
+            radius: 1.1
+          response:
+            body:
+              shapeType: shapeType
+              radius: 1.1
+    createPayment:
+      path: /payment
+      method: POST
+      source:
+        openapi: ../openapi.yml
+      request:
+        body: Payment
+        content-type: application/json
+      response:
+        docs: Success
+        type: Payment
+        status-code: 200
+      examples:
+        - request:
+            cardNumber: cardNumber
+            paymentMethod: credit_card
+          response:
+            body:
+              cardNumber: cardNumber
+              expiryDate: expiryDate
+              cvv: cvv
+              paymentMethod: credit_card
+  source:
+    openapi: ../openapi.yml
+types:
+  Dog:
+    properties:
+      breed: string
+      barkVolume: optional<double>
+    source:
+      openapi: ../openapi.yml
+  Cat:
+    properties:
+      color: optional<string>
+      indoor: optional<boolean>
+    source:
+      openapi: ../openapi.yml
+  Bird:
+    properties:
+      wingspan: optional<double>
+      canFly: boolean
+    source:
+      openapi: ../openapi.yml
+  Animal:
+    discriminant: animalType
+    base-properties: {}
+    union:
+      dog: Dog
+      cat: Cat
+      bird: Bird
+    source:
+      openapi: ../openapi.yml
+  Circle:
+    properties:
+      shapeType: string
+      radius: double
+    source:
+      openapi: ../openapi.yml
+  Square:
+    properties:
+      shapeType: string
+      sideLength: double
+    source:
+      openapi: ../openapi.yml
+  Shape:
+    discriminated: false
+    union:
+      - Circle
+      - Square
+    source:
+      openapi: ../openapi.yml
+  CreditCardPayment:
+    properties:
+      cardNumber: string
+      expiryDate: optional<string>
+      cvv: optional<string>
+    source:
+      openapi: ../openapi.yml
+  BankTransferPayment:
+    properties:
+      accountNumber: string
+      routingNumber: optional<string>
+      bankName: optional<string>
+    source:
+      openapi: ../openapi.yml
+  CryptoPaymentCurrency:
+    enum:
+      - BTC
+      - ETH
+      - USDT
+    inline: true
+    source:
+      openapi: ../openapi.yml
+  CryptoPayment:
+    properties:
+      walletAddress: string
+      currency: CryptoPaymentCurrency
+      network: optional<string>
+    source:
+      openapi: ../openapi.yml
+  Payment:
+    discriminant: paymentMethod
+    base-properties: {}
+    union:
+      credit_card: CreditCardPayment
+      bank_transfer: BankTransferPayment
+      crypto: CryptoPayment
+    source:
+      openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Discriminator Unions Edge Cases",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Discriminator Unions Edge Cases
+",
+  },
+}

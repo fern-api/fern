@@ -6,7 +6,11 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("ServiceClient", () => {
     test("post", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedApiWideBasePathClient({ pathParam: "pathParam", environment: server.baseUrl });
+        const client = new SeedApiWideBasePathClient({
+            maxRetries: 0,
+            pathParam: "pathParam",
+            environment: server.baseUrl,
+        });
 
         server
             .mockEndpoint()
@@ -15,7 +19,7 @@ describe("ServiceClient", () => {
             .statusCode(200)
             .build();
 
-        const response = await client.service.post("serviceParam", "resourceParam", 1);
+        const response = await client.service.post("serviceParam", 1, "resourceParam");
         expect(response).toEqual(undefined);
     });
 });

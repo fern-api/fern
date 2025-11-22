@@ -111,8 +111,8 @@ impl ParamsClient {
                 "/params",
                 None,
                 QueryBuilder::new()
-                    .structured_query("query", request.query.clone())
-                    .int("number", request.number.clone())
+                    .string_array("query", request.query.clone())
+                    .int_array("number", request.number.clone())
                     .build(),
                 options,
             )

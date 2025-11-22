@@ -17,7 +17,6 @@ async fn main() {
                     id: "id".to_string(),
                 })),
                 extended_movie: Some(ExtendedMovie {
-                    cast: vec!["cast".to_string(), "cast".to_string()],
                     id: MovieId("id".to_string()),
                     prequel: Some(MovieId("prequel".to_string())),
                     title: "title".to_string(),
@@ -31,12 +30,17 @@ async fn main() {
                         serde_json::json!({"key":"value"}),
                     )]),
                     revenue: 1000000,
+                    cast: vec!["cast".to_string(), "cast".to_string()],
                 }),
                 entity: Some(Entity {
                     r#type: Type::BasicType(BasicType::Primitive),
                     name: "name".to_string(),
                 }),
-                metadata: Some(Metadata::Html { value: None }),
+                metadata: Some(Metadata2::Html {
+                    value: "value".to_string(),
+                    extra: HashMap::from([("extra".to_string(), "extra".to_string())]),
+                    tags: HashSet::from(["tags".to_string()]),
+                }),
                 common_metadata: Some(Metadata {
                     id: "id".to_string(),
                     data: Some(HashMap::from([("data".to_string(), "data".to_string())])),
@@ -49,7 +53,9 @@ async fn main() {
                         json_string: Some("jsonString".to_string()),
                     },
                 }),
-                data: Some(Data::String_ { value: None }),
+                data: Some(Data::r#String {
+                    value: "value".to_string(),
+                }),
                 migration: Some(Migration {
                     name: "name".to_string(),
                     status: MigrationStatus::Running,
@@ -61,7 +67,7 @@ async fn main() {
                         exception_stacktrace: "exceptionStacktrace".to_string(),
                     },
                 }),
-                test: Some(Test::And { value: None }),
+                test: Some(Test::And { value: false }),
                 node: Some(Node {
                     name: "name".to_string(),
                     nodes: Some(vec![

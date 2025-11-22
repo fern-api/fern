@@ -35,7 +35,7 @@ public partial class SeedApiClient
     ///     {
     ///         Limit = 1,
     ///         Id = "id",
-    ///         Date = "date",
+    ///         Date = new DateOnly(2023, 1, 15),
     ///         Deadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
     ///         Bytes = "bytes",
     ///         User = new User
@@ -52,7 +52,7 @@ public partial class SeedApiClient
     ///             },
     ///         ],
     ///         OptionalDeadline = new DateTime(2024, 01, 15, 09, 30, 00, 000),
-    ///         KeyValue = new Dictionary&lt;string, string?&gt;() { { "keyValue", "keyValue" } },
+    ///         KeyValue = new Dictionary&lt;string, string&gt;() { { "keyValue", "keyValue" } },
     ///         OptionalString = "optionalString",
     ///         NestedUser = new NestedUser
     ///         {
@@ -99,7 +99,7 @@ public partial class SeedApiClient
         var _query = new Dictionary<string, object>();
         _query["limit"] = request.Limit.ToString();
         _query["id"] = request.Id;
-        _query["date"] = request.Date;
+        _query["date"] = request.Date.ToString(Constants.DateFormat);
         _query["deadline"] = request.Deadline.ToString(Constants.DateTimeFormat);
         _query["bytes"] = request.Bytes;
         _query["user"] = JsonUtils.Serialize(request.User);

@@ -224,7 +224,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getDefaultBaseUrlForEndpoint(endpoint: HttpEndpoint): php.CodeBlock {
         if (endpoint.baseUrl != null) {
-            return this.getBaseUrlForEnvironment(endpoint.baseUrl);
+            const defaultEnvironmentId = this.ir.environments?.defaultEnvironment;
+            if (defaultEnvironmentId != null) {
+                return this.getBaseUrlForEnvironment(defaultEnvironmentId, endpoint.baseUrl);
+            }
         }
         return this.getDefaultBaseUrl();
     }
@@ -280,47 +283,46 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getClientOptionsType(): php.Type {
-        return php.Type.typeDict(
-            [
-                {
-                    key: this.getBaseUrlOptionName(),
-                    valueType: php.Type.string(),
-                    optional: true
-                },
-                {
-                    key: this.getGuzzleClientOptionName(),
-                    valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
-                    optional: true
-                },
-                {
-                    key: this.getMaxRetriesOptionName(),
-                    valueType: php.Type.int(),
-                    optional: true
-                },
-                {
-                    key: this.getTimeoutOptionName(),
-                    valueType: php.Type.float(),
-                    optional: true
-                },
-                {
-                    key: this.getHeadersOptionName(),
-                    valueType: php.Type.map(php.Type.string(), php.Type.string()),
-                    optional: true
-                }
-            ],
-            {
-                multiline: true
-            }
-        );
-    }
-
-    public getRequestOptionsType({ endpoint }: { endpoint: HttpEndpoint }): php.Type {
+        const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
         const options = [
             {
+                key: this.getGuzzleClientOptionName(),
+                valueType: php.Type.reference(this.guzzleClient.getClientInterfaceClassReference()),
+                optional: true
+            },
+            {
+                key: this.getMaxRetriesOptionName(),
+                valueType: php.Type.int(),
+                optional: true
+            },
+            {
+                key: this.getTimeoutOptionName(),
+                valueType: php.Type.float(),
+                optional: true
+            },
+            {
+                key: this.getHeadersOptionName(),
+                valueType: php.Type.map(php.Type.string(), php.Type.string()),
+                optional: true
+            }
+        ];
+
+        if (!isMultiUrl) {
+            options.unshift({
                 key: this.getBaseUrlOptionName(),
                 valueType: php.Type.string(),
                 optional: true
-            },
+            });
+        }
+
+        return php.Type.typeDict(options, {
+            multiline: true
+        });
+    }
+
+    public getRequestOptionsType({ endpoint }: { endpoint: HttpEndpoint }): php.Type {
+        const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
+        const options = [
             {
                 key: this.getMaxRetriesOptionName(),
                 valueType: php.Type.int(),
@@ -342,6 +344,15 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
                 optional: true
             }
         ];
+
+        if (!isMultiUrl) {
+            options.unshift({
+                key: this.getBaseUrlOptionName(),
+                valueType: php.Type.string(),
+                optional: true
+            });
+        }
+
         if (!this.isMultipartEndpoint(endpoint)) {
             options.push({
                 key: this.getBodyPropertiesOptionName(),
@@ -355,6 +366,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     public getEnvironmentAccess(name: Name): php.CodeBlock {
+        const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
+        if (isMultiUrl) {
+            return php.codeblock((writer) => {
+                writer.writeNode(this.getEnvironmentsClassReference());
+                writer.write(`::${this.getEnvironmentName(name)}()`);
+            });
+        }
         return php.codeblock((writer) => {
             writer.writeNode(this.getEnvironmentsClassReference());
             writer.write(`::${this.getEnvironmentName(name)}->value`);
@@ -610,7 +628,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.getBaseUrlForEnvironment(defaultEnvironmentId);
     }
 
-    private getBaseUrlForEnvironment(environmentId: string): php.CodeBlock {
+    private getBaseUrlForEnvironment(environmentId: string, baseUrlId?: string): php.CodeBlock {
         const environmentName =
             environmentId != null
                 ? this.ir.environments?.environments._visit({
@@ -630,7 +648,32 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         if (environmentName == null) {
             return php.codeblock("''");
         }
+
+        const isMultiUrl = this.ir.environments?.environments.type === "multipleBaseUrls";
+        if (isMultiUrl && baseUrlId != null) {
+            const baseUrlName = this.getBaseUrlPropertyName(baseUrlId);
+            return php.codeblock((writer) => {
+                writer.writeNode(this.getEnvironmentAccess(environmentName));
+                writer.write(`->${baseUrlName}`);
+            });
+        }
+
         return this.getEnvironmentAccess(environmentName);
+    }
+
+    public getBaseUrlPropertyName(baseUrlId: string): string {
+        const multiUrlEnvs = this.ir.environments?.environments._visit({
+            multipleBaseUrls: (value) => value,
+            singleBaseUrl: () => undefined,
+            _other: () => undefined
+        });
+
+        if (multiUrlEnvs == null) {
+            return "";
+        }
+
+        const baseUrl = multiUrlEnvs.baseUrls.find((url) => url.id === baseUrlId);
+        return baseUrl?.name.camelCase.safeName ?? "";
     }
 
     private getComputedClientName(): string {

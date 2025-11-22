@@ -22,6 +22,21 @@ impl QueryBuilder {
         self
     }
 
+    /// Add multiple string parameters with the same key (for allow-multiple query params)
+    /// Accepts both Vec<String> and Vec<Option<String>>, adding each non-None value as a separate query parameter
+    pub fn string_array<I, T>(mut self, key: &str, values: I) -> Self
+    where
+        I: IntoIterator<Item = T>,
+        T: Into<Option<String>>,
+    {
+        for value in values {
+            if let Some(v) = value.into() {
+                self.params.push((key.to_string(), v));
+            }
+        }
+        self
+    }
+
     /// Add an integer parameter (accept both required/optional)
     pub fn int(mut self, key: &str, value: impl Into<Option<i64>>) -> Self {
         if let Some(v) = value.into() {
@@ -38,6 +53,21 @@ impl QueryBuilder {
         self
     }
 
+    /// Add multiple integer parameters with the same key (for allow-multiple query params)
+    /// Accepts both Vec<i64> and Vec<Option<i64>>, adding each non-None value as a separate query parameter
+    pub fn int_array<I, T>(mut self, key: &str, values: I) -> Self
+    where
+        I: IntoIterator<Item = T>,
+        T: Into<Option<i64>>,
+    {
+        for value in values {
+            if let Some(v) = value.into() {
+                self.params.push((key.to_string(), v.to_string()));
+            }
+        }
+        self
+    }
+
     /// Add a float parameter
     pub fn float(mut self, key: &str, value: impl Into<Option<f64>>) -> Self {
         if let Some(v) = value.into() {
@@ -46,10 +76,40 @@ impl QueryBuilder {
         self
     }
 
+    /// Add multiple float parameters with the same key (for allow-multiple query params)
+    /// Accepts both Vec<f64> and Vec<Option<f64>>, adding each non-None value as a separate query parameter
+    pub fn float_array<I, T>(mut self, key: &str, values: I) -> Self
+    where
+        I: IntoIterator<Item = T>,
+        T: Into<Option<f64>>,
+    {
+        for value in values {
+            if let Some(v) = value.into() {
+                self.params.push((key.to_string(), v.to_string()));
+            }
+        }
+        self
+    }
+
     /// Add a boolean parameter
     pub fn bool(mut self, key: &str, value: impl Into<Option<bool>>) -> Self {
         if let Some(v) = value.into() {
             self.params.push((key.to_string(), v.to_string()));
+        }
+        self
+    }
+
+    /// Add multiple boolean parameters with the same key (for allow-multiple query params)
+    /// Accepts both Vec<bool> and Vec<Option<bool>>, adding each non-None value as a separate query parameter
+    pub fn bool_array<I, T>(mut self, key: &str, values: I) -> Self
+    where
+        I: IntoIterator<Item = T>,
+        T: Into<Option<bool>>,
+    {
+        for value in values {
+            if let Some(v) = value.into() {
+                self.params.push((key.to_string(), v.to_string()));
+            }
         }
         self
     }
@@ -86,6 +146,31 @@ impl QueryBuilder {
             // For enums that implement Display, use the Display implementation
             // to avoid JSON quotes in query parameters
             if let Ok(serialized) = serde_json::to_string(&v) {
+                // Remove JSON quotes if the value is a simple string
+                let cleaned = if serialized.starts_with('"') && serialized.ends_with('"') {
+                    serialized.trim_matches('"').to_string()
+                } else {
+                    serialized
+                };
+                self.params.push((key.to_string(), cleaned));
+            }
+        }
+        self
+    }
+
+    /// Add multiple serializable parameters with the same key (for allow-multiple query params with enums)
+    /// Accepts both Vec<T> and Vec<Option<T>>, adding each non-None value as a separate query parameter
+    pub fn serialize_array<T: Serialize>(
+        mut self,
+        key: &str,
+        values: impl IntoIterator<Item = T>,
+    ) -> Self {
+        for value in values {
+            if let Ok(serialized) = serde_json::to_string(&value) {
+                // Skip null values (from Option::None)
+                if serialized == "null" {
+                    continue;
+                }
                 // Remove JSON quotes if the value is a simple string
                 let cleaned = if serialized.starts_with('"') && serialized.ends_with('"') {
                     serialized.trim_matches('"').to_string()

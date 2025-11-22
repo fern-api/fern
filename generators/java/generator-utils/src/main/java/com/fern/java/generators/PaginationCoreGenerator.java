@@ -16,9 +16,8 @@
 
 package com.fern.java.generators;
 
-import com.fern.generator.exec.model.logging.GeneratorUpdate;
-import com.fern.generator.exec.model.logging.LogLevel;
-import com.fern.generator.exec.model.logging.LogUpdate;
+import static com.fern.java.GeneratorLogging.logError;
+
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.output.GeneratedFile;
@@ -50,21 +49,69 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
                 .getGeneratePaginatedClients()
                 .orElse(false);
         if (!generatePaginatedClients) {
-            generatorExecClient.sendUpdate(GeneratorUpdate.log(LogUpdate.builder()
-                    .level(LogLevel.ERROR)
-                    .message("Pagination is not supported in your current Java SDK plan; falling back to returning full"
-                            + " response types. Please reach out to the Fern team!")
-                    .build()));
+            logError(
+                    generatorExecClient,
+                    "Pagination is not supported in your current Java SDK plan; falling back to returning full"
+                            + " response types. Please reach out to the Fern team!");
             return List.of();
         }
 
-        List<String> fileNames = List.of("BasePage", "SyncPage", "SyncPagingIterable");
+        List<String> fileNames = List.of(
+                "BasePage", "SyncPage", "SyncPagingIterable", "BiDirectionalPage", "CustomPager", "AsyncCustomPager");
 
         return fileNames.stream()
                 .map(fileName -> {
                     String fullFileName = "/" + fileName + ".java";
                     try (InputStream is = PaginationCoreGenerator.class.getResourceAsStream(fullFileName)) {
+                        if (is == null) {
+                            throw new RuntimeException("Resource not found: " + fullFileName);
+                        }
                         String contents = new String(is.readAllBytes(), StandardCharsets.UTF_8);
+
+                        // Apply custom pager name if configured
+                        String customPagerName = generatorContext.getCustomConfig() != null
+                                ? generatorContext
+                                        .getCustomConfig()
+                                        .customPagerName()
+                                        .orElse(null)
+                                : null;
+
+                        if (customPagerName != null
+                                && (fileName.equals("CustomPager") || fileName.equals("AsyncCustomPager"))) {
+                            // Replace class name in the file content
+                            if (fileName.equals("CustomPager")) {
+                                contents = contents.replace(
+                                        "public class CustomPager<T>", "public class " + customPagerName + "<T>");
+                                contents = contents.replace("CustomPager<T>", customPagerName + "<T>");
+                                contents = contents.replace("CustomPager.create(", customPagerName + ".create(");
+                                contents = contents.replace(
+                                        "CustomPager must be implemented", customPagerName + " must be implemented");
+                                contents = contents.replace("CustomPager.", customPagerName + ".");
+                                contents =
+                                        contents.replace("core/CustomPager.java", "core/" + customPagerName + ".java");
+                                // Replace in example code
+                                contents = contents.replace("public CustomPager(", "public " + customPagerName + "(");
+                                contents = contents.replace("new CustomPager ", "new " + customPagerName + " ");
+                                fileName = customPagerName;
+                            } else { // AsyncCustomPager
+                                String asyncName = "Async" + customPagerName;
+                                contents = contents.replace(
+                                        "public class AsyncCustomPager<T>", "public class " + asyncName + "<T>");
+                                contents = contents.replace("AsyncCustomPager<T>", asyncName + "<T>");
+                                contents =
+                                        contents.replace("AsyncCustomPager.createAsync(", asyncName + ".createAsync(");
+                                contents = contents.replace(
+                                        "AsyncCustomPager must be implemented", asyncName + " must be implemented");
+                                contents = contents.replace("AsyncCustomPager.", asyncName + ".");
+                                contents =
+                                        contents.replace("core/AsyncCustomPager.java", "core/" + asyncName + ".java");
+                                // Replace in example code
+                                contents = contents.replace("public AsyncCustomPager(", "public " + asyncName + "(");
+                                contents = contents.replace("new AsyncCustomPager<>(", "new " + asyncName + "<>(");
+                                fileName = asyncName;
+                            }
+                        }
+
                         return GeneratedResourcesJavaFile.builder()
                                 .className(generatorContext
                                         .getPoetClassNameFactory()
@@ -72,7 +119,7 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
                                 .contents(contents)
                                 .build();
                     } catch (IOException e) {
-                        throw new RuntimeException("Failed to read " + fullFileName);
+                        throw new RuntimeException("Failed to read " + fullFileName, e);
                     }
                 })
                 .collect(Collectors.toList());

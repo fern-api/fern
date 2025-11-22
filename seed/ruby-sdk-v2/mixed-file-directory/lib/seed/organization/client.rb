@@ -3,12 +3,22 @@
 module Seed
   module Organization
     class Client
-      # @return [Seed::Organization::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
       # Create a new organization.
+      #
+      # @param request_options [Hash]
+      # @param params [Seed::Organization::Types::CreateOrganizationRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Organization::Types::Organization]
       def create(request_options: {}, **params)

@@ -601,8 +601,8 @@ export class EndpointSnippetGenerator {
         const otherArgs: go.AstNode[] = [];
 
         const { inlinePathParameters, inlineFileProperties } = {
-            inlinePathParameters: this.context.customConfig?.inlinePathParameters ?? false,
-            inlineFileProperties: this.context.customConfig?.inlineFileProperties ?? false
+            inlinePathParameters: this.context.customConfig?.inlinePathParameters ?? true,
+            inlineFileProperties: this.context.customConfig?.inlineFileProperties ?? true
         };
 
         this.context.errors.scope(Scope.PathParameters);

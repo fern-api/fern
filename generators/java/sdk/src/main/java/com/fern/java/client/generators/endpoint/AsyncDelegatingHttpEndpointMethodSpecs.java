@@ -89,4 +89,71 @@ public final class AsyncDelegatingHttpEndpointMethodSpecs extends AbstractDelega
                                 bodyGetterName)
                         .build());
     }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamMethodSpec() {
+        return httpEndpointMethodSpecs.getInputStreamMethodSpec().map(methodSpec -> MethodSpec.methodBuilder(
+                        methodSpec.name)
+                .addJavadoc(methodSpec.javadoc)
+                .returns(methodSpec.returnType)
+                .addModifiers(methodSpec.modifiers)
+                .addParameters(methodSpec.parameters)
+                .addStatement(
+                        "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
+                        rawClientName,
+                        methodSpec.name,
+                        bodyGetterName)
+                .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamWithMediaTypeMethodSpec() {
+        return httpEndpointMethodSpecs
+                .getInputStreamWithMediaTypeMethodSpec()
+                .map(methodSpec -> MethodSpec.methodBuilder(methodSpec.name)
+                        .addJavadoc(methodSpec.javadoc)
+                        .returns(methodSpec.returnType)
+                        .addModifiers(methodSpec.modifiers)
+                        .addParameters(methodSpec.parameters)
+                        .addStatement(
+                                "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
+                                rawClientName,
+                                methodSpec.name,
+                                bodyGetterName)
+                        .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamWithRequestOptionsMethodSpec() {
+        return httpEndpointMethodSpecs
+                .getInputStreamWithRequestOptionsMethodSpec()
+                .map(methodSpec -> MethodSpec.methodBuilder(methodSpec.name)
+                        .addJavadoc(methodSpec.javadoc)
+                        .returns(methodSpec.returnType)
+                        .addModifiers(methodSpec.modifiers)
+                        .addParameters(methodSpec.parameters)
+                        .addStatement(
+                                "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
+                                rawClientName,
+                                methodSpec.name,
+                                bodyGetterName)
+                        .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamWithMediaTypeAndRequestOptionsMethodSpec() {
+        return httpEndpointMethodSpecs
+                .getInputStreamWithMediaTypeAndRequestOptionsMethodSpec()
+                .map(methodSpec -> MethodSpec.methodBuilder(methodSpec.name)
+                        .addJavadoc(methodSpec.javadoc)
+                        .returns(methodSpec.returnType)
+                        .addModifiers(methodSpec.modifiers)
+                        .addParameters(methodSpec.parameters)
+                        .addStatement(
+                                "return this.$L.$L" + paramString(methodSpec) + ".thenApply(response -> response.$L())",
+                                rawClientName,
+                                methodSpec.name,
+                                bodyGetterName)
+                        .build());
+    }
 }

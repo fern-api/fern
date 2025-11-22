@@ -806,6 +806,120 @@
               "_postman_previewlanguage": "json"
             }
           ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get User Specifics",
+          "request": {
+            "description": "Test endpoint with path parameters listed in different order than found in path",
+            "url": {
+              "raw": "{{baseUrl}}/:tenant_id/user/:user_id/specifics/:version/:thought",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ":tenant_id",
+                "user",
+                ":user_id",
+                "specifics",
+                ":version",
+                ":thought"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "tenant_id",
+                  "description": null,
+                  "value": "tenant_id"
+                },
+                {
+                  "key": "user_id",
+                  "description": null,
+                  "value": "user_id"
+                },
+                {
+                  "key": "version",
+                  "description": null,
+                  "value": "1"
+                },
+                {
+                  "key": "thought",
+                  "description": null,
+                  "value": "thought"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "Test endpoint with path parameters listed in different order than found in path",
+                "url": {
+                  "raw": "{{baseUrl}}/:tenant_id/user/:user_id/specifics/:version/:thought",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    ":tenant_id",
+                    "user",
+                    ":user_id",
+                    "specifics",
+                    ":version",
+                    ":thought"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "tenant_id",
+                      "description": null,
+                      "value": "tenant_id"
+                    },
+                    {
+                      "key": "user_id",
+                      "description": null,
+                      "value": "user_id"
+                    },
+                    {
+                      "key": "version",
+                      "description": null,
+                      "value": "1"
+                    },
+                    {
+                      "key": "thought",
+                      "description": null,
+                      "value": "thought"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"name\": \"name\",\n    \"tags\": [\n        \"tags\",\n        \"tags\"\n    ]\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
         }
       ]
     }

@@ -35,6 +35,9 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             ...this.classReference
         });
 
+        const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
+        const hasBaseUrl = this.service != null && this.service.endpoints.some((e) => e.baseUrl != null);
+
         class_.addField(
             php.field({
                 name: `$${this.context.getClientOptionsName()}`,
@@ -43,6 +46,16 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             })
         );
         class_.addField(this.context.rawClient.getField());
+
+        if (isMultiUrl && hasBaseUrl) {
+            class_.addField(
+                php.field({
+                    name: "$environment",
+                    access: "private",
+                    type: php.Type.reference(this.context.getEnvironmentsClassReference())
+                })
+            );
+        }
 
         const subpackages = this.getSubpackages();
         class_.addConstructor(this.getConstructorMethod({ subpackages }));
@@ -70,37 +83,72 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
     }
 
     private getConstructorMethod({ subpackages }: { subpackages: Subpackage[] }): php.Class.Constructor {
-        return {
-            parameters: [
+        const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
+        const hasBaseUrl = this.service != null && this.service.endpoints.some((e) => e.baseUrl != null);
+
+        const parameters: php.Parameter[] = [
+            php.parameter({
+                name: "$client",
+                type: php.Type.reference(this.context.rawClient.getClassReference())
+            })
+        ];
+
+        if (isMultiUrl && hasBaseUrl) {
+            parameters.push(
                 php.parameter({
-                    name: "$client",
-                    type: php.Type.reference(this.context.rawClient.getClassReference())
-                }),
+                    name: "environment",
+                    type: php.Type.reference(this.context.getEnvironmentsClassReference())
+                })
+            );
+        } else {
+            parameters.push(
                 php.parameter({
                     name: this.context.getClientOptionsName(),
                     type: php.Type.optional(this.context.getClientOptionsType()),
                     initializer: php.codeblock("null")
                 })
-            ],
+            );
+        }
+
+        return {
+            parameters,
             body: php.codeblock((writer) => {
                 writer.writeLine(`$this->client = $${this.context.rawClient.getFieldName()};`);
-                writer.writeNodeStatement(
-                    php.codeblock((writer) => {
-                        writer.write(`$this->${this.context.getClientOptionsName()} = `);
-                        writer.writeNode(php.variable(this.context.getClientOptionsName()));
-                        writer.write(" ?? []");
-                    })
-                );
+
+                if (isMultiUrl && hasBaseUrl) {
+                    writer.writeTextStatement("$this->environment = $environment");
+                    writer.writeNodeStatement(
+                        php.codeblock((writer) => {
+                            writer.write(`$this->${this.context.getClientOptionsName()} = []`);
+                        })
+                    );
+                } else {
+                    writer.writeNodeStatement(
+                        php.codeblock((writer) => {
+                            writer.write(`$this->${this.context.getClientOptionsName()} = `);
+                            writer.writeNode(php.variable(this.context.getClientOptionsName()));
+                            writer.write(" ?? []");
+                        })
+                    );
+                }
 
                 for (const subpackage of subpackages) {
                     writer.write(`$this->${subpackage.name.camelCase.safeName} = `);
+
+                    const subClientArgs: php.AstNode[] = [
+                        php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)
+                    ];
+
+                    if (isMultiUrl && hasBaseUrl) {
+                        subClientArgs.push(php.codeblock(`$this->environment`));
+                    } else {
+                        subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
+                    }
+
                     writer.writeNodeStatement(
                         php.instantiateClass({
                             classReference: this.context.getSubpackageClassReference(subpackage),
-                            arguments_: [
-                                php.codeblock(`$this->${this.context.rawClient.getFieldName()}`),
-                                php.codeblock(`$this->${this.context.getClientOptionsName()}`)
-                            ]
+                            arguments_: subClientArgs
                         })
                     );
                 }

@@ -489,3 +489,95 @@ await client.User.GetUserMetadataAsync("tenant_id", "user_id", 1, new GetUserMet
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.User.<a href="/src/SeedPathParameters/User/UserClient.cs">GetUserSpecificsAsync</a>(tenantId, userId, version, thought, GetUserSpecificsRequest { ... }) -> User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint with path parameters listed in different order than found in path
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.User.GetUserSpecificsAsync(
+    "tenant_id",
+    "user_id",
+    1,
+    "thought",
+    new GetUserSpecificsRequest()
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenantId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**userId:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `int` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thought:** `string` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `GetUserSpecificsRequest` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

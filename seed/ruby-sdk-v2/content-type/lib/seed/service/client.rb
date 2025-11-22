@@ -3,11 +3,21 @@
 module Seed
   module Service
     class Client
-      # @return [Seed::Service::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Service::Types::PatchProxyRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [untyped]
       def patch(request_options: {}, **params)
         _body_prop_names = %i[application require_auth]
@@ -36,6 +46,15 @@ module Seed
       # - optional<T> fields (can be present or absent, but not null)
       # - optional<nullable<T>> fields (can be present, absent, or null)
       #
+      # @param request_options [Hash]
+      # @param params [Seed::Service::Types::PatchComplexRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      #
       # @return [untyped]
       def patch_complex(request_options: {}, **params)
         _path_param_names = %i[id]
@@ -63,6 +82,15 @@ module Seed
 
       # Named request with mixed optional/nullable fields and merge-patch content type.
       # This should trigger the NPE issue when optional fields aren't initialized.
+      #
+      # @param request_options [Hash]
+      # @param params [Seed::Service::Types::NamedMixedPatchRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
       #
       # @return [untyped]
       def named_patch_with_mixed(request_options: {}, **params)
@@ -94,6 +122,14 @@ module Seed
       # 1. Not NPE when fields are not provided (tests initialization)
       # 2. Not NPE when fields are explicitly null in JSON (tests Nulls.SKIP)
       #
+      # @param request_options [Hash]
+      # @param params [Seed::Service::Types::OptionalMergePatchRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [untyped]
       def optional_merge_patch_test(request_options: {}, **params)
         _body_prop_names = %i[required_field optional_string optional_integer optional_boolean nullable_string]
@@ -118,6 +154,15 @@ module Seed
       end
 
       # Regular PATCH endpoint without merge-patch semantics
+      #
+      # @param request_options [Hash]
+      # @param params [Seed::Service::Types::RegularPatchRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
       #
       # @return [untyped]
       def regular_patch(request_options: {}, **params)

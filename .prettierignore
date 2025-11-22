@@ -5,6 +5,9 @@ package-lock.yaml
 *.lock.yaml
 *.lock.yml
 
+# Ignore GitHub workflows
+.github/workflows/
+
 # Ignore template files used in generators
 **/asIs/**/*.yml
 
@@ -15,6 +18,7 @@ lib/
 build/
 generated/
 seed/
+seed-remote-local/
 .git/
 .husky/
 .turbo/

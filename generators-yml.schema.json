@@ -87,6 +87,16 @@
         }
       ]
     },
+    "ai": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ai.AIServicesSchema"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "openapi": {
       "oneOf": [
         {
@@ -3195,6 +3205,13 @@
         }
       ]
     },
+    "group.GithubSelfhostedMode": {
+      "type": "string",
+      "enum": [
+        "pull-request",
+        "push"
+      ]
+    },
     "license.GithubLicenseType": {
       "type": "string",
       "enum": [
@@ -3236,7 +3253,17 @@
         "mode": {
           "oneOf": [
             {
-              "const": "pull-request"
+              "$ref": "#/definitions/group.GithubSelfhostedMode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "branch": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"
@@ -3716,6 +3743,33 @@
       },
       "required": [
         "generators"
+      ],
+      "additionalProperties": false
+    },
+    "ai.ModelProvider": {
+      "type": "string",
+      "enum": [
+        "openai",
+        "anthropic",
+        "bedrock"
+      ]
+    },
+    "ai.ModelName": {
+      "type": "string"
+    },
+    "ai.AIServicesSchema": {
+      "type": "object",
+      "properties": {
+        "provider": {
+          "$ref": "#/definitions/ai.ModelProvider"
+        },
+        "model": {
+          "$ref": "#/definitions/ai.ModelName"
+        }
+      },
+      "required": [
+        "provider",
+        "model"
       ],
       "additionalProperties": false
     },

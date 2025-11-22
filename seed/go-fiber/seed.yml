@@ -24,6 +24,9 @@ test:
   docker:
     image: fernapi/fern-go-fiber:latest
     command: pnpm --filter @fern-api/go-sdk dist:cli && docker build -f ./generators/go/fiber/Dockerfile -t fernapi/fern-go-fiber:latest .
+  podman:
+    image: fernapi/fern-go-fiber:latest
+    command: pnpm --filter @fern-api/go-sdk dist:cli && podman build -f ./generators/go/fiber/Dockerfile -t fernapi/fern-go-fiber:latest .
 language: go
 generatorType: Model
 defaultOutputMode: github
@@ -44,7 +47,7 @@ fixtures:
           path: github.com/idempotency-headers/fern
         includeLegacyClientOptions: true
 scripts:
-  - docker: golang:1.23.8-alpine3.20
+  - image: golang:1.23.8-alpine3.20
     commands:
       - CGO_ENABLED=0 go test ./...
 allowedFailures:

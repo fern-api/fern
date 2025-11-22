@@ -42,12 +42,42 @@ private func main() async throws {
     _ = try await client.service.post(
         pathParam: "pathParam",
         serviceParam: "serviceParam",
-        resourceParam: "resourceParam",
-        endpointParam: 1
+        endpointParam: 1,
+        resourceParam: "resourceParam"
     )
 }
 
 try await main()
+```
+
+## Errors
+
+The SDK throws a single error enum for all failures. Client-side issues encoding/decoding failures and network errors use dedicated cases, while non-success HTTP responses are wrapped in an `HTTPError` that exposes the status code, a simple classification and an optional decoded message.
+
+```swift
+import ApiWideBasePath
+
+let client = ApiWideBasePathClient(...)
+
+do {
+    let response = try await client.service.post(...)
+    // Handle successful response
+} catch let error as ApiWideBasePathError {
+    switch error {
+    case .httpError(let httpError):
+        print("Status code:", httpError.statusCode)
+        print("Kind:", httpError.kind)
+        print("Message:", httpError.body?.message ?? httpError.localizedDescription)
+    case .encodingError(let underlying):
+        print("Encoding error:", underlying)
+    case .networkError(let underlying):
+        print("Network error:", underlying)
+    default:
+        print("Other client error:", error)
+    }
+} catch {
+    print("Unexpected error:", error)
+}
 ```
 
 ## Advanced
