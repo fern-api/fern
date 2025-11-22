@@ -21,7 +21,9 @@ export class OAuthAuthProvider implements core.AuthProvider {
 
     constructor(options: OAuthAuthProvider.Options) {
         this._clientId = options.clientId;
+
         this._clientSecret = options.clientSecret;
+
         this._authClient = new AuthClient(options);
         this._expiresAt = new Date();
     }
