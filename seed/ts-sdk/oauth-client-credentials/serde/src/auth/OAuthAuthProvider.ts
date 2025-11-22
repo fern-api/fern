@@ -18,6 +18,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
     private readonly _authClient: AuthClient;
     private _accessToken: string | undefined;
     private _expiresAt: Date;
+    private _refreshPromise: Promise<string> | undefined;
 
     constructor(options: OAuthAuthProvider.Options) {
         this._clientId = options.clientId;
@@ -42,18 +43,29 @@ export class OAuthAuthProvider implements core.AuthProvider {
         if (this._accessToken && this._expiresAt > new Date()) {
             return this._accessToken;
         }
+        // If a refresh is already in progress, return the existing promise
+        if (this._refreshPromise != null) {
+            return this._refreshPromise;
+        }
         return this.refresh();
     }
 
     private async refresh(): Promise<string> {
-        const tokenResponse = await this._authClient.getTokenWithClientCredentials({
-            clientId: await core.Supplier.get(this._clientId),
-            clientSecret: await core.Supplier.get(this._clientSecret),
-        });
+        this._refreshPromise = (async () => {
+            try {
+                const tokenResponse = await this._authClient.getTokenWithClientCredentials({
+                    clientId: await core.Supplier.get(this._clientId),
+                    clientSecret: await core.Supplier.get(this._clientSecret),
+                });
 
-        this._accessToken = tokenResponse.accessToken;
-        this._expiresAt = this.getExpiresAt(tokenResponse.expiresIn, this.BUFFER_IN_MINUTES);
-        return this._accessToken;
+                this._accessToken = tokenResponse.accessToken;
+                this._expiresAt = this.getExpiresAt(tokenResponse.expiresIn, this.BUFFER_IN_MINUTES);
+                return this._accessToken;
+            } finally {
+                this._refreshPromise = undefined;
+            }
+        })();
+        return this._refreshPromise;
     }
 
     private getExpiresAt(expiresInSeconds: number, bufferInMinutes: number): Date {

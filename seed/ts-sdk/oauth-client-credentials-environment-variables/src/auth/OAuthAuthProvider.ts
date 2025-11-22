@@ -3,6 +3,7 @@
 import { AuthClient } from "../api/resources/auth/client/Client.js";
 import type { BaseClientOptions } from "../BaseClient.js";
 import * as core from "../core/index.js";
+import * as errors from "../errors/index.js";
 
 export namespace OAuthAuthProvider {
     export interface Options extends BaseClientOptions {
@@ -18,21 +19,24 @@ export class OAuthAuthProvider implements core.AuthProvider {
     private readonly _authClient: AuthClient;
     private _accessToken: string | undefined;
     private _expiresAt: Date;
+    private _refreshPromise: Promise<string> | undefined;
 
     constructor(options: OAuthAuthProvider.Options) {
         const clientId = options.clientId ?? process.env?.CLIENT_ID;
         if (clientId == null) {
-            throw new Error(
-                "clientId is required; either pass it as an argument or set the CLIENT_ID environment variable",
-            );
+            throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
+                message:
+                    "clientId is required; either pass it as an argument or set the CLIENT_ID environment variable",
+            });
         }
         this._clientId = clientId;
 
         const clientSecret = options.clientSecret ?? process.env?.CLIENT_SECRET;
         if (clientSecret == null) {
-            throw new Error(
-                "clientSecret is required; either pass it as an argument or set the CLIENT_SECRET environment variable",
-            );
+            throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
+                message:
+                    "clientSecret is required; either pass it as an argument or set the CLIENT_SECRET environment variable",
+            });
         }
         this._clientSecret = clientSecret;
 
@@ -54,18 +58,29 @@ export class OAuthAuthProvider implements core.AuthProvider {
         if (this._accessToken && this._expiresAt > new Date()) {
             return this._accessToken;
         }
+        // If a refresh is already in progress, return the existing promise
+        if (this._refreshPromise != null) {
+            return this._refreshPromise;
+        }
         return this.refresh();
     }
 
     private async refresh(): Promise<string> {
-        const tokenResponse = await this._authClient.getTokenWithClientCredentials({
-            client_id: await core.Supplier.get(this._clientId),
-            client_secret: await core.Supplier.get(this._clientSecret),
-        });
+        this._refreshPromise = (async () => {
+            try {
+                const tokenResponse = await this._authClient.getTokenWithClientCredentials({
+                    client_id: await core.Supplier.get(this._clientId),
+                    client_secret: await core.Supplier.get(this._clientSecret),
+                });
 
-        this._accessToken = tokenResponse.access_token;
-        this._expiresAt = this.getExpiresAt(tokenResponse.expires_in, this.BUFFER_IN_MINUTES);
-        return this._accessToken;
+                this._accessToken = tokenResponse.access_token;
+                this._expiresAt = this.getExpiresAt(tokenResponse.expires_in, this.BUFFER_IN_MINUTES);
+                return this._accessToken;
+            } finally {
+                this._refreshPromise = undefined;
+            }
+        })();
+        return this._refreshPromise;
     }
 
     private getExpiresAt(expiresInSeconds: number, bufferInMinutes: number): Date {

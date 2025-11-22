@@ -126,6 +126,11 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const clientIdIsOptional = oauthConfig.clientIdEnvVar != null;
         const clientSecretIsOptional = oauthConfig.clientSecretEnvVar != null;
 
+        // Get error constructor for consistent error handling
+        const errorConstructor = getTextOfTsNode(
+            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+        );
+
         // Generate constructor with validation
         let constructorStatements = "";
 
@@ -133,9 +138,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             constructorStatements += `
         const clientId = options.clientId ?? process.env?.["${oauthConfig.clientIdEnvVar}"];
         if (clientId == null) {
-            throw new Error(
-                "clientId is required; either pass it as an argument or set the ${oauthConfig.clientIdEnvVar} environment variable"
-            );
+            throw new ${errorConstructor}({
+                message: "clientId is required; either pass it as an argument or set the ${oauthConfig.clientIdEnvVar} environment variable"
+            });
         }
         this._clientId = clientId;
 `;
@@ -149,9 +154,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             constructorStatements += `
         const clientSecret = options.clientSecret ?? process.env?.["${oauthConfig.clientSecretEnvVar}"];
         if (clientSecret == null) {
-            throw new Error(
-                "clientSecret is required; either pass it as an argument or set the ${oauthConfig.clientSecretEnvVar} environment variable"
-            );
+            throw new ${errorConstructor}({
+                message: "clientSecret is required; either pass it as an argument or set the ${oauthConfig.clientSecretEnvVar} environment variable"
+            });
         }
         this._clientSecret = clientSecret;
 `;
@@ -203,6 +208,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 type: "Date",
                 isReadonly: false,
                 scope: Scope.Private
+            },
+            {
+                name: "_refreshPromise",
+                type: "Promise<string> | undefined",
+                isReadonly: false,
+                scope: Scope.Private
             }
         ];
 
@@ -221,11 +232,19 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         if (this._accessToken && this._expiresAt > new Date()) {
             return this._accessToken;
         }
+        // If a refresh is already in progress, return the existing promise
+        if (this._refreshPromise != null) {
+            return this._refreshPromise;
+        }
         return this.refresh();
         `
             : `
         if (this._accessToken) {
             return this._accessToken;
+        }
+        // If a refresh is already in progress, return the existing promise
+        if (this._refreshPromise != null) {
+            return this._refreshPromise;
         }
         return this._getToken();
         `;
@@ -236,23 +255,37 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const refreshMethodStatements = hasExpiration
             ? `
-        const tokenResponse = await this._authClient.${endpointName}({
-            ${clientIdProperty}: ${clientIdExpression},
-            ${clientSecretProperty}: ${clientSecretExpression},
-        });
-        ${neverThrowErrorHandler}
-        this._accessToken = ${accessTokenProperty};
-        this._expiresAt = this.getExpiresAt(${expiresInProperty}, this.BUFFER_IN_MINUTES);
-        return this._accessToken;
+        this._refreshPromise = (async () => {
+            try {
+                const tokenResponse = await this._authClient.${endpointName}({
+                    ${clientIdProperty}: ${clientIdExpression},
+                    ${clientSecretProperty}: ${clientSecretExpression},
+                });
+                ${neverThrowErrorHandler}
+                this._accessToken = ${accessTokenProperty};
+                this._expiresAt = this.getExpiresAt(${expiresInProperty}, this.BUFFER_IN_MINUTES);
+                return this._accessToken;
+            } finally {
+                this._refreshPromise = undefined;
+            }
+        })();
+        return this._refreshPromise;
         `
             : `
-        const tokenResponse = await this._authClient.${endpointName}({
-            ${clientIdProperty}: ${clientIdExpression},
-            ${clientSecretProperty}: ${clientSecretExpression},
-        });
-        ${neverThrowErrorHandler}
-        this._accessToken = ${accessTokenProperty};
-        return this._accessToken;
+        this._refreshPromise = (async () => {
+            try {
+                const tokenResponse = await this._authClient.${endpointName}({
+                    ${clientIdProperty}: ${clientIdExpression},
+                    ${clientSecretProperty}: ${clientSecretExpression},
+                });
+                ${neverThrowErrorHandler}
+                this._accessToken = ${accessTokenProperty};
+                return this._accessToken;
+            } finally {
+                this._refreshPromise = undefined;
+            }
+        })();
+        return this._refreshPromise;
         `;
 
         const methods: Array<{
