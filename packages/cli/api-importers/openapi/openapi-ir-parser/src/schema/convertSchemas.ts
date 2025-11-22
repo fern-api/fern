@@ -111,30 +111,13 @@ export function convertSchema(
     const source = getSourceExtension(schema) ?? fileSource;
     const encoding = getEncoding({ schema, logger: context.logger });
     if (isReferenceObject(schema)) {
-        // Check if this ReferenceObject has example/examples siblings (OpenAPI 3.1+)
-        // If so, we need to merge the resolved schema with these property-level examples
-        // biome-ignore lint/suspicious/noExplicitAny: OpenAPI 3.1+ allows $ref siblings
-        const propertyLevelExample = (schema as any).example;
-        // biome-ignore lint/suspicious/noExplicitAny: OpenAPI 3.1+ allows $ref siblings
-        const propertyLevelExamples = (schema as any).examples;
-        const hasPropertyLevelExamples = propertyLevelExample !== undefined || propertyLevelExamples !== undefined;
-
         const schemaId = getSchemaIdFromReference(schema);
         if (schemaId != null) {
             if (shouldResolveAlias(schemaId, schema, context)) {
                 // If the schema is an alias we are configured to inline, we should do that and return immediately.
                 // This prevents reference registration which happens below.
-                const resolvedSchema = context.resolveSchemaReference(schema);
-                // Merge property-level examples with resolved schema, giving priority to property-level
-                const mergedSchema = hasPropertyLevelExamples
-                    ? {
-                          ...resolvedSchema,
-                          example: propertyLevelExample ?? resolvedSchema.example,
-                          examples: propertyLevelExamples ?? resolvedSchema.examples
-                      }
-                    : resolvedSchema;
                 return convertSchemaObject(
-                    mergedSchema,
+                    context.resolveSchemaReference(schema),
                     wrapAsOptional,
                     wrapAsNullable,
                     context,
@@ -153,31 +136,6 @@ export function convertSchema(
             } else {
                 context.markSchemaAsReferencedByRequest(schemaId);
             }
-
-            // If there are property-level examples, we need to inline the schema and merge examples
-            if (hasPropertyLevelExamples) {
-                const resolvedSchema = context.resolveSchemaReference(schema);
-                // Merge property-level examples with resolved schema, giving priority to property-level
-                const mergedSchema = {
-                    ...resolvedSchema,
-                    example: propertyLevelExample ?? resolvedSchema.example,
-                    examples: propertyLevelExamples ?? resolvedSchema.examples
-                };
-                return convertSchemaObject(
-                    mergedSchema,
-                    wrapAsOptional,
-                    wrapAsNullable,
-                    context,
-                    breadcrumbs,
-                    encoding,
-                    source,
-                    namespace,
-                    propertiesToExclude,
-                    referencedAsRequest,
-                    fallback
-                );
-            }
-
             return convertReferenceObject(
                 schema,
                 wrapAsOptional,
@@ -191,17 +149,8 @@ export function convertSchema(
         }
         // if the schema id is null, we should convert the entire schema and inline it
         // in the OpenAPI IR
-        const resolvedSchema = context.resolveSchemaReference(schema);
-        // Merge property-level examples with resolved schema, giving priority to property-level
-        const mergedSchema = hasPropertyLevelExamples
-            ? {
-                  ...resolvedSchema,
-                  example: propertyLevelExample ?? resolvedSchema.example,
-                  examples: propertyLevelExamples ?? resolvedSchema.examples
-              }
-            : resolvedSchema;
         return convertSchemaObject(
-            mergedSchema,
+            context.resolveSchemaReference(schema),
             wrapAsOptional,
             wrapAsNullable,
             context,
