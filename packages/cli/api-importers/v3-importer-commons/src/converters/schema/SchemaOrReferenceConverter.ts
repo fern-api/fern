@@ -67,6 +67,32 @@ export class SchemaOrReferenceConverter extends AbstractConverter<
         schemaOrReference: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
     }): SchemaOrReferenceConverter.Output | undefined {
         if (this.context.isReferenceObject(schemaOrReference)) {
+            // Check if this ReferenceObject has example/examples siblings (OpenAPI 3.1+)
+            // If so, we need to inline the schema and merge examples
+            // biome-ignore lint/suspicious/noExplicitAny: OpenAPI 3.1+ allows $ref siblings
+            const propertyLevelExample = (schemaOrReference as any).example;
+            // biome-ignore lint/suspicious/noExplicitAny: OpenAPI 3.1+ allows $ref siblings
+            const propertyLevelExamples = (schemaOrReference as any).examples;
+            const hasPropertyLevelExamples = propertyLevelExample !== undefined || propertyLevelExamples !== undefined;
+
+            if (hasPropertyLevelExamples) {
+                // Resolve the reference and merge with property-level examples
+                const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                    schemaOrReference,
+                    breadcrumbs: this.breadcrumbs
+                });
+                if (resolved != null) {
+                    // Merge property-level examples with resolved schema, giving priority to property-level
+                    const mergedSchema = {
+                        ...resolved,
+                        example: propertyLevelExample ?? resolved.example,
+                        examples: propertyLevelExamples ?? resolved.examples
+                    };
+                    // Convert as a schema object instead of a reference
+                    return this.convertSchemaObject({ schema: mergedSchema });
+                }
+            }
+
             const response = this.context.convertReferenceToTypeReference({
                 reference: schemaOrReference,
                 breadcrumbs: this.breadcrumbs
