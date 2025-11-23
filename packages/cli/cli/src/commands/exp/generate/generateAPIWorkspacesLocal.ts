@@ -220,18 +220,20 @@ async function validateOutputDirectories({
     cliContext: CliContext;
     force: boolean;
 }): Promise<void> {
-    for (const workspace of project.apiWorkspaces) {
-        for (const generator of workspace.generatorsConfiguration?.groups
-            .filter((group) => groupName == null || groupName === group.groupName)
-            .flatMap((group) => group.generators) ?? []) {
-            const { shouldProceed } = await checkOutputDirectory(
-                generator.absolutePathToLocalOutput,
-                cliContext,
-                force
-            );
+    const outputPaths = project.apiWorkspaces.flatMap(
+        (workspace) =>
+            workspace.generatorsConfiguration?.groups
+                .filter((group) => groupName == null || groupName === group.groupName)
+                .flatMap((group) => group.generators)
+                .map((generator) => generator.absolutePathToLocalOutput) ?? []
+    );
+
+    await Promise.all(
+        outputPaths.map(async (outputPath) => {
+            const { shouldProceed } = await checkOutputDirectory(outputPath, cliContext, force);
             if (!shouldProceed) {
                 cliContext.failAndThrow("Generation cancelled");
             }
-        }
-    }
+        })
+    );
 }
