@@ -20,7 +20,9 @@ export class BearerAuthProvider implements core.AuthProvider {
         return options.token != null;
     }
 
-    public async getAuthRequest(): Promise<core.AuthRequest> {
+    public async getAuthRequest(arg?: {
+            endpointMetadata?: core.EndpointMetadata;
+        }): Promise<core.AuthRequest> {
 
                 const token = await core.Supplier.get(this.token);
                 if (token == null) {

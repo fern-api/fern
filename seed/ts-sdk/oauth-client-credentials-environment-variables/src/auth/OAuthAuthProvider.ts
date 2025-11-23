@@ -32,8 +32,8 @@ export class OAuthAuthProvider implements core.AuthProvider {
         );
     }
 
-    public async getAuthRequest(): Promise<core.AuthRequest> {
-        const token = await this.getToken();
+    public async getAuthRequest(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
+        const token = await this.getToken(arg);
 
         return {
             headers: {
@@ -42,7 +42,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
         };
     }
 
-    private async getToken(): Promise<string> {
+    private async getToken(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<string> {
         if (this._accessToken && this._expiresAt > new Date()) {
             return this._accessToken;
         }
@@ -50,10 +50,10 @@ export class OAuthAuthProvider implements core.AuthProvider {
         if (this._refreshPromise != null) {
             return this._refreshPromise;
         }
-        return this.refresh();
+        return this.refresh(arg);
     }
 
-    private async refresh(): Promise<string> {
+    private async refresh(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<string> {
         this._refreshPromise = (async () => {
             try {
                 const clientId = (await core.Supplier.get(this._clientId)) ?? process.env?.CLIENT_ID;

@@ -20,7 +20,7 @@ export class BearerAuthProvider implements core.AuthProvider {
         return options.apiKey != null || process.env?.SEED_API_KEY != null;
     }
 
-    public async getAuthRequest(): Promise<core.AuthRequest> {
+    public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
         const apiKey = (await core.Supplier.get(this.token)) ?? process.env?.SEED_API_KEY;
         if (apiKey == null) {
             throw new errors.SeedWebsocketBearerAuthError({
