@@ -123,7 +123,8 @@ export class OperationConverter extends AbstractOperationConverter {
         const fernExamples = this.convertExamples({
             httpPath: path,
             httpMethod,
-            baseUrl
+            baseUrl,
+            openapiExamples: convertedResponseBody?.examples
         });
 
         const endpointLevelSecuritySchemes = new Set<string>(
@@ -352,6 +353,14 @@ export class OperationConverter extends AbstractOperationConverter {
                             body: converted.responseBody
                         }
                     ];
+
+                    // Merge examples from the response body converter
+                    if (converted.examples != null) {
+                        convertedResponseBody.examples = {
+                            ...convertedResponseBody.examples,
+                            ...converted.examples
+                        };
+                    }
                 }
             }
             // Convert Error Responses (4xx and 5xx)
@@ -485,11 +494,13 @@ export class OperationConverter extends AbstractOperationConverter {
     private convertExamples({
         httpPath,
         httpMethod,
-        baseUrl
+        baseUrl,
+        openapiExamples
     }: {
         httpPath: HttpPath;
         httpMethod: FernIr.HttpMethod;
         baseUrl: string | undefined;
+        openapiExamples?: Record<string, OpenAPIV3_1.ExampleObject>;
     }): {
         examples: Record<string, FernIr.V2HttpEndpointExample>;
         streamExamples: Record<string, FernIr.V2HttpEndpointExample>;
@@ -515,16 +526,50 @@ export class OperationConverter extends AbstractOperationConverter {
         );
         const allExamples = hasFernCodeSamples ? fernExamples : [...fernExamples, ...redoclyCodeSamples];
 
-        if (allExamples.length === 0) {
+        // Convert OpenAPI examples to Fern examples format
+        const openapiExamplesAsFernExamples = this.convertOpenapiExamplesToFernExamples(openapiExamples);
+        const allExamplesWithOpenapi = [...allExamples, ...openapiExamplesAsFernExamples];
+
+        if (allExamplesWithOpenapi.length === 0) {
             return { examples: {}, streamExamples: {} };
         }
         if (this.streamingExtension?.type === "streamCondition") {
-            return this.convertStreamConditionExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples });
+            return this.convertStreamConditionExamples({
+                httpPath,
+                httpMethod,
+                baseUrl,
+                fernExamples: allExamplesWithOpenapi
+            });
         }
         return {
-            examples: this.convertEndpointExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples }),
+            examples: this.convertEndpointExamples({
+                httpPath,
+                httpMethod,
+                baseUrl,
+                fernExamples: allExamplesWithOpenapi
+            }),
             streamExamples: {}
         };
+    }
+
+    private convertOpenapiExamplesToFernExamples(
+        openapiExamples?: Record<string, OpenAPIV3_1.ExampleObject>
+    ): RawSchemas.ExampleEndpointCallArraySchema {
+        if (openapiExamples == null) {
+            return [];
+        }
+
+        return Object.entries(openapiExamples).map(([_key, example]) => {
+            // Use the summary field as the example name if available
+            const exampleName = example.summary ?? example.description;
+            const fernExample: RawSchemas.ExampleEndpointCallSchema = {
+                name: exampleName,
+                response: {
+                    body: example.value
+                }
+            };
+            return fernExample;
+        });
     }
 
     private convertStreamConditionExamples({
@@ -578,7 +623,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 return [
                     this.getExampleName({ example, exampleIndex }),
                     {
-                        displayName: undefined,
+                        displayName: example.name,
                         request:
                             example.request != null ||
                             example["path-parameters"] != null ||
