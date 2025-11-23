@@ -54,6 +54,134 @@ const EMPTY_DOCS_DEFINITION: DocsV1Read.DocsDefinition = {
 };
 
 /**
+ * Slug tracking system for navigation changes
+ */
+class SlugChangeTracker {
+    private pageSlugMap = new Map<string, string>(); // pageId -> slug
+
+    constructor(private context: TaskContext) {}
+
+    /**
+     * Extract all page slugs using the FernNavigation NodeCollector
+     * This handles both navigation structure and frontmatter slug overrides
+     */
+    private extractSlugsFromNavigationRoot(root: any): Map<string, string> {
+        const slugMap = new Map<string, string>();
+
+        if (!root) {
+            return slugMap;
+        }
+
+        try {
+            // Use FernNavigation's NodeCollector to get the definitive slug mappings
+            // This already processes frontmatter slugs, navigation slugs, and all overrides
+            const collector = FernNavigation.NodeCollector.collect(root);
+
+            if (collector?.slugMap) {
+                // collector.slugMap is Map<string, FernNavigationNode> where key is the final resolved slug
+                collector.slugMap.forEach((node: any, slug: string) => {
+                    if (node && node.type === "page" && node.pageId) {
+                        slugMap.set(node.pageId, slug);
+                    }
+                });
+            } else {
+                // Fallback to manual traversal if NodeCollector is not available
+                this.traverseNavigationManually(root, slugMap);
+            }
+        } catch (error) {
+            // Fallback to manual traversal on any error
+            this.traverseNavigationManually(root, slugMap);
+        }
+
+        return slugMap;
+    }
+
+    /**
+     * Fallback method for manual navigation traversal
+     */
+    private traverseNavigationManually(obj: any, slugMap: Map<string, string>): void {
+        if (obj && typeof obj === "object") {
+            if (obj.type === "page" && obj.pageId && obj.slug) {
+                slugMap.set(obj.pageId, obj.slug);
+            }
+
+            if (Array.isArray(obj)) {
+                obj.forEach((item) => {
+                    this.traverseNavigationManually(item, slugMap);
+                });
+            } else {
+                Object.entries(obj).forEach(([key, value]) => {
+                    if (value && (typeof value === "object" || Array.isArray(value))) {
+                        this.traverseNavigationManually(value, slugMap);
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * Update the slug mappings from a docs definition and detect changes
+     */
+    updateAndDetectChanges(docsDefinition: DocsV1Read.DocsDefinition): Array<{ oldSlug: string; newSlug: string }> {
+        const changes: Array<{ oldSlug: string; newSlug: string }> = [];
+
+        // Extract new slug mappings - use the FernNavigation root structure
+        let newSlugMap: Map<string, string>;
+        if (docsDefinition.config.root) {
+            newSlugMap = this.extractSlugsFromNavigationRoot(docsDefinition.config.root);
+
+            // If this is the first time we have navigation root, treat all as "new" but don't report changes
+            if (this.pageSlugMap.size === 0) {
+                this.pageSlugMap = newSlugMap;
+                return []; // No changes to report on first population
+            }
+        } else {
+            return []; // Can't detect changes without navigation
+        }
+
+        // Compare with previous mappings
+        for (const [pageId, newSlug] of newSlugMap.entries()) {
+            const oldSlug = this.pageSlugMap.get(pageId);
+
+            if (oldSlug && oldSlug !== newSlug) {
+                this.context.logger.debug(
+                    `[SlugTracker] SLUG CHANGE: ${pageId} changed from "${oldSlug}" to "${newSlug}"`
+                );
+                changes.push({ oldSlug, newSlug });
+            }
+        }
+
+        // Also check for pages that were removed from navigation (though this shouldn't happen in normal cases)
+        for (const [pageId, oldSlug] of this.pageSlugMap.entries()) {
+            if (!newSlugMap.has(pageId)) {
+                this.context.logger.debug(`[SlugTracker] PAGE REMOVED: ${pageId} (was "${oldSlug}")`);
+            }
+        }
+
+        // Update the stored mappings
+        this.pageSlugMap = newSlugMap;
+        return changes;
+    }
+
+    /**
+     * Initialize slug mappings from a docs definition
+     */
+    initialize(docsDefinition: DocsV1Read.DocsDefinition): void {
+        if (docsDefinition.config.root) {
+            this.pageSlugMap = this.extractSlugsFromNavigationRoot(docsDefinition.config.root);
+            this.context.logger.debug(`[SlugTracker] INITIALIZED with ${this.pageSlugMap.size} slug mappings:`);
+            for (const [pageId, slug] of this.pageSlugMap.entries()) {
+                this.context.logger.debug(`[SlugTracker]   ${pageId} -> ${slug}`);
+            }
+        } else {
+            // Initialize empty map, will be populated when navigation is ready during change detection
+            this.pageSlugMap = new Map();
+            this.context.logger.debug(`[SlugTracker] INITIALIZED with empty slug map (no navigation root)`);
+        }
+    }
+}
+
+/**
  * Dependency tracking system for markdown snippets
  */
 class SnippetDependencyTracker {
@@ -530,6 +658,9 @@ export async function runAppPreviewServer({
     const snippetTracker = new SnippetDependencyTracker(context);
     await snippetTracker.buildDependencyMap(project);
 
+    // Initialize the slug change tracker
+    const slugTracker = new SlugChangeTracker(context);
+
     let reloadTimer: NodeJS.Timeout | null = null;
     let isReloading = false;
     const RELOAD_DEBOUNCE_MS = 1000;
@@ -583,6 +714,11 @@ export async function runAppPreviewServer({
 
     docsDefinition = await reloadDocsDefinition();
 
+    // Initialize slug mappings from the initial docs definition
+    if (docsDefinition) {
+        slugTracker.initialize(docsDefinition);
+    }
+
     const additionalFilepaths = project.apiWorkspaces.flatMap((workspace) => workspace.getAbsoluteFilePaths());
 
     const watcher = new Watcher([absoluteFilePathToFern, ...additionalFilepaths], {
@@ -628,9 +764,6 @@ export async function runAppPreviewServer({
                 });
 
                 const reloadedDocsDefinition = await reloadDocsDefinition(filesToReload);
-                if (reloadedDocsDefinition != null) {
-                    docsDefinition = reloadedDocsDefinition;
-                }
 
                 editedAbsoluteFilepaths.length = 0;
 
@@ -639,6 +772,27 @@ export async function runAppPreviewServer({
                     type: "finishReload"
                 });
                 isReloading = false;
+
+                if (reloadedDocsDefinition != null) {
+                    // Detect slug changes before updating the docs definition
+                    const slugChanges = slugTracker.updateAndDetectChanges(reloadedDocsDefinition);
+
+                    docsDefinition = reloadedDocsDefinition;
+
+                    // Send navigateToSlug events for any slug changes
+                    if (slugChanges.length > 0) {
+                        slugChanges.forEach((change) => {
+                            const eventData = {
+                                version: 1,
+                                type: "navigateToSlug",
+                                oldSlug: change.oldSlug,
+                                newSlug: change.newSlug
+                            };
+
+                            sendData(eventData);
+                        });
+                    }
+                }
             })();
         }, RELOAD_DEBOUNCE_MS);
     });
