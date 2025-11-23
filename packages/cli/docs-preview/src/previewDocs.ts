@@ -28,6 +28,7 @@ import {
 } from "../../docs-markdown-utils/src";
 
 const frontmatterPositionCache = new Map<string, number | undefined>();
+const frontmatterSidebarTitleCache = new Map<string, string | undefined>();
 
 /**
  * Extracts and normalizes the position field from markdown frontmatter.
@@ -46,6 +47,30 @@ function extractFrontmatterPosition(markdown: string): number | undefined {
 
         if (typeof position === "number" && Number.isFinite(position)) {
             return position;
+        }
+
+        return undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * Extracts the sidebar-title field from markdown frontmatter.
+ * Returns the string value if present, undefined otherwise.
+ */
+function extractFrontmatterSidebarTitle(markdown: string): string | undefined {
+    try {
+        const { data } = grayMatter(markdown);
+
+        if (data["sidebar-title"] == null) {
+            return undefined;
+        }
+
+        const sidebarTitle = data["sidebar-title"];
+
+        if (typeof sidebarTitle === "string") {
+            return sidebarTitle;
         }
 
         return undefined;
@@ -102,7 +127,14 @@ export async function getPreviewDocsDefinition({
                 navAffectingChange = true;
             }
 
+            const currentSidebarTitle = extractFrontmatterSidebarTitle(markdown);
+            const cachedSidebarTitle = frontmatterSidebarTitleCache.get(absoluteFilePath);
+            if (cachedSidebarTitle !== currentSidebarTitle) {
+                navAffectingChange = true;
+            }
+
             frontmatterPositionCache.set(absoluteFilePath, currentPosition);
+            frontmatterSidebarTitleCache.set(absoluteFilePath, currentSidebarTitle);
 
             if (isNewFile) {
                 continue;
@@ -214,11 +246,14 @@ export async function getPreviewDocsDefinition({
     });
 
     frontmatterPositionCache.clear();
+    frontmatterSidebarTitleCache.clear();
     for (const [pageId, page] of Object.entries(dbDocsDefinition.pages)) {
         if (page.rawMarkdown != null) {
             const absolutePath = AbsoluteFilePath.of(`${docsWorkspace.absoluteFilePath}/${pageId.replace("api/", "")}`);
             const position = extractFrontmatterPosition(page.rawMarkdown);
+            const sidebarTitle = extractFrontmatterSidebarTitle(page.rawMarkdown);
             frontmatterPositionCache.set(absolutePath, position);
+            frontmatterSidebarTitleCache.set(absolutePath, sidebarTitle);
         }
     }
 
