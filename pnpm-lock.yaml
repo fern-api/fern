@@ -2335,7 +2335,7 @@ importers:
         specifier: ^3.25.75
         version: 3.25.76
 
-  generators/swift/sdk-wrapper:
+  generators/swift/sdk-runner:
     devDependencies:
       '@fern-api/api-workspace-commons':
         specifier: workspace:*
