@@ -19,24 +19,18 @@ yargs(hideBin(process.argv))
                     description: "The group to generate.",
                     demandOption: true
                 })
-                .option("outDir", {
-                    type: "string",
-                    description: "The path to the output directory.",
-                    demandOption: true
-                })
                 .option("version", {
                     type: "string",
                     description: "The version to use for the output.",
                     demandOption: false
                 }),
         async (args) => {
-            const { api, group: groupName, outDir, version: versionOverride } = args;
+            const { api, group, version } = args;
 
             await generateSwiftSdk({
                 api,
-                group: groupName,
-                outDir,
-                version: versionOverride
+                group,
+                version
             });
         }
     )

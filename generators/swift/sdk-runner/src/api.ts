@@ -15,16 +15,10 @@ import { initProject } from "./initProject";
 interface GenerateSwiftSdkParams {
     api: string | undefined;
     group: string;
-    outDir: string;
     version: string | undefined;
 }
 
-export async function generateSwiftSdk({
-    api,
-    group: groupName,
-    outDir,
-    version: versionOverride
-}: GenerateSwiftSdkParams): Promise<void> {
+export async function generateSwiftSdk({ api, group: groupName, version }: GenerateSwiftSdkParams): Promise<void> {
     const cli = new SdkGeneratorCLI();
 
     const project = await initProject({
@@ -32,8 +26,7 @@ export async function generateSwiftSdk({
         defaultToAllApiWorkspaces: true
     });
 
-    const version: string | undefined = undefined; // TODO: Implement
-    const taskContext: TaskContext = createMockTaskContext(); // TODO: Update
+    const taskContext: TaskContext = createMockTaskContext();
 
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -100,11 +93,16 @@ export async function generateSwiftSdk({
                         }
                     });
 
+                    const absolutePathToLocalOutput = generatorInvocation.absolutePathToLocalOutput;
+                    if (absolutePathToLocalOutput == null) {
+                        return;
+                    }
+
                     const generatorConfig = getGeneratorConfig({
                         generatorInvocation,
                         customConfig: generatorInvocation.config,
                         workspaceName: fernWorkspace.definition.rootApiFile.contents.name,
-                        outputVersion: versionOverride,
+                        outputVersion: version,
                         organization: project.config.organization,
                         absolutePathToSnippet: undefined,
                         absolutePathToSnippetTemplates: undefined,
@@ -117,7 +115,7 @@ export async function generateSwiftSdk({
                             snippetPath: undefined,
                             snippetTemplatePath: undefined,
                             irPath: AbsoluteFilePath.of(resolve(process.cwd(), "ir.json")),
-                            outputDirectory: AbsoluteFilePath.of(resolve(process.cwd(), outDir))
+                            outputDirectory: absolutePathToLocalOutput
                         }
                     });
 

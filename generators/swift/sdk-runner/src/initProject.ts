@@ -5,7 +5,10 @@ export async function initProject(
     args: Omit<loadProject.Args, "context" | "cliName" | "cliVersion">
 ): Promise<Project> {
     const cliName = "generate-swift-sdk";
-    const cliVersion = "0.0.1"; // TODO: Make dynamic
+    const cliVersion = require("../package.json").version;
+    if (typeof cliVersion !== "string") {
+        throw new Error("Cannot determine CLI version from package.json");
+    }
     const project = await loadProject({
         ...args,
         cliName,

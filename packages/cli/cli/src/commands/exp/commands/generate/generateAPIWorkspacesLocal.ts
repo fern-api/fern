@@ -38,7 +38,7 @@ export async function generateAPIWorkspacesLocal({
     await validateOutputDirectories({ project, groupName, cliContext, force });
 
     const presentLanguages = getPresentLanguages(project, groupName);
-    const presentSupportedLanguages = presentLanguages.filter((lang) => isLanguageSupportedForLocalGeneration(lang));
+    const presentSupportedLanguages = presentLanguages.filter(isLanguageSupportedForLocalGeneration);
     const presentUnsupportedLanguages = presentLanguages.filter((lang) => !isLanguageSupportedForLocalGeneration(lang));
 
     if (presentUnsupportedLanguages.length > 0) {
