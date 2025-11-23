@@ -61,7 +61,7 @@ export async function generateAPIWorkspacesLocal({
     force: boolean;
     lfsOverride: string | undefined;
 }): Promise<void> {
-    validateOutputDirectories({ project, groupName, cliContext, force });
+    await validateOutputDirectories({ project, groupName, cliContext, force });
 
     const presentLanguages = getPresentLanguages(project, groupName);
     const presentSupportedLanguages = presentLanguages.filter((lang) => SUPPORTED_LANGUAGES.has(lang));
