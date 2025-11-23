@@ -7,6 +7,17 @@ import { SchemaConverter } from "../converters/schema/SchemaConverter";
 import { SchemaOrReferenceConverter } from "../converters/schema/SchemaOrReferenceConverter";
 import { ErrorCollector } from "../ErrorCollector";
 
+// Type guard for schemas that have example/examples fields
+// In OpenAPI 3.1+, both SchemaObjects and ReferenceObjects can have example/examples as siblings
+type HasExamples = {
+    example?: unknown;
+    examples?: OpenAPIV3_1.BaseSchemaObject["examples"];
+};
+
+function hasExamples(schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject): schema is HasExamples {
+    return typeof schema === "object" && schema != null && ("example" in schema || "examples" in schema);
+}
+
 export function convertProperties({
     properties,
     required,
@@ -45,16 +56,13 @@ export function convertProperties({
 
         // Extract property-level examples before converting the schema
         // In OpenAPI 3.1+, properties can have both $ref and examples as siblings
-        // We need to cast to any to access example/examples on ReferenceObjects with siblings
-        // biome-ignore lint/suspicious/noExplicitAny: OpenAPI 3.1+ allows $ref siblings
-        const propertySchemaWithExamples = propertySchema as any;
         const propertyLevelExamples: unknown[] = [];
-        if (propertySchemaWithExamples.example != null) {
-            propertyLevelExamples.push(propertySchemaWithExamples.example);
-        }
-        if (propertySchemaWithExamples.examples != null) {
-            if (Array.isArray(propertySchemaWithExamples.examples)) {
-                propertyLevelExamples.push(...propertySchemaWithExamples.examples);
+        if (hasExamples(propertySchema)) {
+            if (propertySchema.example != null) {
+                propertyLevelExamples.push(propertySchema.example);
+            }
+            if (Array.isArray(propertySchema.examples)) {
+                propertyLevelExamples.push(...propertySchema.examples);
             }
         }
 
