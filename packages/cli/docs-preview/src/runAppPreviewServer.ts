@@ -65,7 +65,7 @@ class SlugChangeTracker {
      * Extract all page slugs using the FernNavigation NodeCollector
      * This handles both navigation structure and frontmatter slug overrides
      */
-    private extractSlugsFromNavigationRoot(root: any): Map<string, string> {
+    private extractSlugsFromNavigationRoot(root: FernNavigation.RootNode): Map<string, string> {
         const slugMap = new Map<string, string>();
 
         if (!root) {
@@ -79,7 +79,7 @@ class SlugChangeTracker {
 
             if (collector?.slugMap) {
                 // collector.slugMap is Map<string, FernNavigationNode> where key is the final resolved slug
-                collector.slugMap.forEach((node: any, slug: string) => {
+                collector.slugMap.forEach((node: FernNavigation.NavigationNode | null, slug: string) => {
                     if (node && node.type === "page" && node.pageId) {
                         slugMap.set(node.pageId, slug);
                     }
@@ -99,9 +99,10 @@ class SlugChangeTracker {
     /**
      * Fallback method for manual navigation traversal
      */
-    private traverseNavigationManually(obj: any, slugMap: Map<string, string>): void {
+    private traverseNavigationManually(obj: unknown, slugMap: Map<string, string>): void {
         if (obj && typeof obj === "object") {
-            if (obj.type === "page" && obj.pageId && obj.slug) {
+            // Type guard to check if object has the expected navigation node properties
+            if (this.isNavigationNodeLike(obj) && obj.type === "page" && obj.pageId && obj.slug) {
                 slugMap.set(obj.pageId, obj.slug);
             }
 
@@ -120,6 +121,13 @@ class SlugChangeTracker {
     }
 
     /**
+     * Type guard to check if an object has navigation node properties
+     */
+    private isNavigationNodeLike(obj: object): obj is { type?: string; pageId?: string; slug?: string } {
+        return typeof obj === "object" && obj !== null;
+    }
+
+    /**
      * Update the slug mappings from a docs definition and detect changes
      */
     updateAndDetectChanges(docsDefinition: DocsV1Read.DocsDefinition): Array<{ oldSlug: string; newSlug: string }> {
@@ -128,7 +136,11 @@ class SlugChangeTracker {
         // Extract new slug mappings - use the FernNavigation root structure
         let newSlugMap: Map<string, string>;
         if (docsDefinition.config.root) {
-            newSlugMap = this.extractSlugsFromNavigationRoot(docsDefinition.config.root);
+            // Convert V1 navigation root to latest version
+            const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
+                docsDefinition.config.root
+            );
+            newSlugMap = this.extractSlugsFromNavigationRoot(migratedRoot);
 
             // If this is the first time we have navigation root, treat all as "new" but don't report changes
             if (this.pageSlugMap.size === 0) {
@@ -168,7 +180,11 @@ class SlugChangeTracker {
      */
     initialize(docsDefinition: DocsV1Read.DocsDefinition): void {
         if (docsDefinition.config.root) {
-            this.pageSlugMap = this.extractSlugsFromNavigationRoot(docsDefinition.config.root);
+            // Convert V1 navigation root to latest version
+            const migratedRoot = FernNavigation.migrate.FernNavigationV1ToLatest.create().root(
+                docsDefinition.config.root
+            );
+            this.pageSlugMap = this.extractSlugsFromNavigationRoot(migratedRoot);
             this.context.logger.debug(`[SlugTracker] INITIALIZED with ${this.pageSlugMap.size} slug mappings:`);
             for (const [pageId, slug] of this.pageSlugMap.entries()) {
                 this.context.logger.debug(`[SlugTracker]   ${pageId} -> ${slug}`);
