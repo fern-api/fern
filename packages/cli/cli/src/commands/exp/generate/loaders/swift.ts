@@ -1,9 +1,12 @@
+import { createWriteStream } from "node:fs";
 import { mkdir, stat } from "node:fs/promises";
 import os from "node:os";
 import { resolve as resolvePath } from "node:path";
 
 import { generatorsYml } from "@fern-api/configuration-loader";
-import { create as createTar, extract as extractTar } from "tar";
+import axios from "axios";
+import { pipeline } from "stream/promises";
+import { extract as extractTar } from "tar";
 import { SdkGeneratorCLI } from "../types";
 
 export async function loadSwiftGeneratorCLI(generatorVersion: string): Promise<SdkGeneratorCLI> {
@@ -37,19 +40,10 @@ async function ensureSwiftGeneratorCached(generatorVersion: string): Promise<str
 }
 
 async function fetchSwiftGeneratorTarballMock(generatorVersion: string): Promise<string> {
-    // TODO(kafkas): Implement this.
-    // In the future, this function will download the generator tarball from the registry.
-    // For now, we mimic this behavior by creating a tarball from the local dist bundle.
-    const localPackageRoot = resolvePath(__dirname, "../../../../../generators/swift/sdk");
+    const mockTarballUrl = "https://gitclout-dev.firebaseapp.com/swift-sdk-mock.tgz";
     const tarballName = `${generatorsYml.GenerationLanguage.SWIFT}-${generatorVersion}.tgz`;
     const tarballPath = resolvePath(os.tmpdir(), tarballName);
-    await createTar(
-        {
-            gzip: true,
-            cwd: localPackageRoot,
-            file: tarballPath
-        },
-        ["package.json", "features.yml", "dist"]
-    );
+    const response = await axios.get(mockTarballUrl, { responseType: "stream" });
+    await pipeline(response.data, createWriteStream(tarballPath));
     return tarballPath;
 }
