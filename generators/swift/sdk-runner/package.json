@@ -11,9 +11,7 @@
   "main": "lib/cli.js",
   "source": "src/cli.ts",
   "types": "lib/cli.d.ts",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
