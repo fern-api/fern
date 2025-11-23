@@ -7,33 +7,18 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml
 } from "@fern-api/configuration-loader";
-import { keys, replaceEnvVariables } from "@fern-api/core-utils";
+import { replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { getGeneratorConfig, getPackageNameFromGeneratorConfig } from "@fern-api/local-workspace-runner";
 import { Project } from "@fern-api/project-loader";
 import { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
-import { CliContext } from "../../../cli-context/CliContext";
-import { GROUP_CLI_OPTION } from "../../../constants";
-import { checkOutputDirectory } from "../../generate/checkOutputDirectory";
-import { applyLfsOverride } from "../../generate/generateAPIWorkspace";
-import { validateAPIWorkspaceAndLogIssues } from "../../validate/validateAPIWorkspaceAndLogIssues";
-import { loadSwiftGeneratorCLI } from "./loaders/swift";
-import { SdkGeneratorCLILoader } from "./types";
-
-const SUPPORTED_LANG_MAP: Record<generatorsYml.GenerationLanguage, SdkGeneratorCLILoader | undefined> = {
-    [generatorsYml.GenerationLanguage.SWIFT]: loadSwiftGeneratorCLI,
-    [generatorsYml.GenerationLanguage.TYPESCRIPT]: undefined,
-    [generatorsYml.GenerationLanguage.JAVA]: undefined,
-    [generatorsYml.GenerationLanguage.PYTHON]: undefined,
-    [generatorsYml.GenerationLanguage.GO]: undefined,
-    [generatorsYml.GenerationLanguage.RUBY]: undefined,
-    [generatorsYml.GenerationLanguage.CSHARP]: undefined,
-    [generatorsYml.GenerationLanguage.PHP]: undefined,
-    [generatorsYml.GenerationLanguage.RUST]: undefined
-};
-
-const SUPPORTED_LANGS = new Set(keys(SUPPORTED_LANG_MAP).filter((lang) => SUPPORTED_LANG_MAP[lang] != null));
+import { CliContext } from "../../../../cli-context/CliContext";
+import { GROUP_CLI_OPTION } from "../../../../constants";
+import { checkOutputDirectory } from "../../../generate/checkOutputDirectory";
+import { applyLfsOverride } from "../../../generate/generateAPIWorkspace";
+import { validateAPIWorkspaceAndLogIssues } from "../../../validate/validateAPIWorkspaceAndLogIssues";
+import { getSdkGeneratorCLILoader, isLanguageSupportedForLocalGeneration } from "../../config";
 
 export async function generateAPIWorkspacesLocal({
     project,
@@ -53,8 +38,8 @@ export async function generateAPIWorkspacesLocal({
     await validateOutputDirectories({ project, groupName, cliContext, force });
 
     const presentLanguages = getPresentLanguages(project, groupName);
-    const presentSupportedLanguages = presentLanguages.filter((lang) => SUPPORTED_LANGS.has(lang));
-    const presentUnsupportedLanguages = presentLanguages.filter((lang) => !SUPPORTED_LANGS.has(lang));
+    const presentSupportedLanguages = presentLanguages.filter((lang) => isLanguageSupportedForLocalGeneration(lang));
+    const presentUnsupportedLanguages = presentLanguages.filter((lang) => !isLanguageSupportedForLocalGeneration(lang));
 
     if (presentUnsupportedLanguages.length > 0) {
         cliContext.logger.warn(
@@ -109,7 +94,7 @@ export async function generateAPIWorkspacesLocal({
                             );
                             return;
                         }
-                        const sdkGeneratorCliLoader = SUPPORTED_LANG_MAP[lang];
+                        const sdkGeneratorCliLoader = getSdkGeneratorCLILoader(lang);
                         if (sdkGeneratorCliLoader == null) {
                             return;
                         }

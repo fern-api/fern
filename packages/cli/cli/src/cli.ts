@@ -29,7 +29,8 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { downgrade } from "./commands/downgrade/downgrade";
-import { generateAPIWorkspacesLocal } from "./commands/exp/generate";
+import { cleanCache, showCache, warmCache } from "./commands/exp/commands/cache";
+import { generateAPIWorkspacesLocal } from "./commands/exp/commands/generate";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
@@ -1689,6 +1690,39 @@ function addExpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 });
             }
         );
+
+        cli.command("cache", "Manage local generator cache", (cacheYargs) =>
+            cacheYargs
+                .command(
+                    "warm",
+                    "Pre-fetch and cache generator artifacts used in this project",
+                    (subYargs) => subYargs,
+                    async () => {
+                        const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                            commandLineApiWorkspace: undefined,
+                            defaultToAllApiWorkspaces: true
+                        });
+                        await warmCache({ project, cliContext });
+                    }
+                )
+                .command(
+                    "clean",
+                    "Delete all cached generator artifacts",
+                    (subYargs) => subYargs,
+                    async () => {
+                        await cleanCache({ cliContext });
+                    }
+                )
+                .command(
+                    "$0",
+                    "Show generator cache contents and total size",
+                    (subYargs) => subYargs,
+                    async () => {
+                        await showCache({ cliContext });
+                    }
+                )
+        );
+
         return yargs;
     });
 }

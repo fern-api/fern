@@ -7,7 +7,8 @@ import { generatorsYml } from "@fern-api/configuration-loader";
 import axios from "axios";
 import { pipeline } from "stream/promises";
 import { extract as extractTar } from "tar";
-import { SdkGeneratorCLI } from "../types";
+import { EXP_GENERATORS_CACHE_DIR } from "../constants";
+import type { SdkGeneratorCLI } from "../types";
 
 export async function loadSwiftGeneratorCLI(
     generatorVersion: string,
@@ -23,8 +24,7 @@ export async function loadSwiftGeneratorCLI(
 }
 
 async function ensureSwiftGeneratorCached(generatorVersion: string, log?: (message: string) => void): Promise<string> {
-    const cacheRoot = resolvePath(os.homedir(), ".fern", "generators", "node");
-    const cacheDir = resolvePath(cacheRoot, generatorsYml.GenerationLanguage.SWIFT, generatorVersion);
+    const cacheDir = resolvePath(EXP_GENERATORS_CACHE_DIR, generatorsYml.GenerationLanguage.SWIFT, generatorVersion);
     const cachedApiPath = resolvePath(cacheDir, "dist", "api.cjs");
 
     try {
