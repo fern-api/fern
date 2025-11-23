@@ -1429,6 +1429,9 @@ importers:
       '@fern-api/mock-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/mock-utils
+      '@fern-api/python-ast':
+        specifier: workspace:*
+        version: link:../ast
       '@fern-api/python-base':
         specifier: workspace:*
         version: link:../base

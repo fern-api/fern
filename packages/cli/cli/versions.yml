@@ -1,8 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
-        Add support for specifying announcements in InternalProduct and Version navigation objects in docs.yml. This allows announcements to be configured at the product and version level in addition to the top-level docs configuration. Note: Full support requires FDR SDK update to include announcement fields in navigation nodes.
-      type: feat
+        Update local development refresh behavior when updating the `sidebar-title` override, or a `slug` override of a page. The preview should now navigate to the new slug instead of showing a 404.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-23"
+  version: 2.4.1
+
+- changelogEntry:
+    - summary: |
+        Revert "fix(openapi): handle situations where discriminated unions reference unknown variants"
+      type: chore
   irVersion: 61
   createdAt: "2025-11-22"
   version: 2.5.0
