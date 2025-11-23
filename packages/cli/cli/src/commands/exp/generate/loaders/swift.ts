@@ -32,9 +32,7 @@ async function ensureSwiftGeneratorCached(generatorVersion: string, log?: (messa
         return cacheDir;
     } catch {
         // cache miss; fall through to "fetch" and populate
-        log?.(
-            `[fern] Swift generator (version: ${generatorVersion}) not found in cache. Installing cached generator...`
-        );
+        log?.(`[fern] Swift generator (version: ${generatorVersion}) not found in cache. Installing generator...`);
     }
 
     await mkdir(cacheDir, { recursive: true });
