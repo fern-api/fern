@@ -467,6 +467,10 @@ export class EndpointSnippetGenerator {
         return args;
     }
 
+    private usesOptionalNullable(): boolean {
+        return this.context.customConfig?.["collapse-optional-nullable"] === true;
+    }
+
     private getBodyRequestArg({
         body,
         value
@@ -486,18 +490,22 @@ export class EndpointSnippetGenerator {
                     // We should fix the generator to permit the non-Optional type and
                     // remove this special case.
 
-                    // Check if value is undefined/null and use Optional.empty() in that case
+                    // Check if value is undefined/null and use Optional.empty() or OptionalNullable.absent()
                     if (value === undefined || value === null) {
-                        return java.TypeLiteral.reference(
-                            java.invokeMethod({
-                                on: java.classReference({
-                                    name: "Optional",
-                                    packageName: "java.util"
-                                }),
-                                method: "empty",
-                                arguments_: []
-                            })
-                        );
+                        if (this.usesOptionalNullable()) {
+                            return this.context.getOptionalNullableAbsent();
+                        } else {
+                            return java.TypeLiteral.reference(
+                                java.invokeMethod({
+                                    on: java.classReference({
+                                        name: "Optional",
+                                        packageName: "java.util"
+                                    }),
+                                    method: "empty",
+                                    arguments_: []
+                                })
+                            );
+                        }
                     }
 
                     const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
@@ -516,10 +524,14 @@ export class EndpointSnippetGenerator {
                         return convertedValue;
                     }
 
-                    return java.TypeLiteral.optional({
-                        value: convertedValue,
-                        useOf: true
-                    });
+                    if (this.usesOptionalNullable()) {
+                        return this.context.getOptionalNullableOf(convertedValue);
+                    } else {
+                        return java.TypeLiteral.optional({
+                            value: convertedValue,
+                            useOf: true
+                        });
+                    }
                 }
                 return this.context.dynamicTypeLiteralMapper.convert({
                     typeReference: body.value,
