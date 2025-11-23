@@ -203,7 +203,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
-    addExpCommand(cli, cliContext);
+    addExperimentalCommands(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -1605,7 +1605,7 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
-function addExpCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addExperimentalCommands(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command("exp", "Experimental commands", (yargs) => {
         yargs.command(
             ["generate-sdks"],
