@@ -12,30 +12,6 @@
         Revert "fix(openapi): handle situations where discriminated unions reference unknown variants"
       type: chore
   irVersion: 61
-  createdAt: "2025-11-22"
-  version: 2.5.0
-
-- changelogEntry:
-    - summary: |
-        Add branch support to self-hosted GitHub generation. Users can now specify a target branch in their generators.yml configuration using the `branch` field. When specified, generated code will be pushed to that branch instead of the default branch.
-      type: feat
-  irVersion: 61
-  createdAt: "2025-11-21"
-  version: 2.4.0
-
-- changelogEntry:
-    - summary: |
-        Add messaging about AI example generation to the CLI.
-      type: fix
-  irVersion: 61
-  createdAt: "2025-11-20"
-  version: 2.3.0
-
-- changelogEntry:
-    - summary: |
-        Revert "fix(openapi): handle situations where discriminated unions reference unknown variants"
-      type: chore
-  irVersion: 61
   createdAt: "2025-11-21"
   version: 2.2.5
 
@@ -54,6 +30,22 @@
   irVersion: 61
   createdAt: "2025-11-21"
   version: 2.2.3
+
+- changelogEntry:
+    - summary: |
+        Add branch support to self-hosted GitHub generation. Users can now specify a target branch in their generators.yml configuration using the `branch` field. When specified, generated code will be pushed to that branch instead of the default branch.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-21"
+  version: 2.4.0
+
+- changelogEntry:
+    - summary: |
+        Add messaging about AI example generation to the CLI.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-20"
+  version: 2.3.0
 
 - changelogEntry:
     - summary: |
