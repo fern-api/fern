@@ -25,7 +25,7 @@ export async function loadSwiftGeneratorCLI(
 async function ensureSwiftGeneratorCached(generatorVersion: string, log?: (message: string) => void): Promise<string> {
     const cacheRoot = resolvePath(os.homedir(), ".fern", "generators", "node");
     const cacheDir = resolvePath(cacheRoot, generatorsYml.GenerationLanguage.SWIFT, generatorVersion);
-    const cachedApiPath = resolvePath(cacheDir, "api.cjs");
+    const cachedApiPath = resolvePath(cacheDir, "dist", "api.cjs");
 
     try {
         await stat(cachedApiPath);
