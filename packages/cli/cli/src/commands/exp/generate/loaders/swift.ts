@@ -9,8 +9,11 @@ import { pipeline } from "stream/promises";
 import { extract as extractTar } from "tar";
 import { SdkGeneratorCLI } from "../types";
 
-export async function loadSwiftGeneratorCLI(generatorVersion: string): Promise<SdkGeneratorCLI> {
-    const cacheDir = await ensureSwiftGeneratorCached(generatorVersion);
+export async function loadSwiftGeneratorCLI(
+    generatorVersion: string,
+    log?: (message: string) => void
+): Promise<SdkGeneratorCLI> {
+    const cacheDir = await ensureSwiftGeneratorCached(generatorVersion, log);
     const modulePath = resolvePath(cacheDir, "dist", "api.cjs");
 
     const { SdkGeneratorCLI } = (await import(modulePath)) as {
@@ -19,7 +22,7 @@ export async function loadSwiftGeneratorCLI(generatorVersion: string): Promise<S
     return SdkGeneratorCLI;
 }
 
-async function ensureSwiftGeneratorCached(generatorVersion: string): Promise<string> {
+async function ensureSwiftGeneratorCached(generatorVersion: string, log?: (message: string) => void): Promise<string> {
     const cacheRoot = resolvePath(os.homedir(), ".fern", "generators", "node");
     const cacheDir = resolvePath(cacheRoot, generatorsYml.GenerationLanguage.SWIFT, generatorVersion);
     const cachedApiPath = resolvePath(cacheDir, "api.cjs");
@@ -29,6 +32,9 @@ async function ensureSwiftGeneratorCached(generatorVersion: string): Promise<str
         return cacheDir;
     } catch {
         // cache miss; fall through to "fetch" and populate
+        log?.(
+            `[fern] Swift generator (version: ${generatorVersion}) not found in cache. Installing cached generator...`
+        );
     }
 
     await mkdir(cacheDir, { recursive: true });

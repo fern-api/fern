@@ -8,4 +8,4 @@ export type SdkGeneratorCLI = new () => {
     ) => Promise<void>;
 };
 
-export type SdkGeneratorCLILoader = (version: string) => Promise<SdkGeneratorCLI>;
+export type SdkGeneratorCLILoader = (version: string, log?: (message: string) => void) => Promise<SdkGeneratorCLI>;

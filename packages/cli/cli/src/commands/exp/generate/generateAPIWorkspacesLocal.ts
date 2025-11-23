@@ -179,7 +179,9 @@ export async function generateAPIWorkspacesLocal({
                                     }
                                 });
 
-                                const cliClass = await sdkGeneratorCliLoader(generatorInvocation.version);
+                                const cliClass = await sdkGeneratorCliLoader(generatorInvocation.version, (message) =>
+                                    taskContext.logger.info(message)
+                                );
                                 const cli = new cliClass();
                                 await cli.runProgrammatically(intermediateRepresentation, generatorConfig);
                             }
