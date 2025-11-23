@@ -1,3 +1,11 @@
+- version: 3.18.8
+  changelogEntry:
+    - summary: |
+        Skip InputStream overload generation for file upload endpoints with inline path parameters. This prevents compilation errors where InputStream methods would reference non-existent request parameters when path parameters are inlined.
+      type: fix
+  createdAt: "2025-11-23"
+  irVersion: 61
+
 - version: 3.18.7
   changelogEntry:
     - summary: |

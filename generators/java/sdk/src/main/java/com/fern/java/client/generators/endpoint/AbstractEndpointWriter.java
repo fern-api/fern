@@ -348,25 +348,26 @@ public abstract class AbstractEndpointWriter {
             // Check if endpoint has query parameters or inline path parameters - if so, skip InputStream generation
             // to avoid compilation errors from referencing non-existent request parameter
             boolean hasQueryParameters = !httpEndpoint.getQueryParameters().isEmpty();
-            boolean hasInlinePathParameters = clientGeneratorContext.getCustomConfig().inlinePathParameters()
-                    && httpEndpoint.getSdkRequest().isPresent()
-                    && httpEndpoint.getSdkRequest().get().getShape().isWrapper()
-                    && (httpEndpoint
-                                    .getSdkRequest()
-                                    .get()
-                                    .getShape()
-                                    .getWrapper()
-                                    .get()
-                                    .getIncludePathParameters()
-                                    .orElse(false)
-                            || httpEndpoint
-                                    .getSdkRequest()
-                                    .get()
-                                    .getShape()
-                                    .getWrapper()
-                                    .get()
-                                    .getOnlyPathParameters()
-                                    .orElse(false));
+            boolean hasInlinePathParameters =
+                    clientGeneratorContext.getCustomConfig().inlinePathParameters()
+                            && httpEndpoint.getSdkRequest().isPresent()
+                            && httpEndpoint.getSdkRequest().get().getShape().isWrapper()
+                            && (httpEndpoint
+                                            .getSdkRequest()
+                                            .get()
+                                            .getShape()
+                                            .getWrapper()
+                                            .get()
+                                            .getIncludePathParameters()
+                                            .orElse(false)
+                                    || httpEndpoint
+                                            .getSdkRequest()
+                                            .get()
+                                            .getShape()
+                                            .getWrapper()
+                                            .get()
+                                            .getOnlyPathParameters()
+                                            .orElse(false));
 
             if (!hasQueryParameters && !hasInlinePathParameters) {
                 List<FileProperty> fileProperties = fileUpload.getProperties().stream()
