@@ -1,5 +1,3 @@
-import { mkdir, stat } from "node:fs/promises";
-import os from "node:os";
 import { resolve as resolvePath } from "node:path";
 
 import { computeSemanticVersion } from "@fern-api/api-workspace-commons";
@@ -12,28 +10,19 @@ import {
 import { keys, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
-import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { getGeneratorConfig, getPackageNameFromGeneratorConfig } from "@fern-api/local-workspace-runner";
 import { Project } from "@fern-api/project-loader";
 import { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
-import { create as createTar, extract as extractTar } from "tar";
-import { CliContext } from "../../cli-context/CliContext";
-import { GROUP_CLI_OPTION } from "../../constants";
-import { checkOutputDirectory } from "../generate/checkOutputDirectory";
-import { applyLfsOverride } from "../generate/generateAPIWorkspace";
-import { validateAPIWorkspaceAndLogIssues } from "../validate/validateAPIWorkspaceAndLogIssues";
+import { CliContext } from "../../../cli-context/CliContext";
+import { GROUP_CLI_OPTION } from "../../../constants";
+import { checkOutputDirectory } from "../../generate/checkOutputDirectory";
+import { applyLfsOverride } from "../../generate/generateAPIWorkspace";
+import { validateAPIWorkspaceAndLogIssues } from "../../validate/validateAPIWorkspaceAndLogIssues";
+import { loadSwiftGeneratorCLI } from "./loaders/swift";
+import { SdkGeneratorCLILoader } from "./types";
 
-type SdkGeneratorCli = new () => {
-    runProgrammatically: (
-        ir: IntermediateRepresentation,
-        generatorConfig: ReturnType<typeof getGeneratorConfig>
-    ) => Promise<void>;
-};
-
-type SdkGeneratorCliLoader = (version: string) => Promise<SdkGeneratorCli>;
-
-const SUPPORTED_LANG_MAP: Record<generatorsYml.GenerationLanguage, SdkGeneratorCliLoader | undefined> = {
-    [generatorsYml.GenerationLanguage.SWIFT]: loadSwiftGeneratorCli,
+const SUPPORTED_LANG_MAP: Record<generatorsYml.GenerationLanguage, SdkGeneratorCLILoader | undefined> = {
+    [generatorsYml.GenerationLanguage.SWIFT]: loadSwiftGeneratorCLI,
     [generatorsYml.GenerationLanguage.TYPESCRIPT]: undefined,
     [generatorsYml.GenerationLanguage.JAVA]: undefined,
     [generatorsYml.GenerationLanguage.PYTHON]: undefined,
@@ -44,7 +33,7 @@ const SUPPORTED_LANG_MAP: Record<generatorsYml.GenerationLanguage, SdkGeneratorC
     [generatorsYml.GenerationLanguage.RUST]: undefined
 };
 
-const SUPPORTED_LANGUAGES = new Set(keys(SUPPORTED_LANG_MAP).filter((lang) => SUPPORTED_LANG_MAP[lang] != null));
+const SUPPORTED_LANGS = new Set(keys(SUPPORTED_LANG_MAP).filter((lang) => SUPPORTED_LANG_MAP[lang] != null));
 
 export async function generateAPIWorkspacesLocal({
     project,
@@ -64,8 +53,8 @@ export async function generateAPIWorkspacesLocal({
     await validateOutputDirectories({ project, groupName, cliContext, force });
 
     const presentLanguages = getPresentLanguages(project, groupName);
-    const presentSupportedLanguages = presentLanguages.filter((lang) => SUPPORTED_LANGUAGES.has(lang));
-    const presentUnsupportedLanguages = presentLanguages.filter((lang) => !SUPPORTED_LANGUAGES.has(lang));
+    const presentSupportedLanguages = presentLanguages.filter((lang) => SUPPORTED_LANGS.has(lang));
+    const presentUnsupportedLanguages = presentLanguages.filter((lang) => !SUPPORTED_LANGS.has(lang));
 
     if (presentUnsupportedLanguages.length > 0) {
         cliContext.logger.warn(
@@ -245,52 +234,4 @@ async function validateOutputDirectories({
             }
         }
     }
-}
-
-async function loadSwiftGeneratorCli(generatorVersion: string): Promise<SdkGeneratorCli> {
-    const cacheDir = await ensureSwiftGeneratorCached(generatorVersion);
-    const modulePath = resolvePath(cacheDir, "dist", "api.cjs");
-
-    const { SdkGeneratorCLI } = (await import(modulePath)) as {
-        SdkGeneratorCLI: SdkGeneratorCli;
-    };
-    return SdkGeneratorCLI;
-}
-
-async function ensureSwiftGeneratorCached(generatorVersion: string): Promise<string> {
-    const cacheRoot = resolvePath(os.homedir(), ".fern", "generators", "node");
-    const cacheDir = resolvePath(cacheRoot, generatorsYml.GenerationLanguage.SWIFT, generatorVersion);
-    const cachedApiPath = resolvePath(cacheDir, "api.cjs");
-
-    try {
-        await stat(cachedApiPath);
-        return cacheDir;
-    } catch {
-        // cache miss; fall through to "fetch" and populate
-    }
-
-    await mkdir(cacheDir, { recursive: true });
-
-    // Fetch the tarball (mimicked) and extract it into the cache directory.
-    const tarballPath = await fetchSwiftGeneratorTarball(generatorVersion);
-    await extractTar({ file: tarballPath, cwd: cacheDir });
-
-    return cacheDir;
-}
-
-async function fetchSwiftGeneratorTarball(generatorVersion: string): Promise<string> {
-    // In the future, this function will download the generator tarball from the registry.
-    // For now, we mimic this behavior by creating a tarball from the local dist bundle.
-    const localPackageRoot = resolvePath(__dirname, "../../../../../generators/swift/sdk");
-    const tarballName = `${generatorsYml.GenerationLanguage.SWIFT}-${generatorVersion}.tgz`;
-    const tarballPath = resolvePath(os.tmpdir(), tarballName);
-    await createTar(
-        {
-            gzip: true,
-            cwd: localPackageRoot,
-            file: tarballPath
-        },
-        ["package.json", "features.yml", "dist"]
-    );
-    return tarballPath;
 }

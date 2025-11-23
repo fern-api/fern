@@ -29,7 +29,7 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { downgrade } from "./commands/downgrade/downgrade";
-import { generateAPIWorkspacesLocal } from "./commands/exp/generateAPIWorkspacesLocal";
+import { generateAPIWorkspacesLocal } from "./commands/exp/generate";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
