@@ -88,7 +88,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             kwargs=[
                 (
                     "discriminator",
-                    AST.Expression(f'"{self._union.discriminant.wire_value}"'),
+                    AST.Expression(f'"{self._union.discriminant.name.snake_case.safe_name}"'),
                 )
             ],
         )
