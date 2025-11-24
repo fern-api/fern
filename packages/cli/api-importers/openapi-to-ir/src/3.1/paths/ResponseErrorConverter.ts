@@ -146,8 +146,12 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
 
     private getErrorNameForStatusCode(statusCode: number, isWildcard?: boolean): string | undefined {
         if (isWildcard) {
-            if (statusCode === 400) return "ClientRequestError";
-            if (statusCode === 500) return "ServerError";
+            if (statusCode === 400) {
+                return "ClientRequestError";
+            }
+            if (statusCode === 500) {
+                return "ServerError";
+            }
         }
 
         return ERROR_NAMES_BY_STATUS_CODE[statusCode];
