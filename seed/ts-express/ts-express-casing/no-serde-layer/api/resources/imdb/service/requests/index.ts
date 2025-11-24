@@ -1,0 +1,1 @@
+export { CreateMovieRequest } from "./CreateMovieRequest";

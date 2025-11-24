@@ -1,0 +1,1 @@
+export { SeedBasicAuthEnvironmentVariablesError } from "./SeedBasicAuthEnvironmentVariablesError";

@@ -1,0 +1,1 @@
+export { SeedTraceError } from "./SeedTraceError";

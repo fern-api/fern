@@ -1,0 +1,9 @@
+export * as getAndReturnBase64 from "./getAndReturnBase64";
+export * as getAndReturnBool from "./getAndReturnBool";
+export * as getAndReturnDate from "./getAndReturnDate";
+export * as getAndReturnDatetime from "./getAndReturnDatetime";
+export * as getAndReturnDouble from "./getAndReturnDouble";
+export * as getAndReturnInt from "./getAndReturnInt";
+export * as getAndReturnLong from "./getAndReturnLong";
+export * as getAndReturnString from "./getAndReturnString";
+export * as getAndReturnUuid from "./getAndReturnUuid";
