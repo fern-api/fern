@@ -117,7 +117,10 @@ impl QueryBuilder {
     /// Add a datetime parameter
     pub fn datetime(mut self, key: &str, value: impl Into<Option<DateTime<Utc>>>) -> Self {
         if let Some(v) = value.into() {
-            self.params.push((key.to_string(), v.to_rfc3339()));
+            self.params.push((
+                key.to_string(),
+                v.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
+            ));
         }
         self
     }
@@ -135,7 +138,10 @@ impl QueryBuilder {
         if let Some(v) = value.into() {
             // Convert NaiveDate to DateTime<Utc> at start of day
             let datetime = v.and_hms_opt(0, 0, 0).unwrap().and_utc();
-            self.params.push((key.to_string(), datetime.to_rfc3339()));
+            self.params.push((
+                key.to_string(),
+                datetime.to_rfc3339_opts(chrono::SecondsFormat::Secs, true),
+            ));
         }
         self
     }

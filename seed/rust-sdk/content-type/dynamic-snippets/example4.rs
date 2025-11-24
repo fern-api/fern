@@ -14,6 +14,7 @@ async fn main() {
             &RegularPatchRequest {
                 field_1: Some("field1".to_string()),
                 field_2: Some(1),
+                ..Default::default()
             },
             None,
         )

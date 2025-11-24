@@ -53,7 +53,12 @@ async fn main() {
     };
     let client = ApiClient::new(config).expect("Failed to build client");
     client
-        .upload_json_document(&UploadDocumentRequest {}, None)
+        .upload_json_document(
+            &UploadDocumentRequest {
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }
 ```

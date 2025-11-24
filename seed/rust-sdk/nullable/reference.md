@@ -217,6 +217,7 @@ async fn main() {
         .delete_user(
             &DeleteUserRequest {
                 username: Some(Some("xy".to_string())),
+                ..Default::default()
             },
             None,
         )

@@ -13,6 +13,8 @@ async fn main() {
             &SendEnumInlinedRequest {
                 operand: Operand::GreaterThan,
                 operand_or_color: ColorOrOperand::Color(Color::Red),
+                maybe_operand: None,
+                maybe_operand_or_color: None,
             },
             None,
         )

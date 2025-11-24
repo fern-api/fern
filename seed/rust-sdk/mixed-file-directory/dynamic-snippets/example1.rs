@@ -9,6 +9,12 @@ async fn main() {
     let client = MixedFileDirectoryClient::new(config).expect("Failed to build client");
     client
         .user
-        .list(&ListQueryRequest { limit: Some(1) }, None)
+        .list(
+            &ListQueryRequest {
+                limit: Some(1),
+                ..Default::default()
+            },
+            None,
+        )
         .await;
 }

@@ -59,6 +59,7 @@ async fn main() {
                     id: None,
                     name: None,
                 }),
+                ..Default::default()
             },
             None,
         )

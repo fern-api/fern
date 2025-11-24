@@ -14,6 +14,7 @@ async fn main() {
                 nullable_text: Some(Some("nullable_text".to_string())),
                 nullable_number: Some(Some(1.1)),
                 non_nullable_text: Some("non_nullable_text".to_string()),
+                ..Default::default()
             },
             Some(
                 RequestOptions::new()

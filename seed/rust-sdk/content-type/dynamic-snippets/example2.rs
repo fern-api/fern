@@ -15,6 +15,7 @@ async fn main() {
                 app_id: Some("appId".to_string()),
                 instructions: Some("instructions".to_string()),
                 active: Some(true),
+                ..Default::default()
             },
             None,
         )
