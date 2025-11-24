@@ -514,13 +514,16 @@ export class EndpointSnippetGenerator {
                         as: "request"
                     });
 
-                    // Check if the converted value is already Optional.empty() to avoid double-wrapping
+                    // Check if the converted value is already Optional.empty() or OptionalNullable.absent() to avoid double-wrapping
                     const convertedValueStr = convertedValue.toString({
                         packageName: "com.example",
                         customConfig: this.context.customConfig
                     });
 
-                    if (convertedValueStr.includes("Optional.empty()")) {
+                    if (
+                        convertedValueStr.includes("Optional.empty()") ||
+                        convertedValueStr.includes("OptionalNullable.absent()")
+                    ) {
                         return convertedValue;
                     }
 
