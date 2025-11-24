@@ -20,6 +20,7 @@
     "test": "turbo test --filter=!@fern-api/ete-tests",
     "test:debug": "turbo test:debug --filter=!@fern-api/ete-tests",
     "test:update": "turbo test:update --filter=!@fern-api/ete-tests",
+    "test:update:dockerless": "turbo test:update --filter=!@fern-api/ete-tests --filter=!@fern-api/docker-utils",
     "test:ete": "pnpm --filter @fern-api/cli dist:cli:dev && pnpm --filter @fern-api/seed-cli dist:cli && pnpm --filter @fern-api/ete-tests test",
     "test:ete:update": "pnpm --filter @fern-api/cli dist:cli:dev && pnpm --filter @fern-api/seed-cli dist:cli && pnpm --filter @fern-api/ete-tests test -- -u",
     "lint:biome": "biome lint --error-on-warnings",

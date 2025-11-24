@@ -45,7 +45,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
     public convert(): ResponseErrorConverter.Output | undefined {
         if (!this.responseError.content) {
             // TODO: Handle 204 in a first class manner.
-            const errorName = ERROR_NAMES_BY_STATUS_CODE[this.statusCode];
+            const errorName = this.getErrorNameForStatusCode(this.statusCode, this.isWildcardStatusCode);
             if (errorName == null) {
                 this.context.logger.warn(`No error name found for status code ${this.statusCode}`);
                 return undefined;
@@ -77,7 +77,7 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
         }
 
         const jsonContentTypes = Object.keys(this.responseError.content).filter((type) => type.includes("json"));
-        const errorName = ERROR_NAMES_BY_STATUS_CODE[this.statusCode];
+        const errorName = this.getErrorNameForStatusCode(this.statusCode, this.isWildcardStatusCode);
         if (errorName == null) {
             this.context.logger.warn(`No error name found for status code ${this.statusCode}`);
             return undefined;
@@ -142,6 +142,15 @@ export class ResponseErrorConverter extends Converters.AbstractConverters.Abstra
             inlinedTypes: convertedSchema.inlinedTypes,
             examples: convertedSchema.examples
         };
+    }
+
+    private getErrorNameForStatusCode(statusCode: number, isWildcard?: boolean): string | undefined {
+        if (isWildcard) {
+            if (statusCode === 400) return "ClientRequestError";
+            if (statusCode === 500) return "ServerError";
+        }
+
+        return ERROR_NAMES_BY_STATUS_CODE[statusCode];
     }
 
     private getErrorIdFromErrorName(errorName: string): string {

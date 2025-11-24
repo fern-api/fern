@@ -699,6 +699,7 @@
                 "wireValue": "MovieDoesNotExistError"
             },
             "statusCode": 404,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -1132,7 +1133,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 201
+                        "status-code": 201,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -1870,7 +1872,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [

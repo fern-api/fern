@@ -824,6 +824,7 @@
                 "wireValue": "NotFoundError"
             },
             "statusCode": 404,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -1299,6 +1300,7 @@
                 "wireValue": "BadRequestError"
             },
             "statusCode": 400,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -1462,6 +1464,7 @@
                 "wireValue": "InternalServerError"
             },
             "statusCode": 500,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -1625,6 +1628,7 @@
                 "wireValue": "FooTooMuch"
             },
             "statusCode": 429,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -1788,6 +1792,7 @@
                 "wireValue": "FooTooLittle"
             },
             "statusCode": 500,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -2221,7 +2226,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -4778,7 +4784,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -8573,7 +8580,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [
