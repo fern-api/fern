@@ -30,7 +30,7 @@ export class BaseClientTypeGenerator {
     public writeToFile(context: SdkContext): void {
         if (this.shouldGenerateAuthCode()) {
             context.importsManager.addImportFromRoot("core/auth", {
-                namedImports: ["AuthProvider"]
+                namedImports: [{ name: "AuthProvider", type: "type" }]
             });
         }
 
@@ -165,9 +165,8 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
     }
 
     private generateNormalizeClientOptionsWithAuthFunction(context: SdkContext): void {
-        context.importsManager.addImportFromRoot("BaseClient", {
-            namedImports: ["normalizeClientOptions"]
-        });
+        // Note: normalizeClientOptions is defined in this same file (BaseClient.ts),
+        // so we don't need to import it
 
         // Determine which auth provider to use
         let authProviderCreation = "";

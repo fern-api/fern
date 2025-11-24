@@ -643,7 +643,10 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 ? (() => {
                       // Import NormalizedClientOptionsWithAuth and normalizeClientOptionsWithAuth from BaseClient
                       context.importsManager.addImportFromRoot("BaseClient", {
-                          namedImports: ["NormalizedClientOptionsWithAuth", "normalizeClientOptionsWithAuth"]
+                          namedImports: [
+                              { name: "NormalizedClientOptionsWithAuth", type: "type" },
+                              "normalizeClientOptionsWithAuth"
+                          ]
                       });
                       return ts.factory.createTypeReferenceNode(
                           ts.factory.createIdentifier("NormalizedClientOptionsWithAuth"),
@@ -660,7 +663,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 : (() => {
                       // Import NormalizedClientOptions from BaseClient
                       context.importsManager.addImportFromRoot("BaseClient", {
-                          namedImports: ["NormalizedClientOptions"]
+                          namedImports: [{ name: "NormalizedClientOptions", type: "type" }]
                       });
                       return ts.factory.createTypeReferenceNode(
                           ts.factory.createIdentifier("NormalizedClientOptions"),
