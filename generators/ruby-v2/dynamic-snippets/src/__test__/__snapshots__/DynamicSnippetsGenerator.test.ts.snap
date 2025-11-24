@@ -170,7 +170,7 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.imdb.get_movie();
+client.imdb.get_movie('movie_xyz');
 "
 `;
 
