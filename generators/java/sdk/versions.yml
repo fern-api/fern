@@ -1,3 +1,19 @@
+- version: 3.18.9
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to use OptionalNullable when collapse-optional-nullable is enabled. Wire tests now correctly generate OptionalNullable.absent() and OptionalNullable.of() instead of Optional.empty() and Optional.of() for optional request bodies and method arguments when collapse-optional-nullable: true is configured. This includes support for nested optional/nullable types which collapse into a single `OptionalNullable<T>`.
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 61
+
+- version: 3.18.8
+  changelogEntry:
+    - summary: |
+        Skip InputStream overload generation for file upload endpoints with inline path parameters. This prevents compilation errors where InputStream methods would reference non-existent request parameters when path parameters are inlined.
+      type: fix
+  createdAt: "2025-11-23"
+  irVersion: 61
+
 - version: 3.18.7
   changelogEntry:
     - summary: |
