@@ -41,7 +41,7 @@ function validateInstanceUrl(url: string): RuleViolation | null {
         // Handle URLs with or without protocol
         const urlWithProtocol = url.startsWith("http://") || url.startsWith("https://") ? url : `https://${url}`;
         const parsedUrl = new URL(urlWithProtocol);
-        hostname = parsedUrl.hostname;
+        hostname = parsedUrl.hostname.toLowerCase();
     } catch (e) {
         return {
             severity: "fatal",
@@ -58,8 +58,17 @@ function validateInstanceUrl(url: string): RuleViolation | null {
         };
     }
 
-    // Extract subdomain
-    const subdomain = hostname.slice(0, hostname.length - matchedDomain.length - 1); // -1 for the dot
+    // Extract subdomain using a safer approach
+    const suffix = "." + matchedDomain;
+    if (!hostname.endsWith(suffix)) {
+        // hostname is exactly the domain without subdomain
+        return {
+            severity: "fatal",
+            message: `Invalid URL "${url}". A subdomain is required before ${matchedDomain}`
+        };
+    }
+
+    const subdomain = hostname.slice(0, hostname.length - suffix.length);
 
     // Validate subdomain is not empty
     if (!subdomain || subdomain.length === 0) {
