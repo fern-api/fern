@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.13.1
+  createdAt: "2025-11-24"
+  changelogEntry:
+    - type: chore
+      summary: |
+        improved docs.rs with module documentation and dynamic getting started snippets
+  irVersion: 61
+
 - version: 0.13.0
   createdAt: "2025-11-19"
   changelogEntry:
