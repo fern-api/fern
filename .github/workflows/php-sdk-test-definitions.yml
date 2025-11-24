@@ -63,7 +63,7 @@ jobs:
         env:
           FORCE_COLOR: "2"
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.SEED_GITHUB_TOKEN }}
         run: |
           cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs"
           cd test-definitions
