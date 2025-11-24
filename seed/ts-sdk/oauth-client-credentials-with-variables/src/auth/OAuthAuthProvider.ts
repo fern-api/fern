@@ -21,13 +21,13 @@ export class OAuthAuthProvider implements core.AuthProvider {
     constructor(options: OAuthAuthProvider.Options) {
         if (options.clientId == null) {
             throw new errors.SeedOauthClientCredentialsWithVariablesError({
-                message: "clientId is required",
+                message: "clientId is required. Please provide it in options.",
             });
         }
         this._clientId = options.clientId;
         if (options.clientSecret == null) {
             throw new errors.SeedOauthClientCredentialsWithVariablesError({
-                message: "clientSecret is required",
+                message: "clientSecret is required. Please provide it in options.",
             });
         }
         this._clientSecret = options.clientSecret;

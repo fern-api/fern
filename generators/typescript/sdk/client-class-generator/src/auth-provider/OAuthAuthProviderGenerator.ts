@@ -136,10 +136,14 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         // Add validation before assignment when there's no environment variable fallback
         if (!clientIdIsOptional) {
+            const envVarHint =
+                oauthConfig.clientIdEnvVar != null
+                    ? ` or set the ${oauthConfig.clientIdEnvVar} environment variable`
+                    : "";
             constructorStatements += `
         if (options.clientId == null) {
             throw new ${errorConstructor}({
-                message: "clientId is required"
+                message: "clientId is required. Please provide it in options${envVarHint}."
             });
         }`;
         }
@@ -148,10 +152,14 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         this._clientId = options.clientId;`;
 
         if (!clientSecretIsOptional) {
+            const envVarHint =
+                oauthConfig.clientSecretEnvVar != null
+                    ? ` or set the ${oauthConfig.clientSecretEnvVar} environment variable`
+                    : "";
             constructorStatements += `
         if (options.clientSecret == null) {
             throw new ${errorConstructor}({
-                message: "clientSecret is required"
+                message: "clientSecret is required. Please provide it in options${envVarHint}."
             });
         }`;
         }
