@@ -206,6 +206,10 @@ fixtures:
   nullable-request-body:
     - outputFolder: dynamic-snippets-disabled
       disableDynamicSnippetTests: true
+  pagination-custom:
+    - outputFolder: .
+      customConfig:
+        customPagerName: PayrocPager
 scripts:
   - image: fernapi/go-seed:1.0.0
     commands:
@@ -221,7 +225,6 @@ allowedFailures:
   - literal
   - mixed-case:no-custom-config
   - mixed-case:default-values
-  - pagination-custom
   - request-parameters
   - reserved-keywords
   - streaming-parameter
@@ -243,3 +246,5 @@ allowedFailures:
   - file-upload:no-custom-config 
   - file-upload:package-name 
   - file-upload-openapi
+
+  - pagination-custom:.
