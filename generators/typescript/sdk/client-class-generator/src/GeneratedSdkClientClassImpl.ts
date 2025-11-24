@@ -1464,137 +1464,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
             return statements;
         }
-        if (this.bearerAuthScheme != null && this.authProvider != null) {
-            const AUTH_REQUEST_VAR = "authRequest";
-            statements.push(
-                ts.factory.createVariableStatement(
-                    undefined,
-                    ts.factory.createVariableDeclarationList(
-                        [
-                            ts.factory.createVariableDeclaration(
-                                ts.factory.createIdentifier(AUTH_REQUEST_VAR),
-                                undefined,
-                                undefined,
-                                ts.factory.createAwaitExpression(
-                                    ts.factory.createCallExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            this.getReferenceToAuthProviderOrThrow(),
-                                            ts.factory.createIdentifier("getAuthRequest")
-                                        ),
-                                        undefined,
-                                        this.getAuthRequestArgs()
-                                    )
-                                )
-                            )
-                        ],
-                        ts.NodeFlags.Const
-                    )
-                )
-            );
 
-            statements.push(
-                ts.factory.createVariableStatement(
-                    undefined,
-                    ts.factory.createVariableDeclarationList(
-                        [
-                            ts.factory.createVariableDeclaration(
-                                ts.factory.createIdentifier("authHeader"),
-                                undefined,
-                                undefined,
-                                ts.factory.createElementAccessExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createIdentifier(AUTH_REQUEST_VAR),
-                                        ts.factory.createIdentifier("headers")
-                                    ),
-                                    ts.factory.createStringLiteral("Authorization")
-                                )
-                            )
-                        ],
-                        ts.NodeFlags.Const
-                    )
-                )
-            );
-
-            statements.push(
-                ts.factory.createIfStatement(
-                    ts.factory.createBinaryExpression(
-                        ts.factory.createIdentifier("authHeader"),
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                        ts.factory.createNull()
-                    ),
-                    ts.factory.createBlock(
-                        [ts.factory.createReturnStatement(ts.factory.createIdentifier("authHeader"))],
-                        true
-                    )
-                )
-            );
-        }
-
-        if (this.basicAuthScheme != null && this.authProvider != null) {
-            const AUTH_REQUEST_VAR = "authRequest";
-            statements.push(
-                ts.factory.createVariableStatement(
-                    undefined,
-                    ts.factory.createVariableDeclarationList(
-                        [
-                            ts.factory.createVariableDeclaration(
-                                ts.factory.createIdentifier(AUTH_REQUEST_VAR),
-                                undefined,
-                                undefined,
-                                ts.factory.createAwaitExpression(
-                                    ts.factory.createCallExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            this.getReferenceToAuthProviderOrThrow(),
-                                            ts.factory.createIdentifier("getAuthRequest")
-                                        ),
-                                        undefined,
-                                        this.getAuthRequestArgs()
-                                    )
-                                )
-                            )
-                        ],
-                        ts.NodeFlags.Const
-                    )
-                )
-            );
-
-            statements.push(
-                ts.factory.createVariableStatement(
-                    undefined,
-                    ts.factory.createVariableDeclarationList(
-                        [
-                            ts.factory.createVariableDeclaration(
-                                ts.factory.createIdentifier("authHeader"),
-                                undefined,
-                                undefined,
-                                ts.factory.createElementAccessExpression(
-                                    ts.factory.createPropertyAccessExpression(
-                                        ts.factory.createIdentifier(AUTH_REQUEST_VAR),
-                                        ts.factory.createIdentifier("headers")
-                                    ),
-                                    ts.factory.createStringLiteral("Authorization")
-                                )
-                            )
-                        ],
-                        ts.NodeFlags.Const
-                    )
-                )
-            );
-
-            statements.push(
-                ts.factory.createIfStatement(
-                    ts.factory.createBinaryExpression(
-                        ts.factory.createIdentifier("authHeader"),
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                        ts.factory.createNull()
-                    ),
-                    ts.factory.createBlock(
-                        [ts.factory.createReturnStatement(ts.factory.createIdentifier("authHeader"))],
-                        true
-                    )
-                )
-            );
-        }
+        // Bearer and basic auth are now handled by the auth provider system in generateHeaders.ts
+        // Only OAuth uses this helper method (see shouldGenerateAuthorizationHeaderHelperMethod)
 
         if (!this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
             statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier("undefined")));
@@ -1658,18 +1530,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ],
             false
         );
-    }
-
-    private getAuthRequestArgs(): ts.Expression[] {
-        /**
-         * Returns the arguments array for auth provider's getAuthRequest() method.
-         * When generateEndpointMetadata is true, returns [{ endpointMetadata }].
-         * When generateEndpointMetadata is false, returns [] (no arguments).
-         */
-        if (!this.generateEndpointMetadata) {
-            return [];
-        }
-        return [this.createEndpointSupplierArg()];
     }
 
     public getReferenceToMetadataForEndpointSupplier(): ts.Expression {
