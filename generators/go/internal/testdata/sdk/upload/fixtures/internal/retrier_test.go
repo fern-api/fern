@@ -127,7 +127,7 @@ func TestRetrier(t *testing.T) {
 				return
 			}
 
-			require.NoError(t, err)
+			require.NoError(t, writeErr)
 			assert.Equal(t, test.wantResponse, response)
 		})
 	}
@@ -177,7 +177,7 @@ func newTestRetryServer(t *testing.T, tc *RetryTestCase) *httptest.Server {
 
 				request := new(Request)
 				bytes, err := io.ReadAll(r.Body)
-				require.NoError(t, err)
+				require.NoError(t, writeErr)
 				require.NoError(t, json.Unmarshal(bytes, request))
 				require.LessOrEqual(t, index, len(tc.giveStatusCodes))
 
@@ -186,9 +186,9 @@ func newTestRetryServer(t *testing.T, tc *RetryTestCase) *httptest.Server {
 
 				if tc.giveResponse != nil && statusCode == http.StatusOK {
 					bytes, err = json.Marshal(tc.giveResponse)
-					require.NoError(t, err)
-					_, err = w.Write(bytes)
-					require.NoError(t, err)
+					require.NoError(t, writeErr)
+					_, writeErr := w.Write(bytes)
+					require.NoError(t, writeErr)
 				}
 
 				index++

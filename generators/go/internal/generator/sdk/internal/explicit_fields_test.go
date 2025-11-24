@@ -15,7 +15,6 @@ type testExplicitFieldsStruct struct {
 	Count          *int     `json:"count,omitempty"`
 	Enabled        *bool    `json:"enabled,omitempty"`
 	Tags           []string `json:"tags,omitempty"`
-	unexported     string   `json:"-"`
 	explicitFields *big.Int `json:"-"`
 }
 
