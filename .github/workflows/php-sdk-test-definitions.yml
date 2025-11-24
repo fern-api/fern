@@ -12,6 +12,10 @@ on:
     branches:
       - main
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"      
+
 permissions:
   contents: write
   pull-requests: write
