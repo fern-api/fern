@@ -75,9 +75,9 @@
               "responseBody": {
                 "comment": {
                   "author": "string",
-                  "created_at": 1,
+                  "createdAt": 1,
                   "id": "string",
-                  "resource_id": "string",
+                  "resourceId": "string",
                   "text": "string",
                 },
               },
@@ -86,9 +86,9 @@
                 "value": {
                   "comment": {
                     "author": "string",
-                    "created_at": 1,
+                    "createdAt": 1,
                     "id": "string",
-                    "resource_id": "string",
+                    "resourceId": "string",
                     "text": "string",
                   },
                 },
@@ -101,7 +101,7 @@
           "includeInApiExplorer": undefined,
           "method": "POST",
           "multiAuth": undefined,
-          "name": "Add a Comment",
+          "name": "Createcomment",
           "originalEndpointId": "endpoint_commentsService.createcomment",
           "path": {
             "parts": [
@@ -232,7 +232,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "key": "resource_id",
+            "key": "resourceId",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -295,7 +295,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "key": "created_at",
+            "key": "createdAt",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
@@ -327,7 +327,7 @@
           {
             "availability": undefined,
             "description": undefined,
-            "key": "resource_id",
+            "key": "resourceId",
             "propertyAccess": undefined,
             "valueType": {
               "defaultValue": undefined,
