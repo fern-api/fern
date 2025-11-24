@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support per-generator auth overrides in generators.yml. All auth-schemes defined in the configuration are now available for per-generator api.auth settings, allowing different generators to use different authentication schemes.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-25"
+  version: 2.6.0
+
+- changelogEntry:
+    - summary: |
         Add validation for instance URLs to ensure they are valid.
       type: fix
   irVersion: 61
