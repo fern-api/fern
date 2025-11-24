@@ -732,6 +732,9 @@ export class DynamicTypeLiteralMapper {
                 if (date == null) {
                     return java.TypeLiteral.nop();
                 }
+                if (this.context.customConfig?.["use-local-date-for-dates"] === true) {
+                    return java.TypeLiteral.date(date);
+                }
                 return java.TypeLiteral.string(date);
             }
             case "DATE_TIME": {

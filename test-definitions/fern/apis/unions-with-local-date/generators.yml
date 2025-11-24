@@ -10,6 +10,7 @@ groups:
         config:
           use-local-date-for-dates: true
           package-prefix: com.unions.localdate
+          enable-wire-tests: true
   php-sdk:
     generators:
       - name: fernapi/fern-php-sdk
