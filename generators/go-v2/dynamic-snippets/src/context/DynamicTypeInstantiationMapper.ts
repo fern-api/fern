@@ -57,7 +57,7 @@ export class DynamicTypeInstantiationMapper {
                 // This is more idiomatic and matches the exported API type users see.
                 if (inner.type === "named") {
                     const named = this.context.resolveNamedType({ typeId: inner.value });
-                    if (named?.type === "alias" && named.typeReference.type === "list") {
+                    if (named?.type === "alias" && ["list", "set", "map"].includes(named.typeReference.type)) {
                         // Build the underlying collection literal
                         const collectionLiteral = this.convert({
                             typeReference: named.typeReference,
@@ -70,59 +70,11 @@ export class DynamicTypeInstantiationMapper {
                         const aliasImportPath = this.context.getImportPath(named.declaration.fernFilepath);
 
                         // Reconstruct the composite literal using the alias name
-                        const internal = collectionLiteral.internalType;
-                        if (internal.type === "slice") {
-                            return go.TypeInstantiation.reference(
-                                go.codeblock((writer) => {
-                                    writer.write("&");
-                                    writer.writeNode(
-                                        go.typeReference({
-                                            name: aliasName,
-                                            importPath: aliasImportPath
-                                        })
-                                    );
-
-                                    const values = internal.values;
-                                    if (values.length === 0) {
-                                        writer.write("{}");
-                                        return;
-                                    }
-
-                                    writer.writeLine("{");
-                                    writer.indent();
-                                    for (const v of values) {
-                                        writer.writeNode(v);
-                                        writer.writeLine(",");
-                                    }
-                                    writer.dedent();
-                                    writer.write("}");
-                                })
-                            );
-                        }
-                        // Fallback: if not a slice, use the underlying type approach
-                        return go.TypeInstantiation.reference(
-                            go.codeblock((writer) => {
-                                writer.write("&");
-                                writer.writeNode(collectionLiteral);
-                            })
-                        );
-                    }
-                    // For set and map aliases, use the underlying type approach for now
-                    if (
-                        named?.type === "alias" &&
-                        (named.typeReference.type === "set" || named.typeReference.type === "map")
-                    ) {
-                        const collectionLiteral = this.convert({
-                            typeReference: named.typeReference,
-                            value: args.value,
-                            as: args.as
+                        return this.reconstructAliasCollectionLiteral({
+                            collectionLiteral,
+                            aliasName,
+                            aliasImportPath
                         });
-                        return go.TypeInstantiation.reference(
-                            go.codeblock((writer) => {
-                                writer.write("&");
-                                writer.writeNode(collectionLiteral);
-                            })
-                        );
                     }
                 }
                 // Default behavior for all other nullables
@@ -138,7 +90,7 @@ export class DynamicTypeInstantiationMapper {
                 // This is more idiomatic and matches the exported API type users see.
                 if (inner.type === "named") {
                     const named = this.context.resolveNamedType({ typeId: inner.value });
-                    if (named?.type === "alias" && named.typeReference.type === "list") {
+                    if (named?.type === "alias" && ["list", "set", "map"].includes(named.typeReference.type)) {
                         // Build the underlying collection literal
                         const collectionLiteral = this.convert({
                             typeReference: named.typeReference,
@@ -151,59 +103,11 @@ export class DynamicTypeInstantiationMapper {
                         const aliasImportPath = this.context.getImportPath(named.declaration.fernFilepath);
 
                         // Reconstruct the composite literal using the alias name
-                        const internal = collectionLiteral.internalType;
-                        if (internal.type === "slice") {
-                            return go.TypeInstantiation.reference(
-                                go.codeblock((writer) => {
-                                    writer.write("&");
-                                    writer.writeNode(
-                                        go.typeReference({
-                                            name: aliasName,
-                                            importPath: aliasImportPath
-                                        })
-                                    );
-
-                                    const values = internal.values;
-                                    if (values.length === 0) {
-                                        writer.write("{}");
-                                        return;
-                                    }
-
-                                    writer.writeLine("{");
-                                    writer.indent();
-                                    for (const v of values) {
-                                        writer.writeNode(v);
-                                        writer.writeLine(",");
-                                    }
-                                    writer.dedent();
-                                    writer.write("}");
-                                })
-                            );
-                        }
-                        // Fallback: if not a slice, use the underlying type approach
-                        return go.TypeInstantiation.reference(
-                            go.codeblock((writer) => {
-                                writer.write("&");
-                                writer.writeNode(collectionLiteral);
-                            })
-                        );
-                    }
-                    // For set and map aliases, use the underlying type approach for now
-                    if (
-                        named?.type === "alias" &&
-                        (named.typeReference.type === "set" || named.typeReference.type === "map")
-                    ) {
-                        const collectionLiteral = this.convert({
-                            typeReference: named.typeReference,
-                            value: args.value,
-                            as: args.as
+                        return this.reconstructAliasCollectionLiteral({
+                            collectionLiteral,
+                            aliasName,
+                            aliasImportPath
                         });
-                        return go.TypeInstantiation.reference(
-                            go.codeblock((writer) => {
-                                writer.write("&");
-                                writer.writeNode(collectionLiteral);
-                            })
-                        );
                     }
                 }
                 // Default behavior for all other optionals
@@ -344,6 +248,85 @@ export class DynamicTypeInstantiationMapper {
             default:
                 return this.convert({ typeReference: aliasType.typeReference, value, as });
         }
+    }
+
+    private reconstructAliasCollectionLiteral({
+        collectionLiteral,
+        aliasName,
+        aliasImportPath
+    }: {
+        collectionLiteral: go.TypeInstantiation;
+        aliasName: string;
+        aliasImportPath: string;
+    }): go.TypeInstantiation {
+        // Reconstruct the composite literal using the alias name
+        const internal = collectionLiteral.internalType;
+        // Note: sets are converted to slices via convertList, so they're handled by the slice case
+        if (internal.type === "slice") {
+            return go.TypeInstantiation.reference(
+                go.codeblock((writer) => {
+                    writer.write("&");
+                    writer.writeNode(
+                        go.typeReference({
+                            name: aliasName,
+                            importPath: aliasImportPath
+                        })
+                    );
+
+                    const values = internal.values;
+                    if (values.length === 0) {
+                        writer.write("{}");
+                        return;
+                    }
+
+                    writer.writeLine("{");
+                    writer.indent();
+                    for (const v of values) {
+                        writer.writeNode(v);
+                        writer.writeLine(",");
+                    }
+                    writer.dedent();
+                    writer.write("}");
+                })
+            );
+        }
+        if (internal.type === "map") {
+            return go.TypeInstantiation.reference(
+                go.codeblock((writer) => {
+                    writer.write("&");
+                    writer.writeNode(
+                        go.typeReference({
+                            name: aliasName,
+                            importPath: aliasImportPath
+                        })
+                    );
+
+                    const entries = internal.entries;
+                    if (entries.length === 0) {
+                        writer.write("{}");
+                        return;
+                    }
+
+                    writer.writeLine("{");
+                    writer.indent();
+                    for (const entry of entries) {
+                        writer.writeNode(entry.key);
+                        writer.write(": ");
+                        writer.writeNode(entry.value);
+                        writer.writeLine(",");
+                    }
+                    writer.dedent();
+                    writer.write("}");
+                })
+            );
+        }
+        // Fallback: if not a slice or map, use the underlying type approach
+        return go.TypeInstantiation.reference(
+            go.codeblock((writer) => {
+                writer.write("&");
+                writer.writeNode(collectionLiteral);
+            })
+        );
     }
 
     private convertLiteralValue(literal: FernIr.dynamic.LiteralType): go.TypeInstantiation {
