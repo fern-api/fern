@@ -592,6 +592,7 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): rust.Expression {
         const structFields: Array<{ name: string; value: rust.Expression }> = [];
+        const providedFieldNames = new Set<string>();
 
         // Query parameters with enhanced error scoping
         this.context.errors.scope(Scope.QueryParameters);
@@ -604,10 +605,12 @@ export class EndpointSnippetGenerator {
             for (const queryParameter of queryParameters) {
                 this.context.scopeError(queryParameter.name.wireValue);
                 try {
+                    const fieldName = this.context.getPropertyName(queryParameter.name.name);
                     structFields.push({
-                        name: this.context.getPropertyName(queryParameter.name.name),
+                        name: fieldName,
                         value: this.context.dynamicTypeLiteralMapper.convert(queryParameter)
                     });
+                    providedFieldNames.add(fieldName);
                 } finally {
                     this.context.unscopeError();
                 }
@@ -627,13 +630,116 @@ export class EndpointSnippetGenerator {
                 body: request.body,
                 value: snippet.requestBody
             });
-            structFields.push(...requestBodyFields);
+            for (const field of requestBodyFields) {
+                structFields.push(field);
+                providedFieldNames.add(field.name);
+            }
         }
         this.context.errors.unscope();
 
         // Use organized struct construction for better readability
         const structName = this.getCorrectRequestStructName(endpoint, request);
-        return this.createStructExpression(structName, structFields);
+
+        // Only use ..Default::default() if the request type has all optional fields
+        // The model generator only derives Default when all properties are optional
+        // If we use ..Default::default() on a type that doesn't implement Default,
+        // the Rust compiler will produce an error: "the trait `Default` is not implemented for `TypeName`"
+        const useDefault = this.context.canRequestUseDefault(request);
+
+        // If we can't use Default, we need to explicitly provide values for all missing fields
+        if (!useDefault) {
+            this.addMissingFields({
+                request,
+                structFields,
+                providedFieldNames
+            });
+        }
+
+        return this.createStructExpression(structName, structFields, useDefault);
+    }
+
+    private addMissingFields({
+        request,
+        structFields,
+        providedFieldNames
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        structFields: Array<{ name: string; value: rust.Expression }>;
+        providedFieldNames: Set<string>;
+    }): void {
+        // Add missing query parameters (both optional and required)
+        const allQueryParams = request.queryParameters ?? [];
+        for (const param of allQueryParams) {
+            const fieldName = this.context.getPropertyName(param.name.name);
+            if (!providedFieldNames.has(fieldName)) {
+                if (this.context.isOptionalType(param.typeReference)) {
+                    structFields.push({
+                        name: fieldName,
+                        value: rust.Expression.raw("None")
+                    });
+                } else {
+                    // Required field is missing - generate a default value
+                    structFields.push({
+                        name: fieldName,
+                        value: this.generateDefaultValueForType(param.typeReference)
+                    });
+                }
+            }
+        }
+
+        // Add missing body parameters (both optional and required)
+        if (request.body != null && request.body.type === "properties") {
+            for (const param of request.body.value) {
+                const fieldName = this.context.getPropertyName(param.name.name);
+                if (!providedFieldNames.has(fieldName)) {
+                    if (this.context.isOptionalType(param.typeReference)) {
+                        structFields.push({
+                            name: fieldName,
+                            value: rust.Expression.raw("None")
+                        });
+                    } else {
+                        // Required field is missing - generate a default value
+                        structFields.push({
+                            name: fieldName,
+                            value: this.generateDefaultValueForType(param.typeReference)
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    private generateDefaultValueForType(typeRef: FernIr.dynamic.TypeReference): rust.Expression {
+        switch (typeRef.type) {
+            case "primitive":
+                switch (typeRef.value) {
+                    case "STRING":
+                        return rust.Expression.stringLiteral("string");
+                    case "INTEGER":
+                    case "LONG":
+                    case "UINT":
+                    case "UINT_64":
+                        return rust.Expression.raw("0");
+                    case "FLOAT":
+                    case "DOUBLE":
+                        return rust.Expression.raw("0.0");
+                    case "BOOLEAN":
+                        return rust.Expression.raw("false");
+                    default:
+                        return rust.Expression.stringLiteral("default");
+                }
+            case "list":
+                return rust.Expression.raw("vec![]");
+            case "map":
+            case "set":
+                return rust.Expression.raw("Default::default()");
+            case "named":
+                // For named types, try to use Default or create an empty struct
+                return rust.Expression.raw("Default::default()");
+            default:
+                // Fallback to Default::default() for complex types
+                return rust.Expression.raw("Default::default()");
+        }
     }
 
     private getInlinedRequestBodyStructFields({
@@ -833,30 +939,25 @@ export class EndpointSnippetGenerator {
 
     private createStructExpression(
         structName: string,
-        structFields: Array<{ name: string; value: rust.Expression }>
+        structFields: Array<{ name: string; value: rust.Expression }>,
+        shouldUseDefault: boolean = false
     ): rust.Expression {
         // For complex objects with many fields or nested structures,
         // prefer struct construction over JSON for better type safety and readability
         if (this.shouldUseStructConstruction(structFields)) {
             return rust.Expression.structConstruction(
                 structName,
-                structFields.map((field) => ({ name: field.name, value: field.value }))
+                structFields.map((field) => ({ name: field.name, value: field.value })),
+                shouldUseDefault // Use ..Default::default() only when we know the type has Default derived
             );
         }
         return rust.Expression.structLiteral(structName, structFields);
     }
 
     private shouldUseStructConstruction(structFields: Array<{ name: string; value: rust.Expression }>): boolean {
-        // Use struct construction for more than 2 fields
-        if (structFields.length > 2) {
-            return true;
-        }
-
-        // Check for complex nested objects
-        return structFields.some((field) => {
-            const fieldString = field.value.toString();
-            return fieldString.includes("json!") || fieldString.includes("{") || fieldString.length > 30;
-        });
+        // Always use struct construction (multiline format) so we can include ..Default::default()
+        // This ensures optional fields are properly initialized for all request types
+        return true;
     }
 
     private getCorrectRequestStructName(
@@ -867,8 +968,12 @@ export class EndpointSnippetGenerator {
         const hasBody = request.body != null;
 
         if (hasQueryParams && !hasBody) {
-            // Query-only: use QueryRequest suffix like SDK generator
-            // Use the endpoint's method name (e.g., "listDevices" -> "ListDevicesQueryRequest")
+            // Query-only: look up the pre-registered deduplicated name from the context
+            const queryRequestName = this.context.getQueryRequestNameByEndpoint(endpoint.declaration);
+            if (queryRequestName) {
+                return queryRequestName;
+            }
+            // Fallback to manual construction if not found (shouldn't happen)
             const methodName = endpoint.declaration.name.pascalCase.safeName;
             return `${methodName}QueryRequest`;
         }
