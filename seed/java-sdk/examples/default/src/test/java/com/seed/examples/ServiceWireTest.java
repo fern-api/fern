@@ -258,7 +258,7 @@ public class ServiceWireTest {
         Metadata response = client.service()
                 .getMetadata(GetMetadataRequest.builder()
                         .xApiVersion("0.0.1")
-                        .tag(Arrays.asList(Optional.of("development")))
+                        .tag(Arrays.asList("development"))
                         .shallow(false)
                         .build());
         RecordedRequest request = server.takeRequest();

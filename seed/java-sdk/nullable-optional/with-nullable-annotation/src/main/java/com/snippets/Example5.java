@@ -81,8 +81,8 @@ public class Example5 {
                         .optionalArray(Optional.of(Arrays.asList("optionalArray", "optionalArray")))
                         .optionalNullableArray(
                                 Optional.of(Arrays.asList("optionalNullableArray", "optionalNullableArray")))
-                        .nullableListOfNullables(Optional.of(Arrays.asList(
-                                Optional.of("nullableListOfNullables"), Optional.of("nullableListOfNullables"))))
+                        .nullableListOfNullables(
+                                Optional.of(Arrays.asList("nullableListOfNullables", "nullableListOfNullables")))
                         .nullableMapOfNullables(new HashMap<String, Optional<Address>>() {
                             {
                                 put(

@@ -395,7 +395,7 @@ client.service().getMetadata(
         .builder()
         .xApiVersion("0.0.1")
         .tag(
-            Arrays.asList(Optional.of("development"))
+            Arrays.asList("development")
         )
         .shallow(false)
         .build()

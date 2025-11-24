@@ -17,6 +17,29 @@ const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
     value: "STRING"
 };
 
+/**
+ * For query parameters with allow-multiple and optional types, the Dynamic IR produces
+ * List<Optional<T>>. However, Java SDK builders have convenience overloads that accept
+ * List<T> directly. This function unwraps the optional from list items so we generate
+ * List<T> instead of List<Optional<T>>.
+ *
+ * Note: We only unwrap "optional", not "nullable". Nullable list items (list<nullable<T>>)
+ * are a distinct case where items genuinely can be null, and the SDK expects List<Nullable<T>>.
+ */
+function unwrapOptionalFromListItems(typeReference: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference {
+    if (typeReference.type === "list") {
+        const itemType = typeReference.value;
+        // Only unwrap optional, not nullable - nullable items genuinely can be null
+        if (itemType.type === "optional") {
+            return {
+                type: "list",
+                value: itemType.value
+            };
+        }
+    }
+    return typeReference;
+}
+
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
     private formatter: AbstractFormatter | undefined;
@@ -665,7 +688,9 @@ export class EndpointSnippetGenerator {
         const queryParameterFields = sortedQueryParameters.map((queryParameter) => ({
             name: this.context.getMethodName(queryParameter.name.name),
             value: this.context.dynamicTypeLiteralMapper.convert({
-                typeReference: queryParameter.typeReference,
+                // Unwrap optional from list items for allow-multiple query params.
+                // Java SDK builders have convenience overloads that accept List<T>.
+                typeReference: unwrapOptionalFromListItems(queryParameter.typeReference),
                 value: queryParameter.value,
                 as: "request"
             })
