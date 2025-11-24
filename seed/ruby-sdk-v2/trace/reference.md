@@ -39,7 +39,10 @@ client.v_2.test();
 <dd>
 
 ```ruby
-client.admin.update_test_submission_status();
+client.admin.update_test_submission_status(
+  'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+
+);
 ```
 </dd>
 </dl>
@@ -87,9 +90,12 @@ client.admin.update_test_submission_status();
 <dd>
 
 ```ruby
-client.admin.send_test_submission_update({
-  updateTime: '2024-01-15T09:30:00Z'
-});
+client.admin.send_test_submission_update(
+  'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  {
+    updateTime: '2024-01-15T09:30:00Z'
+  }
+);
 ```
 </dd>
 </dl>
@@ -137,7 +143,10 @@ client.admin.send_test_submission_update({
 <dd>
 
 ```ruby
-client.admin.update_workspace_submission_status();
+client.admin.update_workspace_submission_status(
+  'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+
+);
 ```
 </dd>
 </dl>
@@ -185,9 +194,12 @@ client.admin.update_workspace_submission_status();
 <dd>
 
 ```ruby
-client.admin.send_workspace_submission_update({
-  updateTime: '2024-01-15T09:30:00Z'
-});
+client.admin.send_workspace_submission_update(
+  'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  {
+    updateTime: '2024-01-15T09:30:00Z'
+  }
+);
 ```
 </dd>
 </dl>
@@ -349,7 +361,11 @@ client.admin.store_traced_test_case(
 <dd>
 
 ```ruby
-client.admin.store_traced_test_case_v_2();
+client.admin.store_traced_test_case_v_2(
+  'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  'testCaseId',
+
+);
 ```
 </dd>
 </dl>
@@ -512,7 +528,10 @@ client.admin.store_traced_workspace(
 <dd>
 
 ```ruby
-client.admin.store_traced_workspace_v_2();
+client.admin.store_traced_workspace_v_2(
+  'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+
+);
 ```
 </dd>
 </dl>
@@ -868,7 +887,10 @@ Returns a playlist
 <dd>
 
 ```ruby
-client.playlist.get_playlist();
+client.playlist.get_playlist(
+  1,
+  'playlistId'
+);
 ```
 </dd>
 </dl>
@@ -930,10 +952,14 @@ Updates a playlist
 <dd>
 
 ```ruby
-client.playlist.update_playlist({
-  name: 'name',
-  problems: ['problems', 'problems']
-});
+client.playlist.update_playlist(
+  1,
+  'playlistId',
+  {
+    name: 'name',
+    problems: ['problems', 'problems']
+  }
+);
 ```
 </dd>
 </dl>
@@ -1003,7 +1029,10 @@ Deletes a playlist
 <dd>
 
 ```ruby
-client.playlist.delete_playlist();
+client.playlist.delete_playlist(
+  1,
+  'playlist_id'
+);
 ```
 </dd>
 </dl>
@@ -1143,30 +1172,33 @@ Updates a problem
 <dd>
 
 ```ruby
-client.problem.update_problem({
-  problemName: 'problemName',
-  problemDescription: {
-    boards: []
-  },
-  files: {},
-  inputParams: [{
-    name: 'name'
-  }, {
-    name: 'name'
-  }],
-  testcases: [{
-    testCase: {
-      id: 'id',
-      params: []
-    }
-  }, {
-    testCase: {
-      id: 'id',
-      params: []
-    }
-  }],
-  methodName: 'methodName'
-});
+client.problem.update_problem(
+  'problemId',
+  {
+    problemName: 'problemName',
+    problemDescription: {
+      boards: []
+    },
+    files: {},
+    inputParams: [{
+      name: 'name'
+    }, {
+      name: 'name'
+    }],
+    testcases: [{
+      testCase: {
+        id: 'id',
+        params: []
+      }
+    }, {
+      testCase: {
+        id: 'id',
+        params: []
+      }
+    }],
+    methodName: 'methodName'
+  }
+);
 ```
 </dd>
 </dl>
@@ -1228,7 +1260,7 @@ Soft deletes a problem
 <dd>
 
 ```ruby
-client.problem.delete_problem();
+client.problem.delete_problem('problemId');
 ```
 </dd>
 </dl>
@@ -1422,7 +1454,7 @@ Returns execution server URL for session. Returns empty if session isn't registe
 <dd>
 
 ```ruby
-client.submission.get_execution_session();
+client.submission.get_execution_session('sessionId');
 ```
 </dd>
 </dl>
@@ -1476,7 +1508,7 @@ Stops execution session.
 <dd>
 
 ```ruby
-client.submission.stop_execution_session();
+client.submission.stop_execution_session('sessionId');
 ```
 </dd>
 </dl>
@@ -1542,7 +1574,10 @@ client.submission.get_execution_sessions_state();
 <dd>
 
 ```ruby
-client.sysprop.set_num_warm_instances();
+client.sysprop.set_num_warm_instances(
+  ,
+  1
+);
 ```
 </dd>
 </dl>
@@ -1708,7 +1743,7 @@ Returns latest version of a problem
 <dd>
 
 ```ruby
-client.v_2.problem.get_latest_problem();
+client.v_2.problem.get_latest_problem('problemId');
 ```
 </dd>
 </dl>
@@ -1762,7 +1797,10 @@ Returns requested version of a problem
 <dd>
 
 ```ruby
-client.v_2.problem.get_problem_version();
+client.v_2.problem.get_problem_version(
+  'problemId',
+  1
+);
 ```
 </dd>
 </dl>
@@ -1903,7 +1941,7 @@ Returns latest version of a problem
 <dd>
 
 ```ruby
-client.v_2.problem.get_latest_problem();
+client.v_2.problem.get_latest_problem('problemId');
 ```
 </dd>
 </dl>
@@ -1957,7 +1995,10 @@ Returns requested version of a problem
 <dd>
 
 ```ruby
-client.v_2.problem.get_problem_version();
+client.v_2.problem.get_problem_version(
+  'problemId',
+  1
+);
 ```
 </dd>
 </dl>
