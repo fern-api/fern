@@ -8,6 +8,7 @@
   version: 2.6.0
 
 - changelogEntry:
+    - summary: |
         Support product and version-specific announcements in `docs.yml`.
       type: feat
   irVersion: 61
