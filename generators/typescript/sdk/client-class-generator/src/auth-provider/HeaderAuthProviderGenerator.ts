@@ -65,7 +65,6 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     private writeClass(context: SdkContext): void {
         const hasHeaderEnv = this.authScheme.headerEnvVar != null;
 
-        // Match the same logic as BaseClientOptions and Options interface
         const headerValueType =
             this.isAuthMandatory && !hasHeaderEnv
                 ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
@@ -262,9 +261,6 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     private writeOptions(context: SdkContext): void {
         const hasHeaderEnv = this.authScheme.headerEnvVar != null;
 
-        // Match the same logic as BaseClientOptions:
-        // - header is optional when auth is not mandatory OR when there's an env var
-        // - header type includes undefined when auth is not mandatory OR when there's an env var
         const isHeaderOptional = !this.isAuthMandatory || hasHeaderEnv;
         const headerType =
             this.isAuthMandatory && !hasHeaderEnv

@@ -79,7 +79,6 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const authClientExpression = authClientReference.getExpression();
         const authClientType = getTextOfTsNode(authClientExpression);
 
-        // Get the endpoint to access request/response properties
         const endpoint = Object.values(this.ir.services)
             .flatMap((service: FernIr.HttpService) => service.endpoints)
             .find(
@@ -126,15 +125,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const clientIdIsOptional = oauthConfig.clientIdEnvVar != null;
         const clientSecretIsOptional = oauthConfig.clientSecretEnvVar != null;
 
-        // Get error constructor for consistent error handling
         const errorConstructor = getTextOfTsNode(
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
 
-        // Generate constructor with validation
         let constructorStatements = "";
 
-        // Add validation before assignment when there's no environment variable fallback
         if (!clientIdIsOptional) {
             const envVarHint =
                 oauthConfig.clientIdEnvVar != null
@@ -172,7 +168,6 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         this._expiresAt = new Date();
         `;
 
-        // Get the appropriate supplier type (Supplier or EndpointSupplier based on generateEndpointMetadata)
         const supplierType = getTextOfTsNode(
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(
                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
@@ -261,7 +256,6 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this._getToken(arg);
         `;
 
-        // Validation and environment variable fallback happens here
         const clientIdSupplierCall = getTextOfTsNode(
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
                 ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientId"),
@@ -361,7 +355,6 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this._refreshPromise;
         `;
 
-        // Generate canCreate static method
         const canCreateStatements = this.generatecanCreateStatements(
             oauthConfig.clientIdEnvVar,
             oauthConfig.clientSecretEnvVar
@@ -562,20 +555,15 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeOptions(context: SdkContext): void {
-        // Import BaseClientOptions
         context.importsManager.addImportFromRoot("BaseClient", {
             namedImports: ["BaseClientOptions"]
         });
 
-        // Get OAuth configuration
         const oauthConfig = this.authScheme.configuration;
         if (oauthConfig.type !== "clientCredentials") {
             return;
         }
 
-        // OAuthAuthProvider.Options extends BaseClientOptions, which already includes
-        // clientId and clientSecret with the correct types (Supplier or EndpointSupplier
-        // based on generateEndpointMetadata). We don't need to redeclare them here.
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,

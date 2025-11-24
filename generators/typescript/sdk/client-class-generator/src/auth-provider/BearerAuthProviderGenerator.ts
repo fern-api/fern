@@ -65,7 +65,6 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     private writeClass(context: SdkContext): void {
         const hasTokenEnv = this.authScheme.tokenEnvVar != null;
 
-        // Match the same logic as BaseClientOptions and Options interface
         const tokenType =
             this.isAuthMandatory && !hasTokenEnv
                 ? context.coreUtilities.auth.BearerToken._getReferenceToType()
@@ -250,9 +249,6 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     private writeOptions(context: SdkContext): void {
         const hasTokenEnv = this.authScheme.tokenEnvVar != null;
 
-        // Match the same logic as BaseClientOptions:
-        // - token is optional when auth is not mandatory OR when there's an env var
-        // - token type includes undefined when auth is not mandatory OR when there's an env var
         const isTokenOptional = !this.isAuthMandatory || hasTokenEnv;
         const tokenType =
             this.isAuthMandatory && !hasTokenEnv

@@ -367,7 +367,6 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private getAuthTokenEndpointReferenceFromRoot(): ts.Expression {
-        // this.client is now the AuthClient directly, so we can call the method directly on it
         return ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier("this.client"),
             ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
@@ -406,13 +405,10 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeOptions(context: SdkContext): void {
-        // Import BaseClientOptions
         context.importsManager.addImportFromRoot("BaseClient", {
             namedImports: ["BaseClientOptions"]
         });
 
-        // InferredAuthProvider.Options now just extends BaseClientOptions
-        // The auth token parameters are defined directly in BaseClientOptions
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,

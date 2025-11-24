@@ -35,7 +35,6 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public getOptionsType(): ts.TypeNode {
-        // AnyAuthProvider doesn't have an Options type - it takes an array of providers
         throw new Error("AnyAuthProvider does not have an Options type");
     }
 
@@ -48,7 +47,6 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeClass(context: SdkContext): void {
-        // AnyAuthProvider now accepts an array of auth providers
         context.sourceFile.addClass({
             name: CLASS_NAME,
             isExported: true,

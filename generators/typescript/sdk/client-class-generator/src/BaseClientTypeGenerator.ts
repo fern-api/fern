@@ -27,7 +27,6 @@ export class BaseClientTypeGenerator {
     }
 
     public writeToFile(context: SdkContext): void {
-        // Add import for AuthProvider only if auth is configured
         if (this.shouldGenerateAuthCode()) {
             context.importsManager.addImportFromRoot("core/auth", {
                 namedImports: ["AuthProvider"]
@@ -171,7 +170,6 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
 
         // Determine which auth provider to use
         let authProviderCreation = "";
-        let isOAuth = false;
         const isAnyAuth = this.ir.auth.requirement === "ANY";
 
         // Handle ANY auth case - create AnyAuthProvider that aggregates all schemes
@@ -235,7 +233,6 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
             // Only generate auth provider for non-ANY auth schemes
             for (const authScheme of this.ir.auth.schemes) {
                 if (authScheme.type === "bearer") {
-                    // Import BearerAuthProvider
                     context.sourceFile.addImportDeclaration({
                         moduleSpecifier: "./auth/BearerAuthProvider.js",
                         namedImports: ["BearerAuthProvider"]
@@ -243,7 +240,6 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                     authProviderCreation = "new BearerAuthProvider(options)";
                     break;
                 } else if (authScheme.type === "basic") {
-                    // Import BasicAuthProvider
                     context.sourceFile.addImportDeclaration({
                         moduleSpecifier: "./auth/BasicAuthProvider.js",
                         namedImports: ["BasicAuthProvider"]
@@ -251,7 +247,6 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                     authProviderCreation = "new BasicAuthProvider(options)";
                     break;
                 } else if (authScheme.type === "header") {
-                    // Import HeaderAuthProvider
                     context.sourceFile.addImportDeclaration({
                         moduleSpecifier: "./auth/HeaderAuthProvider.js",
                         namedImports: ["HeaderAuthProvider"]
@@ -259,12 +254,13 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                     authProviderCreation = "new HeaderAuthProvider(options)";
                     break;
                 } else if (authScheme.type === "oauth") {
-                    // OAuth requires special handling in root Client.ts with access to AuthClient
-                    // For BaseClient, generate a pass-through function for subclients
-                    isOAuth = true;
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: "./auth/OAuthAuthProvider.js",
+                        namedImports: ["OAuthAuthProvider"]
+                    });
+                    authProviderCreation = "new OAuthAuthProvider(options)";
                     break;
                 } else if (authScheme.type === "inferred") {
-                    // Import InferredAuthProvider
                     context.sourceFile.addImportDeclaration({
                         moduleSpecifier: "./auth/InferredAuthProvider.js",
                         namedImports: ["InferredAuthProvider"]
@@ -275,28 +271,8 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
             }
         }
 
-        // If no auth provider creation code and not OAuth, don't generate the function
-        if (!authProviderCreation && !isOAuth) {
-            return;
-        }
-
-        // For OAuth, generate the function that creates OAuthAuthProvider
-        if (isOAuth) {
-            // Import OAuthAuthProvider
-            context.sourceFile.addImportDeclaration({
-                moduleSpecifier: "./auth/OAuthAuthProvider.js",
-                namedImports: ["OAuthAuthProvider"]
-            });
-
-            const functionCode = `
-export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
-    ${OPTIONS_PARAMETER_NAME}: T
-): NormalizedClientOptionsWithAuth<T> {
-    const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
-    normalized.authProvider ??= new OAuthAuthProvider(options);
-    return normalized;
-}`;
-            context.sourceFile.addStatements(functionCode);
+        // If no auth provider creation code, don't generate the function
+        if (!authProviderCreation) {
             return;
         }
 

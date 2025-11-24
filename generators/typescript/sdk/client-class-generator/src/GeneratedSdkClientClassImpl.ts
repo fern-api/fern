@@ -1187,9 +1187,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
         const supplier = context.coreUtilities.fetcher.SupplierOrEndpointSupplier;
 
-        // Note: All auth properties (basic, bearer, header, inferred, OAuth) are now in BaseClientOptions
-        // Client Options interfaces just extend BaseClientOptions for both root and subclients
-        // Subclients receive the full options object from root clients via this._options
 
         if (
             this.bearerAuthScheme == null &&
@@ -1364,7 +1361,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (!this.authProvider) {
             return undefined;
         }
-        // Auth provider is now always in _options.authProvider for both root and subclients
         return ts.factory.createPropertyAccessExpression(
             this.getReferenceToOptions(),
             ts.factory.createIdentifier("authProvider")
@@ -1375,7 +1371,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         if (!this.authProvider) {
             throw new Error("Auth provider is not available");
         }
-        // Auth provider is now always in _options.authProvider for both root and subclients
         return ts.factory.createPropertyAccessExpression(
             this.getReferenceToOptions(),
             ts.factory.createIdentifier("authProvider")
@@ -1404,9 +1399,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             context.coreUtilities.fetcher.APIResponse.FailedResponse.rawResponse
         );
         const statements: ts.Statement[] = [];
-
-        // All auth types (bearer, basic, OAuth, header) are now handled by the auth provider
-        // system in generateHeaders.ts. This helper method is no longer generated.
 
         if (!this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
             statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier("undefined")));
