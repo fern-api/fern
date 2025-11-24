@@ -22,6 +22,8 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/CreateWorkspace"
+            example:
+              title: My new workspace
             examples:
               simple_workspace:
                 value:
