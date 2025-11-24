@@ -16,6 +16,7 @@ export declare namespace BaseClientTypeGenerator {
 const OPTIONS_PARAMETER_NAME = "options";
 
 export class BaseClientTypeGenerator {
+    public static readonly OPTIONS_PARAMETER_NAME = OPTIONS_PARAMETER_NAME;
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
@@ -280,7 +281,7 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
 export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
 ): NormalizedClientOptionsWithAuth<T> {
-    const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
+    const normalized = normalizeClientOptions(${OPTIONS_PARAMETER_NAME}) as NormalizedClientOptionsWithAuth<T>;
     normalized.authProvider ??= ${authProviderCreation};
     return normalized;
 }`;

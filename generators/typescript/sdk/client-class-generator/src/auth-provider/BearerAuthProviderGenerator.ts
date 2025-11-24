@@ -19,6 +19,8 @@ const OPTIONS_TYPE_NAME = "Options";
 
 export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
+    public static readonly TOKEN_FIELD_NAME = TOKEN_FIELD_NAME;
+    public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
     private readonly authScheme: FernIr.BearerAuthScheme;
     private readonly neverThrowErrors: boolean;
     private readonly isAuthMandatory: boolean;

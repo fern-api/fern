@@ -23,8 +23,21 @@ const CLASS_NAME = "InferredAuthProvider";
 const OPTIONS_TYPE_NAME = "Options";
 const BUFFER_IN_MINUTES_VAR_NAME = "BUFFER_IN_MINUTES";
 const GET_EXPIRES_AT_FN_NAME = "getExpiresAt";
+const GET_AUTH_REQUEST_METHOD_NAME = "getAuthRequest";
+const GET_AUTH_REQUEST_FROM_TOKEN_ENDPOINT_METHOD_NAME = "getAuthRequestFromTokenEndpoint";
+const GET_CACHED_AUTH_REQUEST_METHOD_NAME = "getCachedAuthRequest";
+const OPTIONS_PARAM_NAME = "options";
+const CLIENT_FIELD_NAME = "client";
+const OPTIONS_FIELD_NAME = "options";
+const EXPIRES_AT_FIELD_NAME = "expiresAt";
+const AUTH_REQUEST_PROMISE_FIELD_NAME = "authRequestPromise";
+const RESPONSE_VAR_NAME = "response";
+const EXPIRES_IN_SECONDS_PARAM_NAME = "expiresInSeconds";
+
 export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
+    public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
+    public static readonly GET_AUTH_REQUEST_METHOD_NAME = GET_AUTH_REQUEST_METHOD_NAME;
     private readonly authScheme: FernIr.InferredAuthScheme;
     private readonly packageId: PackageId;
     private readonly endpoint: FernIr.HttpEndpoint;
@@ -113,14 +126,14 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
             implements: [getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())],
             properties: [
                 {
-                    name: "client",
+                    name: CLIENT_FIELD_NAME,
                     type: getTextOfTsNode(this.getAuthClientTypeNode(context)),
                     hasQuestionToken: false,
                     isReadonly: true,
                     scope: Scope.Private
                 },
                 {
-                    name: "options",
+                    name: OPTIONS_FIELD_NAME,
                     type: getTextOfTsNode(this.getOptionsType()),
                     hasQuestionToken: false,
                     isReadonly: true,
@@ -129,7 +142,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                 ...(this.authScheme.tokenEndpoint.expiryProperty
                     ? [
                           {
-                              name: "expiresAt",
+                              name: EXPIRES_AT_FIELD_NAME,
                               type: getTextOfTsNode(
                                   ts.factory.createUnionTypeNode([
                                       ts.factory.createTypeReferenceNode(
@@ -143,7 +156,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                               scope: Scope.Private
                           },
                           {
-                              name: "authRequestPromise",
+                              name: AUTH_REQUEST_PROMISE_FIELD_NAME,
                               type: getTextOfTsNode(
                                   ts.factory.createUnionTypeNode([
                                       ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
@@ -164,7 +177,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                           {
                               kind: StructureKind.Method,
                               scope: Scope.Private,
-                              name: "getCachedAuthRequest",
+                              name: GET_CACHED_AUTH_REQUEST_METHOD_NAME,
                               isAsync: true,
                               returnType: getTextOfTsNode(
                                   ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
@@ -172,16 +185,16 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                                   ])
                               ),
                               statements: `
-        if (this.expiresAt && this.expiresAt <= new Date()) {
+        if (this.${EXPIRES_AT_FIELD_NAME} && this.${EXPIRES_AT_FIELD_NAME} <= new Date()) {
             // If the token has expired, reset the auth request promise
-            this.authRequestPromise = undefined;
+            this.${AUTH_REQUEST_PROMISE_FIELD_NAME} = undefined;
         }
 
-        if (!this.authRequestPromise) {
-            this.authRequestPromise = this.getAuthRequestFromTokenEndpoint();
+        if (!this.${AUTH_REQUEST_PROMISE_FIELD_NAME}) {
+            this.${AUTH_REQUEST_PROMISE_FIELD_NAME} = this.${GET_AUTH_REQUEST_FROM_TOKEN_ENDPOINT_METHOD_NAME}();
         }
 
-        return this.authRequestPromise;
+        return this.${AUTH_REQUEST_PROMISE_FIELD_NAME};
         `
                           }
                       ] as MethodDeclarationStructure[])
@@ -189,7 +202,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                 {
                     kind: StructureKind.Method,
                     scope: Scope.Public,
-                    name: "getAuthRequest",
+                    name: GET_AUTH_REQUEST_METHOD_NAME,
                     isAsync: true,
                     returnType: getTextOfTsNode(
                         ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
@@ -199,17 +212,17 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     statements: this.authScheme.tokenEndpoint.expiryProperty
                         ? `
         try {
-            const authRequest = await this.getCachedAuthRequest();
+            const authRequest = await this.${GET_CACHED_AUTH_REQUEST_METHOD_NAME}();
             return authRequest;
         } catch(e) {
-            this.authRequestPromise = undefined;${
-                this.authScheme.tokenEndpoint.expiryProperty ? `\nthis.expiresAt = undefined;` : ``
+            this.${AUTH_REQUEST_PROMISE_FIELD_NAME} = undefined;${
+                this.authScheme.tokenEndpoint.expiryProperty ? `\nthis.${EXPIRES_AT_FIELD_NAME} = undefined;` : ``
             }
             throw e;
         }
         `
                         : `
-        return await this.getAuthRequestFromTokenEndpoint();
+        return await this.${GET_AUTH_REQUEST_FROM_TOKEN_ENDPOINT_METHOD_NAME}();
         `
                 },
                 this.generateGetAuthRequestFromTokenEndpointMethod({ context, requestWrapper })
@@ -218,26 +231,25 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                 {
                     parameters: [
                         {
-                            name: "options",
+                            name: OPTIONS_PARAM_NAME,
                             type: getTextOfTsNode(this.getOptionsType())
                         }
                     ],
                     statements: [
-                        `this.options = options;`,
-                        `this.client = new ${getTextOfTsNode(this.getAuthClientTypeNode(context))}(options);`
+                        `this.${OPTIONS_FIELD_NAME} = ${OPTIONS_PARAM_NAME};`,
+                        `this.${CLIENT_FIELD_NAME} = new ${getTextOfTsNode(this.getAuthClientTypeNode(context))}(${OPTIONS_PARAM_NAME});`
                     ]
                 }
             ]
         });
 
         if (this.authScheme.tokenEndpoint.expiryProperty) {
-            const expiresInSecondsParamName = "expiresInSeconds";
             context.sourceFile.addFunction({
                 kind: StructureKind.Function,
                 name: GET_EXPIRES_AT_FN_NAME,
                 parameters: [
                     {
-                        name: expiresInSecondsParamName,
+                        name: EXPIRES_IN_SECONDS_PARAM_NAME,
                         type: getTextOfTsNode(ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword))
                     }
                 ],
@@ -245,7 +257,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Date"), [])
                 ),
                 statements: [
-                    `return new Date(new Date().getTime() + ${expiresInSecondsParamName} * 1000 - ${BUFFER_IN_MINUTES_VAR_NAME} * 60 * 1000)`
+                    `return new Date(new Date().getTime() + ${EXPIRES_IN_SECONDS_PARAM_NAME} * 1000 - ${BUFFER_IN_MINUTES_VAR_NAME} * 60 * 1000)`
                 ]
             });
         }
@@ -265,7 +277,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     ts.factory.createVariableDeclarationList(
                         [
                             ts.factory.createVariableDeclaration(
-                                ts.factory.createIdentifier("response"),
+                                ts.factory.createIdentifier(RESPONSE_VAR_NAME),
                                 undefined,
                                 undefined,
                                 ts.factory.createAwaitExpression(
@@ -289,7 +301,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                               ts.factory.createBinaryExpression(
                                   ts.factory.createPropertyAccessExpression(
                                       ts.factory.createThis(),
-                                      ts.factory.createIdentifier("expiresAt")
+                                      ts.factory.createIdentifier(EXPIRES_AT_FIELD_NAME)
                                   ),
                                   ts.factory.createToken(ts.SyntaxKind.EqualsToken),
                                   ts.factory.createCallExpression(
@@ -297,7 +309,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                                       undefined,
                                       [
                                           context.type.generateGetterForResponseProperty({
-                                              variable: "response",
+                                              variable: RESPONSE_VAR_NAME,
                                               property: this.authScheme.tokenEndpoint.expiryProperty
                                           })
                                       ]
@@ -327,7 +339,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                                                       [
                                                           ts.factory.createTemplateSpan(
                                                               context.type.generateGetterForResponseProperty({
-                                                                  variable: "response",
+                                                                  variable: RESPONSE_VAR_NAME,
                                                                   property: header.responseProperty
                                                               }),
                                                               ts.factory.createTemplateTail("", "")
@@ -335,7 +347,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                                                       ]
                                                   )
                                                 : context.type.generateGetterForResponseProperty({
-                                                      variable: "response",
+                                                      variable: RESPONSE_VAR_NAME,
                                                       property: header.responseProperty
                                                   })
                                         );
@@ -352,7 +364,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
 
         const method: MethodDeclarationStructure = {
             kind: StructureKind.Method,
-            name: "getAuthRequestFromTokenEndpoint",
+            name: GET_AUTH_REQUEST_FROM_TOKEN_ENDPOINT_METHOD_NAME,
             isAsync: true,
             scope: Scope.Private,
             returnType: getTextOfTsNode(
@@ -368,7 +380,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
 
     private getAuthTokenEndpointReferenceFromRoot(): ts.Expression {
         return ts.factory.createPropertyAccessExpression(
-            ts.factory.createIdentifier("this.client"),
+            ts.factory.createPropertyAccessExpression(ts.factory.createThis(), CLIENT_FIELD_NAME),
             ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
         );
     }
@@ -389,7 +401,10 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                             ts.factory.createIdentifier(p.name),
                             context.coreUtilities.fetcher.Supplier.get(
                                 ts.factory.createPropertyAccessExpression(
-                                    ts.factory.createIdentifier("this.options"),
+                                    ts.factory.createPropertyAccessExpression(
+                                        ts.factory.createThis(),
+                                        OPTIONS_FIELD_NAME
+                                    ),
                                     ts.factory.createIdentifier(p.safeName)
                                 )
                             )

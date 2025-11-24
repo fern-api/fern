@@ -11,9 +11,11 @@ export declare namespace AnyAuthProviderGenerator {
 }
 
 const CLASS_NAME = "AnyAuthProvider";
+const AUTH_PROVIDERS_FIELD_NAME = "authProviders";
 
 export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
+    public static readonly AUTH_PROVIDERS_FIELD_NAME = AUTH_PROVIDERS_FIELD_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
 
     constructor(init: AnyAuthProviderGenerator.Init) {
@@ -53,7 +55,7 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
             implements: [getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())],
             properties: [
                 {
-                    name: "authProviders",
+                    name: AUTH_PROVIDERS_FIELD_NAME,
                     type: getTextOfTsNode(
                         ts.factory.createArrayTypeNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())
                     ),
@@ -74,7 +76,7 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
                             )
                         }
                     ],
-                    statements: ["this.authProviders = authProviders;"]
+                    statements: [`this.${AUTH_PROVIDERS_FIELD_NAME} = authProviders;`]
                 }
             ],
             methods: [
@@ -111,7 +113,7 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private generateGetAuthRequestStatements(): string {
-        const providerArray = "this.authProviders";
+        const providerArray = `this.${AUTH_PROVIDERS_FIELD_NAME}`;
         const errorHandling = this.ir.sdkConfig.isAuthMandatory
             ? `throw new Error("No authentication credentials provided. Please provide one of the supported authentication methods.");`
             : `return { headers: {} };`;

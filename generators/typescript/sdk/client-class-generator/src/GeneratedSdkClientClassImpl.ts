@@ -120,6 +120,13 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly METADATA_FOR_TOKEN_SUPPLIER_VAR = "_metadata";
     public static readonly ENDPOINT_SUPPLIER_ARG_METADATA_PROP = "endpointMetadata";
     public static readonly AUTH_HEADER_HELPER_METHOD_METADATA_ARG = "endpointMetadata";
+    public static readonly AUTH_PROVIDER_FIELD_NAME = "authProvider";
+    public static readonly LOGGING_FIELD_NAME = "logging";
+    public static readonly FETCH_FIELD_NAME = "fetch";
+    public static readonly AUTHORIZATION_HEADER_NAME = "authorization";
+    public static readonly TOKEN_FIELD_NAME = "token";
+    public static readonly CLIENT_ID_FIELD_NAME = "clientId";
+    public static readonly CLIENT_SECRET_FIELD_NAME = "clientSecret";
 
     private readonly isRoot: boolean;
     private readonly intermediateRepresentation: IntermediateRepresentation;
@@ -1099,11 +1106,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         if (this.oauthAuthScheme != null && context.generateOAuthClients) {
             properties.push(
-                ts.factory.createPropertyAssignment("clientId", ts.factory.createStringLiteral("YOUR_CLIENT_ID"))
+                ts.factory.createPropertyAssignment(
+                    GeneratedSdkClientClassImpl.CLIENT_ID_FIELD_NAME,
+                    ts.factory.createStringLiteral("YOUR_CLIENT_ID")
+                )
             );
             properties.push(
                 ts.factory.createPropertyAssignment(
-                    "clientSecret",
+                    GeneratedSdkClientClassImpl.CLIENT_SECRET_FIELD_NAME,
                     ts.factory.createStringLiteral("YOUR_CLIENT_SECRET")
                 )
             );
@@ -1187,7 +1197,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
         const supplier = context.coreUtilities.fetcher.SupplierOrEndpointSupplier;
 
-
         if (
             this.bearerAuthScheme == null &&
             !this.isRoot &&
@@ -1195,7 +1204,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             context.generateOAuthClients
         ) {
             properties.push({
-                name: getPropertyKey("token"),
+                name: getPropertyKey(GeneratedSdkClientClassImpl.TOKEN_FIELD_NAME),
                 type: getTextOfTsNode(
                     supplier._getReferenceToType(
                         this.intermediateRepresentation.sdkConfig.isAuthMandatory
@@ -1335,7 +1344,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     }
 
     public getReferenceToLogger(_context: SdkContext): ts.Expression {
-        return this.getReferenceToOption("logging");
+        return this.getReferenceToOption(GeneratedSdkClientClassImpl.LOGGING_FIELD_NAME);
     }
 
     public getReferenceToOptions(): ts.Expression {
@@ -1363,7 +1372,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
         return ts.factory.createPropertyAccessExpression(
             this.getReferenceToOptions(),
-            ts.factory.createIdentifier("authProvider")
+            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.AUTH_PROVIDER_FIELD_NAME)
         );
     }
 
@@ -1373,7 +1382,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         }
         return ts.factory.createPropertyAccessExpression(
             this.getReferenceToOptions(),
-            ts.factory.createIdentifier("authProvider")
+            ts.factory.createIdentifier(GeneratedSdkClientClassImpl.AUTH_PROVIDER_FIELD_NAME)
         );
     }
 

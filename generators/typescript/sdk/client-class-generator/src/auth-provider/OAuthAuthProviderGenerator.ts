@@ -16,9 +16,23 @@ export declare namespace OAuthAuthProviderGenerator {
 
 const CLASS_NAME = "OAuthAuthProvider";
 const OPTIONS_TYPE_NAME = "Options";
+const OPTIONS_PARAM_NAME = "options";
+const CLIENT_ID_VAR_NAME = "clientId";
+const CLIENT_SECRET_VAR_NAME = "clientSecret";
+const ENDPOINT_METADATA_ARG_NAME = "arg";
+const REFRESH_METHOD_NAME = "refresh";
+const GET_TOKEN_INTERNAL_METHOD_NAME = "_getToken";
+const BUFFER_IN_MINUTES_FIELD_NAME = "BUFFER_IN_MINUTES";
+const CLIENT_ID_FIELD_NAME = "_clientId";
+const CLIENT_SECRET_FIELD_NAME = "_clientSecret";
+const AUTH_CLIENT_FIELD_NAME = "_authClient";
+const ACCESS_TOKEN_FIELD_NAME = "_accessToken";
+const EXPIRES_AT_FIELD_NAME = "_expiresAt";
+const REFRESH_PROMISE_FIELD_NAME = "_refreshPromise";
 
 export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
+    public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly authScheme: FernIr.OAuthScheme;
     private readonly neverThrowErrors: boolean;
@@ -137,15 +151,15 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     ? ` or set the ${oauthConfig.clientIdEnvVar} environment variable`
                     : "";
             constructorStatements += `
-        if (options.clientId == null) {
+        if (${OPTIONS_PARAM_NAME}.${CLIENT_ID_VAR_NAME} == null) {
             throw new ${errorConstructor}({
-                message: "clientId is required. Please provide it in options${envVarHint}."
+                message: "${CLIENT_ID_VAR_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}${envVarHint}."
             });
         }`;
         }
 
         constructorStatements += `
-        this._clientId = options.clientId;`;
+        this.${CLIENT_ID_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_ID_VAR_NAME};`;
 
         if (!clientSecretIsOptional) {
             const envVarHint =
@@ -153,19 +167,19 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     ? ` or set the ${oauthConfig.clientSecretEnvVar} environment variable`
                     : "";
             constructorStatements += `
-        if (options.clientSecret == null) {
+        if (${OPTIONS_PARAM_NAME}.${CLIENT_SECRET_VAR_NAME} == null) {
             throw new ${errorConstructor}({
-                message: "clientSecret is required. Please provide it in options${envVarHint}."
+                message: "${CLIENT_SECRET_VAR_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}${envVarHint}."
             });
         }`;
         }
 
         constructorStatements += `
-        this._clientSecret = options.clientSecret;`;
+        this.${CLIENT_SECRET_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_SECRET_VAR_NAME};`;
 
         constructorStatements += `
-        this._authClient = new ${authClientType}(options);
-        this._expiresAt = new Date();
+        this.${AUTH_CLIENT_FIELD_NAME} = new ${authClientType}(${OPTIONS_PARAM_NAME});
+        this.${EXPIRES_AT_FIELD_NAME} = new Date();
         `;
 
         const supplierType = getTextOfTsNode(
@@ -183,7 +197,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             initializer?: string;
         }> = [
             {
-                name: "_clientId",
+                name: CLIENT_ID_FIELD_NAME,
                 type: clientIdIsOptional
                     ? `${supplierType}<${clientIdType}> | undefined`
                     : `${supplierType}<${clientIdType}>`,
@@ -191,7 +205,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 scope: Scope.Private
             },
             {
-                name: "_clientSecret",
+                name: CLIENT_SECRET_FIELD_NAME,
                 type: clientSecretIsOptional
                     ? `${supplierType}<${clientSecretType}> | undefined`
                     : `${supplierType}<${clientSecretType}>`,
@@ -199,25 +213,25 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 scope: Scope.Private
             },
             {
-                name: "_authClient",
+                name: AUTH_CLIENT_FIELD_NAME,
                 type: authClientType,
                 isReadonly: true,
                 scope: Scope.Private
             },
             {
-                name: "_accessToken",
+                name: ACCESS_TOKEN_FIELD_NAME,
                 type: "string | undefined",
                 isReadonly: false,
                 scope: Scope.Private
             },
             {
-                name: "_expiresAt",
+                name: EXPIRES_AT_FIELD_NAME,
                 type: "Date",
                 isReadonly: false,
                 scope: Scope.Private
             },
             {
-                name: "_refreshPromise",
+                name: REFRESH_PROMISE_FIELD_NAME,
                 type: "Promise<string> | undefined",
                 isReadonly: false,
                 scope: Scope.Private
@@ -226,7 +240,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         if (hasExpiration) {
             properties.unshift({
-                name: "BUFFER_IN_MINUTES",
+                name: BUFFER_IN_MINUTES_FIELD_NAME,
                 type: "number",
                 isReadonly: true,
                 scope: Scope.Private,
@@ -236,24 +250,24 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const getTokenStatements = hasExpiration
             ? `
-        if (this._accessToken && this._expiresAt > new Date()) {
-            return this._accessToken;
+        if (this.${ACCESS_TOKEN_FIELD_NAME} && this.${EXPIRES_AT_FIELD_NAME} > new Date()) {
+            return this.${ACCESS_TOKEN_FIELD_NAME};
         }
         // If a refresh is already in progress, return the existing promise
-        if (this._refreshPromise != null) {
-            return this._refreshPromise;
+        if (this.${REFRESH_PROMISE_FIELD_NAME} != null) {
+            return this.${REFRESH_PROMISE_FIELD_NAME};
         }
-        return this.refresh(arg);
+        return this.${REFRESH_METHOD_NAME}(${ENDPOINT_METADATA_ARG_NAME});
         `
             : `
-        if (this._accessToken) {
-            return this._accessToken;
+        if (this.${ACCESS_TOKEN_FIELD_NAME}) {
+            return this.${ACCESS_TOKEN_FIELD_NAME};
         }
         // If a refresh is already in progress, return the existing promise
-        if (this._refreshPromise != null) {
-            return this._refreshPromise;
+        if (this.${REFRESH_PROMISE_FIELD_NAME} != null) {
+            return this.${REFRESH_PROMISE_FIELD_NAME};
         }
-        return this._getToken(arg);
+        return this.${GET_TOKEN_INTERNAL_METHOD_NAME}(${ENDPOINT_METADATA_ARG_NAME});
         `;
 
         const clientIdSupplierCall = getTextOfTsNode(

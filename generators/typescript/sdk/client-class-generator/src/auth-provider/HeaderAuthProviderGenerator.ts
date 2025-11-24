@@ -19,6 +19,8 @@ const OPTIONS_TYPE_NAME = "Options";
 
 export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
+    public static readonly HEADER_FIELD_NAME = HEADER_FIELD_NAME;
+    public static readonly OPTIONS_TYPE_NAME = OPTIONS_TYPE_NAME;
     private readonly authScheme: FernIr.HeaderAuthScheme;
     private readonly neverThrowErrors: boolean;
     private readonly isAuthMandatory: boolean;
