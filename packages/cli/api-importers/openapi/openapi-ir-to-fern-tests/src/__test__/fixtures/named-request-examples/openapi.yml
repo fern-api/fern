@@ -1,0 +1,70 @@
+openapi: 3.0.0
+info:
+  title: Named Request Examples API
+  version: 1.0.0
+  description: Tests that named examples in requestBody are preserved
+
+paths:
+  /workspaces:
+    post:
+      tags:
+        - Workspaces
+      summary: Create a workspace
+      description: Creates a new workspace and adds the user as a Workspace Admin.
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateWorkspace"
+            examples:
+              simple_workspace:
+                value:
+                  title: My new workspace
+              great_british_pounds_workspace:
+                value:
+                  title: My workspace using British Pounds
+                  currency_code: GBP
+              united_states_dollars_workspace:
+                value:
+                  title: My workspace using US Dollars
+                  currency_code: USD
+      responses:
+        '200':
+          description: Workspace created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Workspace"
+
+components:
+  schemas:
+    CreateWorkspace:
+      type: object
+      required:
+        - title
+      properties:
+        title:
+          type: string
+          description: The title of the workspace
+        currency_code:
+          type: string
+          description: The currency code for the workspace (e.g., USD, GBP, EUR)
+          
+    Workspace:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The unique identifier for the workspace
+        title:
+          type: string
+          description: The title of the workspace
+        currency_code:
+          type: string
+          description: The currency code for the workspace
