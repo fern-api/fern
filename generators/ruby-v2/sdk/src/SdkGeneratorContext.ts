@@ -46,6 +46,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             logger: this.logger,
             config: this.config,
             readmeConfigBuilder: new ReadmeConfigBuilder(),
+            publishConfig: this.ir.publishConfig,
             ir
         });
     }

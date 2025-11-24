@@ -1,28 +1,32 @@
-import { AbstractGeneratorAgent } from "@fern-api/base-generator";
+import { AbstractGeneratorAgent, RawGithubConfig } from "@fern-api/base-generator";
 import { Logger } from "@fern-api/logger";
 
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, PublishingConfig } from "@fern-fern/ir-sdk/api";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
 
 export class RubyGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContext> {
     private readmeConfigBuilder: ReadmeConfigBuilder;
+    private publishConfig: PublishingConfig | undefined;
 
     public constructor({
         logger,
         config,
         readmeConfigBuilder,
+        publishConfig,
         ir
     }: {
         logger: Logger;
         config: FernGeneratorExec.GeneratorConfig;
         readmeConfigBuilder: ReadmeConfigBuilder;
+        publishConfig: PublishingConfig | undefined;
         ir: IntermediateRepresentation;
     }) {
-        super({ logger, config, selfHosted: false }); // TODO: upgrade IR and add self hosted
+        super({ logger, config, selfHosted: ir.selfHosted });
         this.readmeConfigBuilder = readmeConfigBuilder;
+        this.publishConfig = publishConfig;
     }
 
     public getReadmeConfig(
@@ -40,15 +44,13 @@ export class RubyGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
         return FernGeneratorCli.Language.Ruby;
     }
 
-    public getGitHubConfig(
-        args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>
-    ): FernGeneratorCli.GitHubConfig {
-        // TODO: get from env
+    public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>): RawGithubConfig {
         return {
-            sourceDirectory: "NONE",
-            uri: "NONE",
-            token: "token",
-            branch: "NONE"
+            sourceDirectory: "/fern/output",
+            type: this.publishConfig?.type,
+            uri: this.publishConfig?.type === "github" ? this.publishConfig.uri : undefined,
+            token: this.publishConfig?.type === "github" ? this.publishConfig.token : undefined,
+            mode: this.publishConfig?.type === "github" ? this.publishConfig.mode : undefined
         };
     }
 }
