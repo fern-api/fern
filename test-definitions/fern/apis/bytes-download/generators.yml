@@ -8,5 +8,5 @@ groups:
         github:
           token: "{{ GITHUB_TOKEN }}"
           mode: push
-          uri: https://github.com/fern-api/php-sdk-tests
+          uri: fern-api/php-sdk-tests
           branch: bytes-download
