@@ -10,6 +10,7 @@ describe("ApiClient", () => {
         mockOAuthScheme(server);
 
         const client = new SeedOauthClientCredentialsWithVariablesClient({
+            maxRetries: 0,
             rootVariable: "rootVariable",
             clientId: "client_id",
             clientSecret: "client_secret",
