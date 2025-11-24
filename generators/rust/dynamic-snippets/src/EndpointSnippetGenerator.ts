@@ -868,10 +868,12 @@ export class EndpointSnippetGenerator {
 
         if (hasQueryParams && !hasBody) {
             // Query-only: use QueryRequest suffix like SDK generator
+            // Use the endpoint's method name (e.g., "listDevices" -> "ListDevicesQueryRequest")
             const methodName = endpoint.declaration.name.pascalCase.safeName;
             return `${methodName}QueryRequest`;
         }
         // Default: use regular naming for body requests or mixed requests
-        return this.context.getStructName(request.declaration.name);
+        // Use the request struct's declaration name from the registry
+        return this.context.getStructNameByDeclaration(request.declaration);
     }
 }
