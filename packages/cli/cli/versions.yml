@@ -11,15 +11,15 @@
     - summary: |
         Update local development refresh behavior when updating the `sidebar-title` override, or a `slug` override of a page. The preview should now navigate to the new slug instead of showing a 404.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-23"
-  version: 2.4.1
+  version: 2.2.6
 
 - changelogEntry:
     - summary: |
         Revert "fix(openapi): handle situations where discriminated unions reference unknown variants"
       type: chore
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-21"
   version: 2.2.5
 
@@ -27,7 +27,7 @@
     - summary: |
         Re-publish CLI.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-21"
   version: 2.2.4
 
@@ -35,7 +35,7 @@
     - summary: |
         Support `<Code />` components with props formatted on multiple lines.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-21"
   version: 2.2.3
 
@@ -43,7 +43,7 @@
     - summary: |
         Add branch support to self-hosted GitHub generation. Users can now specify a target branch in their generators.yml configuration using the `branch` field. When specified, generated code will be pushed to that branch instead of the default branch.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-21"
   version: 2.4.0
 
@@ -51,7 +51,7 @@
     - summary: |
         Add messaging about AI example generation to the CLI.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-20"
   version: 2.3.0
 
@@ -59,7 +59,7 @@
     - summary: |
         Add clarified output for unchanged generator versions (i.e., generators already on the latest version) to `fern generator upgrade`.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-21"
   version: 2.2.1
 
@@ -67,7 +67,7 @@
     - summary: |
         Support x-code-samples in OpenAPI specs on the latest version of the OpenAPI parser.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-21"
   version: 2.2.0
 
@@ -75,7 +75,7 @@
     - summary: |
         Add detailed output to `fern generator upgrade` showing which generators were upgraded, their version changes, and changelog links. The command now displays a summary grouped by workspace and group, or reports "All generators are already up to date" when no upgrades are applied.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-20"
   version: 2.1.0
 
@@ -83,7 +83,7 @@
     - summary: |
         Optimize docs generation and image path parsing and replacement for large markdown files (>5MB) using batched edits, precomputed line positions, and filtered AST traversal.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-20"
   version: 2.0.4
 
@@ -91,7 +91,7 @@
     - summary: |
         Updates CLI dependencies to fix `fern` commands.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-20"
   version: 2.0.3
 
@@ -99,7 +99,7 @@
     - summary: |
         Updates dependencies to fix `fern` commands.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-20"
   version: 2.0.2
 
@@ -107,7 +107,7 @@
     - summary: |
         Updates the **beta** `write-translation` command to use `--stub` flag for mocking translation configuration.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-20"
   version: 2.0.1
 
@@ -115,7 +115,7 @@
     - summary: |
         Support sidebar title overrides in the frontmatter of markdown files.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-20"
   version: 2.0.0
 
@@ -123,7 +123,7 @@
     - summary: |
         Improve misc error handling, including for illegal version strings.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-20"
   version: 2.0.0-rc2
 
@@ -131,7 +131,7 @@
     - summary: |
         Fix migration directory name to match exported version (2.0.0-rc0).
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-20"
   version: 2.0.0-rc1
 
@@ -142,7 +142,7 @@
         The CLI will automatically upgrade your _generators.yml_ to explicitly set the old default to preserve
         existing behavior. New users will get the new default.
       type: break
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-20"
   version: 2.0.0-rc0
 
@@ -150,7 +150,7 @@
     - summary: |
         Improve misc error handling, including for illegal version strings
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-20"
   version: 1.11.3
 
@@ -158,7 +158,7 @@
     - summary: |
         Fix OpenAPI enum references being inlined instead of preserved as references. Enum schemas (type: string with enum property) are no longer treated as inlinable primitives, ensuring that $ref to enum schemas maintain their reference structure in the generated IR.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-19"
   version: 1.11.2
 
@@ -166,7 +166,7 @@
     - summary: |
         Fix AutoVersioning to exclude Fern branding from commit messages and PR titles/descriptions when whitelabel config is present.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-19"
   version: 1.11.1
 
@@ -174,7 +174,7 @@
     - summary: |
         Use commit message for auto versioning PR title and description. When auto versioning is successful, the first line of the commit message becomes the PR title and the rest becomes the PR body.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-19"
   version: 1.11.0
 
@@ -182,7 +182,7 @@
     - summary: |
         Fix whitelabel behavior for local generation.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-19"
   version: 1.10.3
 
@@ -190,7 +190,7 @@
     - summary: |
         Support JSX titles in `<Code />` components.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-18"
   version: 1.10.2
 
@@ -198,7 +198,7 @@
     - summary: |
         Tweak SDK diffing AI prompt to work better with larger diffs.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-18"
   version: 1.10.1
 
@@ -206,7 +206,7 @@
     - summary: |
         Add automatic semantic versioning to local generation with `--version AUTO --local` flags.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-18"
   version: 1.10.0
 
@@ -214,7 +214,7 @@
     - summary: |
         Fix issue where x-fern-explorer was not hiding routes from the API Explorer
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-18"
   version: 1.9.2
 
@@ -222,7 +222,7 @@
     - summary: |
         Fix issue where `<Code />` components were not able to be added during `fern docs dev` mode.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-18"
   version: 1.9.1
 
@@ -231,7 +231,7 @@
         Add external configuration to tsup build to prevent dev-only dependencies (prettier, vitest, typescript, tsup, depcheck, @types/*) from being accidentally bundled.
         This ensures the CLI bundle only includes runtime dependencies and enables metafile generation for bundle analysis.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-18"
   version: 1.9.0
 
@@ -239,7 +239,7 @@
     - summary: |
         Fix issue where local generation for github output mode wasn't producing README.md files
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-18"
   version: 1.8.1
 
@@ -247,7 +247,7 @@
     - summary: |
         Add `fern sdk-diff` command to analyze the differences between two SDKs and generate a commit message and version bump.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-18"
   version: 1.8.0
 
@@ -256,7 +256,7 @@
         Replace prettier2 with yaml package in `fern format` command to reduce CLI bundle size by ~4.3 MB (11.4% reduction from 38 MB to 33.67 MB).
         YAML formatting output may have minor differences (e.g., extra blank lines after section headers like `types:` and `errors:`).
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-18"
   version: 1.7.0
 
@@ -267,7 +267,7 @@
         Supports updating to a specific version (e.g., `fern self-update 0.85.0`) or the latest version (e.g., `fern self-update`).
         Includes `--dry-run` flag to preview the update command without executing it.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-17"
   version: 1.6.0
 
@@ -275,7 +275,7 @@
     - summary: |
         Add `fern downgrade <version>` command to set the CLI version in fern.config.json. This allows users to pin their project to a specific CLI version without running migrations.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-17"
   version: 1.5.0
 
@@ -284,7 +284,7 @@
         Enable local generation with preview mode by removing incompatibility restriction and migrating github
         operations handling from generator-cli to fern-cli.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-17"
   version: 1.4.0
 
@@ -292,7 +292,7 @@
     - summary: |
         Fix duplicate upgrade messages when one CLI version reruns another. The parent process now properly suppresses its upgrade nudge so only a single message is shown.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-17"
   version: 1.3.1
 
@@ -306,7 +306,7 @@
     - summary: |
         Improved `fern upgrade` reliability by automatically detecting and recovering from faulty CLI upgrades. When upgrading from a problematic CLI version, Fern now retrieves the correct previous version from git history to ensure migrations run properly.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-17"
   version: 1.3.0
 
@@ -314,7 +314,7 @@
     - summary: |
         Make sure `fern upgrade` with `--rc` follows the same migration logic as non-rc upgrades.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-17"
   version: 1.3.0-rc2
 
@@ -322,7 +322,7 @@
     - summary: |
         Make sure `fern upgrade` with `--rc` follows the same migration logic as non-rc upgrades.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-17"
   version: 1.3.0-rc1
 
@@ -336,7 +336,7 @@
     - summary: |
         Improved `fern upgrade` reliability by automatically detecting and recovering from faulty CLI upgrades. When upgrading from a problematic CLI version, Fern now retrieves the correct previous version from git history to ensure migrations run properly.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-17"
   version: 1.3.0-rc0
 
@@ -344,7 +344,7 @@
     - summary: |
         Show AI example generation progress in the spinner line. When generating AI examples, the spinner displays `generating AI examples for {API name} - X/Y` to track progress without creating terminal noise.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-14"
   version: 1.2.0
 
@@ -361,7 +361,7 @@
             path-parameter-order: url-order
         ```
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-13"
   version: 1.1.0
 
@@ -369,7 +369,7 @@
     - summary: |
         Ensure 1.0.0 settings migration runs for users upgrading from pre-1.0.0 versions. This addresses a previous off-by-one error in migration selection that could cause the 1.0.0 migration to be skipped.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-14"
   version: 1.0.5
 
@@ -377,7 +377,7 @@
     - summary: |
         Fix CLI migration selection to include the target version's migrations during `fern upgrade`. Previously, an off-by-one error excluded the target version (e.g., 1.0.0), causing its migration not to run. Users who upgraded to 1.0.0 should upgrade to 1.0.4 and run `fern upgrade` again to apply the 1.0.0 migration.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-14"
   version: 1.0.4
 
@@ -385,7 +385,7 @@
     - summary: |
         Specify the target of links throughout the docs navigation.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-14"
   version: 1.0.3
 
@@ -393,7 +393,7 @@
     - summary: |
         Display OpenAPI validation warnings when using the --warnings flag with fern check. Previously, warnings were counted but not shown; now they are logged with location details when --warnings is specified.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-13"
   version: 1.0.2
 
@@ -401,7 +401,7 @@
     - summary: |
         Update OpenAPI operation converter to use `x-fern-explorer` extension instead of `x-fern-explorer-enabled` for setting `apiPlayground` property in the IR. Operations now check for the `x-fern-explorer` boolean value to determine API playground availability.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-13"
   version: 1.0.1
 
@@ -419,7 +419,7 @@
         The CLI will automatically upgrade your _generators.yml_ to explicitly set the old defaults to preserve
         existing behavior. New users will get the new defaults.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-13"
   version: 1.0.0
 
@@ -427,7 +427,7 @@
     - summary: |
         Refactor how settings from specs are parsed and applied in the CLI.
       type: chore
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-13"
   version: 0.121.2
 
@@ -435,7 +435,7 @@
     - summary: |
         Match endpoints to AI overrides examples.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-13"
   version: 0.121.1
 
@@ -443,7 +443,7 @@
     - summary: |
         Add batching support for AI example enhancement. The CLI now processes up to 10 endpoints at once with a single pruned OpenAPI spec, improving performance. Non-OpenAPI specs are automatically skipped.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-13"
   version: 0.121.0
 
@@ -451,7 +451,7 @@
     - summary: |
         Support adding arbitrary metadata to `<Code />` components. Title and language are set by default, but can be overridden with `title` and `language` props.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-12"
   version: 0.120.1
 
@@ -459,7 +459,7 @@
     - summary: |
         Rename OpenAPI extensions: x-fern-playground → x-fern-explorer and x-fern-playground-enabled → x-fern-explorer-enabled. The old extension keys are no longer recognized.
       type: break
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-13"
   version: 0.120.0
 
@@ -467,7 +467,7 @@
     - summary: |
         Add x-fern-playground extension to OpenAPI importer to control API playground visibility. Defaults to true.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-12"
   version: 0.119.1
 
@@ -476,7 +476,7 @@
         Add global `settings` flag to `generators.yml` configuration.
         Overrideable by `api.specs[].settings` (which is itself overrideable by `group.generators[].settings` as before).
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-12"
   version: 0.119.0
 
@@ -484,7 +484,7 @@
     - summary: |
         Add support for external URLs in `<Code src="...">` tags in docs markdown. Code snippets can now reference external URLs (e.g., raw.githubusercontent.com) to fetch code content dynamically.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-12"
   version: 0.118.0
 
@@ -492,7 +492,7 @@
     - summary: |
         Add support for hidden versions.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-12"
   version: 0.117.0
 
@@ -500,7 +500,7 @@
     - summary: |
         Retrieve package name from module.path configuration for Go SDK generator to support local generation workflows
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-11"
   version: 0.116.1
 
@@ -508,7 +508,7 @@
     - summary: |
         Add support for a minimal footer navigation theme.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-11"
   version: 0.116.0
 
@@ -516,7 +516,7 @@
     - summary: |
         Do not upload _snippet-templates.json_ files to FDR.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-11"
   version: 0.115.6
 
@@ -524,7 +524,7 @@
     - summary: |
         Fix PyPI credentials to use standard environment variable names (PYPI_USERNAME, PYPI_PASSWORD) and correct package version propagation for local generation
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-11"
   version: 0.115.5
 
@@ -532,7 +532,7 @@
     - summary: |
         Improve error message for unknown API definitions in docs.yml.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-11"
   version: 0.115.4
 
@@ -540,7 +540,7 @@
     - summary: |
         Fix name deconfliction for subtypes of an undiscriminated union (especially when one is an enum).
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-11"
   version: 0.115.3
 
@@ -548,7 +548,7 @@
     - summary: |
         Fix gRPC source resolution to log warnings instead of throwing errors when protobuf sources cannot be resolved, matching OpenAPI behavior.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-11"
   version: 0.115.2
 
@@ -556,7 +556,7 @@
     - summary: |
         Update markdown variable replacement to use double curly braces for variable interpolation.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-10"
   version: 0.115.1
 
@@ -564,7 +564,7 @@
     - summary: |
         Add support for multiAuth field in FDR endpoint definitions to represent OpenAPI security with OR-of-AND semantics.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-11"
   version: 0.115.0
 
@@ -579,7 +579,7 @@
     - summary: |
         Do not remove discriminant properties from schemas when generating types if the schema is also used outside of a discriminated union.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-10"
   version: 0.114.0
 
@@ -587,7 +587,7 @@
     - summary: |
         Make individual theme options optional in docs.yml.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-10"
   version: 0.113.1
 
@@ -595,7 +595,7 @@
     - summary: |
         Add support for page actions theme in docs.yml.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-10"
   version: 0.113.0
 
@@ -603,7 +603,7 @@
     - summary: |
         - Gracefully circuit-break from recursive examples
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-10"
   version: 0.112.2
 
@@ -611,7 +611,7 @@
     - summary: |
         Fix OpenAPI importer to correctly handle `oneOf[Type, null]` and `anyOf[Type, null]` patterns for non-required properties. These properties are now properly represented as `optional(nullable(T))` in the IR, ensuring autogenerated examples omit the field instead of generating `{}`. This preserves tri-state semantics (absent, null, present) for both collapsed `Optional<T>` and non-collapsed `OptionalNullable<T>` modes.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-10"
   version: 0.112.1
 
@@ -619,7 +619,7 @@
     - summary: |
         Markdown snippets now support passing parameters to the markdown file.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-08"
   version: 0.112.0
 
@@ -627,7 +627,7 @@
     - summary: |
         OpenAPI importer now converts request bodies to referenced requests when body parameter names overlap with query parameter names. This ensures proper type generation and avoids naming conflicts in generated SDKs.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-08"
   version: 0.111.0
 
@@ -635,7 +635,7 @@
     - summary: |
         CLI will send the correct IR version to latest Ruby generator.
       type: chore
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-07"
   version: 0.110.1
 
@@ -643,7 +643,7 @@
     - summary: |
         Add support for file hashing when running `fern generate --docs`. This allows for more efficient file uploads to the docs site by only uploading files that have changed since the last generation.
       type: chore
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-07"
   version: 0.110.0
 
@@ -651,7 +651,7 @@
     - summary: |
         Fix TypeScript SDK generator's local GitHub generation to match remote generation.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-06"
   version: 0.109.1
 
@@ -659,7 +659,7 @@
     - summary: |
         Add support for binary primitive type in Conjure parser. Binary types are now converted to string with format: binary in Fern definitions, resolving "Cannot find declaration of type: binary" errors when importing Conjure files.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-06"
   version: 0.109.0
 
@@ -678,7 +678,7 @@
     - summary: |
         Fix hot-reload in `fern docs dev` to detect frontmatter position changes. Previously, changing position values required restarting the dev server. Now position changes, file additions, and file deletions trigger automatic navigation rebuilds.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-05"
   version: 0.108.0
 
@@ -686,7 +686,7 @@
     - summary: |
         Fix AsyncAPI v3 message parsing where channel messages were not being included in generated WebSocket clients. Messages defined in AsyncAPI v3 specs are now correctly resolved and included in the SDK.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-05"
   version: 0.107.11
 
@@ -694,7 +694,7 @@
     - summary: |
         Update migration logic to support new generator versions with ir v61.
       type: chore
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-05"
   version: 0.107.10
 
@@ -702,7 +702,7 @@
     - summary: |
         Implement variant ranking in anyOf/oneOf example generation to prefer variants that use provided examples without coercion over variants that require coercion or generate fallback examples. When a schema has anyOf: [number, string] with examples: ["2500"], the string variant is now preferred since it can use the provided example as-is, rather than the number variant which would coerce it to a number.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-05"
   version: 0.108.0
 
@@ -710,7 +710,7 @@
     - summary: |
         Improve anyOf/oneOf example generation to prefer variants with examples and use schema-level examples when available. This addresses cases where unions with multiple types were generating fallback examples instead of using provided examples.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-05"
   version: 0.107.8
 
@@ -718,7 +718,7 @@
     - summary: |
         Add support for x-fern-playground-enabled extension in OpenAPI v3 to control whether endpoints are shown in the API playground. The extension value is parsed and stored in the IR's HttpEndpoint.apiPlayground field.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-05"
   version: 0.107.8
 
@@ -726,7 +726,7 @@
     - summary: |
         Enables parsing of the language setting in docs.
       type: chore
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-03"
   version: 0.107.7
 
@@ -734,7 +734,7 @@
     - summary: |
         Silence validation logs in fern docs dev unless there is a validation error
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-05"
   version: 0.107.6
 
@@ -742,7 +742,7 @@
     - summary: |
         Perform fern docs dev validation in the background instead of foreground
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-04"
   version: 0.107.5
 
@@ -750,7 +750,7 @@
     - summary: |
         Fix the dereferencing of message $refs in the operations section of AsyncAPI specs.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-04"
   version: 0.107.4
 
@@ -758,7 +758,7 @@
     - summary: |
         Revert the change in 0.107.0 which didn't deduplicate types as expected
       type: chore
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-03"
   version: 0.107.3
 
@@ -766,7 +766,7 @@
     - summary: |
         Fix fern docs dev on windows
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-03"
   version: 0.107.2
 
@@ -774,7 +774,7 @@
     - summary: |
         Allow unknown types in query parameters
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-03"
   version: 0.107.1
 
@@ -782,7 +782,7 @@
     - summary: |
         Fixes fern definition creating duplicate types in separate files
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-03"
   version: 0.107.0
 
@@ -790,7 +790,7 @@
     - summary: |
         Add support for external product links.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-03"
   version: 0.106.0
 
@@ -798,7 +798,7 @@
     - summary: |
         Add a disable-analytics setting in docs.yml
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-02"
   version: 0.105.0
 
@@ -806,7 +806,7 @@
     - summary: |
         Adds support for custom icons.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-11-01"
   version: 0.104.0
 
@@ -814,7 +814,7 @@
     - summary: |
         Add support for new IR property: GenerationMetadata.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-31"
   version: 0.103.0
 
@@ -822,7 +822,7 @@
     - summary: |
         Fix discriminated union validation in `fern check` to include base properties and extends.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-31"
   version: 0.102.1
 
@@ -830,7 +830,7 @@
     - summary: |
         Add discriminated union base property and extend property examples to IR.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-31"
   version: 0.102.0
 
@@ -838,7 +838,7 @@
     - summary: |
         Fix `coerce-enums-to-literals` setting to coerce single value enums to literals.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-31"
   version: 0.101.4
 
@@ -846,7 +846,7 @@
     - summary: |
         Fix issue where parsing failed for null objects in a TabbedNavigationItem.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-31"
   version: 0.101.3
 
@@ -854,7 +854,7 @@
     - summary: |
         Publish with all APIs to S3 by default.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-31"
   version: 0.101.2
 
@@ -862,7 +862,7 @@
     - summary: |
         Fix bug where child nodes of variants did not inherit variant slugs
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-31"
   version: 0.101.1
 
@@ -876,7 +876,7 @@
         - `navbarLinks.[dropdown]`: adds a dropdown option for navbar links
         - `navbarLinks.[].viewers`: allows navbar links to be controlled with RBAC
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-30"
   version: 0.101.0
 
@@ -884,7 +884,7 @@
     - summary: |
         Generate synthetic operationIds for OpenAPI callbacks that don't have an explicit operationId. This ensures callbacks are properly rendered in documentation even when the OpenAPI spec doesn't include an operationId for the callback operation.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-29"
   version: 0.100.2
 
@@ -892,7 +892,7 @@
     - summary: |
         Fix OpenAPI auth scheme hard-coded names.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-29"
   version: 0.100.1
 
@@ -900,7 +900,7 @@
     - summary: |
         Add support for explicit default tab variants in tabbed navigation. You can now specify which tab variant should be the default using the `default: true` property instead of relying on the first tab being default.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-29"
   version: 0.100.0
 
@@ -908,7 +908,7 @@
     - summary: |
         Adds support for availability defined in API reference sections and packages.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-29"
   version: 0.99.4
 
@@ -916,7 +916,7 @@
     - summary: |
         Improve YAML parsing error messages to include line number, column number, and a snippet of the problematic YAML when duplicate mapping keys or other syntax errors are encountered in generators.yml.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-29"
   version: 0.99.3
 
@@ -924,7 +924,7 @@
     - summary: |
         Preserve trailing newline in fern.config.json during `fern upgrade`. Fixes issue where tools requiring a newline at EOF failed after running upgrade.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-29"
   version: 0.99.2
 
@@ -932,7 +932,7 @@
     - summary: |
         Fix image rendering in docs preview after hot-reload. Images now maintain the /_local prefix and render correctly when markdown files are updated during `fern docs dev`.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-27"
   version: 0.99.1
 
@@ -940,7 +940,7 @@
     - summary: |
         Support enablements for custom/prod domains from docs.yml. Separate Slack, Discord, and docs Ask Fern deployments.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-27"
   version: 0.99.0
 
@@ -948,7 +948,7 @@
     - summary: |
         Add support for ignoring properties in OpenAPI schemas using the `x-fern-ignore` extension.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-27"
   version: 0.98.0
 
@@ -956,7 +956,7 @@
     - summary: |
         Remove noisy logging from fern generate --docs and add error message for missing local references.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-27"
   version: 0.97.0
 
@@ -966,7 +966,7 @@
         - OpenAPI v2.0 in docs
         - Non-component local refs in docs
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-25"
   version: 0.96.1
 
@@ -974,7 +974,7 @@
     - summary: |
         Support using audience tags in products and versions to generate a filtered instance of a docs site.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-25"
   version: 0.96.0
 
@@ -985,7 +985,7 @@
     - summary: |
         Add validation for empty FERN_TOKEN environment variable to ensure empty strings are treated the same as missing tokens.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-25"
   version: 0.95.2
 
@@ -993,7 +993,7 @@
     - summary: |
         Re-enable excludeApis flag to skip bundling APIs with docs creation request.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-24"
   version: 0.95.1
 
@@ -1001,7 +1001,7 @@
     - summary: |
         Print how to upgrade generators with major version changes and point them to the changelog.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-24"
   version: 0.95.0
 
@@ -1010,7 +1010,7 @@
         Fixed bug in openapi-importer where file type params in multipart/form-data
         were incorrectly marked as required.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-23"
   version: 0.94.6
 
@@ -1018,7 +1018,7 @@
     - summary: |
         Properly reload pages with Markdown snippets if you update the snippet in `fern docs dev`
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-23"
   version: 0.94.5
 
@@ -1026,7 +1026,7 @@
     - summary: |
         Restore support for x-fern-examples path parameters if there is no request body.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-23"
   version: 0.94.4
 
@@ -1034,7 +1034,7 @@
     - summary: |
         Fix broken recursive unescaping of \ during handling of \$ in IR generation.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-23"
   version: 0.94.3
 
@@ -1044,7 +1044,7 @@
         Previously it looked at the entire IR. Now it only compares the
         parts of the IR that describe the API interface.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-23"
   version: 0.94.2
 
@@ -1052,7 +1052,7 @@
     - summary: |
         Undo change to skip bundling APIs with docs creation request.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-22"
   version: 0.94.1
 
@@ -1060,7 +1060,7 @@
     - summary: |
         Handle npm OIDC token publishing for local workspace generation.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-22"
   version: 0.94.0
 
@@ -1068,7 +1068,7 @@
     - summary: |
         Skip bundling APIs with docs creation request.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-22"
   version: 0.93.4
 
@@ -1076,7 +1076,7 @@
     - summary: |
         Upgrade fdr sdk to 0.139.33
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-20"
   version: 0.93.3
 
@@ -1084,7 +1084,7 @@
     - summary: |
         If API publishing fails, alert and continue to next in fern generate --docs.
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-20"
   version: 0.93.2
 
@@ -1094,7 +1094,7 @@
           - external references in OpenAPI specs
           - references in OpenAPI security schemes
       type: fix
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-20"
   version: 0.93.1
 
@@ -1112,7 +1112,7 @@
             - python
         ```
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-15"
   version: 0.93.0
 
@@ -1121,7 +1121,7 @@
         For debugging purposes, generating a docs preview via `fern generate --docs --preview`, it is now possible to specify `--skip-upload` to
         skip the asset uploading step.
       type: feat
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-15"
   version: 0.92.0
 
@@ -1130,7 +1130,7 @@
         Prevent accidental changes to doc sites by adding a confirmation prompt when generating docs for a production instance outside of common CI/CDs.
         Bypass this prompt by adding a `--no-prompt` flag to the `fern generate` command.
       type: chore
-  irVersion: 62
+  irVersion: 61
   createdAt: "2025-10-14"
   version: 0.91.0
 
@@ -1139,7 +1139,7 @@
         Add Rust crates.io publishing support. Rust SDK now uses --version flag for Cargo.toml version.
       type: feat
   createdAt: "2025-10-14"
-  irVersion: 62
+  irVersion: 61
   version: 0.90.0
 
 - changelogEntry:
@@ -1147,7 +1147,7 @@
         Add `group-environments-by-host` setting for OpenAPI/AsyncAPI imports. When enabled, servers with the same hostname are grouped into unified environments regardless of protocol, allowing APIs with both REST and WebSocket endpoints to share environment configuration.
       type: feat
   createdAt: "2025-10-12"
-  irVersion: 62
+  irVersion: 61
   version: 0.89.0
 
 - changelogEntry:
@@ -1155,7 +1155,7 @@
         Patches `metadata.canonical-host` to be passed through to the docs generation.
       type: fix
   createdAt: "2025-10-11"
-  irVersion: 62
+  irVersion: 61
   version: 0.88.4
 
 - changelogEntry:
@@ -1166,7 +1166,7 @@
         - `snippets.rust`: sets the rust snippet configuration.
       type: fix
   createdAt: "2025-10-11"
-  irVersion: 62
+  irVersion: 61
   version: 0.88.3
 
 - changelogEntry:
@@ -1174,7 +1174,7 @@
         Use FDR instead of hardcoded values to determine which IR version to supply to the generator
       type: fix
   createdAt: "2025-10-10"
-  irVersion: 62
+  irVersion: 61
   version: 0.88.2
 
 - changelogEntry:
@@ -1182,7 +1182,7 @@
         Fix diff command to output no version change when IR is equal
       type: fix
   createdAt: "2025-10-10"
-  irVersion: 62
+  irVersion: 61
   version: 0.88.1
 
 - changelogEntry:
@@ -1190,7 +1190,7 @@
         Include `extra-properties` (aka `additionalProperties`) in inlined request body examples in IR.
       type: feat
   createdAt: "2025-10-10"
-  irVersion: 62
+  irVersion: 61
   version: 0.88.0
 
 - changelogEntry:
@@ -1198,7 +1198,7 @@
         Include `extra-properties` (aka `additionalProperties`) in object examples in IR.
       type: feat
   createdAt: "2025-10-09"
-  irVersion: 62
+  irVersion: 61
   version: 0.87.0
 
 - changelogEntry:
@@ -1206,7 +1206,7 @@
         Update docs initialization to configure ai-search in `docs.yml`
       type: feat
   createdAt: "2025-10-10"
-  irVersion: 62
+  irVersion: 61
   version: 0.86.2
 
 - changelogEntry:
@@ -1214,7 +1214,7 @@
         Revert the change in 0.86.1 which caused request types to be generated in different packages
       type: fix
   createdAt: "2025-10-08"
-  irVersion: 62
+  irVersion: 61
   version: 0.86.1
 
 - changelogEntry:
@@ -1222,7 +1222,7 @@
         Fern definition: use request bodies as reference even when only used once
       type: fix
   createdAt: "2025-10-08"
-  irVersion: 62
+  irVersion: 61
   version: 0.86.0
 
 - changelogEntry:
@@ -1230,7 +1230,7 @@
         Fix: LICENSE file mounting in Docker containers during local generation
       type: fix
   createdAt: "2025-10-08"
-  irVersion: 62
+  irVersion: 61
   version: 0.85.1
 
 - changelogEntry:
@@ -1238,7 +1238,7 @@
         Fix: Enable v61 IR to support c# generator 2.4.0+
       type: fix
   createdAt: "2025-10-06"
-  irVersion: 62
+  irVersion: 61
   version: 0.85.0
 
 - changelogEntry:
