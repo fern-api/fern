@@ -1,1 +1,0 @@
-export { UpdateFooRequest } from "./UpdateFooRequest";

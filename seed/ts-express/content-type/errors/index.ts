@@ -1,1 +1,0 @@
-export { SeedContentTypesError } from "./SeedContentTypesError";

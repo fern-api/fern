@@ -1,1 +1,0 @@
-export { SeedInferredAuthExplicitError } from "./SeedInferredAuthExplicitError";
