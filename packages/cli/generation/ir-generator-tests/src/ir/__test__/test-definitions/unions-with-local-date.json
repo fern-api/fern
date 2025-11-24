@@ -23575,7 +23575,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "f26dc3f1",
+                                "id": "e39cdfee",
                                 "name": null,
                                 "url": "/time/date-example",
                                 "rootPathParameters": [],
@@ -23744,12 +23744,11 @@
                                                             "shape": {
                                                                 "type": "primitive",
                                                                 "primitive": {
-                                                                    "type": "string",
-                                                                    "string": {
-                                                                        "original": "2023-01-15"
-                                                                    }
+                                                                    "type": "date",
+                                                                    "date": "1994-01-01"
                                                                 }
-                                                            }
+                                                            },
+                                                            "jsonExample": "1994-01-01"
                                                         }
                                                     },
                                                     "baseProperties": [],
@@ -23758,7 +23757,7 @@
                                             },
                                             "jsonExample": {
                                                 "type": "date",
-                                                "date": "1994-01-01"
+                                                "value": "1994-01-01"
                                             }
                                         }
                                     }
@@ -23769,7 +23768,7 @@
                         },
                         {
                             "example": {
-                                "id": "9434e4e9",
+                                "id": "ee2b750b",
                                 "name": null,
                                 "url": "/time/datetime-example",
                                 "rootPathParameters": [],
@@ -23938,12 +23937,12 @@
                                                             "shape": {
                                                                 "type": "primitive",
                                                                 "primitive": {
-                                                                    "type": "string",
-                                                                    "string": {
-                                                                        "original": "2024-01-15T09:30:00Z"
-                                                                    }
+                                                                    "type": "datetime",
+                                                                    "datetime": "1994-01-01T01:01:01.000Z",
+                                                                    "raw": "1994-01-01T01:01:01Z"
                                                                 }
-                                                            }
+                                                            },
+                                                            "jsonExample": "1994-01-01T01:01:01Z"
                                                         }
                                                     },
                                                     "baseProperties": [],
@@ -23952,7 +23951,7 @@
                                             },
                                             "jsonExample": {
                                                 "type": "datetime",
-                                                "datetime": "1994-01-01T01:01:01Z"
+                                                "value": "1994-01-01T01:01:01Z"
                                             }
                                         }
                                     }
@@ -24409,7 +24408,7 @@
                     "userSpecifiedExamples": [
                         {
                             "example": {
-                                "id": "8e9b4e1a",
+                                "id": "c7e57eb7",
                                 "name": null,
                                 "url": "/time",
                                 "rootPathParameters": [],
@@ -24540,12 +24539,11 @@
                                                     "shape": {
                                                         "type": "primitive",
                                                         "primitive": {
-                                                            "type": "string",
-                                                            "string": {
-                                                                "original": "2023-01-15"
-                                                            }
+                                                            "type": "date",
+                                                            "date": "1994-01-01"
                                                         }
-                                                    }
+                                                    },
+                                                    "jsonExample": "1994-01-01"
                                                 }
                                             },
                                             "baseProperties": [],
@@ -24554,7 +24552,7 @@
                                     },
                                     "jsonExample": {
                                         "type": "date",
-                                        "date": "1994-01-01"
+                                        "value": "1994-01-01"
                                     }
                                 },
                                 "response": {
@@ -24579,7 +24577,7 @@
                         },
                         {
                             "example": {
-                                "id": "afd9ce67",
+                                "id": "d06cc0bd",
                                 "name": null,
                                 "url": "/time",
                                 "rootPathParameters": [],
@@ -24710,12 +24708,12 @@
                                                     "shape": {
                                                         "type": "primitive",
                                                         "primitive": {
-                                                            "type": "string",
-                                                            "string": {
-                                                                "original": "2024-01-15T09:30:00Z"
-                                                            }
+                                                            "type": "datetime",
+                                                            "datetime": "1994-01-01T01:01:01.000Z",
+                                                            "raw": "1994-01-01T01:01:01Z"
                                                         }
-                                                    }
+                                                    },
+                                                    "jsonExample": "1994-01-01T01:01:01Z"
                                                 }
                                             },
                                             "baseProperties": [],
@@ -24724,7 +24722,7 @@
                                     },
                                     "jsonExample": {
                                         "type": "datetime",
-                                        "datetime": "1994-01-01T01:01:01Z"
+                                        "value": "1994-01-01T01:01:01Z"
                                     }
                                 },
                                 "response": {
