@@ -53,24 +53,70 @@ export class DynamicTypeInstantiationMapper {
                 const inner = args.typeReference.value;
                 // Special case: nullable + alias-of-collection
                 // For fields like `Services *ServicesUs50` where `type ServicesUs50 = []*ServiceUs50`,
-                // we need to generate `&[]*ServiceUs50{...}` instead of trying to use the alias name.
-                // Since ServicesUs50 is a type alias (not a new type), `*[]*ServiceUs50` is identical
-                // to `*ServicesUs50`, so this is assignable without explicit conversion.
+                // we generate `&ServicesUs50{...}` using the alias name in the composite literal.
+                // This is more idiomatic and matches the exported API type users see.
                 if (inner.type === "named") {
                     const named = this.context.resolveNamedType({ typeId: inner.value });
-                    if (
-                        named?.type === "alias" &&
-                        (named.typeReference.type === "list" ||
-                            named.typeReference.type === "set" ||
-                            named.typeReference.type === "map")
-                    ) {
+                    if (named?.type === "alias" && named.typeReference.type === "list") {
                         // Build the underlying collection literal
                         const collectionLiteral = this.convert({
                             typeReference: named.typeReference,
                             value: args.value,
                             as: args.as
                         });
-                        // Wrap it in `&<collection literal>` to create a pointer to the collection
+
+                        // Get the alias type reference
+                        const aliasName = this.context.getTypeName(named.declaration.name);
+                        const aliasImportPath = this.context.getImportPath(named.declaration.fernFilepath);
+
+                        // Reconstruct the composite literal using the alias name
+                        const internal = collectionLiteral.internalType;
+                        if (internal.type === "slice") {
+                            return go.TypeInstantiation.reference(
+                                go.codeblock((writer) => {
+                                    writer.write("&");
+                                    writer.writeNode(
+                                        go.typeReference({
+                                            name: aliasName,
+                                            importPath: aliasImportPath
+                                        })
+                                    );
+
+                                    const values = internal.values;
+                                    if (values.length === 0) {
+                                        writer.write("{}");
+                                        return;
+                                    }
+
+                                    writer.writeLine("{");
+                                    writer.indent();
+                                    for (const v of values) {
+                                        writer.writeNode(v);
+                                        writer.writeLine(",");
+                                    }
+                                    writer.dedent();
+                                    writer.write("}");
+                                })
+                            );
+                        }
+                        // Fallback: if not a slice, use the underlying type approach
+                        return go.TypeInstantiation.reference(
+                            go.codeblock((writer) => {
+                                writer.write("&");
+                                writer.writeNode(collectionLiteral);
+                            })
+                        );
+                    }
+                    // For set and map aliases, use the underlying type approach for now
+                    if (
+                        named?.type === "alias" &&
+                        (named.typeReference.type === "set" || named.typeReference.type === "map")
+                    ) {
+                        const collectionLiteral = this.convert({
+                            typeReference: named.typeReference,
+                            value: args.value,
+                            as: args.as
+                        });
                         return go.TypeInstantiation.reference(
                             go.codeblock((writer) => {
                                 writer.write("&");
@@ -88,24 +134,70 @@ export class DynamicTypeInstantiationMapper {
                 const inner = args.typeReference.value;
                 // Special case: optional + alias-of-collection
                 // For fields like `Services *ServicesUs50` where `type ServicesUs50 = []*ServiceUs50`,
-                // we need to generate `&[]*ServiceUs50{...}` instead of trying to use the alias name.
-                // Since ServicesUs50 is a type alias (not a new type), `*[]*ServiceUs50` is identical
-                // to `*ServicesUs50`, so this is assignable without explicit conversion.
+                // we generate `&ServicesUs50{...}` using the alias name in the composite literal.
+                // This is more idiomatic and matches the exported API type users see.
                 if (inner.type === "named") {
                     const named = this.context.resolveNamedType({ typeId: inner.value });
-                    if (
-                        named?.type === "alias" &&
-                        (named.typeReference.type === "list" ||
-                            named.typeReference.type === "set" ||
-                            named.typeReference.type === "map")
-                    ) {
+                    if (named?.type === "alias" && named.typeReference.type === "list") {
                         // Build the underlying collection literal
                         const collectionLiteral = this.convert({
                             typeReference: named.typeReference,
                             value: args.value,
                             as: args.as
                         });
-                        // Wrap it in `&<collection literal>` to create a pointer to the collection
+
+                        // Get the alias type reference
+                        const aliasName = this.context.getTypeName(named.declaration.name);
+                        const aliasImportPath = this.context.getImportPath(named.declaration.fernFilepath);
+
+                        // Reconstruct the composite literal using the alias name
+                        const internal = collectionLiteral.internalType;
+                        if (internal.type === "slice") {
+                            return go.TypeInstantiation.reference(
+                                go.codeblock((writer) => {
+                                    writer.write("&");
+                                    writer.writeNode(
+                                        go.typeReference({
+                                            name: aliasName,
+                                            importPath: aliasImportPath
+                                        })
+                                    );
+
+                                    const values = internal.values;
+                                    if (values.length === 0) {
+                                        writer.write("{}");
+                                        return;
+                                    }
+
+                                    writer.writeLine("{");
+                                    writer.indent();
+                                    for (const v of values) {
+                                        writer.writeNode(v);
+                                        writer.writeLine(",");
+                                    }
+                                    writer.dedent();
+                                    writer.write("}");
+                                })
+                            );
+                        }
+                        // Fallback: if not a slice, use the underlying type approach
+                        return go.TypeInstantiation.reference(
+                            go.codeblock((writer) => {
+                                writer.write("&");
+                                writer.writeNode(collectionLiteral);
+                            })
+                        );
+                    }
+                    // For set and map aliases, use the underlying type approach for now
+                    if (
+                        named?.type === "alias" &&
+                        (named.typeReference.type === "set" || named.typeReference.type === "map")
+                    ) {
+                        const collectionLiteral = this.convert({
+                            typeReference: named.typeReference,
+                            value: args.value,
+                            as: args.as
+                        });
                         return go.TypeInstantiation.reference(
                             go.codeblock((writer) => {
                                 writer.write("&");
