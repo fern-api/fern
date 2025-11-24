@@ -40,7 +40,7 @@
             }
         },
         {
-            "example_identifier": "f26dc3f1",
+            "example_identifier": "e39cdfee",
             "id": {
                 "method": "GET",
                 "path": "/time/{id}",
@@ -53,7 +53,7 @@
             }
         },
         {
-            "example_identifier": "9434e4e9",
+            "example_identifier": "ee2b750b",
             "id": {
                 "method": "GET",
                 "path": "/time/{id}",
@@ -79,7 +79,7 @@
             }
         },
         {
-            "example_identifier": "8e9b4e1a",
+            "example_identifier": "c7e57eb7",
             "id": {
                 "method": "PATCH",
                 "path": "/time",
@@ -92,7 +92,7 @@
             }
         },
         {
-            "example_identifier": "afd9ce67",
+            "example_identifier": "d06cc0bd",
             "id": {
                 "method": "PATCH",
                 "path": "/time",

@@ -350,6 +350,8 @@ export class DynamicTypeLiteralMapper {
                 }
                 try {
                     this.context.errors.scope(unionVariant.discriminantValue.wireValue);
+                    // For primitive union variants, the property key is always "value"
+                    const propertyKey = "value";
                     return java.TypeLiteral.reference(
                         java.invokeMethod({
                             on: classReference,
@@ -357,7 +359,7 @@ export class DynamicTypeLiteralMapper {
                             arguments_: [
                                 this.convert({
                                     typeReference: unionVariant.typeReference,
-                                    value: record[unionVariant.discriminantValue.wireValue]
+                                    value: record[propertyKey]
                                 })
                             ]
                         })

@@ -332,13 +332,13 @@ service:
           response:
             body:
               type: date
-              date: 1994-01-01
+              value: 1994-01-01
         - path-parameters:
             id: datetime-example
           response:
             body:
               type: datetime
-              datetime: 1994-01-01T01:01:01Z
+              value: 1994-01-01T01:01:01Z
     
     update:
       path: ""
@@ -348,11 +348,11 @@ service:
       examples:
         - request:
             type: date
-            date: 1994-01-01
+            value: 1994-01-01
           response:
             body: true
         - request:
             type: datetime
-            datetime: 1994-01-01T01:01:01Z
+            value: 1994-01-01T01:01:01Z
           response:
             body: true
