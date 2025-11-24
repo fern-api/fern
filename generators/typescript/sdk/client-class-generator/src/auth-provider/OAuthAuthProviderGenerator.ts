@@ -131,10 +131,32 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
 
-        // Generate constructor - just assign the values from options
-        // Validation and environment variable fallback happens in the refresh method
-        let constructorStatements = `
-        this._clientId = options.clientId;
+        // Generate constructor with validation
+        let constructorStatements = "";
+
+        // Add validation before assignment when there's no environment variable fallback
+        if (!clientIdIsOptional) {
+            constructorStatements += `
+        if (options.clientId == null) {
+            throw new ${errorConstructor}({
+                message: "clientId is required"
+            });
+        }`;
+        }
+
+        constructorStatements += `
+        this._clientId = options.clientId;`;
+
+        if (!clientSecretIsOptional) {
+            constructorStatements += `
+        if (options.clientSecret == null) {
+            throw new ${errorConstructor}({
+                message: "clientSecret is required"
+            });
+        }`;
+        }
+
+        constructorStatements += `
         this._clientSecret = options.clientSecret;`;
 
         constructorStatements += `
@@ -159,13 +181,17 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }> = [
             {
                 name: "_clientId",
-                type: `${supplierType}<${clientIdType}> | undefined`,
+                type: clientIdIsOptional
+                    ? `${supplierType}<${clientIdType}> | undefined`
+                    : `${supplierType}<${clientIdType}>`,
                 isReadonly: true,
                 scope: Scope.Private
             },
             {
                 name: "_clientSecret",
-                type: `${supplierType}<${clientSecretType}> | undefined`,
+                type: clientSecretIsOptional
+                    ? `${supplierType}<${clientSecretType}> | undefined`
+                    : `${supplierType}<${clientSecretType}>`,
                 isReadonly: true,
                 scope: Scope.Private
             },
@@ -247,16 +273,15 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 ])
             )
         );
-        const clientIdValidation =
-            clientIdIsOptional && oauthConfig.clientIdEnvVar != null
-                ? `
+        const clientIdValidation = clientIdIsOptional
+            ? `
         const clientId = (${clientIdSupplierCall}) ?? process.env?.["${oauthConfig.clientIdEnvVar}"];
         if (clientId == null) {
             throw new ${errorConstructor}({
                 message: "clientId is required; either pass it as an argument or set the ${oauthConfig.clientIdEnvVar} environment variable"
             });
         }`
-                : `
+            : `
         const clientId = ${clientIdSupplierCall};`;
 
         const clientSecretSupplierCall = getTextOfTsNode(
@@ -278,16 +303,15 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 ])
             )
         );
-        const clientSecretValidation =
-            clientSecretIsOptional && oauthConfig.clientSecretEnvVar != null
-                ? `
+        const clientSecretValidation = clientSecretIsOptional
+            ? `
         const clientSecret = (${clientSecretSupplierCall}) ?? process.env?.["${oauthConfig.clientSecretEnvVar}"];
         if (clientSecret == null) {
             throw new ${errorConstructor}({
                 message: "clientSecret is required; either pass it as an argument or set the ${oauthConfig.clientSecretEnvVar} environment variable"
             });
         }`
-                : `
+            : `
         const clientSecret = ${clientSecretSupplierCall};`;
 
         const refreshMethodStatements = hasExpiration

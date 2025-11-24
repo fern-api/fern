@@ -3,6 +3,7 @@
 import { AuthClient } from "../api/resources/auth/client/Client.js";
 import type { BaseClientOptions } from "../BaseClient.js";
 import * as core from "../core/index.js";
+import * as errors from "../errors/index.js";
 
 export namespace OAuthAuthProvider {
     export interface Options extends BaseClientOptions {}
@@ -10,15 +11,25 @@ export namespace OAuthAuthProvider {
 
 export class OAuthAuthProvider implements core.AuthProvider {
     private readonly BUFFER_IN_MINUTES: number = 2;
-    private readonly _clientId: core.Supplier<string> | undefined;
-    private readonly _clientSecret: core.Supplier<string> | undefined;
+    private readonly _clientId: core.Supplier<string>;
+    private readonly _clientSecret: core.Supplier<string>;
     private readonly _authClient: AuthClient;
     private _accessToken: string | undefined;
     private _expiresAt: Date;
     private _refreshPromise: Promise<string> | undefined;
 
     constructor(options: OAuthAuthProvider.Options) {
+        if (options.clientId == null) {
+            throw new errors.SeedOauthClientCredentialsError({
+                message: "clientId is required",
+            });
+        }
         this._clientId = options.clientId;
+        if (options.clientSecret == null) {
+            throw new errors.SeedOauthClientCredentialsError({
+                message: "clientSecret is required",
+            });
+        }
         this._clientSecret = options.clientSecret;
         this._authClient = new AuthClient(options);
         this._expiresAt = new Date();

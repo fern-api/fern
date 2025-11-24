@@ -1482,7 +1482,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                             ts.factory.createIdentifier("getAuthRequest")
                                         ),
                                         undefined,
-                                        []
+                                        this.getAuthRequestArgs()
                                     )
                                 )
                             )
@@ -1548,7 +1548,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                             ts.factory.createIdentifier("getAuthRequest")
                                         ),
                                         undefined,
-                                        []
+                                        this.getAuthRequestArgs()
                                     )
                                 )
                             )
@@ -1631,10 +1631,16 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     private createEndpointSupplierArg(): ts.Expression {
         /**
+         * Returns the metadata argument object to pass to SupplierOrEndpointSupplier.get():
          * {
          *    endpointMetadata
          * }
+         * When generateEndpointMetadata is false, returns an empty object (the metadata parameter
+         * is required but ignored).
          */
+        if (!this.generateEndpointMetadata) {
+            return ts.factory.createObjectLiteralExpression([], false);
+        }
         return ts.factory.createObjectLiteralExpression(
             [
                 GeneratedSdkClientClassImpl.ENDPOINT_SUPPLIER_ARG_METADATA_PROP ===
@@ -1652,6 +1658,18 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             ],
             false
         );
+    }
+
+    private getAuthRequestArgs(): ts.Expression[] {
+        /**
+         * Returns the arguments array for auth provider's getAuthRequest() method.
+         * When generateEndpointMetadata is true, returns [{ endpointMetadata }].
+         * When generateEndpointMetadata is false, returns [] (no arguments).
+         */
+        if (!this.generateEndpointMetadata) {
+            return [];
+        }
+        return [this.createEndpointSupplierArg()];
     }
 
     public getReferenceToMetadataForEndpointSupplier(): ts.Expression {
