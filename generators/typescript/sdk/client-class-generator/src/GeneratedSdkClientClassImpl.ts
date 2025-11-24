@@ -874,7 +874,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        if (this.shouldGenerateAuthorizationHeaderHelperMethod({ context })) {
+        if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
             const returnsMaybeAuth =
                 !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
                 this.basicAuthScheme != null ||
@@ -953,19 +953,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return code`this._options = normalizeClientOptionsWithAuth(options);`;
     }
 
-    public shouldGenerateAuthorizationHeaderHelperMethod({ context }: { context: SdkContext }): boolean {
-        if (this.generatedEndpointImplementations.length === 0 && this.generatedWebsocketImplementation == null) {
-            return false;
-        }
-        if (
-            anyEndpointsNeedAuth({
-                context,
-                packageId: this.packageId,
-                packageResolver: this.packageResolver
-            })
-        ) {
-            return this.oauthAuthScheme != null;
-        }
+    public shouldGenerateAuthorizationHeaderHelperMethod(): boolean {
+        // Authorization header helper method is no longer generated.
+        // All auth types now use the auth provider system in generateHeaders.ts.
         return false;
     }
 
@@ -1016,8 +1006,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
     }
 
-    public getAuthorizationHeaderValue({ context }: { context: SdkContext }): ts.Expression | undefined {
-        if (this.shouldGenerateAuthorizationHeaderHelperMethod({ context })) {
+    public getAuthorizationHeaderValue(): ts.Expression | undefined {
+        if (this.shouldGenerateAuthorizationHeaderHelperMethod()) {
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(
                     ts.factory.createPropertyAccessExpression(
@@ -1415,58 +1405,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         );
         const statements: ts.Statement[] = [];
 
-        if (this.oauthAuthScheme != null) {
-            const BEARER_TOKEN_VARIABLE_NAME = "bearer";
-            statements.push(
-                ts.factory.createVariableStatement(
-                    undefined,
-                    ts.factory.createVariableDeclarationList(
-                        [
-                            ts.factory.createVariableDeclaration(
-                                ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
-                                undefined,
-                                undefined,
-                                context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                                    this.getReferenceToOption("token"),
-                                    this.createEndpointSupplierArg()
-                                )
-                            )
-                        ],
-                        ts.NodeFlags.Const
-                    )
-                )
-            );
-
-            statements.push(
-                ts.factory.createIfStatement(
-                    ts.factory.createBinaryExpression(
-                        ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
-                        ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
-                        ts.factory.createNull()
-                    ),
-                    ts.factory.createBlock(
-                        [
-                            ts.factory.createReturnStatement(
-                                ts.factory.createTemplateExpression(ts.factory.createTemplateHead("Bearer "), [
-                                    ts.factory.createTemplateSpan(
-                                        ts.factory.createIdentifier(BEARER_TOKEN_VARIABLE_NAME),
-                                        ts.factory.createTemplateTail("", "")
-                                    )
-                                ])
-                            )
-                        ],
-                        true
-                    )
-                )
-            );
-
-            statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier("undefined")));
-
-            return statements;
-        }
-
-        // Bearer and basic auth are now handled by the auth provider system in generateHeaders.ts
-        // Only OAuth uses this helper method (see shouldGenerateAuthorizationHeaderHelperMethod)
+        // All auth types (bearer, basic, OAuth, header) are now handled by the auth provider
+        // system in generateHeaders.ts. This helper method is no longer generated.
 
         if (!this.intermediateRepresentation.sdkConfig.isAuthMandatory) {
             statements.push(ts.factory.createReturnStatement(ts.factory.createIdentifier("undefined")));

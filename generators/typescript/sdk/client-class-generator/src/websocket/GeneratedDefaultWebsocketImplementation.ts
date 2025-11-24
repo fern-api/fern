@@ -361,7 +361,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             );
             mergeHeaders.push(ts.factory.createIdentifier("_authRequest.headers"));
         } else {
-            const getAuthHeaderValue = this.generatedSdkClientClass.getAuthorizationHeaderValue({ context });
+            const getAuthHeaderValue = this.generatedSdkClientClass.getAuthorizationHeaderValue();
             mergeOnlyDefinedHeaders.push(
                 ...(getAuthHeaderValue
                     ? [ts.factory.createPropertyAssignment("Authorization", getAuthHeaderValue)]
