@@ -6,6 +6,7 @@ package com.seed.unions;
 import com.seed.unions.core.ClientOptions;
 import com.seed.unions.core.Suppliers;
 import com.seed.unions.resources.bigunion.AsyncBigunionClient;
+import com.seed.unions.resources.types.AsyncTypesClient;
 import com.seed.unions.resources.union.AsyncUnionClient;
 import java.util.function.Supplier;
 
@@ -14,16 +15,23 @@ public class AsyncSeedUnionsClient {
 
     protected final Supplier<AsyncBigunionClient> bigunionClient;
 
+    protected final Supplier<AsyncTypesClient> typesClient;
+
     protected final Supplier<AsyncUnionClient> unionClient;
 
     public AsyncSeedUnionsClient(ClientOptions clientOptions) {
         this.clientOptions = clientOptions;
         this.bigunionClient = Suppliers.memoize(() -> new AsyncBigunionClient(clientOptions));
+        this.typesClient = Suppliers.memoize(() -> new AsyncTypesClient(clientOptions));
         this.unionClient = Suppliers.memoize(() -> new AsyncUnionClient(clientOptions));
     }
 
     public AsyncBigunionClient bigunion() {
         return this.bigunionClient.get();
+    }
+
+    public AsyncTypesClient types() {
+        return this.typesClient.get();
     }
 
     public AsyncUnionClient union() {
