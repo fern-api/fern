@@ -7,11 +7,14 @@ buildScripts:
   compileScript:
     commands:
       - go build -v ./...
+  lintScript:
+    commands:
+      - golangci-lint run --timeout=5m
   testScript:
     commands:
       - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
       - go test -v ./...
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi 
+      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
 publish:
   workingDirectory: generators/go
   preBuildCommands:

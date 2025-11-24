@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc43
+  createdAt: "2025-11-24"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix missing path parameters in reference.md code snippets for endpoints with BodyRequest types.
+        Path parameters are now included as positional arguments in generated snippets (e.g., `client.test_get('id')` instead of `client.test_get()`).
+  irVersion: 61
+
 - version: 1.0.0-rc42
   createdAt: "2025-11-20"
   changelogEntry:
