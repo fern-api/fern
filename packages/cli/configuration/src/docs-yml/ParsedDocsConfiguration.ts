@@ -170,6 +170,7 @@ export interface VersionInfo
     availability: VersionAvailability | undefined;
     slug: string | undefined;
     hidden: boolean | undefined;
+    announcement: AnnouncementConfig | undefined;
 }
 
 export type ProductInfo = InternalProduct | ExternalProduct;
@@ -185,6 +186,7 @@ export interface InternalProduct
     slug: string | undefined;
     icon: string | AbsoluteFilePath;
     image: AbsoluteFilePath | undefined;
+    announcement: AnnouncementConfig | undefined;
 }
 
 export interface ExternalProduct

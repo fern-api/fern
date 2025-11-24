@@ -108,6 +108,17 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
     private generateTypesModFile(context: ModelGeneratorContext): RustFile {
         const writer = new Writer();
 
+        // Add module documentation
+        const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
+        writer.writeLine(`//! Request and response types for the ${apiName}`);
+        writer.writeLine("//!");
+        writer.writeLine("//! This module contains all data structures used for API communication,");
+        writer.writeLine("//! including request bodies, response types, and shared models.");
+
+        // Count different type categories for documentation
+        let requestTypeCount = 0;
+        let modelTypeCount = 0;
+
         // Use a Set to track unique module names and prevent duplicates
         // TODO: @iamnamananand996 - (remove this after testing it end to end) Theoretically unnecessary - registry ensures unique filenames → unique modules
         const uniqueModuleNames = new Set<string>();
@@ -127,6 +138,13 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
                 if (!uniqueModuleNames.has(escapedModuleName)) {
                     uniqueModuleNames.add(escapedModuleName);
                     moduleExports.push({ moduleName: escapedModuleName, typeName });
+
+                    // Count type categories for documentation
+                    if (typeName.includes("Request") || typeName.includes("Response")) {
+                        requestTypeCount++;
+                    } else {
+                        modelTypeCount++;
+                    }
                 }
             });
         }
@@ -143,6 +161,7 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
                     if (!uniqueModuleNames.has(escapedModuleName)) {
                         uniqueModuleNames.add(escapedModuleName);
                         moduleExports.push({ moduleName: escapedModuleName, typeName });
+                        requestTypeCount++; // Inline request bodies are request types
                     }
                 }
             }
@@ -160,13 +179,14 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
                     if (!uniqueModuleNames.has(escapedModuleName)) {
                         uniqueModuleNames.add(escapedModuleName);
                         moduleExports.push({ moduleName: escapedModuleName, typeName });
+                        requestTypeCount++; // File upload requests are request types
                     }
                 }
             }
         }
 
         // Add query request types
-        for (const [serviceId, service] of Object.entries(context.ir.services)) {
+        for (const service of Object.values(context.ir.services)) {
             for (const endpoint of service.endpoints) {
                 if (endpoint.queryParameters.length > 0 && !endpoint.requestBody) {
                     const filename = context.getFilenameForQueryRequest(endpoint.id);
@@ -177,10 +197,28 @@ export class ModelGeneratorCli extends AbstractRustGeneratorCli<ModelCustomConfi
                     if (!uniqueModuleNames.has(escapedModuleName)) {
                         uniqueModuleNames.add(escapedModuleName);
                         moduleExports.push({ moduleName: escapedModuleName, typeName });
+                        requestTypeCount++; // Query requests are request types
                     }
                 }
             }
         }
+
+        // Add documentation summary if we have types
+        if (moduleExports.length > 0) {
+            writer.writeLine("//!");
+            if (requestTypeCount > 0 || modelTypeCount > 0) {
+                writer.writeLine("//! ## Type Categories");
+                writer.writeLine("//!");
+                if (requestTypeCount > 0) {
+                    writer.writeLine(`//! - **Request/Response Types**: ${requestTypeCount} types for API operations`);
+                }
+                if (modelTypeCount > 0) {
+                    writer.writeLine(`//! - **Model Types**: ${modelTypeCount} types for data representation`);
+                }
+            }
+        }
+
+        writer.newLine();
 
         // Add module declarations for each unique type
         moduleExports.forEach(({ moduleName }) => {

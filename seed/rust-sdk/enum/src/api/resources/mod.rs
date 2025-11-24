@@ -1,3 +1,13 @@
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Headers**
+//! - **InlinedRequest**
+//! - **PathParam**
+//! - **QueryParam**
+//! - **Unknown**
+
 use crate::{ApiError, ClientConfig};
 
 pub mod headers;
