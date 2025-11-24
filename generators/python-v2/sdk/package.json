@@ -44,6 +44,7 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/mock-utils": "workspace:*",
+    "@fern-api/python-ast": "workspace:*",
     "@fern-api/python-base": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",

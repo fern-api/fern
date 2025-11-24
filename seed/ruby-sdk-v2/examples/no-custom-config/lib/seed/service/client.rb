@@ -5,13 +5,18 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::Service::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [Seed::Types::Types::MovieId] :movie_id
       #
       # @return [Seed::Types::Types::Movie]
@@ -35,8 +40,13 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::Types::Types::Movie]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
       def create_movie(request_options: {}, **params)
@@ -60,10 +70,15 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
-      # @option params [bool | nil] :shallow
-      # @option params [String | nil] :tag
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Boolean, nil] :shallow
+      # @option params [String, nil] :tag
       # @option params [String] :x_api_version
       #
       # @return [Seed::Types::Types::Metadata]
@@ -95,8 +110,13 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::Types::Types::BigEntity]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Types::Types::Response]
       def create_big_entity(request_options: {}, **params)
@@ -120,8 +140,13 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [untyped]
       def refresh_token(request_options: {}, **params)

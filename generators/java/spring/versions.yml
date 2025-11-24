@@ -1,6 +1,38 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Capture and display Gradle output in error messages when publish fails. The generator now includes the last 100 lines of stdout/stderr in error messages, making it possible to see actual Gradle compilation errors, dependency resolution failures, or Maven publish issues when running in hosted environments. Also adds --console=plain flag for better log capture.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+  version: 2.0.0-rc4
+
+- changelogEntry:
+    - summary: |
+        Fix Maven publish mode to use Gradle wrapper (./gradlew) instead of system gradle command, add explicit Java 17 source/target compatibility, and include detailed error output with --stacktrace --info flags.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+  version: 2.0.0-rc3
+
+- changelogEntry:
+    - summary: |
+        Fix Maven publish mode to use Java 17 toolchain and add missing Jakarta dependencies (jakarta.validation-api, jakarta.ws.rs-api) required for Spring Boot 3 compilation.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+  version: 2.0.0-rc2
+
+- changelogEntry:
+    - summary: |
+        Add support for Maven publish mode to enable publishing Spring server artifacts.
+      type: feat
+  createdAt: "2025-11-20"
+  irVersion: 61
+  version: 2.0.0-rc1
+
+- changelogEntry:
+    - summary: |
         Generate Java 17 and Spring 6 compatible code.
       type: break
   createdAt: "2025-11-19"

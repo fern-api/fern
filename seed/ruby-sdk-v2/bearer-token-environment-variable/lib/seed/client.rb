@@ -2,10 +2,10 @@
 
 module Seed
   class Client
-    # @param base_url [String | nil]
+    # @param base_url [String, nil]
     # @param token [String]
     #
-    # @return [Seed::Client]
+    # @return [void]
     def initialize(base_url:, token: ENV.fetch("COURIER_API_KEY", nil))
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,

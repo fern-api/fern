@@ -120,11 +120,20 @@ class SDKCustomConfig(pydantic.BaseModel):
     # the recursion limit is at least this value.
     recursion_limit: Optional[int] = pydantic.Field(None, gt=1000)
 
+    enable_wire_tests: bool = False
+
+    custom_pager_name: Optional[str] = None
+
     class Config:
         extra = pydantic.Extra.forbid
 
     @classmethod
     def parse_obj(cls, obj: Any) -> "SDKCustomConfig":
+        if isinstance(obj, dict):
+            obj = obj.copy()
+            if "custom-pager-name" in obj and "custom_pager_name" not in obj:
+                obj["custom_pager_name"] = obj.pop("custom-pager-name")
+
         obj = super().parse_obj(obj)
 
         use_typeddict_requests = obj.use_typeddict_requests or obj.pydantic_config.use_typeddict_requests

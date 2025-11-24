@@ -10,6 +10,9 @@ from fern_python.generators.sdk.client_generator.pagination.abstract_paginator i
 from fern_python.generators.sdk.client_generator.pagination.cursor import (
     CursorPagination,
 )
+from fern_python.generators.sdk.client_generator.pagination.custom import (
+    CustomPagination,
+)
 from fern_python.generators.sdk.client_generator.pagination.offset import (
     OffsetPagination,
 )
@@ -399,7 +402,13 @@ class EndpointResponseCodeWriter:
                     config=self._pagination_snippet_config,
                     offset=offset,
                 ),
-                custom=lambda _: raise_custom_pagination_error(),
+                custom=lambda custom: CustomPagination(
+                    context=self._context,
+                    is_async=self._is_async,
+                    pydantic_parse_expression=pydantic_parse_expression,
+                    config=self._pagination_snippet_config,
+                    custom=custom,
+                ),
             )
             if paginator is not None:
                 paginator.write(writer=writer)
@@ -782,7 +791,3 @@ class EndpointResponseCodeWriter:
         if union.type == "text":
             return AST.TypeHint.str_()
         raise RuntimeError(f"{union.type} streaming response is unsupported")
-
-
-def raise_custom_pagination_error() -> None:
-    raise NotImplementedError("Custom pagination is not supported yet")

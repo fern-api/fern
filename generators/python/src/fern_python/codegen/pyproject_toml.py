@@ -42,6 +42,7 @@ class PyProjectToml:
         github_output_mode: Optional[GithubOutputMode],
         license_: Optional[LicenseConfig],
         extras: typing.Dict[str, List[str]] = {},
+        enable_wire_tests: bool = False,
         user_defined_toml: Optional[str] = None,
     ):
         self._name = name
@@ -57,6 +58,7 @@ class PyProjectToml:
         self._path = path
         self._python_version = python_version
         self._extras = extras
+        self._enable_wire_tests = enable_wire_tests
         self._user_defined_toml = user_defined_toml
 
     def write(self) -> None:
@@ -66,6 +68,7 @@ class PyProjectToml:
                 dependencies=self._dependency_manager.get_dependencies(),
                 dev_dependencies=self._dependency_manager.get_dev_dependencies(),
                 python_version=self._python_version,
+                enable_wire_tests=self._enable_wire_tests,
             ),
             PyProjectToml.PluginConfigurationBlock(),
             PyProjectToml.BuildSystemBlock(),
@@ -195,6 +198,7 @@ packages = [
         dependencies: Set[Dependency]
         dev_dependencies: Set[Dependency]
         python_version: str
+        enable_wire_tests: bool = False
 
         def deps_to_string(self, dependencies: Set[Dependency]) -> str:
             deps = ""
@@ -224,6 +228,12 @@ packages = [
         def to_string(self) -> str:
             deps = self.deps_to_string(self.dependencies)
             dev_deps = self.deps_to_string(self.dev_dependencies)
+
+            # Conditionally add requests and types-requests for wire tests
+            wire_test_deps = ""
+            if self.enable_wire_tests:
+                wire_test_deps = 'requests = "^2.31.0"\ntypes-requests = "^2.31.0"\n'
+
             return f"""
 [tool.poetry.dependencies]
 python = "{self.python_version}"
@@ -235,7 +245,7 @@ pytest-asyncio = "^0.23.5"
 pytest-xdist = "^3.6.1"
 python-dateutil = "^2.9.0"
 types-python-dateutil = "^2.9.0.20240316"
-{dev_deps}"""
+{wire_test_deps}{dev_deps}"""
 
     @dataclass(frozen=True)
     class PluginConfigurationBlock(Block):

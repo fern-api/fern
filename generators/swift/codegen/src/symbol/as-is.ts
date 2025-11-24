@@ -4,7 +4,6 @@ export type AsIsSymbolName =
     | "JSONValue"
     | "CalendarDate"
     | "HTTP"
-    | "HTTPClient"
     | "MultipartFormData"
     | "MultipartFormDataConvertible"
     | "MultipartFormField"
@@ -12,10 +11,9 @@ export type AsIsSymbolName =
     | "EncodableValue"
     | "Serde"
     | "StringKey"
-    | "APIErrorResponse"
     | "ClientConfig"
-    | "ClientError"
     | "FormFile"
+    | "HTTPError"
     | "Nullable"
     | "RequestOptions"
     | "Networking"
@@ -45,11 +43,6 @@ export const SourceAsIsFileSpecs = {
         relativePathToDir: "Core/Networking",
         filenameWithoutExtension: "HTTP",
         symbols: [{ name: "HTTP", shape: { type: "enum-container" } }]
-    },
-    HttpClient: {
-        relativePathToDir: "Core/Networking",
-        filenameWithoutExtension: "HTTPClient",
-        symbols: [{ name: "HTTPClient", shape: { type: "class" } }]
     },
     MultipartFormData: {
         relativePathToDir: "Core/Networking",
@@ -114,11 +107,6 @@ export const SourceAsIsFileSpecs = {
     },
 
     // Core
-    CalendarDate: {
-        relativePathToDir: "Core",
-        filenameWithoutExtension: "CalendarDate",
-        symbols: [{ name: "CalendarDate", shape: { type: "struct" } }]
-    },
     DataPlusString: {
         relativePathToDir: "Core",
         filenameWithoutExtension: "Data+String",
@@ -131,25 +119,25 @@ export const SourceAsIsFileSpecs = {
     },
 
     // Public
-    APIErrorResponse: {
+    CalendarDate: {
         relativePathToDir: "Public",
-        filenameWithoutExtension: "APIErrorResponse",
-        symbols: [{ name: "APIErrorResponse", shape: { type: "struct" } }]
+        filenameWithoutExtension: "CalendarDate",
+        symbols: [{ name: "CalendarDate", shape: { type: "struct" } }]
     },
     ClientConfig: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "ClientConfig",
         symbols: [{ name: "ClientConfig", shape: { type: "class" } }]
     },
-    ClientError: {
-        relativePathToDir: "Public",
-        filenameWithoutExtension: "ClientError",
-        symbols: [{ name: "ClientError", shape: { type: "enum-with-associated-values" } }]
-    },
     FormFile: {
         relativePathToDir: "Public",
         filenameWithoutExtension: "FormFile",
         symbols: [{ name: "FormFile", shape: { type: "struct" } }]
+    },
+    HTTPError: {
+        relativePathToDir: "Public",
+        filenameWithoutExtension: "HTTPError",
+        symbols: [{ name: "HTTPError", shape: { type: "struct" } }]
     },
     Indirect: {
         relativePathToDir: "Public",

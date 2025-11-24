@@ -16,6 +16,7 @@ from fern_python.external_dependencies.typing_extensions import (
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from fern_python.generators.sdk.custom_config import SDKCustomConfig
 from fern_python.source_file_factory import SourceFileFactory
+from fern_python.utils import pascal_case
 
 
 class CoreUtilities:
@@ -40,6 +41,7 @@ class CoreUtilities:
         self._use_pydantic_field_aliases = custom_config.pydantic_config.use_pydantic_field_aliases
         self._should_generate_websocket_clients = custom_config.should_generate_websocket_clients
         self._exclude_types_from_init_exports = custom_config.exclude_types_from_init_exports
+        self._custom_pager_base_name = self._sanitize_pager_name(custom_config.custom_pager_name or "CustomPager")
 
     def copy_to_project(self, *, project: Project) -> None:
         self._copy_file_to_project(
@@ -210,6 +212,19 @@ class CoreUtilities:
                 ),
                 exports={"SyncPager", "AsyncPager"} if not self._exclude_types_from_init_exports else set(),
             )
+            # Copy custom pagination file (for user customization)
+            self._copy_file_to_project(
+                project=project,
+                relative_filepath_on_disk="custom_pagination.py",
+                filepath_in_project=Filepath(
+                    directories=self.filepath,
+                    file=Filepath.FilepathPart(module_name="custom_pagination"),
+                ),
+                exports={f"Sync{self._custom_pager_base_name}", f"Async{self._custom_pager_base_name}"}
+                if not self._exclude_types_from_init_exports
+                else set(),
+                string_replacements={"CustomPager": self._custom_pager_base_name},
+            )
 
         if self._allow_skipping_validation:
             self._copy_file_to_project(
@@ -254,7 +269,13 @@ class CoreUtilities:
             project.add_dependency(PYDANTIC_DEPENDENCY)
 
     def _copy_file_to_project(
-        self, *, project: Project, relative_filepath_on_disk: str, filepath_in_project: Filepath, exports: Set[str]
+        self,
+        *,
+        project: Project,
+        relative_filepath_on_disk: str,
+        filepath_in_project: Filepath,
+        exports: Set[str],
+        string_replacements: Optional[dict[str, str]] = None,
     ) -> None:
         source = (
             os.path.join(os.path.dirname(__file__), "../../../../../core_utilities/sdk")
@@ -266,6 +287,7 @@ class CoreUtilities:
             path_on_disk=os.path.join(source, relative_filepath_on_disk),
             filepath_in_project=filepath_in_project,
             exports=exports,
+            string_replacements=string_replacements,
         )
 
     def _copy_http_sse_folder_to_project(self, *, project: Project) -> None:
@@ -643,9 +665,24 @@ class CoreUtilities:
             ),
         )
 
-    def get_paginator_type(self, inner_type: AST.TypeHint, response_type: AST.TypeHint, is_async: bool) -> AST.TypeHint:
+    def get_custom_paginator_reference(self, is_async: bool) -> AST.ClassReference:
+        pager_name = f"Async{self._custom_pager_base_name}" if is_async else f"Sync{self._custom_pager_base_name}"
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "custom_pagination"),
+                named_import=pager_name,
+            ),
+        )
+
+    def get_paginator_type(
+        self, inner_type: AST.TypeHint, response_type: AST.TypeHint, is_async: bool, is_custom: bool = False
+    ) -> AST.TypeHint:
+        pager_reference = (
+            self.get_custom_paginator_reference(is_async) if is_custom else self.get_paginator_reference(is_async)
+        )
         return AST.TypeHint(
-            type=self.get_paginator_reference(is_async),
+            type=pager_reference,
             type_parameters=[AST.TypeParameter(inner_type), AST.TypeParameter(response_type)],
         )
 
@@ -778,3 +815,7 @@ class CoreUtilities:
             args=[AST.Expression(expression=f'"{field_name}"')],
             kwargs=[("pre", AST.Expression(expression="True" if pre else "False"))],
         )
+
+    def _sanitize_pager_name(self, name: str) -> str:
+        """Sanitize the pager name to be a valid Python identifier in PascalCase."""
+        return pascal_case(name)

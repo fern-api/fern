@@ -10,6 +10,14 @@
   createdAt: "2025-11-23"
   irVersion: 61
 
+- version: 3.33.1
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
 - version: 3.33.0
   changelogEntry:
     - summary: |

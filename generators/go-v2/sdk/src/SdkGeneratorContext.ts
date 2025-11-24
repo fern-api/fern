@@ -478,11 +478,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.callInternalFunc({ name: "QueryValuesWithDefaults", arguments_, multiline: true });
     }
 
-    public getPageTypeReference(cursorType: go.Type, valueType: go.Type): go.TypeReference {
+    public getPageTypeReference(cursorType: go.Type, valueType: go.Type, responseType: go.Type): go.TypeReference {
         return go.typeReference({
             name: "Page",
             importPath: this.getCoreImportPath(),
-            generics: [cursorType, valueType]
+            generics: [cursorType, valueType, responseType]
         });
     }
 

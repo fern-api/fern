@@ -5822,11 +5822,8 @@
             "value": {
               "properties": {
                 "status": {
-                  "value": {
-                    "value": "redacted_audio_ready",
-                    "type": "string"
-                  },
-                  "type": "literal"
+                  "value": "redacted_audio_ready",
+                  "type": "enum"
                 },
                 "redacted_audio_url": {
                   "value": {
@@ -8040,13 +8037,20 @@
       },
       "RedactedAudioStatus": {
         "description": "The status of the redacted audio",
-        "value": {
-          "value": "redacted_audio_ready",
-          "type": "string"
-        },
         "generatedName": "RedactedAudioStatus",
+        "values": [
+          {
+            "generatedName": "redacted_audio_ready",
+            "value": "redacted_audio_ready",
+            "casing": {}
+          }
+        ],
         "groupName": [],
-        "type": "literal"
+        "source": {
+          "file": "../openapi.yml",
+          "type": "openapi"
+        },
+        "type": "enum"
       },
       "SubtitleFormat": {
         "description": "Format of the subtitles",
@@ -13970,13 +13974,20 @@
             "schema": {
               "generatedName": "ErrorStatus",
               "value": {
-                "value": {
-                  "value": "error",
-                  "type": "string"
-                },
                 "generatedName": "ErrorStatus",
+                "values": [
+                  {
+                    "generatedName": "error",
+                    "value": "error",
+                    "casing": {}
+                  }
+                ],
                 "groupName": [],
-                "type": "literal"
+                "source": {
+                  "file": "../openapi.yml",
+                  "type": "openapi"
+                },
+                "type": "enum"
               },
               "groupName": [],
               "type": "optional"
@@ -14205,13 +14216,20 @@
             "key": "message_type",
             "schema": {
               "generatedName": "SessionBeginsMessageType",
-              "value": {
-                "value": "SessionBegins",
-                "type": "string"
-              },
+              "values": [
+                {
+                  "generatedName": "SessionBegins",
+                  "value": "SessionBegins",
+                  "casing": {}
+                }
+              ],
               "description": "Describes the type of the message.",
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": [],
             "conflict": {
@@ -14279,13 +14297,20 @@
             "key": "message_type",
             "schema": {
               "generatedName": "SessionTerminatedMessageType",
-              "value": {
-                "value": "SessionTerminated",
-                "type": "string"
-              },
+              "values": [
+                {
+                  "generatedName": "SessionTerminated",
+                  "value": "SessionTerminated",
+                  "casing": {}
+                }
+              ],
               "description": "Describes the type of the message.",
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": [],
             "conflict": {
@@ -14436,13 +14461,20 @@
             "key": "message_type",
             "schema": {
               "generatedName": "PartialTranscriptMessageType",
-              "value": {
-                "value": "PartialTranscript",
-                "type": "string"
-              },
+              "values": [
+                {
+                  "generatedName": "PartialTranscript",
+                  "value": "PartialTranscript",
+                  "casing": {}
+                }
+              ],
               "description": "Describes the type of message.",
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": [],
             "conflict": {},
@@ -14477,13 +14509,20 @@
             "key": "message_type",
             "schema": {
               "generatedName": "FinalTranscriptMessageType",
-              "value": {
-                "value": "FinalTranscript",
-                "type": "string"
-              },
+              "values": [
+                {
+                  "generatedName": "FinalTranscript",
+                  "value": "FinalTranscript",
+                  "casing": {}
+                }
+              ],
               "description": "Describes the type of message.",
               "groupName": [],
-              "type": "literal"
+              "source": {
+                "file": "../asyncapi.yml",
+                "type": "openapi"
+              },
+              "type": "enum"
             },
             "audiences": [],
             "conflict": {},
