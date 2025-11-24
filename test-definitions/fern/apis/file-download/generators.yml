@@ -7,5 +7,6 @@ groups:
         ir-version: v61
         github:
           token: '{{ GITHUB_TOKEN }}'
-          mode: pull-request
+          mode: push
           uri: https://github.com/fern-api/php-sdk-tests
+          branch: file-download
