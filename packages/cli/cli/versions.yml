@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add validation for `instances[i].url` in docs.yml to ensure valid subdomain format. The CLI now throws a descriptive error if the subdomain contains a '.' character (suggests replacing with '-'), exceeds 62 characters, or contains invalid URL characters. Valid format: <subdomain>.docs.buildwithfern.com
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-24"
+  version: 2.5.0
+
+- changelogEntry:
+    - summary: |
         Update local development refresh behavior when updating the `sidebar-title` override, or a `slug` override of a page. The preview should now navigate to the new slug instead of showing a 404.
       type: fix
   irVersion: 61
