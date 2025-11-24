@@ -45,7 +45,7 @@
         "query-parameters-openapi",
         "extends",
         "trace",
-        "custom-auth",
+        "header-auth",
         "exhaustive",
         "pagination-custom",
         "single-url-environment-default",
@@ -120,7 +120,7 @@
     {
       "fixtures": [
         "alias",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "cross-package-type-names",
         "no-environment",
         "multi-line-docs",

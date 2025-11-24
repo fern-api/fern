@@ -61,7 +61,7 @@ allowedFailures:
   - any-auth
   - api-wide-base-path
   - audiences
-  - auth-environment-variables
+  - header-auth-environment-variable
   - basic-auth
   - basic-auth-environment-variables
   - bearer-token-environment-variable
@@ -72,7 +72,7 @@ allowedFailures:
   - client-side-params
   - content-type
   - cross-package-type-names
-  - custom-auth
+  - header-auth
   - empty-clients
   - enum
   - error-property

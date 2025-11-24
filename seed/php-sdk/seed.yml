@@ -149,7 +149,7 @@ scripts:
 allowedFailures:
   - pagination-custom
   # Dynamic snippets need to add support for global headers included in the client constructor.
-  - auth-environment-variables
+  - header-auth-environment-variable
   # TODO: Add support for bytes upload.
   - bytes-upload
   # Basic auth is not supported yet.
