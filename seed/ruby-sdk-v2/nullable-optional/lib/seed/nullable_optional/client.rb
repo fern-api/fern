@@ -5,15 +5,20 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::NullableOptional::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
       # Get a user by ID
       #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :user_id
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
@@ -39,8 +44,13 @@ module Seed
 
       # Create a new user
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::NullableOptional::Types::CreateUserRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
       def create_user(request_options: {}, **params)
@@ -66,8 +76,13 @@ module Seed
 
       # Update a user (partial update)
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::NullableOptional::Types::UpdateUserRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :user_id
       #
       # @return [Seed::NullableOptional::Types::UserResponse]
@@ -94,12 +109,17 @@ module Seed
 
       # List all users
       #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
-      # @option params [Integer | nil] :limit
-      # @option params [Integer | nil] :offset
-      # @option params [bool | nil] :include_deleted
-      # @option params [String | nil | nil] :sort_by
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer, nil] :limit
+      # @option params [Integer, nil] :offset
+      # @option params [Boolean, nil] :include_deleted
+      # @option params [String, nil] :sort_by
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def list_users(request_options: {}, **params)
@@ -132,12 +152,17 @@ module Seed
 
       # Search users
       #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :query
-      # @option params [String | nil] :department
-      # @option params [String | nil] :role
-      # @option params [bool | nil | nil] :is_active
+      # @option params [String, nil] :department
+      # @option params [String, nil] :role
+      # @option params [Boolean, nil] :is_active
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def search_users(request_options: {}, **params)
@@ -170,8 +195,13 @@ module Seed
 
       # Create a complex profile to test nullable enums and unions
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::NullableOptional::Types::ComplexProfile]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
       def create_complex_profile(request_options: {}, **params)
@@ -197,8 +227,13 @@ module Seed
 
       # Get a complex profile by ID
       #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :profile_id
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
@@ -224,8 +259,13 @@ module Seed
 
       # Update complex profile to test nullable field updates
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::NullableOptional::Types::UpdateComplexProfileRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :profile_id
       #
       # @return [Seed::NullableOptional::Types::ComplexProfile]
@@ -257,8 +297,13 @@ module Seed
 
       # Test endpoint for validating null deserialization
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::NullableOptional::Types::DeserializationTestRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::NullableOptional::Types::DeserializationTestResponse]
       def test_deserialization(request_options: {}, **params)
@@ -284,11 +329,16 @@ module Seed
 
       # Filter users by role with nullable enum
       #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
-      # @option params [Seed::NullableOptional::Types::UserRole | nil] :role
-      # @option params [Seed::NullableOptional::Types::UserStatus | nil] :status
-      # @option params [Seed::NullableOptional::Types::UserRole | nil | nil] :secondary_role
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Seed::NullableOptional::Types::UserRole, nil] :role
+      # @option params [Seed::NullableOptional::Types::UserStatus, nil] :status
+      # @option params [Seed::NullableOptional::Types::UserRole, nil] :secondary_role
       #
       # @return [Array[Seed::NullableOptional::Types::UserResponse]]
       def filter_by_role(request_options: {}, **params)
@@ -320,11 +370,16 @@ module Seed
 
       # Get notification settings which may be null
       #
-      # @param request_options [Seed::RequestOptions]
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :user_id
       #
-      # @return [Seed::NullableOptional::Types::NotificationMethod | nil]
+      # @return [Seed::NullableOptional::Types::NotificationMethod, nil]
       def get_notification_settings(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -345,8 +400,13 @@ module Seed
 
       # Update tags to test array handling
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::NullableOptional::Types::UpdateTagsRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :user_id
       #
       # @return [Array[String]]
@@ -376,10 +436,15 @@ module Seed
 
       # Get search results with nullable unions
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::NullableOptional::Types::SearchRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Array[Seed::NullableOptional::Types::SearchResult] | nil]
+      # @return [Array[Seed::NullableOptional::Types::SearchResult], nil]
       def get_search_results(request_options: {}, **params)
         _body_prop_names = %i[query filters include_types]
         _body_bag = params.slice(*_body_prop_names)

@@ -1,3 +1,59 @@
+- version: 3.18.9
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to use OptionalNullable when collapse-optional-nullable is enabled. Wire tests now correctly generate OptionalNullable.absent() and OptionalNullable.of() instead of Optional.empty() and Optional.of() for optional request bodies and method arguments when collapse-optional-nullable: true is configured. This includes support for nested optional/nullable types which collapse into a single `OptionalNullable<T>`.
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 61
+
+- version: 3.18.8
+  changelogEntry:
+    - summary: |
+        Skip InputStream overload generation for file upload endpoints with inline path parameters. This prevents compilation errors where InputStream methods would reference non-existent request parameters when path parameters are inlined.
+      type: fix
+  createdAt: "2025-11-23"
+  irVersion: 61
+
+- version: 3.18.7
+  changelogEntry:
+    - summary: |
+        Skip InputStream overload generation for file upload endpoints with query parameters. This prevents compilation errors where InputStream methods would reference non-existent request parameters when accessing query parameters.
+      type: fix
+  createdAt: "2025-11-22"
+  irVersion: 61
+
+- version: 3.18.6
+  changelogEntry:
+    - summary: |
+        Fix compilation errors in raw clients when inlinePathParameters is enabled. Raw client methods now correctly use path parameters directly instead of attempting to access non-existent request objects.
+      type: fix
+  createdAt: "2025-11-22"
+  irVersion: 61
+
+- version: 3.18.5
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 3.18.4
+  changelogEntry:
+    - summary: |
+        Fix missing @JsonInclude header on certain instances of `OptionalNullable<>`.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.18.3
+  changelogEntry:
+    - summary: |
+        Fix OptionalNullable compilation errors when collapse-optional-nullable is enabled. Corrected type witness syntax to generate `OptionalNullable.<Type>absent()` and prevented double-wrapping of OptionalNullable types.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 3.18.2
   changelogEntry:
     - summary: |

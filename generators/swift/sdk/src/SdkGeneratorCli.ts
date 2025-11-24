@@ -60,9 +60,6 @@ export class SdkGeneratorCLI extends AbstractSwiftGeneratorCli<SdkCustomConfigSc
 
     protected async writeForGithub(context: SdkGeneratorContext): Promise<void> {
         await this.generate(context);
-        if (context.isSelfHosted()) {
-            await context.generatorAgent.pushToGitHubProgrammatic({ context });
-        }
     }
 
     protected async writeForDownload(context: SdkGeneratorContext): Promise<void> {
