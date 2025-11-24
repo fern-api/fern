@@ -265,9 +265,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.write(" = response.Body");
             writer.writeNewLineIfLastLineNot();
 
-            writer.writeNode(
-                this.buildFetcherFunction({ endpoint, subpackage, responseBodyType, hasErrorDecoder, errorDecoder })
-            );
+            writer.writeNode(this.buildFetcherFunction({ endpoint, subpackage, responseBodyType, hasErrorDecoder }));
             writer.writeNewLineIfLastLineNot();
 
             const customPagerName = this.context.customConfig.customPagerName ?? "CustomPager";
@@ -281,14 +279,12 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         endpoint,
         subpackage,
         responseBodyType,
-        hasErrorDecoder,
-        errorDecoder
+        hasErrorDecoder
     }: {
         endpoint: HttpEndpoint;
         subpackage: Subpackage | undefined;
         responseBodyType: go.Type;
         hasErrorDecoder: boolean;
-        errorDecoder: go.CodeBlock | undefined;
     }): go.AstNode {
         const callParamsFields: go.StructField[] = [
             { name: "URL", value: go.TypeInstantiation.reference(go.codeblock("href")) },
@@ -304,7 +300,11 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (hasErrorDecoder) {
             callParamsFields.push({
                 name: "ErrorDecoder",
-                value: go.TypeInstantiation.reference(go.codeblock("internal.NewErrorDecoder(errorCodes)"))
+                value: go.TypeInstantiation.reference(
+                    this.context.callNewErrorDecoder([
+                        go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference())
+                    ])
+                )
             });
         }
 
@@ -329,10 +329,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.write("var pageResponse ");
             writer.writeNode(responseBodyType);
             writer.writeNewLineIfLastLineNot();
-            if (hasErrorDecoder && errorDecoder != null) {
-                writer.writeNode(errorDecoder);
-                writer.writeNewLineIfLastLineNot();
-            }
             writer.write("_, err := ");
             writer.writeNode(
                 go.selector({
