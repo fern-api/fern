@@ -19,6 +19,10 @@ on:
         required: true
         type: string
 
+env:
+  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+  TURBO_TEAM: "buildwithfern"
+
 jobs:
   detect-release-bump:
     if: ${{ inputs.version == null && github.repository == 'fern-api/fern' }}
