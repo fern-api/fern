@@ -4,10 +4,35 @@ on:
   workflow_dispatch:
     inputs:
       test-definition:
-        description: 'Name of the test definition to generate (e.g., exhaustive, streaming, trace)'
+        description: 'Name of the test definition to generate'
         required: false
-        type: string
+        type: choice
         default: 'exhaustive'
+        options:
+          - exhaustive
+          - streaming
+          - trace
+          - pagination
+          - file-upload
+          - file-download
+          - oauth-client-credentials
+          - websocket
+          - server-sent-events
+          - unions
+          - enum
+          - validation
+          - bytes-upload
+          - bytes-download
+          - basic-auth
+          - custom-auth
+          - examples
+          - imdb
+          - literal
+          - nullable
+          - optional
+          - path-parameters
+          - query-parameters
+          - errors
   pull_request:
     branches:
       - main
