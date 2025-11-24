@@ -1,6 +1,6 @@
 import { Rule, RuleViolation } from "../../Rule";
 
-const VALID_FERN_DOMAINS = ["docs.buildwithfern.com", "docs.buildwithfern.com"];
+const VALID_FERN_DOMAINS = ["docs.buildwithfern.com", "docs.dev.buildwithfern.com"];
 const MAX_SUBDOMAIN_LENGTH = 62;
 
 function validateSubdomain(subdomain: string): { valid: boolean; error?: string; suggestion?: string } {
