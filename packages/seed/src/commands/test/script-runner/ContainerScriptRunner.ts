@@ -110,7 +110,7 @@ export class ContainerScriptRunner extends ScriptRunner {
             this.runner,
             ["exec", containerId, "mkdir", "-p", `/${workDir}/generated`],
             {
-                doNotPipeOutput: false,
+                doNotPipeOutput: true,
                 reject: false
             }
         );
@@ -125,7 +125,7 @@ export class ContainerScriptRunner extends ScriptRunner {
             this.runner,
             ["cp", scriptFile.path, `${containerId}:/${workDir}/test.sh`],
             {
-                doNotPipeOutput: false,
+                doNotPipeOutput: true,
                 reject: false
             }
         );
@@ -140,7 +140,7 @@ export class ContainerScriptRunner extends ScriptRunner {
             this.runner,
             ["cp", `${outputDir}/.`, `${containerId}:/${workDir}/generated/`],
             {
-                doNotPipeOutput: false,
+                doNotPipeOutput: true,
                 reject: false
             }
         );
@@ -157,7 +157,7 @@ export class ContainerScriptRunner extends ScriptRunner {
             this.runner,
             ["exec", containerId, "/bin/sh", "-c", `chmod +x /${workDir}/test.sh && /${workDir}/test.sh`],
             {
-                doNotPipeOutput: false,
+                doNotPipeOutput: true,
                 reject: false
             }
         );

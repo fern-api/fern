@@ -73,7 +73,7 @@ export class LocalScriptRunner extends ScriptRunner {
 
         // Make script executable and run it
         const chmodCommand = await loggingExeca(undefined, "chmod", ["+x", scriptFile.path], {
-            doNotPipeOutput: false,
+            doNotPipeOutput: true,
             reject: false
         });
 
@@ -86,7 +86,7 @@ export class LocalScriptRunner extends ScriptRunner {
 
         const command = await loggingExeca(taskContext.logger, "/bin/sh", [scriptFile.path], {
             cwd: outputDir,
-            doNotPipeOutput: false,
+            doNotPipeOutput: true,
             reject: false
         });
 
