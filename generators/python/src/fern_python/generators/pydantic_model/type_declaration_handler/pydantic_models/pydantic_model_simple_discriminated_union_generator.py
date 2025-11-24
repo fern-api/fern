@@ -8,6 +8,7 @@ from ..discriminated_union.simple_discriminated_union_generator import (
 )
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic
+from fern_python.external_dependencies.pydantic import PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
     FernAwarePydanticModel,
 )
@@ -83,12 +84,20 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                 ),
             )
 
+        if self._custom_config.version in (
+            PydanticVersionCompatibility.V1,
+            PydanticVersionCompatibility.V1_ON_V2,
+        ):
+            discriminator_field_name = self._union.discriminant.wire_value
+        else:
+            discriminator_field_name = self._union.discriminant.name.snake_case.safe_name
+
         field_invocation = AST.FunctionInvocation(
             function_definition=Pydantic(self._custom_config.version).Field(),
             kwargs=[
                 (
                     "discriminator",
-                    AST.Expression(f'"{self._union.discriminant.name.snake_case.safe_name}"'),
+                    AST.Expression(f'"{discriminator_field_name}"'),
                 )
             ],
         )
