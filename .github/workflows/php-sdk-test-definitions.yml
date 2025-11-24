@@ -68,7 +68,7 @@ jobs:
           cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs"
           cd test-definitions
           test_definition="${{ inputs.test-definition || 'exhaustive' }}"
-          FERN_NO_VERSION_REDIRECTION=true node $cli_path generate --group php-sdk --api $test_definition --log-level debug
+          FERN_NO_VERSION_REDIRECTION=true node $cli_path generate --local --group php-sdk --api $test_definition --log-level debug
 
       - name: Get updated branch name
         id: get-branch
