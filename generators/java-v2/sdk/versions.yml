@@ -1,7 +1,0 @@
-- version: 0.1.0
-  changelogEntry:
-    - summary: |
-        Add support for use-local-date-for-dates configuration flag in dynamic snippets. When enabled, date fields now generate LocalDate.parse() calls instead of string literals, ensuring type compatibility with SDKs configured to use LocalDate for date types.
-      type: feat
-  createdAt: "2025-11-24"
-  irVersion: 61
