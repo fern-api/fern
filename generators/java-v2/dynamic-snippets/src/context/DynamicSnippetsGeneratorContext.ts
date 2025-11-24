@@ -138,6 +138,33 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         );
     }
 
+    public getOptionalNullableClassReference(): java.ClassReference {
+        return java.classReference({
+            name: "OptionalNullable",
+            packageName: this.getCorePackageName()
+        });
+    }
+
+    public getOptionalNullableAbsent(): java.TypeLiteral {
+        return java.TypeLiteral.reference(
+            java.invokeMethod({
+                on: this.getOptionalNullableClassReference(),
+                method: "absent",
+                arguments_: []
+            })
+        );
+    }
+
+    public getOptionalNullableOf(value: java.TypeLiteral): java.TypeLiteral {
+        return java.TypeLiteral.reference(
+            java.invokeMethod({
+                on: this.getOptionalNullableClassReference(),
+                method: "of",
+                arguments_: [value]
+            })
+        );
+    }
+
     public getFileStreamFromString(content: string): java.TypeLiteral {
         return java.TypeLiteral.reference(
             java.codeblock((writer) => {
