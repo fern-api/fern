@@ -34,7 +34,7 @@ function validateSubdomain(subdomain: string): { valid: boolean; error?: string;
     return { valid: true };
 }
 
-function validateInstanceUrl(url: string): RuleViolation | null {
+export function validateInstanceUrl(url: string): RuleViolation | null {
     // Parse the URL to extract subdomain and domain
     let hostname: string;
     try {
