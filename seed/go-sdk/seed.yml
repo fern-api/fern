@@ -25,6 +25,9 @@ test:
   docker:
     image: fernapi/fern-go-sdk:latest
     command: pnpm --filter @fern-api/go-sdk dist:cli && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+  podman:
+    image: fernapi/fern-go-sdk:latest
+    command: pnpm --filter @fern-api/go-sdk dist:cli && podman build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
 language: go
 generatorType: SDK
 defaultOutputMode: github
@@ -203,8 +206,12 @@ fixtures:
   nullable-request-body:
     - outputFolder: dynamic-snippets-disabled
       disableDynamicSnippetTests: true
+  pagination-custom:
+    - outputFolder: .
+      customConfig:
+        customPagerName: PayrocPager
 scripts:
-  - docker: fernapi/go-seed:1.0.0
+  - image: fernapi/go-seed:1.0.0
     commands:
       - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
       - CGO_ENABLED=0 go test ./...
@@ -218,7 +225,6 @@ allowedFailures:
   - literal
   - mixed-case:no-custom-config
   - mixed-case:default-values
-  - pagination-custom
   - request-parameters
   - reserved-keywords
   - streaming-parameter
@@ -240,3 +246,5 @@ allowedFailures:
   - file-upload:no-custom-config 
   - file-upload:package-name 
   - file-upload-openapi
+
+  - pagination-custom:.

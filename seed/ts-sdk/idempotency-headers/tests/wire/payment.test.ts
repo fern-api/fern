@@ -3,10 +3,10 @@
 import { SeedIdempotencyHeadersClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Payment", () => {
+describe("PaymentClient", () => {
     test("delete", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedIdempotencyHeadersClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedIdempotencyHeadersClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().delete("/payment/paymentId").respondWith().statusCode(200).build();
 

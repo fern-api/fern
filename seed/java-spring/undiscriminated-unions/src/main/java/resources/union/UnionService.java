@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import resources.union.requests.PaymentRequest;
 import resources.union.types.Metadata;
 import resources.union.types.MetadataUnion;
 import resources.union.types.MyUnion;
@@ -61,4 +62,11 @@ public interface UnionService {
       consumes = "application/json"
   )
   String nestedUnions(@RequestBody NestedUnionRoot body);
+
+  @PostMapping(
+      value = "/camel-case",
+      produces = "application/json",
+      consumes = "application/json"
+  )
+  String testCamelCaseProperties(@RequestBody PaymentRequest body);
 }

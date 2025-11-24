@@ -58,6 +58,38 @@ public final class RawHttpEndpointMethodSpecs implements HttpEndpointMethodSpecs
                         .build());
     }
 
+    @Override
+    public Optional<MethodSpec> getInputStreamMethodSpec() {
+        return httpEndpointMethodSpecs.getInputStreamMethodSpec().map(methodSpec -> methodSpec.toBuilder()
+                .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamWithMediaTypeMethodSpec() {
+        return httpEndpointMethodSpecs.getInputStreamWithMediaTypeMethodSpec().map(methodSpec -> methodSpec.toBuilder()
+                .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamWithRequestOptionsMethodSpec() {
+        return httpEndpointMethodSpecs
+                .getInputStreamWithRequestOptionsMethodSpec()
+                .map(methodSpec -> methodSpec.toBuilder()
+                        .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                        .build());
+    }
+
+    @Override
+    public Optional<MethodSpec> getInputStreamWithMediaTypeAndRequestOptionsMethodSpec() {
+        return httpEndpointMethodSpecs
+                .getInputStreamWithMediaTypeAndRequestOptionsMethodSpec()
+                .map(methodSpec -> methodSpec.toBuilder()
+                        .returns(wrapInRawHttpResponse(methodSpec.returnType))
+                        .build());
+    }
+
     private TypeName wrapInRawHttpResponse(TypeName rawTypeName) {
         if (rawTypeName instanceof ParameterizedTypeName
                 && ((ParameterizedTypeName) rawTypeName).rawType.equals(ClassName.get(CompletableFuture.class))) {

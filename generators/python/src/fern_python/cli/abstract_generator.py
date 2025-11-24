@@ -93,6 +93,10 @@ class AbstractGenerator(ABC):
         if generator_config.custom_config is not None and "recursion_limit" in generator_config.custom_config:
             recursion_limit = generator_config.custom_config.get("recursion_limit")
 
+        enable_wire_tests = False
+        if generator_config.custom_config is not None and "enable_wire_tests" in generator_config.custom_config:
+            enable_wire_tests = generator_config.custom_config.get("enable_wire_tests")
+
         with Project(
             filepath=generator_config.output.path,
             relative_path_to_project=os.path.join(
@@ -115,6 +119,7 @@ class AbstractGenerator(ABC):
             exclude_types_from_init_exports=exclude_types_from_init_exports,
             lazy_imports=self.should_use_lazy_imports(generator_config=generator_config),
             recursion_limit=recursion_limit,
+            enable_wire_tests=enable_wire_tests,
             generator_exec_wrapper=generator_exec_wrapper,
         ) as project:
             self.run(
@@ -306,7 +311,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -322,7 +327,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -334,12 +339,12 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: fern test --command "poetry run pytest -rP -n auto ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest -rP .
+        run: poetry run pytest -rP -n auto .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -361,7 +366,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -391,7 +396,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -407,7 +412,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -419,12 +424,12 @@ jobs:
       - name: Install Fern
         run: npm install -g fern-api
       - name: Test
-        run: fern test --command "poetry run pytest -rP ."
+        run: fern test --command "poetry run pytest -rP -n auto ."
 """
         else:
             workflow_yaml += """
       - name: Test
-        run: poetry run pytest -rP .
+        run: poetry run pytest -rP -n auto .
 """
         if output_mode.publish_info is not None:
             publish_info_union = output_mode.publish_info.get_as_union()
@@ -445,7 +450,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.8
+          python-version: 3.9
       - name: Bootstrap poetry
         run: |
           curl -sSL https://install.python-poetry.org | python - -y --version 1.5.1
@@ -469,7 +474,8 @@ jobs:
       name: pypi
       url: https://pypi.org/p/${{{{ github.event.repository.name }}}}
     permissions:
-      id-token: write
+      contents: read   # Required for checkout
+      id-token: write  # Required for OIDC
     steps:
       - name: Download all the dists
         uses: actions/download-artifact@v4

@@ -3,10 +3,10 @@
 import { SeedNullableClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Nullable", () => {
+describe("NullableClient", () => {
     test("getUsers", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableClient({ environment: server.baseUrl });
+        const client = new SeedNullableClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = [
             {
@@ -109,7 +109,7 @@ describe("Nullable", () => {
 
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableClient({ environment: server.baseUrl });
+        const client = new SeedNullableClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = {
             username: "username",
             tags: ["tags", "tags"],
@@ -195,7 +195,7 @@ describe("Nullable", () => {
 
     test("deleteUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedNullableClient({ environment: server.baseUrl });
+        const client = new SeedNullableClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { username: "xy" };
         const rawResponseBody = true;
         server

@@ -13,13 +13,13 @@ import (
 type SearchRequest struct {
 	Limit            int                            `query:"limit"`
 	Id               string                         `query:"id"`
-	Date             string                         `query:"date"`
+	Date             time.Time                      `query:"date"`
 	Deadline         time.Time                      `query:"deadline"`
 	Bytes            string                         `query:"bytes"`
 	User             *User                          `query:"user"`
 	UserList         []*User                        `query:"userList"`
 	OptionalDeadline *time.Time                     `query:"optionalDeadline"`
-	KeyValue         map[string]*string             `query:"keyValue"`
+	KeyValue         map[string]string              `query:"keyValue"`
 	OptionalString   *string                        `query:"optionalString"`
 	NestedUser       *NestedUser                    `query:"nestedUser"`
 	OptionalUser     *User                          `query:"optionalUser"`

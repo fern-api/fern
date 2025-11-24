@@ -453,3 +453,85 @@ client.user.get_user_metadata(
 </dd>
 </dl>
 </details>
+
+<details><summary><code>client.user.get_user_specifics(tenant_id, user_id, version, thought) -> Seed::User::Types::User</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Test endpoint with path parameters listed in different order than found in path
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.user.get_user_specifics(
+  userId: 'user_id',
+  version: 1,
+  thought: 'thought'
+);
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**tenant_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**user_id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**version:** `Integer` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thought:** `String` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>

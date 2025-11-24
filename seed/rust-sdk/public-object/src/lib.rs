@@ -3,6 +3,7 @@ pub mod client;
 pub mod config;
 pub mod core;
 pub mod error;
+pub mod prelude;
 
 pub use client::*;
 pub use config::*;

@@ -9,6 +9,7 @@ from .types.metadata import Metadata
 from .types.metadata_union import MetadataUnion
 from .types.my_union import MyUnion
 from .types.nested_union_root import NestedUnionRoot
+from .types.payment_method_union import PaymentMethodUnion
 from .types.union_with_duplicate_types import UnionWithDuplicateTypes
 
 # this is used as the default value for optional parameters
@@ -194,6 +195,41 @@ class UnionClient:
         )
         """
         _response = self._raw_client.nested_unions(request=request, request_options=request_options)
+        return _response.data
+
+    def test_camel_case_properties(
+        self, *, payment_method: PaymentMethodUnion, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        Parameters
+        ----------
+        payment_method : PaymentMethodUnion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        from seed import SeedUndiscriminatedUnions
+        from seed.union import TokenizeCard
+
+        client = SeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.union.test_camel_case_properties(
+            payment_method=TokenizeCard(
+                method="card",
+                card_number="1234567890123456",
+            ),
+        )
+        """
+        _response = self._raw_client.test_camel_case_properties(
+            payment_method=payment_method, request_options=request_options
+        )
         return _response.data
 
 
@@ -424,4 +460,47 @@ class AsyncUnionClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.nested_unions(request=request, request_options=request_options)
+        return _response.data
+
+    async def test_camel_case_properties(
+        self, *, payment_method: PaymentMethodUnion, request_options: typing.Optional[RequestOptions] = None
+    ) -> str:
+        """
+        Parameters
+        ----------
+        payment_method : PaymentMethodUnion
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        str
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedUndiscriminatedUnions
+        from seed.union import TokenizeCard
+
+        client = AsyncSeedUndiscriminatedUnions(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.union.test_camel_case_properties(
+                payment_method=TokenizeCard(
+                    method="card",
+                    card_number="1234567890123456",
+                ),
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.test_camel_case_properties(
+            payment_method=payment_method, request_options=request_options
+        )
         return _response.data

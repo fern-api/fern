@@ -1,0 +1,276 @@
+{
+  "auth": undefined,
+  "authSchemes": {},
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [
+      {
+        "auth": false,
+        "authV2": undefined,
+        "availability": undefined,
+        "defaultEnvironment": undefined,
+        "description": undefined,
+        "environments": undefined,
+        "errors": undefined,
+        "errorsV2": [],
+        "examples": [
+          {
+            "codeSamples": [
+              {
+                "code": "from example_sdk import ExampleClient
+
+client = ExampleClient(api_key="your-api-key")
+user = client.users.get(user_id="123")
+print(user.name)",
+                "description": undefined,
+                "install": undefined,
+                "language": "python",
+                "name": "Python SDK",
+              },
+              {
+                "code": "import { ExampleClient } from '@example/sdk';
+
+const client = new ExampleClient({
+  apiKey: 'your-api-key'
+});
+
+const user = await client.users.get('123');
+console.log(user.name);",
+                "description": undefined,
+                "install": undefined,
+                "language": "typescript",
+                "name": "TypeScript SDK",
+              },
+              {
+                "code": "package main
+
+import (
+    "fmt"
+    "github.com/example/sdk-go"
+)
+
+func main() {
+    client := sdk.NewClient("your-api-key")
+    user, err := client.Users.Get("123")
+    if err != nil {
+        panic(err)
+    }
+    fmt.Println(user.Name)
+}",
+                "description": undefined,
+                "install": undefined,
+                "language": "go",
+                "name": "Go SDK",
+              },
+            ],
+            "description": "",
+            "headers": {},
+            "name": undefined,
+            "path": "/users/userId",
+            "pathParameters": {
+              "userId": "userId",
+            },
+            "queryParameters": {},
+            "requestBody": undefined,
+            "requestBodyV3": undefined,
+            "responseBody": {
+              "email": "string",
+              "id": "string",
+              "name": "string",
+            },
+            "responseBodyV3": {
+              "type": "json",
+              "value": {
+                "email": "string",
+                "id": "string",
+                "name": "string",
+              },
+            },
+            "responseStatusCode": 200,
+          },
+        ],
+        "headers": [],
+        "id": "getUser",
+        "includeInApiExplorer": undefined,
+        "method": "GET",
+        "multiAuth": undefined,
+        "name": "Get a user by ID",
+        "originalEndpointId": "endpoint_.getUser",
+        "path": {
+          "parts": [
+            {
+              "type": "literal",
+              "value": "",
+            },
+            {
+              "type": "literal",
+              "value": "/users/",
+            },
+            {
+              "type": "pathParameter",
+              "value": "userId",
+            },
+            {
+              "type": "literal",
+              "value": "",
+            },
+          ],
+          "pathParameters": [
+            {
+              "availability": undefined,
+              "description": undefined,
+              "explode": undefined,
+              "key": "userId",
+              "type": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+            },
+          ],
+        },
+        "protocol": {
+          "type": "rest",
+        },
+        "queryParameters": [],
+        "request": undefined,
+        "requestsV2": {
+          "requests": undefined,
+        },
+        "response": {
+          "description": "Successful response",
+          "isWildcard": undefined,
+          "statusCode": 200,
+          "type": {
+            "type": "reference",
+            "value": {
+              "default": undefined,
+              "type": "id",
+              "value": "getUser_Response_200",
+            },
+          },
+        },
+        "responsesV2": {
+          "responses": [
+            {
+              "description": "Successful response",
+              "isWildcard": undefined,
+              "statusCode": 200,
+              "type": {
+                "type": "reference",
+                "value": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "getUser_Response_200",
+                },
+              },
+            },
+          ],
+        },
+        "slug": undefined,
+      },
+    ],
+    "pointsTo": undefined,
+    "subpackages": [],
+    "types": [],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {},
+  "types": {
+    "getUser_Response_200": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "getUser_Response_200",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "email",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

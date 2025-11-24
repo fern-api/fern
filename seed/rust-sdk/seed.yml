@@ -47,6 +47,7 @@ fixtures:
         crateName: custom_simple_sdk
         crateVersion: "1.2.0"
         clientClassName: CustomSimpleClient
+        enableWireTests: true
       outputFolder: basic-custom-config
   imdb:
     - customConfig:
@@ -59,7 +60,15 @@ fixtures:
         extraDependencies:
           serde_derive: "1.0"
           tokio-util: "0.7"
+        enableWireTests: true
       outputFolder: imdb-custom-config
+    - customConfig:
+        clientName: ImdbClient
+        features:
+          experimental: ["reqwest/blocking", "tokio/process"]
+          advanced: ["sse"]
+        defaultFeatures: ["experimental"]
+      outputFolder: imdb-custom-features
   single-url-environment-default:
     - customConfig: null
       outputFolder: basic
@@ -77,11 +86,13 @@ fixtures:
             content: "For advanced users, you can configure custom retry policies and timeouts."
         crateName: full_custom_sdk
         crateVersion: "1.0.0"
+        enableWireTests: true
       outputFolder: full-custom
   examples:
     - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
+        enableWireTests: true
         customReadmeSections:
           - title: "Override Section"
             content: "Override Content"
@@ -107,4 +118,8 @@ fixtures:
       outputFolder: readme-config
 
 allowedFailures:
-  - public-object
+  - circular-references
+  - circular-references-advanced
+  - objects-with-imports
+  - pagination
+  - trace

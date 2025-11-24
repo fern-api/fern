@@ -3,10 +3,10 @@
 import { SeedExamplesClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("check (1)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().get("/check/id-2sdx82h").respondWith().statusCode(200).build();
 
@@ -16,7 +16,7 @@ describe("Service", () => {
 
     test("check (2)", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         server.mockEndpoint().get("/check/id-3tey93i").respondWith().statusCode(200).build();
 
@@ -26,7 +26,7 @@ describe("Service", () => {
 
     test("ping", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExamplesClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExamplesClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = true;
         server.mockEndpoint().get("/ping").respondWith().statusCode(200).jsonBody(rawResponseBody).build();

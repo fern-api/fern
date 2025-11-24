@@ -1,5 +1,7 @@
 package com.fern.java.client;
 
+import static com.fern.java.GeneratorLogging.log;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fern.generator.exec.model.config.GeneratorConfig;
 import com.fern.generator.exec.model.config.GeneratorPublishConfig;
@@ -183,7 +185,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
                 customConfig.packagePrefix().map(List::of).orElseGet(Collections::emptyList),
-                customConfig.packageLayout());
+                customConfig.packageLayout(),
+                sdkCustomConfig.customPagerName());
         ClientGeneratorContext context = new ClientGeneratorContext(
                 ir,
                 generatorConfig,
@@ -215,8 +218,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .map(List::of)
                 .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
                         ir, generatorConfig.getOrganization()));
-        ClientPoetClassNameFactory clientPoetClassNameFactory =
-                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
+        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
+                packagePrefixTokens, customConfig.packageLayout(), customConfig.customPagerName());
         List<AuthScheme> resolvedAuthSchemes =
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(
@@ -228,6 +231,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
             ClientGeneratorContext context,
             IntermediateRepresentation ir,
             DefaultGeneratorExecClient generatorExecClient) {
+
+        log(generatorExecClient, "Generating core SDK files");
 
         // core
         ObjectMappersGenerator objectMappersGenerator = new ObjectMappersGenerator(context);
@@ -381,6 +386,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         this.addGeneratedFile(generatedMediaTypesFile);
 
         // types
+        log(generatorExecClient, "Generating data types and models");
         TypesGenerator typesGenerator = new TypesGenerator(context);
         Result generatedTypes = typesGenerator.generateFiles();
         generatedTypes.getTypes().values().forEach(this::addGeneratedFile);
@@ -414,6 +420,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
         generatedOAuthTokenSupplier.ifPresent(this::addGeneratedFile);
 
         // subpackage clients and their WebSocket channels
+        log(generatorExecClient, "Generating API client classes");
         ir.getSubpackages().values().forEach(subpackage -> {
             // Generate subpackage clients if there are endpoints or WebSocket channels
             if (subpackage.getHasEndpointsInTree() || subpackage.getWebsocket().isPresent()) {
@@ -608,8 +615,8 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 .map(List::of)
                 .orElseGet(() -> AbstractPoetClassNameFactory.getPackagePrefixWithOrgAndApiName(
                         ir, generatorConfig.getOrganization()));
-        ClientPoetClassNameFactory clientPoetClassNameFactory =
-                new ClientPoetClassNameFactory(packagePrefixTokens, customConfig.packageLayout());
+        ClientPoetClassNameFactory clientPoetClassNameFactory = new ClientPoetClassNameFactory(
+                packagePrefixTokens, customConfig.packageLayout(), customConfig.customPagerName());
         List<AuthScheme> resolvedAuthSchemes =
                 new FeatureResolver(ir, generatorConfig, generatorExecClient).getResolvedAuthSchemes();
         ClientGeneratorContext context = new ClientGeneratorContext(

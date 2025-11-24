@@ -59,8 +59,8 @@ impl ServiceClient {
                     .string("maybeString", request.maybe_string.clone())
                     .int("integer", request.integer.clone())
                     .int("maybeInteger", request.maybe_integer.clone())
-                    .string("listOfStrings", request.list_of_strings.clone())
-                    .string(
+                    .string_array("listOfStrings", request.list_of_strings.clone())
+                    .string_array(
                         "optionalListOfStrings",
                         request.optional_list_of_strings.clone(),
                     )

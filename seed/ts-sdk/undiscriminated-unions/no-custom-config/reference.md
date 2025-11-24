@@ -37,7 +37,7 @@ await client.union.get("string");
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -78,7 +78,7 @@ await client.union.getMetadata();
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -131,7 +131,7 @@ await client.union.updateMetadata({
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -186,7 +186,7 @@ await client.union.call({
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -235,7 +235,7 @@ await client.union.duplicateTypesUnion("string");
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -284,7 +284,61 @@ await client.union.nestedUnions("string");
 <dl>
 <dd>
 
-**requestOptions:** `Union.RequestOptions` 
+**requestOptions:** `UnionClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.union.<a href="/src/api/resources/union/client/Client.ts">testCamelCaseProperties</a>({ ...params }) -> string</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.union.testCamelCaseProperties({
+    paymentMethod: {
+        method: "card",
+        cardNumber: "1234567890123456"
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `SeedUndiscriminatedUnions.PaymentRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `UnionClient.RequestOptions` 
     
 </dd>
 </dl>

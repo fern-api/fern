@@ -116,6 +116,32 @@
                 "sync_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\nimport com.seed.undiscriminatedUnions.resources.union.types.NestedUnionRoot;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().nestedUnions(\n            NestedUnionRoot.of(\"string\")\n        );\n    }\n}\n",
                 "async_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\nimport com.seed.undiscriminatedUnions.resources.union.types.NestedUnionRoot;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().nestedUnions(\n            NestedUnionRoot.of(\"string\")\n        );\n    }\n}\n"
             }
+        },
+        {
+            "example_identifier": "bde8080f",
+            "id": {
+                "method": "POST",
+                "path": "/camel-case",
+                "identifier_override": "endpoint_union.testCamelCaseProperties"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\nimport com.seed.undiscriminatedUnions.resources.union.requests.PaymentRequest;\nimport com.seed.undiscriminatedUnions.resources.union.types.PaymentMethodUnion;\nimport com.seed.undiscriminatedUnions.resources.union.types.TokenizeCard;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().testCamelCaseProperties(\n            PaymentRequest\n                .builder()\n                .paymentMethod(\n                    PaymentMethodUnion.of(\n                        TokenizeCard\n                            .builder()\n                            .method(\"card\")\n                            .cardNumber(\"1234567890123456\")\n                            .build()\n                    )\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\nimport com.seed.undiscriminatedUnions.resources.union.requests.PaymentRequest;\nimport com.seed.undiscriminatedUnions.resources.union.types.PaymentMethodUnion;\nimport com.seed.undiscriminatedUnions.resources.union.types.TokenizeCard;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().testCamelCaseProperties(\n            PaymentRequest\n                .builder()\n                .paymentMethod(\n                    PaymentMethodUnion.of(\n                        TokenizeCard\n                            .builder()\n                            .method(\"card\")\n                            .cardNumber(\"1234567890123456\")\n                            .build()\n                    )\n                )\n                .build()\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "d706e48b",
+            "id": {
+                "method": "POST",
+                "path": "/camel-case",
+                "identifier_override": "endpoint_union.testCamelCaseProperties"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\nimport com.seed.undiscriminatedUnions.resources.union.requests.PaymentRequest;\nimport com.seed.undiscriminatedUnions.resources.union.types.PaymentMethodUnion;\nimport com.seed.undiscriminatedUnions.resources.union.types.TokenizeCard;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().testCamelCaseProperties(\n            PaymentRequest\n                .builder()\n                .paymentMethod(\n                    PaymentMethodUnion.of(\n                        TokenizeCard\n                            .builder()\n                            .method(\"method\")\n                            .cardNumber(\"cardNumber\")\n                            .build()\n                    )\n                )\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.undiscriminatedUnions.SeedUndiscriminatedUnionsClient;\nimport com.seed.undiscriminatedUnions.resources.union.requests.PaymentRequest;\nimport com.seed.undiscriminatedUnions.resources.union.types.PaymentMethodUnion;\nimport com.seed.undiscriminatedUnions.resources.union.types.TokenizeCard;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUndiscriminatedUnionsClient client = SeedUndiscriminatedUnionsClient\n            .builder()\n            .build();\n\n        client.union().testCamelCaseProperties(\n            PaymentRequest\n                .builder()\n                .paymentMethod(\n                    PaymentMethodUnion.of(\n                        TokenizeCard\n                            .builder()\n                            .method(\"method\")\n                            .cardNumber(\"cardNumber\")\n                            .build()\n                    )\n                )\n                .build()\n        );\n    }\n}\n"
+            }
         }
     ],
     "types": {}

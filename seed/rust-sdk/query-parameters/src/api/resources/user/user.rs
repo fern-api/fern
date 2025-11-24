@@ -28,7 +28,7 @@ impl UserClient {
                     .uuid("id", request.id.clone())
                     .date("date", request.date.clone())
                     .datetime("deadline", request.deadline.clone())
-                    .string("bytes", request.bytes.clone())
+                    .serialize("bytes", Some(request.bytes.clone()))
                     .serialize("user", Some(request.user.clone()))
                     .serialize("userList", Some(request.user_list.clone()))
                     .datetime("optionalDeadline", request.optional_deadline.clone())
@@ -36,8 +36,8 @@ impl UserClient {
                     .string("optionalString", request.optional_string.clone())
                     .serialize("nestedUser", Some(request.nested_user.clone()))
                     .serialize("optionalUser", request.optional_user.clone())
-                    .serialize("excludeUser", Some(request.exclude_user.clone()))
-                    .string("filter", request.filter.clone())
+                    .serialize_array("excludeUser", request.exclude_user.clone())
+                    .string_array("filter", request.filter.clone())
                     .build(),
                 options,
             )

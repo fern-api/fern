@@ -3,17 +3,29 @@
 module Seed
   module PathParam
     class Client
-      # @return [Seed::PathParam::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Seed::Types::Operand] :operand
+      # @option params [Seed::Types::ColorOrOperand] :operand_or_color
+      #
       # @return [untyped]
       def send_(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "path/#{params[:operand]}/#{params[:operandOrColor]}"
+          path: "path/#{params[:operand]}/#{params[:operand_or_color]}"
         )
         begin
           _response = @client.send(_request)

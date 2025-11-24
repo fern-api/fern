@@ -54,8 +54,17 @@
             "inline": undefined,
             "properties": {
               "radius": "double",
-              "type": "literal<"circle">",
+              "type": "CircleType",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "CircleType": {
+            "enum": [
+              "circle",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -91,8 +100,17 @@
             "inline": undefined,
             "properties": {
               "sideLength": "double",
-              "type": "literal<"square">",
+              "type": "SquareType",
             },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+          "SquareType": {
+            "enum": [
+              "square",
+            ],
+            "inline": true,
             "source": {
               "openapi": "../openapi.yml",
             },
@@ -114,15 +132,27 @@
       - Square
     source:
       openapi: ../openapi.yml
+  CircleType:
+    enum:
+      - circle
+    inline: true
+    source:
+      openapi: ../openapi.yml
   Circle:
     properties:
-      type: literal<"circle">
+      type: CircleType
       radius: double
+    source:
+      openapi: ../openapi.yml
+  SquareType:
+    enum:
+      - square
+    inline: true
     source:
       openapi: ../openapi.yml
   Square:
     properties:
-      type: literal<"square">
+      type: SquareType
       sideLength: double
     source:
       openapi: ../openapi.yml

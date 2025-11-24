@@ -21,6 +21,10 @@ export function convertPascalToSnakeCase(pascalCase: string): string {
 }
 
 export function escapeRustKeyword(name: string): string {
+    // Handle identifiers starting with numbers by prefixing with underscore
+    if (/^[0-9]/.test(name)) {
+        return `_${name}`;
+    }
     return RUST_KEYWORDS.has(name) ? `r#${name}` : name;
 }
 

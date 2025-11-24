@@ -37,7 +37,7 @@ await client.service.upload(createReadStream("path/to/file"));
 <dl>
 <dd>
 
-**requestOptions:** `Service.RequestOptions` 
+**requestOptions:** `ServiceClient.RequestOptions` 
     
 </dd>
 </dl>

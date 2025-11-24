@@ -14,6 +14,6 @@ import resources.errors.exceptions.UnauthorizedRequest;
 public final class UnauthorizedRequestExceptionHandler {
   @ExceptionHandler(UnauthorizedRequest.class)
   ResponseEntity<Object> handle(UnauthorizedRequest unauthorizedRequest) {
-    return new ResponseEntity<>(unauthorizedRequest.getBody(), null, UnauthorizedRequest.STATUS_CODE);
+    return ResponseEntity.status(UnauthorizedRequest.STATUS_CODE).body(unauthorizedRequest.getBody());
   }
 }

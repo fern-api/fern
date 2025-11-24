@@ -12,6 +12,7 @@ async function main() {
         minify: false,
         outDir: 'dist/prod',
         sourcemap: true,
+        external: ['@boundaryml/baml'],
         env: {
             AUTH0_DOMAIN: "fern-prod.us.auth0.com",
             AUTH0_CLIENT_ID: "syaWnk6SjNoo5xBf1omfvziU3q7085lh",
@@ -42,7 +43,10 @@ async function main() {
                 version: process.argv[2] || packageJson.version,
                 repository: packageJson.repository,
                 files: ["cli.cjs"],
-                bin: { fern: "cli.cjs" }
+                bin: { fern: "cli.cjs" },
+                dependencies: {
+                    "@boundaryml/baml": packageJson.devDependencies["@boundaryml/baml"]
+                }
             },
             undefined,
             2

@@ -3,10 +3,10 @@
 import { SeedMixedCaseClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Service", () => {
+describe("ServiceClient", () => {
     test("getResource", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMixedCaseClient({ environment: server.baseUrl });
+        const client = new SeedMixedCaseClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = {
             resource_type: "user",
@@ -32,7 +32,7 @@ describe("Service", () => {
 
     test("listResources", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedMixedCaseClient({ environment: server.baseUrl });
+        const client = new SeedMixedCaseClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = [
             {

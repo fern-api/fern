@@ -3,10 +3,10 @@
 import { SeedExhaustiveClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Enum", () => {
+describe("EnumClient", () => {
     test("getAndReturnEnum", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedExhaustiveClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedExhaustiveClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
         const rawRequestBody = "SUNNY";
         const rawResponseBody = "SUNNY";
         server

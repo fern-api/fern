@@ -3,11 +3,21 @@
 module Seed
   module NoReqBody
     class Client
-      # @return [Seed::NoReqBody::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
       def get_with_no_request_body(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
@@ -29,6 +39,14 @@ module Seed
         end
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [String]
       def post_with_no_request_body(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(

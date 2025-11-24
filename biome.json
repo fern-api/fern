@@ -9,11 +9,12 @@
   "files": {
     "includes": [
       "**",
-      "!packages/cli/ai/baml_client/**",
+      "!packages/cli/ai/src/baml_client/**",
       "!!**/lib",
       "!!**/dist",
       "!!seed",
-      "!!generators/typescript/asIs/biome.json"
+      "!!generators/typescript/asIs/biome.json",
+      "!!seed-remote-local"
     ],
     "ignoreUnknown": false,
     "maxSize": 80000000

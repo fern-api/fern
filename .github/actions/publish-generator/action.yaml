@@ -29,6 +29,9 @@ runs:
     - name: Install
       uses: ./.github/actions/install
 
+    - name: Set up QEMU
+      uses: docker/setup-qemu-action@v3
+
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
 
@@ -37,6 +40,12 @@ runs:
       with:
         username: fernapi
         password: ${{ inputs.docker-pwd }}
+
+    - name: Build seed CLI with Turbo
+      shell: bash
+      run: |
+        echo "Building seed CLI once with Turbo caching..."
+        pnpm turbo run dist:cli --filter=@fern-api/seed-cli
 
     - name: Run publish (auto)
       if: inputs.manual-trigger == 'false'
@@ -65,12 +74,12 @@ runs:
         head ${VERSIONS_FILE}
 
         if [ $GIT_SHOW_STATUS -eq 0 ]; then
-          pnpm seed:local publish generator ${{ inputs.generator-name }} --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
+          node --enable-source-maps packages/seed/dist/cli.cjs publish generator ${{ inputs.generator-name }} --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
         else
           echo "No previous versions found, skipping publish."
         fi
 
-        pnpm seed:local register generator --generators ${{ inputs.generator-name }}
+        node --enable-source-maps packages/seed/dist/cli.cjs register generator --generators ${{ inputs.generator-name }}
 
     - name: Run publish (manual)
       if: inputs.manual-trigger == 'true'
@@ -81,5 +90,5 @@ runs:
         FERN_TOKEN: ${{ inputs.fern-token }}
         DOCKER_PASSWORD: ${{ inputs.docker-pwd }}
       run: |
-        pnpm seed:local publish generator ${{ inputs.generator-name }} --ver ${{ inputs.version }} --log-level debug
-        pnpm seed:local register generator --generators ${{ inputs.generator-name }}
+        node --enable-source-maps packages/seed/dist/cli.cjs publish generator ${{ inputs.generator-name }} --ver ${{ inputs.version }} --log-level debug
+        node --enable-source-maps packages/seed/dist/cli.cjs register generator --generators ${{ inputs.generator-name }}

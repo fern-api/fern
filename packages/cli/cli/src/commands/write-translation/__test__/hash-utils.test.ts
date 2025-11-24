@@ -12,6 +12,7 @@ import {
     hasFileChanged,
     loadHashMappings,
     saveHashMappings,
+    updateAndSaveHashForFile,
     updateHashForFile
 } from "../hash-utils";
 
@@ -197,6 +198,71 @@ describe("hash-utils", () => {
 
             const expectedHash = calculateContentHash(content);
             expect(mappings["test.md"]).toBe(expectedHash);
+        });
+    });
+
+    describe("updateAndSaveHashForFile", () => {
+        it("should update hash mapping and save to disk", async () => {
+            const content = "test content";
+            const mappings: FileHashMap = {};
+
+            await updateAndSaveHashForFile(testDir, mappings, "test.md" as RelativeFilePath, content);
+
+            // Check that the hash was updated in memory
+            const expectedHash = calculateContentHash(content);
+            expect(mappings["test.md"]).toBe(expectedHash);
+
+            // Check that the hash was saved to disk
+            const hashesFilePath = path.join(testDir, "hashes");
+            expect(existsSync(hashesFilePath)).toBe(true);
+
+            const savedMappings = await loadHashMappings(testDir);
+            expect(savedMappings["test.md"]).toBe(expectedHash);
+        });
+
+        it("should overwrite existing hash mapping and save to disk", async () => {
+            const oldContent = "old content";
+            const newContent = "new content";
+            const mappings: FileHashMap = {
+                "test.md": calculateContentHash(oldContent)
+            };
+
+            // Save the initial mapping to disk
+            await saveHashMappings(testDir, mappings);
+
+            // Update with new content
+            await updateAndSaveHashForFile(testDir, mappings, "test.md" as RelativeFilePath, newContent);
+
+            // Check that the hash was updated in memory
+            const expectedHash = calculateContentHash(newContent);
+            expect(mappings["test.md"]).toBe(expectedHash);
+
+            // Check that the new hash was saved to disk
+            const savedMappings = await loadHashMappings(testDir);
+            expect(savedMappings["test.md"]).toBe(expectedHash);
+        });
+
+        it("should add new hash to existing mappings and save to disk", async () => {
+            const content1 = "content 1";
+            const content2 = "content 2";
+            const mappings: FileHashMap = {
+                "file1.md": calculateContentHash(content1)
+            };
+
+            // Save the initial mapping to disk
+            await saveHashMappings(testDir, mappings);
+
+            // Add a new file hash
+            await updateAndSaveHashForFile(testDir, mappings, "file2.md" as RelativeFilePath, content2);
+
+            // Check that both hashes are in memory
+            expect(mappings["file1.md"]).toBe(calculateContentHash(content1));
+            expect(mappings["file2.md"]).toBe(calculateContentHash(content2));
+
+            // Check that both hashes were saved to disk
+            const savedMappings = await loadHashMappings(testDir);
+            expect(savedMappings["file1.md"]).toBe(calculateContentHash(content1));
+            expect(savedMappings["file2.md"]).toBe(calculateContentHash(content2));
         });
     });
 

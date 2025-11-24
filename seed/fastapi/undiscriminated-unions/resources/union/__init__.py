@@ -2,7 +2,9 @@
 
 # isort: skip_file
 
+from .service import PaymentRequest
 from .types import (
+    ConvertToken,
     Key,
     KeyType,
     Metadata,
@@ -13,7 +15,9 @@ from .types import (
     NestedUnionL2,
     NestedUnionRoot,
     OptionalMetadata,
+    PaymentMethodUnion,
     Request,
+    TokenizeCard,
     TypeWithOptionalUnion,
     UnionWithDuplicateTypes,
     UnionWithIdenticalPrimitives,
@@ -21,6 +25,7 @@ from .types import (
 )
 
 __all__ = [
+    "ConvertToken",
     "Key",
     "KeyType",
     "Metadata",
@@ -31,7 +36,10 @@ __all__ = [
     "NestedUnionL2",
     "NestedUnionRoot",
     "OptionalMetadata",
+    "PaymentMethodUnion",
+    "PaymentRequest",
     "Request",
+    "TokenizeCard",
     "TypeWithOptionalUnion",
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",

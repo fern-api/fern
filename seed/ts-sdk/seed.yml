@@ -16,6 +16,10 @@ test:
     image: fernapi/fern-typescript-sdk:latest
     command:
       - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLatest
+  podman:
+    image: fernapi/fern-typescript-sdk:latest
+    command:
+      - pnpm --filter @fern-typescript/sdk-generator-cli podmanTagLatest
   local:
     workingDirectory: generators/typescript
     buildCommand:
@@ -122,6 +126,9 @@ fixtures:
     - outputFolder: parameter-naming-snake-case
       customConfig:
         parameterNaming: snakeCase
+    - outputFolder: multiple-exports
+      customConfig:
+        generateSubpackageExports: true
   error-property:
     - outputFolder: no-custom-config
       customConfig: null
@@ -429,7 +436,7 @@ fixtures:
       customConfig:
         offsetSemantics: "page-index"
 scripts:
-  - docker: fernapi/ts-seed
+  - image: fernapi/ts-seed
     commands:
       - |
         if [ ! -f "package.json" ]; then

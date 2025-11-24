@@ -87,7 +87,7 @@ class SeedClient
         $query = [];
         $query['limit'] = $request->limit;
         $query['id'] = $request->id;
-        $query['date'] = $request->date;
+        $query['date'] = $request->date->format(Constant::DateFormat);
         $query['deadline'] = $request->deadline->format(Constant::DateTimeFormat);
         $query['bytes'] = $request->bytes;
         $query['user'] = $request->user;

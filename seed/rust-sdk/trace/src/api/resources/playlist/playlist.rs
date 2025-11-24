@@ -25,14 +25,14 @@ impl PlaylistClient {
     pub async fn create_playlist(
         &self,
         service_param: i64,
-        request: &PlaylistCreateRequest,
+        request: &CreatePlaylistRequest,
         options: Option<RequestOptions>,
     ) -> Result<Playlist, ApiError> {
         self.http_client
             .execute_request(
                 Method::POST,
                 &format!("/v2/playlist/{}/create", service_param),
-                Some(serde_json::to_value(request).unwrap_or_default()),
+                Some(serde_json::to_value(&request.body).unwrap_or_default()),
                 QueryBuilder::new()
                     .datetime("datetime", request.datetime.clone())
                     .datetime("optionalDatetime", request.optional_datetime.clone())
@@ -69,11 +69,11 @@ impl PlaylistClient {
                     .int("limit", request.limit.clone())
                     .string("otherField", request.other_field.clone())
                     .string("multiLineDocs", request.multi_line_docs.clone())
-                    .string(
+                    .string_array(
                         "optionalMultipleField",
                         request.optional_multiple_field.clone(),
                     )
-                    .string("multipleField", request.multiple_field.clone())
+                    .string_array("multipleField", request.multiple_field.clone())
                     .build(),
                 options,
             )

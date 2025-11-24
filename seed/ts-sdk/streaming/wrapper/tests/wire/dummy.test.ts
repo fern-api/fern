@@ -3,10 +3,10 @@
 import { SeedStreamingClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Dummy", () => {
+describe("DummyClient", () => {
     test("generate", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedStreamingClient({ environment: server.baseUrl });
+        const client = new SeedStreamingClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { stream: false, num_events: 5 };
         const rawResponseBody = { id: "id", name: "name" };
         server
