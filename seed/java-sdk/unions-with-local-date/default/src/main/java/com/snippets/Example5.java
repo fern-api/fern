@@ -2,11 +2,11 @@ package com.snippets;
 
 import com.seed.unions.SeedUnionsClient;
 
-public class Example4 {
+public class Example5 {
     public static void main(String[] args) {
         SeedUnionsClient client =
                 SeedUnionsClient.builder().url("https://api.fern.com").build();
 
-        client.types().get("datetime-example");
+        client.types().get("id");
     }
 }

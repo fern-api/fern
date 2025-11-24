@@ -40,6 +40,84 @@
             }
         },
         {
+            "example_identifier": "f26dc3f1",
+            "id": {
+                "method": "GET",
+                "path": "/time/{id}",
+                "identifier_override": "endpoint_types.get"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.types().get(\"date-example\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.types().get(\"date-example\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "9434e4e9",
+            "id": {
+                "method": "GET",
+                "path": "/time/{id}",
+                "identifier_override": "endpoint_types.get"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.types().get(\"datetime-example\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.types().get(\"datetime-example\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "bb443545",
+            "id": {
+                "method": "GET",
+                "path": "/time/{id}",
+                "identifier_override": "endpoint_types.get"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.types().get(\"id\");\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.types().get(\"id\");\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "8e9b4e1a",
+            "id": {
+                "method": "PATCH",
+                "path": "/time",
+                "identifier_override": "endpoint_types.update"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.types.types.UnionWithTime;\nimport java.time.LocalDate;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.types().update(\n            UnionWithTime.date(LocalDate.parse(\"1994-01-01\"))\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.types.types.UnionWithTime;\nimport java.time.LocalDate;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.types().update(\n            UnionWithTime.date(LocalDate.parse(\"1994-01-01\"))\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "afd9ce67",
+            "id": {
+                "method": "PATCH",
+                "path": "/time",
+                "identifier_override": "endpoint_types.update"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.types.types.UnionWithTime;\nimport java.time.OffsetDateTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.types().update(\n            UnionWithTime.datetime(OffsetDateTime.parse(\"1994-01-01T01:01:01Z\"))\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.types.types.UnionWithTime;\nimport java.time.OffsetDateTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.types().update(\n            UnionWithTime.datetime(OffsetDateTime.parse(\"1994-01-01T01:01:01Z\"))\n        );\n    }\n}\n"
+            }
+        },
+        {
+            "example_identifier": "67ce62b7",
+            "id": {
+                "method": "PATCH",
+                "path": "/time",
+                "identifier_override": "endpoint_types.update"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.types.types.UnionWithTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.types().update(\n            UnionWithTime.value(1)\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.unions.SeedUnionsClient;\nimport com.seed.unions.resources.types.types.UnionWithTime;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedUnionsClient client = SeedUnionsClient\n            .builder()\n            .build();\n\n        client.types().update(\n            UnionWithTime.value(1)\n        );\n    }\n}\n"
+            }
+        },
+        {
             "example_identifier": "db2e6c32",
             "id": {
                 "method": "GET",

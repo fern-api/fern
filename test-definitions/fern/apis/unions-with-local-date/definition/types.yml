@@ -315,3 +315,44 @@ types:
         value:
           type: anyNumber
           value: 3.14159
+
+service:
+  auth: false
+  base-path: /time
+  endpoints:
+    get:
+      path: /{id}
+      method: GET
+      path-parameters:
+        id: string
+      response: UnionWithTime
+      examples:
+        - path-parameters:
+            id: date-example
+          response:
+            body:
+              type: date
+              date: 1994-01-01
+        - path-parameters:
+            id: datetime-example
+          response:
+            body:
+              type: datetime
+              datetime: 1994-01-01T01:01:01Z
+    
+    update:
+      path: ""
+      method: PATCH
+      request: UnionWithTime
+      response: boolean
+      examples:
+        - request:
+            type: date
+            date: 1994-01-01
+          response:
+            body: true
+        - request:
+            type: datetime
+            datetime: 1994-01-01T01:01:01Z
+          response:
+            body: true
