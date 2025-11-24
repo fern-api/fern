@@ -49,14 +49,76 @@ export class DynamicTypeInstantiationMapper {
                 }
                 return this.convertNamed({ named, value: args.value, as: args.as });
             }
-            case "nullable":
+            case "nullable": {
+                const inner = args.typeReference.value;
+                // Special case: nullable + alias-of-collection
+                // For fields like `Services *ServicesUs50` where `type ServicesUs50 = []*ServiceUs50`,
+                // we need to generate `&[]*ServiceUs50{...}` instead of trying to use the alias name.
+                // Since ServicesUs50 is a type alias (not a new type), `*[]*ServiceUs50` is identical
+                // to `*ServicesUs50`, so this is assignable without explicit conversion.
+                if (inner.type === "named") {
+                    const named = this.context.resolveNamedType({ typeId: inner.value });
+                    if (
+                        named?.type === "alias" &&
+                        (named.typeReference.type === "list" ||
+                            named.typeReference.type === "set" ||
+                            named.typeReference.type === "map")
+                    ) {
+                        // Build the underlying collection literal
+                        const collectionLiteral = this.convert({
+                            typeReference: named.typeReference,
+                            value: args.value,
+                            as: args.as
+                        });
+                        // Wrap it in `&<collection literal>` to create a pointer to the collection
+                        return go.TypeInstantiation.reference(
+                            go.codeblock((writer) => {
+                                writer.write("&");
+                                writer.writeNode(collectionLiteral);
+                            })
+                        );
+                    }
+                }
+                // Default behavior for all other nullables
                 return go.TypeInstantiation.optional(
-                    this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
+                    this.convert({ typeReference: inner, value: args.value, as: args.as })
                 );
-            case "optional":
+            }
+            case "optional": {
+                const inner = args.typeReference.value;
+                // Special case: optional + alias-of-collection
+                // For fields like `Services *ServicesUs50` where `type ServicesUs50 = []*ServiceUs50`,
+                // we need to generate `&[]*ServiceUs50{...}` instead of trying to use the alias name.
+                // Since ServicesUs50 is a type alias (not a new type), `*[]*ServiceUs50` is identical
+                // to `*ServicesUs50`, so this is assignable without explicit conversion.
+                if (inner.type === "named") {
+                    const named = this.context.resolveNamedType({ typeId: inner.value });
+                    if (
+                        named?.type === "alias" &&
+                        (named.typeReference.type === "list" ||
+                            named.typeReference.type === "set" ||
+                            named.typeReference.type === "map")
+                    ) {
+                        // Build the underlying collection literal
+                        const collectionLiteral = this.convert({
+                            typeReference: named.typeReference,
+                            value: args.value,
+                            as: args.as
+                        });
+                        // Wrap it in `&<collection literal>` to create a pointer to the collection
+                        return go.TypeInstantiation.reference(
+                            go.codeblock((writer) => {
+                                writer.write("&");
+                                writer.writeNode(collectionLiteral);
+                            })
+                        );
+                    }
+                }
+                // Default behavior for all other optionals
                 return go.TypeInstantiation.optional(
-                    this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
+                    this.convert({ typeReference: inner, value: args.value, as: args.as })
                 );
+            }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
@@ -176,46 +238,17 @@ export class DynamicTypeInstantiationMapper {
         value: unknown;
         as?: DynamicTypeInstantiationMapper.ConvertedAs;
     }): go.TypeInstantiation {
-        const aliasName = this.context.getTypeName(aliasType.declaration.name);
-        const aliasImportPath = this.context.getImportPath(aliasType.declaration.fernFilepath);
-
         switch (aliasType.typeReference.type) {
             case "literal":
                 return go.TypeInstantiation.reference(
                     go.invokeFunc({
                         func: go.typeReference({
-                            name: aliasName,
-                            importPath: aliasImportPath
+                            name: this.context.getTypeName(aliasType.declaration.name),
+                            importPath: this.context.getImportPath(aliasType.declaration.fernFilepath)
                         }),
                         arguments_: [this.convertLiteralValue(aliasType.typeReference.value)]
                     })
                 );
-            case "list":
-            case "set":
-            case "map": {
-                // For alias-of-collection types, we need to preserve the alias name
-                // by wrapping the underlying collection literal in a type conversion.
-                // This is important when the alias is used as a pointer field, e.g.:
-                //   type ServicesUs50 = []*ServiceUs50
-                //   Services *ServicesUs50
-                // Without this, we'd generate []*ServiceUs50{...} which can't be assigned
-                // to *ServicesUs50. With this fix, we generate ServicesUs50([]*ServiceUs50{...})
-                // which can then be properly addressed as &ServicesUs50([]*ServiceUs50{...}).
-                const underlying = this.convert({
-                    typeReference: aliasType.typeReference,
-                    value,
-                    as
-                });
-                return go.TypeInstantiation.reference(
-                    go.invokeFunc({
-                        func: go.typeReference({
-                            name: aliasName,
-                            importPath: aliasImportPath
-                        }),
-                        arguments_: [underlying]
-                    })
-                );
-            }
             default:
                 return this.convert({ typeReference: aliasType.typeReference, value, as });
         }
