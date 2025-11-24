@@ -36,4 +36,28 @@ describe("substituteEnvVariables", () => {
         const context = createMockTaskContext({ logger: NOOP_LOGGER });
         expect(() => replaceEnvVariables(content, { onError: (e) => context.failAndThrow(e) })).toThrow(FernCliError);
     });
+
+    it("substitutes as empty when substituteAsEmpty is true", () => {
+        process.env.FOO_VAR = "foo";
+        process.env.BAR_VAR = "bar";
+        const content = {
+            foo: "bar",
+            baz: {
+                qux: {
+                    thud: "${FOO_VAR}"
+                }
+            },
+            plugh: "${FOO_VAR}-${BAR_VAR}",
+            xyzzy: "${UNDEFINED_ENV_VAR}"
+        };
+
+        const context = createMockTaskContext();
+        const substituted = replaceEnvVariables(
+            content,
+            { onError: (e) => context.failAndThrow(e) },
+            { substituteAsEmpty: true }
+        );
+
+        expect(substituted).toEqual({ foo: "bar", baz: { qux: { thud: "" } }, plugh: "-", xyzzy: "" });
+    });
 });

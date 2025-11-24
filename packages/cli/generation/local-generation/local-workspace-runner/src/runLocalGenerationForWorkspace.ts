@@ -49,11 +49,17 @@ export async function runLocalGenerationForWorkspace({
     inspect: boolean;
     ai: generatorsYml.AiServicesSchema | undefined;
 }): Promise<void> {
+    const isPreview = absolutePathToPreview != null;
+
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 const substituteEnvVars = <T>(stringOrObject: T) =>
-                    replaceEnvVariables(stringOrObject, { onError: (e) => interactiveTaskContext.failAndThrow(e) });
+                    replaceEnvVariables(
+                        stringOrObject,
+                        { onError: (e) => interactiveTaskContext.failAndThrow(e) },
+                        { substituteAsEmpty: isPreview }
+                    );
 
                 generatorInvocation = substituteEnvVars(generatorInvocation);
 
