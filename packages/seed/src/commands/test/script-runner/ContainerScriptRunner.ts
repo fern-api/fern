@@ -55,7 +55,7 @@ export class ContainerScriptRunner extends ScriptRunner {
         for (const script of this.scripts) {
             // Check if this script should be skipped based on its name
             if (skipScripts != null && script.name != null && skipScripts.includes(script.name)) {
-                taskContext.logger.info(`Skipping script "${script.name}" for ${id} (configured in fixture)`);
+                taskContext.logger.debug(`Skipping script "${script.name}" for ${id} (configured in fixture)`);
                 continue;
             }
 
@@ -98,7 +98,7 @@ export class ContainerScriptRunner extends ScriptRunner {
         containerId: string;
         script: ContainerScriptConfig;
     }): Promise<ScriptRunner.RunResponse> {
-        taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${id}`);
+        taskContext.logger.debug(`Running script ${script.commands[0] ?? ""} on ${id}`);
 
         const workDir = id.replace(":", "_");
         const scriptFile = await tmp.file();

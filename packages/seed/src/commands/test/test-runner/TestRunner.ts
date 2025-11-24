@@ -189,7 +189,7 @@ export abstract class TestRunner {
 
             taskContext.logger.debug("Acquiring lock...");
             await this.lock.acquire();
-            taskContext.logger.info("Running generator...");
+            taskContext.logger.debug("Running generator...");
             try {
                 const generationStopwatch = new Stopwatch();
                 generationStopwatch.start();

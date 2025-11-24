@@ -53,10 +53,6 @@ export async function runWithCustomFixture({
                 `Generator ${workspace.workspaceName} does not have a local test configuration. Please add a 'test.local' section to your seed.yml with 'buildCommand' and 'runCommand' properties.`
             );
         }
-        console.log(
-            `Using local runner for ${workspace.workspaceName} with config:`,
-            workspace.workspaceConfig.test.local
-        );
 
         testRunner = new LocalTestRunner({
             generator: workspace,
@@ -110,10 +106,6 @@ export async function runWithCustomFixture({
             readmeConfig: apiWorkspace.generatorsConfiguration?.rawConfiguration.readme,
             outputFolder: ""
         };
-        console.log(
-            `Running custom fixture for ${workspace.workspaceName} with config:`,
-            JSON.stringify(runFixtureConfig, undefined, 2)
-        );
 
         await testRunner.build();
 
@@ -125,9 +117,9 @@ export async function runWithCustomFixture({
             outputDir: absolutePathToOutput
         });
 
-        taskContext.logger.info(`Wrote files to ${absolutePathToOutput}`);
+        taskContext.logger.debug(`Wrote files to ${absolutePathToOutput}`);
 
-        taskContext.logger.info(`Successfully ran custom fixture for ${workspace.workspaceName}`);
+        taskContext.logger.debug(`Successfully ran custom fixture for ${workspace.workspaceName}`);
     } catch (error) {
         taskContext.logger.error(
             `Encountered error while running generator. ${

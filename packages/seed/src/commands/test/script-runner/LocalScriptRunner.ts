@@ -30,7 +30,7 @@ export class LocalScriptRunner extends ScriptRunner {
         for (const script of scripts) {
             // Check if this script should be skipped based on its name
             if (skipScripts != null && script.name != null && skipScripts.includes(script.name)) {
-                taskContext.logger.info(`Skipping script "${script.name}" for ${id} (configured in fixture)`);
+                taskContext.logger.debug(`Skipping script "${script.name}" for ${id} (configured in fixture)`);
                 continue;
             }
 
@@ -66,7 +66,7 @@ export class LocalScriptRunner extends ScriptRunner {
         taskContext: TaskContext;
         script: { commands: string[] };
     }): Promise<ScriptRunner.RunResponse> {
-        taskContext.logger.info(`Running local script ${script.commands[0] ?? ""} on ${id}`);
+        taskContext.logger.debug(`Running local script ${script.commands[0] ?? ""} on ${id}`);
 
         const scriptFile = await tmp.file();
         await writeFile(scriptFile.path, ["set -e", `cd ${outputDir}`, ...script.commands].join("\n"));

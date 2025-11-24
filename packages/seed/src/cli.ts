@@ -202,10 +202,6 @@ function addTestCommand(cli: Argv) {
                             `Generator ${generator.workspaceName} does not have a local test configuration. Please add a 'test.local' section to your seed.yml with 'buildCommand' and 'runCommand' properties.`
                         );
                     }
-                    console.log(
-                        `Using local test runner for ${generator.workspaceName} with config:`,
-                        generator.workspaceConfig.test.local
-                    );
                     scriptRunner = new LocalScriptRunner(
                         generator,
                         argv.skipScripts,

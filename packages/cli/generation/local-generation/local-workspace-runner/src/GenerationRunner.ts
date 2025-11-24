@@ -71,12 +71,12 @@ export class GenerationRunner {
                                 inspect
                             });
 
-                            interactiveTaskContext.logger.info(
+                            interactiveTaskContext.logger.debug(
                                 chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
                             );
 
                             if (shouldGenerateDynamicSnippetTests && generatorInvocation.language != null) {
-                                interactiveTaskContext.logger.info(
+                                interactiveTaskContext.logger.debug(
                                     `Generating dynamic snippet tests for ${generatorInvocation.language}...`
                                 );
                                 await generateDynamicSnippetTests({
@@ -88,7 +88,7 @@ export class GenerationRunner {
                                     skipUnstable: skipUnstableDynamicSnippetTests
                                 });
                             } else {
-                                interactiveTaskContext.logger.info(
+                                interactiveTaskContext.logger.debug(
                                     `Skipping dynamic snippet tests; shouldGenerateDynamicSnippetTests: ${shouldGenerateDynamicSnippetTests}, language: ${generatorInvocation.language}`
                                 );
                             }
@@ -129,7 +129,7 @@ export class GenerationRunner {
         shouldCommit: boolean;
         autoVersioningCommitMessage?: string;
     }> {
-        context.logger.info(`Starting generation for ${generatorInvocation.name}`);
+        context.logger.debug(`Starting generation for ${generatorInvocation.name}`);
 
         if (generatorInvocation.absolutePathToLocalOutput == null) {
             throw new Error("Output path is required for generation");
