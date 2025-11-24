@@ -21,10 +21,6 @@ permissions:
   pull-requests: write
   actions: read
 
-env:
-  TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
-  TURBO_TEAM: "buildwithfern"
-
 jobs:
   build-and-generate:
     runs-on: ubuntu-latest
