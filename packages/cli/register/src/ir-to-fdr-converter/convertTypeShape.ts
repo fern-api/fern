@@ -341,61 +341,9 @@ function convertExtraProperties(
 function getDisplayNameForTypeReference(typeReference: Ir.types.TypeReference): string | undefined {
     return typeReference._visit<string | undefined>({
         named: (namedType) => namedType.displayName,
-        primitive: (primitiveType) => {
-            return Ir.types.PrimitiveTypeV1._visit<string>(primitiveType.v1, {
-                integer: () => "Integer",
-                long: () => "Long",
-                uint: () => "Unsigned Integer",
-                uint64: () => "Unsigned 64-bit Integer",
-                float: () => "Float",
-                double: () => "Double",
-                boolean: () => "Boolean",
-                string: () => "String",
-                date: () => "Date",
-                dateTime: () => "Date Time",
-                uuid: () => "UUID",
-                base64: () => "Base64",
-                bigInteger: () => "Big Integer",
-                _other: () => "Unknown"
-            });
-        },
-        container: (containerType) => {
-            return Ir.types.ContainerType._visit<string | undefined>(containerType, {
-                list: (itemType) => {
-                    const itemDisplayName = getDisplayNameForTypeReference(itemType);
-                    return itemDisplayName ? `List<${itemDisplayName}>` : "List";
-                },
-                map: ({ keyType, valueType }) => {
-                    const keyDisplayName = getDisplayNameForTypeReference(keyType);
-                    const valueDisplayName = getDisplayNameForTypeReference(valueType);
-                    if (keyDisplayName && valueDisplayName) {
-                        return `Map<${keyDisplayName}, ${valueDisplayName}>`;
-                    }
-                    return "Map";
-                },
-                optional: (itemType) => {
-                    const itemDisplayName = getDisplayNameForTypeReference(itemType);
-                    return itemDisplayName ? `Optional<${itemDisplayName}>` : "Optional";
-                },
-                nullable: (itemType) => {
-                    const itemDisplayName = getDisplayNameForTypeReference(itemType);
-                    return itemDisplayName ? `Nullable<${itemDisplayName}>` : "Nullable";
-                },
-                set: (itemType) => {
-                    const itemDisplayName = getDisplayNameForTypeReference(itemType);
-                    return itemDisplayName ? `Set<${itemDisplayName}>` : "Set";
-                },
-                literal: (literal) => {
-                    return Ir.types.Literal._visit<string>(literal, {
-                        boolean: (booleanLiteral) => `${booleanLiteral}`,
-                        string: (stringLiteral) => `"${stringLiteral}"`,
-                        _other: () => "Literal"
-                    });
-                },
-                _other: () => undefined
-            });
-        },
-        unknown: () => "Unknown",
+        primitive: () => undefined,
+        container: () => undefined,
+        unknown: () => undefined,
         _other: () => undefined
     });
 }
