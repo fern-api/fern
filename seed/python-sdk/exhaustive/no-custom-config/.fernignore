@@ -1,0 +1,2 @@
+tests/test_lazy_loading.py
+tests/custom/test_discriminated_unions.py
