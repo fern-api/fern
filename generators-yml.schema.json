@@ -653,6 +653,51 @@
         }
       ]
     },
+    "fernDefinition.auth.InferredRefreshTokenEndpointSchemaObject": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "expiry-response-property": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authenticated-request-headers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/fernDefinition.auth.InferredAuthenticatedRequestHeader"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "endpoint"
+      ],
+      "additionalProperties": false
+    },
+    "fernDefinition.auth.InferredRefreshTokenEndpointSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/fernDefinition.auth.InferredRefreshTokenEndpointSchemaObject"
+        }
+      ]
+    },
     "fernDefinition.auth.InferredBearerAuthSchema": {
       "type": "object",
       "properties": {
@@ -671,6 +716,16 @@
         },
         "get-token": {
           "$ref": "#/definitions/fernDefinition.auth.InferredGetTokenEndpointSchema"
+        },
+        "refresh-token": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/fernDefinition.auth.InferredRefreshTokenEndpointSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [

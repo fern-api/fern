@@ -896,6 +896,51 @@
         }
       ]
     },
+    "auth.InferredRefreshTokenEndpointSchemaObject": {
+      "type": "object",
+      "properties": {
+        "endpoint": {
+          "type": "string"
+        },
+        "expiry-response-property": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "authenticated-request-headers": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/auth.InferredAuthenticatedRequestHeader"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "endpoint"
+      ],
+      "additionalProperties": false
+    },
+    "auth.InferredRefreshTokenEndpointSchema": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "$ref": "#/definitions/auth.InferredRefreshTokenEndpointSchemaObject"
+        }
+      ]
+    },
     "auth.InferredBearerAuthSchema": {
       "type": "object",
       "properties": {
@@ -914,6 +959,16 @@
         },
         "get-token": {
           "$ref": "#/definitions/auth.InferredGetTokenEndpointSchema"
+        },
+        "refresh-token": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/auth.InferredRefreshTokenEndpointSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
