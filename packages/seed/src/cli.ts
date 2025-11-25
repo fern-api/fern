@@ -209,7 +209,8 @@ function addTestCommand(cli: Argv) {
                     scriptRunner = new LocalScriptRunner(
                         generator,
                         argv.skipScripts,
-                        taskContextFactory.create("local-script-runner")
+                        taskContextFactory.create("local-script-runner"),
+                        argv["log-level"]
                     );
                     testRunner = new LocalTestRunner({
                         generator,
@@ -225,6 +226,7 @@ function addTestCommand(cli: Argv) {
                         generator,
                         argv.skipScripts,
                         taskContextFactory.create("docker-script-runner"),
+                        argv["log-level"],
                         argv.containerRuntime as "docker" | "podman" | undefined
                     );
                     testRunner = new ContainerTestRunner({
@@ -577,7 +579,7 @@ async function getAvailableFixtures(generator: GeneratorWorkspace, withOutputFol
 
     // Optionally, include output folders in format fixture:outputFolder (note: this will replace the fixture name without the output folder)
     if (withOutputFolders) {
-        // Add fixtures that have subfolders with their subfoldered version
+        // Add fixtures that have subfolders with their subfolder version
         const allOptions: string[] = [];
         for (const fixture of availableFixtures) {
             const config = generator.workspaceConfig.fixtures?.[fixture];
