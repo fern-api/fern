@@ -1,0 +1,158 @@
+imports:
+  types: types.yml
+
+service:
+  auth: false
+  base-path: /staged-builder
+  endpoints:
+    createSimple:
+      method: POST
+      path: /simple
+      request: types.SimpleStaged
+      response: string
+      examples:
+        - name: CorrectOrder
+          request:
+            first: "a"
+            second: "b"
+            third: "c"
+          response:
+            body: "ok"
+        - name: ReverseOrder
+          request:
+            third: "c"
+            second: "b"
+            first: "a"
+          response:
+            body: "ok"
+        - name: RandomOrder1
+          request:
+            second: "b"
+            third: "c"
+            first: "a"
+          response:
+            body: "ok"
+
+    createMedium:
+      method: POST
+      path: /medium
+      request: types.MediumStaged
+      response: string
+      examples:
+        - name: CorrectOrder
+          request:
+            alpha: "alpha"
+            beta: 1
+            gamma: "gamma"
+            delta: true
+            optional: "optional"
+          response:
+            body: "ok"
+        - name: ScrambledOrder
+          request:
+            delta: true
+            beta: 1
+            alpha: "alpha"
+            gamma: "gamma"
+            optional: "optional"
+          response:
+            body: "ok"
+
+    createComplex:
+      method: POST
+      path: /complex
+      request: types.ComplexStaged
+      response: string
+      examples:
+        - name: CorrectOrder
+          request:
+            fieldA: "a"
+            fieldB: 1
+            fieldC: true
+            fieldD: "d"
+            fieldE: 1.5
+            optionalX: "x"
+            optionalY: 2
+            optionalZ: false
+          response:
+            body: "ok"
+        - name: RequiredScrambled
+          request:
+            fieldC: true
+            fieldE: 1.5
+            fieldA: "a"
+            fieldB: 1
+            fieldD: "d"
+            optionalX: "x"
+            optionalZ: false
+            optionalY: 2
+          response:
+            body: "ok"
+        - name: PartialReverse
+          request:
+            fieldE: 1.5
+            fieldD: "d"
+            fieldC: true
+            fieldB: 1
+            fieldA: "a"
+            optionalY: 2
+            optionalX: "x"
+            optionalZ: false
+          response:
+            body: "ok"
+
+    createMixed:
+      method: POST
+      path: /mixed
+      request: types.MixedStaged
+      response: string
+      examples:
+        - name: CorrectOrder
+          request:
+            id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+            name: "test"
+            timestamp: "2024-01-15T09:30:00Z"
+            nested:
+              first: "a"
+              second: "b"
+              third: "c"
+            count: 42
+          response:
+            body: "ok"
+        - name: WrongOrder
+          request:
+            count: 42
+            name: "test"
+            id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32"
+            nested:
+              third: "c"
+              first: "a"
+              second: "b"
+            timestamp: "2024-01-15T09:30:00Z"
+          response:
+            body: "ok"
+
+    createParent:
+      method: POST
+      path: /parent
+      request: types.Parent
+      response: string
+      examples:
+        - name: CorrectOrder
+          request:
+            parentId: "parent-123"
+            child:
+              childId: "child-456"
+              childValue: 789
+            parentName: "Parent Name"
+          response:
+            body: "ok"
+        - name: ParentWrongOrder
+          request:
+            parentName: "Parent Name"
+            child:
+              childValue: 789
+              childId: "child-456"
+            parentId: "parent-123"
+          response:
+            body: "ok"
