@@ -1,3 +1,18 @@
+//! # Object SDK
+//!
+//! The official Rust SDK for the Object.
+//!
+//! ## Getting Started
+//!
+//! ## Modules
+//!
+//! - [`api`] - Core API types and models
+//! - [`client`] - Client implementations
+//! - [`config`] - Configuration options
+//! - [`core`] - Core utilities and infrastructure
+//! - [`error`] - Error types and handling
+//! - [`prelude`] - Common imports for convenience
+
 pub mod api;
 pub mod client;
 pub mod config;

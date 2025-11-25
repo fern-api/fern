@@ -1,11 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support 4XX and 5XX patterns in OpenAPI specs for docs.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-24"
+  version: 2.6.0
+
+- changelogEntry:
+    - summary: |
+        Remove spammy "Cannot resolve source" warnings for OpenAPI sources in unioned API configurations with dependencies.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-25"
+  version: 2.5.2
+
+- changelogEntry:
+    - summary: |
+        Add validation for instance URLs to ensure they are valid.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-24"
+  version: 2.5.1
+
+- changelogEntry:
+    - summary: |
+        Support product and version-specific announcements in `docs.yml`.
+      type: feat
+  irVersion: 61
+  createdAt: "2025-11-24"
+  version: 2.5.0
+
+- changelogEntry:
+    - summary: |
         Update local development refresh behavior when updating the `sidebar-title` override, or a `slug` override of a page. The preview should now navigate to the new slug instead of showing a 404.
       type: fix
   irVersion: 61
   createdAt: "2025-11-23"
-  version: 2.4.1
+  version: 2.2.6
 
 - changelogEntry:
     - summary: |

@@ -24,6 +24,7 @@ import { SdkGeneratorContext } from "../../SdkGeneratorContext";
 import { AbstractEndpointGenerator } from "../AbstractEndpointGenerator";
 import { EndpointSignatureInfo } from "../EndpointSignatureInfo";
 import { getPaginationInfo } from "../utils/getPaginationInfo";
+import { getResponseBodyType } from "../utils/getResponseBodyType";
 
 export declare namespace HttpEndpointGenerator {
     export const OCTET_STREAM_CONTENT_TYPE = "application/octet-stream";
@@ -103,6 +104,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         const pagination = this.context.getPagination(endpoint);
         if (pagination != null && this.context.isEnabledPaginationEndpoint(endpoint)) {
             return this.getPaginationEndpointBody({ signature, endpoint, subpackage, pagination });
+        }
+        if (pagination?.type === "custom" && this.context.customConfig.customPagerName != null) {
+            return this.getCustomPaginationEndpointBody({ signature, endpoint, subpackage, pagination });
         }
         return this.generateDelegatingEndpointBody({ endpoint, signature, subpackage });
     }
@@ -196,6 +200,169 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.writeNewLineIfLastLineNot();
             writer.writeNode(paginationInfo.callGetPage);
             writer.writeNewLineIfLastLineNot();
+        });
+    }
+
+    private getCustomPaginationEndpointBody({
+        signature,
+        endpoint,
+        subpackage,
+        pagination
+    }: {
+        signature: EndpointSignatureInfo;
+        endpoint: HttpEndpoint;
+        subpackage: Subpackage | undefined;
+        pagination: Pagination;
+    }): go.CodeBlock {
+        const responseBody = endpoint.response?.body;
+        if (responseBody == null) {
+            return go.codeblock("return nil, nil");
+        }
+
+        const responseBodyType = getResponseBodyType({ context: this.context, body: responseBody });
+        const errorDecoder = this.buildErrorDecoder({ endpoint });
+        const hasErrorDecoder = errorDecoder != null && endpoint.errors.length > 0;
+
+        return go.codeblock((writer) => {
+            writer.writeNode(this.buildRequestOptions({ endpoint }));
+            writer.writeNewLineIfLastLineNot();
+            writer.writeNode(this.buildBaseUrl({ endpoint, subpackage, rawClient: false }));
+            writer.writeNewLineIfLastLineNot();
+            writer.writeNode(this.buildEndpointUrl({ endpoint, signature }));
+
+            const buildQueryParameters = this.buildQueryParameters({
+                signature,
+                endpoint,
+                rawClient: false,
+                encodeQuery: true
+            });
+            if (buildQueryParameters != null) {
+                writer.writeNewLineIfLastLineNot();
+                writer.writeNode(buildQueryParameters);
+            }
+
+            writer.writeNewLineIfLastLineNot();
+            writer.write("response, callErr := ");
+            writer.writeNode(
+                go.invokeMethod({
+                    method: this.context.getMethodName(endpoint.name),
+                    arguments_: [
+                        ...signature.allParameters.slice(0, -1).map((param) => go.codeblock(param.name)),
+                        go.codeblock("opts...")
+                    ],
+                    on: go.selector({
+                        on: this.getReceiverCodeBlock({ subpackage }),
+                        selector: go.codeblock("WithRawResponse")
+                    })
+                })
+            );
+            writer.writeNewLineIfLastLineNot();
+            writer.writeNode(go.codeblock("if callErr != nil {\n\treturn nil, callErr\n}"));
+
+            writer.writeNewLineIfLastLineNot();
+            writer.write("var responseBody ");
+            writer.writeNode(responseBodyType);
+            writer.write(" = response.Body");
+            writer.writeNewLineIfLastLineNot();
+
+            writer.writeNode(this.buildFetcherFunction({ endpoint, subpackage, responseBodyType, hasErrorDecoder }));
+            writer.writeNewLineIfLastLineNot();
+
+            const customPagerName = this.context.customConfig.customPagerName ?? "CustomPager";
+            writer.write(`pager := core.New${customPagerName}(responseBody, fetcher)`);
+            writer.writeNewLineIfLastLineNot();
+            writer.write("return pager, nil");
+        });
+    }
+
+    private buildFetcherFunction({
+        endpoint,
+        subpackage,
+        responseBodyType,
+        hasErrorDecoder
+    }: {
+        endpoint: HttpEndpoint;
+        subpackage: Subpackage | undefined;
+        responseBodyType: go.Type;
+        hasErrorDecoder: boolean;
+    }): go.AstNode {
+        const callParamsFields: go.StructField[] = [
+            { name: "URL", value: go.TypeInstantiation.reference(go.codeblock("href")) },
+            { name: "Method", value: go.TypeInstantiation.string(endpoint.method) },
+            { name: "Headers", value: go.TypeInstantiation.reference(go.codeblock("headers")) },
+            { name: "MaxAttempts", value: go.TypeInstantiation.reference(go.codeblock("options.MaxAttempts")) },
+            { name: "BodyProperties", value: go.TypeInstantiation.reference(go.codeblock("options.BodyProperties")) },
+            { name: "QueryParameters", value: go.TypeInstantiation.reference(go.codeblock("options.QueryParameters")) },
+            { name: "Client", value: go.TypeInstantiation.reference(go.codeblock("options.HTTPClient")) },
+            { name: "Response", value: go.TypeInstantiation.reference(go.codeblock("&pageResponse")) }
+        ];
+
+        if (hasErrorDecoder) {
+            callParamsFields.push({
+                name: "ErrorDecoder",
+                value: go.TypeInstantiation.reference(
+                    this.context.callNewErrorDecoder([
+                        go.TypeInstantiation.reference(this.context.getErrorCodesVariableReference())
+                    ])
+                )
+            });
+        }
+
+        const fetcherBody = go.codeblock((writer) => {
+            writer.writeNode(
+                go.codeblock(
+                    `options := ${endpoint.idempotent ? "core.NewIdempotentRequestOptions" : "core.NewRequestOptions"}(opts...)`
+                )
+            );
+            writer.writeNewLineIfLastLineNot();
+            writer.write("headers := ");
+            writer.writeNode(
+                this.context.callMergeHeaders([
+                    go.selector({
+                        on: this.getReceiverCodeBlock({ subpackage }),
+                        selector: go.codeblock("options.ToHeader()")
+                    }),
+                    go.codeblock("options.ToHeader()")
+                ])
+            );
+            writer.writeNewLineIfLastLineNot();
+            writer.write("var pageResponse ");
+            writer.writeNode(responseBodyType);
+            writer.writeNewLineIfLastLineNot();
+            writer.write("_, err := ");
+            writer.writeNode(
+                go.selector({
+                    on: this.getCallerFieldReference({ subpackage }),
+                    selector: go.codeblock("Call")
+                })
+            );
+            writer.write("(ctx, ");
+            writer.writeNode(
+                go.TypeInstantiation.structPointer({
+                    typeReference: this.context.caller.getCallParamsTypeReference(),
+                    fields: callParamsFields
+                })
+            );
+            writer.write(")");
+            writer.writeNewLineIfLastLineNot();
+            writer.writeNode(go.codeblock("if err != nil {\n\treturn nil, err\n}"));
+            writer.writeNewLineIfLastLineNot();
+            writer.write("return pageResponse, nil");
+        });
+
+        return go.codeblock((writer) => {
+            writer.write("fetcher := ");
+            writer.writeNode(
+                go.func({
+                    parameters: [
+                        go.parameter({ name: "ctx", type: go.Type.reference(this.context.getContextTypeReference()) }),
+                        go.parameter({ name: "href", type: go.Type.string() })
+                    ],
+                    return_: [responseBodyType, go.Type.error()],
+                    body: fetcherBody,
+                    multiline: true
+                })
+            );
         });
     }
 
@@ -1035,7 +1202,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (signature.returnType == null) {
             return [go.Type.error()];
         }
-        if (this.context.isEnabledPaginationEndpoint(endpoint) && signature.pageReturnType != null) {
+        // Use pageReturnType for enabled pagination or custom pagination
+        const pagination = this.context.getPagination(endpoint);
+        const isCustomPagination = pagination?.type === "custom" && this.context.customConfig.customPagerName != null;
+        if (
+            (this.context.isEnabledPaginationEndpoint(endpoint) || isCustomPagination) &&
+            signature.pageReturnType != null
+        ) {
             return [signature.pageReturnType, go.Type.error()];
         }
         return [signature.returnType, go.Type.error()];

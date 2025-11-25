@@ -41,3 +41,5 @@ allowedFailures:
   - trace
   - circular-references
   - circular-references-advanced
+  # Java-specific fixture for staged builder ordering
+  - java-staged-builder-ordering

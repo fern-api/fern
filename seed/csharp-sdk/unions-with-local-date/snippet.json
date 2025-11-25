@@ -40,6 +40,54 @@
         {
             "example_identifier": null,
             "id": {
+                "path": "/time/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_types.get"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Types.GetAsync(\"date-example\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/time/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_types.get"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Types.GetAsync(\"datetime-example\");\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/time",
+                "method": "PATCH",
+                "identifier_override": "endpoint_types.update"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Types.UpdateAsync(new UnionWithTime(new UnionWithTime.Date(new DateOnly(1994, 1, 1))));\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/time",
+                "method": "PATCH",
+                "identifier_override": "endpoint_types.update"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedUnions;\n\nvar client = new SeedUnionsClient();\nawait client.Types.UpdateAsync(\n    new UnionWithTime(new UnionWithTime.Datetime(new DateTime(1994, 01, 01, 01, 01, 01, 000)))\n);\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
                 "path": "/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_union.get"

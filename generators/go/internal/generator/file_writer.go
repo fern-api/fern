@@ -40,6 +40,7 @@ type fileWriter struct {
 	gettersPassByValue           bool
 	exportAllRequestsAtRoot      bool
 	unionVersion                 UnionVersion
+	customPagerName              string
 	scope                        *gospec.Scope
 	types                        map[common.TypeId]*ir.TypeDeclaration
 	errors                       map[ir.ErrorId]*ir.ErrorDeclaration
@@ -61,6 +62,7 @@ func newFileWriter(
 	gettersPassByValue bool,
 	exportAllRequestsAtRoot bool,
 	unionVersion UnionVersion,
+	customPagerName string,
 	types map[common.TypeId]*ir.TypeDeclaration,
 	errors map[ir.ErrorId]*ir.ErrorDeclaration,
 	coordinator *coordinator.Client,
@@ -107,6 +109,7 @@ func newFileWriter(
 		gettersPassByValue:           gettersPassByValue,
 		exportAllRequestsAtRoot:      exportAllRequestsAtRoot,
 		unionVersion:                 unionVersion,
+		customPagerName:              customPagerName,
 		scope:                        scope,
 		types:                        types,
 		errors:                       errors,
@@ -260,6 +263,7 @@ func (f *fileWriter) clone() *fileWriter {
 		f.gettersPassByValue,
 		f.exportAllRequestsAtRoot,
 		f.unionVersion,
+		f.customPagerName,
 		f.types,
 		f.errors,
 		f.coordinator,

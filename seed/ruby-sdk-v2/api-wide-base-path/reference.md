@@ -13,7 +13,11 @@
 <dd>
 
 ```ruby
-client.service.post();
+client.service.post(
+  'serviceParam',
+  1,
+  'resourceParam'
+);
 ```
 </dd>
 </dl>

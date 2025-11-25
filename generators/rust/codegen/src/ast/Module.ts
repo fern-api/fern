@@ -8,6 +8,7 @@ import { Writer } from "./Writer";
 
 export declare namespace Module {
     interface Args {
+        moduleDoc?: string[];
         imports?: string[];
         useStatements?: UseStatement[];
         moduleDeclarations?: ModuleDeclaration[];
@@ -19,6 +20,7 @@ export declare namespace Module {
 }
 
 export class Module extends AstNode {
+    public readonly moduleDoc?: string[];
     public readonly imports?: string[];
     public readonly useStatements?: UseStatement[];
     public readonly moduleDeclarations?: ModuleDeclaration[];
@@ -28,6 +30,7 @@ export class Module extends AstNode {
     public readonly rawDeclarations?: string[];
 
     public constructor({
+        moduleDoc,
         imports,
         useStatements,
         moduleDeclarations,
@@ -37,6 +40,7 @@ export class Module extends AstNode {
         rawDeclarations
     }: Module.Args) {
         super();
+        this.moduleDoc = moduleDoc;
         this.imports = imports;
         this.useStatements = useStatements;
         this.moduleDeclarations = moduleDeclarations;
@@ -47,6 +51,18 @@ export class Module extends AstNode {
     }
 
     public write(writer: Writer): void {
+        // Write module documentation first
+        if (this.moduleDoc && this.moduleDoc.length > 0) {
+            this.moduleDoc.forEach((line) => {
+                if (line === "") {
+                    writer.writeLine("//!");
+                } else {
+                    writer.writeLine(`//! ${line}`);
+                }
+            });
+            writer.newLine();
+        }
+
         // Write imports (legacy string-based imports)
         if (this.imports && this.imports.length > 0) {
             this.imports.forEach((importStatement) => {

@@ -1,3 +1,13 @@
+//! Request and response types for the Trace
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 57 types for API operations
+//! - **Model Types**: 157 types for data representation
+
 pub mod admin_test;
 pub mod commons_user_id;
 pub mod commons_problem_id;

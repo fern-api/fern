@@ -492,7 +492,8 @@ async function getVersionedNavigationConfiguration({
             hidden: version.hidden,
             viewers: parseRoles(version.viewers),
             orphaned: version.orphaned,
-            featureFlags: convertFeatureFlag(version.featureFlag)
+            featureFlags: convertFeatureFlag(version.featureFlag),
+            announcement: version.announcement
         });
     }
     return {
@@ -568,7 +569,8 @@ async function getNavigationConfiguration({
                     image: productImageFile,
                     viewers: parseRoles(product.viewers),
                     orphaned: product.orphaned,
-                    featureFlags: convertFeatureFlag(product.featureFlag)
+                    featureFlags: convertFeatureFlag(product.featureFlag),
+                    announcement: product.announcement
                 });
             } else if ("href" in product && product.href != null) {
                 productNavbars.push({

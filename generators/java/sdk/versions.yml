@@ -1,3 +1,19 @@
+- version: 3.18.11
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to preserve schema parameter order for staged builders.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.10
+  changelogEntry:
+    - summary: |
+        Fix Java dynamic snippets when use-local-date-for-dates is enabled. Snippets for date fields now generate LocalDate.parse(...) instead of string literals, matching SDKs configured to use LocalDate for dates. This fixes compilation errors in generated dynamic snippets for Java v2 when the use-local-date-for-dates flag is true.
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 61
+
 - version: 3.18.9
   changelogEntry:
     - summary: |

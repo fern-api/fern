@@ -1,7 +1,8 @@
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
-    Options
+    Options,
+    TypeInstance
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
@@ -277,6 +278,46 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         required.sort((a, b) => (indexMap.get(a.name.wireValue) ?? 0) - (indexMap.get(b.name.wireValue) ?? 0));
 
         return [...required, ...optional];
+    }
+
+    /**
+     * Override to preserve parameter order for Java staged builders.
+     *
+     * Java uses type-state staged builders where method call order is enforced at compile time.
+     * Unlike Python/TypeScript/Go which use keyword arguments or object literals (order-independent),
+     * Java requires fields to be set in the exact order they appear in the schema definition.
+     *
+     * This override calls the base implementation to preserve all error handling semantics,
+     * then reorders the results to match schema parameter order.
+     */
+    public override associateByWireValue({
+        parameters,
+        values,
+        ignoreMissingParameters
+    }: {
+        parameters: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values;
+        ignoreMissingParameters?: boolean;
+    }): TypeInstance[] {
+        // Call base implementation to preserve all error handling semantics
+        const instances = super.associateByWireValue({ parameters, values, ignoreMissingParameters });
+
+        // Build a map of wire value -> TypeInstance for efficient lookup
+        const byWireValue = new Map<string, TypeInstance>();
+        for (const instance of instances) {
+            byWireValue.set(instance.name.wireValue, instance);
+        }
+
+        // Reorder instances to match schema parameter order
+        const ordered: TypeInstance[] = [];
+        for (const parameter of parameters) {
+            const instance = byWireValue.get(parameter.name.wireValue);
+            if (instance != null) {
+                ordered.push(instance);
+            }
+        }
+
+        return ordered;
     }
 
     public getRootPackageName(): string {

@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "fieldA": {
+      "type": "string"
+    },
+    "fieldB": {
+      "type": "integer"
+    },
+    "fieldC": {
+      "type": "boolean"
+    },
+    "fieldD": {
+      "type": "string"
+    },
+    "fieldE": {
+      "type": "number"
+    },
+    "optionalX": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalY": {
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "optionalZ": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "fieldA",
+    "fieldB",
+    "fieldC",
+    "fieldD",
+    "fieldE"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

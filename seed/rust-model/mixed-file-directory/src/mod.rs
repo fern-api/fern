@@ -1,3 +1,13 @@
+//! Request and response types for the MixedFileDirectory
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 4 types for API operations
+//! - **Model Types**: 5 types for data representation
+
 pub mod id;
 pub mod organization_organization;
 pub mod organization_create_organization_request;
