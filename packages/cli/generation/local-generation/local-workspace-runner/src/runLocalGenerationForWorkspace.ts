@@ -472,6 +472,7 @@ function getPublishConfig({
             uri: generatorInvocation.raw.github.uri,
             token: generatorInvocation.raw.github.token,
             mode: irMode,
+            branch: generatorInvocation.raw.github.branch,
             target: getPublishTarget({ outputSchema: generatorInvocation.raw.output, version, packageName })
         });
     }
