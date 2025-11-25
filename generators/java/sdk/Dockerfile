@@ -49,6 +49,36 @@ RUN set -eux; \
     apt-get autoremove -y --purge && \
     rm -rf /var/lib/apt/lists/*
 
+# Upgrade packages with available security patches to address remaining CVEs
+# CVE-2025-59375: libexpat1 (Medium)
+# CVE-2025-45582: tar (Medium) - required for sdk.tar extraction
+# CVE-2025-8941: libpam (Medium)
+# CVE-2025-64505, CVE-2025-64506, CVE-2025-64720, CVE-2025-65018: libpng16-16 (Medium)
+# CVE-2025-9820: libgnutls30 (Low)
+# CVE-2025-0167, CVE-2025-9086: curl/libcurl (Low)
+# CVE-2024-52005: git (Medium) - required for git config
+RUN set -eux; \
+    max=5; \
+    count=0; \
+    until apt-get update; do \
+      count=$((count + 1)); \
+      if [ "$count" -ge "$max" ]; then \
+        echo "apt-get update failed after ${count} attempts"; \
+        exit 1; \
+      fi; \
+      echo "apt-get update failed, retrying in 20s..."; \
+      sleep 20; \
+    done; \
+    apt-get install -y --only-upgrade \
+        libexpat1 \
+        tar \
+        libpam-modules libpam-modules-bin libpam-runtime libpam0g \
+        libpng16-16 \
+        libgnutls30 \
+        curl libcurl3-gnutls libcurl4 \
+        git git-man || true; \
+    rm -rf /var/lib/apt/lists/*
+
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
 RUN cd / \
     && tar -xvf sdk.tar \
