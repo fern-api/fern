@@ -175,6 +175,6 @@
         "$TURBO_ROOT$/shared/stylelintrc.shared.json",
         "$TURBO_ROOT$/tsconfig.eslint.json"
       ]
-    },
+    }
   }
 }
