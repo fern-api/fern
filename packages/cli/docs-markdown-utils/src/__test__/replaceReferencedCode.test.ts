@@ -647,9 +647,9 @@ describe("replaceReferencedCode", () => {
         }
     });
 
-    it("should extract comma-separated lines", async () => {
+    it("should extract array of lines", async () => {
         const markdown = `
-            <Code src="../snippets/test.py" lines={1,3,5} />
+            <Code src="../snippets/test.py" lines={[1,3,5]} />
         `;
 
         const result = await replaceReferencedCode({
@@ -675,9 +675,9 @@ describe("replaceReferencedCode", () => {
         `);
     });
 
-    it("should extract mixed ranges and single lines", async () => {
+    it("should extract array with mixed ranges and single lines", async () => {
         const markdown = `
-            <Code src="../snippets/test.py" lines={1-2,4,6-7} />
+            <Code src="../snippets/test.py" lines={[1-2,4,6-7]} />
         `;
 
         const result = await replaceReferencedCode({
@@ -707,7 +707,7 @@ describe("replaceReferencedCode", () => {
 
     it("should handle overlapping ranges by deduplicating lines", async () => {
         const markdown = `
-            <Code src="../snippets/test.py" lines={1-3,2-4} />
+            <Code src="../snippets/test.py" lines={[1-3,2-4]} />
         `;
 
         const result = await replaceReferencedCode({
@@ -736,7 +736,7 @@ describe("replaceReferencedCode", () => {
 
     it("should handle out-of-order line specifications by sorting them", async () => {
         const markdown = `
-            <Code src="../snippets/test.py" lines={5,1,3} />
+            <Code src="../snippets/test.py" lines={[5,1,3]} />
         `;
 
         const result = await replaceReferencedCode({

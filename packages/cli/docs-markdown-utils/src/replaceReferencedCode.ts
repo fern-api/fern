@@ -15,10 +15,10 @@ function isUrl(src: string): boolean {
 /**
  * Parses a lines parameter value and extracts the specified lines from content.
  * Supports formats:
- * - Single number: "5" (line 5)
- * - Range: "1-10" (lines 1 through 10, inclusive)
- * - Comma-separated: "1,3,5" (lines 1, 3, and 5)
- * - Mixed: "1-3,5,7-10" (lines 1-3, 5, and 7-10)
+ * - Single number: "5" or "[5]" (line 5)
+ * - Range: "1-10" or "[1-10]" (lines 1 through 10, inclusive)
+ * - Array of numbers: "[1,3,5]" (lines 1, 3, and 5)
+ * - Array with ranges: "[1-3,5,7-10]" (lines 1-3, 5, and 7-10)
  * All line numbers are 1-indexed.
  * @param content The full file content
  * @param linesParam The lines parameter value
@@ -28,8 +28,14 @@ function extractLines(content: string, linesParam: string): string {
     const allLines = content.split("\n");
     const lineIndices = new Set<number>();
 
+    // Strip array brackets if present: [1,3,5] -> 1,3,5
+    let normalizedParam = linesParam.trim();
+    if (normalizedParam.startsWith("[") && normalizedParam.endsWith("]")) {
+        normalizedParam = normalizedParam.slice(1, -1);
+    }
+
     // Split by comma to handle comma-separated values
-    const parts = linesParam.split(",");
+    const parts = normalizedParam.split(",");
 
     for (const part of parts) {
         const trimmedPart = part.trim();
