@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.22.3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to properly handle custom URLs in multi-URL environments. Custom URLs now correctly generate `Environments::custom(...)` calls instead of failing with "Invalid multi url environment" error.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 62
+
 - version: 1.22.2
   changelogEntry:
     - summary: |

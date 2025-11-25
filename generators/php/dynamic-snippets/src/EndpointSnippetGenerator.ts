@@ -354,6 +354,11 @@ export class EndpointSnippetGenerator {
             return undefined;
         }
 
+        // Validate that all required base URLs are provided
+        if (!this.context.validateMultiEnvironmentUrlValues(environment)) {
+            return undefined;
+        }
+
         const firstBaseUrlId = baseUrlIds[0];
         if (firstBaseUrlId == null) {
             return undefined;
@@ -364,37 +369,36 @@ export class EndpointSnippetGenerator {
             return undefined;
         }
 
-        if (this.context.isSingleEnvironmentID(firstBaseUrlValue)) {
-            const environmentName = this.context.resolveEnvironmentName(firstBaseUrlValue);
-            if (environmentName == null) {
-                return undefined;
-            }
-
+        // Check if the first value is a valid environment ID (not just any string)
+        const firstEnvironmentName = this.context.resolveEnvironmentName(firstBaseUrlValue);
+        if (firstEnvironmentName != null) {
+            // Check if all values point to the same environment
             const allSameEnvironment = baseUrlIds.every((baseUrlId) => {
                 const value = environment[baseUrlId];
-                return value != null && this.context.isSingleEnvironmentID(value) && value === firstBaseUrlValue;
+                if (value == null) {
+                    return false;
+                }
+                const envName = this.context.resolveEnvironmentName(value);
+                return envName != null && value === firstBaseUrlValue;
             });
 
             if (allSameEnvironment) {
-                return { type: "named", name: this.context.getClassName(environmentName) };
+                return { type: "named", name: this.context.getClassName(firstEnvironmentName) };
             }
         }
 
+        // Treat all values as custom URLs
         const urls: Record<string, string> = {};
-        let hasAnyLiteralUrl = false;
         for (const baseUrlId of baseUrlIds) {
             const value = environment[baseUrlId];
             if (value == null) {
                 continue;
             }
-            if (!this.context.isSingleEnvironmentID(value)) {
-                hasAnyLiteralUrl = true;
-                const paramName = this.getBaseUrlPropertyName(baseUrlId);
-                urls[paramName] = value;
-            }
+            const paramName = this.getBaseUrlPropertyName(baseUrlId);
+            urls[paramName] = value;
         }
 
-        if (hasAnyLiteralUrl && Object.keys(urls).length > 0) {
+        if (Object.keys(urls).length > 0) {
             return { type: "custom", urls };
         }
 
