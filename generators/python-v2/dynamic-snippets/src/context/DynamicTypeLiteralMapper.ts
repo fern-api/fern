@@ -138,7 +138,10 @@ export class DynamicTypeLiteralMapper {
             });
             return python.TypeInstantiation.nop();
         }
-        return python.TypeInstantiation.set(
+        // Use list syntax instead of set literals because:
+        // 1. SDK request parameters use typing.Sequence which expects lists
+        // 2. Sets can't contain unhashable types like dicts in Python
+        return python.TypeInstantiation.list(
             value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {

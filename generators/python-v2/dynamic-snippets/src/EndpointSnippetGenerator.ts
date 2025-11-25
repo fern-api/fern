@@ -489,8 +489,24 @@ export class EndpointSnippetGenerator {
                 return this.getBodyRequestArgsForNamedTypeReference({ typeReference, named, value });
             }
             case "nullable":
-            case "optional":
+            case "optional": {
+                // Check if the inner type is an object - if so, don't flatten it
+                const innerType = typeReference.value;
+                if (innerType.type === "named") {
+                    const named = this.context.resolveNamedType({ typeId: innerType.value });
+                    if (named?.type === "object") {
+                        // Optional objects should NOT be flattened - use as single 'request' parameter
+                        return [
+                            {
+                                name: REQUEST_BODY_ARG_NAME,
+                                value: this.context.dynamicTypeLiteralMapper.convert({ typeReference: innerType, value })
+                            }
+                        ];
+                    }
+                }
+                // For non-object types, continue unwrapping
                 return this.getBodyRequestArgsForTypeReference({ typeReference: typeReference.value, value });
+            }
             case "list":
             case "map":
             case "set":
