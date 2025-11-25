@@ -36,7 +36,11 @@ export interface BaseRequestOptions {
     xApiVersion?: "1.0.0" | "2.0.0" | "latest";
 }
 
-export function normalizeClientOptions<T extends BaseClientOptions>(options: T): T {
+export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
+    logging: core.logging.Logger;
+};
+
+export function normalizeClientOptions<T extends BaseClientOptions>(options: T): NormalizedClientOptions<T> {
     const headers = mergeHeaders(
         {
             "X-Fern-Language": "JavaScript",
@@ -54,5 +58,5 @@ export function normalizeClientOptions<T extends BaseClientOptions>(options: T):
         ...options,
         logging: core.logging.createLogger(options?.logging),
         headers,
-    } as T;
+    } as NormalizedClientOptions<T>;
 }

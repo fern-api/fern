@@ -2,7 +2,7 @@
 
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedAcceptClient {
     export interface Options extends BaseClientOptions {}
@@ -11,11 +11,11 @@ export declare namespace SeedAcceptClient {
 }
 
 export class SeedAcceptClient {
-    protected readonly _options: SeedAcceptClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedAcceptClient.Options>;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedAcceptClient.Options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get service(): ServiceClient {

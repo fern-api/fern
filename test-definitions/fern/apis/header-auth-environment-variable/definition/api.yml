@@ -1,0 +1,9 @@
+name: header-token-environment-variable
+auth: Header
+auth-schemes:
+  Header:
+    name: Header Token Auth
+    header: x-api-key
+    type: string
+    prefix: test_prefix
+    env: HEADER_TOKEN_ENV_VAR

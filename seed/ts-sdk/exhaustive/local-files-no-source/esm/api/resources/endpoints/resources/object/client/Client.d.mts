@@ -1,4 +1,5 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
+import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
 import type * as SeedExhaustive from "../../../../../index.mjs";
 export declare namespace ObjectClient {
@@ -8,7 +9,7 @@ export declare namespace ObjectClient {
     }
 }
 export declare class ObjectClient {
-    protected readonly _options: ObjectClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<ObjectClient.Options>;
     constructor(options: ObjectClient.Options);
     /**
      * @param {SeedExhaustive.types.ObjectWithOptionalField} request
@@ -165,5 +166,4 @@ export declare class ObjectClient {
      */
     getAndReturnNestedWithRequiredFieldAsList(request: SeedExhaustive.types.NestedObjectWithRequiredField[], requestOptions?: ObjectClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.NestedObjectWithRequiredField>;
     private __getAndReturnNestedWithRequiredFieldAsList;
-    protected _getAuthorizationHeader(): Promise<string | undefined>;
 }
