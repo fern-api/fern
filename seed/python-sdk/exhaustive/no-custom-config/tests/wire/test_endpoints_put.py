@@ -1,8 +1,6 @@
-from seed import SeedExhaustive
 from conftest import verify_request_count
 
-import pytest
-
+from seed import SeedExhaustive
 
 
 def test_endpoints_put_add() -> None:
@@ -11,4 +9,3 @@ def test_endpoints_put_add() -> None:
     client = SeedExhaustive(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})
     result = client.endpoints.put.add("id")
     verify_request_count(test_id, "PUT", "/id", None, 1)
-

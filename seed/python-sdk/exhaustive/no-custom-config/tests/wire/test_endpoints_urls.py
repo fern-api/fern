@@ -1,8 +1,6 @@
-from seed import SeedExhaustive
 from conftest import verify_request_count
 
-import pytest
-
+from seed import SeedExhaustive
 
 
 def test_endpoints_urls_with_mixed_case() -> None:
@@ -35,4 +33,3 @@ def test_endpoints_urls_with_underscores() -> None:
     client = SeedExhaustive(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})
     result = client.endpoints.urls.with_underscores()
     verify_request_count(test_id, "GET", "/urls/with_underscores", None, 1)
-
