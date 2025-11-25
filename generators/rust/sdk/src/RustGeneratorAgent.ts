@@ -65,7 +65,8 @@ export class RustGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorConte
         return {
             sourceDirectory: "fern/output",
             uri: this.publishConfig.uri,
-            token: this.publishConfig.token
+            token: this.publishConfig.token,
+            branch: (this.publishConfig as { branch?: string })?.branch
         };
     }
 }

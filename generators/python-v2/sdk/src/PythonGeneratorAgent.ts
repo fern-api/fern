@@ -34,12 +34,14 @@ export class PythonGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
     }
 
     public getGitHubConfig(args: AbstractGeneratorAgent.GitHubConfigArgs<SdkGeneratorContext>): RawGithubConfig {
+        const githubConfig = this.publishConfig?.type === "github" ? this.publishConfig : undefined;
         return {
             sourceDirectory: "fern/output",
             type: this.publishConfig?.type,
-            uri: this.publishConfig?.type === "github" ? this.publishConfig.uri : undefined,
-            token: this.publishConfig?.type === "github" ? this.publishConfig.token : undefined,
-            mode: this.publishConfig?.type === "github" ? this.publishConfig.mode : undefined
+            uri: githubConfig?.uri,
+            token: githubConfig?.token,
+            branch: (githubConfig as { branch?: string } | undefined)?.branch,
+            mode: githubConfig?.mode
         };
     }
 }
