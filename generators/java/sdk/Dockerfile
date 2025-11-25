@@ -25,7 +25,19 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
 # CVE-2024-46901: subversion vulnerability
 # These packages are only used by mercurial/brz which are not needed by this generator
 # Use purge instead of remove to fully remove packages from dpkg database
-RUN apt-get update && \
+# Add retry logic for apt-get update to handle transient mirror sync issues
+RUN set -eux; \
+    max=5; \
+    count=0; \
+    until apt-get update; do \
+      count=$((count + 1)); \
+      if [ "$count" -ge "$max" ]; then \
+        echo "apt-get update failed after ${count} attempts"; \
+        exit 1; \
+      fi; \
+      echo "apt-get update failed, retrying in 20s..."; \
+      sleep 20; \
+    done; \
     apt-get purge -y --allow-remove-essential \
         python3.10 python3.10-minimal \
         python3 python3-minimal \
