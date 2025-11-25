@@ -1,12 +1,10 @@
-from conftest import verify_request_count
-
-from seed import SeedExhaustive
+from .conftest import get_client, verify_request_count
 
 
 def test_endpoints_object_get_and_return_with_optional_field() -> None:
     """Test getAndReturnWithOptionalField endpoint with WireMock"""
     test_id = "endpoints.object.get_and_return_with_optional_field.0"
-    client = SeedExhaustive(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})
+    client = get_client(test_id)
     result = client.endpoints.object.get_and_return_with_optional_field(
         string="string",
         integer=1,
@@ -28,7 +26,7 @@ def test_endpoints_object_get_and_return_with_optional_field() -> None:
 def test_endpoints_object_get_and_return_with_required_field() -> None:
     """Test getAndReturnWithRequiredField endpoint with WireMock"""
     test_id = "endpoints.object.get_and_return_with_required_field.0"
-    client = SeedExhaustive(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})
+    client = get_client(test_id)
     result = client.endpoints.object.get_and_return_with_required_field(string="string")
     verify_request_count(test_id, "POST", "/object/get-and-return-with-required-field", None, 1)
 
@@ -36,7 +34,7 @@ def test_endpoints_object_get_and_return_with_required_field() -> None:
 def test_endpoints_object_get_and_return_with_map_of_map() -> None:
     """Test getAndReturnWithMapOfMap endpoint with WireMock"""
     test_id = "endpoints.object.get_and_return_with_map_of_map.0"
-    client = SeedExhaustive(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})
+    client = get_client(test_id)
     result = client.endpoints.object.get_and_return_with_map_of_map(map_={"map": {"map": "map"}})
     verify_request_count(test_id, "POST", "/object/get-and-return-with-map-of-map", None, 1)
 
@@ -44,7 +42,7 @@ def test_endpoints_object_get_and_return_with_map_of_map() -> None:
 def test_endpoints_object_get_and_return_nested_with_optional_field() -> None:
     """Test getAndReturnNestedWithOptionalField endpoint with WireMock"""
     test_id = "endpoints.object.get_and_return_nested_with_optional_field.0"
-    client = SeedExhaustive(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})
+    client = get_client(test_id)
     result = client.endpoints.object.get_and_return_nested_with_optional_field(
         string="string",
         nested_object={
@@ -69,7 +67,7 @@ def test_endpoints_object_get_and_return_nested_with_optional_field() -> None:
 def test_endpoints_object_get_and_return_nested_with_required_field() -> None:
     """Test getAndReturnNestedWithRequiredField endpoint with WireMock"""
     test_id = "endpoints.object.get_and_return_nested_with_required_field.0"
-    client = SeedExhaustive(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})
+    client = get_client(test_id)
     result = client.endpoints.object.get_and_return_nested_with_required_field(
         "string",
         string="string",
@@ -95,7 +93,7 @@ def test_endpoints_object_get_and_return_nested_with_required_field() -> None:
 def test_endpoints_object_get_and_return_nested_with_required_field_as_list() -> None:
     """Test getAndReturnNestedWithRequiredFieldAsList endpoint with WireMock"""
     test_id = "endpoints.object.get_and_return_nested_with_required_field_as_list.0"
-    client = SeedExhaustive(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})
+    client = get_client(test_id)
     result = client.endpoints.object.get_and_return_nested_with_required_field_as_list(
         request=[
             {
