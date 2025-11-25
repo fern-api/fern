@@ -231,38 +231,71 @@ ${indentedApiCall}
     }
 
     /**
-     * Indents each line of a snippet with the specified base indentation while preserving
-     * relative indentation between lines. This ensures nested structures like arrays and
-     * objects maintain their proper indentation.
+     * Indents an API call snippet with proper PSR-12 style formatting.
+     * - First line (the method call) gets baseIndent
+     * - Middle lines (arguments) get baseIndent + 4 spaces, preserving relative nesting
+     * - Closing line (");") gets baseIndent
      */
     private indentSnippet(snippet: string, baseIndent: string): string {
         const lines = snippet.split("\n");
+        const argIndent = baseIndent + "    ";
 
-        // Find the minimum indent among non-empty lines
-        let minIndent: number | undefined;
-        for (const line of lines) {
-            if (line.trim() === "") {
-                continue;
-            }
-            const match = line.match(/^(\s*)\S/);
-            if (!match || !match[1]) {
-                continue;
-            }
-            const indentLen = match[1].length;
-            if (minIndent === undefined || indentLen < minIndent) {
-                minIndent = indentLen;
+        // Find first and last non-empty line indices
+        let firstIdx = -1;
+        let lastIdx = -1;
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            if (line != null && line.trim() !== "") {
+                if (firstIdx === -1) {
+                    firstIdx = i;
+                }
+                lastIdx = i;
             }
         }
 
-        const commonIndent = minIndent ?? 0;
+        if (firstIdx === -1) {
+            return "";
+        }
+
+        // For single-line calls, just indent with baseIndent
+        if (firstIdx === lastIdx) {
+            const line = lines[firstIdx];
+            return baseIndent + (line?.trim() ?? "");
+        }
+
+        // Compute the indent of the first non-empty line (the call line) from the raw snippet
+        const firstLine = lines[firstIdx] ?? "";
+        const firstLineMatch = firstLine.match(/^(\s*)/);
+        const callIndent = firstLineMatch?.[1]?.length ?? 0;
 
         return lines
-            .map((line) => {
-                if (line.trim() === "") {
+            .map((line, idx) => {
+                if (line == null) {
                     return "";
                 }
-                const withoutCommon = line.slice(commonIndent);
-                return baseIndent + withoutCommon;
+                const trimmed = line.trim();
+                if (trimmed === "") {
+                    return "";
+                }
+
+                // First non-empty line: the call - use baseIndent
+                if (idx === firstIdx) {
+                    return baseIndent + trimmed;
+                }
+
+                // Closing line(s): align with call
+                if (trimmed === ");" || trimmed === ")") {
+                    return baseIndent + trimmed;
+                }
+
+                // For argument lines, compute relative indent from the original snippet
+                // to preserve nested structure (arrays, objects, etc.)
+                const lineMatch = line.match(/^(\s*)/);
+                const lineIndent = lineMatch?.[1]?.length ?? 0;
+                const relativeIndent = Math.max(0, lineIndent - callIndent);
+
+                // Arguments get argIndent (baseIndent + 4) plus any additional relative indent
+                return argIndent + " ".repeat(relativeIndent) + trimmed;
             })
             .join("\n");
     }
@@ -368,12 +401,14 @@ ${indentedApiCall}
                 return null;
             }
             // Replace everything from '(' onwards with '();'
+            // Don't trim - preserve leading whitespace for indentation
             const noArgsCall = firstLine.replace(/\(.*/, "();");
-            return noArgsCall.trim();
+            return noArgsCall;
         }
 
         // Join the lines and return, preserving the original formatting
-        return callLines.join("\n").trim();
+        // Don't trim - preserve leading whitespace for indentation
+        return callLines.join("\n");
     }
 
     private getTestMethodName(endpoint: HttpEndpoint): string {
