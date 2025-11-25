@@ -87,6 +87,7 @@
                         }
                     ]
                 },
+                "refreshEndpoint": null,
                 "key": "InferredAuthScheme",
                 "docs": null
             }
