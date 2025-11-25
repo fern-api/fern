@@ -10,6 +10,7 @@ import {
     OAuthScheme,
     ObjectProperty,
     PropertyPathItem,
+    RequestProperty,
     ResponseProperty
 } from "@fern-fern/ir-sdk/api";
 
@@ -206,8 +207,8 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
         const requestProperties = this.scheme.configuration.tokenEndpoint.requestProperties;
         const responseProperties = this.scheme.configuration.tokenEndpoint.responseProperties;
 
-        const clientIdProperty = this.getPropertyName(requestProperties.clientId.property.name);
-        const clientSecretProperty = this.getPropertyName(requestProperties.clientSecret.property.name);
+        const clientIdProperty = this.getRequestPropertyName(requestProperties.clientId);
+        const clientSecretProperty = this.getRequestPropertyName(requestProperties.clientSecret);
         const accessTokenProperty = this.getResponsePropertyAccess(responseProperties.accessToken);
 
         return php.method({
@@ -217,16 +218,47 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
             return_: php.Type.string(),
             docs: "Refreshes the access token by calling the token endpoint.",
             body: php.codeblock((writer) => {
-                writer.write("$tokenResponse = $this->authClient->");
-                writer.write(this.getEndpointMethodName());
-                writer.writeLine("([");
+                const requestClassReference = this.getTokenEndpointRequestClassReference();
+                if (requestClassReference != null) {
+                    writer.write("$request = new ");
+                    writer.writeNode(requestClassReference);
+                    writer.writeLine("([");
+                } else {
+                    writer.write("$tokenResponse = $this->authClient->");
+                    writer.write(this.getEndpointMethodName());
+                    writer.writeLine("([");
+                }
                 writer.indent();
                 writer.writeLine(`'${clientIdProperty}' => $this->clientId,`);
                 writer.writeLine(`'${clientSecretProperty}' => $this->clientSecret,`);
+
+                for (const customProperty of requestProperties.customProperties ?? []) {
+                    const propName = this.getRequestPropertyName(customProperty);
+                    const literal = this.context.maybeLiteral(customProperty.property.valueType);
+                    if (literal != null) {
+                        writer.writeLine(`'${propName}' => ${this.context.getLiteralAsString(literal)},`);
+                    }
+                }
+
+                if (requestProperties.scopes != null) {
+                    const scopesPropName = this.getRequestPropertyName(requestProperties.scopes);
+                    const scopesLiteral = this.context.maybeLiteral(requestProperties.scopes.property.valueType);
+                    if (scopesLiteral != null) {
+                        writer.writeLine(`'${scopesPropName}' => ${this.context.getLiteralAsString(scopesLiteral)},`);
+                    }
+                }
+
                 writer.dedent();
                 writer.writeLine("]);");
-                writer.newLine();
 
+                if (requestClassReference != null) {
+                    writer.newLine();
+                    writer.write("$tokenResponse = $this->authClient->");
+                    writer.write(this.getEndpointMethodName());
+                    writer.writeLine("($request);");
+                }
+
+                writer.newLine();
                 writer.writeLine(`$this->accessToken = $tokenResponse${accessTokenProperty};`);
 
                 const expiresIn = responseProperties.expiresIn;
@@ -241,6 +273,24 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                 writer.writeLine("return $this->accessToken;");
             })
         });
+    }
+
+    private getTokenEndpointRequestClassReference(): php.ClassReference | undefined {
+        const sdkRequest = this.tokenEndpoint.sdkRequest;
+        if (sdkRequest == null) {
+            return undefined;
+        }
+        if (sdkRequest.shape.type === "wrapper") {
+            return php.classReference({
+                name: sdkRequest.shape.wrapperName.pascalCase.safeName,
+                namespace: this.context.getLocationForWrappedRequest(this.tokenEndpointReference.serviceId).namespace
+            });
+        }
+        return undefined;
+    }
+
+    private getRequestPropertyName(requestProperty: RequestProperty): string {
+        return requestProperty.property.name.name.camelCase.unsafeName;
     }
 
     private getExpiresAtMethod(): php.Method {
