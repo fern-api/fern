@@ -166,10 +166,12 @@ export class WireTestGenerator {
 
         // Manually add references for "from X import Y" style imports
         // Note: simple "import X" statements are added as raw code blocks separately
-        // Note: verify_request_count is imported from conftest.py automatically by pytest
         const clientModulePath = this.getClientModulePath();
         const clientName = this.getClientClassName();
         node.addReference(python.reference({ name: clientName, modulePath: clientModulePath }));
+
+        // Import verify_request_count from conftest (pytest makes conftest importable)
+        node.addReference(python.reference({ name: "verify_request_count", modulePath: ["conftest"] }));
 
         return node;
     }
