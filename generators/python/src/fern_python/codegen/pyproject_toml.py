@@ -41,8 +41,8 @@ class PyProjectToml:
         pypi_metadata: Optional[PypiMetadata],
         github_output_mode: Optional[GithubOutputMode],
         license_: Optional[LicenseConfig],
+        enable_wire_tests: bool,
         extras: typing.Dict[str, List[str]] = {},
-        enable_wire_tests: bool = False,
         user_defined_toml: Optional[str] = None,
     ):
         self._name = name
@@ -198,7 +198,7 @@ packages = [
         dependencies: Set[Dependency]
         dev_dependencies: Set[Dependency]
         python_version: str
-        enable_wire_tests: bool = False
+        enable_wire_tests: bool
 
         def deps_to_string(self, dependencies: Set[Dependency]) -> str:
             deps = ""

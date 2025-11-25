@@ -41,6 +41,7 @@ class Project:
         filepath: str,
         relative_path_to_project: str,
         python_version: str = "^3.8",
+        enable_wire_tests: bool,
         project_config: Optional[ProjectConfig] = None,
         sorted_modules: Optional[Sequence[str]] = None,
         flat_layout: bool = False,
@@ -52,7 +53,6 @@ class Project:
         exclude_types_from_init_exports: Optional[bool] = False,
         lazy_imports: bool = True,
         recursion_limit: Optional[int] = None,
-        enable_wire_tests: bool = False,
         generator_exec_wrapper: Optional[GeneratorExecWrapper] = None,
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")

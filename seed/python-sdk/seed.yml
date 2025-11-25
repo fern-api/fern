@@ -131,8 +131,7 @@ fixtures:
           enum_type: "python_enums"
       outputFolder: real-enum
   exhaustive:
-    - customConfig:
-        enable_wire_tests: true
+    - customConfig: null
       outputFolder: no-custom-config
     - customConfig:
         inline_path_params: true
