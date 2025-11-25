@@ -46,32 +46,36 @@ client.search(
         )
         .userList(
             Arrays.asList(
-                User
-                    .builder()
-                    .name("name")
-                    .tags(
-                        Optional.of(
-                            Arrays.asList("tags", "tags")
+                Optional.of(
+                    User
+                        .builder()
+                        .name("name")
+                        .tags(
+                            Optional.of(
+                                Arrays.asList("tags", "tags")
+                            )
                         )
-                    )
-                    .build()
+                        .build()
+                )
             )
         )
         .excludeUser(
             Arrays.asList(
-                User
-                    .builder()
-                    .name("name")
-                    .tags(
-                        Optional.of(
-                            Arrays.asList("tags", "tags")
+                Optional.of(
+                    User
+                        .builder()
+                        .name("name")
+                        .tags(
+                            Optional.of(
+                                Arrays.asList("tags", "tags")
+                            )
                         )
-                    )
-                    .build()
+                        .build()
+                )
             )
         )
         .filter(
-            Arrays.asList("filter")
+            Arrays.asList(Optional.of("filter"))
         )
         .optionalDeadline(OffsetDateTime.parse("2024-01-15T09:30:00Z"))
         .keyValue(

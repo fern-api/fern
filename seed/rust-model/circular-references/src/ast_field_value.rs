@@ -16,6 +16,6 @@ pub enum FieldValue {
 
         #[serde(rename = "container_value")]
         ContainerValue {
-            value: Box<ContainerValue>,
+            value: ContainerValue,
         },
 }

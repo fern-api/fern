@@ -12,9 +12,9 @@ public class Example0 {
 
         client.nullable()
                 .getUsers(GetUsersRequest.builder()
-                        .usernames(Arrays.asList("usernames"))
-                        .activated(Arrays.asList(true))
-                        .tags(Arrays.asList(Optional.of("tags")))
+                        .usernames(Arrays.asList(Optional.of("usernames")))
+                        .activated(Arrays.asList(Optional.of(true)))
+                        .tags(Arrays.asList("tags"))
                         .avatar("avatar")
                         .extra(true)
                         .build());

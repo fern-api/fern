@@ -39,10 +39,7 @@ namespace Example;
 use Seed\SeedClient;
 use Seed\Auth\Requests\GetTokenRequest;
 
-$client = new SeedClient(
-    clientId: '<clientId>',
-    clientSecret: '<clientSecret>',
-);
+$client = new SeedClient();
 $client->auth->getToken(
     new GetTokenRequest([
         'clientId' => 'client_id',

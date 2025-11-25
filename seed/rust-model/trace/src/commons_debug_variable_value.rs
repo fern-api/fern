@@ -25,11 +25,11 @@ pub enum DebugVariableValue {
 
         MapValue {
             #[serde(flatten)]
-            data: Box<DebugMapValue>,
+            data: DebugMapValue,
         },
 
         ListValue {
-            value: Vec<Box<DebugVariableValue>>,
+            value: Vec<DebugVariableValue>,
         },
 
         BinaryTreeNodeValue {

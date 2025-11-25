@@ -1201,7 +1201,7 @@ client.playlist().getPlaylists(
         .otherField("otherField")
         .multiLineDocs("multiLineDocs")
         .optionalMultipleField(
-            Arrays.asList("optionalMultipleField")
+            Arrays.asList(Optional.of("optionalMultipleField"))
         )
         .multipleField(
             Arrays.asList("multipleField")

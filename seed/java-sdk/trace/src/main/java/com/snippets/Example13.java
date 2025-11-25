@@ -3,6 +3,7 @@ package com.snippets;
 import com.seed.trace.SeedTraceClient;
 import com.seed.trace.resources.playlist.requests.GetPlaylistsRequest;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class Example13 {
     public static void main(String[] args) {
@@ -17,7 +18,7 @@ public class Example13 {
                         GetPlaylistsRequest.builder()
                                 .otherField("otherField")
                                 .multiLineDocs("multiLineDocs")
-                                .optionalMultipleField(Arrays.asList("optionalMultipleField"))
+                                .optionalMultipleField(Arrays.asList(Optional.of("optionalMultipleField")))
                                 .multipleField(Arrays.asList("multipleField"))
                                 .limit(1)
                                 .build());

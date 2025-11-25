@@ -5,5 +5,5 @@ pub struct MultipleFilterSearchRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub operator: Option<MultipleFilterSearchRequestOperator>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub value: Option<Box<MultipleFilterSearchRequestValue>>,
+    pub value: Option<MultipleFilterSearchRequestValue>,
 }

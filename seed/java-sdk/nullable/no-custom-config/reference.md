@@ -17,13 +17,13 @@ client.nullable().getUsers(
     GetUsersRequest
         .builder()
         .usernames(
-            Arrays.asList("usernames")
+            Arrays.asList(Optional.of("usernames"))
         )
         .activated(
-            Arrays.asList(true)
+            Arrays.asList(Optional.of(true))
         )
         .tags(
-            Arrays.asList(Optional.of("tags"))
+            Arrays.asList("tags")
         )
         .avatar("avatar")
         .extra(true)

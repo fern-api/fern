@@ -4,7 +4,7 @@ pub use crate::prelude::*;
 pub struct Node {
     pub name: String,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub nodes: Option<Vec<Box<Node>>>,
+    pub nodes: Option<Vec<Node>>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub trees: Option<Vec<Box<Tree>>>,
+    pub trees: Option<Vec<Tree>>,
 }

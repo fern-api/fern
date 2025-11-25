@@ -6,8 +6,6 @@ use Seed\SeedClient;
 use Seed\Auth\Requests\GetTokenRequest;
 
 $client = new SeedClient(
-    clientId: '<clientId>',
-    clientSecret: '<clientSecret>',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],

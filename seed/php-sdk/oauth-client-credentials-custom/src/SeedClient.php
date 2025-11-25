@@ -8,7 +8,6 @@ use Seed\Nested\NestedClient;
 use Seed\Simple\SimpleClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
-use Seed\Core\OAuthTokenProvider;
 
 class SeedClient
 {
@@ -49,8 +48,7 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param ?string $clientId The client ID for OAuth authentication.
-     * @param ?string $clientSecret The client secret for OAuth authentication.
+     * @param string $token The token to use for authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -60,22 +58,18 @@ class SeedClient
      * } $options
      */
     public function __construct(
-        ?string $clientId = null,
-        ?string $clientSecret = null,
+        string $token,
         ?array $options = null,
     ) {
-        $authRawClient = new RawClient(['headers' => []]);
-        $authClient = new AuthClient($authRawClient);
-        $oauthTokenProvider = new OAuthTokenProvider($clientId ?? '', $clientSecret ?? '', $authClient);
-        $token = $oauthTokenProvider->getToken();
-
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        $defaultHeaders['Authorization'] = "Bearer $token";
+        if ($token != null) {
+            $defaultHeaders['Authorization'] = "Bearer $token";
+        }
 
         $this->options = $options ?? [];
         $this->options['headers'] = array_merge(

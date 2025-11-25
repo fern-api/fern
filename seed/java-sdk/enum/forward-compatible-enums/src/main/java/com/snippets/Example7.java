@@ -6,6 +6,7 @@ import com.seed.enum.types.Color;
 import com.seed.enum.types.ColorOrOperand;
 import com.seed.enum.types.Operand;
 import java.util.Arrays;
+import java.util.Optional;
 
 public class Example7 {
     public static void main(String[] args) {
@@ -21,7 +22,7 @@ public class Example7 {
                     Arrays.asList(Operand.GREATER_THAN)
                 )
                 .maybeOperand(
-                    Arrays.asList(Operand.GREATER_THAN)
+                    Arrays.asList(Optional.of(Operand.GREATER_THAN))
                 )
                 .operandOrColor(
                     Arrays.asList(
@@ -30,7 +31,9 @@ public class Example7 {
                 )
                 .maybeOperandOrColor(
                     Arrays.asList(
-                        ColorOrOperand.of(Color.RED)
+                        Optional.of(
+                            ColorOrOperand.of(Color.RED)
+                        )
                     )
                 )
                 .build()
