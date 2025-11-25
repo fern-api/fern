@@ -3,9 +3,9 @@ pub use crate::prelude::*;
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(untagged)]
 pub enum Animal {
-    Cat(Cat),
+    Cat(Box<Cat>),
 
-    Dog(Dog),
+    Dog(Box<Dog>),
 }
 
 impl Animal {
@@ -17,7 +17,7 @@ impl Animal {
         matches!(self, Self::Dog(_))
     }
 
-    pub fn as_cat(&self) -> Option<&Cat> {
+    pub fn as_cat(&self) -> Option<&Box<Cat>> {
         match self {
             Self::Cat(value) => Some(value),
             _ => None,
@@ -26,12 +26,12 @@ impl Animal {
 
     pub fn into_cat(self) -> Option<Cat> {
         match self {
-            Self::Cat(value) => Some(value),
+            Self::Cat(value) => Some(*value),
             _ => None,
         }
     }
 
-    pub fn as_dog(&self) -> Option<&Dog> {
+    pub fn as_dog(&self) -> Option<&Box<Dog>> {
         match self {
             Self::Dog(value) => Some(value),
             _ => None,
@@ -40,7 +40,7 @@ impl Animal {
 
     pub fn into_dog(self) -> Option<Dog> {
         match self {
-            Self::Dog(value) => Some(value),
+            Self::Dog(value) => Some(*value),
             _ => None,
         }
     }
