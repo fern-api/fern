@@ -3,11 +3,21 @@
 module Seed
   module Payment
     class Client
-      # @return [Seed::Payment::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Payment::Types::CreatePaymentRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [String]
       def create(request_options: {}, **params)
         _body_prop_names = %i[amount currency]
@@ -31,12 +41,21 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :payment_id
+      #
       # @return [untyped]
       def delete(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/payment/#{params[:paymentId]}"
+          path: "/payment/#{params[:payment_id]}"
         )
         begin
           _response = @client.send(_request)

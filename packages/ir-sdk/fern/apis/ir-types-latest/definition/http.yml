@@ -282,6 +282,11 @@ types:
   HttpResponse:
     properties:
       status-code: optional<integer>
+      isWildcardStatusCode:
+        type: optional<boolean>
+        docs: |
+          When true, indicates that the status-code represents a wildcard pattern (e.g., 4XX or 5XX).
+          The status-code field will contain the base value (400 for 4XX, 500 for 5XX).
       body: optional<HttpResponseBody>
 
   V2HttpResponses:

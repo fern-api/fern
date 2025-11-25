@@ -1,3 +1,9 @@
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **NullableOptional**
+
 use crate::{ApiError, ClientConfig};
 
 pub mod nullable_optional;

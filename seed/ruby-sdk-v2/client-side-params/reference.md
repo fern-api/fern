@@ -551,17 +551,20 @@ Update a user
 <dd>
 
 ```ruby
-client.service.update_user({
-  email: 'email',
-  email_verified: true,
-  username: 'username',
-  phone_number: 'phone_number',
-  phone_verified: true,
-  user_metadata: {},
-  app_metadata: {},
-  password: 'password',
-  blocked: true
-});
+client.service.update_user(
+  'userId',
+  {
+    email: 'email',
+    email_verified: true,
+    username: 'username',
+    phone_number: 'phone_number',
+    phone_verified: true,
+    user_metadata: {},
+    app_metadata: {},
+    password: 'password',
+    blocked: true
+  }
+);
 ```
 </dd>
 </dl>
@@ -623,7 +626,7 @@ Delete a user
 <dd>
 
 ```ruby
-client.service.delete_user();
+client.service.delete_user('userId');
 ```
 </dd>
 </dl>

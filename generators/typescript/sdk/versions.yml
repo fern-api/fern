@@ -1,4 +1,84 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.34.0
+  changelogEntry:
+    - summary: |
+        Implement auth provider architecture for all auth schemes, replacing inline auth logic.
+        This reduces code duplication and improves maintainability.
+        Each auth scheme now uses a dedicated `AuthProvider` class that implements the `AuthProvider` interface.
+        The `AnyAuthProvider` class is used when multiple auth schemes are defined.
+      type: feat
+  createdAt: "2025-11-23"
+  irVersion: 61
+
+- version: 3.33.1
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 3.33.0
+  changelogEntry:
+    - summary: |
+        Implement auth provider architecture for basic auth, matching the pattern established by inferred auth. Basic auth now uses a dedicated `BasicAuthProvider` class that implements the `AuthProvider` interface, replacing inline auth logic.
+      type: feat
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.32.1
+  changelogEntry:
+    - summary: Add contents:read permission to generated publish workflow for OIDC authentication to fix actions/checkout@v4 requirements.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.32.0
+  changelogEntry:
+    - summary: Add support for OAuth and inferred auth in generated wire tests.
+      type: feat
+    - summary: |
+        Respect the `auth: false` at the endpoint level when generating the endpoint function.
+      type: feat
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 3.31.5
+  changelogEntry:
+    - summary: Include subpackage exports in generated README.md if `generateSubpackageExports` is enabled.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 3.31.4
+  changelogEntry:
+    - summary: Default to mock an endpoint once when using `msw` for wire tests.
+      type: fix
+  createdAt: "2025-11-18"
+  irVersion: 61
+
+- version: 3.31.3
+  changelogEntry:
+    - summary: Generate wire tests with `maxRetries` set to 0.
+      type: fix
+  createdAt: "2025-11-18"
+  irVersion: 61
+
+- version: 3.31.2
+  changelogEntry:
+    - summary: Bump generator CLI version to publish new Docker image.
+      type: chore
+  createdAt: "2025-11-18"
+  irVersion: 61
+
+- version: 3.31.1
+  changelogEntry:
+    - summary: |
+        Fix generator to not generate CONTRIBUTING.md file if config.whitelabel is true.
+      type: fix
+  createdAt: "2025-11-17"
+  irVersion: 61
+
 - version: 3.31.0
   changelogEntry:
     - summary: |

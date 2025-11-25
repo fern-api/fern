@@ -49,14 +49,72 @@ export class DynamicTypeInstantiationMapper {
                 }
                 return this.convertNamed({ named, value: args.value, as: args.as });
             }
-            case "nullable":
+            case "nullable": {
+                const inner = args.typeReference.value;
+                // Special case: nullable + alias-of-collection
+                // For fields like `Services *ServicesUs50` where `type ServicesUs50 = []*ServiceUs50`,
+                // we generate `&ServicesUs50{...}` using the alias name in the composite literal.
+                // This is more idiomatic and matches the exported API type users see.
+                if (inner.type === "named") {
+                    const named = this.context.resolveNamedType({ typeId: inner.value });
+                    if (named?.type === "alias" && ["list", "set", "map"].includes(named.typeReference.type)) {
+                        // Build the underlying collection literal
+                        const collectionLiteral = this.convert({
+                            typeReference: named.typeReference,
+                            value: args.value,
+                            as: args.as
+                        });
+
+                        // Get the alias type reference
+                        const aliasName = this.context.getTypeName(named.declaration.name);
+                        const aliasImportPath = this.context.getImportPath(named.declaration.fernFilepath);
+
+                        // Reconstruct the composite literal using the alias name
+                        return this.reconstructAliasCollectionLiteral({
+                            collectionLiteral,
+                            aliasName,
+                            aliasImportPath
+                        });
+                    }
+                }
+                // Default behavior for all other nullables
                 return go.TypeInstantiation.optional(
-                    this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
+                    this.convert({ typeReference: inner, value: args.value, as: args.as })
                 );
-            case "optional":
+            }
+            case "optional": {
+                const inner = args.typeReference.value;
+                // Special case: optional + alias-of-collection
+                // For fields like `Services *ServicesUs50` where `type ServicesUs50 = []*ServiceUs50`,
+                // we generate `&ServicesUs50{...}` using the alias name in the composite literal.
+                // This is more idiomatic and matches the exported API type users see.
+                if (inner.type === "named") {
+                    const named = this.context.resolveNamedType({ typeId: inner.value });
+                    if (named?.type === "alias" && ["list", "set", "map"].includes(named.typeReference.type)) {
+                        // Build the underlying collection literal
+                        const collectionLiteral = this.convert({
+                            typeReference: named.typeReference,
+                            value: args.value,
+                            as: args.as
+                        });
+
+                        // Get the alias type reference
+                        const aliasName = this.context.getTypeName(named.declaration.name);
+                        const aliasImportPath = this.context.getImportPath(named.declaration.fernFilepath);
+
+                        // Reconstruct the composite literal using the alias name
+                        return this.reconstructAliasCollectionLiteral({
+                            collectionLiteral,
+                            aliasName,
+                            aliasImportPath
+                        });
+                    }
+                }
+                // Default behavior for all other optionals
                 return go.TypeInstantiation.optional(
-                    this.convert({ typeReference: args.typeReference.value, value: args.value, as: args.as })
+                    this.convert({ typeReference: inner, value: args.value, as: args.as })
                 );
+            }
             case "primitive":
                 return this.convertPrimitive({ primitive: args.typeReference.value, value: args.value, as: args.as });
             case "set":
@@ -190,6 +248,85 @@ export class DynamicTypeInstantiationMapper {
             default:
                 return this.convert({ typeReference: aliasType.typeReference, value, as });
         }
+    }
+
+    private reconstructAliasCollectionLiteral({
+        collectionLiteral,
+        aliasName,
+        aliasImportPath
+    }: {
+        collectionLiteral: go.TypeInstantiation;
+        aliasName: string;
+        aliasImportPath: string;
+    }): go.TypeInstantiation {
+        // Reconstruct the composite literal using the alias name
+        const internal = collectionLiteral.internalType;
+        // Note: sets are converted to slices via convertList, so they're handled by the slice case
+        if (internal.type === "slice") {
+            return go.TypeInstantiation.reference(
+                go.codeblock((writer) => {
+                    writer.write("&");
+                    writer.writeNode(
+                        go.typeReference({
+                            name: aliasName,
+                            importPath: aliasImportPath
+                        })
+                    );
+
+                    const values = internal.values;
+                    if (values.length === 0) {
+                        writer.write("{}");
+                        return;
+                    }
+
+                    writer.writeLine("{");
+                    writer.indent();
+                    for (const v of values) {
+                        writer.writeNode(v);
+                        writer.writeLine(",");
+                    }
+                    writer.dedent();
+                    writer.write("}");
+                })
+            );
+        }
+        if (internal.type === "map") {
+            return go.TypeInstantiation.reference(
+                go.codeblock((writer) => {
+                    writer.write("&");
+                    writer.writeNode(
+                        go.typeReference({
+                            name: aliasName,
+                            importPath: aliasImportPath
+                        })
+                    );
+
+                    const entries = internal.entries;
+                    if (entries.length === 0) {
+                        writer.write("{}");
+                        return;
+                    }
+
+                    writer.writeLine("{");
+                    writer.indent();
+                    for (const entry of entries) {
+                        writer.writeNode(entry.key);
+                        writer.write(": ");
+                        writer.writeNode(entry.value);
+                        writer.writeLine(",");
+                    }
+                    writer.dedent();
+                    writer.write("}");
+                })
+            );
+        }
+        // Fallback: if not a slice or map, use the underlying type approach
+        return go.TypeInstantiation.reference(
+            go.codeblock((writer) => {
+                writer.write("&");
+                writer.writeNode(collectionLiteral);
+            })
+        );
     }
 
     private convertLiteralValue(literal: FernIr.dynamic.LiteralType): go.TypeInstantiation {
@@ -625,7 +762,8 @@ export class DynamicTypeInstantiationMapper {
                 if (dateTime == null) {
                     return go.TypeInstantiation.nop();
                 }
-                return go.TypeInstantiation.dateTime(dateTime);
+                const normalizedDateTime = this.normalizeDateTimeString(dateTime);
+                return go.TypeInstantiation.dateTime(normalizedDateTime);
             }
             case "UUID": {
                 const uuid = this.context.getValueAsString({ value });
@@ -674,5 +812,15 @@ export class DynamicTypeInstantiationMapper {
         const bool =
             as === "key" ? (typeof value === "string" ? value === "true" : value === "false" ? false : value) : value;
         return this.context.getValueAsBoolean({ value: bool });
+    }
+
+    private normalizeDateTimeString(dateTime: string): string {
+        if (/^\d{4}-\d{2}-\d{2}$/.test(dateTime)) {
+            return `${dateTime}T00:00:00Z`;
+        }
+        if (/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(dateTime)) {
+            return `${dateTime}Z`;
+        }
+        return dateTime;
     }
 }

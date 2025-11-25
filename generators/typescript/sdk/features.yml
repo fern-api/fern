@@ -8,6 +8,11 @@ features:
       The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
       following namespace:
 
+  - id: SUBPACKAGE_EXPORTS
+    advanced: true
+    description: |
+      This SDK supports direct imports of subpackage clients, which allows JavaScript bundlers to tree-shake and include only the imported subpackage code. This results in much smaller bundle sizes.
+
   - id: EXCEPTION_HANDLING
     description: |
       When the API returns a non-success status code (4xx or 5xx response), a subclass of the following error

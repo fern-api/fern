@@ -33,8 +33,8 @@ func (r *RawClient) Post(
 	ctx context.Context,
 	pathParam string,
 	serviceParam string,
-	resourceParam string,
 	endpointParam int,
+	resourceParam string,
 	opts ...option.RequestOption,
 ) (*core.Response[any], error) {
 	options := core.NewRequestOptions(opts...)
@@ -47,8 +47,8 @@ func (r *RawClient) Post(
 		baseURL+"/test/%v/%v/%v/%v",
 		pathParam,
 		serviceParam,
-		resourceParam,
 		endpointParam,
+		resourceParam,
 	)
 	headers := internal.MergeHeaders(
 		r.options.ToHeader(),

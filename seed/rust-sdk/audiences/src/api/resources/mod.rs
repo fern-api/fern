@@ -1,3 +1,14 @@
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Commons**
+//! - **FolderA**
+//! - **FolderB**
+//! - **FolderC**
+//! - **FolderD**
+//! - **Foo**
+
 use crate::{ApiError, ClientConfig};
 
 pub mod commons;

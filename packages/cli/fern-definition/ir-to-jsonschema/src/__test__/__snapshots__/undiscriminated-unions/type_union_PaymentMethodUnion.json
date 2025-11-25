@@ -1,0 +1,44 @@
+{
+  "anyOf": [
+    {
+      "$ref": "#/definitions/union.TokenizeCard"
+    },
+    {
+      "$ref": "#/definitions/union.ConvertToken"
+    }
+  ],
+  "definitions": {
+    "union.TokenizeCard": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "cardNumber": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "cardNumber"
+      ],
+      "additionalProperties": false
+    },
+    "union.ConvertToken": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "type": "string"
+        },
+        "tokenId": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "method",
+        "tokenId"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

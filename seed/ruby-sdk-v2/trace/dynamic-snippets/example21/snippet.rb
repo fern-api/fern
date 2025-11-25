@@ -5,27 +5,30 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.problem.update_problem({
-  problemName: 'problemName',
-  problemDescription: {
-    boards: []
-  },
-  files: {},
-  inputParams: [{
-    name: 'name'
-  }, {
-    name: 'name'
-  }],
-  testcases: [{
-    testCase: {
-      id: 'id',
-      params: []
-    }
-  }, {
-    testCase: {
-      id: 'id',
-      params: []
-    }
-  }],
-  methodName: 'methodName'
-});
+client.problem.update_problem(
+  'problemId',
+  {
+    problemName: 'problemName',
+    problemDescription: {
+      boards: []
+    },
+    files: {},
+    inputParams: [{
+      name: 'name'
+    }, {
+      name: 'name'
+    }],
+    testcases: [{
+      testCase: {
+        id: 'id',
+        params: []
+      }
+    }, {
+      testCase: {
+        id: 'id',
+        params: []
+      }
+    }],
+    methodName: 'methodName'
+  }
+);

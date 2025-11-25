@@ -1,7 +1,9 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-node_modules
+node_modules/
+**/node_modules/
+.pnpm-store
 
 # turbo
 .turbo
@@ -88,3 +90,19 @@ seed/python-sdk/**/output.prof
 **/vitest.config.ts.*.mjs
 
 .local
+
+# Seed build artifacts and caches
+seed/**/.gradle/
+seed/**/build/
+seed/**/bin/
+seed/**/obj/
+seed/**/target/
+seed/**/__pycache__/
+seed/**/.pytest_cache/
+seed/**/.mypy_cache/
+seed/**/.ruff_cache/
+seed/**/*.egg-info/
+
+# Seed remote-local test outputs, except for seed.yml files
+seed-remote-local/*
+!seed-remote-local/**/seed.yml

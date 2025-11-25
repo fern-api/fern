@@ -4,11 +4,22 @@ module Seed
   module Endpoints
     module HttpMethods
       class Client
-        # @return [Seed::Endpoints::HttpMethods::Client]
+        # @param client [Seed::Internal::Http::RawClient]
+        #
+        # @return [void]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String] :id
+        #
         # @return [String]
         def test_get(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -28,6 +39,14 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
+        # @param request_options [Hash]
+        # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_post(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -50,6 +69,15 @@ module Seed
           end
         end
 
+        # @param request_options [Hash]
+        # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String] :id
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_put(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -72,6 +100,15 @@ module Seed
           end
         end
 
+        # @param request_options [Hash]
+        # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String] :id
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def test_patch(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -94,7 +131,16 @@ module Seed
           end
         end
 
-        # @return [bool]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String] :id
+        #
+        # @return [Boolean]
         def test_delete(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],

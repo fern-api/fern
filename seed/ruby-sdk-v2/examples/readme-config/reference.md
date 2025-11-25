@@ -93,7 +93,7 @@ client.create_type();
 <dd>
 
 ```ruby
-client.file.notification.service.get_exception();
+client.file.notification.service.get_exception('notification-hsy129x');
 ```
 </dd>
 </dl>
@@ -206,7 +206,7 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```ruby
-client.health.service.check();
+client.health.service.check('id-2sdx82h');
 ```
 </dd>
 </dl>
@@ -286,7 +286,7 @@ client.health.service.ping();
 <dd>
 
 ```ruby
-client.service.get_movie();
+client.service.get_movie('movie-c06a4ad7');
 ```
 </dd>
 </dl>

@@ -1,3 +1,13 @@
+//! Request and response types for the UndiscriminatedUnions
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 2 types for API operations
+//! - **Model Types**: 17 types for data representation
+
 pub mod union_request;
 pub mod union_type_with_optional_union;
 pub mod union_my_union;
@@ -13,6 +23,10 @@ pub mod union_key;
 pub mod union_key_type;
 pub mod union_union_with_identical_strings;
 pub mod union_union_with_identical_primitives;
+pub mod union_payment_method_union;
+pub mod union_tokenize_card;
+pub mod union_convert_token;
+pub mod payment_request;
 
 pub use union_request::Request;
 pub use union_type_with_optional_union::TypeWithOptionalUnion;
@@ -29,4 +43,8 @@ pub use union_key::Key;
 pub use union_key_type::KeyType;
 pub use union_union_with_identical_strings::UnionWithIdenticalStrings;
 pub use union_union_with_identical_primitives::UnionWithIdenticalPrimitives;
+pub use union_payment_method_union::PaymentMethodUnion;
+pub use union_tokenize_card::TokenizeCard;
+pub use union_convert_token::ConvertToken;
+pub use payment_request::PaymentRequest;
 

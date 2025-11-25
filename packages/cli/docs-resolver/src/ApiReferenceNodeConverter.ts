@@ -487,7 +487,11 @@ export class ApiReferenceNodeConverter {
                     slug: endpointSlug.get(),
                     icon: this.resolveIconFileId(endpointItem.icon),
                     hidden: this.hideChildren || endpointItem.hidden,
-                    playground: this.#convertPlaygroundSettings(endpointItem.playground),
+                    playground: this.#convertPlaygroundSettings(
+                        endpoint.includeInApiExplorer === false
+                            ? { ...endpointItem.playground, hidden: true }
+                            : endpointItem.playground
+                    ),
                     authed: undefined,
                     viewers: endpointItem.viewers,
                     orphaned: endpointItem.orphaned,

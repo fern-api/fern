@@ -22,6 +22,7 @@ import {
     Subpackage
 } from "@fern-fern/ir-sdk/api";
 import { EndpointGenerator } from "./endpoint/EndpointGenerator";
+import { getEndpointPageReturnType } from "./endpoint/utils/getEndpointPageReturnType";
 import { GoGeneratorAgent } from "./GoGeneratorAgent";
 import { Caller } from "./internal/Caller";
 import { Streamer } from "./internal/Streamer";
@@ -65,6 +66,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
         if (this.needsPaginationHelpers()) {
             files.push(AsIsFiles.Page);
+        }
+
+        if (this.customConfig.customPagerName != null) {
+            files.push(AsIsFiles.CustomPagination);
         }
 
         if (this.ir.sdkConfig.hasStreamingEndpoints) {
@@ -478,11 +483,11 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
         return this.callInternalFunc({ name: "QueryValuesWithDefaults", arguments_, multiline: true });
     }
 
-    public getPageTypeReference(cursorType: go.Type, valueType: go.Type): go.TypeReference {
+    public getPageTypeReference(cursorType: go.Type, valueType: go.Type, responseType: go.Type): go.TypeReference {
         return go.typeReference({
             name: "Page",
             importPath: this.getCoreImportPath(),
-            generics: [cursorType, valueType]
+            generics: [cursorType, valueType, responseType]
         });
     }
 
@@ -499,6 +504,15 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             name: "Stream",
             importPath: this.getCoreImportPath(),
             generics: [valueType]
+        });
+    }
+
+    public getCustomPagerTypeReference(responseType: go.Type): go.TypeReference {
+        const pagerName = this.customConfig.customPagerName ?? "CustomPager";
+        return go.typeReference({
+            name: pagerName,
+            importPath: this.getCoreImportPath(),
+            generics: [responseType]
         });
     }
 
@@ -525,6 +539,10 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
             // To preserve compatibility, we generate a delegating endpoint for these cases.
             //
             // We'll need to add an opt-in feature flag to resolve this gap.
+            return false;
+        }
+        const pagination = this.getPagination(endpoint);
+        if (pagination?.type === "custom") {
             return false;
         }
         return this.isPaginationEndpoint(endpoint);
@@ -770,6 +788,18 @@ export class SdkGeneratorContext extends AbstractGoGeneratorContext<SdkCustomCon
 
         if (responseBody == null) {
             return go.Type.error(); // no explicit void in golang, just need to handle the error
+        }
+
+        const pagination = this.getPagination(httpEndpoint);
+        if (pagination?.type === "custom" && this.customConfig.customPagerName != null) {
+            // For custom pagination, delegate to getEndpointPageReturnType which handles all three generics
+            // This avoids code duplication and ensures consistency
+            const pageReturnType = getEndpointPageReturnType({ context: this, endpoint: httpEndpoint });
+            if (pageReturnType != null) {
+                return pageReturnType;
+            }
+            // Fallback to error if pageReturnType is undefined
+            return go.Type.error();
         }
 
         switch (responseBody.type) {

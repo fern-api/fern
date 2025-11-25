@@ -26,8 +26,8 @@ class ServiceClient:
         self,
         path_param: str,
         service_param: str,
-        resource_param: str,
         endpoint_param: int,
+        resource_param: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
@@ -38,9 +38,9 @@ class ServiceClient:
 
         service_param : str
 
-        resource_param : str
-
         endpoint_param : int
+
+        resource_param : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -58,12 +58,12 @@ class ServiceClient:
         )
         client.service.post(
             service_param="serviceParam",
-            resource_param="resourceParam",
             endpoint_param=1,
+            resource_param="resourceParam",
         )
         """
         _response = self._raw_client.post(
-            path_param, service_param, resource_param, endpoint_param, request_options=request_options
+            path_param, service_param, endpoint_param, resource_param, request_options=request_options
         )
         return _response.data
 
@@ -87,8 +87,8 @@ class AsyncServiceClient:
         self,
         path_param: str,
         service_param: str,
-        resource_param: str,
         endpoint_param: int,
+        resource_param: str,
         *,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
@@ -99,9 +99,9 @@ class AsyncServiceClient:
 
         service_param : str
 
-        resource_param : str
-
         endpoint_param : int
+
+        resource_param : str
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -124,14 +124,14 @@ class AsyncServiceClient:
         async def main() -> None:
             await client.service.post(
                 service_param="serviceParam",
-                resource_param="resourceParam",
                 endpoint_param=1,
+                resource_param="resourceParam",
             )
 
 
         asyncio.run(main())
         """
         _response = await self._raw_client.post(
-            path_param, service_param, resource_param, endpoint_param, request_options=request_options
+            path_param, service_param, endpoint_param, resource_param, request_options=request_options
         )
         return _response.data

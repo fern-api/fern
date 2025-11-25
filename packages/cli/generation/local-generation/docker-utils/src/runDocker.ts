@@ -4,6 +4,62 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
+export declare namespace runContainer {
+    export interface Args {
+        logger: Logger;
+        imageName: string;
+        args?: string[];
+        binds?: string[];
+        envVars?: Record<string, string>;
+        ports?: Record<string, string>;
+        writeLogsToFile?: boolean;
+        removeAfterCompletion?: boolean;
+        runner?: ContainerRunner;
+    }
+
+    export interface Result {
+        logs: string;
+    }
+}
+
+export async function runContainer({
+    logger,
+    imageName,
+    args = [],
+    binds = [],
+    envVars = {},
+    ports = {},
+    writeLogsToFile = true,
+    removeAfterCompletion = false,
+    runner
+}: runContainer.Args): Promise<void> {
+    const tryRun = () =>
+        tryRunContainer({
+            logger,
+            imageName,
+            args,
+            binds,
+            envVars,
+            ports,
+            removeAfterCompletion,
+            writeLogsToFile,
+            runner
+        });
+    try {
+        await tryRun();
+    } catch (e) {
+        if (e instanceof Error && e.message.includes("No such image")) {
+            await pullImage(imageName, runner);
+            await tryRun();
+        } else {
+            throw e;
+        }
+    }
+}
+
+/**
+ * @deprecated Use runContainer instead. This function is maintained for backward compatibility.
+ */
 export declare namespace runDocker {
     export interface Args {
         logger: Logger;
@@ -22,42 +78,12 @@ export declare namespace runDocker {
     }
 }
 
-export async function runDocker({
-    logger,
-    imageName,
-    args = [],
-    binds = [],
-    envVars = {},
-    ports = {},
-    writeLogsToFile = true,
-    removeAfterCompletion = false,
-    runner
-}: runDocker.Args): Promise<void> {
-    const tryRun = () =>
-        tryRunDocker({
-            logger,
-            imageName,
-            args,
-            binds,
-            envVars,
-            ports,
-            removeAfterCompletion,
-            writeLogsToFile,
-            runner
-        });
-    try {
-        await tryRun();
-    } catch (e) {
-        if (e instanceof Error && e.message.includes("No such image")) {
-            await pullImage(imageName);
-            await tryRun();
-        } else {
-            throw e;
-        }
-    }
-}
+/**
+ * @deprecated Use runContainer instead. This function is maintained for backward compatibility.
+ */
+export const runDocker = runContainer;
 
-async function tryRunDocker({
+async function tryRunContainer({
     logger,
     imageName,
     args,
@@ -81,7 +107,7 @@ async function tryRunDocker({
     if (process.env["FERN_STACK_TRACK"]) {
         envVars["FERN_STACK_TRACK"] = process.env["FERN_STACK_TRACK"];
     }
-    const dockerArgs = [
+    const containerArgs = [
         "run",
         "--user",
         "root",
@@ -92,10 +118,9 @@ async function tryRunDocker({
         imageName,
         ...args
     ].filter(Boolean);
-    // This filters out any falsy values (empty strings, null, undefined) from the dockerArgs array
-    // In this case, it removes empty strings that may be present when removeAfterCompletion is false
 
-    const { stdout, stderr, exitCode } = await loggingExeca(logger, runner ?? "docker", dockerArgs, {
+    const containerRunner = runner ?? "docker";
+    const { stdout, stderr, exitCode } = await loggingExeca(logger, containerRunner, containerArgs, {
         reject: false,
         all: true,
         doNotPipeOutput: true
@@ -109,13 +134,22 @@ async function tryRunDocker({
         logger.info(`Generator logs here: ${tmpFile.path}`);
     }
 
+    if (exitCode == null) {
+        throw new Error(
+            `Container runtime '${containerRunner}' is not installed or not found on PATH.\n` +
+                `${containerRunner === "podman" ? "Seed tests default to Podman. " : ""}` +
+                `Install ${containerRunner}: ${containerRunner === "podman" ? "https://podman.io/docs/installation" : "https://docs.docker.com/get-docker/"}\n` +
+                `Error details: ${stderr || stdout || "No output"}`
+        );
+    }
+
     if (exitCode !== 0) {
-        throw new Error(`Docker exited with code ${exitCode}.\n${stdout}\n${stderr}`);
+        throw new Error(`Container exited with code ${exitCode}.\n${stdout}\n${stderr}`);
     }
 }
 
-async function pullImage(imageName: string): Promise<void> {
-    await loggingExeca(undefined, "docker", ["pull", imageName], {
+async function pullImage(imageName: string, runner?: ContainerRunner): Promise<void> {
+    await loggingExeca(undefined, runner ?? "docker", ["pull", imageName], {
         all: true,
         doNotPipeOutput: true
     });

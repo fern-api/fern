@@ -4,6 +4,7 @@ namespace Seed;
 
 use Seed\Headers\HeadersClient;
 use Seed\InlinedRequest\InlinedRequestClient;
+use Seed\MultipartForm\MultipartFormClient;
 use Seed\PathParam\PathParamClient;
 use Seed\QueryParam\QueryParamClient;
 use GuzzleHttp\ClientInterface;
@@ -20,6 +21,11 @@ class SeedClient
      * @var InlinedRequestClient $inlinedRequest
      */
     public InlinedRequestClient $inlinedRequest;
+
+    /**
+     * @var MultipartFormClient $multipartForm
+     */
+    public MultipartFormClient $multipartForm;
 
     /**
      * @var PathParamClient $pathParam
@@ -72,12 +78,14 @@ class SeedClient
             $this->options['headers'] ?? [],
         );
 
+
         $this->client = new RawClient(
             options: $this->options,
         );
 
         $this->headers = new HeadersClient($this->client, $this->options);
         $this->inlinedRequest = new InlinedRequestClient($this->client, $this->options);
+        $this->multipartForm = new MultipartFormClient($this->client, $this->options);
         $this->pathParam = new PathParamClient($this->client, $this->options);
         $this->queryParam = new QueryParamClient($this->client, $this->options);
     }

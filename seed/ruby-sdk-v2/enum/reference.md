@@ -136,6 +136,7 @@ client.inlined_request.send_(
 </dl>
 </details>
 
+## MultipartForm
 ## PathParam
 <details><summary><code>client.path_param.send_(operand, operand_or_color) -> </code></summary>
 <dl>
@@ -150,7 +151,10 @@ client.inlined_request.send_(
 <dd>
 
 ```ruby
-client.path_param.send_();
+client.path_param.send_(
+  ,
+
+);
 ```
 </dd>
 </dl>

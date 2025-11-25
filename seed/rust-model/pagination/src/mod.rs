@@ -1,3 +1,13 @@
+//! Request and response types for the Pagination
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 40 types for API operations
+//! - **Model Types**: 28 types for data representation
+
 pub mod username_cursor;
 pub mod username_page;
 pub mod complex_search_request_query;

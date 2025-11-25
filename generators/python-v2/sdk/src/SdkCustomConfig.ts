@@ -1,5 +1,7 @@
 import { z } from "zod";
 
-export const SdkCustomConfigSchema = z.object({});
+export const SdkCustomConfigSchema = z.object({
+    enable_wire_tests: z.boolean().optional()
+});
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

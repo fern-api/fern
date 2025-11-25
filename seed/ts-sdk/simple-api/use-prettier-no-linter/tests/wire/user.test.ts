@@ -6,7 +6,7 @@ import { SeedSimpleApiClient } from "../../src/Client";
 describe("UserClient", () => {
     test("get", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedSimpleApiClient({ token: "test", environment: server.baseUrl });
+        const client = new SeedSimpleApiClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
 
         const rawResponseBody = { id: "id", name: "name", email: "email" };
         server.mockEndpoint().get("/users/id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();

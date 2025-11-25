@@ -40,7 +40,7 @@ func (c *Client) ListWithCursorPagination(
 	ctx context.Context,
 	request *fern.ListUsersCursorPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *fern.User], error) {
+) (*core.Page[*string, *fern.User, *fern.ListUsersPaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -75,14 +75,15 @@ func (c *Client) ListWithCursorPagination(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*string, *fern.User] {
+	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*string, *fern.User, *fern.ListUsersPaginationResponse] {
 		var zeroValue string
 		next := response.GetPage().GetNext().GetStartingAfter()
 		results := response.GetData()
-		return &core.PageResponse[*string, *fern.User]{
-			Next:    &next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, *fern.User, *fern.ListUsersPaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -97,7 +98,7 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 	ctx context.Context,
 	request *fern.ListUsersMixedTypeCursorPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, *fern.User], error) {
+) (*core.Page[*string, *fern.User, *fern.ListUsersMixedTypePaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -132,14 +133,15 @@ func (c *Client) ListWithMixedTypeCursorPagination(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *fern.ListUsersMixedTypePaginationResponse) *core.PageResponse[*string, *fern.User] {
+	readPageResponse := func(response *fern.ListUsersMixedTypePaginationResponse) *core.PageResponse[*string, *fern.User, *fern.ListUsersMixedTypePaginationResponse] {
 		var zeroValue string
 		next := response.GetNext()
 		results := response.GetData()
-		return &core.PageResponse[*string, *fern.User]{
-			Next:    &next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, *fern.User, *fern.ListUsersMixedTypePaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -170,7 +172,7 @@ func (c *Client) ListWithOffsetPagination(
 	ctx context.Context,
 	request *fern.ListUsersOffsetPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *fern.User], error) {
+) (*core.Page[*int, *fern.User, *fern.ListUsersPaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -213,12 +215,13 @@ func (c *Client) ListWithOffsetPagination(
 		}
 	}
 
-	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*int, *fern.User] {
+	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*int, *fern.User, *fern.ListUsersPaginationResponse] {
 		next += 1
 		results := response.GetData()
-		return &core.PageResponse[*int, *fern.User]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, *fern.User, *fern.ListUsersPaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(
@@ -233,7 +236,7 @@ func (c *Client) ListWithDoubleOffsetPagination(
 	ctx context.Context,
 	request *fern.ListUsersDoubleOffsetPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*float64, *fern.User], error) {
+) (*core.Page[*float64, *fern.User, *fern.ListUsersPaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -276,12 +279,13 @@ func (c *Client) ListWithDoubleOffsetPagination(
 		}
 	}
 
-	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*float64, *fern.User] {
+	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*float64, *fern.User, *fern.ListUsersPaginationResponse] {
 		next += 1
 		results := response.GetData()
-		return &core.PageResponse[*float64, *fern.User]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*float64, *fern.User, *fern.ListUsersPaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(
@@ -312,7 +316,7 @@ func (c *Client) ListWithOffsetStepPagination(
 	ctx context.Context,
 	request *fern.ListUsersOffsetStepPaginationRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *fern.User], error) {
+) (*core.Page[*int, *fern.User, *fern.ListUsersPaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -355,12 +359,13 @@ func (c *Client) ListWithOffsetStepPagination(
 		}
 	}
 
-	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*int, *fern.User] {
+	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*int, *fern.User, *fern.ListUsersPaginationResponse] {
 		next += 1
 		results := response.GetData()
-		return &core.PageResponse[*int, *fern.User]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, *fern.User, *fern.ListUsersPaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(
@@ -375,7 +380,7 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 	ctx context.Context,
 	request *fern.ListWithOffsetPaginationHasNextPageRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, *fern.User], error) {
+) (*core.Page[*int, *fern.User, *fern.ListUsersPaginationResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -418,12 +423,13 @@ func (c *Client) ListWithOffsetPaginationHasNextPage(
 		}
 	}
 
-	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*int, *fern.User] {
+	readPageResponse := func(response *fern.ListUsersPaginationResponse) *core.PageResponse[*int, *fern.User, *fern.ListUsersPaginationResponse] {
 		next += 1
 		results := response.GetData()
-		return &core.PageResponse[*int, *fern.User]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, *fern.User, *fern.ListUsersPaginationResponse]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(
@@ -438,7 +444,7 @@ func (c *Client) ListWithExtendedResults(
 	ctx context.Context,
 	request *fern.ListUsersExtendedRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*uuid.UUID, *fern.User], error) {
+) (*core.Page[*uuid.UUID, *fern.User, *fern.ListUsersExtendedResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -473,14 +479,15 @@ func (c *Client) ListWithExtendedResults(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *fern.ListUsersExtendedResponse) *core.PageResponse[*uuid.UUID, *fern.User] {
+	readPageResponse := func(response *fern.ListUsersExtendedResponse) *core.PageResponse[*uuid.UUID, *fern.User, *fern.ListUsersExtendedResponse] {
 		var zeroValue *uuid.UUID
 		next := response.GetNext()
 		results := response.GetData().GetUsers()
-		return &core.PageResponse[*uuid.UUID, *fern.User]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*uuid.UUID, *fern.User, *fern.ListUsersExtendedResponse]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -495,7 +502,7 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 	ctx context.Context,
 	request *fern.ListUsersExtendedRequestForOptionalData,
 	opts ...option.RequestOption,
-) (*core.Page[*uuid.UUID, *fern.User], error) {
+) (*core.Page[*uuid.UUID, *fern.User, *fern.ListUsersExtendedOptionalListResponse], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -530,14 +537,15 @@ func (c *Client) ListWithExtendedResultsAndOptionalData(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *fern.ListUsersExtendedOptionalListResponse) *core.PageResponse[*uuid.UUID, *fern.User] {
+	readPageResponse := func(response *fern.ListUsersExtendedOptionalListResponse) *core.PageResponse[*uuid.UUID, *fern.User, *fern.ListUsersExtendedOptionalListResponse] {
 		var zeroValue *uuid.UUID
 		next := response.GetNext()
 		results := response.GetData().GetUsers()
-		return &core.PageResponse[*uuid.UUID, *fern.User]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*uuid.UUID, *fern.User, *fern.ListUsersExtendedOptionalListResponse]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -552,7 +560,7 @@ func (c *Client) ListUsernames(
 	ctx context.Context,
 	request *fern.ListUsernamesRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*string, string], error) {
+) (*core.Page[*string, string, *fern.UsernameCursor], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -587,17 +595,18 @@ func (c *Client) ListUsernames(
 			Response:        pageRequest.Response,
 		}
 	}
-	readPageResponse := func(response *fern.UsernameCursor) *core.PageResponse[*string, string] {
+	readPageResponse := func(response *fern.UsernameCursor) *core.PageResponse[*string, string, *fern.UsernameCursor] {
 		var zeroValue *string
 		var next *string
 		if response.Cursor != nil {
 			next = response.Cursor.After
 		}
 		results := response.GetCursor().GetData()
-		return &core.PageResponse[*string, string]{
-			Next:    next,
-			Results: results,
-			Done:    next == zeroValue,
+		return &core.PageResponse[*string, string, *fern.UsernameCursor]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -612,7 +621,7 @@ func (c *Client) ListWithGlobalConfig(
 	ctx context.Context,
 	request *fern.ListWithGlobalConfigRequest,
 	opts ...option.RequestOption,
-) (*core.Page[*int, string], error) {
+) (*core.Page[*int, string, *fern.UsernameContainer], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -655,12 +664,13 @@ func (c *Client) ListWithGlobalConfig(
 		}
 	}
 
-	readPageResponse := func(response *fern.UsernameContainer) *core.PageResponse[*int, string] {
+	readPageResponse := func(response *fern.UsernameContainer) *core.PageResponse[*int, string, *fern.UsernameContainer] {
 		next += 1
 		results := response.GetResults()
-		return &core.PageResponse[*int, string]{
-			Next:    &next,
-			Results: results,
+		return &core.PageResponse[*int, string, *fern.UsernameContainer]{
+			Results:  results,
+			Response: response,
+			Next:     &next,
 		}
 	}
 	pager := internal.NewOffsetPager(

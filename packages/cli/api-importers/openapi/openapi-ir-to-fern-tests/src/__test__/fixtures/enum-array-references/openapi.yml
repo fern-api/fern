@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: Enum Array Reference Test API
+  version: 1.0.0
+paths:
+  /filters:
+    get:
+      summary: Get filters with array of enum references
+      parameters:
+        - name: quantityUnitFilter
+          in: query
+          description: Filter by quantity units
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/QuantityUnit"
+        - name: statusFilter
+          in: query
+          description: Filter by status
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/OrderStatus"
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Product"
+  /products:
+    post:
+      summary: Create product with enum references
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                category:
+                  $ref: "#/components/schemas/ProductCategory"
+                allowedUnits:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/QuantityUnit"
+                validStatuses:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/OrderStatus"
+      responses:
+        "201":
+          description: Product created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+
+components:
+  schemas:
+    QuantityUnit:
+      type: string
+      enum:
+        - QUANTITY_UNIT_UNSPECIFIED
+        - QUANTITY_UNIT_COUNT
+        - QUANTITY_UNIT_GALLONS
+        - QUANTITY_UNIT_POD
+        - QUANTITY_UNIT_PALLET
+        - QUANTITY_UNIT_SET
+      description: Units for measuring quantity
+
+    OrderStatus:
+      type: string
+      enum:
+        - PENDING
+        - PROCESSING
+        - SHIPPED
+        - DELIVERED
+        - CANCELLED
+      description: Status of an order
+
+    ProductCategory:
+      type: string
+      enum:
+        - ELECTRONICS
+        - CLOTHING
+        - HOME_GARDEN
+        - BOOKS
+        - TOYS
+      description: Category of a product
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        category:
+          $ref: "#/components/schemas/ProductCategory"
+        quantityUnit:
+          $ref: "#/components/schemas/QuantityUnit"
+        status:
+          $ref: "#/components/schemas/OrderStatus"
+        allowedUnits:
+          type: array
+          items:
+            $ref: "#/components/schemas/QuantityUnit"

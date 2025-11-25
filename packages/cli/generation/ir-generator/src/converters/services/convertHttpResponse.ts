@@ -34,7 +34,8 @@ export function convertHttpResponse({
     });
     return {
         body: responseBody,
-        statusCode: typeof endpoint.response !== "string" ? endpoint.response?.["status-code"] : undefined
+        statusCode: typeof endpoint.response !== "string" ? endpoint.response?.["status-code"] : undefined,
+        isWildcardStatusCode: undefined
     };
 }
 

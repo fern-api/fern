@@ -42,6 +42,24 @@ describe("typescript custom sections", () => {
         config: ts.multipleCustomSectionsConfig,
         originalReadme: "../../ts.README.md"
     });
+
+    testGenerateReadme({
+        fixtureName: "custom-sections/typescript/custom-sections-with-advanced-features",
+        config: ts.customSectionsWithAdvancedFeaturesConfig,
+        originalReadme: "../../ts.README.md"
+    });
+
+    testGenerateReadme({
+        fixtureName: "custom-sections/typescript/custom-sections-with-core-and-advanced-features",
+        config: ts.customSectionsWithCoreAndAdvancedFeaturesConfig,
+        originalReadme: "../../ts.README.md"
+    });
+
+    testGenerateReadme({
+        fixtureName: "custom-sections/typescript/multiple-custom-sections-with-advanced-features",
+        config: ts.multipleCustomSectionsWithAdvancedFeaturesConfig,
+        originalReadme: "../../ts.README.md"
+    });
 });
 
 describe("python custom sections", () => {

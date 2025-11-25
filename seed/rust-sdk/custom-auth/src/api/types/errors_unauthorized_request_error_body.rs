@@ -1,6 +1,0 @@
-pub use crate::prelude::*;
-
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
-pub struct UnauthorizedRequestErrorBody {
-    pub message: String,
-}

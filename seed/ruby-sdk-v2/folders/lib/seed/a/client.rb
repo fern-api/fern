@@ -3,7 +3,9 @@
 module Seed
   module A
     class Client
-      # @return [Seed::A::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end

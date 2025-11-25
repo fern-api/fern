@@ -9,6 +9,7 @@ if typing.TYPE_CHECKING:
     from . import union
     from .client import AsyncSeedUndiscriminatedUnions, SeedUndiscriminatedUnions
     from .union import (
+        ConvertToken,
         Key,
         KeyType,
         Metadata,
@@ -19,7 +20,9 @@ if typing.TYPE_CHECKING:
         NestedUnionL2,
         NestedUnionRoot,
         OptionalMetadata,
+        PaymentMethodUnion,
         Request,
+        TokenizeCard,
         TypeWithOptionalUnion,
         UnionWithDuplicateTypes,
         UnionWithIdenticalPrimitives,
@@ -28,6 +31,7 @@ if typing.TYPE_CHECKING:
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
     "AsyncSeedUndiscriminatedUnions": ".client",
+    "ConvertToken": ".union",
     "Key": ".union",
     "KeyType": ".union",
     "Metadata": ".union",
@@ -38,8 +42,10 @@ _dynamic_imports: typing.Dict[str, str] = {
     "NestedUnionL2": ".union",
     "NestedUnionRoot": ".union",
     "OptionalMetadata": ".union",
+    "PaymentMethodUnion": ".union",
     "Request": ".union",
     "SeedUndiscriminatedUnions": ".client",
+    "TokenizeCard": ".union",
     "TypeWithOptionalUnion": ".union",
     "UnionWithDuplicateTypes": ".union",
     "UnionWithIdenticalPrimitives": ".union",
@@ -72,6 +78,7 @@ def __dir__():
 
 __all__ = [
     "AsyncSeedUndiscriminatedUnions",
+    "ConvertToken",
     "Key",
     "KeyType",
     "Metadata",
@@ -82,8 +89,10 @@ __all__ = [
     "NestedUnionL2",
     "NestedUnionRoot",
     "OptionalMetadata",
+    "PaymentMethodUnion",
     "Request",
     "SeedUndiscriminatedUnions",
+    "TokenizeCard",
     "TypeWithOptionalUnion",
     "UnionWithDuplicateTypes",
     "UnionWithIdenticalPrimitives",

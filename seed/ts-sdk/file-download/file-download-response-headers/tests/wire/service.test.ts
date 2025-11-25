@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("ServiceClient", () => {
     test("simple", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedFileDownloadClient({ environment: server.baseUrl });
+        const client = new SeedFileDownloadClient({ maxRetries: 0, environment: server.baseUrl });
 
         server.mockEndpoint().post("/snippet").respondWith().statusCode(200).build();
 

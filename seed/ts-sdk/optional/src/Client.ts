@@ -2,7 +2,7 @@
 
 import { OptionalClient } from "./api/resources/optional/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedObjectsWithImportsClient {
     export interface Options extends BaseClientOptions {}
@@ -11,7 +11,7 @@ export declare namespace SeedObjectsWithImportsClient {
 }
 
 export class SeedObjectsWithImportsClient {
-    protected readonly _options: SeedObjectsWithImportsClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedObjectsWithImportsClient.Options>;
     protected _optional: OptionalClient | undefined;
 
     constructor(options: SeedObjectsWithImportsClient.Options) {

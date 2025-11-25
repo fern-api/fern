@@ -1,22 +1,24 @@
 pub use crate::prelude::*;
 
+/// Query parameters for search
+///
+/// Request type for the SearchQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct SearchQueryRequest {
     pub limit: i64,
     pub id: String,
-    pub date: String,
+    pub date: NaiveDate,
     pub deadline: DateTime<Utc>,
     pub bytes: String,
     pub user: User,
     #[serde(rename = "userList")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub user_list: Option<User>,
+    pub user_list: Vec<Option<User>>,
     #[serde(rename = "optionalDeadline")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_deadline: Option<DateTime<Utc>>,
     #[serde(rename = "keyValue")]
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub key_value: Option<HashMap<String, Option<String>>>,
+    pub key_value: Option<HashMap<String, String>>,
     #[serde(rename = "optionalString")]
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_string: Option<String>,
@@ -27,10 +29,8 @@ pub struct SearchQueryRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub optional_user: Option<User>,
     #[serde(rename = "excludeUser")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub exclude_user: Option<User>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub filter: Option<String>,
+    pub exclude_user: Vec<Option<User>>,
+    pub filter: Vec<Option<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub neighbor: Option<SearchRequestNeighbor>,
     #[serde(rename = "neighborRequired")]

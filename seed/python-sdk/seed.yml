@@ -131,7 +131,8 @@ fixtures:
           enum_type: "python_enums"
       outputFolder: real-enum
   exhaustive:
-    - customConfig: null
+    - customConfig:
+        enable_wire_tests: true
       outputFolder: no-custom-config
     - customConfig:
         inline_path_params: true
@@ -333,7 +334,7 @@ fixtures:
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2
-    docker: fernapi/python-seed
+    image: fernapi/python-seed
     commands:
       # Tests now run a mock server, you can always run seed with --skip-scripts to save time
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
@@ -346,7 +347,7 @@ scripts:
       - poetry run pytest -rP .
   # Test Pydantic V1
   - name: test-pydantic-v1
-    docker: fernapi/python-seed
+    image: fernapi/python-seed
     commands:
       - export NPM_CONFIG_CACHE="$(pwd)/.cache"
       - export HOME="$(pwd)/"

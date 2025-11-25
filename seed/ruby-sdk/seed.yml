@@ -18,6 +18,10 @@ publish:
     file: ./generators/ruby-v2/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk
     context: .
+  podman:
+    file: ./generators/ruby-v2/sdk/Dockerfile
+    image: fernapi/fern-ruby-sdk
+    context: .
 test:
   docker:
     image: fernapi/fern-ruby-sdk:latest
@@ -57,7 +61,7 @@ allowedFailures:
   - any-auth
   - api-wide-base-path
   - audiences
-  - auth-environment-variables
+  - header-auth-environment-variable
   - basic-auth
   - basic-auth-environment-variables
   - bearer-token-environment-variable
@@ -68,7 +72,7 @@ allowedFailures:
   - client-side-params
   - content-type
   - cross-package-type-names
-  - custom-auth
+  - header-auth
   - empty-clients
   - enum
   - error-property
@@ -142,6 +146,8 @@ allowedFailures:
   # Java-specific fixture for LocalDate support
   - unions-with-local-date
   - unknown
+  # Java-specific fixture for staged builder ordering
+  - java-staged-builder-ordering
   - url-form-encoded
   - validation
   - variables
@@ -169,6 +175,6 @@ features:
   whitelabel: false
   apiReferenceGeneration: false
 scripts:
-  - docker: ruby:2.7
+  - image: ruby:2.7
     commands:
       - bundle install && bundle exec rake test

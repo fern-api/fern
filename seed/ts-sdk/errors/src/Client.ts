@@ -2,7 +2,7 @@
 
 import { SimpleClient } from "./api/resources/simple/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedErrorsClient {
     export interface Options extends BaseClientOptions {}
@@ -11,7 +11,7 @@ export declare namespace SeedErrorsClient {
 }
 
 export class SeedErrorsClient {
-    protected readonly _options: SeedErrorsClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedErrorsClient.Options>;
     protected _simple: SimpleClient | undefined;
 
     constructor(options: SeedErrorsClient.Options) {

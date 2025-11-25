@@ -32,7 +32,7 @@ com.google.guava:guava = 31.1-jre
 # jersey
 
 # spring
-org.springframework:spring-web = 5.3.19
+org.springframework:spring-web = 6.1.14
 
 # slf4j
 org.slf4j:slf4j-api = 1.7.36

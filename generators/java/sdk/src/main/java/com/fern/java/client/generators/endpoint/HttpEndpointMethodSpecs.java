@@ -13,4 +13,12 @@ public interface HttpEndpointMethodSpecs {
     Optional<MethodSpec> getByteArrayMethodSpec();
 
     Optional<MethodSpec> getNonRequestOptionsByteArrayMethodSpec();
+
+    Optional<MethodSpec> getInputStreamMethodSpec();
+
+    Optional<MethodSpec> getInputStreamWithMediaTypeMethodSpec();
+
+    Optional<MethodSpec> getInputStreamWithRequestOptionsMethodSpec();
+
+    Optional<MethodSpec> getInputStreamWithMediaTypeAndRequestOptionsMethodSpec();
 }

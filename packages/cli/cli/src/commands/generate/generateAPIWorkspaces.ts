@@ -63,7 +63,9 @@ export async function generateAPIWorkspaces({
     }
 
     for (const workspace of project.apiWorkspaces) {
-        for (const generator of workspace.generatorsConfiguration?.groups.flatMap((group) => group.generators) ?? []) {
+        for (const generator of workspace.generatorsConfiguration?.groups
+            .filter((group) => groupName == null || groupName === group.groupName)
+            .flatMap((group) => group.generators) ?? []) {
             const { shouldProceed } = await checkOutputDirectory(
                 generator.absolutePathToLocalOutput,
                 cliContext,

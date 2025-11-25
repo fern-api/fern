@@ -6,7 +6,11 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("UserClient", () => {
     test("getUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({ tenant_id: "tenant_id", environment: server.baseUrl });
+        const client = new SeedPathParametersClient({
+            maxRetries: 0,
+            tenant_id: "tenant_id",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server
@@ -28,7 +32,11 @@ describe("UserClient", () => {
 
     test("createUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({ tenant_id: "tenant_id", environment: server.baseUrl });
+        const client = new SeedPathParametersClient({
+            maxRetries: 0,
+            tenant_id: "tenant_id",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", tags: ["tags", "tags"] };
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server
@@ -52,7 +60,11 @@ describe("UserClient", () => {
 
     test("updateUser", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({ tenant_id: "tenant_id", environment: server.baseUrl });
+        const client = new SeedPathParametersClient({
+            maxRetries: 0,
+            tenant_id: "tenant_id",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { name: "name", tags: ["tags", "tags"] };
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server
@@ -79,7 +91,11 @@ describe("UserClient", () => {
 
     test("searchUsers", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({ tenant_id: "tenant_id", environment: server.baseUrl });
+        const client = new SeedPathParametersClient({
+            maxRetries: 0,
+            tenant_id: "tenant_id",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = [
             { name: "name", tags: ["tags", "tags"] },
@@ -111,7 +127,11 @@ describe("UserClient", () => {
 
     test("getUserMetadata", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedPathParametersClient({ tenant_id: "tenant_id", environment: server.baseUrl });
+        const client = new SeedPathParametersClient({
+            maxRetries: 0,
+            tenant_id: "tenant_id",
+            environment: server.baseUrl,
+        });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server
@@ -125,6 +145,34 @@ describe("UserClient", () => {
         const response = await client.user.getUserMetadata({
             user_id: "user_id",
             version: 1,
+        });
+        expect(response).toEqual({
+            name: "name",
+            tags: ["tags", "tags"],
+        });
+    });
+
+    test("getUserSpecifics", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPathParametersClient({
+            maxRetries: 0,
+            tenant_id: "tenant_id",
+            environment: server.baseUrl,
+        });
+
+        const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
+        server
+            .mockEndpoint()
+            .get("/tenant_id/user/user_id/specifics/1/thought")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.user.getUserSpecifics({
+            user_id: "user_id",
+            version: 1,
+            thought: "thought",
         });
         expect(response).toEqual({
             name: "name",

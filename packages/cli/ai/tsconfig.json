@@ -4,7 +4,12 @@
     "composite": true,
     "outDir": "lib",
     "rootDir": "src",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals", "node"]
   },
-  "include": ["./generated/**/*", "./src/**/*"]
+  "include": ["./src/**/*"],
+  "references": [
+    {
+      "path": "../configuration"
+    }
+  ]
 }
