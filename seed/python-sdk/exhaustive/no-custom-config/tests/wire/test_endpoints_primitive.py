@@ -1,8 +1,6 @@
-from seed import SeedExhaustive
 from conftest import verify_request_count
 
-import pytest
-
+from seed import SeedExhaustive
 
 
 def test_endpoints_primitive_get_and_return_string() -> None:
@@ -75,4 +73,3 @@ def test_endpoints_primitive_get_and_return_base_64() -> None:
     client = SeedExhaustive(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})
     result = client.endpoints.primitive.get_and_return_base_64(request="SGVsbG8gd29ybGQh")
     verify_request_count(test_id, "POST", "/primitive/base64", None, 1)
-

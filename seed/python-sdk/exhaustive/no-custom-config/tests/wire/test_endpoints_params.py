@@ -1,8 +1,6 @@
-from seed import SeedExhaustive
 from conftest import verify_request_count
 
-import pytest
-
+from seed import SeedExhaustive
 
 
 def test_endpoints_params_get_with_path() -> None:
@@ -67,4 +65,3 @@ def test_endpoints_params_modify_with_inline_path() -> None:
     client = SeedExhaustive(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})
     result = client.endpoints.params.modify_with_inline_path("param", request="string")
     verify_request_count(test_id, "PUT", "/params/path/param", None, 1)
-

@@ -12,6 +12,7 @@ import {
     HttpService,
     IntermediateRepresentation,
     Name,
+    OAuthScheme,
     SdkRequestWrapper,
     ServiceId,
     Subpackage,
@@ -705,5 +706,16 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public hasPagination(): boolean {
         return this.config.generatePaginatedClients === true && this.ir.sdkConfig.hasPaginatedEndpoints;
+    }
+
+    public getOauth(): OAuthScheme | undefined {
+        if (
+            this.ir.auth.schemes[0] != null &&
+            this.ir.auth.schemes[0].type === "oauth" &&
+            this.config.generateOauthClients
+        ) {
+            return this.ir.auth.schemes[0];
+        }
+        return undefined;
     }
 }
