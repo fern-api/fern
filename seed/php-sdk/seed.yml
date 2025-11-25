@@ -184,5 +184,5 @@ allowedFailures:
   - oauth-client-credentials-with-variables
   - variables
   # Java-specific fixture for staged builder ordering
-  - staged-builder-ordering
+  - java-staged-builder-ordering
 

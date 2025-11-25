@@ -147,7 +147,7 @@ allowedFailures:
   - unions-with-local-date
   - unknown
   # Java-specific fixture for staged builder ordering
-  - staged-builder-ordering
+  - java-staged-builder-ordering
   - url-form-encoded
   - validation
   - variables
