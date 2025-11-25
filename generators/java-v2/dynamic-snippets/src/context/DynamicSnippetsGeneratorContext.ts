@@ -2,7 +2,6 @@ import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
     Options,
-    Severity,
     TypeInstance
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
@@ -288,7 +287,8 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
      * Unlike Python/TypeScript/Go which use keyword arguments or object literals (order-independent),
      * Java requires fields to be set in the exact order they appear in the schema definition.
      *
-     * This override ensures we iterate over parameters (schema order) instead of values (example order).
+     * This override calls the base implementation to preserve all error handling semantics,
+     * then reorders the results to match schema parameter order.
      */
     public override associateByWireValue({
         parameters,
@@ -299,33 +299,25 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         values: FernIr.dynamic.Values;
         ignoreMissingParameters?: boolean;
     }): TypeInstance[] {
-        const instances: TypeInstance[] = [];
+        // Call base implementation to preserve all error handling semantics
+        const instances = super.associateByWireValue({ parameters, values, ignoreMissingParameters });
 
-        // Iterate over parameters (schema order) instead of values (example order)
+        // Build a map of wire value -> TypeInstance for efficient lookup
+        const byWireValue = new Map<string, TypeInstance>();
+        for (const instance of instances) {
+            byWireValue.set(instance.name.wireValue, instance);
+        }
+
+        // Reorder instances to match schema parameter order
+        const ordered: TypeInstance[] = [];
         for (const parameter of parameters) {
-            this.errors.scope(parameter.name.wireValue);
-            try {
-                const value = values[parameter.name.wireValue];
-                if (value === undefined) {
-                    if (!ignoreMissingParameters) {
-                        this.errors.add({
-                            severity: Severity.Critical,
-                            message: this.newParameterNotRecognizedError(parameter.name.wireValue).message
-                        });
-                    }
-                    continue;
-                }
-                instances.push({
-                    name: parameter.name,
-                    typeReference: parameter.typeReference,
-                    value
-                });
-            } finally {
-                this.errors.unscope();
+            const instance = byWireValue.get(parameter.name.wireValue);
+            if (instance != null) {
+                ordered.push(instance);
             }
         }
 
-        return instances;
+        return ordered;
     }
 
     public getRootPackageName(): string {
