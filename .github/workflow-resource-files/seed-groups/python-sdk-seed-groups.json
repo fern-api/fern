@@ -41,7 +41,7 @@
       "fixtures": [
         "variables",
         "file-upload:use_typeddict_requests",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "extends",
         "enum:real-enum",
         "object",
@@ -176,7 +176,7 @@
         "exhaustive:pydantic-v2-wrapped",
         "exhaustive:infinite-timeout",
         "oauth-client-credentials-nested-root",
-        "custom-auth",
+        "header-auth",
         "alias-extends:no-custom-config",
         "errors",
         "response-property",

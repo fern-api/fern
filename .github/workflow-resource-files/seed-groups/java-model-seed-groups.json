@@ -11,7 +11,7 @@
         "simple-fhir",
         "circular-references-advanced",
         "literal",
-        "custom-auth",
+        "header-auth",
         "property-access"
       ],
       "groupTotalTimeSeconds": 2740
@@ -50,7 +50,7 @@
       "fixtures": [
         "license",
         "basic-auth",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "java-nullable-named-request-types",
         "java-builder-extension",
         "streaming",

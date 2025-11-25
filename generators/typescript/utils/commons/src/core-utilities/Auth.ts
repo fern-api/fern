@@ -18,11 +18,6 @@ export interface Auth {
         fromAuthorizationHeader: (header: ts.Expression) => ts.Expression;
     };
 
-    OAuthTokenProvider: {
-        _getExpression: () => ts.Expression;
-        _getReferenceToType: () => ts.TypeNode;
-    };
-
     AuthRequest: {
         _getReferenceToType: () => ts.TypeNode;
         getHeaders: (instanceExpression: ts.Expression) => ts.Expression;
@@ -31,7 +26,7 @@ export interface Auth {
     AuthProvider: {
         _getReferenceToType: () => ts.TypeNode;
         getAuthRequest: {
-            invoke: (instanceExpression: ts.Expression) => ts.Expression;
+            invoke: (instanceExpression: ts.Expression, metadata?: ts.Expression) => ts.Expression;
             getReturnTypeNode: () => ts.TypeNode;
         };
     };
@@ -127,17 +122,6 @@ export class AuthImpl extends CoreUtility implements Auth {
         )
     };
 
-    public readonly OAuthTokenProvider = {
-        _getExpression: this.withExportedName(
-            "OAuthTokenProvider",
-            (OAuthTokenProvider) => () => OAuthTokenProvider.getExpression()
-        ),
-        _getReferenceToType: this.withExportedName(
-            "OAuthTokenProvider",
-            (OAuthTokenProvider) => () => OAuthTokenProvider.getTypeNode()
-        )
-    };
-
     public readonly AuthRequest = {
         _getReferenceToType: this.withExportedName("AuthRequest", (AuthRequest) => () => AuthRequest.getTypeNode()),
         getHeaders: (instanceExpression: ts.Expression): ts.Expression => {
@@ -157,7 +141,7 @@ export class AuthImpl extends CoreUtility implements Auth {
     public readonly AuthProvider = {
         _getReferenceToType: this.withExportedName("AuthProvider", (AuthProvider) => () => AuthProvider.getTypeNode()),
         getAuthRequest: {
-            invoke: (instanceExpression: ts.Expression) => {
+            invoke: (instanceExpression: ts.Expression, metadata?: ts.Expression) => {
                 return ts.factory.createAwaitExpression(
                     ts.factory.createCallExpression(
                         ts.factory.createPropertyAccessExpression(
@@ -165,7 +149,7 @@ export class AuthImpl extends CoreUtility implements Auth {
                             ts.factory.createIdentifier("getAuthRequest")
                         ),
                         undefined,
-                        []
+                        metadata ? [metadata] : []
                     )
                 );
             },

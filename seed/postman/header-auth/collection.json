@@ -1,0 +1,122 @@
+{
+  "info": {
+    "name": "Header Token",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "headerTokenAuth",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "value",
+        "value": "{{headerTokenAuth}}",
+        "type": "string"
+      },
+      {
+        "key": "key",
+        "value": "x-api-key",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Service",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get With Bearer Token",
+          "request": {
+            "description": "GET request with custom api key",
+            "url": {
+              "raw": "{{baseUrl}}/apiKey",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "apiKey"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "x-api-key",
+                "value": "{{headerTokenAuth}}",
+                "type": "string",
+                "description": null
+              },
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": "GET request with custom api key",
+                "url": {
+                  "raw": "{{baseUrl}}/apiKey",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "apiKey"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "x-api-key",
+                    "value": "{{headerTokenAuth}}",
+                    "type": "string",
+                    "description": null
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "\"string\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

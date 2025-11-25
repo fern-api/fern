@@ -6,7 +6,7 @@ import { NoAuthClient } from "./api/resources/noAuth/client/Client.js";
 import { NoReqBodyClient } from "./api/resources/noReqBody/client/Client.js";
 import { ReqWithHeadersClient } from "./api/resources/reqWithHeaders/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedExhaustiveClient {
     export interface Options extends BaseClientOptions {}
@@ -15,7 +15,7 @@ export declare namespace SeedExhaustiveClient {
 }
 
 export class SeedExhaustiveClient {
-    protected readonly _options: SeedExhaustiveClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedExhaustiveClient.Options>;
     protected _endpoints: EndpointsClient | undefined;
     protected _inlinedRequests: InlinedRequestsClient | undefined;
     protected _noAuth: NoAuthClient | undefined;
@@ -23,7 +23,7 @@ export class SeedExhaustiveClient {
     protected _reqWithHeaders: ReqWithHeadersClient | undefined;
 
     constructor(options: SeedExhaustiveClient.Options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get endpoints(): EndpointsClient {

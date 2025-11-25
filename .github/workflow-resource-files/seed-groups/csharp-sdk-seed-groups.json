@@ -79,7 +79,7 @@
         "undiscriminated-unions",
         "server-sent-events",
         "single-url-environment-default",
-        "custom-auth",
+        "header-auth",
         "websocket-bearer-auth",
         "literals-unions",
         "exhaustive:include-exception-handler"
@@ -140,7 +140,7 @@
     {
       "fixtures": [
         "query-parameters-openapi-as-objects",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "empty-clients",
         "imdb:exported-client-class-name",
         "oauth-client-credentials:no-custom-config",

@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.13.2
+  createdAt: "2025-11-25"
+  changelogEntry:
+    - type: chore
+      summary: |
+        add circular reference detection and Box wrapping for recursive types
+  irVersion: 61
+
 - version: 0.13.1
   createdAt: "2025-11-24"
   changelogEntry:

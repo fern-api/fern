@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.34.0
+  changelogEntry:
+    - summary: |
+        Implement auth provider architecture for all auth schemes, replacing inline auth logic.
+        This reduces code duplication and improves maintainability.
+        Each auth scheme now uses a dedicated `AuthProvider` class that implements the `AuthProvider` interface.
+        The `AnyAuthProvider` class is used when multiple auth schemes are defined.
+      type: feat
+  createdAt: "2025-11-23"
+  irVersion: 61
+
 - version: 3.33.1
   changelogEntry:
     - summary: |

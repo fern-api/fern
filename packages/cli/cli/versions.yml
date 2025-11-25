@@ -35,6 +35,14 @@
 
 - changelogEntry:
     - summary: |
+        Support generating examples for `x-fern-type: literal<...>` values in OpenAPI specs. Parameters with literal type annotations now generate examples using the underlying literal value.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.6.2
+
+- changelogEntry:
+    - summary: |
         Fix docs broken-links validator incorrectly flagging external URLs that contain the docs domain in query parameters.
       type: fix
   irVersion: 62
