@@ -1,12 +1,10 @@
-from conftest import verify_request_count
-
-from seed import SeedExhaustive
+from conftest import get_client, verify_request_count
 
 
 def test_inlinedRequests_post_with_object_bodyand_response() -> None:
     """Test postWithObjectBodyandResponse endpoint with WireMock"""
     test_id = "inlined_requests.post_with_object_bodyand_response.0"
-    client = SeedExhaustive(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})
+    client = get_client(test_id)
     result = client.inlined_requests.post_with_object_bodyand_response(
         string="string",
         integer=1,
