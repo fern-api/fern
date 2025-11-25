@@ -165,16 +165,17 @@ export class DynamicTypeLiteralMapper {
         }
 
         const isItemOptional = list.type === "optional" || list.type === "nullable";
-        const effectiveItemType = isItemOptional ? list.value : list;
 
         return java.TypeLiteral.list({
-            valueType: this.context.dynamicTypeMapper.convert({ typeReference: effectiveItemType }),
+            valueType: this.context.dynamicTypeMapper.convert({ typeReference: list }),
             values: value.map((v, index) => {
                 this.context.errors.scope({ index });
                 try {
-                    // For optional/nullable items, convert without wrapping in Optional.
-                    // The SDK builder's convenience overload accepts List<T> directly.
-                    return this.convert({ typeReference: effectiveItemType, value: v, as });
+                    if (isItemOptional) {
+                        const itemValue = this.convert({ typeReference: list.value, value: v, as });
+                        return this.wrapInOptionalIfNotNop(itemValue, true);
+                    }
+                    return this.convert({ typeReference: list, value: v, as });
                 } finally {
                     this.context.errors.unscope();
                 }

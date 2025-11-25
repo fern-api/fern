@@ -627,7 +627,10 @@ client.nullableOptional().createComplexProfile(
         )
         .nullableListOfNullables(
             OptionalNullable.of(
-                Arrays.asList("nullableListOfNullables", "nullableListOfNullables")
+                Arrays.asList(
+                    OptionalNullable.of("nullableListOfNullables"),
+                    OptionalNullable.of("nullableListOfNullables")
+                )
             )
         )
         .nullableMapOfNullables(
