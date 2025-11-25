@@ -1,3 +1,13 @@
+//! Request and response types for the NullableOptional
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 11 types for API operations
+//! - **Model Types**: 14 types for data representation
+
 pub mod nullable_optional_nullable_user_id;
 pub mod nullable_optional_optional_user_id;
 pub mod nullable_optional_user_profile;

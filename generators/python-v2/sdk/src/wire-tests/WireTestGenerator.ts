@@ -14,6 +14,12 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
 /**
+ * Reserved method names that are allowed to use their unsafe (original) names.
+ * This matches the Python generator's ALLOWED_RESERVED_METHOD_NAMES.
+ */
+const ALLOWED_RESERVED_METHOD_NAMES = ["list", "set"];
+
+/**
  * Generates WireMock-based integration tests for Python SDK.
  *
  * This is a skeleton implementation that sets up the infrastructure for wire tests
@@ -73,6 +79,7 @@ export class WireTestGenerator {
             endpoint: HttpEndpoint;
             example: dynamic.EndpointExample;
             service: HttpService;
+            exampleIndex: number;
         }> = [];
 
         for (const endpoint of endpoints) {
@@ -85,7 +92,7 @@ export class WireTestGenerator {
                         s.endpoints.some((e) => e.id === endpoint.id)
                     );
                     if (service) {
-                        endpointTestCases.push({ endpoint, example: firstExample, service });
+                        endpointTestCases.push({ endpoint, example: firstExample, service, exampleIndex: 0 });
                     }
                 }
             }
@@ -114,7 +121,12 @@ export class WireTestGenerator {
 
     private buildTestFile(
         serviceName: string,
-        testCases: Array<{ endpoint: HttpEndpoint; example: dynamic.EndpointExample; service: HttpService }>
+        testCases: Array<{
+            endpoint: HttpEndpoint;
+            example: dynamic.EndpointExample;
+            service: HttpService;
+            exampleIndex: number;
+        }>
     ): python.PythonFile {
         const statements: python.AstNode[] = [];
 
@@ -125,16 +137,18 @@ export class WireTestGenerator {
         // Add an import registration statement (for "from X import Y" style imports)
         statements.push(this.createImportRegistration());
 
-        // Add setup fixture
-        statements.push(this.generateSetupFixture());
-
-        // Add helper functions
-        statements.push(this.generateResetWiremockFunction());
+        // Add helper function for verifying request count
         statements.push(this.generateVerifyRequestCountFunction());
 
         // Add test functions for each endpoint
-        for (const { endpoint, example, service } of testCases) {
-            const testFunction = this.generateEndpointTestFunction(serviceName, endpoint, example, service);
+        for (const { endpoint, example, service, exampleIndex } of testCases) {
+            const testFunction = this.generateEndpointTestFunction(
+                serviceName,
+                endpoint,
+                example,
+                service,
+                exampleIndex
+            );
             if (testFunction) {
                 statements.push(testFunction);
             }
@@ -171,41 +185,12 @@ export class WireTestGenerator {
     // HELPER FUNCTION GENERATION
     // =============================================================================
 
-    private generateSetupFixture(): python.Method {
-        const method = python.method({
-            name: "setup_client",
-            decorators: [
-                python.decorator({
-                    callable: python.codeBlock("pytest.fixture(autouse=True)")
-                })
-            ],
-            return_: python.Type.none(),
-            docstring: "Reset WireMock before each test"
-        });
-
-        method.addStatement(python.codeBlock(`reset_wiremock_requests()`));
-        return method;
-    }
-
-    private generateResetWiremockFunction(): python.Method {
-        const statements = [
-            python.codeBlock(`wiremock_admin_url = "http://localhost:8080/__admin"`),
-            python.codeBlock(`response = requests.delete(f"{wiremock_admin_url}/requests")`),
-            python.codeBlock(`assert response.status_code == 200, "Failed to reset WireMock requests"`)
-        ];
-
-        const method = python.method({
-            name: "reset_wiremock_requests",
-            return_: python.Type.none(),
-            docstring: "Resets all WireMock request journal"
-        });
-
-        statements.forEach((stmt) => method.addStatement(stmt));
-        return method;
-    }
-
     private generateVerifyRequestCountFunction(): python.Method {
         const params = [
+            python.parameter({
+                name: "test_id",
+                type: python.Type.str()
+            }),
             python.parameter({
                 name: "method",
                 type: python.Type.str()
@@ -226,7 +211,11 @@ export class WireTestGenerator {
 
         const statements = [
             python.codeBlock(`wiremock_admin_url = "http://localhost:8080/__admin"`),
-            python.codeBlock(`request_body: Dict[str, Any] = {"method": method, "urlPath": url_path}`),
+            python.codeBlock(`request_body: Dict[str, Any] = {
+        "method": method,
+        "urlPath": url_path,
+        "headers": {"X-Test-Id": {"equalTo": test_id}}
+    }`),
             python.codeBlock(`if query_params:
         query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}
         request_body["queryParameters"] = query_parameters`),
@@ -243,7 +232,7 @@ export class WireTestGenerator {
             name: "verify_request_count",
             parameters: params,
             return_: python.Type.none(),
-            docstring: "Verifies the number of requests made to WireMock"
+            docstring: "Verifies the number of requests made to WireMock filtered by test ID for concurrency safety"
         });
 
         statements.forEach((stmt) => method.addStatement(stmt));
@@ -258,7 +247,8 @@ export class WireTestGenerator {
         serviceName: string,
         endpoint: HttpEndpoint,
         example: dynamic.EndpointExample,
-        service: HttpService
+        service: HttpService,
+        exampleIndex: number
     ): python.Method | null {
         try {
             const testName = this.getTestFunctionName(serviceName, endpoint);
@@ -266,18 +256,30 @@ export class WireTestGenerator {
             const queryParamsCode = this.buildQueryParamsCode(endpoint);
             const clientName = this.getClientClassName();
 
+            // Build deterministic test ID based on fully qualified path
+            const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
+
             const statements: python.AstNode[] = [];
 
-            // Create client
-            statements.push(python.codeBlock(`client = ${clientName}(base_url="http://localhost:8080")`));
+            // Use deterministic test ID for concurrency safety
+            statements.push(python.codeBlock(`test_id = "${testId}"`));
+
+            // Create client with test ID header for request tracking
+            statements.push(
+                python.codeBlock(
+                    `client = ${clientName}(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})`
+                )
+            );
 
             // Generate the API call
             const apiCall = this.generateApiCall(endpoint, example, service);
             statements.push(python.codeBlock(apiCall));
 
-            // Verify request count
+            // Verify request count using test ID for filtering
             statements.push(
-                python.codeBlock(`verify_request_count("${endpoint.method}", "${basePath}", ${queryParamsCode}, 1)`)
+                python.codeBlock(
+                    `verify_request_count(test_id, "${endpoint.method}", "${basePath}", ${queryParamsCode}, 1)`
+                )
             );
 
             const method = python.method({
@@ -294,12 +296,32 @@ export class WireTestGenerator {
         }
     }
 
+    /**
+     * Builds a deterministic test ID based on the fully qualified service path.
+     * Format: service.sub_service.endpoint_name.example_index
+     * This ensures test IDs are unique per test and deterministic across regenerations.
+     */
+    private buildDeterministicTestId(service: HttpService, endpoint: HttpEndpoint, exampleIndex: number): string {
+        const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const endpointName = endpoint.name.snakeCase.safeName;
+
+        const segments: string[] = [];
+        if (servicePathParts.length > 0) {
+            segments.push(servicePathParts.join("."));
+        }
+        segments.push(endpointName);
+        segments.push(String(exampleIndex));
+
+        // Example: "endpoints.primitive.get_and_return_string.0"
+        return segments.join(".");
+    }
+
     // =============================================================================
     // API CALL GENERATION
     // =============================================================================
 
     private generateApiCall(endpoint: HttpEndpoint, example: dynamic.EndpointExample, service: HttpService): string {
-        const methodName = endpoint.name.snakeCase.safeName;
+        const methodName = this.getEndpointName(endpoint);
 
         // Build path parameters
         const pathParams = this.buildPathParameters(endpoint, example);
@@ -510,9 +532,22 @@ export class WireTestGenerator {
         });
     }
 
+    /**
+     * Escapes a string for use in Python code.
+     * Handles newlines, tabs, carriage returns, backslashes, and quotes.
+     */
+    private escapeStringForPython(value: string): string {
+        return value
+            .replace(/\\/g, "\\\\") // Escape backslashes first
+            .replace(/\n/g, "\\n") // Escape newlines
+            .replace(/\r/g, "\\r") // Escape carriage returns
+            .replace(/\t/g, "\\t") // Escape tabs
+            .replace(/"/g, '\\"'); // Escape double quotes
+    }
+
     private formatValue(value: unknown): string {
         if (typeof value === "string") {
-            return `"${value}"`;
+            return `"${this.escapeStringForPython(value)}"`;
         }
         if (typeof value === "number") {
             return String(value);
@@ -540,7 +575,7 @@ export class WireTestGenerator {
             return value ? "True" : "False";
         }
         if (typeof value === "string") {
-            return `"${value}"`;
+            return `"${this.escapeStringForPython(value)}"`;
         }
         if (typeof value === "number") {
             return String(value);
@@ -550,7 +585,9 @@ export class WireTestGenerator {
             return `[${items.join(",")}]`;
         }
         if (typeof value === "object") {
-            const entries = Object.entries(value).map(([key, val]) => `"${key}":${this.jsonToPython(val)}`);
+            const entries = Object.entries(value).map(
+                ([key, val]) => `"${this.escapeStringForPython(key)}":${this.jsonToPython(val)}`
+            );
             return `{${entries.join(",")}}`;
         }
         return JSON.stringify(value);
@@ -571,7 +608,7 @@ export class WireTestGenerator {
 
         for (const [key, value] of Object.entries(queryParams)) {
             if (value != null) {
-                entries.push(`"${key}": "${String(value)}"`);
+                entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(String(value))}"`);
             }
         }
 
@@ -589,6 +626,18 @@ export class WireTestGenerator {
     private getTestFunctionName(serviceName: string, endpoint: HttpEndpoint): string {
         const endpointName = endpoint.name.snakeCase.safeName;
         return `test_${serviceName}_${endpointName}`;
+    }
+
+    /**
+     * Gets the endpoint method name, matching the Python generator's get_endpoint_name logic.
+     * If the endpoint's original name (lowercased) is in ALLOWED_RESERVED_METHOD_NAMES,
+     * use the unsafe name; otherwise use the safe name.
+     */
+    private getEndpointName(endpoint: HttpEndpoint): string {
+        if (ALLOWED_RESERVED_METHOD_NAMES.includes(endpoint.name.originalName.toLowerCase())) {
+            return endpoint.name.snakeCase.unsafeName;
+        }
+        return endpoint.name.snakeCase.safeName;
     }
 
     private getClientModulePath(): string[] {

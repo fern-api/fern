@@ -22,3 +22,5 @@ scripts: []
 allowedFailures:
   # TODO: Add support for recursive undiscriminated unions.
   - circular-references
+  # Java-specific fixture for staged builder ordering
+  - java-staged-builder-ordering

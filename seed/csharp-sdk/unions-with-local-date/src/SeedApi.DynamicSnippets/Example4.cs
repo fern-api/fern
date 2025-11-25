@@ -11,14 +11,8 @@ public class Example4
             }
         );
 
-        await client.Union.UpdateAsync(
-            new Shape(
-                new Circle {
-                    Radius = 1.1
-                }
-            ) {
-                Id = "id",
-            }
+        await client.Types.GetAsync(
+            "datetime-example"
         );
     }
 
