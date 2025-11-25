@@ -141,7 +141,8 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             if (githubConfig.uri != null && githubConfig.token != null) {
                 return FernGeneratorCli.Remote.github({
                     repoUrl: this.normalizeRepoUrl(githubConfig.uri),
-                    installationToken: githubConfig.token
+                    installationToken: githubConfig.token,
+                    branch: githubConfig.branch
                 });
             }
         } catch (error) {
