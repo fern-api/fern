@@ -26,7 +26,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && tsup ./src/cli.ts --sourcemap && cp -R ../base/src/asIs dist",
+    "dist:cli": "node build.mjs",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-typescript-mcp-server:latest ../../..",
     "podmanTagLatest": "pnpm dist:cli && podman build -f ./Dockerfile -t fernapi/fern-typescript-mcp-server:latest ../../..",
     "publish:cli": "pnpm dist:cli && cd dist && npm publish",

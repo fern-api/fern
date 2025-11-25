@@ -1,35 +1,10 @@
-import { join, dirname } from "path";
-import { cp } from "fs/promises";
-import { fileURLToPath } from "url";
-import tsup from "tsup";
+import { buildGenerator, getDirname } from '@fern-api/configs/build-utils.mjs';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-main();
-
-async function main() {
-  await tsup.build({
-    entry: ["src/cli.ts"],
-    format: ["cjs"],
-    minify: false,
-    outDir: "dist",
-    sourcemap: true,
-    clean: true,
-  });
-  const filesFoldersToCopy = [
-    ["../features.yml", "./dist/assets/features.yml"],
-    [
-      "../../asIs/readme/binary-response-addendum.md",
-      "./dist/assets/readme/binary-response-addendum.md",
+buildGenerator(getDirname(import.meta.url), {
+    copyFrom: [
+        { from: '../features.yml', to: './dist/assets/features.yml' },
+        { from: '../../asIs/readme/binary-response-addendum.md', to: './dist/assets/readme/binary-response-addendum.md' },
+        { from: '../../asIs/', to: './dist/assets/asIs' },
+        { from: '../../utils/core-utilities/', to: './dist/assets/core-utilities' },
     ],
-    ["../../asIs/", "./dist/assets/asIs"],
-    ["../../utils/core-utilities/", "./dist/assets/core-utilities"],
-  ];
-  for (const [source, destination] of filesFoldersToCopy) {
-    await cp(join(__dirname, source), join(__dirname, destination), {
-      recursive: true,
-      force: true,
-    });
-  }
-}
+});
