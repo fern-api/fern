@@ -1,3 +1,11 @@
+- version: 3.19.0
+  changelogEntry:
+    - summary: |
+        Further hardening
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
 - version: 3.19.0-rc0
   changelogEntry:
     - summary: |
