@@ -1,4 +1,4 @@
-import { NamedArgument, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, NamedArgument, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
@@ -53,7 +53,17 @@ export class EndpointSnippetGenerator {
         );
     }
 
-    private buildCodeBlock({
+    public async generateSnippetAst({
+        endpoint,
+        request
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+    }): Promise<AbstractAstNode> {
+        return this.buildCodeBlock({ endpoint, snippet: request });
+    }
+
+    public buildCodeBlock({
         endpoint,
         snippet
     }: {

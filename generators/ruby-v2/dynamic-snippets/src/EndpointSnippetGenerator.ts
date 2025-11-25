@@ -1,4 +1,4 @@
-import { AbstractFormatter, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractFormatter, Options, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ruby } from "@fern-api/ruby-ast";
@@ -42,6 +42,18 @@ export class EndpointSnippetGenerator {
             customConfig: this.context.customConfig ?? {},
             formatter: this.formatter
         });
+    }
+
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<ruby.AstNode> {
+        return this.buildCodeBlock({ endpoint, snippet: request });
     }
 
     private buildCodeBlock({

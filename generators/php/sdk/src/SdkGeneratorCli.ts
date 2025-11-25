@@ -19,6 +19,7 @@ import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
+import { WireTestGenerator } from "./wire-tests";
 
 export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
     protected constructContext({
@@ -36,11 +37,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
     }
 
     protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
-        const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        if (parsed != null) {
-            return parsed;
-        }
-        return {};
+        return SdkCustomConfigSchema.parse(customConfig ?? {});
     }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
@@ -63,6 +60,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         this.generateEnvironment(context);
         this.generateErrors(context);
         this.generateOauthTokenProvider(context);
+        await this.generateWireTestFiles(context);
 
         if (context.config.output.snippetFilepath != null) {
             const snippets = await this.generateSnippets({ context });
@@ -162,6 +160,25 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
                 scheme: oauth
             });
             context.project.addSourceFiles(oauthTokenProvider.generate());
+        }
+    }
+
+    private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {
+        if (!context.customConfig.enableWireTests) {
+            return;
+        }
+
+        if (!context.ir.dynamic) {
+            context.logger.warn("Cannot generate wire tests without dynamic IR");
+            return;
+        }
+
+        try {
+            const wireTestGenerator = new WireTestGenerator({ context, ir: context.ir });
+            await wireTestGenerator.generate();
+            context.logger.info("Generated wire test files");
+        } catch (error) {
+            context.logger.error(`Failed to generate wire test files: ${error}`);
         }
     }
 
