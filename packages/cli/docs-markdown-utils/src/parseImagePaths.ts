@@ -511,6 +511,12 @@ function resolvePath(
         return undefined;
     }
 
+    // If the path is already absolute (e.g., from a previous pass that resolved relative paths),
+    // return it directly instead of trying to wrap it in RelativeFilePath.of()
+    if (isAbsolute(pathToImage)) {
+        return AbsoluteFilePath.of(pathToImage);
+    }
+
     const filepath = resolve(
         pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
         RelativeFilePath.of(pathToImage.replace(/^\//, ""))
