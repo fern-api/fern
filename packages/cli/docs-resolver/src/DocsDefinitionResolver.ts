@@ -1208,6 +1208,24 @@ export class DocsDefinitionResolver {
                 // noop
             }
         }
+
+        // Extract OpenAPI IR tags when tag description pages are enabled
+        let openApiTags: Record<string, { id: string; description: string | undefined }> | undefined;
+        if (item.tagDescriptionPages && useV3Parser) {
+            try {
+                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                const openApiIr = await openapiWorkspace.getOpenAPIIr({ context: this.taskContext });
+                if (openApiIr.tags.tagsById) {
+                    openApiTags = Object.fromEntries(
+                        Object.entries(openApiIr.tags.tagsById)
+                            .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
+                            .map(([tagId, tag]) => [tagId, { id: String(tag.id), description: tag.description }])
+                    );
+                }
+            } catch (error) {
+                this.taskContext.logger.warn("Failed to extract OpenAPI tags for tag description pages", String(error));
+            }
+        }
         // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
         if (ir == null) {
             ir = generateIntermediateRepresentation({
@@ -1256,8 +1274,22 @@ export class DocsDefinitionResolver {
             this.collectedFileIds,
             workspace,
             hideChildren,
-            parentAvailability ?? item.availability
+            parentAvailability ?? item.availability,
+            openApiTags
         );
+
+        // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
+        const tagDescriptionContent = node.getTagDescriptionContent();
+        for (const [absolutePath, content] of tagDescriptionContent.entries()) {
+            // Extract just the filename from the absolute path (e.g., "/tag-users.md" -> "tag-users.md")
+            const filename = absolutePath.split("/").pop() || absolutePath;
+            const relativePath = RelativeFilePath.of(filename);
+
+            // Add to both collections so the file appears in the final pages output
+            this.rawMarkdownFiles[relativePath] = content;
+            this.parsedDocsConfig.pages[relativePath] = content;
+        }
+
         return node.get();
     }
 

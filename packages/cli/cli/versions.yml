@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Adds an option for `api.tag-description-pages: true` to create summary pages from tag descriptions within an API reference.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.8.0
+
+- changelogEntry:
+    - summary: |
         Fix fern docs dev bug on Windows where asset paths were not parsing correctly
       type: fix
   irVersion: 62
