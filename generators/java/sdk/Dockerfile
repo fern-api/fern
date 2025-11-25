@@ -7,6 +7,11 @@ COPY generators/java-v2/sdk/features.yml /assets/features.yml
 # Stage 2: Java V1
 # Apple Silicon: FROM bitnami/gradle:latest
 FROM gradle:jdk11-jammy
+
+# Remove vulnerable jgit jars (CVE-2025-4949) - not used by this generator
+RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
+       /opt/gradle/lib/plugins/org.eclipse.jgit.ssh.apache-*.jar
+
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
 RUN cd / \
     && tar -xvf sdk.tar \
