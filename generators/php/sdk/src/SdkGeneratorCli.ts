@@ -11,6 +11,7 @@ import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpo
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
+import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
@@ -72,6 +73,14 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
             } catch (e) {
                 context.logger.warn(
                     `Failed to generate README.md: ${e instanceof Error ? e.message : "Unknown error"}. This is non-critical and generation will continue.`
+                );
+            }
+
+            try {
+                await this.generateReference({ context });
+            } catch (e) {
+                context.logger.warn(
+                    `Failed to generate reference.md: ${e instanceof Error ? e.message : "Unknown error"}. This is non-critical and generation will continue.`
                 );
             }
         }
@@ -156,6 +165,14 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
         context.project.addRawFiles(
             new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+        );
+    }
+
+    private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
+        const builder = buildReference({ context });
+        const content = await context.generatorAgent.generateReference(builder);
+        context.project.addRawFiles(
+            new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
         );
     }
 
