@@ -152,7 +152,12 @@
         "error-property",
         "no-environment",
         "streaming",
-        "folders"
+        "folders",
+        "exhaustive:no-custom-config",
+        "exhaustive:wire-tests",
+        "no-retries",
+        "nullable-request-body",
+        "unions-with-local-date"
       ],
       "groupTotalTimeSeconds": 813
     }
