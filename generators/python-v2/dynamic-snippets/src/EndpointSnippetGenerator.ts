@@ -499,7 +499,10 @@ export class EndpointSnippetGenerator {
                         return [
                             {
                                 name: REQUEST_BODY_ARG_NAME,
-                                value: this.context.dynamicTypeLiteralMapper.convert({ typeReference: innerType, value })
+                                value: this.context.dynamicTypeLiteralMapper.convert({
+                                    typeReference: innerType,
+                                    value
+                                })
                             }
                         ];
                     }

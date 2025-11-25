@@ -1,10 +1,10 @@
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { python } from "@fern-api/python-ast";
 import { WriteablePythonFile } from "@fern-api/python-base";
 import { DynamicSnippetsGenerator } from "@fern-api/python-dynamic-snippets";
-import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
 import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
