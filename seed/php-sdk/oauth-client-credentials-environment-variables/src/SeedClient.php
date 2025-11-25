@@ -8,6 +8,8 @@ use Seed\Nested\NestedClient;
 use Seed\Simple\SimpleClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
+use Seed\Core\OAuthTokenProvider;
+use Exception;
 
 class SeedClient
 {
@@ -48,7 +50,8 @@ class SeedClient
     private RawClient $client;
 
     /**
-     * @param string $token The token to use for authentication.
+     * @param ?string $clientId The client ID for OAuth authentication.
+     * @param ?string $clientSecret The client secret for OAuth authentication.
      * @param ?array{
      *   baseUrl?: string,
      *   client?: ClientInterface,
@@ -58,18 +61,24 @@ class SeedClient
      * } $options
      */
     public function __construct(
-        string $token,
+        ?string $clientId = null,
+        ?string $clientSecret = null,
         ?array $options = null,
     ) {
+        $clientId ??= $this->getFromEnvOrThrow('CLIENT_ID', 'Please pass in clientId or set the environment variable CLIENT_ID.');
+        $clientSecret ??= $this->getFromEnvOrThrow('CLIENT_SECRET', 'Please pass in clientSecret or set the environment variable CLIENT_SECRET.');
+        $authRawClient = new RawClient(['headers' => []]);
+        $authClient = new AuthClient($authRawClient);
+        $oauthTokenProvider = new OAuthTokenProvider($clientId ?? '', $clientSecret ?? '', $authClient);
+        $token = $oauthTokenProvider->getToken();
+
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($token != null) {
-            $defaultHeaders['Authorization'] = "Bearer $token";
-        }
+        $defaultHeaders['Authorization'] = "Bearer $token";
 
         $this->options = $options ?? [];
         $this->options['headers'] = array_merge(
@@ -86,5 +95,16 @@ class SeedClient
         $this->nestedNoAuth = new NestedNoAuthClient($this->client, $this->options);
         $this->nested = new NestedClient($this->client, $this->options);
         $this->simple = new SimpleClient($this->client, $this->options);
+    }
+
+    /**
+     * @param string $env
+     * @param string $message
+     * @return string
+     */
+    private function getFromEnvOrThrow(string $env, string $message): string
+    {
+        $value = getenv($env);
+        return $value ? (string) $value : throw new Exception($message);
     }
 }
