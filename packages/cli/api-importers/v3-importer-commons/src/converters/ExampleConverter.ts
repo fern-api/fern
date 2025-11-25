@@ -1083,7 +1083,7 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
     }
 
     private maybeConvertLiteralFernType(resolvedSchema: OpenAPIV3_1.SchemaObject): ExampleConverter.Output | undefined {
-        const fernType = resolvedSchema["x-fern-type"];
+        const fernType = (resolvedSchema as Record<string, unknown>)["x-fern-type"];
         if (typeof fernType !== "string") {
             return undefined;
         }
