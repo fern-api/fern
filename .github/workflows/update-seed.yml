@@ -220,25 +220,6 @@ jobs:
         run: |
           echo "${{ matrix.generator-name }}-changes=${{ steps.get-generator-changes.outputs.any_changed }}" >> $GITHUB_OUTPUT
 
-  check-orphaned-seed-folders:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    needs: [changes]
-    if: ${{ needs.changes.outputs.seed == 'true' || github.event_name == 'workflow_dispatch' }}
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Check for orphaned seed folders
-        shell: bash
-        env:
-          FORCE_COLOR: "2"
-        run: |
-          pnpm seed:local clean --dry-run
-
   get-all-test-matrices:
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -1213,6 +1194,18 @@ jobs:
           patch-pattern: seed-*.patch
           checkout-ref: ${{ steps.extract-branch.outputs.branch }}
 
+      - name: Install
+        if: steps.apply-patches.outputs.has-patches == 'true'
+        uses: ./.github/actions/install
+
+      - name: Clean orphaned seed folders
+        if: steps.apply-patches.outputs.has-patches == 'true'
+        shell: bash
+        env:
+          FORCE_COLOR: "2"
+        run: |
+          pnpm seed:local clean
+
       # Commit all applied patches back to branch (will be checked out in apply-patches step)
       - name: Add and Commit Changes
         id: commit-changes
@@ -1353,6 +1346,18 @@ jobs:
         uses: ./.github/actions/apply-update-seed-patches
         with:
           patch-pattern: seed-${{ matrix.sdk-name }}-*.patch
+
+      - name: Install
+        if: steps.apply-patches.outputs.has-patches == 'true'
+        uses: ./.github/actions/install
+
+      - name: Clean orphaned seed folders for ${{ matrix.sdk-name }}
+        if: steps.apply-patches.outputs.has-patches == 'true'
+        shell: bash
+        env:
+          FORCE_COLOR: "2"
+        run: |
+          pnpm seed:local clean --generator ${{ matrix.sdk-name }}
 
       # Create PR, approve and set to merge per generator
       - name: Create Pull Request
