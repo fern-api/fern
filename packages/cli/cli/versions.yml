@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Adds support for `api.tag-description-pages` to create summary pages from tag descriptions within an API reference.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.7.0
+
+- changelogEntry:
+    - summary: |
         Support 4XX and 5XX patterns in OpenAPI specs for docs.
       type: feat
   irVersion: 62
