@@ -246,7 +246,7 @@ export class WireTestGenerator {
             // Create client with test ID header for request tracking
             statements.push(
                 python.codeBlock(
-                    `client = ${clientName}(base_url="http://localhost:8080", default_headers={"X-Test-Id": test_id})`
+                    `client = ${clientName}(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})`
                 )
             );
 
