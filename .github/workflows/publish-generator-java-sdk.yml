@@ -42,3 +42,18 @@ jobs:
           manual-trigger: "true"
           fern-token: ${{ secrets.FERN_TOKEN }}
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+      - name: Configure AWS Credentials
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: "arn:aws:iam::985111089818:role/github-ci"
+          aws-region: "us-east-1"
+      - name: Upload to ECR for scanning
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |-
+          aws sts get-caller-identity
+          docker pull fernapi/fern-java-sdk:${{ inputs.version }}
+          SANITIZED_BRANCH="${BRANCH_NAME//\//-}"
+          docker tag fernapi/fern-java-sdk:${{ inputs.version }} 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:${{ inputs.version }}-$SANITIZED_BRANCH-${{ github.sha }}
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 985111089818.dkr.ecr.us-east-1.amazonaws.com
+          docker push 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:${{ inputs.version }}-$SANITIZED_BRANCH-${{ github.sha }}
