@@ -23294,6 +23294,1641 @@
             ],
             "audiences": null
         },
+        "service_types": {
+            "availability": null,
+            "name": {
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "types",
+                        "camelCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "types",
+                            "safeName": "types"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "TYPES",
+                            "safeName": "TYPES"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Types",
+                            "safeName": "Types"
+                        }
+                    }
+                }
+            },
+            "displayName": null,
+            "basePath": {
+                "head": "/time",
+                "parts": []
+            },
+            "headers": [],
+            "pathParameters": [],
+            "encoding": {
+                "json": {},
+                "proto": null
+            },
+            "transport": {
+                "type": "http"
+            },
+            "endpoints": [
+                {
+                    "id": "endpoint_types.get",
+                    "name": {
+                        "originalName": "get",
+                        "camelCase": {
+                            "unsafeName": "get",
+                            "safeName": "get"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get",
+                            "safeName": "get"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET",
+                            "safeName": "GET"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Get",
+                            "safeName": "Get"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "GET",
+                    "basePath": null,
+                    "path": {
+                        "head": "/",
+                        "parts": [
+                            {
+                                "pathParameter": "id",
+                                "tail": ""
+                            }
+                        ]
+                    },
+                    "fullPath": {
+                        "head": "/time/",
+                        "parts": [
+                            {
+                                "pathParameter": "id",
+                                "tail": ""
+                            }
+                        ]
+                    },
+                    "pathParameters": [
+                        {
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "v2Examples": {
+                                "userSpecifiedExamples": {},
+                                "autogeneratedExamples": {}
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "allPathParameters": [
+                        {
+                            "name": {
+                                "originalName": "id",
+                                "camelCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "id",
+                                    "safeName": "id"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "ID",
+                                    "safeName": "ID"
+                                }
+                            },
+                            "valueType": {
+                                "_type": "primitive",
+                                "primitive": {
+                                    "v1": "STRING",
+                                    "v2": {
+                                        "type": "string",
+                                        "default": null,
+                                        "validation": null
+                                    }
+                                }
+                            },
+                            "location": "ENDPOINT",
+                            "variable": null,
+                            "v2Examples": {
+                                "userSpecifiedExamples": {},
+                                "autogeneratedExamples": {}
+                            },
+                            "docs": null
+                        }
+                    ],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": null,
+                    "v2RequestBodies": null,
+                    "sdkRequest": null,
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "UnionWithTime",
+                                        "camelCase": {
+                                            "unsafeName": "unionWithTime",
+                                            "safeName": "unionWithTime"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "union_with_time",
+                                            "safeName": "union_with_time"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNION_WITH_TIME",
+                                            "safeName": "UNION_WITH_TIME"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "UnionWithTime",
+                                            "safeName": "UnionWithTime"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "types",
+                                            "camelCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TYPES",
+                                                "safeName": "TYPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Types",
+                                                "safeName": "Types"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_types:UnionWithTime",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "e39cdfee",
+                                "name": null,
+                                "url": "/time/date-example",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [
+                                    {
+                                        "name": {
+                                            "originalName": "id",
+                                            "camelCase": {
+                                                "unsafeName": "id",
+                                                "safeName": "id"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "id",
+                                                "safeName": "id"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ID",
+                                                "safeName": "ID"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ID",
+                                                "safeName": "ID"
+                                            }
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "date-example"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "date-example"
+                                        }
+                                    }
+                                ],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_types:UnionWithTime",
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "types",
+                                                                "camelCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "TYPES",
+                                                                    "safeName": "TYPES"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Types",
+                                                                    "safeName": "Types"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "types",
+                                                            "camelCase": {
+                                                                "unsafeName": "types",
+                                                                "safeName": "types"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "types",
+                                                                "safeName": "types"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "TYPES",
+                                                                "safeName": "TYPES"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Types",
+                                                                "safeName": "Types"
+                                                            }
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "originalName": "UnionWithTime",
+                                                        "camelCase": {
+                                                            "unsafeName": "unionWithTime",
+                                                            "safeName": "unionWithTime"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "union_with_time",
+                                                            "safeName": "union_with_time"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "UNION_WITH_TIME",
+                                                            "safeName": "UNION_WITH_TIME"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "UnionWithTime",
+                                                            "safeName": "UnionWithTime"
+                                                        }
+                                                    },
+                                                    "displayName": null
+                                                },
+                                                "shape": {
+                                                    "type": "union",
+                                                    "discriminant": {
+                                                        "name": {
+                                                            "originalName": "type",
+                                                            "camelCase": {
+                                                                "unsafeName": "type",
+                                                                "safeName": "type"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "type",
+                                                                "safeName": "type"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "TYPE",
+                                                                "safeName": "TYPE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Type",
+                                                                "safeName": "Type"
+                                                            }
+                                                        },
+                                                        "wireValue": "type"
+                                                    },
+                                                    "singleUnionType": {
+                                                        "wireDiscriminantValue": {
+                                                            "name": {
+                                                                "originalName": "date",
+                                                                "camelCase": {
+                                                                    "unsafeName": "date",
+                                                                    "safeName": "date"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "date",
+                                                                    "safeName": "date"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "DATE",
+                                                                    "safeName": "DATE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Date",
+                                                                    "safeName": "Date"
+                                                                }
+                                                            },
+                                                            "wireValue": "date"
+                                                        },
+                                                        "shape": {
+                                                            "type": "singleProperty",
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "date",
+                                                                    "date": "1994-01-01"
+                                                                }
+                                                            },
+                                                            "jsonExample": "1994-01-01"
+                                                        }
+                                                    },
+                                                    "baseProperties": [],
+                                                    "extendProperties": []
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "type": "date",
+                                                "value": "1994-01-01"
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        },
+                        {
+                            "example": {
+                                "id": "ee2b750b",
+                                "name": null,
+                                "url": "/time/datetime-example",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [
+                                    {
+                                        "name": {
+                                            "originalName": "id",
+                                            "camelCase": {
+                                                "unsafeName": "id",
+                                                "safeName": "id"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "id",
+                                                "safeName": "id"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ID",
+                                                "safeName": "ID"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ID",
+                                                "safeName": "ID"
+                                            }
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "datetime-example"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "datetime-example"
+                                        }
+                                    }
+                                ],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "typeName": {
+                                                    "typeId": "type_types:UnionWithTime",
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "types",
+                                                                "camelCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "TYPES",
+                                                                    "safeName": "TYPES"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Types",
+                                                                    "safeName": "Types"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "types",
+                                                            "camelCase": {
+                                                                "unsafeName": "types",
+                                                                "safeName": "types"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "types",
+                                                                "safeName": "types"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "TYPES",
+                                                                "safeName": "TYPES"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Types",
+                                                                "safeName": "Types"
+                                                            }
+                                                        }
+                                                    },
+                                                    "name": {
+                                                        "originalName": "UnionWithTime",
+                                                        "camelCase": {
+                                                            "unsafeName": "unionWithTime",
+                                                            "safeName": "unionWithTime"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "union_with_time",
+                                                            "safeName": "union_with_time"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "UNION_WITH_TIME",
+                                                            "safeName": "UNION_WITH_TIME"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "UnionWithTime",
+                                                            "safeName": "UnionWithTime"
+                                                        }
+                                                    },
+                                                    "displayName": null
+                                                },
+                                                "shape": {
+                                                    "type": "union",
+                                                    "discriminant": {
+                                                        "name": {
+                                                            "originalName": "type",
+                                                            "camelCase": {
+                                                                "unsafeName": "type",
+                                                                "safeName": "type"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "type",
+                                                                "safeName": "type"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "TYPE",
+                                                                "safeName": "TYPE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Type",
+                                                                "safeName": "Type"
+                                                            }
+                                                        },
+                                                        "wireValue": "type"
+                                                    },
+                                                    "singleUnionType": {
+                                                        "wireDiscriminantValue": {
+                                                            "name": {
+                                                                "originalName": "datetime",
+                                                                "camelCase": {
+                                                                    "unsafeName": "datetime",
+                                                                    "safeName": "datetime"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "datetime",
+                                                                    "safeName": "datetime"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "DATETIME",
+                                                                    "safeName": "DATETIME"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Datetime",
+                                                                    "safeName": "Datetime"
+                                                                }
+                                                            },
+                                                            "wireValue": "datetime"
+                                                        },
+                                                        "shape": {
+                                                            "type": "singleProperty",
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "datetime",
+                                                                    "datetime": "1994-01-01T01:01:01.000Z",
+                                                                    "raw": "1994-01-01T01:01:01Z"
+                                                                }
+                                                            },
+                                                            "jsonExample": "1994-01-01T01:01:01Z"
+                                                        }
+                                                    },
+                                                    "baseProperties": [],
+                                                    "extendProperties": []
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "type": "datetime",
+                                                "value": "1994-01-01T01:01:01Z"
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "e521371b",
+                                "url": "/time/id",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [
+                                    {
+                                        "name": {
+                                            "originalName": "id",
+                                            "camelCase": {
+                                                "unsafeName": "id",
+                                                "safeName": "id"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "id",
+                                                "safeName": "id"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "ID",
+                                                "safeName": "ID"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "ID",
+                                                "safeName": "ID"
+                                            }
+                                        },
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "string",
+                                                    "string": {
+                                                        "original": "id"
+                                                    }
+                                                }
+                                            },
+                                            "jsonExample": "id"
+                                        }
+                                    }
+                                ],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": null,
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "named",
+                                                "shape": {
+                                                    "type": "union",
+                                                    "discriminant": {
+                                                        "name": {
+                                                            "originalName": "type",
+                                                            "camelCase": {
+                                                                "unsafeName": "type",
+                                                                "safeName": "type"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "type",
+                                                                "safeName": "type"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "TYPE",
+                                                                "safeName": "TYPE"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Type",
+                                                                "safeName": "Type"
+                                                            }
+                                                        },
+                                                        "wireValue": "type"
+                                                    },
+                                                    "singleUnionType": {
+                                                        "wireDiscriminantValue": {
+                                                            "name": {
+                                                                "originalName": "value",
+                                                                "camelCase": {
+                                                                    "unsafeName": "value",
+                                                                    "safeName": "value"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "value",
+                                                                    "safeName": "value"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "VALUE",
+                                                                    "safeName": "VALUE"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Value",
+                                                                    "safeName": "Value"
+                                                                }
+                                                            },
+                                                            "wireValue": "value"
+                                                        },
+                                                        "shape": {
+                                                            "type": "singleProperty",
+                                                            "shape": {
+                                                                "type": "primitive",
+                                                                "primitive": {
+                                                                    "type": "integer",
+                                                                    "integer": 1
+                                                                }
+                                                            },
+                                                            "jsonExample": 1
+                                                        }
+                                                    },
+                                                    "baseProperties": [],
+                                                    "extendProperties": []
+                                                },
+                                                "typeName": {
+                                                    "name": {
+                                                        "originalName": "UnionWithTime",
+                                                        "camelCase": {
+                                                            "unsafeName": "unionWithTime",
+                                                            "safeName": "unionWithTime"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "union_with_time",
+                                                            "safeName": "union_with_time"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "UNION_WITH_TIME",
+                                                            "safeName": "UNION_WITH_TIME"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "UnionWithTime",
+                                                            "safeName": "UnionWithTime"
+                                                        }
+                                                    },
+                                                    "fernFilepath": {
+                                                        "allParts": [
+                                                            {
+                                                                "originalName": "types",
+                                                                "camelCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "snakeCase": {
+                                                                    "unsafeName": "types",
+                                                                    "safeName": "types"
+                                                                },
+                                                                "screamingSnakeCase": {
+                                                                    "unsafeName": "TYPES",
+                                                                    "safeName": "TYPES"
+                                                                },
+                                                                "pascalCase": {
+                                                                    "unsafeName": "Types",
+                                                                    "safeName": "Types"
+                                                                }
+                                                            }
+                                                        ],
+                                                        "packagePath": [],
+                                                        "file": {
+                                                            "originalName": "types",
+                                                            "camelCase": {
+                                                                "unsafeName": "types",
+                                                                "safeName": "types"
+                                                            },
+                                                            "snakeCase": {
+                                                                "unsafeName": "types",
+                                                                "safeName": "types"
+                                                            },
+                                                            "screamingSnakeCase": {
+                                                                "unsafeName": "TYPES",
+                                                                "safeName": "TYPES"
+                                                            },
+                                                            "pascalCase": {
+                                                                "unsafeName": "Types",
+                                                                "safeName": "Types"
+                                                            }
+                                                        }
+                                                    },
+                                                    "displayName": null,
+                                                    "typeId": "type_types:UnionWithTime"
+                                                }
+                                            },
+                                            "jsonExample": {
+                                                "type": "value",
+                                                "value": 1
+                                            }
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "apiPlayground": null,
+                    "availability": null,
+                    "docs": null
+                },
+                {
+                    "id": "endpoint_types.update",
+                    "name": {
+                        "originalName": "update",
+                        "camelCase": {
+                            "unsafeName": "update",
+                            "safeName": "update"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "update",
+                            "safeName": "update"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPDATE",
+                            "safeName": "UPDATE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Update",
+                            "safeName": "Update"
+                        }
+                    },
+                    "displayName": null,
+                    "auth": false,
+                    "security": null,
+                    "idempotent": false,
+                    "baseUrl": null,
+                    "v2BaseUrls": null,
+                    "method": "PATCH",
+                    "basePath": null,
+                    "path": {
+                        "head": "",
+                        "parts": []
+                    },
+                    "fullPath": {
+                        "head": "/time",
+                        "parts": []
+                    },
+                    "pathParameters": [],
+                    "allPathParameters": [],
+                    "queryParameters": [],
+                    "headers": [],
+                    "requestBody": {
+                        "type": "reference",
+                        "requestBodyType": {
+                            "_type": "named",
+                            "name": {
+                                "originalName": "UnionWithTime",
+                                "camelCase": {
+                                    "unsafeName": "unionWithTime",
+                                    "safeName": "unionWithTime"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "union_with_time",
+                                    "safeName": "union_with_time"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "UNION_WITH_TIME",
+                                    "safeName": "UNION_WITH_TIME"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "UnionWithTime",
+                                    "safeName": "UnionWithTime"
+                                }
+                            },
+                            "fernFilepath": {
+                                "allParts": [
+                                    {
+                                        "originalName": "types",
+                                        "camelCase": {
+                                            "unsafeName": "types",
+                                            "safeName": "types"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "types",
+                                            "safeName": "types"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "TYPES",
+                                            "safeName": "TYPES"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Types",
+                                            "safeName": "Types"
+                                        }
+                                    }
+                                ],
+                                "packagePath": [],
+                                "file": {
+                                    "originalName": "types",
+                                    "camelCase": {
+                                        "unsafeName": "types",
+                                        "safeName": "types"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "types",
+                                        "safeName": "types"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "TYPES",
+                                        "safeName": "TYPES"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "Types",
+                                        "safeName": "Types"
+                                    }
+                                }
+                            },
+                            "displayName": null,
+                            "typeId": "type_types:UnionWithTime",
+                            "default": null,
+                            "inline": null
+                        },
+                        "docs": null,
+                        "contentType": null,
+                        "v2Examples": null
+                    },
+                    "v2RequestBodies": null,
+                    "sdkRequest": {
+                        "shape": {
+                            "type": "justRequestBody",
+                            "value": {
+                                "type": "typeReference",
+                                "requestBodyType": {
+                                    "_type": "named",
+                                    "name": {
+                                        "originalName": "UnionWithTime",
+                                        "camelCase": {
+                                            "unsafeName": "unionWithTime",
+                                            "safeName": "unionWithTime"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "union_with_time",
+                                            "safeName": "union_with_time"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "UNION_WITH_TIME",
+                                            "safeName": "UNION_WITH_TIME"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "UnionWithTime",
+                                            "safeName": "UnionWithTime"
+                                        }
+                                    },
+                                    "fernFilepath": {
+                                        "allParts": [
+                                            {
+                                                "originalName": "types",
+                                                "camelCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "types",
+                                                    "safeName": "types"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "TYPES",
+                                                    "safeName": "TYPES"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "Types",
+                                                    "safeName": "Types"
+                                                }
+                                            }
+                                        ],
+                                        "packagePath": [],
+                                        "file": {
+                                            "originalName": "types",
+                                            "camelCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "snakeCase": {
+                                                "unsafeName": "types",
+                                                "safeName": "types"
+                                            },
+                                            "screamingSnakeCase": {
+                                                "unsafeName": "TYPES",
+                                                "safeName": "TYPES"
+                                            },
+                                            "pascalCase": {
+                                                "unsafeName": "Types",
+                                                "safeName": "Types"
+                                            }
+                                        }
+                                    },
+                                    "displayName": null,
+                                    "typeId": "type_types:UnionWithTime",
+                                    "default": null,
+                                    "inline": null
+                                },
+                                "docs": null,
+                                "contentType": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "requestParameterName": {
+                            "originalName": "request",
+                            "camelCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "request",
+                                "safeName": "request"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "REQUEST",
+                                "safeName": "REQUEST"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Request",
+                                "safeName": "Request"
+                            }
+                        },
+                        "streamParameter": null
+                    },
+                    "response": {
+                        "body": {
+                            "type": "json",
+                            "value": {
+                                "type": "response",
+                                "responseBodyType": {
+                                    "_type": "primitive",
+                                    "primitive": {
+                                        "v1": "BOOLEAN",
+                                        "v2": {
+                                            "type": "boolean",
+                                            "default": null
+                                        }
+                                    }
+                                },
+                                "docs": null,
+                                "v2Examples": null
+                            }
+                        },
+                        "status-code": null
+                    },
+                    "v2Responses": null,
+                    "errors": [],
+                    "userSpecifiedExamples": [
+                        {
+                            "example": {
+                                "id": "c7e57eb7",
+                                "name": null,
+                                "url": "/time",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_types:UnionWithTime",
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "types",
+                                                        "camelCase": {
+                                                            "unsafeName": "types",
+                                                            "safeName": "types"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "types",
+                                                            "safeName": "types"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "TYPES",
+                                                            "safeName": "TYPES"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Types",
+                                                            "safeName": "Types"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [],
+                                                "file": {
+                                                    "originalName": "types",
+                                                    "camelCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPES",
+                                                        "safeName": "TYPES"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Types",
+                                                        "safeName": "Types"
+                                                    }
+                                                }
+                                            },
+                                            "name": {
+                                                "originalName": "UnionWithTime",
+                                                "camelCase": {
+                                                    "unsafeName": "unionWithTime",
+                                                    "safeName": "unionWithTime"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "union_with_time",
+                                                    "safeName": "union_with_time"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "UNION_WITH_TIME",
+                                                    "safeName": "UNION_WITH_TIME"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "UnionWithTime",
+                                                    "safeName": "UnionWithTime"
+                                                }
+                                            },
+                                            "displayName": null
+                                        },
+                                        "shape": {
+                                            "type": "union",
+                                            "discriminant": {
+                                                "name": {
+                                                    "originalName": "type",
+                                                    "camelCase": {
+                                                        "unsafeName": "type",
+                                                        "safeName": "type"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "type",
+                                                        "safeName": "type"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPE",
+                                                        "safeName": "TYPE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Type",
+                                                        "safeName": "Type"
+                                                    }
+                                                },
+                                                "wireValue": "type"
+                                            },
+                                            "singleUnionType": {
+                                                "wireDiscriminantValue": {
+                                                    "name": {
+                                                        "originalName": "date",
+                                                        "camelCase": {
+                                                            "unsafeName": "date",
+                                                            "safeName": "date"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "date",
+                                                            "safeName": "date"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "DATE",
+                                                            "safeName": "DATE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Date",
+                                                            "safeName": "Date"
+                                                        }
+                                                    },
+                                                    "wireValue": "date"
+                                                },
+                                                "shape": {
+                                                    "type": "singleProperty",
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "date",
+                                                            "date": "1994-01-01"
+                                                        }
+                                                    },
+                                                    "jsonExample": "1994-01-01"
+                                                }
+                                            },
+                                            "baseProperties": [],
+                                            "extendProperties": []
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "type": "date",
+                                        "value": "1994-01-01"
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "boolean",
+                                                    "boolean": true
+                                                }
+                                            },
+                                            "jsonExample": true
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        },
+                        {
+                            "example": {
+                                "id": "d06cc0bd",
+                                "name": null,
+                                "url": "/time",
+                                "rootPathParameters": [],
+                                "endpointPathParameters": [],
+                                "servicePathParameters": [],
+                                "endpointHeaders": [],
+                                "serviceHeaders": [],
+                                "queryParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "named",
+                                        "typeName": {
+                                            "typeId": "type_types:UnionWithTime",
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "types",
+                                                        "camelCase": {
+                                                            "unsafeName": "types",
+                                                            "safeName": "types"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "types",
+                                                            "safeName": "types"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "TYPES",
+                                                            "safeName": "TYPES"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Types",
+                                                            "safeName": "Types"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [],
+                                                "file": {
+                                                    "originalName": "types",
+                                                    "camelCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPES",
+                                                        "safeName": "TYPES"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Types",
+                                                        "safeName": "Types"
+                                                    }
+                                                }
+                                            },
+                                            "name": {
+                                                "originalName": "UnionWithTime",
+                                                "camelCase": {
+                                                    "unsafeName": "unionWithTime",
+                                                    "safeName": "unionWithTime"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "union_with_time",
+                                                    "safeName": "union_with_time"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "UNION_WITH_TIME",
+                                                    "safeName": "UNION_WITH_TIME"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "UnionWithTime",
+                                                    "safeName": "UnionWithTime"
+                                                }
+                                            },
+                                            "displayName": null
+                                        },
+                                        "shape": {
+                                            "type": "union",
+                                            "discriminant": {
+                                                "name": {
+                                                    "originalName": "type",
+                                                    "camelCase": {
+                                                        "unsafeName": "type",
+                                                        "safeName": "type"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "type",
+                                                        "safeName": "type"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPE",
+                                                        "safeName": "TYPE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Type",
+                                                        "safeName": "Type"
+                                                    }
+                                                },
+                                                "wireValue": "type"
+                                            },
+                                            "singleUnionType": {
+                                                "wireDiscriminantValue": {
+                                                    "name": {
+                                                        "originalName": "datetime",
+                                                        "camelCase": {
+                                                            "unsafeName": "datetime",
+                                                            "safeName": "datetime"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "datetime",
+                                                            "safeName": "datetime"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "DATETIME",
+                                                            "safeName": "DATETIME"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Datetime",
+                                                            "safeName": "Datetime"
+                                                        }
+                                                    },
+                                                    "wireValue": "datetime"
+                                                },
+                                                "shape": {
+                                                    "type": "singleProperty",
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "datetime",
+                                                            "datetime": "1994-01-01T01:01:01.000Z",
+                                                            "raw": "1994-01-01T01:01:01Z"
+                                                        }
+                                                    },
+                                                    "jsonExample": "1994-01-01T01:01:01Z"
+                                                }
+                                            },
+                                            "baseProperties": [],
+                                            "extendProperties": []
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "type": "datetime",
+                                        "value": "1994-01-01T01:01:01Z"
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "boolean",
+                                                    "boolean": true
+                                                }
+                                            },
+                                            "jsonExample": true
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            "codeSamples": null
+                        }
+                    ],
+                    "autogeneratedExamples": [
+                        {
+                            "example": {
+                                "id": "373c9757",
+                                "url": "/time",
+                                "name": null,
+                                "endpointHeaders": [],
+                                "endpointPathParameters": [],
+                                "queryParameters": [],
+                                "servicePathParameters": [],
+                                "serviceHeaders": [],
+                                "rootPathParameters": [],
+                                "request": {
+                                    "type": "reference",
+                                    "shape": {
+                                        "type": "named",
+                                        "shape": {
+                                            "type": "union",
+                                            "discriminant": {
+                                                "name": {
+                                                    "originalName": "type",
+                                                    "camelCase": {
+                                                        "unsafeName": "type",
+                                                        "safeName": "type"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "type",
+                                                        "safeName": "type"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPE",
+                                                        "safeName": "TYPE"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Type",
+                                                        "safeName": "Type"
+                                                    }
+                                                },
+                                                "wireValue": "type"
+                                            },
+                                            "singleUnionType": {
+                                                "wireDiscriminantValue": {
+                                                    "name": {
+                                                        "originalName": "value",
+                                                        "camelCase": {
+                                                            "unsafeName": "value",
+                                                            "safeName": "value"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "value",
+                                                            "safeName": "value"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "VALUE",
+                                                            "safeName": "VALUE"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Value",
+                                                            "safeName": "Value"
+                                                        }
+                                                    },
+                                                    "wireValue": "value"
+                                                },
+                                                "shape": {
+                                                    "type": "singleProperty",
+                                                    "shape": {
+                                                        "type": "primitive",
+                                                        "primitive": {
+                                                            "type": "integer",
+                                                            "integer": 1
+                                                        }
+                                                    },
+                                                    "jsonExample": 1
+                                                }
+                                            },
+                                            "baseProperties": [],
+                                            "extendProperties": []
+                                        },
+                                        "typeName": {
+                                            "name": {
+                                                "originalName": "UnionWithTime",
+                                                "camelCase": {
+                                                    "unsafeName": "unionWithTime",
+                                                    "safeName": "unionWithTime"
+                                                },
+                                                "snakeCase": {
+                                                    "unsafeName": "union_with_time",
+                                                    "safeName": "union_with_time"
+                                                },
+                                                "screamingSnakeCase": {
+                                                    "unsafeName": "UNION_WITH_TIME",
+                                                    "safeName": "UNION_WITH_TIME"
+                                                },
+                                                "pascalCase": {
+                                                    "unsafeName": "UnionWithTime",
+                                                    "safeName": "UnionWithTime"
+                                                }
+                                            },
+                                            "fernFilepath": {
+                                                "allParts": [
+                                                    {
+                                                        "originalName": "types",
+                                                        "camelCase": {
+                                                            "unsafeName": "types",
+                                                            "safeName": "types"
+                                                        },
+                                                        "snakeCase": {
+                                                            "unsafeName": "types",
+                                                            "safeName": "types"
+                                                        },
+                                                        "screamingSnakeCase": {
+                                                            "unsafeName": "TYPES",
+                                                            "safeName": "TYPES"
+                                                        },
+                                                        "pascalCase": {
+                                                            "unsafeName": "Types",
+                                                            "safeName": "Types"
+                                                        }
+                                                    }
+                                                ],
+                                                "packagePath": [],
+                                                "file": {
+                                                    "originalName": "types",
+                                                    "camelCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "snakeCase": {
+                                                        "unsafeName": "types",
+                                                        "safeName": "types"
+                                                    },
+                                                    "screamingSnakeCase": {
+                                                        "unsafeName": "TYPES",
+                                                        "safeName": "TYPES"
+                                                    },
+                                                    "pascalCase": {
+                                                        "unsafeName": "Types",
+                                                        "safeName": "Types"
+                                                    }
+                                                }
+                                            },
+                                            "displayName": null,
+                                            "typeId": "type_types:UnionWithTime"
+                                        }
+                                    },
+                                    "jsonExample": {
+                                        "type": "value",
+                                        "value": 1
+                                    }
+                                },
+                                "response": {
+                                    "type": "ok",
+                                    "value": {
+                                        "type": "body",
+                                        "value": {
+                                            "shape": {
+                                                "type": "primitive",
+                                                "primitive": {
+                                                    "type": "boolean",
+                                                    "boolean": true
+                                                }
+                                            },
+                                            "jsonExample": true
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            }
+                        }
+                    ],
+                    "pagination": null,
+                    "transport": null,
+                    "v2Examples": null,
+                    "source": null,
+                    "audiences": null,
+                    "retries": null,
+                    "apiPlayground": null,
+                    "availability": null,
+                    "docs": null
+                }
+            ],
+            "audiences": null
+        },
         "service_union": {
             "availability": null,
             "name": {
@@ -24749,6 +26384,9 @@
                 "type_bigunion:TriangularRepair",
                 "type_bigunion:GaseousRoad"
             ],
+            "service_types": [
+                "type_types:UnionWithTime"
+            ],
             "service_union": [
                 "type_union:Shape",
                 "type_union:Circle",
@@ -24765,7 +26403,6 @@
             "type_types:UnionWithMultipleNoProperties",
             "type_types:UnionWithLiteral",
             "type_types:UnionWithBaseProperties",
-            "type_types:UnionWithTime",
             "type_types:UnionWithOptionalTime",
             "type_types:UnionWithSingleElement",
             "type_types:UnionWithDuplicateTypes",
@@ -35233,6 +36870,203 @@
                 },
                 "examples": null
             },
+            "endpoint_types.get": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "get",
+                        "camelCase": {
+                            "unsafeName": "get",
+                            "safeName": "get"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "get",
+                            "safeName": "get"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "GET",
+                            "safeName": "GET"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Get",
+                            "safeName": "Get"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "types",
+                                "camelCase": {
+                                    "unsafeName": "types",
+                                    "safeName": "types"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "types",
+                                    "safeName": "types"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TYPES",
+                                    "safeName": "TYPES"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Types",
+                                    "safeName": "Types"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "GET",
+                    "path": "/time/{id}"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [
+                        {
+                            "name": {
+                                "name": {
+                                    "originalName": "id",
+                                    "camelCase": {
+                                        "unsafeName": "id",
+                                        "safeName": "id"
+                                    },
+                                    "snakeCase": {
+                                        "unsafeName": "id",
+                                        "safeName": "id"
+                                    },
+                                    "screamingSnakeCase": {
+                                        "unsafeName": "ID",
+                                        "safeName": "ID"
+                                    },
+                                    "pascalCase": {
+                                        "unsafeName": "ID",
+                                        "safeName": "ID"
+                                    }
+                                },
+                                "wireValue": "id"
+                            },
+                            "typeReference": {
+                                "type": "primitive",
+                                "value": "STRING"
+                            },
+                            "propertyAccess": null,
+                            "variable": null
+                        }
+                    ],
+                    "body": null
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
+            "endpoint_types.update": {
+                "auth": null,
+                "declaration": {
+                    "name": {
+                        "originalName": "update",
+                        "camelCase": {
+                            "unsafeName": "update",
+                            "safeName": "update"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "update",
+                            "safeName": "update"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "UPDATE",
+                            "safeName": "UPDATE"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Update",
+                            "safeName": "Update"
+                        }
+                    },
+                    "fernFilepath": {
+                        "allParts": [
+                            {
+                                "originalName": "types",
+                                "camelCase": {
+                                    "unsafeName": "types",
+                                    "safeName": "types"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "types",
+                                    "safeName": "types"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TYPES",
+                                    "safeName": "TYPES"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Types",
+                                    "safeName": "Types"
+                                }
+                            }
+                        ],
+                        "packagePath": [],
+                        "file": {
+                            "originalName": "types",
+                            "camelCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "types",
+                                "safeName": "types"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "TYPES",
+                                "safeName": "TYPES"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Types",
+                                "safeName": "Types"
+                            }
+                        }
+                    }
+                },
+                "location": {
+                    "method": "PATCH",
+                    "path": "/time"
+                },
+                "request": {
+                    "type": "body",
+                    "pathParameters": [],
+                    "body": {
+                        "type": "typeReference",
+                        "value": {
+                            "type": "named",
+                            "value": "type_types:UnionWithTime"
+                        }
+                    }
+                },
+                "response": {
+                    "type": "json"
+                },
+                "examples": null
+            },
             "endpoint_union.get": {
                 "auth": null,
                 "declaration": {
@@ -35609,7 +37443,7 @@
                     }
                 }
             },
-            "service": null,
+            "service": "service_types",
             "types": [
                 "type_types:Union",
                 "type_types:UnionWithDiscriminant",
@@ -35636,7 +37470,7 @@
             "navigationConfig": null,
             "webhooks": null,
             "websocket": null,
-            "hasEndpointsInTree": false,
+            "hasEndpointsInTree": true,
             "docs": null
         },
         "subpackage_union": {
