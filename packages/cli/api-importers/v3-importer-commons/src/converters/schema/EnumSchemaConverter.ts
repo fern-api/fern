@@ -32,6 +32,14 @@ export class EnumSchemaConverter extends AbstractConverter<
             return undefined;
         }
 
+        // Check if enum contains only null values
+        const hasOnlyNulls = this.schema.enum.length > 0 && this.schema.enum.every((value) => value === null);
+        if (hasOnlyNulls) {
+            // An enum with only null values cannot be represented as a Fern enum.
+            // Return undefined to let the caller fall back to an appropriate type (e.g., unknown).
+            return undefined;
+        }
+
         const enumValues = this.schema.enum.filter((value) => typeof value === "string" || typeof value === "number");
         const values = enumValues.map((value) => {
             const stringValue = value.toString();

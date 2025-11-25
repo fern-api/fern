@@ -387,6 +387,48 @@ export function convertSchemaObject(
             schema.enum != null &&
             (schema.type === "string" || schema.type == null || (schema.type as string) === "enum")
         ) {
+            // Check if enum contains only null values before filtering
+            const hasOnlyNulls = schema.enum.length > 0 && schema.enum.every((value) => value === null);
+            if (hasOnlyNulls) {
+                // An enum with only null values cannot be represented as a Fern enum.
+                // Treat it as a nullable unknown type instead.
+                let result: SchemaWithExample = SchemaWithExample.unknown({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    description,
+                    availability,
+                    namespace,
+                    groupName,
+                    example: undefined
+                });
+                result = SchemaWithExample.nullable({
+                    nameOverride,
+                    generatedName,
+                    title,
+                    value: result,
+                    description,
+                    availability,
+                    namespace,
+                    groupName,
+                    inline: undefined
+                });
+                if (wrapAsOptional) {
+                    result = SchemaWithExample.optional({
+                        nameOverride,
+                        generatedName,
+                        title,
+                        value: result,
+                        description,
+                        availability,
+                        namespace,
+                        groupName,
+                        inline: undefined
+                    });
+                }
+                return result;
+            }
+
             // Cut 'null' from enum since functionality is achieved by 'nullable'
             schema.enum = schema.enum.filter((value) => value !== null);
 
