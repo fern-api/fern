@@ -13,5 +13,7 @@ export interface GithubOutputMode {
      * should NOT attempt to clone the repository.
      */
     installationToken: string | undefined;
+    /** The branch to use for README cloning. Defaults to the repository's default branch when omitted. */
+    branch: string | undefined;
     publishInfo: FernIr.generatorExec.GithubPublishInfo | undefined;
 }
