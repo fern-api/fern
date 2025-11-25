@@ -43,7 +43,7 @@ export class EndpointSnippetGenerator {
         return formattedCode;
     }
 
-    private buildCodeComponents({
+    public buildCodeComponents({
         endpoint,
         snippet
     }: {

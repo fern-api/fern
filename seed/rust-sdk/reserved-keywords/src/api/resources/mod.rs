@@ -1,4 +1,10 @@
-use crate::{ApiError, ClientConfig};
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Package**
+
+use crate::{ClientConfig, ApiError};
 
 pub mod package;
 pub struct NurseryApiClient {

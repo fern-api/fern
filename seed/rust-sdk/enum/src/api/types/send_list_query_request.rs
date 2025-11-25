@@ -1,5 +1,8 @@
 pub use crate::prelude::*;
 
+/// Query parameters for sendList
+///
+/// Request type for the SendListQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SendListQueryRequest {
     pub operand: Vec<Operand>,

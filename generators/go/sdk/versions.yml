@@ -1,4 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- version: 1.18.1
+  changelogEntry:
+    - summary: Fix linting in test files
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 60
+
+- version: 1.18.0
+  changelogEntry:
+    - summary: |
+        Add support for custom pagination (with particular implementation)
+        Fix dynamic snippets handling for alias of collection literals.
+      type: feat
+  createdAt: "2025-11-21"
+  irVersion: 60
+
 - version: 1.17.1
   changelogEntry:
     - summary: |

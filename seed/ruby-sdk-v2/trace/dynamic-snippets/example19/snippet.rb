@@ -5,4 +5,7 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.playlist.delete_playlist();
+client.playlist.delete_playlist(
+  1,
+  'playlist_id'
+);

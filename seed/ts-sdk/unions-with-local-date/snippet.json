@@ -35,6 +35,50 @@
         },
         {
             "id": {
+                "path": "/time/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_types.get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.types.get(\"date-example\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/time/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_types.get"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.types.get(\"datetime-example\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/time",
+                "method": "PATCH",
+                "identifier_override": "endpoint_types.update"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.types.update({\n    type: \"date\",\n    value: \"1994-01-01\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/time",
+                "method": "PATCH",
+                "identifier_override": "endpoint_types.update"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedUnionsClient } from \"@fern/unions-with-local-date\";\n\nconst client = new SeedUnionsClient({ environment: \"YOUR_BASE_URL\" });\nawait client.types.update({\n    type: \"datetime\",\n    value: \"1994-01-01T01:01:01Z\"\n});\n"
+            }
+        },
+        {
+            "id": {
                 "path": "/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_union.get"

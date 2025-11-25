@@ -1,8 +1,10 @@
 pub use crate::prelude::*;
 
+/// Request type for API operation
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct UploadFileRequest {
     pub name: String,
+    /// The file to upload.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub file: Option<Vec<u8>>,
 }

@@ -147,6 +147,48 @@
         "$TURBO_ROOT$/shared/stylelintrc.shared.json",
         "$TURBO_ROOT$/tsconfig.eslint.json"
       ]
+    },
+    "fern:build": {
+      "dependsOn": ["^compile"],
+      "outputs": ["packages/cli/cli/dist/prod/**"],
+      "inputs": [
+        "packages/cli/cli/src/**",
+        "packages/cli/cli/tests/**",
+        "packages/cli/cli/package.json",
+        "packages/cli/cli/tsconfig.json",
+        "packages/cli/cli/build.prod.cjs",
+        "$TURBO_ROOT$/shared/.prettierignore",
+        "$TURBO_ROOT$/shared/stylelintrc.shared.json",
+        "$TURBO_ROOT$/tsconfig.eslint.json"
+      ]
+    },
+    "fern-dev:build": {
+      "dependsOn": ["^compile"],
+      "outputs": ["packages/cli/cli/dist/dev/**"],
+      "inputs": [
+        "packages/cli/cli/src/**",
+        "packages/cli/cli/tests/**",
+        "packages/cli/cli/package.json",
+        "packages/cli/cli/tsconfig.json",
+        "packages/cli/cli/build.dev.cjs",
+        "$TURBO_ROOT$/shared/.prettierignore",
+        "$TURBO_ROOT$/shared/stylelintrc.shared.json",
+        "$TURBO_ROOT$/tsconfig.eslint.json"
+      ]
+    },
+    "seed:build": {
+      "dependsOn": ["^compile"],
+      "outputs": ["packages/seed/dist/**"],
+      "inputs": [
+        "packages/seed/src/**",
+        "packages/seed/tests/**",
+        "packages/seed/package.json",
+        "packages/seed/tsconfig.json",
+        "packages/seed/build.cjs",
+        "$TURBO_ROOT$/shared/.prettierignore",
+        "$TURBO_ROOT$/shared/stylelintrc.shared.json",
+        "$TURBO_ROOT$/tsconfig.eslint.json"
+      ]
     }
   }
 }

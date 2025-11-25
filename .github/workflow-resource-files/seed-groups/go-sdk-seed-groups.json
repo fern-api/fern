@@ -64,7 +64,7 @@
         "examples:client-name",
         "optional",
         "any-auth",
-        "pagination-custom"
+        "pagination-custom:."
       ],
       "groupTotalTimeSeconds": 839
     },

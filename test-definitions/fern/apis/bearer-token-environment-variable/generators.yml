@@ -6,6 +6,7 @@ groups:
         version: latest
         ir-version: v61
         github:
-          token: '{{ GITHUB_TOKEN }}'
-          mode: pull-request
-          uri: https://github.com/fern-api/php-sdk-tests
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/php-sdk-tests
+          branch: bearer-token-environment-variable
