@@ -57,11 +57,11 @@ export class WireTestGenerator {
             }
 
             const serviceTestFile = this.generateServiceTestFile(serviceName, endpointsWithExamples);
-                        if (serviceTestFile) {
-                            this.context.project.addRawFiles(
-                                new File(serviceTestFile.filename, serviceTestFile.directory, serviceTestFile.contents)
-                            );
-                        }
+            if (serviceTestFile) {
+                this.context.project.addRawFiles(
+                    new File(serviceTestFile.filename, serviceTestFile.directory, serviceTestFile.contents)
+                );
+            }
         }
 
         // Generate docker-compose.test.yml, wiremock-mappings.json, and WireMockTestCase.php
@@ -161,48 +161,48 @@ ${testMethods.join("\n\n")}
 `;
     }
 
-        private generateEndpointTestMethod(
-            endpoint: HttpEndpoint,
-            example: dynamic.EndpointExample,
-            service: HttpService,
-            exampleIndex: number,
-            imports: Set<string>
-        ): string | null {
-            try {
-                const testName = this.getTestMethodName(endpoint);
-                const basePath = this.buildBasePath(endpoint);
-                const queryParamsCode = this.buildQueryParamsCode(endpoint);
-                const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
+    private generateEndpointTestMethod(
+        endpoint: HttpEndpoint,
+        example: dynamic.EndpointExample,
+        service: HttpService,
+        exampleIndex: number,
+        imports: Set<string>
+    ): string | null {
+        try {
+            const testName = this.getTestMethodName(endpoint);
+            const basePath = this.buildBasePath(endpoint);
+            const queryParamsCode = this.buildQueryParamsCode(endpoint);
+            const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
 
-                // Generate the API call using dynamic snippets
-                const snippetRequest = convertDynamicEndpointSnippetRequest({
-                    ...example,
-                    baseUrl: "http://localhost:8080"
-                });
-                const snippetResponse = this.dynamicSnippets.generateSync(snippetRequest);
-                let snippet = snippetResponse.snippet;
+            // Generate the API call using dynamic snippets
+            const snippetRequest = convertDynamicEndpointSnippetRequest({
+                ...example,
+                baseUrl: "http://localhost:8080"
+            });
+            const snippetResponse = this.dynamicSnippets.generateSync(snippetRequest);
+            let snippet = snippetResponse.snippet;
 
-                // Extract just the method call from the snippet (remove client instantiation if present)
-                // The snippet typically looks like:
-                // $client = new SeedClient();
-                // $client->service->method(...);
-                // We want to extract just the method call and use our own client with test headers
-                const lines = snippet.split("\n").filter((line) => line.trim().length > 0);
-                let apiCallLine = "";
-                for (const line of lines) {
-                    // Find the line that calls the client method (not the client instantiation)
-                    if (line.includes("->") && !line.includes("new ")) {
-                        apiCallLine = line.trim();
-                        break;
-                    }
+            // Extract just the method call from the snippet (remove client instantiation if present)
+            // The snippet typically looks like:
+            // $client = new SeedClient();
+            // $client->service->method(...);
+            // We want to extract just the method call and use our own client with test headers
+            const lines = snippet.split("\n").filter((line) => line.trim().length > 0);
+            let apiCallLine = "";
+            for (const line of lines) {
+                // Find the line that calls the client method (not the client instantiation)
+                if (line.includes("->") && !line.includes("new ")) {
+                    apiCallLine = line.trim();
+                    break;
                 }
+            }
 
-                // If we couldn't extract the API call, fall back to the full snippet
-                if (!apiCallLine) {
-                    apiCallLine = snippet;
-                }
+            // If we couldn't extract the API call, fall back to the full snippet
+            if (!apiCallLine) {
+                apiCallLine = snippet;
+            }
 
-                return `    public function ${testName}(): void
+            return `    public function ${testName}(): void
         {
             $testId = "${testId}";
             $client = new ${this.context.getRootClientClassName()}(
@@ -222,11 +222,11 @@ ${testMethods.join("\n\n")}
                 1
             );
         }`;
-            } catch (error) {
-                this.context.logger.warn(`Failed to generate test method for endpoint ${endpoint.id}: ${error}`);
-                return null;
-            }
+        } catch (error) {
+            this.context.logger.warn(`Failed to generate test method for endpoint ${endpoint.id}: ${error}`);
+            return null;
         }
+    }
 
     private getTestMethodName(endpoint: HttpEndpoint): string {
         // Convert endpoint name to camelCase test method name

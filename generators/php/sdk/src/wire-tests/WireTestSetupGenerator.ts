@@ -31,33 +31,29 @@ export class WireTestSetupGenerator {
         return new WireMock().convertToWireMock(ir);
     }
 
-        private generateWireMockConfigFile(): void {
-            const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
-            this.context.project.addRawFiles(
-                new File(
-                    "wiremock-mappings.json",
-                    RelativeFilePath.of("wiremock"),
-                    JSON.stringify(wireMockConfigContent, null, 2)
-                )
-            );
-            this.context.logger.debug("Generated wiremock-mappings.json for WireMock");
-        }
+    private generateWireMockConfigFile(): void {
+        const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
+        this.context.project.addRawFiles(
+            new File(
+                "wiremock-mappings.json",
+                RelativeFilePath.of("wiremock"),
+                JSON.stringify(wireMockConfigContent, null, 2)
+            )
+        );
+        this.context.logger.debug("Generated wiremock-mappings.json for WireMock");
+    }
 
     /**
      * Generates a docker-compose.test.yml file for spinning up WireMock
      * for wire test execution.
      */
-        private generateDockerComposeFile(): void {
-            const dockerComposeContent = this.buildDockerComposeContent();
-            this.context.project.addRawFiles(
-                new File(
-                    "docker-compose.test.yml",
-                    RelativeFilePath.of("wiremock"),
-                    dockerComposeContent
-                )
-            );
-            this.context.logger.debug("Generated docker-compose.test.yml for WireMock container");
-        }
+    private generateDockerComposeFile(): void {
+        const dockerComposeContent = this.buildDockerComposeContent();
+        this.context.project.addRawFiles(
+            new File("docker-compose.test.yml", RelativeFilePath.of("wiremock"), dockerComposeContent)
+        );
+        this.context.logger.debug("Generated docker-compose.test.yml for WireMock container");
+    }
 
     /**
      * Builds the content for the docker-compose.test.yml file
@@ -83,17 +79,13 @@ export class WireTestSetupGenerator {
     /**
      * Generates a WireMockTestCase.php file that manages WireMock container lifecycle
      */
-        private generateWireMockTestCaseFile(): void {
-            const testCaseContent = this.buildWireMockTestCaseContent();
-            this.context.project.addRawFiles(
-                new File(
-                    "WireMockTestCase.php",
-                    RelativeFilePath.of("tests/Wire"),
-                    testCaseContent
-                )
-            );
-            this.context.logger.debug("Generated WireMockTestCase.php for WireMock container lifecycle management");
-        }
+    private generateWireMockTestCaseFile(): void {
+        const testCaseContent = this.buildWireMockTestCaseContent();
+        this.context.project.addRawFiles(
+            new File("WireMockTestCase.php", RelativeFilePath.of("tests/Wire"), testCaseContent)
+        );
+        this.context.logger.debug("Generated WireMockTestCase.php for WireMock container lifecycle management");
+    }
 
     /**
      * Builds the content for the WireMockTestCase.php file
