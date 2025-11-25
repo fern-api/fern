@@ -155,8 +155,7 @@ function getPhpTypeString({ type, context }: { type: php.Type; context: SdkGener
     const writer = new php.Writer({
         namespace: context.getRootNamespace(),
         rootNamespace: context.getRootNamespace(),
-        customConfig: context.customConfig,
-        skipImports: true
+        customConfig: context.customConfig
     });
 
     type.write(writer);
