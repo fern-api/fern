@@ -92,3 +92,14 @@ runs:
       run: |
         node --enable-source-maps packages/seed/dist/cli.cjs publish generator ${{ inputs.generator-name }} --ver ${{ inputs.version }} --log-level debug
         node --enable-source-maps packages/seed/dist/cli.cjs register generator --generators ${{ inputs.generator-name }}
+
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        role-to-assume: "arn:aws:iam::985111089818:role/github-ci"
+        aws-region: "us-east-1"
+    
+    - name: Upload to ECR for scanning
+      run: |-
+        aws sts get-caller-identity
+        docker image ls
