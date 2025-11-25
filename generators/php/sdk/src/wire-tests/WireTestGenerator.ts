@@ -1,5 +1,7 @@
+import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
+import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets";
 import {
     dynamic,
     HttpEndpoint,
@@ -9,6 +11,8 @@ import {
     TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
+import { convertIr } from "../utils/convertIr";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
 /**
@@ -23,6 +27,7 @@ export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
     private dynamicIr: dynamic.DynamicIntermediateRepresentation;
     private wireMockConfigContent: Record<string, WireMockMapping>;
+    private readonly dynamicSnippets: DynamicSnippetsGenerator;
 
     constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
         this.context = context;
@@ -32,6 +37,10 @@ export class WireTestGenerator {
         }
         this.dynamicIr = dynamicIr;
         this.wireMockConfigContent = this.getWireMockConfigContent();
+        this.dynamicSnippets = new DynamicSnippetsGenerator({
+            ir: convertIr(dynamicIr),
+            config: context.config
+        });
     }
 
     public async generate(): Promise<void> {
@@ -48,13 +57,11 @@ export class WireTestGenerator {
             }
 
             const serviceTestFile = this.generateServiceTestFile(serviceName, endpointsWithExamples);
-            if (serviceTestFile) {
-                this.context.project.addRawFiles({
-                    filename: serviceTestFile.filename,
-                    directory: serviceTestFile.directory,
-                    contents: serviceTestFile.contents
-                });
-            }
+                        if (serviceTestFile) {
+                            this.context.project.addRawFiles(
+                                new File(serviceTestFile.filename, serviceTestFile.directory, serviceTestFile.contents)
+                            );
+                        }
         }
 
         // Generate docker-compose.test.yml, wiremock-mappings.json, and WireMockTestCase.php
@@ -125,7 +132,7 @@ export class WireTestGenerator {
     ): string {
         const namespace = this.context.getTestsNamespace();
         const rootNamespace = this.context.getRootNamespace();
-        const clientClassName = this.context.getClientName();
+        const clientClassName = this.context.getRootClientClassName();
 
         const imports = new Set<string>();
         imports.add(`use ${rootNamespace}\\${clientClassName};`);
@@ -154,47 +161,72 @@ ${testMethods.join("\n\n")}
 `;
     }
 
-    private generateEndpointTestMethod(
-        endpoint: HttpEndpoint,
-        example: dynamic.EndpointExample,
-        service: HttpService,
-        exampleIndex: number,
-        imports: Set<string>
-    ): string | null {
-        try {
-            const testName = this.getTestMethodName(endpoint);
-            const basePath = this.buildBasePath(endpoint);
-            const queryParamsCode = this.buildQueryParamsCode(endpoint);
-            const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
+        private generateEndpointTestMethod(
+            endpoint: HttpEndpoint,
+            example: dynamic.EndpointExample,
+            service: HttpService,
+            exampleIndex: number,
+            imports: Set<string>
+        ): string | null {
+            try {
+                const testName = this.getTestMethodName(endpoint);
+                const basePath = this.buildBasePath(endpoint);
+                const queryParamsCode = this.buildQueryParamsCode(endpoint);
+                const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
 
-            // Generate the API call
-            const apiCall = this.generateApiCall(endpoint, example, service, imports);
+                // Generate the API call using dynamic snippets
+                const snippetRequest = convertDynamicEndpointSnippetRequest({
+                    ...example,
+                    baseUrl: "http://localhost:8080"
+                });
+                const snippetResponse = this.dynamicSnippets.generateSync(snippetRequest);
+                let snippet = snippetResponse.snippet;
 
-            return `    public function ${testName}(): void
-    {
-        $testId = "${testId}";
-        $client = new ${this.context.getClientName()}(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
+                // Extract just the method call from the snippet (remove client instantiation if present)
+                // The snippet typically looks like:
+                // $client = new SeedClient();
+                // $client->service->method(...);
+                // We want to extract just the method call and use our own client with test headers
+                const lines = snippet.split("\n").filter((line) => line.trim().length > 0);
+                let apiCallLine = "";
+                for (const line of lines) {
+                    // Find the line that calls the client method (not the client instantiation)
+                    if (line.includes("->") && !line.includes("new ")) {
+                        apiCallLine = line.trim();
+                        break;
+                    }
+                }
 
-        ${apiCall}
+                // If we couldn't extract the API call, fall back to the full snippet
+                if (!apiCallLine) {
+                    apiCallLine = snippet;
+                }
 
-        $this->verifyRequestCount(
-            $testId,
-            "${endpoint.method}",
-            "${basePath}",
-            ${queryParamsCode},
-            1
-        );
-    }`;
-        } catch (error) {
-            this.context.logger.warn(`Failed to generate test method for endpoint ${endpoint.id}: ${error}`);
-            return null;
+                return `    public function ${testName}(): void
+        {
+            $testId = "${testId}";
+            $client = new ${this.context.getRootClientClassName()}(
+                options: [
+                    'baseUrl' => 'http://localhost:8080',
+                    'headers' => ['X-Test-Id' => $testId],
+                ]
+            );
+
+            ${apiCallLine}
+
+            $this->verifyRequestCount(
+                $testId,
+                "${endpoint.method}",
+                "${basePath}",
+                ${queryParamsCode},
+                1
+            );
+        }`;
+            } catch (error) {
+                this.context.logger.warn(`Failed to generate test method for endpoint ${endpoint.id}: ${error}`);
+                return null;
+            }
         }
-    }
 
     private getTestMethodName(endpoint: HttpEndpoint): string {
         // Convert endpoint name to camelCase test method name
