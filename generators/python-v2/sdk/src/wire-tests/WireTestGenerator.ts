@@ -125,6 +125,7 @@ export class WireTestGenerator {
         const statements: python.AstNode[] = [];
 
         // Add raw imports that the AST doesn't support (simple "import X" statements)
+        statements.push(python.codeBlock("import datetime"));
         statements.push(python.codeBlock("import pytest"));
         statements.push(python.codeBlock("import requests"));
 
@@ -307,17 +308,20 @@ export class WireTestGenerator {
     private generateApiCall(endpoint: HttpEndpoint, example: dynamic.EndpointExample, service: HttpService): string {
         const methodName = this.getEndpointName(endpoint);
 
+        // Get the dynamic endpoint definition for type information
+        const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
+
         // Build path parameters
-        const pathParams = this.buildPathParameters(endpoint, example);
+        const pathParams = this.buildPathParameters(endpoint, example, dynamicEndpoint);
 
         // Build query parameters
-        const queryParams = this.buildQueryParameters(endpoint, example);
+        const queryParams = this.buildQueryParameters(endpoint, example, dynamicEndpoint);
 
         // Build headers
-        const headers = this.buildHeaders(endpoint, example);
+        const headers = this.buildHeaders(endpoint, example, dynamicEndpoint);
 
         // Build request body
-        const requestBody = this.buildRequestBody(endpoint, example);
+        const requestBody = this.buildRequestBody(endpoint, example, dynamicEndpoint);
 
         // Build the client accessor path (e.g., "client.endpoints.container")
         const servicePath = service.name.fernFilepath.allParts.map((part) => part.snakeCase.unsafeName).join(".");
@@ -354,14 +358,31 @@ export class WireTestGenerator {
         return `result = ${call}`;
     }
 
-    private buildPathParameters(endpoint: HttpEndpoint, example: dynamic.EndpointExample): string[] {
+    private buildPathParameters(
+        endpoint: HttpEndpoint,
+        example: dynamic.EndpointExample,
+        dynamicEndpoint: dynamic.Endpoint | undefined
+    ): string[] {
         const pathParams: string[] = [];
 
         if (example.pathParameters) {
+            // Build a map of path parameter names to their type references from the dynamic endpoint
+            const pathParamTypeMap = new Map<string, dynamic.TypeReference>();
+            if (dynamicEndpoint?.request.type === "inlined") {
+                for (const param of dynamicEndpoint.request.pathParameters ?? []) {
+                    pathParamTypeMap.set(param.name.wireValue, param.typeReference);
+                }
+            } else if (dynamicEndpoint?.request.type === "body") {
+                for (const param of dynamicEndpoint.request.pathParameters ?? []) {
+                    pathParamTypeMap.set(param.name.wireValue, param.typeReference);
+                }
+            }
+
             for (const part of endpoint.fullPath.parts) {
                 const paramValue = example.pathParameters[part.pathParameter];
                 if (paramValue != null) {
-                    pathParams.push(this.formatValue(paramValue));
+                    const typeRef = pathParamTypeMap.get(part.pathParameter);
+                    pathParams.push(this.formatValue(paramValue, typeRef));
                 }
             }
         }
@@ -369,13 +390,26 @@ export class WireTestGenerator {
         return pathParams;
     }
 
-    private buildQueryParameters(endpoint: HttpEndpoint, example: dynamic.EndpointExample): Array<[string, string]> {
+    private buildQueryParameters(
+        endpoint: HttpEndpoint,
+        example: dynamic.EndpointExample,
+        dynamicEndpoint: dynamic.Endpoint | undefined
+    ): Array<[string, string]> {
         const queryParams: Array<[string, string]> = [];
 
         if (example.queryParameters) {
+            // Build a map of query parameter names to their type references from the dynamic endpoint
+            const queryParamTypeMap = new Map<string, dynamic.TypeReference>();
+            if (dynamicEndpoint?.request.type === "inlined") {
+                for (const param of dynamicEndpoint.request.queryParameters ?? []) {
+                    queryParamTypeMap.set(param.name.wireValue, param.typeReference);
+                }
+            }
+
             for (const [key, value] of Object.entries(example.queryParameters)) {
                 if (value != null) {
-                    queryParams.push([key, this.formatValue(value)]);
+                    const typeRef = queryParamTypeMap.get(key);
+                    queryParams.push([key, this.formatValue(value, typeRef)]);
                 }
             }
         }
@@ -383,10 +417,22 @@ export class WireTestGenerator {
         return queryParams;
     }
 
-    private buildHeaders(endpoint: HttpEndpoint, example: dynamic.EndpointExample): Array<[string, string]> {
+    private buildHeaders(
+        endpoint: HttpEndpoint,
+        example: dynamic.EndpointExample,
+        dynamicEndpoint: dynamic.Endpoint | undefined
+    ): Array<[string, string]> {
         const headers: Array<[string, string]> = [];
 
         if (example.headers) {
+            // Build a map of header names to their type references from the dynamic endpoint
+            const headerTypeMap = new Map<string, dynamic.TypeReference>();
+            if (dynamicEndpoint?.request.type === "inlined") {
+                for (const param of dynamicEndpoint.request.headers ?? []) {
+                    headerTypeMap.set(param.name.wireValue, param.typeReference);
+                }
+            }
+
             // Map wire header names to SDK parameter names
             const headerMap = new Map<string, string>();
             for (const header of endpoint.headers) {
@@ -399,7 +445,8 @@ export class WireTestGenerator {
             for (const [wireKey, value] of Object.entries(example.headers)) {
                 if (value != null) {
                     const paramName = headerMap.get(wireKey) ?? wireKey.toLowerCase().replace(/-/g, "_");
-                    headers.push([paramName, this.formatValue(value)]);
+                    const typeRef = headerTypeMap.get(wireKey);
+                    headers.push([paramName, this.formatValue(value, typeRef)]);
                 }
             }
         }
@@ -407,9 +454,21 @@ export class WireTestGenerator {
         return headers;
     }
 
-    private buildRequestBody(endpoint: HttpEndpoint, example: dynamic.EndpointExample): string | null {
+    private buildRequestBody(
+        endpoint: HttpEndpoint,
+        example: dynamic.EndpointExample,
+        dynamicEndpoint: dynamic.Endpoint | undefined
+    ): string | null {
         if (!endpoint.requestBody || !example.requestBody) {
             return null;
+        }
+
+        // Build a map of body property names to their type references from the dynamic endpoint
+        const bodyPropertyTypeMap = new Map<string, dynamic.TypeReference>();
+        if (dynamicEndpoint?.request.type === "inlined" && dynamicEndpoint.request.body?.type === "properties") {
+            for (const prop of dynamicEndpoint.request.body.value) {
+                bodyPropertyTypeMap.set(prop.name.wireValue, prop.typeReference);
+            }
         }
 
         // Use the discriminated union visitor pattern to handle different request body types
@@ -435,7 +494,8 @@ export class WireTestGenerator {
                     // Generate parameters using the correct SDK names
                     for (const [wireKey, value] of Object.entries(example.requestBody)) {
                         const paramName = propertyMap.get(wireKey) ?? wireKey;
-                        params.push(`${paramName}=${this.jsonToPython(value)}`);
+                        const typeRef = bodyPropertyTypeMap.get(wireKey);
+                        params.push(`${paramName}=${this.jsonToPython(value, typeRef)}`);
                     }
                     return params.join(", ");
                 }
@@ -466,7 +526,8 @@ export class WireTestGenerator {
                         // Generate parameters using the correct SDK names
                         for (const [wireKey, value] of Object.entries(example.requestBody)) {
                             const paramName = propertyMap.get(wireKey) ?? wireKey;
-                            params.push(`${paramName}=${this.jsonToPython(value)}`);
+                            const typeRef = bodyPropertyTypeMap.get(wireKey);
+                            params.push(`${paramName}=${this.jsonToPython(value, typeRef)}`);
                         }
                         return params.join(", ");
                     }
@@ -529,8 +590,33 @@ export class WireTestGenerator {
             .replace(/"/g, '\\"'); // Escape double quotes
     }
 
-    private formatValue(value: unknown): string {
+    /**
+     * Gets the primitive type from a type reference, unwrapping optionals and nullables.
+     */
+    private getPrimitiveType(typeRef: dynamic.TypeReference | undefined): dynamic.PrimitiveTypeV1 | undefined {
+        if (!typeRef) {
+            return undefined;
+        }
+        switch (typeRef.type) {
+            case "primitive":
+                return typeRef.value;
+            case "optional":
+            case "nullable":
+                return this.getPrimitiveType(typeRef.value);
+            default:
+                return undefined;
+        }
+    }
+
+    private formatValue(value: unknown, typeRef?: dynamic.TypeReference): string {
         if (typeof value === "string") {
+            const primitiveType = this.getPrimitiveType(typeRef);
+            if (primitiveType === "DATE_TIME") {
+                return `datetime.datetime.fromisoformat("${this.escapeStringForPython(value)}")`;
+            }
+            if (primitiveType === "DATE") {
+                return `datetime.date.fromisoformat("${this.escapeStringForPython(value)}")`;
+            }
             return `"${this.escapeStringForPython(value)}"`;
         }
         if (typeof value === "number") {
@@ -544,14 +630,14 @@ export class WireTestGenerator {
             return "None";
         }
         // For complex objects, convert to Python representation
-        return this.jsonToPython(value);
+        return this.jsonToPython(value, typeRef);
     }
 
     /**
      * Converts JSON representation to Python code representation.
      * Handles objects, arrays, and nested structures.
      */
-    private jsonToPython(value: unknown): string {
+    private jsonToPython(value: unknown, typeRef?: dynamic.TypeReference): string {
         if (value === null) {
             return "None";
         }
@@ -559,13 +645,25 @@ export class WireTestGenerator {
             return value ? "True" : "False";
         }
         if (typeof value === "string") {
+            const primitiveType = this.getPrimitiveType(typeRef);
+            if (primitiveType === "DATE_TIME") {
+                return `datetime.datetime.fromisoformat("${this.escapeStringForPython(value)}")`;
+            }
+            if (primitiveType === "DATE") {
+                return `datetime.date.fromisoformat("${this.escapeStringForPython(value)}")`;
+            }
             return `"${this.escapeStringForPython(value)}"`;
         }
         if (typeof value === "number") {
             return String(value);
         }
         if (Array.isArray(value)) {
-            const items = value.map((item) => this.jsonToPython(item));
+            // Get the inner type for list/set containers
+            let innerTypeRef: dynamic.TypeReference | undefined;
+            if (typeRef?.type === "list" || typeRef?.type === "set") {
+                innerTypeRef = typeRef.value;
+            }
+            const items = value.map((item) => this.jsonToPython(item, innerTypeRef));
             return `[${items.join(",")}]`;
         }
         if (typeof value === "object") {
