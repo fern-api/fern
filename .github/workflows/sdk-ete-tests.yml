@@ -135,6 +135,11 @@ on:
       - main
     paths:
       - 'generators/php/**'
+  push:
+    branches:
+      - main
+    paths:
+      - 'generators/php/**'
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -198,7 +203,12 @@ jobs:
         run: |
           cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs"
           cd test-definitions
-          test_definition="${{ inputs.test-definition || 'exhaustive' }}"
+          # Use 'all' for push events (merges to main), 'exhaustive' for PRs, or the input value for workflow_dispatch
+          if [ "${{ github.event_name }}" = "push" ]; then
+            test_definition="all"
+          else
+            test_definition="${{ inputs.test-definition || 'exhaustive' }}"
+          fi
           
           if [ "$test_definition" = "all" ]; then
             echo "Running fern generate for all test definitions with php-sdk group..."
