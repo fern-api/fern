@@ -1,6 +1,5 @@
 pub use crate::prelude::*;
 
-/// Request type for API operation
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 pub struct WithFormEncodedContainersRequest {
     #[serde(skip_serializing_if = "Option::is_none")]

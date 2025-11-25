@@ -49,15 +49,15 @@ version = '0.0.1'
 
 jar {
     dependsOn(":generatePomFileForMavenPublication")
-    archiveBaseName = "staged-builder-ordering"
+    archiveBaseName = "java-staged-builder-ordering"
 }
 
 sourcesJar {
-    archiveBaseName = "staged-builder-ordering"
+    archiveBaseName = "java-staged-builder-ordering"
 }
 
 javadocJar {
-    archiveBaseName = "staged-builder-ordering"
+    archiveBaseName = "java-staged-builder-ordering"
 }
 
 test {
@@ -71,7 +71,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId = 'com.fern'
-            artifactId = 'staged-builder-ordering'
+            artifactId = 'java-staged-builder-ordering'
             version = '0.0.1'
             from components.java
             pom {
@@ -82,9 +82,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection = 'scm:git:git://github.com/staged-builder-ordering/fern.git'
-                    developerConnection = 'scm:git:git://github.com/staged-builder-ordering/fern.git'
-                    url = 'https://github.com/staged-builder-ordering/fern'
+                    connection = 'scm:git:git://github.com/java-staged-builder-ordering/fern.git'
+                    developerConnection = 'scm:git:git://github.com/java-staged-builder-ordering/fern.git'
+                    url = 'https://github.com/java-staged-builder-ordering/fern'
                 }
             }
         }

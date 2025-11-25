@@ -66,6 +66,58 @@
         {
             "example_identifier": "default",
             "id": {
+                "path": "/time/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_types.get"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedUnions\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.types.get(\n    id=\"date-example\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.types.get(\n        id=\"date-example\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/time/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_types.get"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedUnions\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.types.get(\n    id=\"datetime-example\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedUnions\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.types.get(\n        id=\"datetime-example\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/time",
+                "method": "PATCH",
+                "identifier_override": "endpoint_types.update"
+            },
+            "snippet": {
+                "sync_client": "import datetime\n\nfrom seed import SeedUnions\nfrom seed.types import UnionWithTime_Date\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.types.update(\n    request=UnionWithTime_Date(\n        value=datetime.date.fromisoformat(\n            \"1994-01-01\",\n        )\n    ),\n)\n",
+                "async_client": "import asyncio\nimport datetime\n\nfrom seed import AsyncSeedUnions\nfrom seed.types import UnionWithTime_Date\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.types.update(\n        request=UnionWithTime_Date(\n            value=datetime.date.fromisoformat(\n                \"1994-01-01\",\n            )\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/time",
+                "method": "PATCH",
+                "identifier_override": "endpoint_types.update"
+            },
+            "snippet": {
+                "sync_client": "import datetime\n\nfrom seed import SeedUnions\nfrom seed.types import UnionWithTime_Datetime\n\nclient = SeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.types.update(\n    request=UnionWithTime_Datetime(\n        value=datetime.datetime.fromisoformat(\n            \"1994-01-01 01:01:01+00:00\",\n        )\n    ),\n)\n",
+                "async_client": "import asyncio\nimport datetime\n\nfrom seed import AsyncSeedUnions\nfrom seed.types import UnionWithTime_Datetime\n\nclient = AsyncSeedUnions(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.types.update(\n        request=UnionWithTime_Datetime(\n            value=datetime.datetime.fromisoformat(\n                \"1994-01-01 01:01:01+00:00\",\n            )\n        ),\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
                 "path": "/{id}",
                 "method": "GET",
                 "identifier_override": "endpoint_union.get"

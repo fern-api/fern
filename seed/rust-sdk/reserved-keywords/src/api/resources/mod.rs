@@ -4,7 +4,7 @@
 //!
 //! - **Package**
 
-use crate::{ClientConfig, ApiError};
+use crate::{ApiError, ClientConfig};
 
 pub mod package;
 pub struct NurseryApiClient {

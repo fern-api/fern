@@ -5,7 +5,6 @@ package com.seed.nullableOptional.resources.nullableoptional.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -71,7 +70,8 @@ public final class UserResponse {
         return username;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("email")
     public OptionalNullable<String> getEmail() {
         if (email == null) {
             return OptionalNullable.absent();
@@ -89,7 +89,8 @@ public final class UserResponse {
         return createdAt;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("updatedAt")
     public OptionalNullable<OffsetDateTime> getUpdatedAt() {
         if (updatedAt == null) {
             return OptionalNullable.absent();

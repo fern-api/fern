@@ -18,7 +18,7 @@
 //!             &SearchQueryRequest {
 //!                 limit: 1,
 //!                 id: "id".to_string(),
-//!                 date: "date".to_string(),
+//!                 date: NaiveDate::parse_from_str("2023-01-15", "%Y-%m-%d").unwrap(),
 //!                 deadline: DateTime::parse_from_rfc3339("2024-01-15T09:30:00Z")
 //!                     .unwrap()
 //!                     .with_timezone(&Utc),
@@ -38,7 +38,7 @@
 //!                 ),
 //!                 key_value: Some(HashMap::from([(
 //!                     "keyValue".to_string(),
-//!                     Some("keyValue".to_string()),
+//!                     "keyValue".to_string(),
 //!                 )])),
 //!                 optional_string: Some("optionalString".to_string()),
 //!                 nested_user: Some(NestedUser {
@@ -57,10 +57,10 @@
 //!                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
 //!                 })],
 //!                 filter: vec![Some("filter".to_string())],
-//!                 neighbor: Some(User {
+//!                 neighbor: Some(SearchRequestNeighbor::User(User {
 //!                     name: Some("name".to_string()),
 //!                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
-//!                 }),
+//!                 })),
 //!                 neighbor_required: SearchRequestNeighborRequired::User(User {
 //!                     name: Some("name".to_string()),
 //!                     tags: Some(vec!["tags".to_string(), "tags".to_string()]),
