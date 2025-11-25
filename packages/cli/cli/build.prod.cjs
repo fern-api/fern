@@ -5,6 +5,14 @@ const path = require("path");
 
 main();
 
+/**
+ * Get a dependency version from package.json, preferring dependencies over devDependencies.
+ * This ensures we don't miss runtime dependencies regardless of where they're declared.
+ */
+function getDependencyVersion(packageName) {
+    return packageJson.dependencies?.[packageName] ?? packageJson.devDependencies?.[packageName];
+}
+
 async function main() {
     await tsup.build({
         entry: ['src/cli.ts'],
@@ -47,6 +55,24 @@ async function main() {
     
     process.chdir(path.join(__dirname, "dist/prod"));
     
+    // Collect runtime dependencies that need to be included in the published package
+    const runtimeDependencies = {
+        "@boundaryml/baml": getDependencyVersion("@boundaryml/baml"),
+        "cli-progress": getDependencyVersion("cli-progress")
+    };
+    
+    // Validate that all required dependencies were found
+    const missingDeps = Object.entries(runtimeDependencies)
+        .filter(([_, version]) => !version)
+        .map(([name, _]) => name);
+    
+    if (missingDeps.length > 0) {
+        throw new Error(
+            `Missing required runtime dependencies in package.json: ${missingDeps.join(", ")}. ` +
+            `These must be declared in either dependencies or devDependencies.`
+        );
+    }
+    
     // write cli's package.json
     await writeFile(
         "package.json",
@@ -57,9 +83,7 @@ async function main() {
                 repository: packageJson.repository,
                 files: ["cli.cjs"],
                 bin: { fern: "cli.cjs" },
-                dependencies: {
-                    "@boundaryml/baml": packageJson.devDependencies["@boundaryml/baml"]
-                }
+                dependencies: runtimeDependencies
             },
             undefined,
             2

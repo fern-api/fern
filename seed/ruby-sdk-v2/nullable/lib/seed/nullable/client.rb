@@ -5,14 +5,23 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::Nullable::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String, nil] :usernames
+      # @option params [String, nil] :avatar
+      # @option params [Boolean, nil] :activated
+      # @option params [String, nil] :tags
+      # @option params [Boolean, nil] :extra
       #
       # @return [Array[Seed::Nullable::Types::User]]
       def get_users(request_options: {}, **params)
@@ -44,9 +53,13 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
-      #
+      # @param request_options [Hash]
       # @param params [Seed::Nullable::Types::CreateUserRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Nullable::Types::User]
       def create_user(request_options: {}, **params)
@@ -73,11 +86,15 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
-      #
+      # @param request_options [Hash]
       # @param params [Seed::Nullable::Types::DeleteUserRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [bool]
+      # @return [Boolean]
       def delete_user(request_options: {}, **params)
         _body_prop_names = %i[username]
         _body_bag = params.slice(*_body_prop_names)

@@ -5,16 +5,21 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::Submission::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
       # Returns sessionId and execution server URL for session. Spins up server.
       #
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Seed::Commons::Types::Language] :language
       #
       # @return [Seed::Submission::Types::ExecutionSessionResponse]
       def create_execution_session(request_options: {}, **params)
@@ -39,11 +44,16 @@ module Seed
 
       # Returns execution server URL for session. Returns empty if session isn't registered.
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :session_id
       #
-      # @param params [Hash[untyped, untyped]]
-      #
-      # @return [Seed::Submission::Types::ExecutionSessionResponse | nil]
+      # @return [Seed::Submission::Types::ExecutionSessionResponse, nil]
       def get_execution_session(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
@@ -64,9 +74,14 @@ module Seed
 
       # Stops execution session.
       #
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :session_id
       #
       # @return [untyped]
       def stop_execution_session(request_options: {}, **params)
@@ -87,9 +102,13 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Submission::Types::GetExecutionSessionStateResponse]
       def get_execution_sessions_state(request_options: {}, **_params)

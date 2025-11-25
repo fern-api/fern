@@ -10,3 +10,14 @@ groups:
         config:
           use-local-date-for-dates: true
           package-prefix: com.unions.localdate
+          enable-wire-tests: true
+  php-sdk:
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/php-sdk-tests
+          branch: unions-with-local-date

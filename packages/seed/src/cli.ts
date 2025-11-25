@@ -6,6 +6,7 @@ import { writeFile } from "fs/promises";
 import { minimatch } from "minimatch";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+import { cleanOrphanedSeedFolders } from "./commands/clean";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
 import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
@@ -48,6 +49,7 @@ export async function tryRunCli(): Promise<void> {
     addRunCommand(cli);
     addImgCommand(cli);
     addGetAvailableFixturesCommand(cli);
+    addCleanCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
     addValidateCommands(cli);
@@ -209,7 +211,8 @@ function addTestCommand(cli: Argv) {
                     scriptRunner = new LocalScriptRunner(
                         generator,
                         argv.skipScripts,
-                        taskContextFactory.create("local-script-runner")
+                        taskContextFactory.create("local-script-runner"),
+                        argv["log-level"]
                     );
                     testRunner = new LocalTestRunner({
                         generator,
@@ -225,6 +228,7 @@ function addTestCommand(cli: Argv) {
                         generator,
                         argv.skipScripts,
                         taskContextFactory.create("docker-script-runner"),
+                        argv["log-level"],
                         argv.containerRuntime as "docker" | "podman" | undefined
                     );
                     testRunner = new ContainerTestRunner({
@@ -568,6 +572,45 @@ function addGetAvailableFixturesCommand(cli: Argv) {
     );
 }
 
+function addCleanCommand(cli: Argv) {
+    cli.command(
+        "clean",
+        "Find and remove orphaned seed folders that no longer have corresponding test definitions",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    alias: "g",
+                    description: "The generators to clean (cleans all if not provided)"
+                })
+                .option("dry-run", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "List orphaned folders without deleting them"
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            if (argv.generator != null) {
+                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
+            }
+
+            const targetGenerators =
+                argv.generator != null
+                    ? generators.filter((g) => argv.generator?.includes(g.workspaceName))
+                    : generators;
+
+            const result = await cleanOrphanedSeedFolders(targetGenerators, argv.dryRun);
+
+            if (argv.dryRun && result.orphanedFolders.length > 0) {
+                process.exit(1);
+            }
+        }
+    );
+}
+
 async function getAvailableFixtures(generator: GeneratorWorkspace, withOutputFolders: boolean) {
     // Get all available fixtures
     const availableFixtures = FIXTURES.filter((fixture) => {
@@ -577,7 +620,7 @@ async function getAvailableFixtures(generator: GeneratorWorkspace, withOutputFol
 
     // Optionally, include output folders in format fixture:outputFolder (note: this will replace the fixture name without the output folder)
     if (withOutputFolders) {
-        // Add fixtures that have subfolders with their subfoldered version
+        // Add fixtures that have subfolders with their subfolder version
         const allOptions: string[] = [];
         for (const fixture of availableFixtures) {
             const config = generator.workspaceConfig.fixtures?.[fixture];

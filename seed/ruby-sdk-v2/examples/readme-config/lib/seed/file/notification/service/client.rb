@@ -7,14 +7,19 @@ module Seed
         class Client
           # @param client [Seed::Internal::Http::RawClient]
           #
-          # @return [Seed::File::Notification::Service::Client]
+          # @return [void]
           def initialize(client:)
             @client = client
           end
 
-          # @param request_options [Seed::RequestOptions]
-          #
-          # @param params [Hash[untyped, untyped]]
+          # @param request_options [Hash]
+          # @param params [Hash]
+          # @option request_options [String] :base_url
+          # @option request_options [Hash{String => Object}] :additional_headers
+          # @option request_options [Hash{String => Object}] :additional_query_parameters
+          # @option request_options [Hash{String => Object}] :additional_body_parameters
+          # @option request_options [Integer] :timeout_in_seconds
+          # @option params [String] :notification_id
           #
           # @return [Seed::Types::Types::Exception]
           def get_exception(request_options: {}, **params)

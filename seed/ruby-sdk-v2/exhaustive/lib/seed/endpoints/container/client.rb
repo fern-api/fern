@@ -6,14 +6,18 @@ module Seed
       class Client
         # @param client [Seed::Internal::Http::RawClient]
         #
-        # @return [Seed::Endpoints::Container::Client]
+        # @return [void]
         def initialize(client:)
           @client = client
         end
 
-        # @param request_options [Seed::RequestOptions]
-        #
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Array[String]]
         def get_and_return_list_of_primitives(request_options: {}, **params)
@@ -35,9 +39,13 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
-        # @param request_options [Seed::RequestOptions]
-        #
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_list_of_objects(request_options: {}, **params)
@@ -59,9 +67,13 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
-        # @param request_options [Seed::RequestOptions]
-        #
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Array[String]]
         def get_and_return_set_of_primitives(request_options: {}, **params)
@@ -83,9 +95,13 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
-        # @param request_options [Seed::RequestOptions]
-        #
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Array[Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_set_of_objects(request_options: {}, **params)
@@ -107,9 +123,13 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
-        # @param request_options [Seed::RequestOptions]
-        #
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Hash[String, String]]
         def get_and_return_map_prim_to_prim(request_options: {}, **params)
@@ -131,9 +151,13 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
-        # @param request_options [Seed::RequestOptions]
-        #
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Hash[String, Seed::Types::Object_::Types::ObjectWithRequiredField]]
         def get_and_return_map_of_prim_to_object(request_options: {}, **params)
@@ -155,11 +179,15 @@ module Seed
           raise error_class.new(_response.body, code: code)
         end
 
-        # @param request_options [Seed::RequestOptions]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         #
-        # @param params [Hash[untyped, untyped]]
-        #
-        # @return [Seed::Types::Object_::Types::ObjectWithRequiredField | nil]
+        # @return [Seed::Types::Object_::Types::ObjectWithRequiredField, nil]
         def get_and_return_optional(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],

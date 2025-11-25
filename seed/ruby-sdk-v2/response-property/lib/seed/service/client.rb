@@ -5,14 +5,18 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::Service::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Service::Types::Response]
       def get_movie(request_options: {}, **params)
@@ -36,9 +40,13 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Service::Types::Response]
       def get_movie_docs(request_options: {}, **params)
@@ -62,9 +70,13 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Types::StringResponse]
       def get_movie_name(request_options: {}, **params)
@@ -88,9 +100,13 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Service::Types::Response]
       def get_movie_metadata(request_options: {}, **params)
@@ -114,11 +130,15 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
-      # @param params [Hash[untyped, untyped]]
-      #
-      # @return [Seed::Service::Types::Response | nil]
+      # @return [Seed::Service::Types::Response, nil]
       def get_optional_movie(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -138,11 +158,15 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
-      # @param params [Hash[untyped, untyped]]
-      #
-      # @return [Seed::Service::Types::WithDocs | nil]
+      # @return [Seed::Service::Types::WithDocs, nil]
       def get_optional_movie_docs(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
@@ -164,11 +188,15 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
-      # @param params [Hash[untyped, untyped]]
-      #
-      # @return [Seed::Types::StringResponse | nil]
+      # @return [Seed::Types::StringResponse, nil]
       def get_optional_movie_name(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],

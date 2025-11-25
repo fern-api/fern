@@ -2,3 +2,14 @@
 api:
   specs:
     - openapi: ./openapi.json
+groups:
+  php-sdk:
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/php-sdk-tests
+          branch: file-upload-openapi

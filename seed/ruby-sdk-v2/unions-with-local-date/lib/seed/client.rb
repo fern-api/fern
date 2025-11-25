@@ -2,9 +2,9 @@
 
 module Seed
   class Client
-    # @param base_url [String | nil]
+    # @param base_url [String, nil]
     #
-    # @return [Seed::Client]
+    # @return [void]
     def initialize(base_url:)
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
@@ -18,6 +18,11 @@ module Seed
     # @return [Seed::Bigunion::Client]
     def bigunion
       @bigunion ||= Seed::Bigunion::Client.new(client: @raw_client)
+    end
+
+    # @return [Seed::Types::Client]
+    def types
+      @types ||= Seed::Types::Client.new(client: @raw_client)
     end
 
     # @return [Seed::Union::Client]

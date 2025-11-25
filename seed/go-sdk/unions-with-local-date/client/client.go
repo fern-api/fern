@@ -7,11 +7,13 @@ import (
 	core "github.com/unions-with-local-date/fern/core"
 	internal "github.com/unions-with-local-date/fern/internal"
 	option "github.com/unions-with-local-date/fern/option"
+	types "github.com/unions-with-local-date/fern/types"
 	union "github.com/unions-with-local-date/fern/union"
 )
 
 type Client struct {
 	Bigunion *bigunion.Client
+	Types    *types.Client
 	Union    *union.Client
 
 	options *core.RequestOptions
@@ -23,6 +25,7 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		Bigunion: bigunion.NewClient(options),
+		Types:    types.NewClient(options),
 		Union:    union.NewClient(options),
 		options:  options,
 		baseURL:  options.BaseURL,

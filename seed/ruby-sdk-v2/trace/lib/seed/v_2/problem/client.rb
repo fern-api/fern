@@ -6,16 +6,20 @@ module Seed
       class Client
         # @param client [Seed::Internal::Http::RawClient]
         #
-        # @return [Seed::V2::Problem::Client]
+        # @return [void]
         def initialize(client:)
           @client = client
         end
 
         # Returns lightweight versions of all problems
         #
-        # @param request_options [Seed::RequestOptions]
-        #
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Array[Seed::V2::Problem::Types::LightweightProblemInfoV2]]
         def get_lightweight_problems(request_options: {}, **_params)
@@ -38,9 +42,13 @@ module Seed
 
         # Returns latest versions of all problems
         #
-        # @param request_options [Seed::RequestOptions]
-        #
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
         #
         # @return [Array[Seed::V2::Problem::Types::ProblemInfoV2]]
         def get_problems(request_options: {}, **_params)
@@ -63,9 +71,14 @@ module Seed
 
         # Returns latest version of a problem
         #
-        # @param request_options [Seed::RequestOptions]
-        #
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        # @option params [Seed::Commons::Types::ProblemId] :problem_id
         #
         # @return [Seed::V2::Problem::Types::ProblemInfoV2]
         def get_latest_problem(request_options: {}, **params)
@@ -90,9 +103,15 @@ module Seed
 
         # Returns requested version of a problem
         #
-        # @param request_options [Seed::RequestOptions]
-        #
-        # @param params [Hash[untyped, untyped]]
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        # @option params [Seed::Commons::Types::ProblemId] :problem_id
+        # @option params [Integer] :problem_version
         #
         # @return [Seed::V2::Problem::Types::ProblemInfoV2]
         def get_problem_version(request_options: {}, **params)

@@ -3205,6 +3205,13 @@
         }
       ]
     },
+    "group.GithubSelfhostedMode": {
+      "type": "string",
+      "enum": [
+        "pull-request",
+        "push"
+      ]
+    },
     "license.GithubLicenseType": {
       "type": "string",
       "enum": [
@@ -3246,7 +3253,17 @@
         "mode": {
           "oneOf": [
             {
-              "const": "pull-request"
+              "$ref": "#/definitions/group.GithubSelfhostedMode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "branch": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"

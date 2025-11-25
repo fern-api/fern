@@ -23,5 +23,13 @@ jobs:
       - name: Set up go
         uses: actions/setup-go@v4
 
+      - name: Setup wiremock server
+        run: |
+          if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
+
       - name: Test
         run: go test ./...
+
+      - name: Teardown wiremock server
+        run: |
+          if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi

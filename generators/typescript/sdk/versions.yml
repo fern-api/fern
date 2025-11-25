@@ -1,4 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.33.1
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 3.33.0
+  changelogEntry:
+    - summary: |
+        Implement auth provider architecture for basic auth, matching the pattern established by inferred auth. Basic auth now uses a dedicated `BasicAuthProvider` class that implements the `AuthProvider` interface, replacing inline auth logic.
+      type: feat
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 3.32.1
+  changelogEntry:
+    - summary: Add contents:read permission to generated publish workflow for OIDC authentication to fix actions/checkout@v4 requirements.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 3.32.0
   changelogEntry:
     - summary: Add support for OAuth and inferred auth in generated wire tests.

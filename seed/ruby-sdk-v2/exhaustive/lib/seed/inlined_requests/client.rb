@@ -5,16 +5,20 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::InlinedRequests::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
       # POST with custom object in request body, response is an object
       #
-      # @param request_options [Seed::RequestOptions]
-      #
+      # @param request_options [Hash]
       # @param params [Seed::InlinedRequests::Types::PostWithObjectBody]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
       def post_with_object_bodyand_response(request_options: {}, **params)

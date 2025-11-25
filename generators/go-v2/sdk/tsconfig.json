@@ -4,16 +4,10 @@
   "include": ["./src/**/*"],
   "references": [
     {
+      "path": "../../../packages/commons/mock-utils"
+    },
+    {
       "path": "../../../packages/cli/logger"
-    },
-    {
-      "path": "../../../packages/commons/fs-utils"
-    },
-    {
-      "path": "../../../packages/commons/core-utils"
-    },
-    {
-      "path": "../../base"
     },
     {
       "path": "../dynamic-snippets"
@@ -23,6 +17,15 @@
     },
     {
       "path": "../ast"
+    },
+    {
+      "path": "../../../packages/commons/fs-utils"
+    },
+    {
+      "path": "../../../packages/commons/core-utils"
+    },
+    {
+      "path": "../../base"
     }
   ]
 }

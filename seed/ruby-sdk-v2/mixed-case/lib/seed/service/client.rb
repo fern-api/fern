@@ -5,14 +5,19 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::Service::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :resource_id
       #
       # @return [Seed::Service::Types::Resource]
       def get_resource(request_options: {}, **params)
@@ -35,9 +40,15 @@ module Seed
         end
       end
 
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer] :page_limit
+      # @option params [String] :before_date
       #
       # @return [Array[Seed::Service::Types::Resource]]
       def list_resources(request_options: {}, **params)

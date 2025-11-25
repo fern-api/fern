@@ -5,14 +5,18 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::Unknown::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[Hash[String, Object]]]
       def post(request_options: {}, **params)
@@ -34,9 +38,13 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
-      # @param request_options [Seed::RequestOptions]
-      #
+      # @param request_options [Hash]
       # @param params [Seed::Unknown::Types::MyObject]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Array[Hash[String, Object]]]
       def post_object(request_options: {}, **params)

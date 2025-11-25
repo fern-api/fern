@@ -30,9 +30,16 @@ export class DynamicTypeLiteralMapper {
         return valueWithInternal.internalType?.type === "nop";
     }
 
+    private usesOptionalNullable(): boolean {
+        return this.context.customConfig?.["collapse-optional-nullable"] === true;
+    }
+
     private wrapInOptionalIfNotNop(value: java.TypeLiteral, useOf: boolean = false): java.TypeLiteral {
         if (this.isNopTypeLiteral(value)) {
             return value;
+        }
+        if (this.usesOptionalNullable()) {
+            return this.context.getOptionalNullableOf(value);
         }
         return java.TypeLiteral.optional({ value, useOf });
     }
@@ -80,22 +87,41 @@ export class DynamicTypeLiteralMapper {
                         Object.keys(args.value).length === 0 &&
                         args.typeReference.value.type === "named")
                 ) {
-                    return java.TypeLiteral.reference(
-                        java.invokeMethod({
-                            on: java.classReference({
-                                name: "Optional",
-                                packageName: "java.util"
-                            }),
-                            method: "empty",
-                            arguments_: []
-                        })
-                    );
+                    if (this.usesOptionalNullable()) {
+                        return this.context.getOptionalNullableAbsent();
+                    } else {
+                        return java.TypeLiteral.reference(
+                            java.invokeMethod({
+                                on: java.classReference({
+                                    name: "Optional",
+                                    packageName: "java.util"
+                                }),
+                                method: "empty",
+                                arguments_: []
+                            })
+                        );
+                    }
                 }
 
                 if (args.typeReference.value.type === "list") {
                     const listLiteral = this.convertList({ list: args.typeReference.value.value, value: args.value });
                     return this.wrapInOptionalIfNotNop(listLiteral, true);
                 }
+
+                // When using OptionalNullable mode and we have nested optional/nullable,
+                // skip wrapping since they collapse into a single OptionalNullable<T>
+                if (
+                    this.usesOptionalNullable() &&
+                    (args.typeReference.value.type === "optional" || args.typeReference.value.type === "nullable")
+                ) {
+                    return this.convert({
+                        typeReference: args.typeReference.value,
+                        value: args.value,
+                        as: args.as,
+                        inUndiscriminatedUnion: args.inUndiscriminatedUnion
+                    });
+                }
+
                 const convertedValue = this.convert({
                     typeReference: args.typeReference.value,
                     value: args.value,
@@ -324,6 +350,8 @@ export class DynamicTypeLiteralMapper {
                 }
                 try {
                     this.context.errors.scope(unionVariant.discriminantValue.wireValue);
+                    // For primitive union variants, the property key is always "value"
+                    const propertyKey = "value";
                     return java.TypeLiteral.reference(
                         java.invokeMethod({
                             on: classReference,
@@ -331,7 +359,7 @@ export class DynamicTypeLiteralMapper {
                             arguments_: [
                                 this.convert({
                                     typeReference: unionVariant.typeReference,
-                                    value: record[unionVariant.discriminantValue.wireValue]
+                                    value: record[propertyKey]
                                 })
                             ]
                         })
@@ -705,6 +733,9 @@ export class DynamicTypeLiteralMapper {
                 const date = this.context.getValueAsString({ value });
                 if (date == null) {
                     return java.TypeLiteral.nop();
+                }
+                if (this.context.customConfig?.["use-local-date-for-dates"] === true) {
+                    return java.TypeLiteral.date(date);
                 }
                 return java.TypeLiteral.string(date);
             }

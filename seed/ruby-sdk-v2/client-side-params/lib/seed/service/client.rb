@@ -5,16 +5,27 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::Service::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
       # List resources with pagination
       #
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer] :page
+      # @option params [Integer] :per_page
+      # @option params [String] :sort
+      # @option params [String] :order
+      # @option params [Boolean] :include_totals
+      # @option params [String, nil] :fields
+      # @option params [String, nil] :search
       #
       # @return [Array[Seed::Types::Types::Resource]]
       def list_resources(request_options: {}, **params)
@@ -50,9 +61,16 @@ module Seed
 
       # Get a single resource
       #
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :resource_id
+      # @option params [Boolean] :include_metadata
+      # @option params [String] :format
       #
       # @return [Seed::Types::Types::Resource]
       def get_resource(request_options: {}, **params)
@@ -85,9 +103,15 @@ module Seed
 
       # Search resources with complex parameters
       #
-      # @param request_options [Seed::RequestOptions]
-      #
+      # @param request_options [Hash]
       # @param params [Seed::Service::Types::SearchResourcesRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer] :limit
+      # @option params [Integer] :offset
       #
       # @return [Seed::Types::Types::SearchResponse]
       def search_resources(request_options: {}, **params)
@@ -124,9 +148,21 @@ module Seed
 
       # List or search for users
       #
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer, nil] :page
+      # @option params [Integer, nil] :per_page
+      # @option params [Boolean, nil] :include_totals
+      # @option params [String, nil] :sort
+      # @option params [String, nil] :connection
+      # @option params [String, nil] :q
+      # @option params [String, nil] :search_engine
+      # @option params [String, nil] :fields
       #
       # @return [Seed::Types::Types::PaginatedUserResponse]
       def list_users(request_options: {}, **params)
@@ -165,9 +201,16 @@ module Seed
 
       # Get a user by ID
       #
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :user_id
+      # @option params [String, nil] :fields
+      # @option params [Boolean, nil] :include_fields
       #
       # @return [Seed::Types::Types::User]
       def get_user_by_id(request_options: {}, **params)
@@ -200,9 +243,13 @@ module Seed
 
       # Create a new user
       #
-      # @param request_options [Seed::RequestOptions]
-      #
+      # @param request_options [Hash]
       # @param params [Seed::Types::Types::CreateUserRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [Seed::Types::Types::User]
       def create_user(request_options: {}, **params)
@@ -228,9 +275,14 @@ module Seed
 
       # Update a user
       #
-      # @param request_options [Seed::RequestOptions]
-      #
+      # @param request_options [Hash]
       # @param params [Seed::Types::Types::UpdateUserRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :user_id
       #
       # @return [Seed::Types::Types::User]
       def update_user(request_options: {}, **params)
@@ -256,9 +308,14 @@ module Seed
 
       # Delete a user
       #
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :user_id
       #
       # @return [untyped]
       def delete_user(request_options: {}, **params)
@@ -281,9 +338,16 @@ module Seed
 
       # List all connections
       #
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String, nil] :strategy
+      # @option params [String, nil] :name
+      # @option params [String, nil] :fields
       #
       # @return [Array[Seed::Types::Types::Connection]]
       def list_connections(request_options: {}, **params)
@@ -315,9 +379,15 @@ module Seed
 
       # Get a connection by ID
       #
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :connection_id
+      # @option params [String, nil] :fields
       #
       # @return [Seed::Types::Types::Connection]
       def get_connection(request_options: {}, **params)
@@ -349,9 +419,21 @@ module Seed
 
       # List all clients/applications
       #
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String, nil] :fields
+      # @option params [Boolean, nil] :include_fields
+      # @option params [Integer, nil] :page
+      # @option params [Integer, nil] :per_page
+      # @option params [Boolean, nil] :include_totals
+      # @option params [Boolean, nil] :is_global
+      # @option params [Boolean, nil] :is_first_party
+      # @option params [Array[String], nil] :app_type
       #
       # @return [Seed::Types::Types::PaginatedClientResponse]
       def list_clients(request_options: {}, **params)
@@ -390,9 +472,16 @@ module Seed
 
       # Get a client by ID
       #
-      # @param request_options [Seed::RequestOptions]
-      #
-      # @param params [Hash[untyped, untyped]]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :client_id
+      # @option params [String, nil] :fields
+      # @option params [Boolean, nil] :include_fields
       #
       # @return [Seed::Types::Types::Client]
       def get_client(request_options: {}, **params)

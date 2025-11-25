@@ -141,7 +141,8 @@
                     "sdkRequest": null,
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -320,7 +321,8 @@
                             "docs": null,
                             "v2Examples": null
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],

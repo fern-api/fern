@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.user.get();
+client.user.get('id');
 ```
 </dd>
 </dl>

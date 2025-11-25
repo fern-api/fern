@@ -6,6 +6,7 @@
  *
  */
 
+import { spawnSync } from "node:child_process";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { OSSWorkspace } from "@fern-api/lazy-fern-workspace";
 import { createMockTaskContext } from "@fern-api/task-context";
@@ -13,6 +14,8 @@ import { loadAPIWorkspace } from "@fern-api/workspace-loader";
 import assert from "assert";
 
 import { convertIrToFdrApi } from "../convertIrToFdrApi";
+
+const hasBuf = spawnSync("buf", ["--version"], { stdio: "ignore" }).status === 0;
 
 describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
     it("should replicate complete `fern fdr {file} --from-openapi` pipeline and produce S3-ready output", async () => {
@@ -375,7 +378,7 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(rootApi).toBeDefined();
     });
 
-    it("should handle gRPC proto with comments service", async () => {
+    it.skipIf(!hasBuf)("should handle gRPC proto with comments service", async () => {
         const context = createMockTaskContext();
         const workspace = await loadAPIWorkspace({
             absolutePathToWorkspace: join(
@@ -433,5 +436,309 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         // Snapshot the complete output for regression testing
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/grpc-comments-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/grpc-comments-ir.snap");
+    });
+
+    it("should handle OpenAPI with x-codeSamples extension", async () => {
+        // Test OpenAPI spec with x-codeSamples extension (Redocly format)
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/x-code-samples")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "x-code-samples"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that x-codeSamples were parsed into IR
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        const service = services[0];
+        expect(service).toBeDefined();
+        if (service && typeof service === "object" && "endpoints" in service) {
+            const serviceWithEndpoints = service as { endpoints?: Array<{ examples?: unknown[] }> };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBeGreaterThan(0);
+
+            // Validate that code samples were converted to examples
+            const getUserEndpoint = serviceWithEndpoints.endpoints?.[0];
+            expect(getUserEndpoint).toBeDefined();
+
+            if (getUserEndpoint?.examples) {
+                // Should have 3 code samples: Python, TypeScript, Go
+                expect(getUserEndpoint.examples.length).toBeGreaterThanOrEqual(3);
+            }
+        }
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/x-code-samples-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/x-code-samples-ir.snap");
+    });
+
+    it("should prefer x-fern-examples code-samples over x-codeSamples when both are present", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/x-code-samples-override")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "x-code-samples-override"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that x-fern-examples code-samples are present in IR
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        const service = services[0];
+        expect(service).toBeDefined();
+        if (service && typeof service === "object" && "endpoints" in service) {
+            const serviceWithEndpoints = service as { endpoints?: Array<{ examples?: unknown[] }> };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBeGreaterThan(0);
+
+            const getUserEndpoint = serviceWithEndpoints.endpoints?.[0];
+            expect(getUserEndpoint).toBeDefined();
+        }
+
+        // Verify that FDR contains Fern code samples (Go, Ruby) and NOT OpenAPI code samples (Python, TypeScript)
+        const fdrString = JSON.stringify(fdrApiDefinition);
+
+        // Should contain Fern code samples
+        expect(fdrString).toContain("Go SDK (Fern)");
+        expect(fdrString).toContain("Ruby SDK (Fern)");
+        expect(fdrString).toContain("go");
+        expect(fdrString).toContain("ruby");
+
+        // Should NOT contain OpenAPI code samples (they should be overridden)
+        expect(fdrString).not.toContain("Python SDK (OpenAPI)");
+        expect(fdrString).not.toContain("TypeScript SDK (OpenAPI)");
+        expect(fdrString).not.toContain("openapi-key");
+        expect(fdrString).not.toContain("openapi_sdk");
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/x-code-samples-override-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/x-code-samples-override-ir.snap");
+    });
+
+    it("should handle wildcard status codes conflicting with specific status codes", async () => {
+        // Test OpenAPI spec that has both specific status codes (400, 500) and wildcard patterns (4XX, 5XX)
+        // Validates that the fix creates unique error IDs: ClientRequestError (4XX) vs BadRequestError (400)
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/wildcard-status-conflict")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "wildcard-status-conflict"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // This test demonstrates the bug where wildcard status codes (4XX, 5XX) and specific status codes (400, 500)
+        // conflict because they generate the same error IDs, causing one to overwrite the other.
+
+        // Validate the IR contains error declarations
+        expect(intermediateRepresentation.errors).toBeDefined();
+        const errorDeclarations = Object.values(intermediateRepresentation.errors);
+
+        // FIXED: Now we expect 4 unique error declarations because each has a unique errorId:
+        // - 400 specific: "TestOperationRequestBadRequestError"
+        // - 4XX wildcard: "TestOperationRequestClientRequestError"
+        // - 500 specific: "TestOperationRequestInternalServerError"
+        // - 5XX wildcard: "TestOperationRequestServerError"
+        expect(errorDeclarations.length).toBe(4);
+
+        // Verify that all expected error combinations exist
+        const errorDeclarationsByStatus = errorDeclarations.reduce(
+            (acc, error) => {
+                const key = `${error.statusCode}-${error.isWildcardStatusCode || false}`;
+                acc[key] = error;
+                return acc;
+            },
+            {} as Record<string, (typeof errorDeclarations)[0]>
+        );
+
+        // All four combinations should now exist
+        expect(errorDeclarationsByStatus["400-false"]).toBeDefined(); // Specific 400
+        expect(errorDeclarationsByStatus["400-true"]).toBeDefined(); // Wildcard 4XX -> 400
+        expect(errorDeclarationsByStatus["500-false"]).toBeDefined(); // Specific 500
+        expect(errorDeclarationsByStatus["500-true"]).toBeDefined(); // Wildcard 5XX -> 500
+
+        // Verify the error names are unique and semantic
+        const specific400 = errorDeclarationsByStatus["400-false"];
+        const wildcard400 = errorDeclarationsByStatus["400-true"];
+        const specific500 = errorDeclarationsByStatus["500-false"];
+        const wildcard500 = errorDeclarationsByStatus["500-true"];
+
+        expect(specific400?.name.name.originalName).toContain("BadRequestError");
+        expect(wildcard400?.name.name.originalName).toContain("ClientRequestError");
+        expect(specific500?.name.name.originalName).toContain("InternalServerError");
+        expect(wildcard500?.name.name.originalName).toContain("ServerError");
+
+        // Validate FDR now contains all 4 errors properly converted
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+        expect(fdrApiDefinition.rootPackage.endpoints).toBeDefined();
+        expect(fdrApiDefinition.rootPackage.endpoints.length).toBeGreaterThan(0);
+
+        const fdrEndpoint = fdrApiDefinition.rootPackage.endpoints[0];
+        if (fdrEndpoint && fdrEndpoint.errorsV2) {
+            // FIXED: Now we should have 4 errors instead of 2
+            expect(fdrEndpoint.errorsV2.length).toBe(4);
+
+            const fdrErrors400 = fdrEndpoint.errorsV2.filter((error) => error.statusCode === 400);
+            const fdrErrors500 = fdrEndpoint.errorsV2.filter((error) => error.statusCode === 500);
+
+            // Should have 2 errors for each status code (specific + wildcard)
+            expect(fdrErrors400.length).toBe(2);
+            expect(fdrErrors500.length).toBe(2);
+
+            // Verify we have both specific and wildcard versions for each status code
+            const specific400 = fdrErrors400.find((error) => !error.isWildcard);
+            const wildcard400 = fdrErrors400.find((error) => error.isWildcard);
+            const specific500 = fdrErrors500.find((error) => !error.isWildcard);
+            const wildcard500 = fdrErrors500.find((error) => error.isWildcard);
+
+            expect(specific400).toBeDefined();
+            expect(wildcard400).toBeDefined();
+            expect(specific500).toBeDefined();
+            expect(wildcard500).toBeDefined();
+
+            // Verify the error names reflect the unique IDs
+            expect(specific400?.name).toContain("BadRequestError");
+            expect(wildcard400?.name).toContain("ClientRequestError");
+            expect(specific500?.name).toContain("InternalServerError");
+            expect(wildcard500?.name).toContain("ServerError");
+        }
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/wildcard-status-conflict-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/wildcard-status-conflict-ir.snap");
     });
 });

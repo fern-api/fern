@@ -3,6 +3,7 @@
 namespace Seed;
 
 use Seed\Bigunion\BigunionClient;
+use Seed\Types\TypesClient;
 use Seed\Union\UnionClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
@@ -13,6 +14,11 @@ class SeedClient
      * @var BigunionClient $bigunion
      */
     public BigunionClient $bigunion;
+
+    /**
+     * @var TypesClient $types
+     */
+    public TypesClient $types;
 
     /**
      * @var UnionClient $union
@@ -60,11 +66,13 @@ class SeedClient
             $this->options['headers'] ?? [],
         );
 
+
         $this->client = new RawClient(
             options: $this->options,
         );
 
         $this->bigunion = new BigunionClient($this->client, $this->options);
+        $this->types = new TypesClient($this->client, $this->options);
         $this->union = new UnionClient($this->client, $this->options);
     }
 }
