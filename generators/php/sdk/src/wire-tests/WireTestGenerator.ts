@@ -1,14 +1,13 @@
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
+import { php } from "@fern-api/php-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets";
 import {
     dynamic,
     HttpEndpoint,
     HttpService,
-    IntermediateRepresentation,
-    ObjectProperty,
-    TypeReference
+    IntermediateRepresentation
 } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
@@ -27,9 +26,9 @@ export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
     private dynamicIr: dynamic.DynamicIntermediateRepresentation;
     private wireMockConfigContent: Record<string, WireMockMapping>;
-    private readonly dynamicSnippets: DynamicSnippetsGenerator;
+    private readonly dynamicSnippetsGenerator: DynamicSnippetsGenerator;
 
-    constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
+    constructor({ context, ir }: { context: SdkGeneratorContext; ir: IntermediateRepresentation }) {
         this.context = context;
         const dynamicIr = ir.dynamic;
         if (!dynamicIr) {
@@ -37,7 +36,7 @@ export class WireTestGenerator {
         }
         this.dynamicIr = dynamicIr;
         this.wireMockConfigContent = this.getWireMockConfigContent();
-        this.dynamicSnippets = new DynamicSnippetsGenerator({
+        this.dynamicSnippetsGenerator = new DynamicSnippetsGenerator({
             ir: convertIr(dynamicIr),
             config: context.config
         });
@@ -56,7 +55,7 @@ export class WireTestGenerator {
                 continue;
             }
 
-            const serviceTestFile = this.generateServiceTestFile(serviceName, endpointsWithExamples);
+            const serviceTestFile = await this.generateServiceTestFile(serviceName, endpointsWithExamples);
             if (serviceTestFile) {
                 this.context.project.addRawFiles(
                     new File(serviceTestFile.filename, serviceTestFile.directory, serviceTestFile.contents)
@@ -68,10 +67,10 @@ export class WireTestGenerator {
         new WireTestSetupGenerator(this.context, this.context.ir).generate();
     }
 
-    private generateServiceTestFile(
+    private async generateServiceTestFile(
         serviceName: string,
         endpoints: HttpEndpoint[]
-    ): { filename: string; directory: RelativeFilePath; contents: string } | null {
+    ): Promise<{ filename: string; directory: RelativeFilePath; contents: string } | undefined> {
         const endpointTestCases: Array<{
             endpoint: HttpEndpoint;
             example: dynamic.EndpointExample;
@@ -95,7 +94,7 @@ export class WireTestGenerator {
         }
 
         if (endpointTestCases.length === 0) {
-            return null;
+            return undefined;
         }
 
         this.context.logger.info(
@@ -103,13 +102,18 @@ export class WireTestGenerator {
         );
 
         const testClassName = this.getTestClassName(serviceName);
-        const phpContent = this.buildTestFileContent(testClassName, endpointTestCases);
+        const phpContent = await this.buildTestFileContent(testClassName, endpointTestCases);
 
         return {
             filename: `${testClassName}.php`,
             directory: RelativeFilePath.of("tests/Wire"),
-            contents: phpContent
+            contents: phpContent.toString({
+                namespace: this.context.getTestsNamespace(),
+                rootNamespace: this.context.getRootNamespace(),
+                customConfig: this.context.customConfig
+            })
         };
+
     }
 
     private getTestClassName(serviceName: string): string {
@@ -121,7 +125,7 @@ export class WireTestGenerator {
         return `${pascalCase}WireTest`;
     }
 
-    private buildTestFileContent(
+    private async buildTestFileContent(
         testClassName: string,
         testCases: Array<{
             endpoint: HttpEndpoint;
@@ -129,286 +133,90 @@ export class WireTestGenerator {
             service: HttpService;
             exampleIndex: number;
         }>
-    ): string {
-        const namespace = this.context.getTestsNamespace();
-        const rootNamespace = this.context.getRootNamespace();
-        const clientClassName = this.context.getRootClientClassName();
-
-        const imports = new Set<string>();
-        imports.add(`use ${rootNamespace}\\${clientClassName};`);
-
-        const testMethods: string[] = [];
+    ): Promise<php.Class> {
+        const class_ = php.class_({
+            name: testClassName,
+            namespace: this.context.getTestsNamespace(),
+            parentClassReference: php.classReference({ namespace: "PHPUnit\\Framework", name: "TestCase" }),
+        });
 
         for (const { endpoint, example, service, exampleIndex } of testCases) {
-            const testMethod = this.generateEndpointTestMethod(endpoint, example, service, exampleIndex, imports);
+            const testMethod = await this.generateEndpointTestMethod({
+                endpoint,
+                example,
+                service,
+                exampleIndex,
+            });
             if (testMethod) {
-                testMethods.push(testMethod);
+                class_.addMethod(testMethod);
             }
         }
-
-        const sortedImports = Array.from(imports).sort();
-
-        return `<?php
-
-namespace ${namespace}\\Wire;
-
-${sortedImports.join("\n")}
-
-class ${testClassName} extends WireMockTestCase
-{
-${testMethods.join("\n\n")}
-}
-`;
+        return class_;
     }
 
-    private generateEndpointTestMethod(
-        endpoint: HttpEndpoint,
-        example: dynamic.EndpointExample,
-        service: HttpService,
-        exampleIndex: number,
-        imports: Set<string>
-    ): string | null {
+    private async generateEndpointTestMethod({
+        endpoint,
+        example,
+        service,
+        exampleIndex,
+    }: {
+        endpoint: HttpEndpoint;
+        example: dynamic.EndpointExample;
+        service: HttpService;
+        exampleIndex: number;
+    }): Promise<php.Method | undefined> {
         try {
             const testName = this.getTestMethodName(endpoint);
             const basePath = this.buildBasePath(endpoint);
             const queryParamsCode = this.buildQueryParamsCode(endpoint);
-            const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
+            const testId = this.buildDeterministicTestId(
+                service,
+                endpoint,
+                exampleIndex
+            );
 
-            // Generate the API call using dynamic snippets
+            // Generate the API call using dynamic snippets generator
             const snippetRequest = convertDynamicEndpointSnippetRequest({
                 ...example,
                 baseUrl: "http://localhost:8080"
             });
-            const snippetResponse = this.dynamicSnippets.generateSync(snippetRequest);
-            const snippet = snippetResponse.snippet;
+            const snippetAst = await this.dynamicSnippetsGenerator.generateSnippetAst(snippetRequest);
 
-            // Extract use statements from the snippet and add them to imports
-            this.extractImportsFromSnippet(snippet, imports);
+            return php.method({
+                name: testName,
+                access: "public",
+                parameters: [],
+                body: php.codeblock((writer) => {
+                    // $testId = '...';
+                    writer.writeStatement(`$testId = '${testId}'`);
 
-            // Extract the complete method call from the snippet (remove client instantiation if present)
-            // The snippet typically looks like:
-            // $client = new SeedClient();
-            // $client->service->method(
-            //     arg1: 'value1',
-            //     arg2: 'value2',
-            // );
-            // We want to extract the complete method call (including multi-line arguments)
-            // and use our own client with test headers
-            const apiCallSnippet = this.extractApiCallFromSnippet(snippet);
+                    // $client = new Client(...);
+                    writer.writeStatement(
+                        `$client = new ${this.context.getRootClientClassName()}(
+    options: [
+        'baseUrl' => 'http://localhost:8080',
+        'headers' => ['X-Test-Id' => $testId],
+    ]
+)`
+                    );
 
-            if (!apiCallSnippet) {
-                this.context.logger.warn(`Failed to extract API call from snippet for endpoint ${endpoint.id}`);
-                return null;
-            }
+                    // API call from dynamic snippet AST
+                    writer.writeNode(snippetAst as php.AstNode);
 
-            // Indent the extracted snippet to match the test method's indentation (8 spaces)
-            const indentedApiCall = this.indentSnippet(apiCallSnippet, "        ");
-
-            return `    public function ${testName}(): void
-    {
-        $testId = "${testId}";
-        $client = new ${this.context.getRootClientClassName()}(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-
-${indentedApiCall}
-
-        $this->verifyRequestCount(
-            $testId,
-            "${endpoint.method}",
-            "${basePath}",
-            ${queryParamsCode},
-            1
-        );
-    }`;
+                    // $this->verifyRequestCount(...);
+                    writer.writeStatement(`$this->verifyRequestCount(
+    $testId,
+    "${endpoint.method}",
+    "${basePath}",
+    ${queryParamsCode},
+    1
+)`);
+                })
+            });
         } catch (error) {
             this.context.logger.warn(`Failed to generate test method for endpoint ${endpoint.id}: ${error}`);
-            return null;
+            return undefined;
         }
-    }
-
-    /**
-     * Indents an API call snippet with proper PSR-12 style formatting.
-     * - First line (the method call) gets baseIndent
-     * - Middle lines (arguments) get baseIndent + 4 spaces, preserving relative nesting
-     * - Closing line (");") gets baseIndent
-     */
-    private indentSnippet(snippet: string, baseIndent: string): string {
-        const lines = snippet.split("\n");
-        const argIndent = baseIndent + "    ";
-
-        // Find first and last non-empty line indices
-        let firstIdx = -1;
-        let lastIdx = -1;
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i];
-            if (line != null && line.trim() !== "") {
-                if (firstIdx === -1) {
-                    firstIdx = i;
-                }
-                lastIdx = i;
-            }
-        }
-
-        if (firstIdx === -1) {
-            return "";
-        }
-
-        // For single-line calls, just indent with baseIndent
-        if (firstIdx === lastIdx) {
-            const line = lines[firstIdx];
-            return baseIndent + (line?.trim() ?? "");
-        }
-
-        // Compute the indent of the first non-empty line (the call line) from the raw snippet
-        const firstLine = lines[firstIdx] ?? "";
-        const firstLineMatch = firstLine.match(/^(\s*)/);
-        const callIndent = firstLineMatch?.[1]?.length ?? 0;
-
-        return lines
-            .map((line, idx) => {
-                if (line == null) {
-                    return "";
-                }
-                const trimmed = line.trim();
-                if (trimmed === "") {
-                    return "";
-                }
-
-                // First non-empty line: the call - use baseIndent
-                if (idx === firstIdx) {
-                    return baseIndent + trimmed;
-                }
-
-                // Closing line(s): align with call
-                if (trimmed === ");" || trimmed === ")") {
-                    return baseIndent + trimmed;
-                }
-
-                // For argument lines, compute relative indent from the original snippet
-                // to preserve nested structure (arrays, objects, etc.)
-                const lineMatch = line.match(/^(\s*)/);
-                const lineIndent = lineMatch?.[1]?.length ?? 0;
-                const relativeIndent = Math.max(0, lineIndent - callIndent);
-
-                // Arguments get argIndent (baseIndent + 4) plus any additional relative indent
-                return argIndent + " ".repeat(relativeIndent) + trimmed;
-            })
-            .join("\n");
-    }
-
-    /**
-     * Extracts use statements from a snippet and adds them to the imports set.
-     * This ensures that any types used in the snippet are properly imported in the test file.
-     */
-    private extractImportsFromSnippet(snippet: string, imports: Set<string>): void {
-        for (const line of snippet.split("\n")) {
-            const trimmed = line.trim();
-            if (trimmed.startsWith("use ") && trimmed.endsWith(";")) {
-                imports.add(trimmed);
-            }
-        }
-    }
-
-    /**
-     * Extracts the complete API call from a dynamic snippet.
-     * The snippet may contain client instantiation followed by a method call.
-     * We extract only the method call, handling multi-line calls with proper parentheses balancing.
-     */
-    private extractApiCallFromSnippet(snippet: string): string | null {
-        const lines = snippet.split("\n");
-
-        // Find the first line that contains a client method call (has -> but not "new ")
-        let startIndex = -1;
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i];
-            if (line != null && line.includes("->") && !line.includes("new ")) {
-                startIndex = i;
-                break;
-            }
-        }
-
-        if (startIndex === -1) {
-            return null;
-        }
-
-        // Collect lines starting from the method call until parentheses are balanced
-        const callLines: string[] = [];
-        let parenDepth = 0;
-        let foundOpenParen = false;
-
-        for (let i = startIndex; i < lines.length; i++) {
-            const line = lines[i];
-            if (line == null) {
-                continue;
-            }
-            callLines.push(line);
-
-            // Count parentheses in this line
-            for (const char of line) {
-                if (char === "(") {
-                    parenDepth++;
-                    foundOpenParen = true;
-                } else if (char === ")") {
-                    parenDepth--;
-                }
-            }
-
-            // Stop when we've found at least one open paren and depth returns to 0
-            if (foundOpenParen && parenDepth <= 0) {
-                break;
-            }
-        }
-
-        // If we never found balanced parentheses, return null
-        if (parenDepth !== 0) {
-            return null;
-        }
-
-        // Check if there's any real argument content between '(' and ')'
-        // This handles cases where the snippet has empty or invalid arguments (e.g., just a comma)
-        let hasArgumentContent = false;
-        for (let i = 0; i < callLines.length; i++) {
-            const trimmed = callLines[i]?.trim() ?? "";
-
-            // Skip the method line itself (first line)
-            if (i === 0) {
-                continue;
-            }
-
-            // Skip closing parenthesis lines and empty lines
-            if (trimmed === ");" || trimmed === ")" || trimmed === "") {
-                continue;
-            }
-
-            // If the only thing on the line is a comma, treat as "no content"
-            if (trimmed === ",") {
-                continue;
-            }
-
-            // Anything else counts as real argument content
-            hasArgumentContent = true;
-            break;
-        }
-
-        // If no real argument content, rebuild as a call with no arguments
-        if (!hasArgumentContent) {
-            const firstLine = callLines[0];
-            if (firstLine == null) {
-                return null;
-            }
-            // Replace everything from '(' onwards with '();'
-            // Don't trim - preserve leading whitespace for indentation
-            const noArgsCall = firstLine.replace(/\(.*/, "();");
-            return noArgsCall;
-        }
-
-        // Join the lines and return, preserving the original formatting
-        // Don't trim - preserve leading whitespace for indentation
-        return callLines.join("\n");
     }
 
     private getTestMethodName(endpoint: HttpEndpoint): string {
@@ -417,7 +225,11 @@ ${indentedApiCall}
         return `test${endpointName.charAt(0).toUpperCase()}${endpointName.slice(1)}`;
     }
 
-    private buildDeterministicTestId(service: HttpService, endpoint: HttpEndpoint, exampleIndex: number): string {
+    private buildDeterministicTestId(
+        service: HttpService,
+        endpoint: HttpEndpoint,
+        exampleIndex: number
+    ): string {
         const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
         const endpointName = endpoint.name.snakeCase.safeName;
 
@@ -431,198 +243,6 @@ ${indentedApiCall}
         return segments.join(".");
     }
 
-    private generateApiCall(
-        endpoint: HttpEndpoint,
-        example: dynamic.EndpointExample,
-        service: HttpService,
-        imports: Set<string>
-    ): string {
-        // Build the client accessor path (e.g., "$client->endpoints->container")
-        const servicePath = service.name.fernFilepath.allParts.map((part) => part.camelCase.unsafeName);
-        let clientAccessor = "$client";
-        for (const part of servicePath) {
-            clientAccessor += `->${part}`;
-        }
-
-        const methodName = endpoint.name.camelCase.safeName;
-
-        // Build arguments
-        const args: string[] = [];
-
-        // Add path parameters
-        const pathParams = this.buildPathParameters(endpoint, example);
-        args.push(...pathParams);
-
-        // Add request body parameters
-        const bodyParams = this.buildRequestBodyParameters(endpoint, example, imports);
-        if (bodyParams) {
-            args.push(...bodyParams);
-        }
-
-        // Add query parameters
-        const queryParams = this.buildQueryParametersForCall(endpoint, example);
-        args.push(...queryParams);
-
-        // Add headers
-        const headerParams = this.buildHeaderParameters(endpoint, example);
-        args.push(...headerParams);
-
-        const argsStr = args.length > 0 ? args.join(",\n            ") : "";
-
-        return `$response = ${clientAccessor}->${methodName}(${argsStr ? "\n            " + argsStr + "\n        " : ""});`;
-    }
-
-    private buildPathParameters(endpoint: HttpEndpoint, example: dynamic.EndpointExample): string[] {
-        const pathParams: string[] = [];
-
-        if (example.pathParameters) {
-            for (const part of endpoint.fullPath.parts) {
-                const paramValue = example.pathParameters[part.pathParameter];
-                if (paramValue != null) {
-                    pathParams.push(this.formatValue(paramValue));
-                }
-            }
-        }
-
-        return pathParams;
-    }
-
-    private buildQueryParametersForCall(endpoint: HttpEndpoint, example: dynamic.EndpointExample): string[] {
-        const queryParams: string[] = [];
-
-        if (example.queryParameters) {
-            for (const [key, value] of Object.entries(example.queryParameters)) {
-                if (value != null) {
-                    const queryParameterDeclaration = endpoint.queryParameters.find(
-                        (queryParameter) => queryParameter.name.wireValue === key
-                    );
-                    if (queryParameterDeclaration != null) {
-                        const paramName = queryParameterDeclaration.name.name.camelCase.safeName;
-                        queryParams.push(`${paramName}: ${this.formatValue(value)}`);
-                    } else {
-                        queryParams.push(`${key}: ${this.formatValue(value)}`);
-                    }
-                }
-            }
-        }
-
-        return queryParams;
-    }
-
-    private buildHeaderParameters(endpoint: HttpEndpoint, example: dynamic.EndpointExample): string[] {
-        const headers: string[] = [];
-
-        if (example.headers) {
-            const headerMap = new Map<string, string>();
-            for (const header of endpoint.headers) {
-                const wireKey = header.name.wireValue;
-                const phpName = header.name.name.camelCase.safeName;
-                headerMap.set(wireKey, phpName);
-            }
-
-            for (const [wireKey, value] of Object.entries(example.headers)) {
-                if (value != null) {
-                    const paramName = headerMap.get(wireKey) ?? wireKey;
-                    headers.push(`${paramName}: ${this.formatValue(value)}`);
-                }
-            }
-        }
-
-        return headers;
-    }
-
-    private buildRequestBodyParameters(
-        endpoint: HttpEndpoint,
-        example: dynamic.EndpointExample,
-        imports: Set<string>
-    ): string[] | null {
-        if (!endpoint.requestBody || !example.requestBody) {
-            return null;
-        }
-
-        return endpoint.requestBody._visit<string[] | null>({
-            inlinedRequestBody: (inlinedBody) => {
-                if (
-                    example.requestBody != null &&
-                    typeof example.requestBody === "object" &&
-                    !Array.isArray(example.requestBody)
-                ) {
-                    const params: string[] = [];
-
-                    const propertyMap = new Map<string, string>();
-                    for (const prop of inlinedBody.properties) {
-                        const wireKey = prop.name.wireValue;
-                        const phpName = prop.name.name.camelCase.safeName;
-                        propertyMap.set(wireKey, phpName);
-                    }
-
-                    for (const [wireKey, value] of Object.entries(example.requestBody)) {
-                        const paramName = propertyMap.get(wireKey) ?? wireKey;
-                        params.push(`${paramName}: ${this.jsonToPhp(value)}`);
-                    }
-                    return params;
-                }
-                return null;
-            },
-            reference: (value) => {
-                const objectTypeDecl = this.getObjectTypeIfFlattened(value.requestBodyType);
-
-                if (objectTypeDecl != null) {
-                    if (
-                        example.requestBody != null &&
-                        typeof example.requestBody === "object" &&
-                        !Array.isArray(example.requestBody)
-                    ) {
-                        const params: string[] = [];
-
-                        const propertyMap = new Map<string, string>();
-                        for (const prop of objectTypeDecl.properties) {
-                            const wireKey = prop.name.wireValue;
-                            const phpName = prop.name.name.camelCase.safeName;
-                            propertyMap.set(wireKey, phpName);
-                        }
-
-                        for (const [wireKey, value] of Object.entries(example.requestBody)) {
-                            const paramName = propertyMap.get(wireKey) ?? wireKey;
-                            params.push(`${paramName}: ${this.jsonToPhp(value)}`);
-                        }
-                        return params;
-                    }
-                } else {
-                    if (example.requestBody != null) {
-                        return [`request: ${this.jsonToPhp(example.requestBody)}`];
-                    }
-                }
-                return null;
-            },
-            fileUpload: () => null,
-            bytes: () => null,
-            _other: () => {
-                this.context.logger.warn(`Unknown request body type for endpoint ${endpoint.name.originalName}`);
-                return null;
-            }
-        });
-    }
-
-    private getObjectTypeIfFlattened(typeRef: TypeReference): { properties: ObjectProperty[] } | null {
-        return typeRef._visit<{ properties: ObjectProperty[] } | null>({
-            named: (namedType) => {
-                const typeDecl = this.context.ir.types[namedType.typeId];
-                if (!typeDecl) {
-                    return null;
-                }
-                if (typeDecl.shape.type === "object") {
-                    return typeDecl.shape;
-                }
-                return null;
-            },
-            primitive: () => null,
-            container: () => null,
-            unknown: () => null,
-            _other: () => null
-        });
-    }
-
     private escapeStringForPhp(value: string): string {
         return value
             .replace(/\\/g, "\\\\")
@@ -632,24 +252,8 @@ ${indentedApiCall}
             .replace(/'/g, "\\'");
     }
 
-    private formatValue(value: unknown): string {
-        if (typeof value === "string") {
-            return `'${this.escapeStringForPhp(value)}'`;
-        }
-        if (typeof value === "number") {
-            return String(value);
-        }
-        if (typeof value === "boolean") {
-            return value ? "true" : "false";
-        }
-        if (value === null) {
-            return "null";
-        }
-        return this.jsonToPhp(value);
-    }
-
     private jsonToPhp(value: unknown): string {
-        if (value === null) {
+        if (value === null || value === undefined) {
             return "null";
         }
         if (typeof value === "boolean") {
@@ -684,8 +288,10 @@ ${indentedApiCall}
         const entries: string[] = [];
 
         for (const [key, value] of Object.entries(queryParams)) {
-            if (value != null) {
-                entries.push(`'${this.escapeStringForPhp(key)}' => '${this.escapeStringForPhp(String(value))}'`);
+            if (value !== null && value !== undefined) {
+                entries.push(
+                    `'${this.escapeStringForPhp(key)}' => '${this.escapeStringForPhp(String(value))}'`
+                );
             }
         }
 
@@ -696,13 +302,10 @@ ${indentedApiCall}
         return `[${entries.join(", ")}]`;
     }
 
-    private wiremockMappingKey({
-        requestMethod,
-        requestUrlPathTemplate
-    }: {
-        requestMethod: string;
-        requestUrlPathTemplate: string;
-    }): string {
+    private wiremockMappingKey(
+        requestMethod: string,
+        requestUrlPathTemplate: string
+    ): string {
         return `${requestMethod} - ${requestUrlPathTemplate}`;
     }
 
@@ -710,10 +313,10 @@ ${indentedApiCall}
         const out: Record<string, WireMockMapping> = {};
         const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
         for (const mapping of wiremockStubMapping.mappings) {
-            const key = this.wiremockMappingKey({
-                requestMethod: mapping.request.method,
-                requestUrlPathTemplate: mapping.request.urlPathTemplate
-            });
+            const key = this.wiremockMappingKey(
+                mapping.request.method,
+                mapping.request.urlPathTemplate
+            );
             out[key] = mapping;
         }
         return out;
@@ -728,10 +331,10 @@ ${indentedApiCall}
             basePath = "/" + basePath;
         }
 
-        const mappingKey = this.wiremockMappingKey({
-            requestMethod: endpoint.method,
-            requestUrlPathTemplate: basePath
-        });
+        const mappingKey = this.wiremockMappingKey(
+            endpoint.method,
+            basePath
+        );
 
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
         if (wiremockMapping && wiremockMapping.request.pathParameters) {

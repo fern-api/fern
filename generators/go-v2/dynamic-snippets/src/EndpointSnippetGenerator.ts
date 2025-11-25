@@ -71,6 +71,10 @@ export class EndpointSnippetGenerator {
         });
     }
 
+    public async generateSnippetAst({ endpoint, request, options }: { endpoint: FernIr.dynamic.Endpoint; request: FernIr.dynamic.EndpointSnippetRequest; options?: Options; }): Promise<go.AstNode> {
+        throw new Error("Unsupported");
+    }
+
     private generateWiremockTest({
         endpoint,
         snippet

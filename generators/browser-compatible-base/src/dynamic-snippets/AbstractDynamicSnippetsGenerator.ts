@@ -4,6 +4,7 @@ import { AbstractDynamicSnippetsGeneratorContext } from "./AbstractDynamicSnippe
 import { AbstractEndpointSnippetGenerator } from "./AbstractEndpointSnippetGenerator";
 import { Options } from "./Options";
 import { Result } from "./Result";
+import { AbstractAstNode } from "../ast";
 
 export abstract class AbstractDynamicSnippetsGenerator<
     Context extends AbstractDynamicSnippetsGeneratorContext,
@@ -41,6 +42,31 @@ export abstract class AbstractDynamicSnippetsGenerator<
             }
         }
         return result.getResponseOrThrow({ endpoint: request.endpoint });
+    }
+
+    public async generateSnippetAst(
+        request: FernIr.dynamic.EndpointSnippetRequest,
+        options: Options = {}
+    ): Promise<AbstractAstNode> {
+        const endpoints = this.context.resolveEndpointLocationOrThrow(request.endpoint);
+        if (endpoints.length === 0) {
+            throw new Error(`No endpoints found that match "${request.endpoint.method} ${request.endpoint.path}"`);
+        }
+        let lastError: Error | undefined = undefined;
+        for (const endpoint of endpoints) {
+            const context = this.context.clone() as Context;
+            const snippetGenerator = this.createSnippetGenerator(context);
+            try {
+                const ast = await snippetGenerator.generateSnippetAst({ endpoint, request, options });
+                return ast;
+            } catch (error) {
+                lastError = error as Error;
+            }
+        }
+        if (lastError != null) {
+            throw lastError;
+        }
+        throw new Error(`Failed to generate snippet AST for endpoint: ${request.endpoint.method} ${request.endpoint.path}`);
     }
 
     public generateSync(

@@ -174,7 +174,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         }
 
         try {
-            const wireTestGenerator = new WireTestGenerator(context, context.ir);
+            const wireTestGenerator = new WireTestGenerator({ context, ir: context.ir });
             await wireTestGenerator.generate();
             context.logger.info("Generated wire test files");
         } catch (error) {

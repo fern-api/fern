@@ -62,6 +62,10 @@ export class EndpointSnippetGenerator {
         });
     }
 
+    public async generateSnippetAst({ endpoint, request, options }: { endpoint: FernIr.dynamic.Endpoint; request: FernIr.dynamic.EndpointSnippetRequest; options?: Options; }): Promise<java.AstNode> {
+        throw new Error("Unsupported");
+    }
+
     private buildCodeBlock({
         endpoint,
         snippet,
