@@ -8,9 +8,12 @@ COPY generators/java-v2/sdk/features.yml /assets/features.yml
 # Apple Silicon: FROM bitnami/gradle:latest
 FROM gradle:jdk11-jammy
 
-# Remove vulnerable jgit jars (CVE-2025-4949) - not used by this generator
+# Remove vulnerable jars from Gradle base image - not used by this generator
+# CVE-2025-4949: jgit 5.13.3
+# CVE-2022-4065: testng 6.3.1
 RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
-       /opt/gradle/lib/plugins/org.eclipse.jgit.ssh.apache-*.jar
+       /opt/gradle/lib/plugins/org.eclipse.jgit.ssh.apache-*.jar \
+       /opt/gradle/lib/plugins/testng-*.jar
 
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
 RUN cd / \
@@ -25,8 +28,8 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
-# Update npm to fix CVE-2025-64756 (glob vulnerability)
-RUN npm install -g npm@latest
+# Update npm and glob to fix CVE-2025-64756 (glob vulnerability requires 11.1.0+)
+RUN npm install -g npm@latest && npm install -g glob@11.1.0
 
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2
