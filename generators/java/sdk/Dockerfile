@@ -24,13 +24,14 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
 # CVE-2025-8291, CVE-2025-6075: python3.10 zipfile/expandvars vulnerabilities
 # CVE-2024-46901: subversion vulnerability
 # These packages are only used by mercurial/brz which are not needed by this generator
+# Use purge instead of remove to fully remove packages from dpkg database
 RUN apt-get update && \
-    apt-get remove -y --allow-remove-essential \
+    apt-get purge -y --allow-remove-essential \
         python3.10 python3.10-minimal \
         python3 python3-minimal \
         libpython3.10-minimal libpython3.10-stdlib libpython3-stdlib \
         subversion && \
-    apt-get autoremove -y && \
+    apt-get autoremove -y --purge && \
     rm -rf /var/lib/apt/lists/*
 
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
