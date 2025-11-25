@@ -1,5 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.21.0
+  changelogEntry:
+    - summary: |
+        Add OAuth client credentials support for PHP SDKs. The SDK now generates an OAuthTokenProvider class that handles automatic token refresh with expiration handling. Root clients accept clientId and clientSecret parameters for OAuth authentication, and dynamic snippets show proper OAuth instantiation examples.
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 1.20.0
+  changelogEntry:
+    - summary: |
+        Add reference.md generation for PHP SDKs. The reference documentation includes dynamic snippets with example data for all API endpoints, organized by service.
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
 - version: 1.19.2
   changelogEntry:
     - summary: |

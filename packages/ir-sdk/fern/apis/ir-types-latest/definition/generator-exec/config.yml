@@ -67,6 +67,9 @@ types:
         docs: |
           The token scoped to installing the repository. If not specified, the generator
           should NOT attempt to clone the repository.
+      branch:
+        type: optional<string>
+        docs: The branch to use for README cloning. Defaults to the repository's default branch when omitted.
       publishInfo: optional<GithubPublishInfo>
   OutputMetadataAuthor:
     properties:

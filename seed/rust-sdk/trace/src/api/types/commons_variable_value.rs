@@ -25,11 +25,11 @@ pub enum VariableValue {
 
     MapValue {
         #[serde(flatten)]
-        data: MapValue,
+        data: Box<MapValue>,
     },
 
     ListValue {
-        value: Vec<VariableValue>,
+        value: Vec<Box<VariableValue>>,
     },
 
     BinaryTreeValue {

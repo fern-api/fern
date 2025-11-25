@@ -3,12 +3,15 @@ Pytest configuration for wire tests.
 
 This module manages the WireMock container lifecycle for integration tests.
 """
+
 import os
 import subprocess
 from typing import Any, Dict, Optional
 
 import pytest
 import requests
+
+from seed.client import SeedExhaustive
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -30,10 +33,7 @@ def wiremock_container():
     print("\nStarting WireMock container...")
     try:
         subprocess.run(
-            ["docker", "compose", "-f", compose_file, "up", "-d", "--wait"],
-            check=True,
-            capture_output=True,
-            text=True
+            ["docker", "compose", "-f", compose_file, "up", "-d", "--wait"], check=True, capture_output=True, text=True
         )
         print("WireMock container is ready")
     except subprocess.CalledProcessError as e:
@@ -45,10 +45,23 @@ def wiremock_container():
 
     # Cleanup: stop and remove the container
     print("\nStopping WireMock container...")
-    subprocess.run(
-        ["docker", "compose", "-f", compose_file, "down", "-v"],
-        check=False,
-        capture_output=True
+    subprocess.run(["docker", "compose", "-f", compose_file, "down", "-v"], check=False, capture_output=True)
+
+
+def get_client(test_id: str) -> SeedExhaustive:
+    """
+    Creates a configured client instance for wire tests.
+
+    Args:
+        test_id: Unique identifier for the test, used for request tracking.
+
+    Returns:
+        A configured client instance with all required auth parameters.
+    """
+    return SeedExhaustive(
+        base_url="http://localhost:8080",
+        headers={"X-Test-Id": test_id},
+        token="test_token",
     )
 
 
@@ -64,7 +77,7 @@ def verify_request_count(
     request_body: Dict[str, Any] = {
         "method": method,
         "urlPath": url_path,
-        "headers": {"X-Test-Id": {"equalTo": test_id}}
+        "headers": {"X-Test-Id": {"equalTo": test_id}},
     }
     if query_params:
         query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}

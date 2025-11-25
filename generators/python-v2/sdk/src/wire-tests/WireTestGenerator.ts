@@ -164,14 +164,9 @@ export class WireTestGenerator {
         // Create an empty code block
         const node = python.codeBlock("");
 
-        // Manually add references for "from X import Y" style imports
-        // Note: simple "import X" statements are added as raw code blocks separately
-        const clientModulePath = this.getClientModulePath();
-        const clientName = this.getClientClassName();
-        node.addReference(python.reference({ name: clientName, modulePath: clientModulePath }));
-
-        // Import verify_request_count from conftest (pytest makes conftest importable)
-        node.addReference(python.reference({ name: "verify_request_count", modulePath: ["conftest"] }));
+        // Import get_client and verify_request_count from .conftest (relative import within tests/wire package)
+        node.addReference(python.reference({ name: "get_client", modulePath: [".conftest"] }));
+        node.addReference(python.reference({ name: "verify_request_count", modulePath: [".conftest"] }));
 
         return node;
     }
@@ -191,7 +186,6 @@ export class WireTestGenerator {
             const testName = this.getTestFunctionName(serviceName, endpoint);
             const basePath = this.buildBasePath(endpoint);
             const queryParamsCode = this.buildQueryParamsCode(endpoint);
-            const clientName = this.getClientClassName();
 
             // Build deterministic test ID based on fully qualified path
             const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
@@ -201,12 +195,9 @@ export class WireTestGenerator {
             // Use deterministic test ID for concurrency safety
             statements.push(python.codeBlock(`test_id = "${testId}"`));
 
-            // Create client with test ID header for request tracking
-            statements.push(
-                python.codeBlock(
-                    `client = ${clientName}(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})`
-                )
-            );
+            // Create client using the get_client helper from conftest.py
+            // This ensures all required auth parameters are supplied with fake values
+            statements.push(python.codeBlock(`client = get_client(test_id)`));
 
             // Generate the API call
             const apiCall = this.generateApiCall(endpoint, example, service);
