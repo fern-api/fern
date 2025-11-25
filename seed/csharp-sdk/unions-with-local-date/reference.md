@@ -128,6 +128,87 @@ await client.Bigunion.UpdateManyAsync(
 </dl>
 </details>
 
+## Types
+<details><summary><code>client.Types.<a href="/src/SeedUnions/Types/TypesClient.cs">GetAsync</a>(id) -> UnionWithTime</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Types.GetAsync("date-example");
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Types.<a href="/src/SeedUnions/Types/TypesClient.cs">UpdateAsync</a>(UnionWithTime { ... }) -> bool</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```csharp
+await client.Types.UpdateAsync(new UnionWithTime(new UnionWithTime.Date(new DateOnly(1994, 1, 1))));
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `UnionWithTime` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Union
 <details><summary><code>client.Union.<a href="/src/SeedUnions/Union/UnionClient.cs">GetAsync</a>(id) -> Shape</code></summary>
 <dl>
