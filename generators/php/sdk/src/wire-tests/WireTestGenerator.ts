@@ -182,6 +182,9 @@ ${testMethods.join("\n\n")}
             const snippetResponse = this.dynamicSnippets.generateSync(snippetRequest);
             const snippet = snippetResponse.snippet;
 
+            // Extract use statements from the snippet and add them to imports
+            this.extractImportsFromSnippet(snippet, imports);
+
             // Extract the complete method call from the snippet (remove client instantiation if present)
             // The snippet typically looks like:
             // $client = new SeedClient();
@@ -240,6 +243,19 @@ ${indentedApiCall}
                 return trimmedLine.length === 0 ? "" : indent + trimmedLine;
             })
             .join("\n");
+    }
+
+    /**
+     * Extracts use statements from a snippet and adds them to the imports set.
+     * This ensures that any types used in the snippet are properly imported in the test file.
+     */
+    private extractImportsFromSnippet(snippet: string, imports: Set<string>): void {
+        for (const line of snippet.split("\n")) {
+            const trimmed = line.trim();
+            if (trimmed.startsWith("use ") && trimmed.endsWith(";")) {
+                imports.add(trimmed);
+            }
+        }
     }
 
     /**
