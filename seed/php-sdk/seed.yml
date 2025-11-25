@@ -25,6 +25,10 @@ language: php
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
+  exhaustive:
+    - outputFolder: no-custom-config
+      customConfig:
+        enable-wire-tests: true
   examples:
     - customConfig: null
       outputFolder: no-custom-config
