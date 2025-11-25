@@ -14,32 +14,64 @@ function isUrl(src: string): boolean {
 
 /**
  * Parses a lines parameter value and extracts the specified lines from content.
- * Supports formats like "1-10" (lines 1 through 10, 1-indexed).
+ * Supports formats:
+ * - Single number: "5" (line 5)
+ * - Range: "1-10" (lines 1 through 10, inclusive)
+ * - Comma-separated: "1,3,5" (lines 1, 3, and 5)
+ * - Mixed: "1-3,5,7-10" (lines 1-3, 5, and 7-10)
+ * All line numbers are 1-indexed.
  * @param content The full file content
- * @param linesParam The lines parameter value (e.g., "1-10")
+ * @param linesParam The lines parameter value
  * @returns The extracted lines as a string, or the original content if parsing fails
  */
 function extractLines(content: string, linesParam: string): string {
-    const lines = content.split("\n");
+    const allLines = content.split("\n");
+    const lineIndices = new Set<number>();
 
-    // Parse range format: "start-end" (1-indexed)
-    const rangeMatch = linesParam.match(/^(\d+)-(\d+)$/);
-    if (rangeMatch) {
-        const start = parseInt(rangeMatch[1] ?? "1", 10);
-        const end = parseInt(rangeMatch[2] ?? "1", 10);
-        // Convert from 1-indexed to 0-indexed
-        return lines.slice(start - 1, end).join("\n");
+    // Split by comma to handle comma-separated values
+    const parts = linesParam.split(",");
+
+    for (const part of parts) {
+        const trimmedPart = part.trim();
+
+        // Check for range format: "start-end"
+        const rangeMatch = trimmedPart.match(/^(\d+)-(\d+)$/);
+        if (rangeMatch) {
+            const start = parseInt(rangeMatch[1] ?? "1", 10);
+            const end = parseInt(rangeMatch[2] ?? "1", 10);
+            // Add all lines in the range (inclusive, 1-indexed)
+            for (let i = start; i <= end; i++) {
+                lineIndices.add(i - 1); // Convert to 0-indexed
+            }
+            continue;
+        }
+
+        // Check for single number format: "5"
+        const singleMatch = trimmedPart.match(/^(\d+)$/);
+        if (singleMatch) {
+            const lineNum = parseInt(singleMatch[1] ?? "1", 10);
+            lineIndices.add(lineNum - 1); // Convert to 0-indexed
+            continue;
+        }
+
+        // If any part doesn't match, return original content
+        if (trimmedPart !== "") {
+            return content;
+        }
     }
 
-    // Parse single line format: "5" (1-indexed)
-    const singleMatch = linesParam.match(/^(\d+)$/);
-    if (singleMatch) {
-        const lineNum = parseInt(singleMatch[1] ?? "1", 10);
-        return lines[lineNum - 1] ?? "";
+    // If no valid line indices were found, return original content
+    if (lineIndices.size === 0) {
+        return content;
     }
 
-    // If parsing fails, return original content
-    return content;
+    // Sort indices and extract lines in order
+    const sortedIndices = Array.from(lineIndices).sort((a, b) => a - b);
+    const extractedLines = sortedIndices
+        .filter((idx) => idx >= 0 && idx < allLines.length)
+        .map((idx) => allLines[idx] ?? "");
+
+    return extractedLines.join("\n");
 }
 
 // TODO: add a newline before and after the code block if inline to improve markdown parsing. i.e. <CodeGroup> <Code src="" /> </CodeGroup>
