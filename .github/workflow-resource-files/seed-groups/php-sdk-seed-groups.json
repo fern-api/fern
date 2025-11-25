@@ -152,8 +152,7 @@
         "error-property",
         "no-environment",
         "streaming",
-        "folders",
-        "exhaustive"
+        "folders"
       ],
       "groupTotalTimeSeconds": 813
     }
