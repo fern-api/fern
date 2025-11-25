@@ -31,7 +31,6 @@ function unwrapOptionalFromListItems(typeReference: FernIr.dynamic.TypeReference
     if (typeReference.type === "optional" && typeReference.value.type === "list") {
         const listType = typeReference.value;
         const itemType = listType.value;
-        // Only unwrap optional, not nullable - nullable items genuinely can be null
         if (itemType.type === "optional") {
             return {
                 type: "optional",
@@ -42,7 +41,6 @@ function unwrapOptionalFromListItems(typeReference: FernIr.dynamic.TypeReference
             };
         }
     }
-    // Handle list<optional<T>> -> list<T>
     if (typeReference.type === "list") {
         const itemType = typeReference.value;
         // Only unwrap optional, not nullable - nullable items genuinely can be null
