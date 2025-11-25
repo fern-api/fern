@@ -8,6 +8,7 @@ import {
     ContainerType,
     HttpHeader,
     Literal,
+    OAuthScheme,
     PrimitiveTypeV1,
     Subpackage,
     TypeReference
@@ -283,6 +284,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     }
                 }
 
+                const oauth = this.context.getOauth();
+                if (oauth != null && oauth.configuration.type === "clientCredentials") {
+                    this.writeOAuthTokenRetrieval(writer, oauth);
+                }
+
                 writer.write("$defaultHeaders = ");
                 writer.writeNodeStatement(headers);
                 for (const param of constructorParameters.optional) {
@@ -305,6 +311,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         writer.endControlFlow();
                     }
                 }
+
+                const oauthScheme = this.context.getOauth();
+                if (oauthScheme != null && oauthScheme.configuration.type === "clientCredentials") {
+                    writer.writeLine("$defaultHeaders['Authorization'] = \"Bearer $token\";");
+                }
+
                 writer.writeLine();
 
                 writer.writeNodeStatement(
@@ -535,10 +547,39 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 ];
             }
             case "oauth": {
-                // Fallback to the default bearer token scheme if the user hasn't already configured it.
+                // If there's already a bearer scheme, skip OAuth parameters
                 if (this.context.ir.auth.schemes.some((s) => s.type === "bearer")) {
                     return [];
                 }
+                const oauthConfig = scheme.configuration;
+                if (oauthConfig.type === "clientCredentials") {
+                    const clientCredentials = oauthConfig.value;
+                    return [
+                        {
+                            name: "clientId",
+                            docs: "The client ID for OAuth authentication.",
+                            isOptional,
+                            typeReference: this.getAuthParameterTypeReference({
+                                typeReference: STRING_TYPE_REFERENCE,
+                                envVar: clientCredentials.clientIdEnvVar,
+                                isOptional
+                            }),
+                            environmentVariable: clientCredentials.clientIdEnvVar
+                        },
+                        {
+                            name: "clientSecret",
+                            docs: "The client secret for OAuth authentication.",
+                            isOptional,
+                            typeReference: this.getAuthParameterTypeReference({
+                                typeReference: STRING_TYPE_REFERENCE,
+                                envVar: clientCredentials.clientSecretEnvVar,
+                                isOptional
+                            }),
+                            environmentVariable: clientCredentials.clientSecretEnvVar
+                        }
+                    ];
+                }
+                // Fallback to the default bearer token scheme for other OAuth types
                 const name = "token";
                 return [
                     {
@@ -618,6 +659,48 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 return this.context.getSubpackageOrThrow(subpackageId);
             })
             .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
+    }
+
+    private writeOAuthTokenRetrieval(writer: php.Writer, oauth: OAuthScheme): void {
+        const tokenEndpointReference = oauth.configuration.tokenEndpoint.endpointReference;
+        const subpackageId = tokenEndpointReference.subpackageId;
+
+        let authClientClassName: string;
+        let authClientNamespace: string;
+
+        if (subpackageId != null) {
+            const subpackage = this.context.getSubpackageOrThrow(subpackageId);
+            authClientClassName = this.context.getSubpackageClientClassName(subpackage);
+            authClientNamespace = this.context.getLocationForSubpackage(subpackage).namespace;
+        } else {
+            authClientClassName = this.context.getRootClientClassName();
+            authClientNamespace = this.context.getRootNamespace();
+        }
+
+        const authClientClassReference = php.classReference({
+            name: authClientClassName,
+            namespace: authClientNamespace
+        });
+
+        const oauthTokenProviderClassReference = php.classReference({
+            name: "OAuthTokenProvider",
+            namespace: this.context.getCoreNamespace()
+        });
+
+        writer.writeLine("$authRawClient = new ");
+        writer.writeNode(this.context.rawClient.getClassReference());
+        writer.writeLine("(options: $options ?? []);");
+
+        writer.write("$authClient = new ");
+        writer.writeNode(authClientClassReference);
+        writer.writeLine("($authRawClient, $options ?? []);");
+
+        writer.write("$oauthTokenProvider = new ");
+        writer.writeNode(oauthTokenProviderClassReference);
+        writer.writeLine("($clientId, $clientSecret, $authClient);");
+
+        writer.writeLine("$token = $oauthTokenProvider->getToken();");
+        writer.writeLine();
     }
 
     private newRootClientFile(class_: php.Class): PhpFile {

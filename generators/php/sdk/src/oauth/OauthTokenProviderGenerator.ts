@@ -72,17 +72,14 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
 
         return new PhpFile({
             clazz: class_,
-            directory: RelativeFilePath.of("src/Core"),
+            directory: RelativeFilePath.of("Core"),
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
         });
     }
 
     protected getFilepath(): RelativeFilePath {
-        return join(
-            RelativeFilePath.of("src/Core"),
-            RelativeFilePath.of(`${OauthTokenProviderGenerator.CLASS_NAME}.php`)
-        );
+        return join(RelativeFilePath.of("Core"), RelativeFilePath.of(`${OauthTokenProviderGenerator.CLASS_NAME}.php`));
     }
 
     private addFields(class_: php.Class): void {
