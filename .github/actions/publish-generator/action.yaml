@@ -100,6 +100,7 @@ runs:
         aws-region: "us-east-1"
     
     - name: Upload to ECR for scanning
+      shell: bash
       run: |-
         aws sts get-caller-identity
         docker image ls
