@@ -44,7 +44,15 @@ export class EndpointSnippetGenerator {
         });
     }
 
-    public async generateSnippetAst({ endpoint, request, options }: { endpoint: FernIr.dynamic.Endpoint; request: FernIr.dynamic.EndpointSnippetRequest; options?: Options; }): Promise<ruby.AstNode> {
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<ruby.AstNode> {
         return this.buildCodeBlock({ endpoint, snippet: request });
     }
 

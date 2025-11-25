@@ -51,7 +51,15 @@ export class EndpointSnippetGenerator extends WithGeneration {
         });
     }
 
-    public async generateSnippetAst({ endpoint, request, options }: { endpoint: FernIr.dynamic.Endpoint; request: FernIr.dynamic.EndpointSnippetRequest; options?: Options; }): Promise<ast.AstNode> {
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<ast.AstNode> {
         throw new Error("Unsupported");
     }
 

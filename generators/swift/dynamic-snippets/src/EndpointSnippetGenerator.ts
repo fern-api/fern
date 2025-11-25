@@ -38,7 +38,15 @@ export class EndpointSnippetGenerator {
         return this.buildCodeBlock({ endpoint, snippetRequest: request, options });
     }
 
-    public async generateSnippetAst({ endpoint, request, options }: { endpoint: FernIr.dynamic.Endpoint; request: FernIr.dynamic.EndpointSnippetRequest; options?: Options; }): Promise<AbstractAstNode> {
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<AbstractAstNode> {
         throw new Error("Unsupported");
     }
 

@@ -3,12 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets";
-import {
-    dynamic,
-    HttpEndpoint,
-    HttpService,
-    IntermediateRepresentation
-} from "@fern-fern/ir-sdk/api";
+import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
@@ -113,7 +108,6 @@ export class WireTestGenerator {
                 customConfig: this.context.customConfig
             })
         };
-
     }
 
     private getTestClassName(serviceName: string): string {
@@ -137,7 +131,7 @@ export class WireTestGenerator {
         const class_ = php.class_({
             name: testClassName,
             namespace: this.context.getTestsNamespace(),
-            parentClassReference: php.classReference({ namespace: "PHPUnit\\Framework", name: "TestCase" }),
+            parentClassReference: php.classReference({ namespace: "PHPUnit\\Framework", name: "TestCase" })
         });
 
         for (const { endpoint, example, service, exampleIndex } of testCases) {
@@ -145,7 +139,7 @@ export class WireTestGenerator {
                 endpoint,
                 example,
                 service,
-                exampleIndex,
+                exampleIndex
             });
             if (testMethod) {
                 class_.addMethod(testMethod);
@@ -158,7 +152,7 @@ export class WireTestGenerator {
         endpoint,
         example,
         service,
-        exampleIndex,
+        exampleIndex
     }: {
         endpoint: HttpEndpoint;
         example: dynamic.EndpointExample;
@@ -169,11 +163,7 @@ export class WireTestGenerator {
             const testName = this.getTestMethodName(endpoint);
             const basePath = this.buildBasePath(endpoint);
             const queryParamsCode = this.buildQueryParamsCode(endpoint);
-            const testId = this.buildDeterministicTestId(
-                service,
-                endpoint,
-                exampleIndex
-            );
+            const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
 
             // Generate the API call using dynamic snippets generator
             const snippetRequest = convertDynamicEndpointSnippetRequest({
@@ -225,11 +215,7 @@ export class WireTestGenerator {
         return `test${endpointName.charAt(0).toUpperCase()}${endpointName.slice(1)}`;
     }
 
-    private buildDeterministicTestId(
-        service: HttpService,
-        endpoint: HttpEndpoint,
-        exampleIndex: number
-    ): string {
+    private buildDeterministicTestId(service: HttpService, endpoint: HttpEndpoint, exampleIndex: number): string {
         const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
         const endpointName = endpoint.name.snakeCase.safeName;
 
@@ -289,9 +275,7 @@ export class WireTestGenerator {
 
         for (const [key, value] of Object.entries(queryParams)) {
             if (value !== null && value !== undefined) {
-                entries.push(
-                    `'${this.escapeStringForPhp(key)}' => '${this.escapeStringForPhp(String(value))}'`
-                );
+                entries.push(`'${this.escapeStringForPhp(key)}' => '${this.escapeStringForPhp(String(value))}'`);
             }
         }
 
@@ -302,10 +286,7 @@ export class WireTestGenerator {
         return `[${entries.join(", ")}]`;
     }
 
-    private wiremockMappingKey(
-        requestMethod: string,
-        requestUrlPathTemplate: string
-    ): string {
+    private wiremockMappingKey(requestMethod: string, requestUrlPathTemplate: string): string {
         return `${requestMethod} - ${requestUrlPathTemplate}`;
     }
 
@@ -313,10 +294,7 @@ export class WireTestGenerator {
         const out: Record<string, WireMockMapping> = {};
         const wiremockStubMapping = WireTestSetupGenerator.getWiremockConfigContent(this.context.ir);
         for (const mapping of wiremockStubMapping.mappings) {
-            const key = this.wiremockMappingKey(
-                mapping.request.method,
-                mapping.request.urlPathTemplate
-            );
+            const key = this.wiremockMappingKey(mapping.request.method, mapping.request.urlPathTemplate);
             out[key] = mapping;
         }
         return out;
@@ -331,10 +309,7 @@ export class WireTestGenerator {
             basePath = "/" + basePath;
         }
 
-        const mappingKey = this.wiremockMappingKey(
-            endpoint.method,
-            basePath
-        );
+        const mappingKey = this.wiremockMappingKey(endpoint.method, basePath);
 
         const wiremockMapping = this.wireMockConfigContent[mappingKey];
         if (wiremockMapping && wiremockMapping.request.pathParameters) {

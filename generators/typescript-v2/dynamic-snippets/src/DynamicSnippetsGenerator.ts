@@ -1,4 +1,8 @@
-import { AbstractAstNode, AbstractDynamicSnippetsGenerator, FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import {
+    AbstractAstNode,
+    AbstractDynamicSnippetsGenerator,
+    FernGeneratorExec
+} from "@fern-api/browser-compatible-base-generator";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { EndpointSnippetGenerator } from "./EndpointSnippetGenerator";

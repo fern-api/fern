@@ -53,7 +53,13 @@ export class EndpointSnippetGenerator {
         );
     }
 
-    public async generateSnippetAst({ endpoint, request }: { endpoint: FernIr.dynamic.Endpoint; request: FernIr.dynamic.EndpointSnippetRequest; }): Promise<AbstractAstNode> {
+    public async generateSnippetAst({
+        endpoint,
+        request
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+    }): Promise<AbstractAstNode> {
         return this.buildCodeBlock({ endpoint, snippet: request });
     }
 

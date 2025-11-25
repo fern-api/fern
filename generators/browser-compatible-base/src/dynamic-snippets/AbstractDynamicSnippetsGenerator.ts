@@ -66,7 +66,9 @@ export abstract class AbstractDynamicSnippetsGenerator<
         if (lastError != null) {
             throw lastError;
         }
-        throw new Error(`Failed to generate snippet AST for endpoint: ${request.endpoint.method} ${request.endpoint.path}`);
+        throw new Error(
+            `Failed to generate snippet AST for endpoint: ${request.endpoint.method} ${request.endpoint.path}`
+        );
     }
 
     public generateSync(
