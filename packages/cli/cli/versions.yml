@@ -1,6 +1,40 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support per-generator auth overrides in generators.yml.
+        In the following example the TypeScript SDK generator will use Basic auth while the rest of the APIs use OAuth.
+
+        ```yml
+        # generators.yml
+        auth-schemes:
+          OAuth:
+            scheme: oauth
+            type: client-credentials
+            get-token:
+              endpoint: POST /authorize
+          Basic:
+            scheme: basic
+
+        api:
+          auth: OAuth
+          specs:
+            - openapi: openapi.yml
+
+        groups:
+          ts-sdk:
+            generators:
+              - name: fernapi/fern-typescript-sdk
+                version: 3.33.0
+                api:
+                  auth: Basic
+        ```
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.7.0
+
+- changelogEntry:
+    - summary: |
         Support generating examples for `x-fern-type: literal<...>` values in OpenAPI specs. Parameters with literal type annotations now generate examples using the underlying literal value.
       type: fix
   irVersion: 62
