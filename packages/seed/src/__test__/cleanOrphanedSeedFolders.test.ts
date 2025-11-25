@@ -61,7 +61,7 @@ describe("cleanOrphanedSeedFolders", () => {
                 test: {} as never,
                 publish: {} as never,
                 defaultOutputMode: "github",
-                generatorType: "sdk"
+                generatorType: "SDK"
             }
         };
 
@@ -95,7 +95,7 @@ describe("cleanOrphanedSeedFolders", () => {
                 test: {} as never,
                 publish: {} as never,
                 defaultOutputMode: "github",
-                generatorType: "sdk"
+                generatorType: "SDK"
             }
         };
 
@@ -133,7 +133,7 @@ describe("cleanOrphanedSeedFolders", () => {
                 test: {} as never,
                 publish: {} as never,
                 defaultOutputMode: "github",
-                generatorType: "sdk"
+                generatorType: "SDK"
             }
         };
 
@@ -169,7 +169,7 @@ describe("cleanOrphanedSeedFolders", () => {
                 test: {} as never,
                 publish: {} as never,
                 defaultOutputMode: "github",
-                generatorType: "sdk"
+                generatorType: "SDK"
             }
         };
 
@@ -220,7 +220,7 @@ describe("findOrphanedSeedFolders", () => {
                 test: {} as never,
                 publish: {} as never,
                 defaultOutputMode: "github",
-                generatorType: "sdk"
+                generatorType: "SDK"
             }
         };
 
@@ -266,7 +266,7 @@ describe("findOrphanedSeedFolders", () => {
                 test: {} as never,
                 publish: {} as never,
                 defaultOutputMode: "github",
-                generatorType: "sdk",
+                generatorType: "SDK",
                 fixtures: {
                     exhaustive: [{ outputFolder: "no-custom-config" }, { outputFolder: "inline-path-params" }]
                 }
@@ -313,7 +313,7 @@ describe("findOrphanedSeedFolders", () => {
                 test: {} as never,
                 publish: {} as never,
                 defaultOutputMode: "github",
-                generatorType: "sdk"
+                generatorType: "SDK"
             }
         };
 
@@ -354,7 +354,7 @@ describe("findOrphanedSeedFolders", () => {
                 test: {} as never,
                 publish: {} as never,
                 defaultOutputMode: "github",
-                generatorType: "sdk"
+                generatorType: "SDK"
             }
         };
 
