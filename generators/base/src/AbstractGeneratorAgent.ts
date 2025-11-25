@@ -139,17 +139,10 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
         try {
             const githubConfig = this.getGitHubConfig({ context });
             if (githubConfig.uri != null && githubConfig.token != null) {
-                const remote = FernGeneratorCli.Remote.github({
+                return FernGeneratorCli.Remote.github({
                     repoUrl: this.normalizeRepoUrl(githubConfig.uri),
                     installationToken: githubConfig.token
                 });
-                // Add branch to the remote object for the CLI to use when cloning the README.
-                // The branch field is supported by the CLI SDK but not yet by the published
-                // @fern-fern/generator-cli-sdk package, so we add it manually here.
-                if (githubConfig.branch != null) {
-                    (remote as unknown as Record<string, unknown>).branch = githubConfig.branch;
-                }
-                return remote;
             }
         } catch (error) {
             return undefined;
