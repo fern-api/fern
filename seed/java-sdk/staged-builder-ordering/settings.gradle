@@ -1,0 +1,3 @@
+rootProject.name = 'staged-builder-ordering'
+
+include 'sample-app'

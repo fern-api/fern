@@ -1,7 +1,9 @@
 import {
     AbstractDynamicSnippetsGeneratorContext,
     FernGeneratorExec,
-    Options
+    Options,
+    Severity,
+    TypeInstance
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
@@ -277,6 +279,53 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         required.sort((a, b) => (indexMap.get(a.name.wireValue) ?? 0) - (indexMap.get(b.name.wireValue) ?? 0));
 
         return [...required, ...optional];
+    }
+
+    /**
+     * Override to preserve parameter order for Java staged builders.
+     *
+     * Java uses type-state staged builders where method call order is enforced at compile time.
+     * Unlike Python/TypeScript/Go which use keyword arguments or object literals (order-independent),
+     * Java requires fields to be set in the exact order they appear in the schema definition.
+     *
+     * This override ensures we iterate over parameters (schema order) instead of values (example order).
+     */
+    public override associateByWireValue({
+        parameters,
+        values,
+        ignoreMissingParameters
+    }: {
+        parameters: FernIr.dynamic.NamedParameter[];
+        values: FernIr.dynamic.Values;
+        ignoreMissingParameters?: boolean;
+    }): TypeInstance[] {
+        const instances: TypeInstance[] = [];
+
+        // Iterate over parameters (schema order) instead of values (example order)
+        for (const parameter of parameters) {
+            this.errors.scope(parameter.name.wireValue);
+            try {
+                const value = values[parameter.name.wireValue];
+                if (value === undefined) {
+                    if (!ignoreMissingParameters) {
+                        this.errors.add({
+                            severity: Severity.Critical,
+                            message: this.newParameterNotRecognizedError(parameter.name.wireValue).message
+                        });
+                    }
+                    continue;
+                }
+                instances.push({
+                    name: parameter.name,
+                    typeReference: parameter.typeReference,
+                    value
+                });
+            } finally {
+                this.errors.unscope();
+            }
+        }
+
+        return instances;
     }
 
     public getRootPackageName(): string {
