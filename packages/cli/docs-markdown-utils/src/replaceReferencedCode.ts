@@ -12,6 +12,36 @@ function isUrl(src: string): boolean {
     return src.startsWith("http://") || src.startsWith("https://");
 }
 
+/**
+ * Parses a lines parameter value and extracts the specified lines from content.
+ * Supports formats like "1-10" (lines 1 through 10, 1-indexed).
+ * @param content The full file content
+ * @param linesParam The lines parameter value (e.g., "1-10")
+ * @returns The extracted lines as a string, or the original content if parsing fails
+ */
+function extractLines(content: string, linesParam: string): string {
+    const lines = content.split("\n");
+
+    // Parse range format: "start-end" (1-indexed)
+    const rangeMatch = linesParam.match(/^(\d+)-(\d+)$/);
+    if (rangeMatch) {
+        const start = parseInt(rangeMatch[1] ?? "1", 10);
+        const end = parseInt(rangeMatch[2] ?? "1", 10);
+        // Convert from 1-indexed to 0-indexed
+        return lines.slice(start - 1, end).join("\n");
+    }
+
+    // Parse single line format: "5" (1-indexed)
+    const singleMatch = linesParam.match(/^(\d+)$/);
+    if (singleMatch) {
+        const lineNum = parseInt(singleMatch[1] ?? "1", 10);
+        return lines[lineNum - 1] ?? "";
+    }
+
+    // If parsing fails, return original content
+    return content;
+}
+
 // TODO: add a newline before and after the code block if inline to improve markdown parsing. i.e. <CodeGroup> <Code src="" /> </CodeGroup>
 export async function replaceReferencedCode({
     markdown,
@@ -123,6 +153,13 @@ export async function replaceReferencedCode({
             if (titleProp) {
                 title = titleProp.value;
                 allProps.delete("title");
+            }
+
+            // Handle lines parameter - extract specific lines from the content
+            const linesProp = allProps.get("lines");
+            if (linesProp) {
+                replacement = extractLines(replacement, linesProp.value);
+                allProps.delete("lines");
             }
 
             // Build metastring
