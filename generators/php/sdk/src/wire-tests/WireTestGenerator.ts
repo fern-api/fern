@@ -198,6 +198,9 @@ ${testMethods.join("\n\n")}
                 return null;
             }
 
+            // Indent the extracted snippet to match the test method's indentation (8 spaces)
+            const indentedApiCall = this.indentSnippet(apiCallSnippet, "        ");
+
             return `    public function ${testName}(): void
     {
         $testId = "${testId}";
@@ -208,7 +211,7 @@ ${testMethods.join("\n\n")}
             ]
         );
 
-        ${apiCallSnippet}
+${indentedApiCall}
 
         $this->verifyRequestCount(
             $testId,
@@ -222,6 +225,21 @@ ${testMethods.join("\n\n")}
             this.context.logger.warn(`Failed to generate test method for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Indents each line of a snippet with the specified indentation.
+     * Empty lines are preserved without indentation.
+     */
+    private indentSnippet(snippet: string, indent: string): string {
+        return snippet
+            .split("\n")
+            .map((line) => {
+                // Strip any existing leading whitespace and apply consistent indentation
+                const trimmedLine = line.trimStart();
+                return trimmedLine.length === 0 ? "" : indent + trimmedLine;
+            })
+            .join("\n");
     }
 
     /**
@@ -277,6 +295,43 @@ ${testMethods.join("\n\n")}
         // If we never found balanced parentheses, return null
         if (parenDepth !== 0) {
             return null;
+        }
+
+        // Check if there's any real argument content between '(' and ')'
+        // This handles cases where the snippet has empty or invalid arguments (e.g., just a comma)
+        let hasArgumentContent = false;
+        for (let i = 0; i < callLines.length; i++) {
+            const trimmed = callLines[i]?.trim() ?? "";
+
+            // Skip the method line itself (first line)
+            if (i === 0) {
+                continue;
+            }
+
+            // Skip closing parenthesis lines and empty lines
+            if (trimmed === ");" || trimmed === ")" || trimmed === "") {
+                continue;
+            }
+
+            // If the only thing on the line is a comma, treat as "no content"
+            if (trimmed === ",") {
+                continue;
+            }
+
+            // Anything else counts as real argument content
+            hasArgumentContent = true;
+            break;
+        }
+
+        // If no real argument content, rebuild as a call with no arguments
+        if (!hasArgumentContent) {
+            const firstLine = callLines[0];
+            if (firstLine == null) {
+                return null;
+            }
+            // Replace everything from '(' onwards with '();'
+            const noArgsCall = firstLine.replace(/\(.*/, "();");
+            return noArgsCall.trim();
         }
 
         // Join the lines and return, preserving the original formatting
