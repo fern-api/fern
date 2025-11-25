@@ -1,3 +1,13 @@
+//! Request and response types for the Literal
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 5 types for API operations
+//! - **Model Types**: 10 types for data representation
+
 pub mod send_response;
 pub mod inlined_some_aliased_literal;
 pub mod inlined_a_top_level_literal;

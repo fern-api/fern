@@ -6,6 +6,7 @@
 //! ## Modules
 //!
 //! - [`resources`] - Service clients and endpoints
+//! - [`types`] - Request, response, and model types
 
 pub mod resources;
 pub mod types;

@@ -14,6 +14,12 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
 /**
+ * Reserved method names that are allowed to use their unsafe (original) names.
+ * This matches the Python generator's ALLOWED_RESERVED_METHOD_NAMES.
+ */
+const ALLOWED_RESERVED_METHOD_NAMES = ["list", "set"];
+
+/**
  * Generates WireMock-based integration tests for Python SDK.
  *
  * This is a skeleton implementation that sets up the infrastructure for wire tests
@@ -299,7 +305,7 @@ export class WireTestGenerator {
     // =============================================================================
 
     private generateApiCall(endpoint: HttpEndpoint, example: dynamic.EndpointExample, service: HttpService): string {
-        const methodName = endpoint.name.snakeCase.safeName;
+        const methodName = this.getEndpointName(endpoint);
 
         // Build path parameters
         const pathParams = this.buildPathParameters(endpoint, example);
@@ -510,9 +516,22 @@ export class WireTestGenerator {
         });
     }
 
+    /**
+     * Escapes a string for use in Python code.
+     * Handles newlines, tabs, carriage returns, backslashes, and quotes.
+     */
+    private escapeStringForPython(value: string): string {
+        return value
+            .replace(/\\/g, "\\\\") // Escape backslashes first
+            .replace(/\n/g, "\\n") // Escape newlines
+            .replace(/\r/g, "\\r") // Escape carriage returns
+            .replace(/\t/g, "\\t") // Escape tabs
+            .replace(/"/g, '\\"'); // Escape double quotes
+    }
+
     private formatValue(value: unknown): string {
         if (typeof value === "string") {
-            return `"${value}"`;
+            return `"${this.escapeStringForPython(value)}"`;
         }
         if (typeof value === "number") {
             return String(value);
@@ -540,7 +559,7 @@ export class WireTestGenerator {
             return value ? "True" : "False";
         }
         if (typeof value === "string") {
-            return `"${value}"`;
+            return `"${this.escapeStringForPython(value)}"`;
         }
         if (typeof value === "number") {
             return String(value);
@@ -550,7 +569,9 @@ export class WireTestGenerator {
             return `[${items.join(",")}]`;
         }
         if (typeof value === "object") {
-            const entries = Object.entries(value).map(([key, val]) => `"${key}":${this.jsonToPython(val)}`);
+            const entries = Object.entries(value).map(
+                ([key, val]) => `"${this.escapeStringForPython(key)}":${this.jsonToPython(val)}`
+            );
             return `{${entries.join(",")}}`;
         }
         return JSON.stringify(value);
@@ -571,7 +592,7 @@ export class WireTestGenerator {
 
         for (const [key, value] of Object.entries(queryParams)) {
             if (value != null) {
-                entries.push(`"${key}": "${String(value)}"`);
+                entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(String(value))}"`);
             }
         }
 
@@ -589,6 +610,18 @@ export class WireTestGenerator {
     private getTestFunctionName(serviceName: string, endpoint: HttpEndpoint): string {
         const endpointName = endpoint.name.snakeCase.safeName;
         return `test_${serviceName}_${endpointName}`;
+    }
+
+    /**
+     * Gets the endpoint method name, matching the Python generator's get_endpoint_name logic.
+     * If the endpoint's original name (lowercased) is in ALLOWED_RESERVED_METHOD_NAMES,
+     * use the unsafe name; otherwise use the safe name.
+     */
+    private getEndpointName(endpoint: HttpEndpoint): string {
+        if (ALLOWED_RESERVED_METHOD_NAMES.includes(endpoint.name.originalName.toLowerCase())) {
+            return endpoint.name.snakeCase.unsafeName;
+        }
+        return endpoint.name.snakeCase.safeName;
     }
 
     private getClientModulePath(): string[] {

@@ -1,3 +1,13 @@
+//! Request and response types for the RequestParameters
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 2 types for API operations
+//! - **Model Types**: 4 types for data representation
+
 pub mod user_user;
 pub mod user_nested_user;
 pub mod user_create_username_body;

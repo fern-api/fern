@@ -5,7 +5,6 @@ package com.seed.nullableOptional.resources.nullableoptional.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -116,7 +115,8 @@ public final class UserProfile {
         return username;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableString")
     public OptionalNullable<String> getNullableString() {
         if (nullableString == null) {
             return OptionalNullable.absent();
@@ -124,7 +124,8 @@ public final class UserProfile {
         return nullableString;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableInteger")
     public OptionalNullable<Integer> getNullableInteger() {
         if (nullableInteger == null) {
             return OptionalNullable.absent();
@@ -132,7 +133,8 @@ public final class UserProfile {
         return nullableInteger;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableBoolean")
     public OptionalNullable<Boolean> getNullableBoolean() {
         if (nullableBoolean == null) {
             return OptionalNullable.absent();
@@ -140,7 +142,8 @@ public final class UserProfile {
         return nullableBoolean;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableDate")
     public OptionalNullable<OffsetDateTime> getNullableDate() {
         if (nullableDate == null) {
             return OptionalNullable.absent();
@@ -148,7 +151,8 @@ public final class UserProfile {
         return nullableDate;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableObject")
     public OptionalNullable<Address> getNullableObject() {
         if (nullableObject == null) {
             return OptionalNullable.absent();
@@ -156,7 +160,8 @@ public final class UserProfile {
         return nullableObject;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableList")
     public OptionalNullable<List<String>> getNullableList() {
         if (nullableList == null) {
             return OptionalNullable.absent();
@@ -164,7 +169,8 @@ public final class UserProfile {
         return nullableList;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableMap")
     public OptionalNullable<Map<String, String>> getNullableMap() {
         if (nullableMap == null) {
             return OptionalNullable.absent();
@@ -207,7 +213,8 @@ public final class UserProfile {
         return optionalMap;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("optionalNullableString")
     public OptionalNullable<String> getOptionalNullableString() {
         if (optionalNullableString == null) {
             return OptionalNullable.absent();
@@ -215,7 +222,8 @@ public final class UserProfile {
         return optionalNullableString;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("optionalNullableObject")
     public OptionalNullable<Address> getOptionalNullableObject() {
         if (optionalNullableObject == null) {
             return OptionalNullable.absent();
