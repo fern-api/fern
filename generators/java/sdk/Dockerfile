@@ -20,6 +20,9 @@ COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s ../lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm \
     && ln -s ../lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
+# Update npm to fix CVE-2025-64756 (glob vulnerability)
+RUN npm install -g npm@latest
+
 # Copy Node CLI from first stage and rename it /bin/java-v2
 COPY --from=node /dist/cli.cjs /bin/java-v2
 COPY --from=node /assets/features.yml /assets/features.yml
