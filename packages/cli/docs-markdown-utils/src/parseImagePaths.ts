@@ -135,9 +135,15 @@ function resolvePath(
         return undefined;
     }
 
+    // For absolute paths (Unix: /path or Windows: C:\path), resolve from Fern folder
+    // For relative paths, resolve from the markdown file's directory
+    const isAbsolutePath = isAbsolute(pathToImage);
+    const basePath = isAbsolutePath ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile);
+    const relativePath = isAbsolutePath ? pathToImage.replace(/^[/\\]/, "").replace(/^[a-zA-Z]:[\\/]/, "") : pathToImage;
+
     const filepath = resolve(
-        pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-        RelativeFilePath.of(pathToImage.replace(/^\//, ""))
+        basePath,
+        RelativeFilePath.of(relativePath)
     );
 
     return filepath;

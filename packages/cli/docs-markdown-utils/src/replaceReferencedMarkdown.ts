@@ -2,6 +2,7 @@ import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/
 import { TaskContext } from "@fern-api/task-context";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
+import { isAbsolute } from "path";
 
 async function defaultMarkdownLoader(filepath: AbsoluteFilePath) {
     // strip frontmatter from the referenced markdown
@@ -43,9 +44,15 @@ export async function replaceReferencedMarkdown({
             throw new Error(`Failed to parse regex "${match}" in ${absolutePathToMarkdownFile}`);
         }
 
+        // For absolute paths (Unix: /path or Windows: C:\path), resolve from Fern folder
+        // For relative paths, resolve from the markdown file's directory
+        const isAbsolutePath = isAbsolute(src);
+        const basePath = isAbsolutePath ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile);
+        const relativePath = isAbsolutePath ? src.replace(/^[/\\]/, "").replace(/^[a-zA-Z]:[\\/]/, "") : src;
+
         const filepath = resolve(
-            src.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-            RelativeFilePath.of(src.replace(/^\//, ""))
+            basePath,
+            RelativeFilePath.of(relativePath)
         );
 
         try {

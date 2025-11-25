@@ -1,3 +1,4 @@
 export function isAbsolute(value: string): boolean {
-    return value.startsWith("/");
+    // Check for Unix absolute paths (/path) and Windows absolute paths (C:\path or C:/path)
+    return value.startsWith("/") || /^[a-zA-Z]:[\\/]/.test(value);
 }
