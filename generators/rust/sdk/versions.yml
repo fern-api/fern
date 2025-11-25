@@ -5,7 +5,7 @@
   changelogEntry:
     - type: chore
       summary: |
-        add circular reference detection and Box<T> wrapping for recursive types
+        add circular reference detection and Box wrapping for recursive types
   irVersion: 61
 
 - version: 0.13.1
