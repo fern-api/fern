@@ -132,13 +132,9 @@ export class WireTestGenerator {
 
         // Add raw imports that the AST doesn't support (simple "import X" statements)
         statements.push(python.codeBlock("import pytest"));
-        statements.push(python.codeBlock("import requests"));
 
         // Add an import registration statement (for "from X import Y" style imports)
         statements.push(this.createImportRegistration());
-
-        // Add helper function for verifying request count
-        statements.push(this.generateVerifyRequestCountFunction());
 
         // Add test functions for each endpoint
         for (const { endpoint, example, service, exampleIndex } of testCases) {
@@ -170,73 +166,12 @@ export class WireTestGenerator {
 
         // Manually add references for "from X import Y" style imports
         // Note: simple "import X" statements are added as raw code blocks separately
-        node.addReference(python.reference({ name: "Optional", modulePath: ["typing"] }));
-        node.addReference(python.reference({ name: "Dict", modulePath: ["typing"] }));
-        node.addReference(python.reference({ name: "Any", modulePath: ["typing"] }));
-
+        // Note: verify_request_count is imported from conftest.py automatically by pytest
         const clientModulePath = this.getClientModulePath();
         const clientName = this.getClientClassName();
         node.addReference(python.reference({ name: clientName, modulePath: clientModulePath }));
 
         return node;
-    }
-
-    // =============================================================================
-    // HELPER FUNCTION GENERATION
-    // =============================================================================
-
-    private generateVerifyRequestCountFunction(): python.Method {
-        const params = [
-            python.parameter({
-                name: "test_id",
-                type: python.Type.str()
-            }),
-            python.parameter({
-                name: "method",
-                type: python.Type.str()
-            }),
-            python.parameter({
-                name: "url_path",
-                type: python.Type.str()
-            }),
-            python.parameter({
-                name: "query_params",
-                type: python.Type.optional(python.Type.dict(python.Type.str(), python.Type.str()))
-            }),
-            python.parameter({
-                name: "expected",
-                type: python.Type.int()
-            })
-        ];
-
-        const statements = [
-            python.codeBlock(`wiremock_admin_url = "http://localhost:8080/__admin"`),
-            python.codeBlock(`request_body: Dict[str, Any] = {
-        "method": method,
-        "urlPath": url_path,
-        "headers": {"X-Test-Id": {"equalTo": test_id}}
-    }`),
-            python.codeBlock(`if query_params:
-        query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}
-        request_body["queryParameters"] = query_parameters`),
-            python.codeBlock(`response = requests.post(f"{wiremock_admin_url}/requests/find", json=request_body)`),
-            python.codeBlock(`assert response.status_code == 200, "Failed to query WireMock requests"`),
-            python.codeBlock(`result = response.json()`),
-            python.codeBlock(`requests_found = len(result.get("requests", []))`),
-            python.codeBlock(
-                `assert requests_found == expected, f"Expected {expected} requests, found {requests_found}"`
-            )
-        ];
-
-        const method = python.method({
-            name: "verify_request_count",
-            parameters: params,
-            return_: python.Type.none(),
-            docstring: "Verifies the number of requests made to WireMock filtered by test ID for concurrency safety"
-        });
-
-        statements.forEach((stmt) => method.addStatement(stmt));
-        return method;
     }
 
     // =============================================================================
