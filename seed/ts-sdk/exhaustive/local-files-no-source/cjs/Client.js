@@ -10,7 +10,7 @@ const Client_js_5 = require("./api/resources/reqWithHeaders/client/Client.js");
 const BaseClient_js_1 = require("./BaseClient.js");
 class SeedExhaustiveClient {
     constructor(options) {
-        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
+        this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
     }
     get endpoints() {
         var _a;

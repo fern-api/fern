@@ -14,6 +14,7 @@ export const GithubOutputMode: core.serialization.ObjectSchema<
     version: core.serialization.string(),
     repoUrl: core.serialization.string(),
     installationToken: core.serialization.string().optional(),
+    branch: core.serialization.string().optional(),
     publishInfo: GithubPublishInfo.optional(),
 });
 
@@ -22,6 +23,7 @@ export declare namespace GithubOutputMode {
         version: string;
         repoUrl: string;
         installationToken?: string | null;
+        branch?: string | null;
         publishInfo?: GithubPublishInfo.Raw | null;
     }
 }

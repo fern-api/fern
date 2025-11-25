@@ -6,6 +6,14 @@
   irVersion: 62
   createdAt: "2025-11-25"
   version: 2.7.0
+  
+  - changelogEntry:
+    - summary: |
+        Fix docs broken-links validator incorrectly flagging external URLs that contain the docs domain in query parameters.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.6.1
 
 - changelogEntry:
     - summary: |

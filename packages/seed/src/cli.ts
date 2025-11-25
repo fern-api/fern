@@ -6,6 +6,7 @@ import { writeFile } from "fs/promises";
 import { minimatch } from "minimatch";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+import { cleanOrphanedSeedFolders } from "./commands/clean";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
 import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
@@ -48,6 +49,7 @@ export async function tryRunCli(): Promise<void> {
     addRunCommand(cli);
     addImgCommand(cli);
     addGetAvailableFixturesCommand(cli);
+    addCleanCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
     addValidateCommands(cli);
@@ -566,6 +568,45 @@ function addGetAvailableFixturesCommand(cli: Argv) {
 
             // Note: HAVE to log the output for CI to pick it up
             console.log(JSON.stringify({ fixtures: availableFixtures }, null, 2));
+        }
+    );
+}
+
+function addCleanCommand(cli: Argv) {
+    cli.command(
+        "clean",
+        "Find and remove orphaned seed folders that no longer have corresponding test definitions",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    alias: "g",
+                    description: "The generators to clean (cleans all if not provided)"
+                })
+                .option("dry-run", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "List orphaned folders without deleting them"
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            if (argv.generator != null) {
+                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
+            }
+
+            const targetGenerators =
+                argv.generator != null
+                    ? generators.filter((g) => argv.generator?.includes(g.workspaceName))
+                    : generators;
+
+            const result = await cleanOrphanedSeedFolders(targetGenerators, argv.dryRun);
+
+            if (argv.dryRun && result.orphanedFolders.length > 0) {
+                process.exit(1);
+            }
         }
     );
 }

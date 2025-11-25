@@ -3,7 +3,7 @@
 import { Ec2Client } from "./api/resources/ec2/client/Client.js";
 import { S3Client } from "./api/resources/s3/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedMultiUrlEnvironmentClient {
     export interface Options extends BaseClientOptions {}
@@ -12,12 +12,12 @@ export declare namespace SeedMultiUrlEnvironmentClient {
 }
 
 export class SeedMultiUrlEnvironmentClient {
-    protected readonly _options: SeedMultiUrlEnvironmentClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedMultiUrlEnvironmentClient.Options>;
     protected _ec2: Ec2Client | undefined;
     protected _s3: S3Client | undefined;
 
     constructor(options: SeedMultiUrlEnvironmentClient.Options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get ec2(): Ec2Client {

@@ -2,7 +2,7 @@
 
 import { UsersClient } from "./api/resources/users/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedPaginationClient {
     export interface Options extends BaseClientOptions {}
@@ -11,7 +11,7 @@ export declare namespace SeedPaginationClient {
 }
 
 export class SeedPaginationClient {
-    protected readonly _options: SeedPaginationClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedPaginationClient.Options>;
     protected _users: UsersClient | undefined;
 
     constructor(options: SeedPaginationClient.Options) {

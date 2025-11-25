@@ -1,4 +1,5 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
+import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
 export declare namespace PrimitiveClient {
     interface Options extends BaseClientOptions {
@@ -7,7 +8,7 @@ export declare namespace PrimitiveClient {
     }
 }
 export declare class PrimitiveClient {
-    protected readonly _options: PrimitiveClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<PrimitiveClient.Options>;
     constructor(options: PrimitiveClient.Options);
     /**
      * @param {string} request
@@ -90,5 +91,4 @@ export declare class PrimitiveClient {
      */
     getAndReturnBase64(request: string, requestOptions?: PrimitiveClient.RequestOptions): core.HttpResponsePromise<string>;
     private __getAndReturnBase64;
-    protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

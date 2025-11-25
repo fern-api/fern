@@ -2,7 +2,7 @@
 
 import type * as stream from "stream";
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
-import { normalizeClientOptions } from "../../../../BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
@@ -15,7 +15,7 @@ export declare namespace DummyClient {
 }
 
 export class DummyClient {
-    protected readonly _options: DummyClient.Options;
+    protected readonly _options: NormalizedClientOptions<DummyClient.Options>;
 
     constructor(options: DummyClient.Options) {
         this._options = normalizeClientOptions(options);

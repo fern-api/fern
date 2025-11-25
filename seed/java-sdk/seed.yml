@@ -265,10 +265,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: oauth-client-credentials
-  custom-auth:
+  header-auth:
     - customConfig:
         enable-wire-tests: true
-      outputFolder: custom-auth
+      outputFolder: header-auth
   nullable-optional:
     - customConfig:
         use-nullable-annotation: true

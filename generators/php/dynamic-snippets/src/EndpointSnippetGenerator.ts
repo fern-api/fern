@@ -179,8 +179,7 @@ export class EndpointSnippetGenerator {
             case "header":
                 return values.type === "header" ? this.getConstructorHeaderAuthArgs({ auth, values }) : [];
             case "oauth":
-                this.addWarning("The PHP SDK doesn't support OAuth client credentials yet");
-                return [];
+                return values.type === "oauth" ? this.getConstructorOAuthArgs({ auth, values }) : [];
             case "inferred":
                 this.addWarning("The PHP SDK Generator does not support Inferred auth scheme yet");
                 return [];
@@ -499,6 +498,25 @@ export class EndpointSnippetGenerator {
                     typeReference: auth.header.typeReference,
                     value: values.value
                 })
+            }
+        ];
+    }
+
+    private getConstructorOAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.OAuth;
+        values: FernIr.dynamic.OAuthValues;
+    }): NamedArgument[] {
+        return [
+            {
+                name: this.context.getPropertyName(auth.clientId),
+                assignment: php.TypeLiteral.string(values.clientId)
+            },
+            {
+                name: this.context.getPropertyName(auth.clientSecret),
+                assignment: php.TypeLiteral.string(values.clientSecret)
             }
         ];
     }
