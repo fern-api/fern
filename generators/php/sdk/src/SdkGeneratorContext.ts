@@ -555,6 +555,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             AsIsFiles.HttpMethod,
             AsIsFiles.JsonApiRequest,
             AsIsFiles.RawClient,
+            AsIsFiles.Redactor,
             AsIsFiles.RetryMiddleware,
             AsIsFiles.MultipartApiRequest,
             AsIsFiles.MultipartFormData,
