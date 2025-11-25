@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support a `lines` prop for the `<Code />` component to extract specific lines from a code snippet.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.8.1
+
+- changelogEntry:
+    - summary: |
         Adds an option for `api.tag-description-pages: true` to create summary pages from tag descriptions within an API reference.
       type: feat
   irVersion: 62
