@@ -33,7 +33,7 @@ jobs:
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
       - name: manual publish
         if: ${{ github.event_name == 'workflow_dispatch' }}
-        uses: ./.github/actions/publish-generator
+        uses: ./.github/actions/publish-generator@dak/ci/scan-generator-imgs
         with:
           generator-name: "java-sdk"
           version: ${{ inputs.version }}

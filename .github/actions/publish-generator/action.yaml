@@ -104,3 +104,7 @@ runs:
       run: |-
         aws sts get-caller-identity
         docker image ls
+        SANITIZED_BRANCH="${BRANCH_NAME//\//-}"
+        docker tag fernapi/fern-${{ inputs.generator-name }}:${{ inputs.version }} 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/${{ inputs.generator-name }}-generator:${{ inputs.version }}-$SANITIZED_BRANCH-${{ github.sha }}
+        aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 985111089818.dkr.ecr.us-east-1.amazonaws.com
+        docker push 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/${{ inputs.generator-name }}-generator:${{ inputs.version }}-$SANITIZED_BRANCH-${{ github.sha }}
