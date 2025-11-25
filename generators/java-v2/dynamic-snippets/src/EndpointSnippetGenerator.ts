@@ -27,7 +27,6 @@ const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
  * are a distinct case where items genuinely can be null, and the SDK expects List<Optional<T>>.
  */
 function unwrapOptionalFromListItems(typeReference: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference {
-    // Handle optional<list<optional<T>>> -> optional<list<T>>
     if (typeReference.type === "optional" && typeReference.value.type === "list") {
         const listType = typeReference.value;
         const itemType = listType.value;
@@ -43,7 +42,6 @@ function unwrapOptionalFromListItems(typeReference: FernIr.dynamic.TypeReference
     }
     if (typeReference.type === "list") {
         const itemType = typeReference.value;
-        // Only unwrap optional, not nullable - nullable items genuinely can be null
         if (itemType.type === "optional") {
             return {
                 type: "list",
