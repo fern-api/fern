@@ -553,7 +553,6 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 }
                 const oauthConfig = scheme.configuration;
                 if (oauthConfig.type === "clientCredentials") {
-                    const clientCredentials = oauthConfig.value;
                     return [
                         {
                             name: "clientId",
@@ -561,10 +560,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             isOptional,
                             typeReference: this.getAuthParameterTypeReference({
                                 typeReference: STRING_TYPE_REFERENCE,
-                                envVar: clientCredentials.clientIdEnvVar,
+                                envVar: oauthConfig.clientIdEnvVar,
                                 isOptional
                             }),
-                            environmentVariable: clientCredentials.clientIdEnvVar
+                            environmentVariable: oauthConfig.clientIdEnvVar
                         },
                         {
                             name: "clientSecret",
@@ -572,10 +571,10 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             isOptional,
                             typeReference: this.getAuthParameterTypeReference({
                                 typeReference: STRING_TYPE_REFERENCE,
-                                envVar: clientCredentials.clientSecretEnvVar,
+                                envVar: oauthConfig.clientSecretEnvVar,
                                 isOptional
                             }),
-                            environmentVariable: clientCredentials.clientSecretEnvVar
+                            environmentVariable: oauthConfig.clientSecretEnvVar
                         }
                     ];
                 }
@@ -665,35 +664,29 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         const tokenEndpointReference = oauth.configuration.tokenEndpoint.endpointReference;
         const subpackageId = tokenEndpointReference.subpackageId;
 
-        let authClientClassName: string;
-        let authClientNamespace: string;
-
+        let authClientClassReference: php.ClassReference;
         if (subpackageId != null) {
             const subpackage = this.context.getSubpackageOrThrow(subpackageId);
-            authClientClassName = this.context.getSubpackageClientClassName(subpackage);
-            authClientNamespace = this.context.getLocationForSubpackage(subpackage).namespace;
+            authClientClassReference = this.context.getSubpackageClassReference(subpackage);
         } else {
-            authClientClassName = this.context.getRootClientClassName();
-            authClientNamespace = this.context.getRootNamespace();
+            authClientClassReference = php.classReference({
+                name: this.context.getRootClientClassName(),
+                namespace: this.context.getRootNamespace()
+            });
         }
-
-        const authClientClassReference = php.classReference({
-            name: authClientClassName,
-            namespace: authClientNamespace
-        });
 
         const oauthTokenProviderClassReference = php.classReference({
             name: "OAuthTokenProvider",
             namespace: this.context.getCoreNamespace()
         });
 
-        writer.writeLine("$authRawClient = new ");
+        writer.write("$authRawClient = new ");
         writer.writeNode(this.context.rawClient.getClassReference());
-        writer.writeLine("(options: $options ?? []);");
+        writer.writeLine("(['headers' => []]);");
 
         writer.write("$authClient = new ");
         writer.writeNode(authClientClassReference);
-        writer.writeLine("($authRawClient, $options ?? []);");
+        writer.writeLine("($authRawClient);");
 
         writer.write("$oauthTokenProvider = new ");
         writer.writeNode(oauthTokenProviderClassReference);

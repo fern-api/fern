@@ -2,7 +2,7 @@
 
 import type * as SeedPropertyAccess from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
@@ -14,7 +14,7 @@ export declare namespace SeedPropertyAccessClient {
 }
 
 export class SeedPropertyAccessClient {
-    protected readonly _options: SeedPropertyAccessClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedPropertyAccessClient.Options>;
 
     constructor(options: SeedPropertyAccessClient.Options) {
         this._options = normalizeClientOptions(options);

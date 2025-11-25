@@ -75,8 +75,10 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
         self._error_declaration_referencer = ErrorDeclarationReferencer(
             skip_resources_module=custom_config.improved_imports
         )
+        default_env_class_name = f"{exported_client_class_name}Environment"
+        final_env_class_name = custom_config.environment_class_name or default_env_class_name
         self._environments_enum_declaration_referencer = EnvironmentsEnumDeclarationReferencer(
-            client_class_name=exported_client_class_name,
+            environment_class_name=final_env_class_name,
             skip_resources_module=custom_config.improved_imports,
         )
         self._subpackage_client_declaration_referencer = SubpackageClientDeclarationReferencer(
