@@ -717,9 +717,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     methodSuffix: upperFirst(internalType.type)
                 });
             case "enumString":
-                return this.decodeJsonResponseForPrimitive({
-                    arguments_,
-                    methodSuffix: "String"
+                return this.decodeJsonResponseForEnumString({
+                    arguments_
                 });
             case "union":
                 return this.decodeJsonResponseForUnion({
@@ -796,6 +795,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     static_: true
                 })
             );
+        });
+    }
+
+    private decodeJsonResponseForEnumString({ arguments_ }: { arguments_: Arguments }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.writeNode(
+                php.invokeMethod({
+                    on: this.context.getJsonDecoderClassReference(),
+                    method: "decodeString",
+                    arguments_,
+                    static_: true
+                })
+            );
+            writer.writeLine("; // @phpstan-ignore-line");
         });
     }
 

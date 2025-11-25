@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.22.1
+  changelogEntry:
+    - summary: |
+        Fix PHPStan error for enum string return types by adding @phpstan-ignore-line suppression.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 62
+
 - version: 1.22.0
   changelogEntry:
     - summary: |
