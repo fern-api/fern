@@ -77,6 +77,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
             }
 
             try {
+                await context.snippetGenerator.populateSnippetsCache();
                 await this.generateReference({ context });
             } catch (e) {
                 context.logger.warn(

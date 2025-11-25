@@ -5,6 +5,7 @@ import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { HttpEndpoint, HttpService, ServiceId, TypeReference } from "@fern-fern/ir-sdk/api";
 
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+import { SingleEndpointSnippet } from "./EndpointSnippetsGenerator";
 
 export function buildReference({ context }: { context: SdkGeneratorContext }): ReferenceConfigBuilder {
     const builder = new ReferenceConfigBuilder();
@@ -34,11 +35,20 @@ function getEndpointReferencesForService({
 }): FernGeneratorCli.EndpointReference[] {
     return service.endpoints
         .map((endpoint) => {
+            let singleEndpointSnippet;
+            const exampleCall = context.maybeGetExampleEndpointCall(endpoint);
+            if (exampleCall) {
+                singleEndpointSnippet = context.snippetGenerator.getSingleEndpointSnippet({
+                    endpoint,
+                    example: exampleCall
+                });
+            }
             return getEndpointReference({
                 context,
                 serviceId,
                 service,
-                endpoint
+                endpoint,
+                singleEndpointSnippet
             });
         })
         .filter((endpoint): endpoint is FernGeneratorCli.EndpointReference => !!endpoint);
@@ -48,12 +58,14 @@ function getEndpointReference({
     context,
     serviceId,
     service,
-    endpoint
+    endpoint,
+    singleEndpointSnippet
 }: {
     context: SdkGeneratorContext;
     serviceId: ServiceId;
     service: HttpService;
     endpoint: HttpEndpoint;
+    singleEndpointSnippet: SingleEndpointSnippet | undefined;
 }): FernGeneratorCli.EndpointReference {
     const endpointSignatureInfo = context.endpointGenerator.getEndpointSignatureInfo({
         serviceId,
@@ -61,7 +73,10 @@ function getEndpointReference({
         endpoint
     });
     const returnValue = getReturnValue({ context, endpoint });
-    const snippet = getEndpointSnippet({ context, serviceId, service, endpoint, endpointSignatureInfo });
+
+    const snippet =
+        singleEndpointSnippet?.endpointCall ??
+        getEndpointSnippet({ context, serviceId, service, endpoint, endpointSignatureInfo });
 
     return {
         title: {
