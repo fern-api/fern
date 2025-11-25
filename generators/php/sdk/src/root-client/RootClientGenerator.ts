@@ -690,7 +690,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$oauthTokenProvider = new ");
         writer.writeNode(oauthTokenProviderClassReference);
-        writer.writeLine("($clientId, $clientSecret, $authClient);");
+        writer.writeLine("($clientId ?? '', $clientSecret ?? '', $authClient);");
 
         writer.writeLine("$token = $oauthTokenProvider->getToken();");
         writer.writeLine();
