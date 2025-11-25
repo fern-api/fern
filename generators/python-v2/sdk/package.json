@@ -20,7 +20,9 @@
   "main": "lib/index.js",
   "source": "src/index.ts",
   "types": "lib/index.d.ts",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "scripts": {
     "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "compile": "tsc --build",
@@ -40,12 +42,15 @@
   },
   "devDependencies": {
     "@fern-api/base-generator": "workspace:*",
+    "@fern-api/browser-compatible-base-generator": "workspace:*",
     "@fern-api/configs": "workspace:*",
+    "@fern-api/dynamic-ir-sdk": "^61.7.0",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/logger": "workspace:*",
     "@fern-api/mock-utils": "workspace:*",
     "@fern-api/python-ast": "workspace:*",
     "@fern-api/python-base": "workspace:*",
+    "@fern-api/python-dynamic-snippets": "workspace:*",
     "@fern-fern/generator-cli-sdk": "^0.1.5",
     "@fern-fern/generator-exec-sdk": "^0.0.1167",
     "@fern-fern/ir-sdk": "^61.7.0",
