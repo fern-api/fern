@@ -1,6 +1,5 @@
 import { generatorsYml } from "@fern-api/configuration";
 import { assertNever } from "@fern-api/core-utils";
-import { visitRawApiAuth } from "@fern-api/fern-definition-schema";
 import { AbsoluteFilePath, dirname, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { parseRepository } from "@fern-api/github";
 import { TaskContext } from "@fern-api/task-context";
@@ -343,24 +342,7 @@ async function parseApiConfigurationV2Schema({
     apiSettings: generatorsYml.APIDefinitionSettings;
 }): Promise<generatorsYml.APIDefinition> {
     const partialConfig = {
-        "auth-schemes":
-            apiConfiguration.auth != null
-                ? Object.fromEntries(
-                      Object.entries(rawConfiguration["auth-schemes"] ?? {}).filter(([name, _]) => {
-                          if (apiConfiguration.auth == null) {
-                              return false;
-                          }
-                          return visitRawApiAuth(apiConfiguration.auth, {
-                              any: (any) => {
-                                  return any.any.includes(name);
-                              },
-                              single: (single) => {
-                                  return single === name;
-                              }
-                          });
-                      })
-                  )
-                : undefined,
+        "auth-schemes": rawConfiguration["auth-schemes"],
         ...apiConfiguration
     };
 
