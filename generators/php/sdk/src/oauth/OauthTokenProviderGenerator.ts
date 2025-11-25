@@ -71,7 +71,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
 
         return new PhpFile({
             clazz: class_,
-            directory: this.context.getCoreDirectory(),
+            directory: RelativeFilePath.of("src/Core"),
             rootNamespace: this.context.getRootNamespace(),
             customConfig: this.context.customConfig
         });
@@ -79,7 +79,7 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
 
     protected getFilepath(): RelativeFilePath {
         return join(
-            this.context.getCoreDirectory(),
+            RelativeFilePath.of("src/Core"),
             RelativeFilePath.of(`${OauthTokenProviderGenerator.CLASS_NAME}.php`)
         );
     }
