@@ -3,7 +3,7 @@ import { AbsoluteFilePath, dirname, RelativeFilePath, resolve } from "@fern-api/
 import { TaskContext } from "@fern-api/task-context";
 import type { Node as EstreeNode } from "estree";
 import grayMatter from "gray-matter";
-import { isAbsolute } from "path";
+import { isAbsolute, relative } from "path";
 import { CONTINUE, visit } from "unist-util-visit";
 import { z } from "zod";
 
@@ -511,10 +511,17 @@ function resolvePath(
         return undefined;
     }
 
-    // If the path is already absolute (e.g., from a previous pass that resolved relative paths),
-    // return it directly instead of trying to wrap it in RelativeFilePath.of()
+    // If the path is already absolute AND under the Fern folder (e.g., from a previous pass
+    // that resolved relative paths like "./assets/image.png" to "C:\Users\...\assets\image.png"),
+    // return it directly instead of trying to wrap it in RelativeFilePath.of().
+    // We check if it's under the Fern folder to distinguish from root-relative paths like
+    // "/static/image.png" which should be resolved against absolutePathToFernFolder.
     if (isAbsolute(pathToImage)) {
-        return AbsoluteFilePath.of(pathToImage);
+        const relFromRoot = relative(absolutePathToFernFolder, pathToImage);
+        const isUnderRoot = !relFromRoot.startsWith("..") && !isAbsolute(relFromRoot);
+        if (isUnderRoot) {
+            return AbsoluteFilePath.of(pathToImage);
+        }
     }
 
     const filepath = resolve(
