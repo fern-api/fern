@@ -120,7 +120,8 @@ export class ClonedRepository {
         await this.git.cwd(this.clonePath);
         const currentBranch = await this.getCurrentBranch();
 
-        const isRemoteReject = (msg: string) => msg.includes("fetch first") || msg.includes("Updates were rejected");
+        const isRemoteReject = (msg: string) =>
+            msg.includes("fetch first") || msg.includes("Updates were rejected") || msg.includes("non-fast-forward");
         const isDivergent = (msg: string) =>
             msg.includes("divergent branches") || msg.includes("You have divergent branches");
 
@@ -157,7 +158,8 @@ export class ClonedRepository {
         await this.git.cwd(this.clonePath);
         const currentBranch = await this.getCurrentBranch();
 
-        const isRemoteReject = (msg: string) => msg.includes("fetch first") || msg.includes("Updates were rejected");
+        const isRemoteReject = (msg: string) =>
+            msg.includes("fetch first") || msg.includes("Updates were rejected") || msg.includes("non-fast-forward");
 
         try {
             await this.push();
@@ -169,7 +171,9 @@ export class ClonedRepository {
                     await this.push();
                     return;
                 } catch (pullErr) {
-                    throw err; // rethrow original push error
+                    throw new Error(
+                        `Push failed: ${errMsg}. Attempted to rebase but that also failed: ${String(pullErr)}`
+                    );
                 }
             } else {
                 throw err; // rethrow non-remote-reject errors
