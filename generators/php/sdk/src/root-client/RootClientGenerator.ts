@@ -551,7 +551,6 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 ];
             }
             case "inferred": {
-                this.context.logger.warn("Inferred auth scheme is not supported by PHP SDK Generator");
                 return [];
             }
             default:

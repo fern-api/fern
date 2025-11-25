@@ -7,6 +7,7 @@ import { generateModels, generateTraits } from "@fern-api/php-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { InferredAuthProviderGenerator } from "./auth/InferredAuthProviderGenerator";
 import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpointRequestGenerator";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
@@ -56,6 +57,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
     protected async generate(context: SdkGeneratorContext): Promise<void> {
         generateModels(context);
         generateTraits(context);
+        this.generateAuthProviders(context);
         this.generateRootClient(context);
         this.generateSubpackages(context);
         this.generateEnvironment(context);
@@ -77,6 +79,15 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         }
 
         await context.project.persist();
+    }
+
+    private generateAuthProviders(context: SdkGeneratorContext) {
+        for (const scheme of context.ir.auth.schemes) {
+            if (scheme.type === "inferred") {
+                const generator = new InferredAuthProviderGenerator(context, context.ir, scheme);
+                context.project.addSourceFiles(generator.generate());
+            }
+        }
     }
 
     private generateRootClient(context: SdkGeneratorContext) {
