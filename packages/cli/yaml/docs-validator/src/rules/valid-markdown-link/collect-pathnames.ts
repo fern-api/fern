@@ -8,6 +8,16 @@ import { stripAnchorsAndSearchParams } from "./url-utils";
 // this should match any link that starts with a protocol (e.g. http://, https://, mailto:, etc.)
 const EXTERNAL_LINK_PATTERN = /^(?:[a-z+]+:)/gi;
 
+// Strip angle brackets from URLs. Markdown allows angle brackets around URLs to handle special characters,
+// e.g. [link](<https://example.com?foo=bar>) - the angle brackets should not be part of the URL.
+function stripAngleBrackets(url: string): string {
+    const trimmed = url.trim();
+    if (trimmed.startsWith("<") && trimmed.endsWith(">")) {
+        return trimmed.slice(1, -1);
+    }
+    return url;
+}
+
 export interface PathnameToCheck {
     markdown: boolean;
     pathname: string;
@@ -55,18 +65,21 @@ export function collectPathnamesToCheck(
     const { links, sources } = safeCollectLinksAndSources({ content, absoluteFilepath });
 
     links.forEach((link) => {
-        if (link.href.trimStart().match(EXTERNAL_LINK_PATTERN)) {
-            if (!link.href.trimStart().startsWith("http")) {
+        // Strip angle brackets from URLs - markdown allows [link](<url>) syntax for URLs with special characters
+        const href = stripAngleBrackets(link.href);
+
+        if (href.trimStart().match(EXTERNAL_LINK_PATTERN)) {
+            if (!href.trimStart().startsWith("http")) {
                 // we don't need to check if it exists if it's not an http link
                 return;
             }
 
             try {
-                // test if the link is a valid WHATWG URL (otherwise `new URL(link.href)` will throw)
-                const url = new URL(link.href);
+                // test if the link is a valid WHATWG URL (otherwise `new URL(href)` will throw)
+                const url = new URL(href);
 
                 // if the link does not point to an instance URL, we don't need to check if it exists internally
-                if (!instanceUrls.some((url) => link.href.includes(url))) {
+                if (!instanceUrls.some((instanceUrl) => href.includes(instanceUrl))) {
                     // TODO: potentially do a `fetch` check here to see if the external link is valid?
                     return;
                 }
@@ -80,13 +93,13 @@ export function collectPathnamesToCheck(
             } catch (error) {
                 violations.push({
                     severity: "warning",
-                    message: `Invalid URL: ${link.href}`
+                    message: `Invalid URL: ${href}`
                 });
             }
             return;
         }
 
-        const pathname = stripAnchorsAndSearchParams(link.href);
+        const pathname = stripAnchorsAndSearchParams(href);
 
         // empty "" is actually a valid path, so we don't need to check it
         if (pathname.trim() === "") {
