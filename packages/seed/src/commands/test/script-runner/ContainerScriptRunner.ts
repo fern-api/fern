@@ -1,5 +1,6 @@
 import { ContainerRunner } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
@@ -21,8 +22,14 @@ export class ContainerScriptRunner extends ScriptRunner {
     private startContainersFn: Promise<void> | undefined;
     private scripts: RunningScriptConfig[] = [];
 
-    constructor(workspace: GeneratorWorkspace, skipScripts: boolean, context: TaskContext, runner?: ContainerRunner) {
-        super(workspace, skipScripts, context);
+    constructor(
+        workspace: GeneratorWorkspace,
+        skipScripts: boolean,
+        context: TaskContext,
+        logLevel: LogLevel,
+        runner?: ContainerRunner
+    ) {
+        super(workspace, skipScripts, context, logLevel);
 
         if (runner != null) {
             this.runner = runner;
@@ -98,11 +105,12 @@ export class ContainerScriptRunner extends ScriptRunner {
         containerId: string;
         script: ContainerScriptConfig;
     }): Promise<ScriptRunner.RunResponse> {
-        taskContext.logger.info(`Running script ${script.commands[0] ?? ""} on ${id}`);
-
         const workDir = id.replace(":", "_");
         const scriptFile = await tmp.file();
-        await writeFile(scriptFile.path, ["set -e", `cd /${workDir}/generated`, ...script.commands].join("\n"));
+        const scriptContents = ["set -e", `cd /${workDir}/generated`, ...script.commands].join("\n");
+        await writeFile(scriptFile.path, scriptContents);
+
+        taskContext.logger.debug(`Running script on ${id}:\n${scriptContents}`);
 
         // Move scripts and generated files into the container
         const mkdirCommand = await loggingExeca(
@@ -110,7 +118,7 @@ export class ContainerScriptRunner extends ScriptRunner {
             this.runner,
             ["exec", containerId, "mkdir", "-p", `/${workDir}/generated`],
             {
-                doNotPipeOutput: false,
+                doNotPipeOutput: true,
                 reject: false
             }
         );
@@ -125,7 +133,7 @@ export class ContainerScriptRunner extends ScriptRunner {
             this.runner,
             ["cp", scriptFile.path, `${containerId}:/${workDir}/test.sh`],
             {
-                doNotPipeOutput: false,
+                doNotPipeOutput: true,
                 reject: false
             }
         );
@@ -140,7 +148,7 @@ export class ContainerScriptRunner extends ScriptRunner {
             this.runner,
             ["cp", `${outputDir}/.`, `${containerId}:/${workDir}/generated/`],
             {
-                doNotPipeOutput: false,
+                doNotPipeOutput: true,
                 reject: false
             }
         );
@@ -157,7 +165,7 @@ export class ContainerScriptRunner extends ScriptRunner {
             this.runner,
             ["exec", containerId, "/bin/sh", "-c", `chmod +x /${workDir}/test.sh && /${workDir}/test.sh`],
             {
-                doNotPipeOutput: false,
+                doNotPipeOutput: true,
                 reject: false
             }
         );
