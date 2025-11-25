@@ -1,8 +1,15 @@
-name: PHP SDK Test Definitions
+name: SDK ETE Tests
 
 on:
   workflow_dispatch:
     inputs:
+      language:
+        description: 'SDK language to test'
+        required: true
+        type: choice
+        default: 'php'
+        options:
+          - php
       test-definition:
         description: 'Name of the test definition to generate'
         required: false
@@ -37,6 +44,8 @@ on:
   pull_request:
     branches:
       - main
+    paths:
+      - 'generators/php/**'
 
 env:
   TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -48,7 +57,7 @@ permissions:
   actions: read
 
 jobs:
-  build-and-generate:
+  test:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
@@ -64,6 +73,7 @@ jobs:
         run: pnpm fern-dev:build
 
       - name: Build PHP SDK generator
+        if: ${{ inputs.language == 'php' || github.event_name == 'pull_request' }}
         run: pnpm --filter @fern-api/php-sdk dist:cli
 
       - name: Set up Docker Buildx
@@ -76,6 +86,7 @@ jobs:
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Build PHP SDK Docker image
+        if: ${{ inputs.language == 'php' || github.event_name == 'pull_request' }}
         run: |
           docker build \
             -f generators/php/sdk/Dockerfile \
@@ -90,6 +101,7 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Generate PHP SDK for test definition
+        if: ${{ inputs.language == 'php' || github.event_name == 'pull_request' }}
         env:
           FORCE_COLOR: "2"
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
@@ -147,11 +159,12 @@ jobs:
         run: |
           # Read the generators.yml file for the test definition to find the branch name
           test_definition="${{ inputs.test-definition || 'exhaustive' }}"
+          language="${{ inputs.language || 'php' }}"
           if [ "$test_definition" = "all" ]; then
             echo "branch=all" >> $GITHUB_OUTPUT
             echo "Running all test definitions"
           elif [ -f "test-definitions/fern/apis/$test_definition/generators.yml" ]; then
-            branch=$(grep -A 10 "php-sdk:" test-definitions/fern/apis/$test_definition/generators.yml | grep "branch:" | head -1 | awk '{print $2}')
+            branch=$(grep -A 10 "${language}-sdk:" test-definitions/fern/apis/$test_definition/generators.yml | grep "branch:" | head -1 | awk '{print $2}')
             echo "branch=$branch" >> $GITHUB_OUTPUT
             echo "Found branch: $branch"
           else
@@ -165,29 +178,32 @@ jobs:
         with:
           script: |
             const testDefinition = '${{ inputs.test-definition }}' || 'exhaustive';
+            const language = '${{ inputs.language }}' || 'php';
             const branch = '${{ steps.get-branch.outputs.branch }}';
             const runUrl = `https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}`;
 
             let body;
             if (testDefinition === 'all') {
-              body = `## 🚀 PHP SDK Generation and Push Complete
+              body = `## SDK Generation and Push Complete
 
-            **Test Definition:** All test definitions with php-sdk group
-            **Repository:** https://github.com/fern-api/php-sdk-tests
+            **Language:** \`${language}\`
+            **Test Definition:** All test definitions with ${language}-sdk group
+            **Repository:** https://github.com/fern-api/${language}-sdk-tests
 
-            The PHP SDK has been generated and pushed to all branches in the php-sdk-tests repository.
+            The ${language.toUpperCase()} SDK has been generated and pushed to all branches in the ${language}-sdk-tests repository.
 
             [View workflow run](${runUrl})`;
             } else {
-              body = `## 🚀 PHP SDK Generation and Push Complete
+              body = `## SDK Generation and Push Complete
 
+            **Language:** \`${language}\`
             **Test Definition:** \`${testDefinition}\`
             **Updated Branch:** \`${branch}\`
-            **Repository:** https://github.com/fern-api/php-sdk-tests
+            **Repository:** https://github.com/fern-api/${language}-sdk-tests
 
-            The PHP SDK has been generated and pushed to the branch \`${branch}\` in the php-sdk-tests repository.
+            The ${language.toUpperCase()} SDK has been generated and pushed to the branch \`${branch}\` in the ${language}-sdk-tests repository.
 
-            You can view the changes at: https://github.com/fern-api/php-sdk-tests/tree/${branch}
+            You can view the changes at: https://github.com/fern-api/${language}-sdk-tests/tree/${branch}
 
             [View workflow run](${runUrl})`;
             }
