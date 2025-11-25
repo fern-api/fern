@@ -20,10 +20,11 @@ RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
        /opt/gradle/lib/commons-lang3-*.jar \
        /opt/gradle/lib/plugins/eddsa-*.jar
 
-# Remove python3.10 and subversion to address CVEs (not needed at runtime)
+# Remove vulnerable packages not needed at runtime
 # CVE-2025-8291, CVE-2025-6075: python3.10 zipfile/expandvars vulnerabilities
 # CVE-2024-46901: subversion vulnerability
-# These packages are only used by mercurial/brz which are not needed by this generator
+# Go stdlib CVEs (60+): git-lfs 3.0.2 embeds Go 1.18.1 with many critical vulnerabilities
+# CVE-2024-10524, CVE-2021-31879: wget vulnerabilities
 # Use purge instead of remove to fully remove packages from dpkg database
 # Add retry logic for apt-get update to handle transient mirror sync issues
 RUN set -eux; \
@@ -42,7 +43,9 @@ RUN set -eux; \
         python3.10 python3.10-minimal \
         python3 python3-minimal \
         libpython3.10-minimal libpython3.10-stdlib libpython3-stdlib \
-        subversion && \
+        subversion \
+        git-lfs \
+        wget && \
     apt-get autoremove -y --purge && \
     rm -rf /var/lib/apt/lists/*
 
