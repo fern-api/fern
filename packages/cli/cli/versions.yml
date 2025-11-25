@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Remove spammy "Cannot resolve source" warnings for OpenAPI sources in unioned API configurations with dependencies.
+      type: fix
+  irVersion: 61
+  createdAt: "2025-11-25"
+  version: 2.5.2
+
+- changelogEntry:
+    - summary: |
         Add validation for instance URLs to ensure they are valid.
       type: fix
   irVersion: 61

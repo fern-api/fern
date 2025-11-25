@@ -79,8 +79,8 @@ client.service().createBigEntity(
             CastMember.of(
                 Actor
                     .builder()
-                    .id("john.doe")
                     .name("John Doe")
+                    .id("john.doe")
                     .build()
             )
         )
@@ -93,9 +93,6 @@ client.service().createBigEntity(
                 .rating(8.5)
                 .tag("tag-12efs9dv")
                 .revenue(1000000L)
-                .cast(
-                    Arrays.asList("John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis")
-                )
                 .metadata(
                     new HashMap<String, Object>() {{
                         put("academyAward", true);
@@ -105,6 +102,9 @@ client.service().createBigEntity(
                             put("imdb", 7.6);
                         }});
                     }}
+                )
+                .cast(
+                    Arrays.asList("John Travolta", "Samuel L. Jackson", "Uma Thurman", "Bruce Willis")
                 )
                 .build()
         )
