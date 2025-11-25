@@ -25,4 +25,4 @@ from .acai import Acai  # noqa: E402, I001
 from .fig import Fig  # noqa: E402, I001
 from .fruit import Fruit  # noqa: E402, I001
 
-update_forward_refs(Cat, Acai=Acai, Fig=Fig)
+update_forward_refs(Cat, Fig=Fig, Acai=Acai)

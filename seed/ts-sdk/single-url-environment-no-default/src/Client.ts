@@ -2,7 +2,7 @@
 
 import { DummyClient } from "./api/resources/dummy/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedSingleUrlEnvironmentNoDefaultClient {
     export interface Options extends BaseClientOptions {}
@@ -11,11 +11,11 @@ export declare namespace SeedSingleUrlEnvironmentNoDefaultClient {
 }
 
 export class SeedSingleUrlEnvironmentNoDefaultClient {
-    protected readonly _options: SeedSingleUrlEnvironmentNoDefaultClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedSingleUrlEnvironmentNoDefaultClient.Options>;
     protected _dummy: DummyClient | undefined;
 
     constructor(options: SeedSingleUrlEnvironmentNoDefaultClient.Options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get dummy(): DummyClient {
