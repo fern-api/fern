@@ -1,12 +1,19 @@
 # Stage 1: Java V2
 # Updated: WebSocket feature support added
-FROM node:23.10-bookworm AS node
+FROM node:22.12-bookworm-slim AS node
 COPY generators/java-v2/sdk/dist/cli.cjs /dist/cli.cjs
 COPY generators/java-v2/sdk/features.yml /assets/features.yml
 
 # Stage 2: Java V1
 # Apple Silicon: FROM bitnami/gradle:latest
-FROM gradle:jdk11-jammy
+FROM gradle:8.5.0-jdk11-jammy
+
+# Update system packages to patch security vulnerabilities
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
 RUN cd / \
     && tar -xvf sdk.tar \
