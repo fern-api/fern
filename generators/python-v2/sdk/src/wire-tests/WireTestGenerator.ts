@@ -328,7 +328,18 @@ export class WireTestGenerator {
         if (example.queryParameters) {
             for (const [key, value] of Object.entries(example.queryParameters)) {
                 if (value != null) {
-                    queryParams.push([key, this.formatValue(value)]);
+                    const queryParameterDeclaration = endpoint.queryParameters.find(
+                        (queryParameter) => queryParameter.name.wireValue === key
+                    );
+                    if (queryParameterDeclaration != null) {
+                        // Use the safe name to avoid collisions with reserved keywords
+                        queryParams.push([
+                            queryParameterDeclaration.name.name.snakeCase.safeName,
+                            this.formatValue(value)
+                        ]);
+                    } else {
+                        queryParams.push([key, this.formatValue(value)]);
+                    }
                 }
             }
         }
