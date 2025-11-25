@@ -73,6 +73,7 @@ export class WireTestGenerator {
             endpoint: HttpEndpoint;
             example: dynamic.EndpointExample;
             service: HttpService;
+            exampleIndex: number;
         }> = [];
 
         for (const endpoint of endpoints) {
@@ -85,7 +86,7 @@ export class WireTestGenerator {
                         s.endpoints.some((e) => e.id === endpoint.id)
                     );
                     if (service) {
-                        endpointTestCases.push({ endpoint, example: firstExample, service });
+                        endpointTestCases.push({ endpoint, example: firstExample, service, exampleIndex: 0 });
                     }
                 }
             }
@@ -114,14 +115,18 @@ export class WireTestGenerator {
 
     private buildTestFile(
         serviceName: string,
-        testCases: Array<{ endpoint: HttpEndpoint; example: dynamic.EndpointExample; service: HttpService }>
+        testCases: Array<{
+            endpoint: HttpEndpoint;
+            example: dynamic.EndpointExample;
+            service: HttpService;
+            exampleIndex: number;
+        }>
     ): python.PythonFile {
         const statements: python.AstNode[] = [];
 
         // Add raw imports that the AST doesn't support (simple "import X" statements)
         statements.push(python.codeBlock("import pytest"));
         statements.push(python.codeBlock("import requests"));
-        statements.push(python.codeBlock("import uuid"));
 
         // Add an import registration statement (for "from X import Y" style imports)
         statements.push(this.createImportRegistration());
@@ -130,8 +135,14 @@ export class WireTestGenerator {
         statements.push(this.generateVerifyRequestCountFunction());
 
         // Add test functions for each endpoint
-        for (const { endpoint, example, service } of testCases) {
-            const testFunction = this.generateEndpointTestFunction(serviceName, endpoint, example, service);
+        for (const { endpoint, example, service, exampleIndex } of testCases) {
+            const testFunction = this.generateEndpointTestFunction(
+                serviceName,
+                endpoint,
+                example,
+                service,
+                exampleIndex
+            );
             if (testFunction) {
                 statements.push(testFunction);
             }
@@ -230,7 +241,8 @@ export class WireTestGenerator {
         serviceName: string,
         endpoint: HttpEndpoint,
         example: dynamic.EndpointExample,
-        service: HttpService
+        service: HttpService,
+        exampleIndex: number
     ): python.Method | null {
         try {
             const testName = this.getTestFunctionName(serviceName, endpoint);
@@ -238,10 +250,13 @@ export class WireTestGenerator {
             const queryParamsCode = this.buildQueryParamsCode(endpoint);
             const clientName = this.getClientClassName();
 
+            // Build deterministic test ID based on fully qualified path
+            const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
+
             const statements: python.AstNode[] = [];
 
-            // Generate unique test ID for concurrency safety
-            statements.push(python.codeBlock(`test_id = str(uuid.uuid4())`));
+            // Use deterministic test ID for concurrency safety
+            statements.push(python.codeBlock(`test_id = "${testId}"`));
 
             // Create client with test ID header for request tracking
             statements.push(
@@ -273,6 +288,26 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test function for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Builds a deterministic test ID based on the fully qualified service path.
+     * Format: service.sub_service.endpoint_name.example_index
+     * This ensures test IDs are unique per test and deterministic across regenerations.
+     */
+    private buildDeterministicTestId(service: HttpService, endpoint: HttpEndpoint, exampleIndex: number): string {
+        const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const endpointName = endpoint.name.snakeCase.safeName;
+
+        const segments: string[] = [];
+        if (servicePathParts.length > 0) {
+            segments.push(servicePathParts.join("."));
+        }
+        segments.push(endpointName);
+        segments.push(String(exampleIndex));
+
+        // Example: "endpoints.primitive.get_and_return_string.0"
+        return segments.join(".");
     }
 
     // =============================================================================
