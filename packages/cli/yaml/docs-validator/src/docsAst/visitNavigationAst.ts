@@ -124,6 +124,7 @@ async function visitNavigationItem({
             });
         },
         displayErrors: noop,
+        tagDescriptionPages: noop,
         snippets: noop,
         summary: noop,
         title: noop,
