@@ -29,8 +29,16 @@
                   auth: Basic
         ```
       type: feat
-  irVersion: 61
+  irVersion: 62
   createdAt: "2025-11-25"
+  version: 2.7.0
+
+- changelogEntry:
+    - summary: |
+        Support 4XX and 5XX patterns in OpenAPI specs for docs.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-24"
   version: 2.6.0
 
 - changelogEntry:

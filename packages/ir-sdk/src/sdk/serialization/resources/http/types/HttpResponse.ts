@@ -10,12 +10,14 @@ import { HttpResponseBody } from "./HttpResponseBody";
 export const HttpResponse: core.serialization.ObjectSchema<serializers.HttpResponse.Raw, FernIr.HttpResponse> =
     core.serialization.objectWithoutOptionalProperties({
         statusCode: core.serialization.property("status-code", core.serialization.number().optional()),
+        isWildcardStatusCode: core.serialization.boolean().optional(),
         body: HttpResponseBody.optional(),
     });
 
 export declare namespace HttpResponse {
     export interface Raw {
         "status-code"?: number | null;
+        isWildcardStatusCode?: boolean | null;
         body?: HttpResponseBody.Raw | null;
     }
 }
