@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { InferredGetTokenEndpointSchema } from "./InferredGetTokenEndpointSchema";
+import { InferredRefreshTokenEndpointSchema } from "./InferredRefreshTokenEndpointSchema";
 import { WithDocsSchema } from "../../commons/types/WithDocsSchema";
 
 export const InferredBearerAuthSchema: core.serialization.ObjectSchema<
@@ -15,6 +16,7 @@ export const InferredBearerAuthSchema: core.serialization.ObjectSchema<
     .object({
         scheme: core.serialization.stringLiteral("bearer"),
         "get-token": InferredGetTokenEndpointSchema,
+        "refresh-token": InferredRefreshTokenEndpointSchema.optional(),
     })
     .extend(WithDocsSchema);
 
@@ -22,5 +24,6 @@ export declare namespace InferredBearerAuthSchema {
     export interface Raw extends WithDocsSchema.Raw {
         scheme: "bearer";
         "get-token": InferredGetTokenEndpointSchema.Raw;
+        "refresh-token"?: InferredRefreshTokenEndpointSchema.Raw | null;
     }
 }

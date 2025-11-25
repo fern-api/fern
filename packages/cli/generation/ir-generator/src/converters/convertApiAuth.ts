@@ -4,6 +4,7 @@ import {
     AuthScheme,
     AuthSchemesRequirement,
     FernIr,
+    InferredAuthSchemeRefreshEndpoint,
     InferredAuthSchemeTokenEndpoint,
     OAuthConfiguration
 } from "@fern-api/ir-sdk";
@@ -264,6 +265,12 @@ function generateInferredAuth({
             rawScheme,
             propertyResolver,
             endpointResolver
+        }),
+        refreshEndpoint: getInferredRefreshEndpoint({
+            file,
+            rawScheme,
+            propertyResolver,
+            endpointResolver
         })
     });
 }
@@ -307,6 +314,150 @@ function getInferredTokenEndpoint({
     };
 
     return result;
+}
+
+function getInferredRefreshEndpoint({
+    file,
+    rawScheme,
+    propertyResolver,
+    endpointResolver
+}: {
+    file: FernFileContext;
+    rawScheme: RawSchemas.InferredBearerAuthSchema;
+    propertyResolver: PropertyResolver;
+    endpointResolver: EndpointResolver;
+}): InferredAuthSchemeRefreshEndpoint | undefined {
+    const refreshTokenConfigOrString = rawScheme["refresh-token"];
+    if (refreshTokenConfigOrString == null) {
+        return undefined;
+    }
+
+    const refreshTokenConfig: RawSchemas.InferredRefreshTokenEndpointSchemaObject =
+        typeof refreshTokenConfigOrString === "string"
+            ? {
+                  endpoint: refreshTokenConfigOrString
+              }
+            : refreshTokenConfigOrString;
+
+    const refreshEndpoint = endpointResolver.resolveEndpointOrThrow({
+        endpoint: refreshTokenConfig.endpoint,
+        file
+    });
+
+    return {
+        endpoint: createEndpointReference({ resolvedEndpoint: refreshEndpoint }),
+        expiryProperty: inferExpiryPropertyForRefresh({
+            refreshEndpoint,
+            refreshTokenConfig,
+            propertyResolver
+        }),
+        authenticatedRequestHeaders: getInferredAuthenticatedRequestHeadersForRefresh({
+            refreshEndpoint,
+            refreshTokenConfig,
+            propertyResolver
+        })
+    };
+}
+
+function inferExpiryPropertyForRefresh({
+    refreshEndpoint,
+    refreshTokenConfig,
+    propertyResolver
+}: {
+    refreshEndpoint: ResolvedEndpoint;
+    refreshTokenConfig: RawSchemas.InferredRefreshTokenEndpointSchemaObject;
+    propertyResolver: PropertyResolver;
+}): FernIr.ResponseProperty | undefined {
+    if (refreshTokenConfig["expiry-response-property"]) {
+        return propertyResolver.resolveResponsePropertyOrThrow({
+            file: refreshEndpoint.file,
+            endpoint: refreshEndpoint.endpointId,
+            propertyComponents: getResponsePropertyComponents(refreshTokenConfig["expiry-response-property"])
+        });
+    }
+    for (const property of commonExpiryProperties) {
+        try {
+            const responseProperty = propertyResolver.resolveResponseProperty({
+                file: refreshEndpoint.file,
+                endpoint: refreshEndpoint.endpointId,
+                propertyComponents: [property]
+            });
+            if (responseProperty) {
+                return responseProperty;
+            }
+        } catch (e) {
+            // Ignore errors
+        }
+    }
+    return undefined;
+}
+
+function getInferredAuthenticatedRequestHeadersForRefresh({
+    refreshEndpoint,
+    refreshTokenConfig,
+    propertyResolver
+}: {
+    refreshEndpoint: ResolvedEndpoint;
+    refreshTokenConfig: RawSchemas.InferredRefreshTokenEndpointSchemaObject;
+    propertyResolver: PropertyResolver;
+}): FernIr.InferredAuthenticatedRequestHeader[] | undefined {
+    const requestHeaders = refreshTokenConfig["authenticated-request-headers"];
+    if (requestHeaders == null) {
+        return undefined;
+    }
+
+    const result = new Map<string, FernIr.InferredAuthenticatedRequestHeader>();
+    requestHeaders.forEach((header) => {
+        result.set(header["header-name"].toLowerCase(), {
+            headerName: header["header-name"],
+            responseProperty: propertyResolver.resolveResponsePropertyOrThrow({
+                file: refreshEndpoint.file,
+                endpoint: refreshEndpoint.endpointId,
+                propertyComponents: getResponsePropertyComponents(header["response-property"])
+            }),
+            valuePrefix: header["value-prefix"]
+        });
+    });
+
+    if (!result.has("authorization")) {
+        const authTokenResponseProperty = inferAuthTokenResponsePropertyForRefresh({
+            refreshEndpoint,
+            propertyResolver
+        });
+        if (authTokenResponseProperty) {
+            result.set("authorization", {
+                headerName: "Authorization",
+                responseProperty: authTokenResponseProperty,
+                valuePrefix: "Bearer "
+            });
+        }
+    }
+
+    return Array.from(result.values());
+}
+
+function inferAuthTokenResponsePropertyForRefresh({
+    refreshEndpoint,
+    propertyResolver
+}: {
+    refreshEndpoint: ResolvedEndpoint;
+    propertyResolver: PropertyResolver;
+}): FernIr.ResponseProperty | undefined {
+    for (const property of commonAuthTokenProperties) {
+        try {
+            const responseProperty = propertyResolver.resolveResponseProperty({
+                file: refreshEndpoint.file,
+                endpoint: refreshEndpoint.endpointId,
+                propertyComponents: [property]
+            });
+            if (responseProperty) {
+                return responseProperty;
+            }
+        } catch (e) {
+            // Ignore errors
+        }
+    }
+    return undefined;
 }
 
 const commonAuthTokenProperties = [

@@ -16,6 +16,8 @@ export * from "./InferredBearerAuthSchema";
 export * from "./InferredGetTokenEndpointSchema";
 export * from "./InferredGetTokenEndpointSchemaObject";
 export * from "./InferredAuthenticatedRequestHeader";
+export * from "./InferredRefreshTokenEndpointSchema";
+export * from "./InferredRefreshTokenEndpointSchemaObject";
 export * from "./OAuthSchemeSchema";
 export * from "./OAuthGetTokenEndpointSchema";
 export * from "./OAuthAccessTokenRequestPropertiesSchema";
