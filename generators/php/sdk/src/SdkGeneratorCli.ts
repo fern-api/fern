@@ -11,6 +11,7 @@ import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpo
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
+import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
 import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -61,6 +62,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         this.generateSubpackages(context);
         this.generateEnvironment(context);
         this.generateErrors(context);
+        this.generateOauthTokenProvider(context);
 
         if (context.config.output.snippetFilepath != null) {
             const snippets = await this.generateSnippets({ context });
@@ -150,6 +152,17 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
 
         const baseApiException = new BaseApiExceptionGenerator(context);
         context.project.addSourceFiles(baseApiException.generate());
+    }
+
+    private generateOauthTokenProvider(context: SdkGeneratorContext) {
+        const oauth = context.getOauth();
+        if (oauth != null) {
+            const oauthTokenProvider = new OauthTokenProviderGenerator({
+                context,
+                scheme: oauth
+            });
+            context.project.addSourceFiles(oauthTokenProvider.generate());
+        }
     }
 
     private async generateReadme({
