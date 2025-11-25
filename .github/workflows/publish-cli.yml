@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - devin/1764042701-fix-relative-path-detection
     paths-ignore:
       - "fern/**"
       - "guides/**"
