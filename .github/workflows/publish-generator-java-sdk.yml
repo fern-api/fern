@@ -21,7 +21,7 @@ jobs:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: dak/ci/scan-generator-imgs
           fetch-depth: 2
       - name: automated publish
         if: ${{ github.event_name == 'push' }}
@@ -33,7 +33,7 @@ jobs:
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
       - name: manual publish
         if: ${{ github.event_name == 'workflow_dispatch' }}
-        uses: ./.github/actions/publish-generator@dak/ci/scan-generator-imgs
+        uses: ./.github/actions/publish-generator
         with:
           generator-name: "java-sdk"
           version: ${{ inputs.version }}
