@@ -183,6 +183,17 @@ export async function runLocalGenerationForWorkspace({
                             targetDirectory: absolutePathToLocalOutput,
                             timeoutMs: 1000 // 10 seconds timeout for credential/network issues
                         });
+
+                        // For push mode, checkout the target branch while the working tree is clean.
+                        // This prevents non-fast-forward errors that occur when trying to checkout
+                        // after files have been generated (dirty working tree).
+                        const mode = selfhostedGithubConfig.mode ?? "push";
+                        if (mode === "push" && selfhostedGithubConfig.branch != null) {
+                            interactiveTaskContext.logger.debug(
+                                `Checking out branch ${selfhostedGithubConfig.branch} before generation`
+                            );
+                            await repo.checkoutRemoteBranch(selfhostedGithubConfig.branch);
+                        }
                     } catch (error) {
                         interactiveTaskContext.failAndThrow(
                             `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${error instanceof Error ? error.message : String(error)}`
