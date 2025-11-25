@@ -420,8 +420,25 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+
+        // Get body property names to check for collisions
+        let bodyPropertyNames: Set<string> = new Set();
+        if (request.body != null) {
+            const bodyArgs = this.getBodyRequestArgs({ body: request.body, value: snippet.requestBody });
+            bodyPropertyNames = new Set(bodyArgs.map((arg) => arg.name));
+        }
+
+        // Add path parameters, adding underscore suffix if they collide with body properties
         if (pathParameters.length > 0) {
-            args.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
+            const pathArgs = this.getPathParameters({ namedParameters: pathParameters, snippet });
+            const disambiguatedPathArgs = pathArgs.map((arg) => {
+                // If this path parameter name collides with a body property, add underscore suffix
+                if (bodyPropertyNames.has(arg.name)) {
+                    return { ...arg, name: arg.name + "_" };
+                }
+                return arg;
+            });
+            args.push(...disambiguatedPathArgs);
         }
         this.context.errors.unscope();
 
@@ -472,8 +489,27 @@ export class EndpointSnippetGenerator {
                 return this.getBodyRequestArgsForNamedTypeReference({ typeReference, named, value });
             }
             case "nullable":
-            case "optional":
+            case "optional": {
+                // Check if the inner type is an object - if so, don't flatten it
+                const innerType = typeReference.value;
+                if (innerType.type === "named") {
+                    const named = this.context.resolveNamedType({ typeId: innerType.value });
+                    if (named?.type === "object") {
+                        // Optional objects should NOT be flattened - use as single 'request' parameter
+                        return [
+                            {
+                                name: REQUEST_BODY_ARG_NAME,
+                                value: this.context.dynamicTypeLiteralMapper.convert({
+                                    typeReference: innerType,
+                                    value
+                                })
+                            }
+                        ];
+                    }
+                }
+                // For non-object types, continue unwrapping
                 return this.getBodyRequestArgsForTypeReference({ typeReference: typeReference.value, value });
+            }
             case "list":
             case "map":
             case "set":

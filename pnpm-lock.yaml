@@ -1250,8 +1250,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^59.6.1
-        version: 59.6.1
+        specifier: ^61.7.0
+        version: 61.7.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -1375,9 +1375,15 @@ importers:
       '@fern-api/base-generator':
         specifier: workspace:*
         version: link:../../base
+      '@fern-api/browser-compatible-base-generator':
+        specifier: workspace:*
+        version: link:../../browser-compatible-base
       '@fern-api/configs':
         specifier: workspace:*
         version: link:../../../packages/configs
+      '@fern-api/dynamic-ir-sdk':
+        specifier: ^61.7.0
+        version: 61.7.0
       '@fern-api/fs-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/fs-utils
@@ -1393,6 +1399,9 @@ importers:
       '@fern-api/python-base':
         specifier: workspace:*
         version: link:../base
+      '@fern-api/python-dynamic-snippets':
+        specifier: workspace:*
+        version: link:../dynamic-snippets
       '@fern-fern/generator-cli-sdk':
         specifier: ^0.1.5
         version: 0.1.8

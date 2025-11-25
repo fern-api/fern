@@ -1,3 +1,11 @@
+- version: 3.18.12
+  changelogEntry:
+    - summary: |
+        Fix Java dynamic snippets for query parameters with `allow-multiple: true` and optional types. Snippets now generate `List<T>` instead of `List<Optional<T>>`, which matches the SDK builder's convenience overload.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
 - version: 3.18.11
   changelogEntry:
     - summary: |

@@ -2119,6 +2119,16 @@
             }
           ]
         },
+        "tag-description-pages": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "snippets": {
           "oneOf": [
             {
