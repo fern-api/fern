@@ -39,18 +39,3 @@ Options:
                    displayed, but no upgrade will be taken.
                                                       [boolean] [default: false]"
 `;
-
-exports[`fern generator upgrade > fern generator upgrade message 1`] = `
-"         ╭────────────────────────────────────────────────────────────╮
-         │                                                            │
-         │                     Upgrades available                     │
-         │                                                            │
-         │                                                            │
-         │           Java SDK (Group: local) 0.0.1 → 0.10.1           │
-         │       Python SDK (Group: python-sdk) 3.0.0 → 3.10.8        │
-         │                                                            │
-         │   Run fern generator upgrade to upgrade your generators.   │
-         │                                                            │
-         ╰────────────────────────────────────────────────────────────╯
-"
-`;

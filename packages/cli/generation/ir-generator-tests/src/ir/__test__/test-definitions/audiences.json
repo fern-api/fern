@@ -1918,7 +1918,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -3305,7 +3306,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -4083,7 +4085,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],

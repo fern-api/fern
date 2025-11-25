@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support 4XX and 5XX patterns in OpenAPI specs for docs.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-24"
+  version: 2.6.0
+
+- changelogEntry:
+    - summary: |
         Remove spammy "Cannot resolve source" warnings for OpenAPI sources in unioned API configurations with dependencies.
       type: fix
   irVersion: 61
