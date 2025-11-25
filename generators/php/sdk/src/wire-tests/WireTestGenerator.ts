@@ -231,16 +231,38 @@ ${indentedApiCall}
     }
 
     /**
-     * Indents each line of a snippet with the specified indentation.
-     * Empty lines are preserved without indentation.
+     * Indents each line of a snippet with the specified base indentation while preserving
+     * relative indentation between lines. This ensures nested structures like arrays and
+     * objects maintain their proper indentation.
      */
-    private indentSnippet(snippet: string, indent: string): string {
-        return snippet
-            .split("\n")
+    private indentSnippet(snippet: string, baseIndent: string): string {
+        const lines = snippet.split("\n");
+
+        // Find the minimum indent among non-empty lines
+        let minIndent: number | undefined;
+        for (const line of lines) {
+            if (line.trim() === "") {
+                continue;
+            }
+            const match = line.match(/^(\s*)\S/);
+            if (!match || !match[1]) {
+                continue;
+            }
+            const indentLen = match[1].length;
+            if (minIndent === undefined || indentLen < minIndent) {
+                minIndent = indentLen;
+            }
+        }
+
+        const commonIndent = minIndent ?? 0;
+
+        return lines
             .map((line) => {
-                // Strip any existing leading whitespace and apply consistent indentation
-                const trimmedLine = line.trimStart();
-                return trimmedLine.length === 0 ? "" : indent + trimmedLine;
+                if (line.trim() === "") {
+                    return "";
+                }
+                const withoutCommon = line.slice(commonIndent);
+                return baseIndent + withoutCommon;
             })
             .join("\n");
     }
