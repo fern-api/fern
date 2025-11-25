@@ -924,8 +924,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^62.1.0
+        version: 62.1.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -1000,8 +1000,8 @@ importers:
         specifier: workspace:*
         version: link:../../../packages/commons/core-utils
       '@fern-api/dynamic-ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^62.1.0
+        version: 62.1.0
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -1048,8 +1048,8 @@ importers:
         specifier: workspace:*
         version: link:../codegen
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^62.1.0
+        version: 62.1.0
       '@types/node':
         specifier: 18.15.3
         version: 18.15.3
@@ -1108,8 +1108,8 @@ importers:
         specifier: ^0.0.1167
         version: 0.0.1167
       '@fern-fern/ir-sdk':
-        specifier: ^61.7.0
-        version: 61.7.0
+        specifier: ^62.1.0
+        version: 62.1.0
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
@@ -9617,6 +9617,9 @@ packages:
   '@fern-api/dynamic-ir-sdk@61.7.0':
     resolution: {integrity: sha512-3BcgNnTgr3qucG2AYr1hCOjVMjM5VLZZIkSTgOlVjwASTvH5eqxApfYasUNLAAA9xXU7anfCqtnd7IOE2G2jTw==}
 
+  '@fern-api/dynamic-ir-sdk@62.1.0':
+    resolution: {integrity: sha512-3GrWtmxRpgStXUyejFxa+yA5kIm5NS5FsxmKT3sLQN52OKGd9phskyPk8GiiPmIeKdeGIHT8HIwKz003ksxZSg==}
+
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28':
     resolution: {integrity: sha512-3qhAAuc4ZJWLaFtyZzaYXfF9OQ5iviNrvLDXtjKScKUNS134fR3v3c3xedCidTq5KedapuBECziUaOmmd6KXVA==}
     engines: {node: '>=18.0.0'}
@@ -9673,6 +9676,9 @@ packages:
 
   '@fern-fern/ir-sdk@61.7.0':
     resolution: {integrity: sha512-LHz8xJRISnuMVzLZHjwh1ziEofE0smL08Ddoe/YHnod8p7DPS/mpOcQKEfzqUn2mdLB6iqUBKB74NMchP/nM+Q==}
+
+  '@fern-fern/ir-sdk@62.1.0':
+    resolution: {integrity: sha512-0FVJFtG1TvxAvPe6NlxOUSOYgs4dVTbYB1Faj/Fj+/ounMyucifW3QVy/DJeYjgdyn3DUzochSwIMvPrf1atqQ==}
 
   '@fern-fern/ir-v1-model@0.0.2':
     resolution: {integrity: sha512-Rho6qXYfRoB1sAISFS4V7vttVFN0ypoaztmbfKKNFmSTNVOyLN++e2xNZ+Aw9ckE5ZZmfMXK9v4+dnFReWVzvA==}
@@ -17338,6 +17344,8 @@ snapshots:
 
   '@fern-api/dynamic-ir-sdk@61.7.0': {}
 
+  '@fern-api/dynamic-ir-sdk@62.1.0': {}
+
   '@fern-api/fai-sdk@0.0.6-2ee1b7e28': {}
 
   '@fern-api/fdr-sdk@0.142.0-aae6ba0ae(typescript@5.9.3)':
@@ -17464,6 +17472,16 @@ snapshots:
       - encoding
 
   '@fern-fern/ir-sdk@61.7.0':
+    dependencies:
+      form-data: 4.0.4
+      formdata-node: 6.0.3
+      node-fetch: 2.7.0
+      qs: 6.13.0
+      readable-stream: 4.7.0
+    transitivePeerDependencies:
+      - encoding
+
+  '@fern-fern/ir-sdk@62.1.0':
     dependencies:
       form-data: 4.0.4
       formdata-node: 6.0.3
