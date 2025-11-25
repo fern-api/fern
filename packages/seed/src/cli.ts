@@ -600,7 +600,11 @@ function addCleanCommand(cli: Argv) {
                     ? generators.filter((g) => argv.generator?.includes(g.workspaceName))
                     : generators;
 
-            await cleanOrphanedSeedFolders(targetGenerators, argv.dryRun);
+            const result = await cleanOrphanedSeedFolders(targetGenerators, argv.dryRun);
+
+            if (argv.dryRun && result.orphanedFolders.length > 0) {
+                process.exit(1);
+            }
         }
     );
 }
