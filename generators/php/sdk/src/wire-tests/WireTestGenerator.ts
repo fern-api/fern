@@ -166,9 +166,11 @@ export class WireTestGenerator {
             const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
 
             // Generate the API call using dynamic snippets generator
+            // For multi-URL environments, pass environment object with all URLs pointing to localhost
             const snippetRequest = convertDynamicEndpointSnippetRequest({
                 ...example,
-                baseUrl: "http://localhost:8080"
+                baseUrl: this.isMultiUrlEnvironment() ? undefined : "http://localhost:8080",
+                environment: this.isMultiUrlEnvironment() ? this.getMultiUrlEnvironmentForTest() : undefined
             });
             const snippetAst = await this.dynamicSnippetsGenerator.generateSnippetAst(snippetRequest);
 
@@ -339,5 +341,22 @@ export class WireTestGenerator {
 
     private getFormattedServiceName(service: HttpService): string {
         return service.name.fernFilepath.allParts.map((part) => part.camelCase.unsafeName).join("_");
+    }
+
+    private isMultiUrlEnvironment(): boolean {
+        return this.context.ir.environments?.environments.type === "multipleBaseUrls";
+    }
+
+    private getMultiUrlEnvironmentForTest(): Record<string, string> | undefined {
+        const environments = this.context.ir.environments?.environments;
+        if (environments?.type !== "multipleBaseUrls") {
+            return undefined;
+        }
+
+        const result: Record<string, string> = {};
+        for (const baseUrl of environments.baseUrls) {
+            result[baseUrl.id] = "http://localhost:8080";
+        }
+        return result;
     }
 }
