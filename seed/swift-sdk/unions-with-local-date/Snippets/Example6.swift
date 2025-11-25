@@ -4,7 +4,11 @@ import Unions
 private func main() async throws {
     let client = UnionsClient(baseURL: "https://api.fern.com")
 
-    _ = try await client.types.get(id: "date-example")
+    _ = try await client.types.update(request: UnionWithTime.date(
+        .init(
+            date: 
+        )
+    ))
 }
 
 try await main()
