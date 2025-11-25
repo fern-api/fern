@@ -200,6 +200,23 @@ export class ClonedRepository {
         }
     }
 
+    public async checkoutRemoteBranch(branch: string): Promise<void> {
+        await this.git.cwd(this.clonePath);
+        try {
+            // First, try to checkout the branch directly (works if local tracking branch exists)
+            await this.git.checkout(branch);
+        } catch (_error) {
+            // Local branch doesn't exist, try to create it from the remote tracking branch
+            try {
+                await this.git.checkout(["-b", branch, `origin/${branch}`]);
+            } catch (_remoteError) {
+                // Remote branch doesn't exist either, create a new local branch
+                // (but don't push - let the caller decide when to push)
+                await this.git.checkoutLocalBranch(branch);
+            }
+        }
+    }
+
     public async pushUpstream(branch: string): Promise<void> {
         await this.git.cwd(this.clonePath);
         await this.git.push("origin", branch, { "--set-upstream": null });
