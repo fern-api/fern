@@ -11,9 +11,14 @@ FROM gradle:jdk11-jammy
 # Remove vulnerable jars from Gradle base image - not used by this generator
 # CVE-2025-4949: jgit 5.13.3
 # CVE-2022-4065: testng 6.3.1
+# CVE-2025-48924: commons-lang 2.6, commons-lang3 3.14.0
+# CVE-2020-36843: eddsa 0.3.0
 RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
        /opt/gradle/lib/plugins/org.eclipse.jgit.ssh.apache-*.jar \
-       /opt/gradle/lib/plugins/testng-*.jar
+       /opt/gradle/lib/plugins/testng-*.jar \
+       /opt/gradle/lib/commons-lang-*.jar \
+       /opt/gradle/lib/commons-lang3-*.jar \
+       /opt/gradle/lib/plugins/eddsa-*.jar
 
 COPY generators/java/sdk/build/distributions/sdk.tar generators/java/sdk/init.sh /
 RUN cd / \
@@ -42,5 +47,8 @@ RUN git config --global user.email "115122769+fern-api[bot]@users.noreply.github
 RUN test -f /bin/java-v2 || echo "java-v2 CLI not found or not executable"
 
 RUN npm install -f -g @fern-api/generator-cli@0.2.0
+
+# Patch @octokit/request to fix CVE-2025-25290 (ReDoS vulnerability)
+RUN cd /usr/local/lib/node_modules/@fern-api/generator-cli && npm install @octokit/request@10.0.7
 
 ENTRYPOINT ["sh", "/init.sh"]
