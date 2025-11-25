@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.39.0
+  changelogEntry:
+    - summary: Add environment_class_name config option to customize the environment class name. Default remains {ClientName}Environment.
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
 - version: 4.38.5
   changelogEntry:
     - summary: Fix discriminated union Field(discriminator=...) and UnionMetadata(discriminant=...) to use Python field names instead of JSON aliases for Pydantic v2 compatibility.

@@ -68,7 +68,7 @@
     {
       "fixtures": [
         "alias-extends:no-custom-config",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "unions:no-custom-config",
         "extra-properties",
         "unknown",
@@ -119,7 +119,7 @@
         "bytes-download",
         "circular-references-advanced:no-custom-config",
         "websocket-bearer-auth",
-        "custom-auth",
+        "header-auth",
         "pagination-custom",
         "cross-package-type-names",
         "package-yml",

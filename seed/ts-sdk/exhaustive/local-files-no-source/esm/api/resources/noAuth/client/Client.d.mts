@@ -1,4 +1,5 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.mjs";
+import { type NormalizedClientOptions } from "../../../../BaseClient.mjs";
 import * as core from "../../../../core/index.mjs";
 export declare namespace NoAuthClient {
     interface Options extends BaseClientOptions {
@@ -7,7 +8,7 @@ export declare namespace NoAuthClient {
     }
 }
 export declare class NoAuthClient {
-    protected readonly _options: NoAuthClient.Options;
+    protected readonly _options: NormalizedClientOptions<NoAuthClient.Options>;
     constructor(options: NoAuthClient.Options);
     /**
      * POST request with no auth

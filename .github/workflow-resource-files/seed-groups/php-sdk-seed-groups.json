@@ -112,7 +112,7 @@
     {
       "fixtures": [
         "alias-extends",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "alias:composer-json",
         "idempotency-headers",
         "extends:private",
@@ -147,7 +147,7 @@
         "file-upload-openapi",
         "oauth-client-credentials-default",
         "basic-auth-environment-variables",
-        "custom-auth",
+        "header-auth",
         "multiple-request-bodies",
         "error-property",
         "no-environment",

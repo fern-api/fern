@@ -1,4 +1,5 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.mjs";
+import { type NormalizedClientOptions } from "../../../../BaseClient.mjs";
 import * as core from "../../../../core/index.mjs";
 import * as SeedExhaustive from "../../../index.mjs";
 export declare namespace InlinedRequestsClient {
@@ -8,7 +9,7 @@ export declare namespace InlinedRequestsClient {
     }
 }
 export declare class InlinedRequestsClient {
-    protected readonly _options: InlinedRequestsClient.Options;
+    protected readonly _options: NormalizedClientOptions<InlinedRequestsClient.Options>;
     constructor(options: InlinedRequestsClient.Options);
     /**
      * POST with custom object in request body, response is an object

@@ -54,7 +54,7 @@
     },
     {
       "fixtures": [
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "extends",
         "single-url-environment-no-default",
         "undiscriminated-unions:v0",
@@ -126,7 +126,7 @@
         "enum",
         "file-upload:package-name",
         "multi-line-docs",
-        "custom-auth",
+        "header-auth",
         "examples:always-send-required-properties",
         "nullable-optional",
         "variables",

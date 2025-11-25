@@ -10,4 +10,8 @@ export class InferredAuthProviderInstance implements AuthProviderInstance {
 
         return ts.factory.createNewExpression(ts.factory.createIdentifier("InferredAuthProvider"), undefined, params);
     }
+
+    public getSnippetProperties(_context: SdkContext): ts.ObjectLiteralElementLike[] {
+        return [];
+    }
 }
