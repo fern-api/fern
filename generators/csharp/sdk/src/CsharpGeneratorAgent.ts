@@ -64,7 +64,7 @@ export class CsharpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorCon
             sourceDirectory: "fern/output",
             uri: this.publishConfig.uri,
             token: this.publishConfig.token,
-            branch: (this.publishConfig as { branch?: string })?.branch
+            branch: undefined
         };
     }
 }

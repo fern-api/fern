@@ -78,7 +78,7 @@ export class TypeScriptGeneratorAgent extends AbstractGeneratorAgent<SdkContext>
             type: this.publishConfig?.type,
             uri: githubConfig?.uri,
             token: githubConfig?.token,
-            branch: (githubConfig as { branch?: string } | undefined)?.branch,
+            branch: undefined,
             mode: githubConfig?.mode
         };
     }
