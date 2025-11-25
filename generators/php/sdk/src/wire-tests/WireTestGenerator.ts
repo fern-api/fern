@@ -180,52 +180,107 @@ ${testMethods.join("\n\n")}
                 baseUrl: "http://localhost:8080"
             });
             const snippetResponse = this.dynamicSnippets.generateSync(snippetRequest);
-            let snippet = snippetResponse.snippet;
+            const snippet = snippetResponse.snippet;
 
-            // Extract just the method call from the snippet (remove client instantiation if present)
+            // Extract the complete method call from the snippet (remove client instantiation if present)
             // The snippet typically looks like:
             // $client = new SeedClient();
-            // $client->service->method(...);
-            // We want to extract just the method call and use our own client with test headers
-            const lines = snippet.split("\n").filter((line) => line.trim().length > 0);
-            let apiCallLine = "";
-            for (const line of lines) {
-                // Find the line that calls the client method (not the client instantiation)
-                if (line.includes("->") && !line.includes("new ")) {
-                    apiCallLine = line.trim();
-                    break;
-                }
-            }
+            // $client->service->method(
+            //     arg1: 'value1',
+            //     arg2: 'value2',
+            // );
+            // We want to extract the complete method call (including multi-line arguments)
+            // and use our own client with test headers
+            const apiCallSnippet = this.extractApiCallFromSnippet(snippet);
 
-            // If we couldn't extract the API call, fall back to the full snippet
-            if (!apiCallLine) {
-                apiCallLine = snippet;
+            if (!apiCallSnippet) {
+                this.context.logger.warn(`Failed to extract API call from snippet for endpoint ${endpoint.id}`);
+                return null;
             }
 
             return `    public function ${testName}(): void
-        {
-            $testId = "${testId}";
-            $client = new ${this.context.getRootClientClassName()}(
-                options: [
-                    'baseUrl' => 'http://localhost:8080',
-                    'headers' => ['X-Test-Id' => $testId],
-                ]
-            );
+    {
+        $testId = "${testId}";
+        $client = new ${this.context.getRootClientClassName()}(
+            options: [
+                'baseUrl' => 'http://localhost:8080',
+                'headers' => ['X-Test-Id' => $testId],
+            ]
+        );
 
-            ${apiCallLine}
+        ${apiCallSnippet}
 
-            $this->verifyRequestCount(
-                $testId,
-                "${endpoint.method}",
-                "${basePath}",
-                ${queryParamsCode},
-                1
-            );
-        }`;
+        $this->verifyRequestCount(
+            $testId,
+            "${endpoint.method}",
+            "${basePath}",
+            ${queryParamsCode},
+            1
+        );
+    }`;
         } catch (error) {
             this.context.logger.warn(`Failed to generate test method for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
+    }
+
+    /**
+     * Extracts the complete API call from a dynamic snippet.
+     * The snippet may contain client instantiation followed by a method call.
+     * We extract only the method call, handling multi-line calls with proper parentheses balancing.
+     */
+    private extractApiCallFromSnippet(snippet: string): string | null {
+        const lines = snippet.split("\n");
+
+        // Find the first line that contains a client method call (has -> but not "new ")
+        let startIndex = -1;
+        for (let i = 0; i < lines.length; i++) {
+            const line = lines[i];
+            if (line != null && line.includes("->") && !line.includes("new ")) {
+                startIndex = i;
+                break;
+            }
+        }
+
+        if (startIndex === -1) {
+            return null;
+        }
+
+        // Collect lines starting from the method call until parentheses are balanced
+        const callLines: string[] = [];
+        let parenDepth = 0;
+        let foundOpenParen = false;
+
+        for (let i = startIndex; i < lines.length; i++) {
+            const line = lines[i];
+            if (line == null) {
+                continue;
+            }
+            callLines.push(line);
+
+            // Count parentheses in this line
+            for (const char of line) {
+                if (char === "(") {
+                    parenDepth++;
+                    foundOpenParen = true;
+                } else if (char === ")") {
+                    parenDepth--;
+                }
+            }
+
+            // Stop when we've found at least one open paren and depth returns to 0
+            if (foundOpenParen && parenDepth <= 0) {
+                break;
+            }
+        }
+
+        // If we never found balanced parentheses, return null
+        if (parenDepth !== 0) {
+            return null;
+        }
+
+        // Join the lines and return, preserving the original formatting
+        return callLines.join("\n").trim();
     }
 
     private getTestMethodName(endpoint: HttpEndpoint): string {
