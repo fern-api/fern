@@ -1,0 +1,8 @@
+name: inferred-auth-implicit-refresh
+
+auth: InferredAuthScheme
+auth-schemes:
+  InferredAuthScheme:
+    scheme: bearer
+    get-token: POST /token
+    refresh-token: POST /token/refresh
