@@ -35,6 +35,8 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.normalizeClientOptions = normalizeClientOptions;
+exports.normalizeClientOptionsWithAuth = normalizeClientOptionsWithAuth;
+const BearerAuthProvider_js_1 = require("./auth/BearerAuthProvider.js");
 const headers_js_1 = require("./core/headers.js");
 const core = __importStar(require("./core/index.js"));
 function normalizeClientOptions(options) {
@@ -44,4 +46,10 @@ function normalizeClientOptions(options) {
         "X-Fern-Runtime-Version": core.RUNTIME.version,
     }, options === null || options === void 0 ? void 0 : options.headers);
     return Object.assign(Object.assign({}, options), { logging: core.logging.createLogger(options === null || options === void 0 ? void 0 : options.logging), headers });
+}
+function normalizeClientOptionsWithAuth(options) {
+    var _a;
+    const normalized = normalizeClientOptions(options);
+    (_a = normalized.authProvider) !== null && _a !== void 0 ? _a : (normalized.authProvider = new BearerAuthProvider_js_1.BearerAuthProvider(options));
+    return normalized;
 }

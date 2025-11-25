@@ -56,6 +56,9 @@ types:
       installationToken:
         docs: The token used to clone the GitHub repository.
         type: string
+      branch:
+        docs: The branch to clone from. If not specified, the default branch will be used.
+        type: optional<string>
 
   ReadmeFeature:
     docs: |

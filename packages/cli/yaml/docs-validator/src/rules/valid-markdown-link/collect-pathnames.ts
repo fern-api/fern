@@ -3,7 +3,7 @@ import type { Position } from "unist";
 
 import { RuleViolation } from "../../Rule";
 import { safeCollectLinksAndSources } from "./collect-links";
-import { stripAnchorsAndSearchParams } from "./url-utils";
+import { stripAnchorsAndSearchParams, urlMatchesInstanceHost } from "./url-utils";
 
 // this should match any link that starts with a protocol (e.g. http://, https://, mailto:, etc.)
 const EXTERNAL_LINK_PATTERN = /^(?:[a-z+]+:)/gi;
@@ -66,7 +66,7 @@ export function collectPathnamesToCheck(
                 const url = new URL(link.href);
 
                 // if the link does not point to an instance URL, we don't need to check if it exists internally
-                if (!instanceUrls.some((url) => link.href.includes(url))) {
+                if (!urlMatchesInstanceHost(url, instanceUrls)) {
                     // TODO: potentially do a `fetch` check here to see if the external link is valid?
                     return;
                 }

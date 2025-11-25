@@ -4,36 +4,24 @@ import { AuthClient } from "./api/resources/auth/client/Client.js";
 import { NestedClient } from "./api/resources/nested/client/Client.js";
 import { NestedNoAuthClient } from "./api/resources/nestedNoAuth/client/Client.js";
 import { SimpleClient } from "./api/resources/simple/client/Client.js";
-import { InferredAuthProvider } from "./auth/InferredAuthProvider.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
-import type * as core from "./core/index.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedInferredAuthExplicitClient {
-    export interface Options extends BaseClientOptions {
-        xApiKey: string;
-        clientId: string;
-        clientSecret: string;
-        scope?: string;
-    }
+    export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedInferredAuthExplicitClient {
-    protected readonly _options: SeedInferredAuthExplicitClient.Options;
-    protected readonly _authProvider: core.AuthProvider;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedInferredAuthExplicitClient.Options>;
     protected _auth: AuthClient | undefined;
     protected _nestedNoAuth: NestedNoAuthClient | undefined;
     protected _nested: NestedClient | undefined;
     protected _simple: SimpleClient | undefined;
 
     constructor(options: SeedInferredAuthExplicitClient.Options) {
-        this._options = normalizeClientOptions(options);
-        this._authProvider = new InferredAuthProvider({
-            client: this,
-            authTokenParameters: { ...this._options },
-        });
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get auth(): AuthClient {
@@ -45,10 +33,10 @@ export class SeedInferredAuthExplicitClient {
     }
 
     public get nested(): NestedClient {
-        return (this._nested ??= new NestedClient({ ...this._options, authProvider: this._authProvider }));
+        return (this._nested ??= new NestedClient(this._options));
     }
 
     public get simple(): SimpleClient {
-        return (this._simple ??= new SimpleClient({ ...this._options, authProvider: this._authProvider }));
+        return (this._simple ??= new SimpleClient(this._options));
     }
 }

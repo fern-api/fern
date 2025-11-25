@@ -331,6 +331,15 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         const authProviderStatements = [];
         const mergeOnlyDefinedHeaders: (ts.PropertyAssignment | ts.SpreadAssignment)[] = [];
         if (this.generatedSdkClientClass.hasAuthProvider()) {
+            const metadataArg = this.generatedSdkClientClass.getGenerateEndpointMetadata()
+                ? ts.factory.createObjectLiteralExpression([
+                      ts.factory.createPropertyAssignment(
+                          "endpointMetadata",
+                          this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
+                      )
+                  ])
+                : undefined;
+
             authProviderStatements.push(
                 ts.factory.createVariableStatement(
                     undefined,
@@ -341,7 +350,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                                 undefined,
                                 context.coreUtilities.auth.AuthRequest._getReferenceToType(),
                                 context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
-                                    this.generatedSdkClientClass.getReferenceToAuthProviderOrThrow()
+                                    this.generatedSdkClientClass.getReferenceToAuthProviderOrThrow(),
+                                    metadataArg
                                 )
                             )
                         ],
@@ -350,28 +360,6 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             );
             mergeHeaders.push(ts.factory.createIdentifier("_authRequest.headers"));
-        } else {
-            const getAuthHeaderValue = this.generatedSdkClientClass.getAuthorizationHeaderValue({ context });
-            mergeOnlyDefinedHeaders.push(
-                ...(getAuthHeaderValue
-                    ? [ts.factory.createPropertyAssignment("Authorization", getAuthHeaderValue)]
-                    : this.generatedSdkClientClass.shouldGenerateCustomAuthorizationHeaderHelperMethod()
-                      ? [
-                            ts.factory.createSpreadAssignment(
-                                ts.factory.createAwaitExpression(
-                                    ts.factory.createCallExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createThis(),
-                                            GeneratedSdkClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME
-                                        ),
-                                        undefined,
-                                        []
-                                    )
-                                )
-                            )
-                        ]
-                      : [])
-            );
         }
         mergeOnlyDefinedHeaders.push(
             ...this.channel.headers.map((header) => {
