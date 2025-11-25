@@ -112,11 +112,15 @@ function getReferenceEndpointInvocationParameters({
     const parameters: string[] = [];
 
     for (const param of endpointSignatureInfo.pathParameters) {
-        parameters.push(`$${param.name}`);
+        const paramName = param.name.startsWith("$") ? param.name : `$${param.name}`;
+        parameters.push(paramName);
     }
 
     if (endpointSignatureInfo.requestParameter != null) {
-        parameters.push(`$${endpointSignatureInfo.requestParameter.name}`);
+        const paramName = endpointSignatureInfo.requestParameter.name.startsWith("$")
+            ? endpointSignatureInfo.requestParameter.name
+            : `$${endpointSignatureInfo.requestParameter.name}`;
+        parameters.push(paramName);
     }
 
     return `(${parameters.join(", ")})`;
@@ -151,12 +155,19 @@ function getPhpTypeString({ type, context }: { type: php.Type; context: SdkGener
     const writer = new php.Writer({
         namespace: context.getRootNamespace(),
         rootNamespace: context.getRootNamespace(),
-        customConfig: context.customConfig
+        customConfig: context.customConfig,
+        skipImports: true
     });
 
     type.write(writer);
 
-    const typeName = writer.toString().trim();
+    let typeName = writer.toString().trim();
+
+    // Remove namespace declarations and use statements that may appear in the output
+    typeName = typeName
+        .replace(/^namespace\s+[^;]+;\s*/gm, "")
+        .replace(/^use\s+[^;]+;\s*/gm, "")
+        .trim();
 
     if (typeName === "" || typeName === "void") {
         return "void";
@@ -256,11 +267,15 @@ function getEndpointSnippet({
     const params: string[] = [];
 
     for (const param of endpointSignatureInfo.pathParameters) {
-        params.push(`$${param.name}`);
+        const paramName = param.name.startsWith("$") ? param.name : `$${param.name}`;
+        params.push(paramName);
     }
 
     if (endpointSignatureInfo.requestParameter != null) {
-        params.push(`$${endpointSignatureInfo.requestParameter.name}`);
+        const paramName = endpointSignatureInfo.requestParameter.name.startsWith("$")
+            ? endpointSignatureInfo.requestParameter.name
+            : `$${endpointSignatureInfo.requestParameter.name}`;
+        params.push(paramName);
     }
 
     const returnType = endpointSignatureInfo.returnType;
