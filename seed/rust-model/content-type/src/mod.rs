@@ -1,3 +1,12 @@
+//! Request and response types for the ContentTypes
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 5 types for API operations
+
 pub mod patch_proxy_request;
 pub mod patch_complex_request;
 pub mod named_mixed_patch_request;

@@ -1,5 +1,8 @@
 pub use crate::prelude::*;
 
+/// Query parameters for send
+///
+/// Request type for the SendQueryRequest operation.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SendQueryRequest {
     pub operand: Operand,

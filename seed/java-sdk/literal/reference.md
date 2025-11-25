@@ -90,8 +90,8 @@ client.inlined().send(
                 )
                 .build()
         )
-        .temperature(10.1)
         .context("You're super wise")
+        .temperature(10.1)
         .maybeContext("You're super wise")
         .build()
 );
@@ -351,8 +351,8 @@ client.query().send(
 client.reference().send(
     SendRequest
         .builder()
-        .context("You're super wise")
         .query("What is the weather today")
+        .context("You're super wise")
         .containerObject(
             ContainerObject
                 .builder()

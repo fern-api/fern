@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "properties": {
+    "first": {
+      "type": "string"
+    },
+    "second": {
+      "type": "string"
+    },
+    "third": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "first",
+    "second",
+    "third"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
