@@ -146,6 +146,8 @@ allowedFailures:
   # Java-specific fixture for LocalDate support
   - unions-with-local-date
   - unknown
+  # Java-specific fixture for staged builder ordering
+  - staged-builder-ordering
   - url-form-encoded
   - validation
   - variables
