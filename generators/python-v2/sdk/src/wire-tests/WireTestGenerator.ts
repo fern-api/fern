@@ -510,9 +510,22 @@ export class WireTestGenerator {
         });
     }
 
+    /**
+     * Escapes a string for use in Python code.
+     * Handles newlines, tabs, carriage returns, backslashes, and quotes.
+     */
+    private escapeStringForPython(value: string): string {
+        return value
+            .replace(/\\/g, "\\\\") // Escape backslashes first
+            .replace(/\n/g, "\\n") // Escape newlines
+            .replace(/\r/g, "\\r") // Escape carriage returns
+            .replace(/\t/g, "\\t") // Escape tabs
+            .replace(/"/g, '\\"'); // Escape double quotes
+    }
+
     private formatValue(value: unknown): string {
         if (typeof value === "string") {
-            return `"${value}"`;
+            return `"${this.escapeStringForPython(value)}"`;
         }
         if (typeof value === "number") {
             return String(value);
@@ -540,7 +553,7 @@ export class WireTestGenerator {
             return value ? "True" : "False";
         }
         if (typeof value === "string") {
-            return `"${value}"`;
+            return `"${this.escapeStringForPython(value)}"`;
         }
         if (typeof value === "number") {
             return String(value);
@@ -550,7 +563,9 @@ export class WireTestGenerator {
             return `[${items.join(",")}]`;
         }
         if (typeof value === "object") {
-            const entries = Object.entries(value).map(([key, val]) => `"${key}":${this.jsonToPython(val)}`);
+            const entries = Object.entries(value).map(
+                ([key, val]) => `"${this.escapeStringForPython(key)}":${this.jsonToPython(val)}`
+            );
             return `{${entries.join(",")}}`;
         }
         return JSON.stringify(value);
@@ -571,7 +586,7 @@ export class WireTestGenerator {
 
         for (const [key, value] of Object.entries(queryParams)) {
             if (value != null) {
-                entries.push(`"${key}": "${String(value)}"`);
+                entries.push(`"${this.escapeStringForPython(key)}": "${this.escapeStringForPython(String(value))}"`);
             }
         }
 
