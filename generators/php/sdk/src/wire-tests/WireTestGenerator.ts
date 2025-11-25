@@ -102,11 +102,13 @@ export class WireTestGenerator {
         return {
             filename: `${testClassName}.php`,
             directory: RelativeFilePath.of("tests/Wire"),
-            contents: phpContent.toString({
-                namespace: this.context.getTestsNamespace(),
-                rootNamespace: this.context.getRootNamespace(),
-                customConfig: this.context.customConfig
-            })
+            contents:
+                "<?php\n\n" +
+                phpContent.toString({
+                    namespace: this.context.getTestsNamespace(),
+                    rootNamespace: this.context.getRootNamespace(),
+                    customConfig: this.context.customConfig
+                })
         };
     }
 

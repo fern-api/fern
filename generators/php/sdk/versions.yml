@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.22.2
+  changelogEntry:
+    - summary: |
+        Add missing <?php opening tag to generated wire test files for proper syntax highlighting.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 62
+
 - version: 1.22.1
   changelogEntry:
     - summary: |
