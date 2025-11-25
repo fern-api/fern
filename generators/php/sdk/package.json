@@ -38,9 +38,9 @@
     "test:debug": "pnpm run test --inspect --no-file-parallelism",
     "test:update": "vitest --passWithNoTests --run -u"
   },
-    "devDependencies": {
-      "@fern-api/base-generator": "workspace:*",
-      "@fern-api/mock-utils": "workspace:*",
+  "devDependencies": {
+    "@fern-api/base-generator": "workspace:*",
+    "@fern-api/mock-utils": "workspace:*",
     "@fern-api/configs": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/fs-utils": "workspace:*",

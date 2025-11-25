@@ -36,9 +36,9 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         return new SdkGeneratorContext(ir, generatorConfig, customConfig, generatorNotificationService);
     }
 
-        protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
-            return SdkCustomConfigSchema.parse(customConfig ?? {});
-        }
+    protected parseCustomConfigOrThrow(customConfig: unknown): SdkCustomConfigSchema {
+        return SdkCustomConfigSchema.parse(customConfig ?? {});
+    }
 
     protected async publishPackage(context: SdkGeneratorContext): Promise<void> {
         throw new Error("Method not implemented.");
