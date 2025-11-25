@@ -189,6 +189,20 @@ fixtures:
         packageName: stream
         module:
           path: github.com/fern-api/stream-go
+  server-sent-event-examples:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
+        packageName: sse
+        module:
+          path: github.com/fern-api/sse-examples-go
+  server-sent-events:
+    - outputFolder: with-wire-tests
+      customConfig:
+        enableWireTests: true
+        packageName: sse
+        module:
+          path: github.com/fern-api/sse-go
   idempotency-headers:
     - outputFolder: .
       outputVersion: 0.0.1

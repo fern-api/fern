@@ -308,6 +308,14 @@ fixtures:
         pydantic_config:
           skip_validation: true
       outputFolder: skip-pydantic-validation
+  server-sent-event-examples:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: with-wire-tests
+  server-sent-events:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: with-wire-tests
   unions:
     - customConfig: null
       outputFolder: no-custom-config
