@@ -178,7 +178,19 @@ abstract class WireMockTestCase extends TestCase
         $this->assertSame(200, $response->getStatusCode(), 'Failed to query WireMock requests');
 
         $json = json_decode((string) $response->getBody(), true);
-        $requests = $json['requests'] ?? [];
+        
+        // Ensure we have an array; otherwise, fail the test.
+        if (!is_array($json)) {
+            $this->fail('Expected WireMock to return a JSON object.');
+        }
+
+        /** @var array<string, mixed> $json */
+        $requests = [];
+        if (isset($json['requests']) && is_array($json['requests'])) {
+            $requests = $json['requests'];
+        }
+
+        /** @var array<int, mixed> $requests */
         $this->assertCount(
             $expected,
             $requests,
