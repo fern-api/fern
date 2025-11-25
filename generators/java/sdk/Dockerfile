@@ -49,6 +49,12 @@ RUN test -f /bin/java-v2 || echo "java-v2 CLI not found or not executable"
 RUN npm install -f -g @fern-api/generator-cli@0.2.0
 
 # Patch @octokit/request to fix CVE-2025-25290 (ReDoS vulnerability)
-RUN cd /usr/local/lib/node_modules/@fern-api/generator-cli && npm install @octokit/request@10.0.7
+# Use npm pack + tar to replace the package without running npm install (which fails due to workspace: protocol)
+RUN cd /usr/local/lib/node_modules/@fern-api/generator-cli/node_modules/@octokit && \
+    rm -rf request && \
+    npm pack @octokit/request@10.0.7 && \
+    tar -xzf octokit-request-10.0.7.tgz && \
+    mv package request && \
+    rm octokit-request-10.0.7.tgz
 
 ENTRYPOINT ["sh", "/init.sh"]
