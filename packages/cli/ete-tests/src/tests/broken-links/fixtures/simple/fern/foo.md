@@ -5,7 +5,6 @@
 1. valid page link [/api-reference/imdb/create-movie](/api-reference/imdb/create-movie)
 2. valid relative file link [./bar.mdx](./bar.mdx)
 3. valid relative link with [anchor](./#subsection-title)
-4. external link with angle brackets [here](<https://conduitxyz.typeform.com/to/VY5a5URt?typeform-source=docs.conduit.xyz>)
 
 ## Broken Links
 
