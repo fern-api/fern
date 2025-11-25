@@ -99,7 +99,7 @@ export function findOrphanedSeedFolders(generators: GeneratorWorkspace[]): Orpha
             if (expectedOutputFolders != null) {
                 const actualSubFolders = getSubFolders(folderPath);
                 for (const subFolder of actualSubFolders) {
-                    if (isLikelyOutputFolder(subFolder) && !expectedOutputFolders.has(subFolder)) {
+                    if (!expectedOutputFolders.has(subFolder)) {
                         orphanedFolders.push({
                             generator: generator.workspaceName,
                             folder,
@@ -113,22 +113,6 @@ export function findOrphanedSeedFolders(generators: GeneratorWorkspace[]): Orpha
     }
 
     return orphanedFolders;
-}
-
-function isLikelyOutputFolder(folderName: string): boolean {
-    const sharedFolderPatterns = [
-        /^\./, // Hidden folders like .github, .mock
-        /^src$/, // Source folder
-        /^tests?$/, // Test folders
-        /^node_modules$/, // Node modules
-        /^__pycache__$/, // Python cache
-        /^\.venv$/, // Python virtual environment
-        /^dist$/, // Distribution folder
-        /^build$/, // Build folder
-        /^target$/ // Rust/Java target folder
-    ];
-
-    return !sharedFolderPatterns.some((pattern) => pattern.test(folderName));
 }
 
 export async function cleanOrphanedSeedFolders(
