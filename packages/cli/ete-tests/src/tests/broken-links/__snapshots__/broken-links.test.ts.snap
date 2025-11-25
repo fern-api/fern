@@ -3,9 +3,9 @@
 exports[`fern docs broken-links > simple broken links 1`] = `
 "[docs]:foo.md
        broken link to /bar/baz
-       	fix here: foo.md:11:21
-       broken link to /bar/baz.md
        	fix here: foo.md:12:21
+       broken link to /bar/baz.md
+       	fix here: foo.md:13:21
        
 [docs]:bar.mdx
        broken link to ../hello (resolved path: section/hello)
