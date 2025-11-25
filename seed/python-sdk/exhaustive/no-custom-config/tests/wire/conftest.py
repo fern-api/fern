@@ -11,6 +11,8 @@ from typing import Any, Dict, Optional
 import pytest
 import requests
 
+from seed.client import SeedExhaustive
+
 
 @pytest.fixture(scope="session", autouse=True)
 def wiremock_container():
@@ -44,6 +46,23 @@ def wiremock_container():
     # Cleanup: stop and remove the container
     print("\nStopping WireMock container...")
     subprocess.run(["docker", "compose", "-f", compose_file, "down", "-v"], check=False, capture_output=True)
+
+
+def get_client(test_id: str) -> SeedExhaustive:
+    """
+    Creates a configured client instance for wire tests.
+
+    Args:
+        test_id: Unique identifier for the test, used for request tracking.
+
+    Returns:
+        A configured client instance with all required auth parameters.
+    """
+    return SeedExhaustive(
+        base_url="http://localhost:8080",
+        headers={"X-Test-Id": test_id},
+        token="test_token",
+    )
 
 
 def verify_request_count(
