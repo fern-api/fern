@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix fern docs dev bug on Windows where asset paths were not parsing correctly
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.7.1
+
+- changelogEntry:
+    - summary: |
         Support per-generator auth overrides in generators.yml.
         In the following example the TypeScript SDK generator will use Basic auth while the rest of the APIs use OAuth.
 
