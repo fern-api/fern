@@ -420,8 +420,25 @@ export class EndpointSnippetGenerator {
 
         this.context.errors.scope(Scope.PathParameters);
         const pathParameters = [...(this.context.ir.pathParameters ?? []), ...(request.pathParameters ?? [])];
+
+        // Get body property names to check for collisions
+        let bodyPropertyNames: Set<string> = new Set();
+        if (request.body != null) {
+            const bodyArgs = this.getBodyRequestArgs({ body: request.body, value: snippet.requestBody });
+            bodyPropertyNames = new Set(bodyArgs.map(arg => arg.name));
+        }
+
+        // Add path parameters, adding underscore suffix if they collide with body properties
         if (pathParameters.length > 0) {
-            args.push(...this.getPathParameters({ namedParameters: pathParameters, snippet }));
+            const pathArgs = this.getPathParameters({ namedParameters: pathParameters, snippet });
+            const disambiguatedPathArgs = pathArgs.map(arg => {
+                // If this path parameter name collides with a body property, add underscore suffix
+                if (bodyPropertyNames.has(arg.name)) {
+                    return { ...arg, name: arg.name + "_" };
+                }
+                return arg;
+            });
+            args.push(...disambiguatedPathArgs);
         }
         this.context.errors.unscope();
 
