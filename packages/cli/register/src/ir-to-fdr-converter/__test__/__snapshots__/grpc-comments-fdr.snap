@@ -63,7 +63,7 @@
               "codeSamples": undefined,
               "description": "",
               "headers": {},
-              "name": undefined,
+              "name": "commentsServiceCreatecommentExample",
               "path": "/comments/v1/comments",
               "pathParameters": {},
               "queryParameters": {},
