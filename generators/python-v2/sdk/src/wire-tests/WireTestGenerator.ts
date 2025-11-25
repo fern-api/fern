@@ -164,9 +164,9 @@ export class WireTestGenerator {
         // Create an empty code block
         const node = python.codeBlock("");
 
-        // Import get_client and verify_request_count from conftest (pytest makes conftest importable)
-        node.addReference(python.reference({ name: "get_client", modulePath: ["conftest"] }));
-        node.addReference(python.reference({ name: "verify_request_count", modulePath: ["conftest"] }));
+        // Import get_client and verify_request_count from .conftest (relative import within tests/wire package)
+        node.addReference(python.reference({ name: "get_client", modulePath: [".conftest"] }));
+        node.addReference(python.reference({ name: "verify_request_count", modulePath: [".conftest"] }));
 
         return node;
     }

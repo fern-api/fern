@@ -25,6 +25,7 @@ export class WireTestSetupGenerator {
         this.generateWireMockConfigFile();
         this.generateDockerComposeFile();
         this.generateConftestFile();
+        this.generateInitFile();
     }
 
     public static getWiremockConfigContent(ir: IntermediateRepresentation) {
@@ -88,6 +89,15 @@ export class WireTestSetupGenerator {
 
         this.context.project.addRawFiles(conftestFile);
         this.context.logger.debug("Generated conftest.py for WireMock container lifecycle management");
+    }
+
+    /**
+     * Generates an __init__.py file to make tests/wire a proper Python package
+     */
+    private generateInitFile(): void {
+        const initFile = new File("__init__.py", RelativeFilePath.of("./tests/wire"), "");
+        this.context.project.addRawFiles(initFile);
+        this.context.logger.debug("Generated __init__.py for tests/wire package");
     }
 
     /**
@@ -219,7 +229,7 @@ def verify_request_count(
     private getClientImport(): string {
         const orgName = this.context.config.organization;
         const clientClassName = this.getClientClassName();
-        return `from ${orgName} import ${clientClassName}`;
+        return `from ${orgName}.client import ${clientClassName}`;
     }
 
     /**

@@ -11,7 +11,7 @@ from typing import Any, Dict, Optional
 import pytest
 import requests
 
-from seed import SeedExhaustive
+from seed.client import SeedExhaustive
 
 
 @pytest.fixture(scope="session", autouse=True)

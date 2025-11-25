@@ -1,4 +1,4 @@
-from conftest import get_client, verify_request_count
+from .conftest import get_client, verify_request_count
 
 
 def test_endpoints_enum_get_and_return_enum() -> None:

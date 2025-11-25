@@ -1,4 +1,4 @@
-from conftest import get_client, verify_request_count
+from .conftest import get_client, verify_request_count
 
 
 def test_endpoints_contentType_post_json_patch_content_type() -> None:
