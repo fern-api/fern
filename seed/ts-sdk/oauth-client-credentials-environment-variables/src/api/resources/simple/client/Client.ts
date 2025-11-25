@@ -7,9 +7,7 @@ import * as core from "../../../../core/index.js";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace SimpleClient {
-    export interface Options extends BaseClientOptions {
-        token?: core.Supplier<core.BearerToken | undefined>;
-    }
+    export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

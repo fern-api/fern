@@ -361,26 +361,23 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
             );
             mergeHeaders.push(ts.factory.createIdentifier("_authRequest.headers"));
         } else {
-            const getAuthHeaderValue = this.generatedSdkClientClass.getAuthorizationHeaderValue();
             mergeOnlyDefinedHeaders.push(
-                ...(getAuthHeaderValue
-                    ? [ts.factory.createPropertyAssignment("Authorization", getAuthHeaderValue)]
-                    : this.generatedSdkClientClass.shouldGenerateCustomAuthorizationHeaderHelperMethod()
-                      ? [
-                            ts.factory.createSpreadAssignment(
-                                ts.factory.createAwaitExpression(
-                                    ts.factory.createCallExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createThis(),
-                                            GeneratedSdkClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME
-                                        ),
-                                        undefined,
-                                        []
-                                    )
-                                )
-                            )
-                        ]
-                      : [])
+                ...(this.generatedSdkClientClass.shouldGenerateCustomAuthorizationHeaderHelperMethod()
+                    ? [
+                          ts.factory.createSpreadAssignment(
+                              ts.factory.createAwaitExpression(
+                                  ts.factory.createCallExpression(
+                                      ts.factory.createPropertyAccessExpression(
+                                          ts.factory.createThis(),
+                                          GeneratedSdkClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME
+                                      ),
+                                      undefined,
+                                      []
+                                  )
+                              )
+                          )
+                      ]
+                    : [])
             );
         }
         mergeOnlyDefinedHeaders.push(

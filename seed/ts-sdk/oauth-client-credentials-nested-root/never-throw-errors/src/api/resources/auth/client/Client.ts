@@ -7,9 +7,7 @@ import * as core from "../../../../core/index.js";
 import * as SeedOauthClientCredentials from "../../../index.js";
 
 export declare namespace AuthClient {
-    export interface Options extends BaseClientOptions {
-        token?: core.Supplier<core.BearerToken | undefined>;
-    }
+    export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

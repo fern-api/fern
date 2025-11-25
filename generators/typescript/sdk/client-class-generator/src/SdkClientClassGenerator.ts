@@ -142,7 +142,6 @@ export class SdkClientClassGenerator {
             shouldGenerateWebsocketClients: this.shouldGenerateWebsocketClients,
             requireDefaultEnvironment: this.requireDefaultEnvironment,
             defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
-            npmPackage: this.npmPackage,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
             includeSerdeLayer: this.includeSerdeLayer,
             retainOriginalCasing: this.retainOriginalCasing,
