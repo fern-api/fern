@@ -121,15 +121,12 @@ export class WireTestGenerator {
         // Add raw imports that the AST doesn't support (simple "import X" statements)
         statements.push(python.codeBlock("import pytest"));
         statements.push(python.codeBlock("import requests"));
+        statements.push(python.codeBlock("import uuid"));
 
         // Add an import registration statement (for "from X import Y" style imports)
         statements.push(this.createImportRegistration());
 
-        // Add setup fixture
-        statements.push(this.generateSetupFixture());
-
-        // Add helper functions
-        statements.push(this.generateResetWiremockFunction());
+        // Add helper function for verifying request count
         statements.push(this.generateVerifyRequestCountFunction());
 
         // Add test functions for each endpoint
@@ -171,41 +168,12 @@ export class WireTestGenerator {
     // HELPER FUNCTION GENERATION
     // =============================================================================
 
-    private generateSetupFixture(): python.Method {
-        const method = python.method({
-            name: "setup_client",
-            decorators: [
-                python.decorator({
-                    callable: python.codeBlock("pytest.fixture(autouse=True)")
-                })
-            ],
-            return_: python.Type.none(),
-            docstring: "Reset WireMock before each test"
-        });
-
-        method.addStatement(python.codeBlock(`reset_wiremock_requests()`));
-        return method;
-    }
-
-    private generateResetWiremockFunction(): python.Method {
-        const statements = [
-            python.codeBlock(`wiremock_admin_url = "http://localhost:8080/__admin"`),
-            python.codeBlock(`response = requests.delete(f"{wiremock_admin_url}/requests")`),
-            python.codeBlock(`assert response.status_code == 200, "Failed to reset WireMock requests"`)
-        ];
-
-        const method = python.method({
-            name: "reset_wiremock_requests",
-            return_: python.Type.none(),
-            docstring: "Resets all WireMock request journal"
-        });
-
-        statements.forEach((stmt) => method.addStatement(stmt));
-        return method;
-    }
-
     private generateVerifyRequestCountFunction(): python.Method {
         const params = [
+            python.parameter({
+                name: "test_id",
+                type: python.Type.str()
+            }),
             python.parameter({
                 name: "method",
                 type: python.Type.str()
@@ -226,7 +194,11 @@ export class WireTestGenerator {
 
         const statements = [
             python.codeBlock(`wiremock_admin_url = "http://localhost:8080/__admin"`),
-            python.codeBlock(`request_body: Dict[str, Any] = {"method": method, "urlPath": url_path}`),
+            python.codeBlock(`request_body: Dict[str, Any] = {
+        "method": method,
+        "urlPath": url_path,
+        "headers": {"X-Test-Id": {"equalTo": test_id}}
+    }`),
             python.codeBlock(`if query_params:
         query_parameters = {k: {"equalTo": v} for k, v in query_params.items()}
         request_body["queryParameters"] = query_parameters`),
@@ -243,7 +215,7 @@ export class WireTestGenerator {
             name: "verify_request_count",
             parameters: params,
             return_: python.Type.none(),
-            docstring: "Verifies the number of requests made to WireMock"
+            docstring: "Verifies the number of requests made to WireMock filtered by test ID for concurrency safety"
         });
 
         statements.forEach((stmt) => method.addStatement(stmt));
@@ -268,16 +240,25 @@ export class WireTestGenerator {
 
             const statements: python.AstNode[] = [];
 
-            // Create client
-            statements.push(python.codeBlock(`client = ${clientName}(base_url="http://localhost:8080")`));
+            // Generate unique test ID for concurrency safety
+            statements.push(python.codeBlock(`test_id = str(uuid.uuid4())`));
+
+            // Create client with test ID header for request tracking
+            statements.push(
+                python.codeBlock(
+                    `client = ${clientName}(base_url="http://localhost:8080", default_headers={"X-Test-Id": test_id})`
+                )
+            );
 
             // Generate the API call
             const apiCall = this.generateApiCall(endpoint, example, service);
             statements.push(python.codeBlock(apiCall));
 
-            // Verify request count
+            // Verify request count using test ID for filtering
             statements.push(
-                python.codeBlock(`verify_request_count("${endpoint.method}", "${basePath}", ${queryParamsCode}, 1)`)
+                python.codeBlock(
+                    `verify_request_count(test_id, "${endpoint.method}", "${basePath}", ${queryParamsCode}, 1)`
+                )
             );
 
             const method = python.method({
