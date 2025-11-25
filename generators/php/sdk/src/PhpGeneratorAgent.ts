@@ -64,7 +64,7 @@ export class PhpGeneratorAgent extends AbstractGeneratorAgent<SdkGeneratorContex
             sourceDirectory: "fern/output",
             uri: this.publishConfig.uri,
             token: this.publishConfig.token,
-            branch: undefined
+            branch: this.publishConfig.branch
         };
     }
 }
