@@ -62,7 +62,6 @@ import { GeneratedDefaultEndpointImplementation } from "./endpoints/default/Gene
 import { GeneratedFileDownloadEndpointImplementation } from "./endpoints/GeneratedFileDownloadEndpointImplementation";
 import { GeneratedStreamingEndpointImplementation } from "./endpoints/GeneratedStreamingEndpointImplementation";
 import { isLiteralHeader } from "./endpoints/utils/isLiteralHeader";
-import { GeneratedHeader } from "./GeneratedHeader";
 import { GeneratedWrappedService } from "./GeneratedWrappedService";
 import { GeneratedDefaultWebsocketImplementation } from "./websocket/GeneratedDefaultWebsocketImplementation";
 
@@ -110,18 +109,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     public static readonly OPTIONS_INTERFACE_NAME = "Options";
     public static readonly OPTIONS_PRIVATE_MEMBER = "_options";
     private static readonly OPTIONS_PARAMETER_NAME = "options";
-    public static readonly AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getAuthorizationHeader";
-    public static readonly CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME = "_getCustomAuthorizationHeaders";
     public static readonly METADATA_FOR_TOKEN_SUPPLIER_VAR = "_metadata";
-    public static readonly ENDPOINT_SUPPLIER_ARG_METADATA_PROP = "endpointMetadata";
-    public static readonly AUTH_HEADER_HELPER_METHOD_METADATA_ARG = "endpointMetadata";
     public static readonly AUTH_PROVIDER_FIELD_NAME = "authProvider";
     public static readonly LOGGING_FIELD_NAME = "logging";
-    public static readonly FETCH_FIELD_NAME = "fetch";
-    public static readonly AUTHORIZATION_HEADER_NAME = "authorization";
-    public static readonly TOKEN_FIELD_NAME = "token";
-    public static readonly CLIENT_ID_FIELD_NAME = "clientId";
-    public static readonly CLIENT_SECRET_FIELD_NAME = "clientSecret";
 
     private readonly isRoot: boolean;
     private readonly intermediateRepresentation: IntermediateRepresentation;
@@ -411,6 +401,23 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             []
         );
 
+        // Convert any global "authorization" headers into HeaderAuthScheme objects
+        const authSchemes: AuthScheme[] = [...intermediateRepresentation.auth.schemes];
+        for (const header of intermediateRepresentation.headers) {
+            if (header.name.wireValue.toLowerCase() === "authorization") {
+                authSchemes.push(
+                    AuthScheme.header({
+                        key: "_GlobalAuthorizationHeader",
+                        name: header.name,
+                        prefix: undefined,
+                        headerEnvVar: header.env,
+                        valueType: header.valueType,
+                        docs: header.docs
+                    })
+                );
+            }
+        }
+
         const isAnyAuth = intermediateRepresentation.auth.requirement === "ANY";
         const anyAuthProviders: AuthProviderInstance[] = [];
 
@@ -426,7 +433,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 }
             });
 
-        for (const authScheme of intermediateRepresentation.auth.schemes) {
+        for (const authScheme of authSchemes) {
             if (isAnyAuth) {
                 const authProvider = getAuthProvider(authScheme);
                 anyAuthProviders.push(authProvider);
@@ -830,28 +837,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             });
         }
 
-        if (this.shouldGenerateCustomAuthorizationHeaderHelperMethod()) {
-            serviceClass.methods.push({
-                scope: Scope.Protected,
-                isAsync: true,
-                name: GeneratedSdkClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME,
-                returnType: "Promise<Record<string, string | undefined>>",
-                statements: this.getCustomAuthorizationHeaderStatements(context).map(getTextOfTsNode),
-                parameters: [
-                    ...(this.generateEndpointMetadata
-                        ? [
-                              {
-                                  name: GeneratedSdkClientClassImpl.AUTH_HEADER_HELPER_METHOD_METADATA_ARG,
-                                  type: getTextOfTsNode(
-                                      context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
-                                  )
-                              }
-                          ]
-                        : [])
-                ]
-            });
-        }
-
         context.sourceFile.addModule(serviceModule);
         context.sourceFile.addClass(serviceClass);
     }
@@ -870,13 +855,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         });
 
         return code`this._options = normalizeClientOptionsWithAuth(options);`;
-    }
-
-    public shouldGenerateCustomAuthorizationHeaderHelperMethod(): boolean {
-        if (this.generatedEndpointImplementations.length === 0 && this.generatedWebsocketImplementation == null) {
-            return false;
-        }
-        return this.getCustomAuthorizationHeaders().length > 0;
     }
 
     public getBaseUrl(endpoint: HttpEndpoint, context: SdkContext): ts.Expression {
@@ -917,23 +895,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             referenceToEnvironmentValue,
             baseUrlId: endpoint.baseUrl ?? undefined
         });
-    }
-
-    public getCustomAuthorizationHeadersValue(): ts.Expression | undefined {
-        if (this.shouldGenerateCustomAuthorizationHeaderHelperMethod()) {
-            return ts.factory.createAwaitExpression(
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createThis(),
-                        GeneratedSdkClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME
-                    ),
-                    undefined,
-                    this.generateEndpointMetadata ? [this.getReferenceToMetadataForEndpointSupplier()] : []
-                )
-            );
-        } else {
-            return undefined;
-        }
     }
 
     /*******************
@@ -1205,62 +1166,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return header.name.name.camelCase.unsafeName;
     }
 
-    public getReferenceToMetadataArg(): ts.Expression {
-        return ts.factory.createIdentifier(GeneratedSdkClientClassImpl.AUTH_HEADER_HELPER_METHOD_METADATA_ARG);
-    }
-
     public getReferenceToMetadataForEndpointSupplier(): ts.Expression {
         return ts.factory.createIdentifier(GeneratedSdkClientClassImpl.METADATA_FOR_TOKEN_SUPPLIER_VAR);
-    }
-
-    private getCustomAuthorizationHeaderStatements(context: SdkContext): ts.Statement[] {
-        const elements: GeneratedHeader[] = [];
-        const statements: ts.Statement[] = [];
-        for (const header of this.getCustomAuthorizationHeaders()) {
-            const headerVariableName = `${header.name.name.camelCase.unsafeName}Value`;
-            statements.push(
-                ts.factory.createVariableStatement(
-                    undefined,
-                    ts.factory.createVariableDeclarationList(
-                        [
-                            ts.factory.createVariableDeclaration(
-                                ts.factory.createIdentifier(headerVariableName),
-                                undefined,
-                                undefined,
-                                context.coreUtilities.fetcher.Supplier.get(
-                                    this.getReferenceToOption(this.getOptionKeyForHeader(header))
-                                )
-                            )
-                        ],
-                        ts.NodeFlags.Const
-                    )
-                )
-            );
-
-            elements.push({
-                header: header.name.wireValue,
-                value: ts.factory.createIdentifier(headerVariableName)
-            });
-        }
-
-        const authHeaders: ts.ObjectLiteralElementLike[] = elements.map(({ header, value }) =>
-            ts.factory.createPropertyAssignment(ts.factory.createStringLiteral(header), value)
-        );
-
-        const toAuthHeaderStatement = ts.factory.createReturnStatement(
-            ts.factory.createObjectLiteralExpression(authHeaders)
-        );
-        statements.push(toAuthHeaderStatement);
-
-        return statements;
-    }
-
-    private getCustomAuthorizationHeaders(): HttpHeader[] {
-        return this.intermediateRepresentation.headers.filter((header) => this.isAuthorizationHeader(header));
-    }
-
-    private isAuthorizationHeader(header: HttpHeader): boolean {
-        return header.name.wireValue.toLowerCase() === "authorization";
     }
 
     public getReferenceToRootPathParameter(pathParameter: PathParameter): ts.Expression {

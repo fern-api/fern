@@ -108,11 +108,6 @@ export function generateHeaders({
         )
     );
 
-    const customAuthorizationHeaderValue = generatedSdkClientClass.getCustomAuthorizationHeadersValue();
-    if (customAuthorizationHeaderValue != null) {
-        onlyDefinedHeaders.push(ts.factory.createSpreadAssignment(customAuthorizationHeaderValue));
-    }
-
     for (const additionalSpreadHeader of additionalSpreadHeaders) {
         onlyDefinedHeaders.push(
             ts.factory.createSpreadAssignment(ts.factory.createParenthesizedExpression(additionalSpreadHeader))
