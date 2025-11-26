@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc44
+  createdAt: "2025-11-26"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix request_options[:base_url] being ignored. The RawClient.build_url method now correctly uses the per-request base_url override when provided.
+
 - version: 1.0.0-rc43
   createdAt: "2025-11-24"
   changelogEntry:
