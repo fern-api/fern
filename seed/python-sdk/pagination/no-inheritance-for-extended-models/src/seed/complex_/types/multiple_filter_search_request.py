@@ -31,6 +31,7 @@ update_forward_refs(
     MultipleFilterSearchRequest,
     MultipleFilterSearchRequestOperator=MultipleFilterSearchRequestOperator,
     MultipleFilterSearchRequestValue=MultipleFilterSearchRequestValue,
+    SingleFilterSearchRequest=SingleFilterSearchRequest,
     SingleFilterSearchRequestOperator=SingleFilterSearchRequestOperator,
     SingleFilterSearchRequest=SingleFilterSearchRequest,
 )
