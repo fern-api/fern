@@ -7,6 +7,7 @@ import {
     HttpEndpoint,
     HttpService,
     InferredAuthScheme,
+    Literal,
     NameAndWireValue,
     ObjectProperty,
     PropertyPathItem,
@@ -205,30 +206,42 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
             docs: "Refreshes the access token by calling the token endpoint.",
             body: php.codeblock((writer) => {
                 const requestClassReference = this.getTokenEndpointRequestClassReference();
-                if (requestClassReference != null) {
-                    // Build the array shape for PHPDoc annotation
-                    const arrayShapeParts = requestProperties.map((prop) => {
-                        if (prop.isOptional) {
-                            return `${prop.camelName}?: string|null`;
-                        }
-                        return `${prop.camelName}: string`;
-                    });
-                    const arrayShape = `array{${arrayShapeParts.join(", ")}}`;
 
-                    // Add PHPDoc annotation to tell PHPStan the expected type
-                    writer.writeLine(`/** @var ${arrayShape} $values */`);
-                    writer.writeLine("$values = [");
-                    writer.indent();
-                    for (const prop of requestProperties) {
-                        if (prop.isOptional) {
-                            writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'] ?? null,`);
-                        } else {
-                            writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'],`);
-                        }
+                // Build the array shape for PHPDoc annotation
+                const arrayShapeParts = requestProperties.map((prop) => {
+                    if (prop.literal != null) {
+                        // Use the literal type in the PHPDoc
+                        const literalType = this.context.getLiteralAsString(prop.literal);
+                        return prop.isOptional
+                            ? `${prop.camelName}?: ${literalType}|null`
+                            : `${prop.camelName}: ${literalType}`;
                     }
-                    writer.dedent();
-                    writer.writeLine("];");
-                    writer.newLine();
+                    if (prop.isOptional) {
+                        return `${prop.camelName}?: string|null`;
+                    }
+                    return `${prop.camelName}: string`;
+                });
+                const arrayShape = `array{${arrayShapeParts.join(", ")}}`;
+
+                // Add PHPDoc annotation to tell PHPStan the expected type
+                writer.writeLine(`/** @var ${arrayShape} $values */`);
+                writer.writeLine("$values = [");
+                writer.indent();
+                for (const prop of requestProperties) {
+                    if (prop.literal != null) {
+                        // Emit the literal value directly
+                        writer.writeLine(`'${prop.camelName}' => ${this.context.getLiteralAsString(prop.literal)},`);
+                    } else if (prop.isOptional) {
+                        writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'] ?? null,`);
+                    } else {
+                        writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'],`);
+                    }
+                }
+                writer.dedent();
+                writer.writeLine("];");
+                writer.newLine();
+
+                if (requestClassReference != null) {
                     writer.write("$request = new ");
                     writer.writeNode(requestClassReference);
                     writer.writeLine("($values);");
@@ -237,29 +250,6 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                     writer.write(this.getEndpointMethodName());
                     writer.writeLine("($request);");
                 } else {
-                    // Build the array shape for PHPDoc annotation
-                    const arrayShapeParts = requestProperties.map((prop) => {
-                        if (prop.isOptional) {
-                            return `${prop.camelName}?: string|null`;
-                        }
-                        return `${prop.camelName}: string`;
-                    });
-                    const arrayShape = `array{${arrayShapeParts.join(", ")}}`;
-
-                    // Add PHPDoc annotation to tell PHPStan the expected type
-                    writer.writeLine(`/** @var ${arrayShape} $values */`);
-                    writer.writeLine("$values = [");
-                    writer.indent();
-                    for (const prop of requestProperties) {
-                        if (prop.isOptional) {
-                            writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'] ?? null,`);
-                        } else {
-                            writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'],`);
-                        }
-                    }
-                    writer.dedent();
-                    writer.writeLine("];");
-                    writer.newLine();
                     writer.write("$tokenResponse = $this->authClient->");
                     writer.write(this.getEndpointMethodName());
                     writer.writeLine("($values);");
@@ -289,15 +279,20 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
         });
     }
 
-    private getTokenEndpointRequestProperties(): Array<{ camelName: string; isOptional: boolean }> {
-        const properties: Array<{ camelName: string; isOptional: boolean }> = [];
+    private getTokenEndpointRequestProperties(): Array<{
+        camelName: string;
+        isOptional: boolean;
+        literal?: Literal;
+    }> {
+        const properties: Array<{ camelName: string; isOptional: boolean; literal?: Literal }> = [];
         const service = this.tokenEndpointHttpService;
 
         // Add query parameters
         for (const query of this.tokenEndpoint.queryParameters) {
             properties.push({
                 camelName: query.name.name.camelCase.unsafeName,
-                isOptional: this.context.isOptional(query.valueType)
+                isOptional: this.context.isOptional(query.valueType),
+                literal: this.context.maybeLiteral(query.valueType)
             });
         }
 
@@ -305,7 +300,8 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
         for (const header of [...service.headers, ...this.tokenEndpoint.headers]) {
             properties.push({
                 camelName: header.name.name.camelCase.unsafeName,
-                isOptional: this.context.isOptional(header.valueType)
+                isOptional: this.context.isOptional(header.valueType),
+                literal: this.context.maybeLiteral(header.valueType)
             });
         }
 
@@ -318,7 +314,8 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                 for (const property of request.properties) {
                     properties.push({
                         camelName: property.name.name.camelCase.unsafeName,
-                        isOptional: this.context.isOptional(property.valueType)
+                        isOptional: this.context.isOptional(property.valueType),
+                        literal: this.context.maybeLiteral(property.valueType)
                     });
                 }
             },
@@ -327,7 +324,8 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                     if (property.type === "bodyProperty") {
                         properties.push({
                             camelName: property.name.name.camelCase.unsafeName,
-                            isOptional: this.context.isOptional(property.valueType)
+                            isOptional: this.context.isOptional(property.valueType),
+                            literal: this.context.maybeLiteral(property.valueType)
                         });
                     }
                 }
