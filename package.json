@@ -42,7 +42,7 @@
     "fern": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/prod/cli.cjs",
     "fern:local": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/prod/cli.cjs",
     "fern-dev:local": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/dev/cli.cjs",
-    "fern:build": "cross-env POSTHOG_API_KEY=\"\" turbo run dist:cli:prod --filter=@fern-api/cli --graph && echo 'Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs'",
+    "fern:build": "cross-env POSTHOG_API_KEY=\"\" turbo run dist:cli:prod --filter=@fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs'",
     "fern:build:unminified": "cross-env POSTHOG_API_KEY=\"\" pnpm --filter @fern-api/cli dist:cli:prod:unminified && echo 'Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs'",
     "fern-dev:build": "turbo run dist:cli:dev --filter=@fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/dev/cli.cjs'",
     "fern-local:build": "turbo run dist:cli:local --filter @fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/local/cli.cjs'",
