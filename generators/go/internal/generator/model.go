@@ -2245,7 +2245,7 @@ func capitalizeFirstLetter(s string) string {
 	return strings.ToUpper(s[:1]) + s[1:]
 }
 
-// goReservedIdentifiers contains Go keywords and predeclared identifiers that should be
+// goReservedIdentifiers contains Go keywords and predeclared types that should be
 // avoided as struct field names. We check case-insensitively since PascalCase versions
 // like "String" should also be prefixed.
 // We will just add to this list as needed
