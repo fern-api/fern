@@ -199,10 +199,19 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         argNames.push(this.names.parameters.cancellationToken);
         const argsString = argNames.join(", ");
 
+        // Check if endpoint has a response body - if not, don't try to access .Body
+        const hasResponseBody = endpoint.response?.body != null;
         const body = this.csharp.codeblock((writer) => {
-            writer.writeLine(
-                `return (await ${rawResponseClientReference}.${methodName}(${argsString}).ConfigureAwait(false)).Body;`
-            );
+            if (hasResponseBody) {
+                writer.writeLine(
+                    `return (await ${rawResponseClientReference}.${methodName}(${argsString}).ConfigureAwait(false)).Body;`
+                );
+            } else {
+                // For void endpoints, just await the raw call without returning anything
+                writer.writeLine(
+                    `await ${rawResponseClientReference}.${methodName}(${argsString}).ConfigureAwait(false);`
+                );
+            }
         });
 
         return cls.addMethod({
