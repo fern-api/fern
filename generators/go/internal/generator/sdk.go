@@ -2096,7 +2096,7 @@ func exampleRequestBodyToFields(
 		fields = append(
 			fields,
 			&ast.Field{
-				Key:   endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName,
+				Key:   goExportedFieldName(endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName),
 				Value: f.snippetWriter.GetSnippetForExampleTypeReference(exampleRequestBody.Reference),
 			},
 		)
