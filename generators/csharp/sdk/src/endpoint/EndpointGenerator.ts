@@ -25,17 +25,19 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
             rawClientReference,
             rawGrpcClientReference,
             rawClient,
-            grpcClientInfo
+            grpcClientInfo,
+            generateRawResponse = false
         }: {
             serviceId: ServiceId;
             endpoint: HttpEndpoint;
             rawClientReference: string;
-            rawGrpcClientReference: string;
+            rawGrpcClientReference?: string;
             rawClient: RawClient;
-            grpcClientInfo: GrpcClientInfo | undefined;
+            grpcClientInfo?: GrpcClientInfo | undefined;
+            generateRawResponse?: boolean;
         }
     ) {
-        if (this.isGrpcEndpoint(grpcClientInfo, endpoint)) {
+        if (this.isGrpcEndpoint(grpcClientInfo, endpoint) && rawGrpcClientReference != null) {
             this.grpc.generate(cls, {
                 serviceId,
                 endpoint,
@@ -47,7 +49,8 @@ export class EndpointGenerator extends AbstractEndpointGenerator {
                 serviceId,
                 endpoint,
                 rawClientReference,
-                rawClient
+                rawClient,
+                generateRawResponse
             });
         }
     }

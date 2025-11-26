@@ -333,23 +333,23 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     streaming: () => {
                         // For streaming responses, we don't support raw response wrapper
                         writer.write("throw new ");
-                        writer.writeNode(this.System.NotSupportedException);
+                        writer.writeNode(this.Types.BaseException);
                         writer.writeTextStatement('("Raw response is not supported for streaming endpoints")');
                     },
                     streamParameter: () => {
                         // For streaming responses, we don't support raw response wrapper
                         writer.write("throw new ");
-                        writer.writeNode(this.System.NotSupportedException);
+                        writer.writeNode(this.Types.BaseException);
                         writer.writeTextStatement('("Raw response is not supported for streaming endpoints")');
                     },
                     bytes: () => {
                         writer.write("throw new ");
-                        writer.writeNode(this.System.NotSupportedException);
+                        writer.writeNode(this.Types.BaseException);
                         writer.writeTextStatement('("Raw response is not supported for bytes endpoints")');
                     },
                     _other: () => {
                         writer.write("throw new ");
-                        writer.writeNode(this.System.NotSupportedException);
+                        writer.writeNode(this.Types.BaseException);
                         writer.writeTextStatement('("Raw response is not supported for this endpoint type")');
                     }
                 });
