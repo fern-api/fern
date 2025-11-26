@@ -4,3 +4,4 @@
 !./core_utilities/fastapi
 !./core_utilities/shared
 !./src
+**/.DS_Store
