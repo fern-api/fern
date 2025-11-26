@@ -3,11 +3,25 @@
 module Seed
   module QueryParam
     class Client
-      # @return [Seed::QueryParam::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Seed::Types::Operand] :operand
+      # @option params [Seed::Types::Operand, nil] :maybe_operand
+      # @option params [Seed::Types::ColorOrOperand] :operand_or_color
+      # @option params [Seed::Types::ColorOrOperand, nil] :maybe_operand_or_color
+      #
       # @return [untyped]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -37,6 +51,18 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Seed::Types::Operand] :operand
+      # @option params [Seed::Types::Operand, nil] :maybe_operand
+      # @option params [Seed::Types::ColorOrOperand] :operand_or_color
+      # @option params [Seed::Types::ColorOrOperand, nil] :maybe_operand_or_color
+      #
       # @return [untyped]
       def send_list(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)

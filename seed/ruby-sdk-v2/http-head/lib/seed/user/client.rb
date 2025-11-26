@@ -3,11 +3,21 @@
 module Seed
   module User
     class Client
-      # @return [Seed::User::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [untyped]
       def head(request_options: {}, **_params)
         _request = Seed::Internal::JSON::Request.new(
@@ -27,6 +37,15 @@ module Seed
         raise error_class.new(_response.body, code: code)
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer] :limit
+      #
       # @return [Array[Seed::User::Types::User]]
       def list(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)

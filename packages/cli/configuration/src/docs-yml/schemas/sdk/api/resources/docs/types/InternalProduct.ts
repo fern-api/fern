@@ -9,4 +9,5 @@ export interface InternalProduct extends FernDocsConfig.ProductConfigBase {
     path: string;
     /** The "slug" is this version's basePath. If not set, the slug will be generated from the display-name. */
     slug?: string;
+    announcement?: FernDocsConfig.AnnouncementConfig;
 }

@@ -17,6 +17,41 @@ const STRING_TYPE_REFERENCE: FernIr.dynamic.TypeReference = {
     value: "STRING"
 };
 
+/**
+ * For query parameters with allow-multiple and optional types, the Dynamic IR produces
+ * optional<list<optional<T>>> or list<optional<T>>. However, Java SDK builders have
+ * convenience overloads that accept List<T> directly. This function unwraps the optional
+ * from list items so we generate List<T> instead of List<Optional<T>>.
+ *
+ * Note: We only unwrap "optional", not "nullable". Nullable list items (list<nullable<T>>)
+ * are a distinct case where items genuinely can be null, and the SDK expects List<Optional<T>>.
+ */
+function unwrapOptionalFromListItems(typeReference: FernIr.dynamic.TypeReference): FernIr.dynamic.TypeReference {
+    if (typeReference.type === "optional" && typeReference.value.type === "list") {
+        const listType = typeReference.value;
+        const itemType = listType.value;
+        if (itemType.type === "optional") {
+            return {
+                type: "optional",
+                value: {
+                    type: "list",
+                    value: itemType.value
+                }
+            };
+        }
+    }
+    if (typeReference.type === "list") {
+        const itemType = typeReference.value;
+        if (itemType.type === "optional") {
+            return {
+                type: "list",
+                value: itemType.value
+            };
+        }
+    }
+    return typeReference;
+}
+
 export class EndpointSnippetGenerator {
     private context: DynamicSnippetsGeneratorContext;
     private formatter: AbstractFormatter | undefined;
@@ -60,6 +95,18 @@ export class EndpointSnippetGenerator {
             customConfig: this.context.customConfig,
             formatter: this.formatter
         });
+    }
+
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<java.AstNode> {
+        throw new Error("Unsupported");
     }
 
     private buildCodeBlock({
@@ -467,6 +514,10 @@ export class EndpointSnippetGenerator {
         return args;
     }
 
+    private usesOptionalNullable(): boolean {
+        return this.context.customConfig?.["collapse-optional-nullable"] === true;
+    }
+
     private getBodyRequestArg({
         body,
         value
@@ -486,18 +537,22 @@ export class EndpointSnippetGenerator {
                     // We should fix the generator to permit the non-Optional type and
                     // remove this special case.
 
-                    // Check if value is undefined/null and use Optional.empty() in that case
+                    // Check if value is undefined/null and use Optional.empty() or OptionalNullable.absent()
                     if (value === undefined || value === null) {
-                        return java.TypeLiteral.reference(
-                            java.invokeMethod({
-                                on: java.classReference({
-                                    name: "Optional",
-                                    packageName: "java.util"
-                                }),
-                                method: "empty",
-                                arguments_: []
-                            })
-                        );
+                        if (this.usesOptionalNullable()) {
+                            return this.context.getOptionalNullableAbsent();
+                        } else {
+                            return java.TypeLiteral.reference(
+                                java.invokeMethod({
+                                    on: java.classReference({
+                                        name: "Optional",
+                                        packageName: "java.util"
+                                    }),
+                                    method: "empty",
+                                    arguments_: []
+                                })
+                            );
+                        }
                     }
 
                     const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
@@ -506,20 +561,27 @@ export class EndpointSnippetGenerator {
                         as: "request"
                     });
 
-                    // Check if the converted value is already Optional.empty() to avoid double-wrapping
+                    // Check if the converted value is already Optional.empty() or OptionalNullable.absent() to avoid double-wrapping
                     const convertedValueStr = convertedValue.toString({
                         packageName: "com.example",
                         customConfig: this.context.customConfig
                     });
 
-                    if (convertedValueStr.includes("Optional.empty()")) {
+                    if (
+                        convertedValueStr.includes("Optional.empty()") ||
+                        convertedValueStr.includes("OptionalNullable.absent()")
+                    ) {
                         return convertedValue;
                     }
 
-                    return java.TypeLiteral.optional({
-                        value: convertedValue,
-                        useOf: true
-                    });
+                    if (this.usesOptionalNullable()) {
+                        return this.context.getOptionalNullableOf(convertedValue);
+                    } else {
+                        return java.TypeLiteral.optional({
+                            value: convertedValue,
+                            useOf: true
+                        });
+                    }
                 }
                 return this.context.dynamicTypeLiteralMapper.convert({
                     typeReference: body.value,
@@ -533,6 +595,9 @@ export class EndpointSnippetGenerator {
     }
 
     private getBytesBodyRequestArg({ value }: { value: unknown }): java.TypeLiteral {
+        if (value === undefined || value === null) {
+            return java.TypeLiteral.bytes("");
+        }
         if (typeof value !== "string") {
             this.context.errors.add({
                 severity: Severity.Critical,
@@ -647,7 +712,9 @@ export class EndpointSnippetGenerator {
         const queryParameterFields = sortedQueryParameters.map((queryParameter) => ({
             name: this.context.getMethodName(queryParameter.name.name),
             value: this.context.dynamicTypeLiteralMapper.convert({
-                typeReference: queryParameter.typeReference,
+                // Unwrap optional from list items for allow-multiple query params.
+                // Java SDK builders have convenience overloads that accept List<T>.
+                typeReference: unwrapOptionalFromListItems(queryParameter.typeReference),
                 value: queryParameter.value,
                 as: "request"
             })

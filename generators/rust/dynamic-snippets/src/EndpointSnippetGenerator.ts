@@ -1,4 +1,4 @@
-import { Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { formatRustSnippet, formatRustSnippetAsync } from "@fern-api/rust-base";
@@ -43,7 +43,19 @@ export class EndpointSnippetGenerator {
         return formattedCode;
     }
 
-    private buildCodeComponents({
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<AbstractAstNode> {
+        throw new Error("Unsupported");
+    }
+
+    public buildCodeComponents({
         endpoint,
         snippet
     }: {
@@ -531,8 +543,13 @@ export class EndpointSnippetGenerator {
             args.push(rust.Expression.referenceOf(this.getInlinedRequestArg({ endpoint, request, snippet })));
         }
 
-        // Add default None for RequestOptions parameter
-        args.push(rust.Expression.raw("None"));
+        // Add RequestOptions with headers if present, otherwise None
+        const hasHeaders = (request.headers ?? []).length > 0 && Object.keys(snippet.headers ?? {}).length > 0;
+        if (hasHeaders) {
+            args.push(rust.Expression.functionCall("Some", [this.getRequestOptionsWithHeaders({ request, snippet })]));
+        } else {
+            args.push(rust.Expression.raw("None"));
+        }
 
         return args;
     }
@@ -600,19 +617,8 @@ export class EndpointSnippetGenerator {
             this.context.errors.unscope();
         }
 
-        // Headers
-        this.context.errors.scope(Scope.Headers);
-        const headers = this.context.associateByWireValue({
-            parameters: request.headers ?? [],
-            values: snippet.headers ?? {}
-        });
-        for (const header of headers) {
-            structFields.push({
-                name: this.context.getPropertyName(header.name.name),
-                value: this.context.dynamicTypeLiteralMapper.convert(header)
-            });
-        }
-        this.context.errors.unscope();
+        // Headers are handled via RequestOptions, not in the request struct
+        // Skip headers here
 
         // Request body
         this.context.errors.scope(Scope.RequestBody);
@@ -749,6 +755,39 @@ export class EndpointSnippetGenerator {
         }
 
         return args;
+    }
+
+    private getRequestOptionsWithHeaders({
+        request,
+        snippet
+    }: {
+        request: FernIr.dynamic.InlinedRequest;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): rust.Expression {
+        // Create RequestOptions with additional headers
+        const headers = this.context.associateByWireValue({
+            parameters: request.headers ?? [],
+            values: snippet.headers ?? {}
+        });
+
+        // Build the RequestOptions::new().additional_header("key", "value") chain
+        let optionsExpr = rust.Expression.functionCall("RequestOptions::new", []);
+
+        for (const header of headers) {
+            this.context.scopeError(header.name.wireValue);
+            try {
+                const headerValue = this.context.dynamicTypeLiteralMapper.convert(header);
+                optionsExpr = rust.Expression.methodCall({
+                    target: optionsExpr,
+                    method: "additional_header",
+                    args: [rust.Expression.stringLiteral(header.name.wireValue), headerValue]
+                });
+            } finally {
+                this.context.unscopeError();
+            }
+        }
+
+        return optionsExpr;
     }
 
     private buildRequestComponents({

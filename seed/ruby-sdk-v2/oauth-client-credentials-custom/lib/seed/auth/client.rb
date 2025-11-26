@@ -3,11 +3,21 @@
 module Seed
   module Auth
     class Client
-      # @return [Seed::Auth::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Auth::Types::GetTokenRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def get_token_with_client_credentials(request_options: {}, **params)
         _body_prop_names = %i[cid csr scp entity_id audience grant_type scope]
@@ -33,6 +43,14 @@ module Seed
         end
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Auth::Types::RefreshTokenRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [Seed::Auth::Types::TokenResponse]
       def refresh_token(request_options: {}, **params)
         _body_prop_names = %i[client_id client_secret refresh_token audience grant_type scope]

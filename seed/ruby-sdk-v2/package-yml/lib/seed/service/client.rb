@@ -3,17 +3,29 @@
 module Seed
   module Service
     class Client
-      # @return [Seed::Service::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [String] :id
+      # @option params [String] :nested_id
+      #
       # @return [untyped]
       def nop(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:id]}//#{params[:nestedId]}"
+          path: "/#{params[:id]}//#{params[:nested_id]}"
         )
         begin
           _response = @client.send(_request)

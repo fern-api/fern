@@ -2,7 +2,7 @@
 
 import { BasicAuthClient } from "./api/resources/basicAuth/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
 
 export declare namespace SeedBasicAuthClient {
     export interface Options extends BaseClientOptions {}
@@ -11,11 +11,11 @@ export declare namespace SeedBasicAuthClient {
 }
 
 export class SeedBasicAuthClient {
-    protected readonly _options: SeedBasicAuthClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedBasicAuthClient.Options>;
     protected _basicAuth: BasicAuthClient | undefined;
 
     constructor(options: SeedBasicAuthClient.Options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get basicAuth(): BasicAuthClient {

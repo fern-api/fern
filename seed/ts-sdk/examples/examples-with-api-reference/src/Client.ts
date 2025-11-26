@@ -5,8 +5,8 @@ import { FileClient } from "./api/resources/file/client/Client.js";
 import { HealthClient } from "./api/resources/health/client/Client.js";
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "./core/headers.js";
+import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
+import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
 
@@ -17,13 +17,13 @@ export declare namespace SeedExamplesClient {
 }
 
 export class SeedExamplesClient {
-    protected readonly _options: SeedExamplesClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<SeedExamplesClient.Options>;
     protected _file: FileClient | undefined;
     protected _health: HealthClient | undefined;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedExamplesClient.Options) {
-        this._options = normalizeClientOptions(options);
+        this._options = normalizeClientOptionsWithAuth(options);
     }
 
     public get file(): FileClient {
@@ -53,11 +53,7 @@ export class SeedExamplesClient {
         request: string,
         requestOptions?: SeedExamplesClient.RequestOptions,
     ): Promise<core.WithRawResponse<string>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -121,11 +117,7 @@ export class SeedExamplesClient {
         request: SeedExamples.Type,
         requestOptions?: SeedExamplesClient.RequestOptions,
     ): Promise<core.WithRawResponse<SeedExamples.Identifier>> {
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(this._options?.headers, requestOptions?.headers);
         const _response = await core.fetcher({
             url:
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -169,14 +161,5 @@ export class SeedExamplesClient {
                     rawResponse: _response.rawResponse,
                 });
         }
-    }
-
-    protected async _getAuthorizationHeader(): Promise<string | undefined> {
-        const bearer = await core.Supplier.get(this._options.token);
-        if (bearer != null) {
-            return `Bearer ${bearer}`;
-        }
-
-        return undefined;
     }
 }

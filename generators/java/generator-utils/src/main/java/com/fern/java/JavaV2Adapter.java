@@ -1,5 +1,7 @@
 package com.fern.java;
 
+import static com.fern.java.GeneratorLogging.log;
+
 import com.fern.generator.exec.model.logging.GeneratorUpdate;
 import com.fern.generator.exec.model.logging.LogLevel;
 import com.fern.generator.exec.model.logging.LogUpdate;
@@ -74,11 +76,5 @@ public class JavaV2Adapter {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static void log(DefaultGeneratorExecClient execClient, String message) {
-        System.out.println(message);
-        execClient.sendUpdate(GeneratorUpdate.log(
-                LogUpdate.builder().level(LogLevel.DEBUG).message(message).build()));
     }
 }

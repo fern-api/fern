@@ -3,8 +3,10 @@ import { LOG_LEVELS, LogLevel } from "@fern-api/logger";
 import { askToLogin } from "@fern-api/login";
 import { FernRegistryClient as FdrClient } from "@fern-fern/generators-sdk";
 import { writeFile } from "fs/promises";
+import { minimatch } from "minimatch";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
+import { cleanOrphanedSeedFolders } from "./commands/clean";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
 import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
@@ -16,9 +18,9 @@ import { publishGenerator } from "./commands/publish/publishGenerator";
 import { registerCliRelease } from "./commands/register/registerCliRelease";
 import { registerGenerator } from "./commands/register/registerGenerator";
 import { runWithCustomFixture } from "./commands/run/runWithCustomFixture";
-import { DockerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test";
+import { ContainerScriptRunner, LocalScriptRunner, ScriptRunner } from "./commands/test";
 import { TaskContextFactory } from "./commands/test/TaskContextFactory";
-import { DockerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
+import { ContainerTestRunner, LocalTestRunner, TestRunner } from "./commands/test/test-runner";
 import { FIXTURES, LANGUAGE_SPECIFIC_FIXTURE_PREFIXES, testGenerator } from "./commands/test/testWorkspaceFixtures";
 import { executeTestRemoteLocalCommand, isFernRepo, isLocalFernCliBuilt } from "./commands/test-remote-local";
 import { assertValidSemVerOrThrow } from "./commands/validate/semVerUtils";
@@ -47,6 +49,7 @@ export async function tryRunCli(): Promise<void> {
     addRunCommand(cli);
     addImgCommand(cli);
     addGetAvailableFixturesCommand(cli);
+    addCleanCommand(cli);
     addRegisterCommands(cli);
     addPublishCommands(cli);
     addValidateCommands(cli);
@@ -86,11 +89,12 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     description: "Runs on a specific output folder. Only relevant if there are >1 folders configured."
                 })
-                .option("keepDocker", {
+                .option("keepContainer", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
-                    description: "Keeps the docker container after the tests are finished"
+                    description: "Keeps the docker container after the tests are finished",
+                    alias: ["keepDocker"]
                 })
                 .option("skip-scripts", {
                     type: "boolean",
@@ -117,6 +121,12 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     default: false,
                     description: "Execute Node with --inspect flag for debugging"
+                })
+                .option("container-runtime", {
+                    type: "string",
+                    choices: ["docker", "podman"],
+                    demandOption: false,
+                    description: "Explicitly specify which container runtime to use (docker or podman)"
                 }),
         async (argv) => {
             const generators = await loadGeneratorWorkspaces();
@@ -139,6 +149,9 @@ function addTestCommand(cli: Argv) {
                 // If no fixtures passed in, use all available fixtures (without output folders)
                 if (argv.fixture == null) {
                     argv.fixture = await getAvailableFixtures(generator, false);
+                } else {
+                    const availableFixturesForGlobbing = await getAvailableFixtures(generator, false);
+                    argv.fixture = expandFixtureGlobs(argv.fixture, availableFixturesForGlobbing);
                 }
 
                 // Get both formats of fixtures and check if the fixtures passed in are of one of the two formats allowed
@@ -164,6 +177,27 @@ function addTestCommand(cli: Argv) {
                     );
                 }
 
+                if (argv.local && argv.containerRuntime != null) {
+                    throw new Error(
+                        `Cannot specify both --local and --container-runtime flags. The --container-runtime flag is only applicable for container-based test runners.`
+                    );
+                }
+
+                if (argv.containerRuntime != null) {
+                    const runtime = argv.containerRuntime as "docker" | "podman";
+                    const hasConfig =
+                        runtime === "docker"
+                            ? generator.workspaceConfig.test.docker != null
+                            : generator.workspaceConfig.test.podman != null;
+
+                    if (!hasConfig) {
+                        throw new Error(
+                            `Generator ${generator.workspaceName} does not have a test.${runtime} configuration in seed.yml. ` +
+                                `Either add a 'test.${runtime}' section to your seed.yml or omit the --container-runtime flag to use auto-detection.`
+                        );
+                    }
+                }
+
                 if (argv.local) {
                     if (generator.workspaceConfig.test.local == null) {
                         throw new Error(
@@ -177,7 +211,8 @@ function addTestCommand(cli: Argv) {
                     scriptRunner = new LocalScriptRunner(
                         generator,
                         argv.skipScripts,
-                        taskContextFactory.create("local-script-runner")
+                        taskContextFactory.create("local-script-runner"),
+                        argv["log-level"]
                     );
                     testRunner = new LocalTestRunner({
                         generator,
@@ -185,23 +220,26 @@ function addTestCommand(cli: Argv) {
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
                         scriptRunner,
-                        keepDocker: false, // not used for local
+                        keepContainer: false, // not used for local
                         inspect: argv.inspect
                     });
                 } else {
-                    scriptRunner = new DockerScriptRunner(
+                    scriptRunner = new ContainerScriptRunner(
                         generator,
                         argv.skipScripts,
-                        taskContextFactory.create("docker-script-runner")
+                        taskContextFactory.create("docker-script-runner"),
+                        argv["log-level"],
+                        argv.containerRuntime as "docker" | "podman" | undefined
                     );
-                    testRunner = new DockerTestRunner({
+                    testRunner = new ContainerTestRunner({
                         generator,
                         lock,
                         taskContextFactory,
                         skipScripts: argv.skipScripts,
-                        keepDocker: argv.keepDocker,
+                        keepContainer: argv.keepContainer,
                         scriptRunner,
-                        inspect: argv.inspect
+                        inspect: argv.inspect,
+                        runner: argv.containerRuntime as "docker" | "podman" | undefined
                     });
                 }
 
@@ -384,7 +422,7 @@ function addRunCommand(cli: Argv) {
                     default: false,
                     description: "Run the generator locally instead of using Docker"
                 })
-                .option("keepDocker", {
+                .option("keepContainer", {
                     type: "boolean",
                     demandOption: false,
                     default: false,
@@ -426,7 +464,7 @@ function addRunCommand(cli: Argv) {
                     : undefined,
                 inspect: argv.inspect,
                 local: argv.local,
-                keepDocker: argv.keepDocker
+                keepContainer: argv.keepContainer
             });
         }
     );
@@ -534,6 +572,45 @@ function addGetAvailableFixturesCommand(cli: Argv) {
     );
 }
 
+function addCleanCommand(cli: Argv) {
+    cli.command(
+        "clean",
+        "Find and remove orphaned seed folders that no longer have corresponding test definitions",
+        (yargs) =>
+            yargs
+                .option("generator", {
+                    type: "array",
+                    string: true,
+                    demandOption: false,
+                    alias: "g",
+                    description: "The generators to clean (cleans all if not provided)"
+                })
+                .option("dry-run", {
+                    type: "boolean",
+                    demandOption: false,
+                    default: false,
+                    description: "List orphaned folders without deleting them"
+                }),
+        async (argv) => {
+            const generators = await loadGeneratorWorkspaces();
+            if (argv.generator != null) {
+                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: argv.generator });
+            }
+
+            const targetGenerators =
+                argv.generator != null
+                    ? generators.filter((g) => argv.generator?.includes(g.workspaceName))
+                    : generators;
+
+            const result = await cleanOrphanedSeedFolders(targetGenerators, argv.dryRun);
+
+            if (argv.dryRun && result.orphanedFolders.length > 0) {
+                process.exit(1);
+            }
+        }
+    );
+}
+
 async function getAvailableFixtures(generator: GeneratorWorkspace, withOutputFolders: boolean) {
     // Get all available fixtures
     const availableFixtures = FIXTURES.filter((fixture) => {
@@ -543,7 +620,7 @@ async function getAvailableFixtures(generator: GeneratorWorkspace, withOutputFol
 
     // Optionally, include output folders in format fixture:outputFolder (note: this will replace the fixture name without the output folder)
     if (withOutputFolders) {
-        // Add fixtures that have subfolders with their subfoldered version
+        // Add fixtures that have subfolders with their subfolder version
         const allOptions: string[] = [];
         for (const fixture of availableFixtures) {
             const config = generator.workspaceConfig.fixtures?.[fixture];
@@ -563,6 +640,28 @@ async function getAvailableFixtures(generator: GeneratorWorkspace, withOutputFol
 
     // Don't include subfolders, return the original fixtures
     return availableFixtures;
+}
+
+function expandFixtureGlobs(fixturePatterns: string[], availableFixtures: string[]): string[] {
+    const expandedFixtures = new Set<string>();
+
+    for (const pattern of fixturePatterns) {
+        if (pattern.includes("*") || pattern.includes("?") || pattern.includes("[")) {
+            const matches = availableFixtures.filter((fixture) => minimatch(fixture, pattern));
+            if (matches.length === 0) {
+                throw new Error(
+                    `Glob pattern "${pattern}" did not match any fixtures. Available fixtures: ${availableFixtures.join(", ")}`
+                );
+            }
+            for (const match of matches) {
+                expandedFixtures.add(match);
+            }
+        } else {
+            expandedFixtures.add(pattern);
+        }
+    }
+
+    return Array.from(expandedFixtures);
 }
 
 function addPublishCommands(cli: Argv) {

@@ -9,7 +9,7 @@ import { Semaphore } from "../../Semaphore";
 import { convertGeneratorWorkspaceToFernWorkspace } from "../../utils/convertSeedWorkspaceToFernWorkspace";
 import { LocalScriptRunner, ScriptRunner } from "../test";
 import { TaskContextFactory } from "../test/TaskContextFactory";
-import { DockerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner";
+import { ContainerTestRunner, LocalTestRunner, TestRunner } from "../test/test-runner";
 
 export async function runWithCustomFixture({
     pathToFixture,
@@ -19,7 +19,7 @@ export async function runWithCustomFixture({
     outputPath,
     inspect,
     local,
-    keepDocker
+    keepContainer
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: GeneratorWorkspace;
@@ -28,7 +28,7 @@ export async function runWithCustomFixture({
     outputPath?: AbsoluteFilePath;
     inspect: boolean;
     local: boolean;
-    keepDocker: boolean;
+    keepContainer: boolean;
 }): Promise<void> {
     const lock = new Semaphore(1);
     const absolutePathToOutput = outputPath ?? AbsoluteFilePath.of((await tmp.dir()).path);
@@ -44,7 +44,7 @@ export async function runWithCustomFixture({
     let scriptRunner: ScriptRunner | undefined = undefined;
 
     if (!skipScripts) {
-        scriptRunner = new LocalScriptRunner(workspace, skipScripts, taskContext);
+        scriptRunner = new LocalScriptRunner(workspace, skipScripts, taskContext, logLevel);
     }
 
     if (local) {
@@ -64,16 +64,16 @@ export async function runWithCustomFixture({
             taskContextFactory,
             skipScripts,
             scriptRunner,
-            keepDocker,
+            keepContainer,
             inspect
         });
     } else {
-        testRunner = new DockerTestRunner({
+        testRunner = new ContainerTestRunner({
             generator: workspace,
             lock,
             taskContextFactory,
             skipScripts,
-            keepDocker,
+            keepContainer,
             scriptRunner,
             inspect
         });

@@ -110,6 +110,9 @@ public interface ICustomConfig {
     @JsonProperty("package-prefix")
     Optional<String> packagePrefix();
 
+    @JsonProperty("custom-pager-name")
+    Optional<String> customPagerName();
+
     @Value.Default
     @JsonProperty("package-layout")
     default PackageLayout packageLayout() {

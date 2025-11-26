@@ -7,3 +7,14 @@ api:
         inline-path-parameters: true
         respect-nullable-schemas: true
         idiomatic-request-names: true
+groups:
+  php-sdk:
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/php-sdk-tests
+          branch: java-nullable-named-request-types

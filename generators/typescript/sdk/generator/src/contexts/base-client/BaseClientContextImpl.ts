@@ -1,10 +1,16 @@
-import { SetRequired } from "@fern-api/core-utils";
+import type { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import type { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
-import { BaseClientContext, SdkContext } from "@fern-typescript/contexts";
+import type { BaseClientContext, SdkContext } from "@fern-typescript/contexts";
 import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
-import { InterfaceDeclarationStructure, OptionalKind, PropertySignatureStructure, StructureKind, ts } from "ts-morph";
+import {
+    type InterfaceDeclarationStructure,
+    type OptionalKind,
+    type PropertySignatureStructure,
+    StructureKind,
+    ts
+} from "ts-morph";
 
 export declare namespace BaseClientContextImpl {
     export interface Init {
@@ -47,6 +53,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     public static readonly IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME = IDEMPOTENT_REQUEST_OPTIONS_INTERFACE_NAME;
     private bearerAuthScheme: FernIr.BearerAuthScheme | undefined;
     private basicAuthScheme: FernIr.BasicAuthScheme | undefined;
+    private inferredAuthScheme: FernIr.InferredAuthScheme | undefined;
     private readonly authHeaders: FernIr.HeaderAuthScheme[];
 
     constructor({
@@ -76,8 +83,12 @@ export class BaseClientContextImpl implements BaseClientContext {
                 header: (header) => {
                     this.authHeaders.push(header);
                 },
-                oauth: () => undefined,
-                inferred: () => undefined,
+                oauth: () => {
+                    // OAuth is handled in the root client, not in BaseClient
+                },
+                inferred: (inferredAuthScheme) => {
+                    this.inferredAuthScheme = inferredAuthScheme;
+                },
                 _other: () => {
                     throw new Error("Unknown auth scheme: " + authScheme.type);
                 }
@@ -211,6 +222,21 @@ export class BaseClientContextImpl implements BaseClientContext {
             );
         }
 
+        if (this.inferredAuthScheme != null) {
+            const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
+                FernIr.AuthScheme.inferred(this.inferredAuthScheme)
+            );
+            for (const param of authTokenParams) {
+                properties.push({
+                    kind: StructureKind.PropertySignature,
+                    name: getPropertyKey(param.name),
+                    type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(param.type)),
+                    hasQuestionToken: param.isOptional,
+                    docs: param.docs
+                });
+            }
+        }
+
         for (const header of this.authHeaders) {
             const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
             const isOptional =
@@ -232,6 +258,38 @@ export class BaseClientContextImpl implements BaseClientContext {
                 ),
                 hasQuestionToken: isOptional
             });
+        }
+
+        // Add OAuth clientId and clientSecret to BaseClientOptions if OAuth is used
+        const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
+        if (oauthScheme != null && oauthScheme.type === "oauth" && context.generateOAuthClients) {
+            const oauthConfig = oauthScheme.configuration;
+            if (oauthConfig.type === "clientCredentials") {
+                const clientIdProperty = oauthConfig.tokenEndpoint.requestProperties.clientId;
+                const clientSecretProperty = oauthConfig.tokenEndpoint.requestProperties.clientSecret;
+
+                properties.push({
+                    kind: StructureKind.PropertySignature,
+                    name: getPropertyKey("clientId"),
+                    type: getTextOfTsNode(
+                        supplier._getReferenceToType(
+                            context.type.getReferenceToType(clientIdProperty.property.valueType).typeNode
+                        )
+                    ),
+                    hasQuestionToken: oauthConfig.clientIdEnvVar != null
+                });
+
+                properties.push({
+                    kind: StructureKind.PropertySignature,
+                    name: getPropertyKey("clientSecret"),
+                    type: getTextOfTsNode(
+                        supplier._getReferenceToType(
+                            context.type.getReferenceToType(clientSecretProperty.property.valueType).typeNode
+                        )
+                    ),
+                    hasQuestionToken: oauthConfig.clientSecretEnvVar != null
+                });
+            }
         }
 
         for (const header of this.intermediateRepresentation.headers) {

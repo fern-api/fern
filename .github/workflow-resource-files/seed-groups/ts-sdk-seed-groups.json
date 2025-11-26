@@ -132,7 +132,7 @@
         "file-download:stream-wrapper",
         "exhaustive:allow-extra-fields",
         "examples:retain-original-casing",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "folders",
         "file-upload:no-custom-config",
         "errors",
@@ -204,7 +204,7 @@
         "nullable",
         "multi-line-docs",
         "ts-express-casing",
-        "custom-auth",
+        "header-auth",
         "undiscriminated-unions:no-custom-config",
         "http-head",
         "websocket:no-websocket-clients"

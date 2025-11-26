@@ -48,7 +48,7 @@ export async function writeGeneratorsYml(
 
 export async function loadCustomConfig(
     generator: GeneratorNickname,
-    fixture: TestFixture,
+    fixture: string,
     outputFolder: string | undefined,
     fernRepoDirectory: string,
     logger: Logger
@@ -140,6 +140,8 @@ export function getPackageOutputConfig(
                     location: PACKAGE_LOCATION_MAVEN,
                     coordinate: JAVA_SDK_MAVEN_COORDINATE
                 };
+            case "php-sdk":
+                return undefined;
             case "python-sdk":
                 return {
                     location: PACKAGE_LOCATION_PYPI,

@@ -14,19 +14,23 @@ export class ReadmeConfigBuilder {
     private readonly endpointSnippets: FernGeneratorExec.Endpoint[];
     private readonly fileResponseType: "stream" | "binary-response";
     private readonly fetchSupport: "node-fetch" | "native";
+    private readonly generateSubpackageExports: boolean;
 
     constructor({
         endpointSnippets,
         fileResponseType,
-        fetchSupport
+        fetchSupport,
+        generateSubpackageExports
     }: {
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
         fetchSupport: "node-fetch" | "native";
+        generateSubpackageExports: boolean;
     }) {
         this.endpointSnippets = endpointSnippets;
         this.fileResponseType = fileResponseType;
         this.fetchSupport = fetchSupport;
+        this.generateSubpackageExports = generateSubpackageExports;
     }
 
     public build({
@@ -41,7 +45,8 @@ export class ReadmeConfigBuilder {
         const readmeSnippetBuilder = new ReadmeSnippetBuilder({
             context,
             endpointSnippets: this.endpointSnippets,
-            fileResponseType: this.fileResponseType
+            fileResponseType: this.fileResponseType,
+            generateSubpackageExports: this.generateSubpackageExports
         });
         const snippets = readmeSnippetBuilder.buildReadmeSnippets();
         const addendums = readmeSnippetBuilder.buildReadmeAddendums();
@@ -79,7 +84,7 @@ export class ReadmeConfigBuilder {
                 ? Array.from(context.ir.readmeConfig.disabledFeatures)
                 : undefined,
             whiteLabel: context.ir.readmeConfig?.whiteLabel,
-            customSections: getCustomSections(context),
+            customSections: getCustomSections(context, this.generateSubpackageExports),
             features
         };
     }
@@ -109,7 +114,10 @@ export class ReadmeConfigBuilder {
     }
 }
 
-function getCustomSections(context: SdkContext): FernGeneratorCli.CustomSection[] | undefined {
+function getCustomSections(
+    context: SdkContext,
+    generateSubpackageExports: boolean
+): FernGeneratorCli.CustomSection[] | undefined {
     const irCustomSections = context.ir.readmeConfig?.customSections;
     const customConfigSections = parseCustomConfigOrUndefined(
         context.logger,
@@ -133,10 +141,14 @@ function getCustomSections(context: SdkContext): FernGeneratorCli.CustomSection[
             content: section.content
         });
     }
+
     return sections.length > 0 ? sections : undefined;
 }
 
 function parseCustomConfigOrUndefined(logger: Logger, customConfig: unknown): SdkCustomConfigSchema | undefined {
+    if (customConfig == null) {
+        return undefined;
+    }
     try {
         return SdkCustomConfigSchema.parse(customConfig);
     } catch (error) {

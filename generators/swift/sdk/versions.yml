@@ -1,4 +1,35 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 0.25.2
+  changelogEntry:
+    - summary: |
+        Remove error on null config in README generation.
+      type: fix
+  createdAt: "2025-11-26"
+  irVersion: 61
+
+- version: 0.25.1
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 0.25.0
+  changelogEntry:
+    - type: feat
+      summary: |
+        Introduced a unified client error enum and structured `HTTPError` with a nested `ResponseBody`, and updated the HTTP client and tests to classify and surface HTTP failures consistently.
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 0.24.1
+  changelogEntry:
+    - type: chore
+      summary: |
+        Bump generator CLI version to publish new Docker image.
+  createdAt: "2025-11-19"
+  irVersion: 61
 
 - version: 0.24.0
   changelogEntry:

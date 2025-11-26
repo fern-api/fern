@@ -1,5 +1,5 @@
 import { ReferenceConfigBuilder } from "@fern-api/base-generator";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorCli } from "@fern-fern/generator-cli-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as FernGeneratorExecSerializers from "@fern-fern/generator-exec-sdk/serialization";
@@ -8,7 +8,6 @@ import {
     HttpEndpoint,
     HttpService,
     IntermediateRepresentation,
-    OAuthScheme,
     Subpackage,
     TypeDeclaration,
     TypeId,
@@ -40,7 +39,6 @@ import { ErrorResolver, PackageResolver, TypeResolver } from "@fern-typescript/r
 import {
     AuthProvidersGenerator,
     BaseClientTypeGenerator,
-    OAuthTokenProviderGenerator,
     SdkClientClassGenerator,
     WebsocketClassGenerator
 } from "@fern-typescript/sdk-client-class-generator";
@@ -223,7 +221,6 @@ export class SdkGenerator {
     private baseClientTypeGenerator: BaseClientTypeGenerator;
     private genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
-    private oauthTokenProviderGenerator: OAuthTokenProviderGenerator;
     private testGenerator: TestGenerator;
     private websocketGenerator: WebsocketClassGenerator;
     private referenceConfigBuilder: ReferenceConfigBuilder;
@@ -441,11 +438,6 @@ export class SdkGenerator {
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
-        this.oauthTokenProviderGenerator = new OAuthTokenProviderGenerator({
-            intermediateRepresentation,
-            neverThrowErrors: this.config.neverThrowErrors,
-            includeSerdeLayer: this.config.includeSerdeLayer
-        });
         this.sdkClientClassGenerator = new SdkClientClassGenerator({
             intermediateRepresentation,
             errorResolver: this.errorResolver,
@@ -461,7 +453,6 @@ export class SdkGenerator {
             includeSerdeLayer: config.includeSerdeLayer,
             retainOriginalCasing: config.retainOriginalCasing,
             inlineFileProperties: config.inlineFileProperties,
-            oauthTokenProviderGenerator: this.oauthTokenProviderGenerator,
             omitUndefined: config.omitUndefined,
             allowExtraFields: config.allowExtraFields,
             streamType: config.streamType,
@@ -522,7 +513,8 @@ export class SdkGenerator {
             readmeConfigBuilder: new ReadmeConfigBuilder({
                 endpointSnippets: this.endpointSnippets,
                 fileResponseType: this.config.fileResponseType,
-                fetchSupport: this.config.fetchSupport
+                fetchSupport: this.config.fetchSupport,
+                generateSubpackageExports: this.config.generateSubpackageExports
             }),
             ir: intermediateRepresentation
         });
@@ -606,13 +598,6 @@ export class SdkGenerator {
                     { nameOnDisk: "serialization", exportDeclaration: { namespaceExport: "serialization" } }
                 ]);
                 this.context.logger.debug("Generated serde layer.");
-            }
-        }
-
-        if (this.generateOAuthClients) {
-            const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
-            if (oauthScheme != null && oauthScheme.type === "oauth") {
-                this.generateOAuthTokenProvider(oauthScheme);
             }
         }
 
@@ -1045,25 +1030,6 @@ export class SdkGenerator {
         }
     }
 
-    private generateOAuthTokenProvider(oauthScheme: OAuthScheme) {
-        this.context.logger.debug("Generating OAuth token provider...");
-        this.withSourceFile({
-            filepath: this.oauthTokenProviderGenerator.getExportedFilePath(),
-            run: ({ sourceFile, importsManager }) => {
-                const context = this.generateSdkContext({ sourceFile, importsManager });
-                const file = this.oauthTokenProviderGenerator.buildFile({
-                    context,
-                    oauthScheme
-                });
-                sourceFile.replaceWithText(file.toString({ dprintOptions: { indentWidth: 4 } }));
-            }
-        });
-        this.coreUtilitiesManager.addAuthOverride({
-            filepath: RelativeFilePath.of("index.ts"),
-            content: this.oauthTokenProviderGenerator.buildIndexFile().toString()
-        });
-    }
-
     private generateTestFiles() {
         this.context.logger.debug("Generating test files...");
         if (this.config.generateWireTests) {
@@ -1390,21 +1356,64 @@ export class SdkGenerator {
     }
 
     private generateAuthProviders(): void {
-        for (const authScheme of this.intermediateRepresentation.auth.schemes) {
-            const authProvidersGenerator = new AuthProvidersGenerator({
-                ir: this.intermediateRepresentation,
-                authScheme
-            });
-            if (!authProvidersGenerator.shouldWriteFile()) {
-                continue;
+        const isAnyAuth = this.intermediateRepresentation.auth.requirement === "ANY";
+
+        if (isAnyAuth) {
+            // For ANY auth, we need to generate all individual auth providers first,
+            // then generate the AnyAuthProvider that aggregates them
+            for (const authScheme of this.intermediateRepresentation.auth.schemes) {
+                const authProvidersGenerator = new AuthProvidersGenerator({
+                    ir: this.intermediateRepresentation,
+                    authScheme,
+                    neverThrowErrors: this.config.neverThrowErrors,
+                    includeSerdeLayer: this.config.includeSerdeLayer
+                });
+                if (!authProvidersGenerator.shouldWriteFile()) {
+                    continue;
+                }
+                this.withSourceFile({
+                    filepath: authProvidersGenerator.getFilePath(),
+                    run: ({ sourceFile, importsManager }) => {
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        authProvidersGenerator.writeToFile(context);
+                    }
+                });
             }
+
+            // Now generate the AnyAuthProvider that aggregates all the individual providers
+            const anyAuthProvidersGenerator = new AuthProvidersGenerator({
+                ir: this.intermediateRepresentation,
+                authScheme: { type: "any" },
+                neverThrowErrors: this.config.neverThrowErrors,
+                includeSerdeLayer: this.config.includeSerdeLayer
+            });
             this.withSourceFile({
-                filepath: authProvidersGenerator.getFilePath(),
+                filepath: anyAuthProvidersGenerator.getFilePath(),
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
-                    authProvidersGenerator.writeToFile(context);
+                    anyAuthProvidersGenerator.writeToFile(context);
                 }
             });
+        } else {
+            // For non-ANY auth, generate auth providers as before
+            for (const authScheme of this.intermediateRepresentation.auth.schemes) {
+                const authProvidersGenerator = new AuthProvidersGenerator({
+                    ir: this.intermediateRepresentation,
+                    authScheme,
+                    neverThrowErrors: this.config.neverThrowErrors,
+                    includeSerdeLayer: this.config.includeSerdeLayer
+                });
+                if (!authProvidersGenerator.shouldWriteFile()) {
+                    continue;
+                }
+                this.withSourceFile({
+                    filepath: authProvidersGenerator.getFilePath(),
+                    run: ({ sourceFile, importsManager }) => {
+                        const context = this.generateSdkContext({ sourceFile, importsManager });
+                        authProvidersGenerator.writeToFile(context);
+                    }
+                });
+            }
         }
     }
 

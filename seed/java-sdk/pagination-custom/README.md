@@ -96,37 +96,92 @@ Paginated requests will return an Iterable<T>, which can be used to loop through
 
 ```java
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.core.SyncPagingIterable;
-import com.seed.pagination.types.UsernameCursor;
-import java.util.List;
 
 SeedPaginationClient client = SeedPaginationClient
     .builder()
     .build();
 
-SyncPagingIterable<UsernameCursor> response = client.users().listUsernamesCustom(...);
+CustomPager<?> response = client.users().listUsernamesCustom(...);
 
-// Iterator
-for (item : response){
-    // Do something with item
+// Iterate through pages using bidirectional navigation
+while (response.hasNext()) {
+    for (var item : response.getItems()) {
+        // Process each item
+    }
+    response = response.nextPage();
 }
 
-// Streaming
-response.streamItems().map(item -> ...);
-
-// Manual pagination
-for (
-        List<UsernameCursor> items = response.getItems;
-        response.hasNext();
-        items = items.nextPage().getItems()) {
-    // Do something with items
+// Navigate to previous page
+if (response.hasPrevious()) {
+    response = response.previousPage();
 }
 
-// Access pagination metadata
-response.getResponse().ifPresent(r -> {
-    String cursor = r.getNext();
-    // Use cursor for stateless pagination
+// Access the full response for metadata
+response.getResponse().ifPresent(fullResponse -> {
+    // Access custom pagination metadata from the response
 });
+```
+## Custom Pagination Implementation
+
+The SDK uses a custom bidirectional pagination implementation via the `CustomPager` class. This class is a skeleton implementation that you must complete based on your API's specific pagination structure (e.g., HATEOAS links).
+
+### Implementation Steps
+
+1. **Locate the skeleton class**: Find `core/pagination/CustomPager.java`
+2. **Implement required methods**: Replace the `UnsupportedOperationException` with your logic
+3. **Add to .fernignore**: Ensure the file is listed in `.fernignore` to preserve your changes
+
+### Example Implementation
+
+```java
+public class CustomPager<T> implements BiDirectionalPage<T>, Iterable<T> {
+    private final List<T> items;
+    private final String nextUrl;
+    private final String previousUrl;
+    private final OkHttpClient client;
+
+    @Override
+    public boolean hasNext() {
+        return nextUrl != null;
+    }
+
+    @Override
+    public CustomPager<T> nextPage() throws IOException {
+        if (!hasNext()) {
+            throw new NoSuchElementException("No next page available");
+        }
+        // Make HTTP request to nextUrl
+        // Parse response and return new CustomPager instance
+    }
+
+    @Override
+    public List<T> getItems() {
+        return items;
+    }
+
+    // ... implement other required methods
+}
+```
+
+### Usage
+
+Once implemented, the custom pager provides bidirectional navigation:
+
+```java
+CustomPager<Item> page = client.listItems();
+
+// Navigate forward
+while (page.hasNext()) {
+    for (Item item : page.getItems()) {
+        // Process item
+    }
+    page = page.nextPage();
+}
+
+// Navigate backward
+if (page.hasPrevious()) {
+    page = page.previousPage();
+}
 ```
 
 ## Exception Handling

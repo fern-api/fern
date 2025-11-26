@@ -1,0 +1,257 @@
+name: CI - Dynamic Snippets
+
+on:
+  pull_request:
+    paths:
+      - generators/typescript-v2/dynamic-snippets/**
+      - generators/python-v2/dynamic-snippets/**
+      - generators/csharp/dynamic-snippets/**
+      - generators/go-v2/dynamic-snippets/**
+      - generators/ruby-v2/dynamic-snippets/**
+      - generators/php/dynamic-snippets/**
+      - generators/swift/dynamic-snippets/**
+      - generators/java-v2/dynamic-snippets/**
+
+permissions:
+  contents: read
+
+jobs:
+  test-typescript:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.changed_files, 'generators/typescript-v2/dynamic-snippets/')
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: 🧪 Build
+        run: pnpm --filter=@fern-api/typescript-dynamic-snippets compile
+
+      - name: 🧪 Test
+        run: pnpm --filter=@fern-api/typescript-dynamic-snippets test
+
+  test-python:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.changed_files, 'generators/python-v2/dynamic-snippets/')
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: 🧪 Build
+        run: pnpm --filter=@fern-api/python-dynamic-snippets compile
+
+      - name: 🧪 Test
+        run: pnpm --filter=@fern-api/python-dynamic-snippets test
+
+  test-csharp:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.changed_files, 'generators/csharp/dynamic-snippets/')
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: 🧪 Build
+        run: pnpm --filter=@fern-api/csharp-dynamic-snippets compile
+
+      - name: 🧪 Test
+        run: pnpm --filter=@fern-api/csharp-dynamic-snippets test
+
+  test-go:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.changed_files, 'generators/go-v2/dynamic-snippets/')
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: 🧪 Build
+        run: pnpm --filter=@fern-api/go-dynamic-snippets compile
+
+      - name: 🧪 Test
+        run: pnpm --filter=@fern-api/go-dynamic-snippets test
+
+  test-ruby:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.changed_files, 'generators/ruby-v2/dynamic-snippets/')
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: 🧪 Build
+        run: pnpm --filter=@fern-api/ruby-dynamic-snippets compile
+
+      - name: 🧪 Test
+        run: pnpm --filter=@fern-api/ruby-dynamic-snippets test
+
+  test-php:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.changed_files, 'generators/php/dynamic-snippets/')
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: 🧪 Build
+        run: pnpm --filter=@fern-api/php-dynamic-snippets compile
+
+      - name: 🧪 Test
+        run: pnpm --filter=@fern-api/php-dynamic-snippets test
+
+  test-swift:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.changed_files, 'generators/swift/dynamic-snippets/')
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: 🧪 Build
+        run: pnpm --filter=@fern-api/swift-dynamic-snippets compile
+
+      - name: 🧪 Test
+        run: pnpm --filter=@fern-api/swift-dynamic-snippets test
+
+  test-java:
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.changed_files, 'generators/java-v2/dynamic-snippets/')
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: 📥 Install
+        uses: ./.github/actions/install
+
+      - name: Update npm
+        run: npm install -g npm@latest
+
+      - uses: bufbuild/buf-setup-action@v1.34.0
+        with:
+          github_token: ${{ github.token }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "stable"
+
+      - name: Install protoc-gen-openapi
+        run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
+
+      - name: 🧪 Build
+        run: pnpm --filter=@fern-api/java-dynamic-snippets compile
+
+      - name: 🧪 Test
+        run: pnpm --filter=@fern-api/java-dynamic-snippets test

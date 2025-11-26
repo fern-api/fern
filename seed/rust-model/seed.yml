@@ -48,4 +48,4 @@ fixtures:
   types:
     - customConfig:
         generateBuilders: true
-      outputFolder: with-builders 
+      outputFolder: with-builders

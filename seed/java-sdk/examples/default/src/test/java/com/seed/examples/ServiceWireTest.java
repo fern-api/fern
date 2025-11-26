@@ -258,7 +258,7 @@ public class ServiceWireTest {
         Metadata response = client.service()
                 .getMetadata(GetMetadataRequest.builder()
                         .xApiVersion("0.0.1")
-                        .tag(Arrays.asList(Optional.of("development")))
+                        .tag(Arrays.asList("development"))
                         .shallow(false)
                         .build());
         RecordedRequest request = server.takeRequest();
@@ -334,7 +334,6 @@ public class ServiceWireTest {
                                 .rating(1.1)
                                 .tag("tag")
                                 .revenue(1000000L)
-                                .cast(Arrays.asList("cast", "cast"))
                                 .prequel("prequel")
                                 .book("book")
                                 .metadata(new HashMap<String, Object>() {
@@ -346,12 +345,13 @@ public class ServiceWireTest {
                                         });
                                     }
                                 })
+                                .cast(Arrays.asList("cast", "cast"))
                                 .build())
                         .entity(Entity.builder()
                                 .type(Type.of(BasicType.PRIMITIVE))
                                 .name("name")
                                 .build())
-                        .metadata(Metadata.html())
+                        .metadata(Metadata.html("metadata"))
                         .commonMetadata(Metadata.builder()
                                 .id("id")
                                 .data(new HashMap<String, String>() {
@@ -370,7 +370,7 @@ public class ServiceWireTest {
                                 })
                                 .jsonString("jsonString")
                                 .build()))
-                        .data(Data.string())
+                        .data(Data.string("data"))
                         .migration(Migration.builder()
                                 .name("name")
                                 .status(MigrationStatus.RUNNING)
@@ -380,7 +380,7 @@ public class ServiceWireTest {
                                 .exceptionMessage("exceptionMessage")
                                 .exceptionStacktrace("exceptionStacktrace")
                                 .build()))
-                        .test(Test.and())
+                        .test(Test.and(true))
                         .node(Node.builder()
                                 .name("name")
                                 .nodes(Optional.of(Arrays.asList(

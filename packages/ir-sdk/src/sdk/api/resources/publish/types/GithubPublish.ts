@@ -10,5 +10,7 @@ export interface GithubPublish {
     uri: string | undefined;
     token: string | undefined;
     mode: "pull-request" | undefined;
+    /** The branch to use for README cloning and publishing. Defaults to the repository's default branch when omitted. */
+    branch: string | undefined;
     target: FernIr.PublishTarget;
 }

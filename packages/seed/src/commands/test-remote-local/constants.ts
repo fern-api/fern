@@ -6,9 +6,9 @@ export const REMOTE_GROUP_NAME = "remote";
 export const LOCAL_GROUP_NAME = "local";
 
 // Source of truth: const arrays (enables runtime iteration)
-export const ALL_GENERATOR_NICKNAMES = ["ts-sdk", "java-sdk", "go-sdk", "python-sdk"] as const;
+export const ALL_GENERATOR_NICKNAMES = ["ts-sdk", "java-sdk", "go-sdk", "python-sdk", "php-sdk"] as const;
 export const ALL_TEST_FIXTURES = ["imdb"] as const;
-export const ALL_OUTPUT_MODES = ["github", "local"] as const;
+export const ALL_OUTPUT_MODES = ["github"] as const;
 export const ALL_GENERATION_MODES = ["local", "remote"] as const;
 
 // Derived types (enables type safety in switch statements)
@@ -21,12 +21,14 @@ export type GeneratorName =
     | "fernapi/fern-typescript-sdk"
     | "fernapi/fern-java-sdk"
     | "fernapi/fern-go-sdk"
+    | "fernapi/fern-php-sdk"
     | "fernapi/fern-python-sdk";
 
 export const GeneratorNameFromNickname: Record<GeneratorNickname, GeneratorName> = {
     "ts-sdk": "fernapi/fern-typescript-sdk",
     "java-sdk": "fernapi/fern-java-sdk",
     "go-sdk": "fernapi/fern-go-sdk",
+    "php-sdk": "fernapi/fern-php-sdk",
     "python-sdk": "fernapi/fern-python-sdk"
 };
 
@@ -51,7 +53,10 @@ export const OUTPUT_MODE_SUFFIX = "OutputMode";
 export const FERN_GENERATE_COMMAND = "generate";
 export const FLAG_GROUP = "--group";
 export const FLAG_LOG_LEVEL = "--log-level";
+export const DEFAULT_FERN_LOG_LEVEL = "debug";
 export const FLAG_LOCAL = "--local";
+export const FLAG_VERSION = "--version";
+export const DEFAULT_SDK_VERSION = "7.7.7";
 
 // ============================================================================
 // Git Commands & Flags
@@ -81,7 +86,7 @@ export const PACKAGE_LOCATION_LOCAL_FILE_SYSTEM = "local-file-system";
 export const TS_SDK_PACKAGE_NAME = "@fern-fern/test-remote-local-sdk";
 export const JAVA_SDK_MAVEN_COORDINATE = "com.fern-api:test-remote-local-sdk";
 export const PYTHON_SDK_PACKAGE_NAME = "test-remote-local-sdk";
-export const GO_SDK_MODULE_PATH = "github.com/fern-api/test-remote-local-sdk";
+export const GO_SDK_MODULE_PATH = `github.com/${FERN_TEST_REPO_NAME}`;
 
 // ============================================================================
 // GitHub Configuration

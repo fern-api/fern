@@ -3,11 +3,21 @@
 module Seed
   module Simple
     class Client
-      # @return [Seed::Simple::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Simple::Types::FooRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [Seed::Simple::Types::FooResponse]
       def foo_without_endpoint_error(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -30,6 +40,14 @@ module Seed
         end
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Simple::Types::FooRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [Seed::Simple::Types::FooResponse]
       def foo(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
@@ -52,6 +70,14 @@ module Seed
         end
       end
 
+      # @param request_options [Hash]
+      # @param params [Seed::Simple::Types::FooRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      #
       # @return [Seed::Simple::Types::FooResponse]
       def foo_with_examples(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(

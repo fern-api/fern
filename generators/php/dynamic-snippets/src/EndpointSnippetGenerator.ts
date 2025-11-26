@@ -1,4 +1,4 @@
-import { NamedArgument, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, NamedArgument, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
@@ -53,7 +53,17 @@ export class EndpointSnippetGenerator {
         );
     }
 
-    private buildCodeBlock({
+    public async generateSnippetAst({
+        endpoint,
+        request
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+    }): Promise<AbstractAstNode> {
+        return this.buildCodeBlock({ endpoint, snippet: request });
+    }
+
+    public buildCodeBlock({
         endpoint,
         snippet
     }: {
@@ -112,14 +122,25 @@ export class EndpointSnippetGenerator {
                 });
             }
         }
-        const optionArgs: php.ConstructorField[] = [];
-        const baseUrlArgs = this.getConstructorBaseUrlArgs({
-            baseUrl: snippet.baseURL,
-            environment: snippet.environment
+
+        const hasMultiUrlEnvironments = this.context.ir.environments?.environments.type === "multipleBaseUrls";
+        const environmentArg = this.getConstructorEnvironmentArg({
+            environment: snippet.environment,
+            hasMultiUrlEnvironments
         });
-        if (baseUrlArgs.length > 0) {
-            optionArgs.push(...baseUrlArgs);
+
+        const optionArgs: php.ConstructorField[] = [];
+
+        if (!hasMultiUrlEnvironments) {
+            const baseUrlArgs = this.getConstructorBaseUrlArgs({
+                baseUrl: snippet.baseURL,
+                environment: snippet.environment
+            });
+            if (baseUrlArgs.length > 0) {
+                optionArgs.push(...baseUrlArgs);
+            }
         }
+
         this.context.errors.scope(Scope.Headers);
         if (this.context.ir.headers != null && snippet.headers != null) {
             optionArgs.push(
@@ -128,12 +149,14 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.unscope();
 
-        if (optionArgs.length === 0) {
-            return authArgs;
+        const args: NamedArgument[] = [...authArgs];
+
+        if (environmentArg != null) {
+            args.push(environmentArg);
         }
-        return [
-            ...authArgs,
-            {
+
+        if (optionArgs.length > 0) {
+            args.push({
                 name: "options",
                 assignment: php.TypeLiteral.map({
                     entries: optionArgs.map((arg) => ({
@@ -141,8 +164,10 @@ export class EndpointSnippetGenerator {
                         value: arg.value
                     }))
                 })
-            }
-        ];
+            });
+        }
+
+        return args;
     }
 
     private getConstructorAuthArgs({
@@ -164,11 +189,9 @@ export class EndpointSnippetGenerator {
             case "header":
                 return values.type === "header" ? this.getConstructorHeaderAuthArgs({ auth, values }) : [];
             case "oauth":
-                this.addWarning("The PHP SDK doesn't support OAuth client credentials yet");
-                return [];
+                return values.type === "oauth" ? this.getConstructorOAuthArgs({ auth, values }) : [];
             case "inferred":
-                this.addWarning("The PHP SDK Generator does not support Inferred auth scheme yet");
-                return [];
+                return values.type === "inferred" ? this.getConstructorInferredAuthArgs({ auth, values }) : [];
             default:
                 assertNever(auth);
         }
@@ -199,6 +222,204 @@ export class EndpointSnippetGenerator {
                 assignment: php.TypeLiteral.string(values.password)
             }
         ];
+    }
+
+    private getConstructorEnvironmentArg({
+        environment,
+        hasMultiUrlEnvironments
+    }: {
+        environment: FernIr.dynamic.EnvironmentValues | undefined;
+        hasMultiUrlEnvironments: boolean;
+    }): NamedArgument | undefined {
+        if (!hasMultiUrlEnvironments) {
+            return undefined;
+        }
+
+        const environmentClassRef = this.context.getEnvironmentsClassReference();
+
+        if (environment != null) {
+            if (this.context.isSingleEnvironmentID(environment)) {
+                const environmentName = this.context.resolveEnvironmentName(environment);
+                if (environmentName == null) {
+                    this.addWarning(`Environment "${environment}" was not found`);
+                    return undefined;
+                }
+                const className = this.context.getClassName(environmentName);
+                return {
+                    name: "environment",
+                    assignment: php.TypeLiteral.reference(
+                        php.codeblock((writer) => {
+                            writer.writeNode(environmentClassRef);
+                            writer.write(`::`);
+                            writer.write(className);
+                            writer.write(`()`);
+                        })
+                    )
+                };
+            }
+
+            if (this.context.isMultiEnvironmentValues(environment)) {
+                const result = this.resolveMultiEnvironmentName(environment);
+                if (result == null) {
+                    this.addWarning("Invalid multi url environment");
+                    return undefined;
+                }
+                if (result.type === "named") {
+                    return {
+                        name: "environment",
+                        assignment: php.TypeLiteral.reference(
+                            php.codeblock((writer) => {
+                                writer.writeNode(environmentClassRef);
+                                writer.write(`::`);
+                                writer.write(result.name);
+                                writer.write(`()`);
+                            })
+                        )
+                    };
+                } else {
+                    return {
+                        name: "environment",
+                        assignment: php.TypeLiteral.reference(
+                            php.codeblock((writer) => {
+                                writer.writeNode(environmentClassRef);
+                                writer.write(`::custom(`);
+                                const entries = Object.entries(result.urls);
+                                entries.forEach(([paramName, url], index) => {
+                                    writer.write(`${paramName}: '${url}'`);
+                                    if (index < entries.length - 1) {
+                                        writer.write(`, `);
+                                    }
+                                });
+                                writer.write(`)`);
+                            })
+                        )
+                    };
+                }
+            }
+        }
+
+        const defaultName = this.getDefaultEnvironmentName();
+        if (defaultName == null) {
+            return undefined;
+        }
+
+        return {
+            name: "environment",
+            assignment: php.TypeLiteral.reference(
+                php.codeblock((writer) => {
+                    writer.writeNode(environmentClassRef);
+                    writer.write(`::`);
+                    writer.write(defaultName);
+                    writer.write(`()`);
+                })
+            )
+        };
+    }
+
+    private getDefaultEnvironmentName(): string | undefined {
+        if (this.context.ir.environments?.environments.type !== "multipleBaseUrls") {
+            return undefined;
+        }
+
+        const environmentsConfig = this.context.ir.environments.environments;
+        if (environmentsConfig.type !== "multipleBaseUrls") {
+            return undefined;
+        }
+
+        const environments = environmentsConfig.environments;
+        if (environments.length === 0) {
+            return undefined;
+        }
+
+        for (const env of environments) {
+            const className = this.context.getClassName(env.name);
+            if (className === "Production") {
+                return className;
+            }
+        }
+
+        const firstEnv = environments[0];
+        if (firstEnv == null) {
+            return undefined;
+        }
+        return this.context.getClassName(firstEnv.name);
+    }
+
+    private resolveMultiEnvironmentName(
+        environment: FernIr.dynamic.MultipleEnvironmentUrlValues
+    ): { type: "named"; name: string } | { type: "custom"; urls: Record<string, string> } | undefined {
+        const baseUrlIds = Object.keys(environment);
+        if (baseUrlIds.length === 0) {
+            return undefined;
+        }
+
+        // Validate that all required base URLs are provided
+        if (!this.context.validateMultiEnvironmentUrlValues(environment)) {
+            return undefined;
+        }
+
+        const firstBaseUrlId = baseUrlIds[0];
+        if (firstBaseUrlId == null) {
+            return undefined;
+        }
+
+        const firstBaseUrlValue = environment[firstBaseUrlId];
+        if (firstBaseUrlValue == null) {
+            return undefined;
+        }
+
+        // Check if the first value is a valid environment ID (not just any string)
+        const firstEnvironmentName = this.context.resolveEnvironmentName(firstBaseUrlValue);
+        if (firstEnvironmentName != null) {
+            // Check if all values point to the same environment
+            const allSameEnvironment = baseUrlIds.every((baseUrlId) => {
+                const value = environment[baseUrlId];
+                if (value == null) {
+                    return false;
+                }
+                const envName = this.context.resolveEnvironmentName(value);
+                return envName != null && value === firstBaseUrlValue;
+            });
+
+            if (allSameEnvironment) {
+                return { type: "named", name: this.context.getClassName(firstEnvironmentName) };
+            }
+        }
+
+        // Treat all values as custom URLs
+        const urls: Record<string, string> = {};
+        for (const baseUrlId of baseUrlIds) {
+            const value = environment[baseUrlId];
+            if (value == null) {
+                continue;
+            }
+            const paramName = this.getBaseUrlPropertyName(baseUrlId);
+            urls[paramName] = value;
+        }
+
+        if (Object.keys(urls).length > 0) {
+            return { type: "custom", urls };
+        }
+
+        return undefined;
+    }
+
+    private getBaseUrlPropertyName(baseUrlId: string): string {
+        if (this.context.ir.environments?.environments.type !== "multipleBaseUrls") {
+            return baseUrlId;
+        }
+
+        const environmentsConfig = this.context.ir.environments.environments;
+        if (environmentsConfig.type !== "multipleBaseUrls") {
+            return baseUrlId;
+        }
+
+        const baseUrl = environmentsConfig.baseUrls.find((url) => url.id === baseUrlId);
+        if (baseUrl == null) {
+            return baseUrlId;
+        }
+
+        return baseUrl.name.camelCase.safeName;
     }
 
     private getConstructorBaseUrlArgs({
@@ -254,12 +475,8 @@ export class EndpointSnippetGenerator {
                     })
                 );
             }
-            if (this.context.isMultiEnvironmentValues(environment)) {
-                this.context.errors.add({
-                    severity: Severity.Warning,
-                    message:
-                        "The PHP SDK doesn't support a multi-environment client option yet; use the baseUrl option instead"
-                });
+            if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
+                return php.TypeLiteral.nop();
             }
         }
         return php.TypeLiteral.nop();
@@ -296,6 +513,37 @@ export class EndpointSnippetGenerator {
                 })
             }
         ];
+    }
+
+    private getConstructorOAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.OAuth;
+        values: FernIr.dynamic.OAuthValues;
+    }): NamedArgument[] {
+        return [
+            {
+                name: this.context.getPropertyName(auth.clientId),
+                assignment: php.TypeLiteral.string(values.clientId)
+            },
+            {
+                name: this.context.getPropertyName(auth.clientSecret),
+                assignment: php.TypeLiteral.string(values.clientSecret)
+            }
+        ];
+    }
+
+    private getConstructorInferredAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.InferredAuth;
+        values: FernIr.dynamic.InferredAuthValues;
+    }): NamedArgument[] {
+        // Inferred auth doesn't require any constructor arguments from the user.
+        // The SDK automatically handles token retrieval via the InferredAuthProvider.
+        return [];
     }
 
     private getConstructorHeaderArgs({

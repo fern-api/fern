@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("UserClient", () => {
     test("getUsername", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedQueryParametersClient({ environment: server.baseUrl });
+        const client = new SeedQueryParametersClient({ maxRetries: 0, environment: server.baseUrl });
 
         const rawResponseBody = { name: "name", tags: ["tags", "tags"] };
         server.mockEndpoint().get("/user").respondWith().statusCode(200).jsonBody(rawResponseBody).build();

@@ -1,4 +1,5 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
+import { type NormalizedClientOptions } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
 import * as SeedExhaustive from "../../../index.js";
 export declare namespace InlinedRequestsClient {
@@ -8,7 +9,7 @@ export declare namespace InlinedRequestsClient {
     }
 }
 export declare class InlinedRequestsClient {
-    protected readonly _options: InlinedRequestsClient.Options;
+    protected readonly _options: NormalizedClientOptions<InlinedRequestsClient.Options>;
     constructor(options: InlinedRequestsClient.Options);
     /**
      * POST with custom object in request body, response is an object
@@ -43,5 +44,4 @@ export declare class InlinedRequestsClient {
      */
     postWithObjectBodyandResponse(request: SeedExhaustive.PostWithObjectBody, requestOptions?: InlinedRequestsClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithOptionalField>;
     private __postWithObjectBodyandResponse;
-    protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

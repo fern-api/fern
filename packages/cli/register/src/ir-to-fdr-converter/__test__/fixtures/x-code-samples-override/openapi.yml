@@ -1,0 +1,84 @@
+openapi: 3.1.0
+info:
+  title: Code Samples Override Test API
+  version: 1.0.0
+  description: API for testing x-fern-examples code-samples override x-codeSamples
+
+paths:
+  /users/{userId}:
+    get:
+      operationId: getUser
+      summary: Get a user by ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  email:
+                    type: string
+      x-codeSamples:
+        - lang: python
+          label: Python SDK (OpenAPI)
+          source: |-
+            # This should NOT appear in FDR when x-fern-examples with code-samples exist
+            from openapi_sdk import Client
+
+            client = Client(api_key="openapi-key")
+            user = client.users.get(user_id="123")
+        - lang: typescript
+          label: TypeScript SDK (OpenAPI)
+          source: |-
+            // This should NOT appear in FDR when x-fern-examples with code-samples exist
+            import { Client } from '@openapi/sdk';
+
+            const client = new Client({ apiKey: 'openapi-key' });
+            const user = await client.users.get('123');
+      x-fern-examples:
+        - name: GetUserExample
+          path-parameters:
+            userId: "user-123"
+          response:
+            body:
+              id: "user-123"
+              name: "John Doe"
+              email: "john@example.com"
+          code-samples:
+            - name: Go SDK (Fern)
+              language: go
+              code: |-
+                package main
+
+                import (
+                    "fmt"
+                    "github.com/fern/sdk-go"
+                )
+
+                func main() {
+                    client := sdk.NewClient("fern-api-key")
+                    user, err := client.Users.Get("user-123")
+                    if err != nil {
+                        panic(err)
+                    }
+                    fmt.Println(user.Name)
+                }
+            - name: Ruby SDK (Fern)
+              language: ruby
+              code: |-
+                require 'fern_sdk'
+
+                client = FernSDK::Client.new(api_key: 'fern-api-key')
+                user = client.users.get(user_id: 'user-123')
+                puts user.name

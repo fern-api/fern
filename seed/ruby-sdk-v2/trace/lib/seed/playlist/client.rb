@@ -3,12 +3,25 @@
 module Seed
   module Playlist
     class Client
-      # @return [Seed::Playlist::Client]
+      # @param client [Seed::Internal::Http::RawClient]
+      #
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
       # Create a new playlist
+      #
+      # @param request_options [Hash]
+      # @param params [Seed::Playlist::Types::PlaylistCreateRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer] :service_param
+      # @option params [String] :datetime
+      # @option params [String, nil] :optional_datetime
       #
       # @return [Seed::Playlist::Types::Playlist]
       def create_playlist(request_options: {}, **params)
@@ -25,7 +38,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
-          path: "/v2/playlist/#{params[:serviceParam]}/create",
+          path: "/v2/playlist/#{params[:service_param]}/create",
           query: _query,
           body: Seed::Playlist::Types::PlaylistCreateRequest.new(_body).to_h
         )
@@ -45,6 +58,20 @@ module Seed
 
       # Returns the user's playlists
       #
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer] :service_param
+      # @option params [Integer, nil] :limit
+      # @option params [String] :other_field
+      # @option params [String] :multi_line_docs
+      # @option params [String, nil] :optional_multiple_field
+      # @option params [String] :multiple_field
+      #
       # @return [Array[Seed::Playlist::Types::Playlist]]
       def get_playlists(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
@@ -60,7 +87,7 @@ module Seed
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
-          path: "/v2/playlist/#{params[:serviceParam]}/all",
+          path: "/v2/playlist/#{params[:service_param]}/all",
           query: _query
         )
         begin
@@ -77,12 +104,22 @@ module Seed
 
       # Returns a playlist
       #
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer] :service_param
+      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
+      #
       # @return [Seed::Playlist::Types::Playlist]
       def get_playlist(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
-          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}"
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}"
         )
         begin
           _response = @client.send(_request)
@@ -100,12 +137,22 @@ module Seed
 
       # Updates a playlist
       #
-      # @return [Seed::Playlist::Types::Playlist | nil]
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer] :service_param
+      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
+      #
+      # @return [Seed::Playlist::Types::Playlist, nil]
       def update_playlist(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "PUT",
-          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlistId]}",
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}",
           body: params
         )
         begin
@@ -122,12 +169,22 @@ module Seed
 
       # Deletes a playlist
       #
+      # @param request_options [Hash]
+      # @param params [Hash]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
+      # @option params [Integer] :service_param
+      # @option params [Seed::Playlist::Types::PlaylistId] :playlist_id
+      #
       # @return [untyped]
       def delete_playlist(request_options: {}, **params)
         _request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "DELETE",
-          path: "/v2/playlist/#{params[:serviceParam]}/#{params[:playlist_id]}"
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}"
         )
         begin
           _response = @client.send(_request)

@@ -6,3 +6,13 @@ groups:
         version: latest
         config:
           use-default-request-parameter-values: true
+  php-sdk:
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/php-sdk-tests
+          branch: mixed-case

@@ -8,12 +8,7 @@ async fn main() {
     };
     let client = UnionsClient::new(config).expect("Failed to build client");
     client
-        .union_
-        .update(
-            &Shape::Circle {
-                data: Circle { radius: 1.1 },
-            },
-            None,
-        )
+        .types
+        .get(&"datetime-example".to_string(), None)
         .await;
 }

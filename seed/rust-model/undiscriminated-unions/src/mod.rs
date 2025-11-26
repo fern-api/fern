@@ -1,3 +1,13 @@
+//! Request and response types for the UndiscriminatedUnions
+//!
+//! This module contains all data structures used for API communication,
+//! including request bodies, response types, and shared models.
+//!
+//! ## Type Categories
+//!
+//! - **Request/Response Types**: 2 types for API operations
+//! - **Model Types**: 17 types for data representation
+
 pub mod union_request;
 pub mod union_type_with_optional_union;
 pub mod union_my_union;

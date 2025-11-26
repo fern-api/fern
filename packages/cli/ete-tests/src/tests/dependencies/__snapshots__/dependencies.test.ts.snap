@@ -503,7 +503,8 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
                     "sdkRequest": null,
                     "response": {
                         "body": null,
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -1248,4 +1249,4 @@ exports[`dependencies > correctly incorporates dependencies 1`] = `
 }"
 `;
 
-exports[`dependencies > file dependencies 1`] = `4900482`;
+exports[`dependencies > file dependencies 1`] = `5756500`;

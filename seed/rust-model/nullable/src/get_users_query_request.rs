@@ -1,15 +1,15 @@
 pub use crate::prelude::*;
 
-#[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq, Eq, Hash)]
+/// Query parameters for getUsers
+///
+/// Request type for the GetUsersQueryRequest operation.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct GetUsersQueryRequest {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub usernames: Option<String>,
+    pub usernames: Vec<Option<String>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub avatar: Option<String>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub activated: Option<bool>,
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub tags: Option<Option<String>>,
+    pub activated: Vec<Option<bool>>,
+    pub tags: Vec<Option<Option<String>>>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub extra: Option<Option<bool>>,
 }

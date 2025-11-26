@@ -1,5 +1,83 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.39.2
+  changelogEntry:
+    - summary: More fixes and improvements to wire tests.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 4.39.1
+  changelogEntry:
+    - summary: Various fixes and improvements to wire tests.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 4.39.0
+  changelogEntry:
+    - summary: Add environment_class_name config option to customize the environment class name. Default remains {ClientName}Environment.
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 4.38.5
+  changelogEntry:
+    - summary: Fix discriminated union Field(discriminator=...) and UnionMetadata(discriminant=...) to use Python field names instead of JSON aliases for Pydantic v2 compatibility.
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 61
+
+- version: 4.38.4
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 4.38.3-rc1
+  changelogEntry:
+    - summary: Add wire test generation behind `enable_wire_tests` flag.
+      type: feat
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 4.38.3-rc0
+  changelogEntry:
+    - summary: Add support for custom pagination
+      type: feat
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 4.38.2
+  changelogEntry:
+    - summary: Fix missing websocket services when using lazy imports
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 4.38.1
+  changelogEntry:
+    - summary: Add contents:read permission to generated publish workflow for OIDC authentication to fix actions/checkout@v4 requirements.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 4.38.0
+  changelogEntry:
+    - summary: Add pytest-xdist for parallel test execution and upgrade CI Python version to 3.9 in generated SDKs.
+      type: feat
+  createdAt: "2025-11-19"
+  irVersion: 61
+
+- version: 4.37.1
+  changelogEntry:
+    - summary: Bump generator CLI version to publish new Docker image.
+      type: chore
+  createdAt: "2025-11-19"
+  irVersion: 61
+
 - version: 4.37.0
   changelogEntry:
     - summary: |

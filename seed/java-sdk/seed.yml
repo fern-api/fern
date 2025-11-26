@@ -27,6 +27,15 @@ test:
       - cd ../../
       - pnpm --filter @fern-api/java-sdk dist:cli
       - docker build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
+  podman:
+    image: fernapi/fern-java-sdk:latest
+    context: .
+    command:
+      - cd generators/java
+      - ./gradlew :sdk:distTar
+      - cd ../../
+      - pnpm --filter @fern-api/java-sdk dist:cli
+      - podman build -f generators/java/sdk/Dockerfile -t fernapi/fern-java-sdk:latest .
   local:
     workingDirectory: generators/java
     buildCommand:
@@ -155,6 +164,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: default
+  pagination-custom:
+    - customConfig:
+        custom-pager-name: "FernCustomPaginator"
+      outputFolder: default
   unions:
     - customConfig:
         enable-wire-tests: true
@@ -252,10 +265,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: oauth-client-credentials
-  custom-auth:
+  header-auth:
     - customConfig:
         enable-wire-tests: true
-      outputFolder: custom-auth
+      outputFolder: header-auth
   nullable-optional:
     - customConfig:
         use-nullable-annotation: true
@@ -275,13 +288,11 @@ fixtures:
         enable-wire-tests: true
       outputFolder: streaming
 scripts:
-  - docker: fernapi/java-seed
+  - image: fernapi/java-seed
     commands:
       - source ~/.bash_profile && jenv shell 1.8 && source ~/.bash_profile && ./gradlew spotlessCheck test
 allowedFailures:
   - alias-extends
-  - bytes-download
-  - bytes-upload
   - enum:forward-compatible-enums
   - enum:no-custom-config
   - errors

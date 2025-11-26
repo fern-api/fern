@@ -86,6 +86,9 @@ function getCustomSections(context: SdkGeneratorContext): FernGeneratorCli.Custo
 }
 
 function parseCustomConfigOrUndefined(logger: Logger, customConfig: unknown): CsharpConfigSchema | undefined {
+    if (customConfig == null) {
+        return undefined;
+    }
     try {
         return CsharpConfigSchema.parse(customConfig);
     } catch (error) {

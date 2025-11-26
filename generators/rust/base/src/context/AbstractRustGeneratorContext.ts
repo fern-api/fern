@@ -1,14 +1,16 @@
 import { AbstractGeneratorContext, FernGeneratorExec, GeneratorNotificationService } from "@fern-api/base-generator";
 import { BaseRustCustomConfigSchema } from "@fern-api/rust-codegen";
+import type * as FernIr from "@fern-fern/ir-sdk/api";
 import { HttpEndpoint, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AsIsFileDefinition } from "../AsIs";
-import { RustProject } from "../project";
+import { RustDependencyManager, RustDependencySpec, RustDependencyType, RustProject } from "../project";
 import {
     convertPascalToSnakeCase,
     convertToSnakeCase,
     escapeRustKeyword,
     escapeRustReservedType,
     generateDefaultCrateName,
+    RustCycleDetector,
     validateAndSanitizeCrateName
 } from "../utils";
 
@@ -16,6 +18,7 @@ export abstract class AbstractRustGeneratorContext<
     CustomConfig extends BaseRustCustomConfigSchema
 > extends AbstractGeneratorContext {
     public readonly project: RustProject;
+    public readonly dependencyManager: RustDependencyManager;
     public publishConfig: FernGeneratorExec.CratesGithubPublishInfo | undefined;
 
     public constructor(
@@ -25,6 +28,11 @@ export abstract class AbstractRustGeneratorContext<
         public readonly generatorNotificationService: GeneratorNotificationService
     ) {
         super(config, generatorNotificationService);
+
+        // Detect illegal recursive type cycles before any generation
+        // This will throw an error if the schema has cycles that cannot be represented in Rust
+        const cycleDetector = new RustCycleDetector(ir);
+        cycleDetector.detectIllegalCycles();
 
         // Extract publish config from output mode
         config.output.mode._visit<void>({
@@ -38,6 +46,10 @@ export abstract class AbstractRustGeneratorContext<
             _other: () => undefined
         });
 
+        this.dependencyManager = new RustDependencyManager();
+        this.addBaseDependencies();
+        this.detectAndAddFeatureDependencies();
+
         this.project = new RustProject({
             context: this,
             crateName: this.getCrateName(),
@@ -47,6 +59,320 @@ export abstract class AbstractRustGeneratorContext<
 
         // Pre-register ALL filenames before any generation
         this.registerAllFilenames(ir);
+    }
+
+    /**
+     * Add base dependencies that are always required
+     */
+    private addBaseDependencies(): void {
+        this.dependencyManager.add("serde", { version: "1.0", features: ["derive"] });
+        this.dependencyManager.add("serde_json", "1.0");
+        this.dependencyManager.add("reqwest", {
+            version: "0.12",
+            features: ["json", "stream"], // stream is needed for ByteStream (file downloads)
+            defaultFeatures: false
+        });
+        this.dependencyManager.add("tokio", { version: "1.0", features: ["full"] });
+        this.dependencyManager.add("futures", "0.3");
+        this.dependencyManager.add("bytes", "1.0");
+        this.dependencyManager.add("thiserror", "1.0");
+        this.dependencyManager.add("percent-encoding", "2.3");
+        this.dependencyManager.add("ordered-float", { version: "4.5", features: ["serde"] });
+        this.dependencyManager.add("num-bigint", { version: "0.4", features: ["serde"] });
+
+        // Always include chrono and uuid for QueryBuilder support
+        this.dependencyManager.add("chrono", { version: "0.4", features: ["serde"] });
+        this.dependencyManager.add("uuid", { version: "1.0", features: ["serde"] });
+
+        this.dependencyManager.add("tokio-test", "0.4", RustDependencyType.DEV);
+
+        const extraDeps = this.customConfig.extraDependencies ?? {};
+        for (const [name, versionOrSpec] of Object.entries(extraDeps)) {
+            if (typeof versionOrSpec === "string") {
+                this.dependencyManager.add(name, versionOrSpec);
+            } else {
+                this.dependencyManager.add(name, versionOrSpec as RustDependencySpec);
+            }
+        }
+
+        const extraDevDeps = this.customConfig.extraDevDependencies ?? {};
+        for (const [name, version] of Object.entries(extraDevDeps)) {
+            this.dependencyManager.add(name, version, RustDependencyType.DEV);
+        }
+    }
+
+    /**
+     * Detect features from IR and add conditional dependencies
+     * Also respects custom features configuration from customConfig
+     */
+    private detectAndAddFeatureDependencies(): void {
+        const hasFileUpload = this.hasFileUploadEndpoints();
+        const hasStreaming = this.hasStreamingEndpoints();
+
+        // Track auto-detected default features
+        const autoDetectedDefaults: string[] = [];
+
+        // Always declare multipart feature (empty if not used, to avoid cfg warnings)
+        if (hasFileUpload) {
+            // Add multipart feature that enables reqwest/multipart
+            this.dependencyManager.addFeature("multipart", ["reqwest/multipart"]);
+            autoDetectedDefaults.push("multipart");
+        } else {
+            // Add empty multipart feature to satisfy cfg checks
+            this.dependencyManager.addFeature("multipart", []);
+        }
+
+        // Always declare sse feature (empty if not used, to avoid cfg warnings)
+        if (hasStreaming) {
+            // Add SSE-specific dependencies as optional
+            this.dependencyManager.add("reqwest-sse", { version: "0.1", optional: true });
+            this.dependencyManager.add("pin-project", { version: "1.1", optional: true });
+
+            // Add sse feature that enables SSE dependencies
+            this.dependencyManager.addFeature("sse", ["reqwest-sse", "pin-project"]);
+            autoDetectedDefaults.push("sse");
+        } else {
+            // Add empty sse feature to satisfy cfg checks
+            this.dependencyManager.addFeature("sse", []);
+        }
+
+        // Add custom features from configuration
+        if (this.customConfig.features) {
+            for (const [featureName, dependencies] of Object.entries(this.customConfig.features)) {
+                this.dependencyManager.addFeature(featureName, dependencies);
+            }
+        }
+
+        // Apply default features (custom override or auto-detected)
+        const defaultFeatures = this.customConfig.defaultFeatures ?? autoDetectedDefaults;
+        for (const feature of defaultFeatures) {
+            this.dependencyManager.enableDefaultFeature(feature);
+        }
+    }
+
+    /**
+     * Check if IR uses a specific primitive type
+     */
+    private irUsesType(typeName: "DATE_TIME" | "DATE" | "UUID" | "BIG_INTEGER"): boolean {
+        // Use a visited set to prevent infinite recursion on circular types
+        const visited = new Set<string>();
+
+        for (const typeDecl of Object.values(this.ir.types)) {
+            if (this.typeShapeUsesBuiltin(typeDecl.shape, typeName, visited)) {
+                return true;
+            }
+        }
+
+        for (const service of Object.values(this.ir.services)) {
+            for (const endpoint of service.endpoints) {
+                if (endpoint.requestBody != null) {
+                    if (endpoint.requestBody.type === "inlinedRequestBody") {
+                        for (const property of endpoint.requestBody.properties) {
+                            if (this.typeReferenceUsesBuiltin(property.valueType, typeName, visited)) {
+                                return true;
+                            }
+                        }
+                    } else if (endpoint.requestBody.type === "reference") {
+                        if (this.typeReferenceUsesBuiltin(endpoint.requestBody.requestBodyType, typeName, visited)) {
+                            return true;
+                        }
+                    }
+                }
+
+                if (endpoint.response?.body) {
+                    const usesBuiltin = endpoint.response.body._visit({
+                        json: (json: FernIr.JsonResponse) => {
+                            return json._visit({
+                                response: (response: FernIr.JsonResponseBody) =>
+                                    this.typeReferenceUsesBuiltin(response.responseBodyType, typeName, visited),
+                                nestedPropertyAsResponse: (nested: FernIr.JsonResponseBodyWithProperty) =>
+                                    this.typeReferenceUsesBuiltin(nested.responseBodyType, typeName, visited),
+                                _other: () => false
+                            });
+                        },
+                        fileDownload: () => false,
+                        streaming: () => false,
+                        streamParameter: () => false,
+                        text: () => false,
+                        bytes: () => false,
+                        _other: () => false
+                    });
+                    if (usesBuiltin) {
+                        return true;
+                    }
+                }
+
+                for (const param of endpoint.queryParameters) {
+                    if (this.typeReferenceUsesBuiltin(param.valueType, typeName, visited)) {
+                        return true;
+                    }
+                }
+
+                for (const param of endpoint.pathParameters) {
+                    if (this.typeReferenceUsesBuiltin(param.valueType, typeName, visited)) {
+                        return true;
+                    }
+                }
+
+                for (const header of endpoint.headers) {
+                    if (this.typeReferenceUsesBuiltin(header.valueType, typeName, visited)) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Check if a type shape uses a specific builtin type
+     * @param visited Set of type IDs already visited to prevent infinite recursion
+     */
+    private typeShapeUsesBuiltin(shape: FernIr.Type, typeName: string, visited: Set<string>): boolean {
+        return shape._visit({
+            alias: (alias: FernIr.AliasTypeDeclaration) =>
+                this.typeReferenceUsesBuiltin(alias.aliasOf, typeName, visited),
+            enum: () => false,
+            object: (obj: FernIr.ObjectTypeDeclaration) => {
+                for (const property of obj.properties) {
+                    if (this.typeReferenceUsesBuiltin(property.valueType, typeName, visited)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            union: (union: FernIr.UnionTypeDeclaration) => {
+                for (const variant of union.types) {
+                    const usesBuiltin = variant.shape._visit({
+                        singleProperty: (property: FernIr.SingleUnionTypeProperty) =>
+                            this.typeReferenceUsesBuiltin(property.type, typeName, visited),
+                        samePropertiesAsObject: (declaredType: FernIr.DeclaredTypeName) => {
+                            // Prevent infinite recursion by checking if we've visited this type
+                            if (visited.has(declaredType.typeId)) {
+                                return false;
+                            }
+                            const typeDecl = this.ir.types[declaredType.typeId];
+                            if (typeDecl) {
+                                return this.typeShapeUsesBuiltin(typeDecl.shape, typeName, visited);
+                            }
+                            return false;
+                        },
+                        noProperties: () => false,
+                        _other: () => false
+                    });
+                    if (usesBuiltin) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            undiscriminatedUnion: (union: FernIr.UndiscriminatedUnionTypeDeclaration) => {
+                for (const member of union.members) {
+                    if (this.typeReferenceUsesBuiltin(member.type, typeName, visited)) {
+                        return true;
+                    }
+                }
+                return false;
+            },
+            _other: () => false
+        });
+    }
+
+    /**
+     * Check if a type reference uses a specific builtin type
+     * @param visited Set of type IDs already visited to prevent infinite recursion
+     */
+    private typeReferenceUsesBuiltin(typeRef: FernIr.TypeReference, typeName: string, visited: Set<string>): boolean {
+        return typeRef._visit({
+            primitive: (primitive: FernIr.PrimitiveType) => {
+                return primitive.v1 === typeName;
+            },
+            container: (container: FernIr.ContainerType) => {
+                return container._visit({
+                    list: (list: FernIr.TypeReference) => this.typeReferenceUsesBuiltin(list, typeName, visited),
+                    set: (set: FernIr.TypeReference) => this.typeReferenceUsesBuiltin(set, typeName, visited),
+                    optional: (optional: FernIr.TypeReference) =>
+                        this.typeReferenceUsesBuiltin(optional, typeName, visited),
+                    nullable: (nullable: FernIr.TypeReference) =>
+                        this.typeReferenceUsesBuiltin(nullable, typeName, visited),
+                    map: (map: FernIr.MapType) =>
+                        this.typeReferenceUsesBuiltin(map.keyType, typeName, visited) ||
+                        this.typeReferenceUsesBuiltin(map.valueType, typeName, visited),
+                    literal: () => false,
+                    _other: () => false
+                });
+            },
+            named: (named: FernIr.NamedType) => {
+                // Prevent infinite recursion by checking if we've already visited this type
+                if (visited.has(named.typeId)) {
+                    return false;
+                }
+
+                // Mark this type as visited
+                visited.add(named.typeId);
+
+                const typeDecl = this.ir.types[named.typeId];
+                if (typeDecl) {
+                    return this.typeShapeUsesBuiltin(typeDecl.shape, typeName, visited);
+                }
+                return false;
+            },
+            unknown: () => false,
+            _other: () => false
+        });
+    }
+
+    /**
+     * Check if IR uses datetime types (DateTime or NaiveDate)
+     */
+    public usesDateTime(): boolean {
+        return this.irUsesType("DATE_TIME") || this.irUsesType("DATE");
+    }
+
+    /**
+     * Check if IR uses uuid types
+     */
+    public usesUuid(): boolean {
+        return this.irUsesType("UUID");
+    }
+
+    /**
+     * Check if IR uses big integer types
+     */
+    public usesBigInteger(): boolean {
+        return this.irUsesType("BIG_INTEGER");
+    }
+
+    /**
+     * Check if IR has any file upload endpoints
+     */
+    public hasFileUploadEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => endpoint.requestBody?.type === "fileUpload")
+        );
+    }
+
+    /**
+     * Check if IR has any streaming endpoints
+     */
+    public hasStreamingEndpoints(): boolean {
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => {
+                if (!endpoint.response?.body) {
+                    return false;
+                }
+                return endpoint.response.body._visit({
+                    streaming: () => true,
+                    streamParameter: () => true,
+                    json: () => false,
+                    fileDownload: () => false,
+                    text: () => false,
+                    bytes: () => false,
+                    _other: () => false
+                });
+            })
+        );
     }
 
     /**

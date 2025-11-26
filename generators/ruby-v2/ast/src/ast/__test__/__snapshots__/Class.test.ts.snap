@@ -25,6 +25,8 @@ exports[`Class > writes class with a body 1`] = `
   # @return [void]
   def initialize(name); end
 
+  # @param name [String]
+  #
   # @return [instance]
   def self.build(name:); end
 

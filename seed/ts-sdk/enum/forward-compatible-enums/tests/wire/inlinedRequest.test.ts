@@ -6,7 +6,7 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("InlinedRequestClient", () => {
     test("send", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedEnumClient({ environment: server.baseUrl });
+        const client = new SeedEnumClient({ maxRetries: 0, environment: server.baseUrl });
         const rawRequestBody = { operand: ">", operandOrColor: "red" };
 
         server.mockEndpoint().post("/inlined").jsonBody(rawRequestBody).respondWith().statusCode(200).build();

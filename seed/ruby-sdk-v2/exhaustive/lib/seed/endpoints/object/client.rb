@@ -4,11 +4,21 @@ module Seed
   module Endpoints
     module Object_
       class Client
-        # @return [Seed::Endpoints::Object_::Client]
+        # @param client [Seed::Internal::Http::RawClient]
+        #
+        # @return [void]
         def initialize(client:)
           @client = client
         end
 
+        # @param request_options [Hash]
+        # @param params [Seed::Types::Object_::Types::ObjectWithOptionalField]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithOptionalField]
         def get_and_return_with_optional_field(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -31,6 +41,14 @@ module Seed
           end
         end
 
+        # @param request_options [Hash]
+        # @param params [Seed::Types::Object_::Types::ObjectWithRequiredField]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithRequiredField]
         def get_and_return_with_required_field(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -53,6 +71,14 @@ module Seed
           end
         end
 
+        # @param request_options [Hash]
+        # @param params [Seed::Types::Object_::Types::ObjectWithMapOfMap]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
         # @return [Seed::Types::Object_::Types::ObjectWithMapOfMap]
         def get_and_return_with_map_of_map(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -75,6 +101,14 @@ module Seed
           end
         end
 
+        # @param request_options [Hash]
+        # @param params [Seed::Types::Object_::Types::NestedObjectWithOptionalField]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
         # @return [Seed::Types::Object_::Types::NestedObjectWithOptionalField]
         def get_and_return_nested_with_optional_field(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -97,6 +131,15 @@ module Seed
           end
         end
 
+        # @param request_options [Hash]
+        # @param params [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        # @option params [String] :string
+        #
         # @return [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(
@@ -119,6 +162,14 @@ module Seed
           end
         end
 
+        # @param request_options [Hash]
+        # @param params [Hash]
+        # @option request_options [String] :base_url
+        # @option request_options [Hash{String => Object}] :additional_headers
+        # @option request_options [Hash{String => Object}] :additional_query_parameters
+        # @option request_options [Hash{String => Object}] :additional_body_parameters
+        # @option request_options [Integer] :timeout_in_seconds
+        #
         # @return [Seed::Types::Object_::Types::NestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field_as_list(request_options: {}, **params)
           _request = Seed::Internal::JSON::Request.new(

@@ -6,7 +6,7 @@ import { PathClient } from "./api/resources/path/client/Client.js";
 import { QueryClient } from "./api/resources/query/client/Client.js";
 import { ReferenceClient } from "./api/resources/reference/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedLiteralClient {
     export interface Options extends BaseClientOptions {}
@@ -15,7 +15,7 @@ export declare namespace SeedLiteralClient {
 }
 
 export class SeedLiteralClient {
-    protected readonly _options: SeedLiteralClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedLiteralClient.Options>;
     protected _headers: HeadersClient | undefined;
     protected _inlined: InlinedClient | undefined;
     protected _path: PathClient | undefined;

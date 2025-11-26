@@ -1,4 +1,5 @@
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../BaseClient.mjs";
+import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClient.mjs";
 import * as core from "../../../../../../core/index.mjs";
 import type * as SeedExhaustive from "../../../../../index.mjs";
 export declare namespace ContainerClient {
@@ -8,7 +9,7 @@ export declare namespace ContainerClient {
     }
 }
 export declare class ContainerClient {
-    protected readonly _options: ContainerClient.Options;
+    protected readonly _options: NormalizedClientOptionsWithAuth<ContainerClient.Options>;
     constructor(options: ContainerClient.Options);
     /**
      * @param {string[]} request
@@ -87,5 +88,4 @@ export declare class ContainerClient {
      */
     getAndReturnOptional(request?: SeedExhaustive.types.ObjectWithRequiredField, requestOptions?: ContainerClient.RequestOptions): core.HttpResponsePromise<SeedExhaustive.types.ObjectWithRequiredField | undefined>;
     private __getAndReturnOptional;
-    protected _getAuthorizationHeader(): Promise<string | undefined>;
 }

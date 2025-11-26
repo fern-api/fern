@@ -34,7 +34,7 @@ async fn main() {
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
                         line_number: 1,
-                        return_value: Some(DebugVariableValue::IntegerValue { value: None }),
+                        return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                         expression_location: Some(ExpressionLocation {
                             start: 1,
                             offset: 1,
@@ -48,13 +48,13 @@ async fn main() {
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: None },
+                                            DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
                                     },
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: None },
+                                            DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
                                     },
                                 ],
@@ -67,7 +67,7 @@ async fn main() {
                             Uuid::parse_str("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32").unwrap(),
                         ),
                         line_number: 1,
-                        return_value: Some(DebugVariableValue::IntegerValue { value: None }),
+                        return_value: Some(DebugVariableValue::IntegerValue { value: 0 }),
                         expression_location: Some(ExpressionLocation {
                             start: 1,
                             offset: 1,
@@ -81,13 +81,13 @@ async fn main() {
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: None },
+                                            DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
                                     },
                                     Scope {
                                         variables: HashMap::from([(
                                             "variables".to_string(),
-                                            DebugVariableValue::IntegerValue { value: None },
+                                            DebugVariableValue::IntegerValue { value: 0 },
                                         )]),
                                     },
                                 ],

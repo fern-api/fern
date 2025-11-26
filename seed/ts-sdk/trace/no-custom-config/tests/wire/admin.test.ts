@@ -6,7 +6,12 @@ import { mockServerPool } from "../mock-server/MockServerPool";
 describe("AdminClient", () => {
     test("updateTestSubmissionStatus", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { type: "stopped" };
 
         server
@@ -25,7 +30,12 @@ describe("AdminClient", () => {
 
     test("sendTestSubmissionUpdate", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             updateTime: "2024-01-15T09:30:00Z",
             updateInfo: { type: "running", value: "QUEUEING_SUBMISSION" },
@@ -51,7 +61,12 @@ describe("AdminClient", () => {
 
     test("updateWorkspaceSubmissionStatus", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = { type: "stopped" };
 
         server
@@ -70,7 +85,12 @@ describe("AdminClient", () => {
 
     test("sendWorkspaceSubmissionUpdate", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             updateTime: "2024-01-15T09:30:00Z",
             updateInfo: { type: "running", value: "QUEUEING_SUBMISSION" },
@@ -96,7 +116,12 @@ describe("AdminClient", () => {
 
     test("storeTracedTestCase", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             result: {
                 result: {
@@ -256,7 +281,12 @@ describe("AdminClient", () => {
 
     test("storeTracedTestCaseV2", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = [
             {
                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -401,7 +431,12 @@ describe("AdminClient", () => {
 
     test("storeTracedWorkspace", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = {
             workspaceRunDetails: {
                 exceptionV2: {
@@ -564,7 +599,12 @@ describe("AdminClient", () => {
 
     test("storeTracedWorkspaceV2", async () => {
         const server = mockServerPool.createServer();
-        const client = new SeedTraceClient({ token: "test", xRandomHeader: "test", environment: server.baseUrl });
+        const client = new SeedTraceClient({
+            maxRetries: 0,
+            token: "test",
+            xRandomHeader: "test",
+            environment: server.baseUrl,
+        });
         const rawRequestBody = [
             {
                 submissionId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",

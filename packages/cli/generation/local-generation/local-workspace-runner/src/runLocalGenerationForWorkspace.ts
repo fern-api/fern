@@ -3,7 +3,7 @@ import { FernToken, getAccessToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { fernConfigJson, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { createVenusService } from "@fern-api/core";
-import { ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
+import { assertNever, ContainerRunner, replaceEnvVariables } from "@fern-api/core-utils";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { ClonedRepository, cloneRepository, parseRepository } from "@fern-api/github";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
@@ -22,6 +22,7 @@ import os from "os";
 import path from "path";
 import tmp from "tmp-promise";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
+import { isAutoVersion } from "./VersionUtils";
 
 export async function runLocalGenerationForWorkspace({
     token,
@@ -33,7 +34,8 @@ export async function runLocalGenerationForWorkspace({
     inspect,
     context,
     absolutePathToPreview,
-    runner
+    runner,
+    ai
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -45,6 +47,7 @@ export async function runLocalGenerationForWorkspace({
     absolutePathToPreview: AbsoluteFilePath | undefined;
     runner: ContainerRunner | undefined;
     inspect: boolean;
+    ai: generatorsYml.AiServicesSchema | undefined;
 }): Promise<void> {
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
@@ -120,6 +123,7 @@ export async function runLocalGenerationForWorkspace({
                         }
                         intermediateRepresentation.readmeConfig.whiteLabel = true;
                     }
+                    intermediateRepresentation.selfHosted = organization.body.selfHostedSdKs;
                 }
 
                 // Set the publish config on the intermediateRepresentation if available
@@ -149,14 +153,52 @@ export async function runLocalGenerationForWorkspace({
                     absolutePathToPreviewForGenerator != null
                 );
 
+                // Validate that automatic versioning requires self-hosted GitHub configuration
+                if (version != null && isAutoVersion(version)) {
+                    if (selfhostedGithubConfig == null) {
+                        context.failAndThrow(
+                            `Automatic versioning (--version AUTO) requires a self-hosted GitHub repository configuration. ` +
+                                `Regular GitHub repositories are not supported because auto versioning needs to push changes back to the repository. ` +
+                                `Please configure your generator with self-hosted GitHub output in generators.yml. ` +
+                                `Example:\n` +
+                                `generators:\n` +
+                                `  - name: fernapi/fern-typescript-sdk\n` +
+                                `    version: latest\n` +
+                                `    github:\n` +
+                                `      uri: your-org/your-sdk-repo\n` +
+                                `      token: \${GITHUB_TOKEN}\n` +
+                                `      mode: pull-request\n`
+                        );
+                    }
+                }
+
                 if (selfhostedGithubConfig != null) {
                     await fs.rm(absolutePathToLocalOutput, { recursive: true, force: true });
                     await fs.mkdir(absolutePathToLocalOutput, { recursive: true });
-                    const repo = await cloneRepository({
-                        githubRepository: selfhostedGithubConfig.uri,
-                        installationToken: selfhostedGithubConfig.token,
-                        targetDirectory: absolutePathToLocalOutput
-                    });
+
+                    try {
+                        const repo = await cloneRepository({
+                            githubRepository: selfhostedGithubConfig.uri,
+                            installationToken: selfhostedGithubConfig.token,
+                            targetDirectory: absolutePathToLocalOutput,
+                            timeoutMs: 1000 // 10 seconds timeout for credential/network issues
+                        });
+
+                        // For push mode, checkout the target branch while the working tree is clean.
+                        // This prevents non-fast-forward errors that occur when trying to checkout
+                        // after files have been generated (dirty working tree).
+                        const mode = selfhostedGithubConfig.mode ?? "push";
+                        if (mode === "push" && selfhostedGithubConfig.branch != null) {
+                            interactiveTaskContext.logger.debug(
+                                `Checking out branch ${selfhostedGithubConfig.branch} before generation`
+                            );
+                            await repo.checkoutRemoteBranch(selfhostedGithubConfig.branch);
+                        }
+                    } catch (error) {
+                        interactiveTaskContext.failAndThrow(
+                            `Failed to clone GitHub repository ${selfhostedGithubConfig.uri}: ${error instanceof Error ? error.message : String(error)}`
+                        );
+                    }
                 }
 
                 let absolutePathToLocalSnippetJSON: AbsoluteFilePath | undefined = undefined;
@@ -174,7 +216,7 @@ export async function runLocalGenerationForWorkspace({
                 // NOTE(tjb9dc): Important that we get a new temp dir per-generator, as we don't want their local files to collide.
                 const workspaceTempDir = await getWorkspaceTempDir();
 
-                await writeFilesToDiskAndRunGenerator({
+                const { shouldCommit, autoVersioningCommitMessage } = await writeFilesToDiskAndRunGenerator({
                     organization: projectConfig.organization,
                     absolutePathToFernConfig: projectConfig._absolutePath,
                     workspace: fernWorkspace,
@@ -196,16 +238,19 @@ export async function runLocalGenerationForWorkspace({
                     inspect,
                     executionEnvironment: undefined, // This should use the Docker fallback with proper image name
                     ir: intermediateRepresentation,
-                    runner
+                    whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
+                    runner,
+                    ai
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
 
-                if (selfhostedGithubConfig != null) {
+                if (selfhostedGithubConfig != null && shouldCommit) {
                     await postProcessGithubSelfHosted(
                         interactiveTaskContext,
                         selfhostedGithubConfig,
-                        absolutePathToLocalOutput
+                        absolutePathToLocalOutput,
+                        autoVersioningCommitMessage
                     );
                 }
             });
@@ -253,61 +298,136 @@ function resolveAbsolutePathToLocalPreview(
 
     return absolutePathToPreview ? join(absolutePathToPreview, RelativeFilePath.of(subfolderName)) : undefined;
 }
+
+function parseCommitMessageForPR(commitMessage: string): { prTitle: string; prBody: string } {
+    const lines = commitMessage.split("\n");
+    const prTitle = lines[0]?.trim() || "SDK Generation";
+    const prBody = lines.slice(1).join("\n").trim() || "Automated SDK generation by Fern";
+    return { prTitle, prBody };
+}
+
 async function postProcessGithubSelfHosted(
     context: TaskContext,
     selfhostedGithubConfig: SelhostedGithubConfig,
-    absolutePathToLocalOutput: AbsoluteFilePath
+    absolutePathToLocalOutput: AbsoluteFilePath,
+    commitMessage?: string
 ): Promise<void> {
     try {
         context.logger.debug("Starting GitHub self-hosted flow in directory: " + absolutePathToLocalOutput);
         const repository = ClonedRepository.createAtPath(absolutePathToLocalOutput);
         const now = new Date();
-        const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace(/\..+/, "");
+        const formattedDate = now.toISOString().replace("T", "_").replace(/:/g, "-").replace("Z", "").replace(".", "_");
         const prBranch = `fern-bot/${formattedDate}`;
-        if (selfhostedGithubConfig.mode === "pull-request") {
-            context.logger.debug(`Checking out new branch ${prBranch}`);
-            await repository.checkout(prBranch);
-        }
-
-        context.logger.debug("Committing changes...");
-        await repository.commitAllChanges("SDK Generation");
-        context.logger.debug(`Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`);
-
-        if (!selfhostedGithubConfig.previewMode) {
-            await repository.push();
-            const pushedBranch = await repository.getCurrentBranch();
-            context.logger.info(`Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`);
-        }
-
-        if (selfhostedGithubConfig.mode === "pull-request") {
-            const baseBranch = await repository.getDefaultBranch();
-
-            const octokit = new Octokit({
-                auth: selfhostedGithubConfig.token
+        // Ensure git commits are attributed to a bot user so pushes/PRs have a consistent author.
+        try {
+            // Use repository helper to set git user/email if available
+            await repository.setUserAndEmail({
+                name: "fern-api",
+                email: "115122769+fern-api[bot]@users.noreply.github.com"
             });
-            // Use octokit directly to create the pull request
-            const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
-            const { owner, repo } = parsedRepo;
-            const head = `${owner}:${prBranch}`;
+        } catch (_other) {
+            // pass
+        }
 
-            try {
-                await octokit.pulls.create({
-                    owner,
-                    repo,
-                    title: "SDK Generation",
-                    body: "Automated SDK generation by Fern",
-                    head,
-                    base: baseBranch,
-                    draft: false
-                });
+        const mode = selfhostedGithubConfig.mode ?? "push";
+        switch (mode) {
+            case "pull-request": {
+                context.logger.debug(`Checking out new branch ${prBranch}`);
+                await repository.checkout(prBranch);
 
-                context.logger.info(`Created pull request ${head} -> ${baseBranch} on ${selfhostedGithubConfig.uri}`);
-            } catch (error) {
-                const message = error instanceof Error ? error.message : String(error);
-                if (message.includes("A pull request already exists for")) {
-                    context.failWithoutThrowing(`A pull request already exists for ${head}`);
+                context.logger.debug("Checking for .fernignore file...");
+                const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
+                try {
+                    await fs.access(fernignorePath);
+                    context.logger.debug(".fernignore already exists");
+                } catch {
+                    context.logger.debug("Creating .fernignore file...");
+                    await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
                 }
+
+                context.logger.debug("Committing changes...");
+                const finalCommitMessage = commitMessage ?? "SDK Generation";
+                await repository.commitAllChanges(finalCommitMessage);
+                context.logger.debug(
+                    `Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`
+                );
+
+                if (!selfhostedGithubConfig.previewMode) {
+                    await repository.push();
+                    const pushedBranch = await repository.getCurrentBranch();
+                    context.logger.info(
+                        `Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`
+                    );
+                }
+
+                const baseBranch = selfhostedGithubConfig.branch ?? (await repository.getDefaultBranch());
+
+                const octokit = new Octokit({
+                    auth: selfhostedGithubConfig.token
+                });
+                const parsedRepo = parseRepository(selfhostedGithubConfig.uri);
+                const { owner, repo } = parsedRepo;
+                const head = `${owner}:${prBranch}`;
+
+                const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
+
+                try {
+                    await octokit.pulls.create({
+                        owner,
+                        repo,
+                        title: prTitle,
+                        body: prBody,
+                        head,
+                        base: baseBranch,
+                        draft: false
+                    });
+
+                    context.logger.info(
+                        `Created pull request ${head} -> ${baseBranch} on ${selfhostedGithubConfig.uri}`
+                    );
+                } catch (error) {
+                    const message = error instanceof Error ? error.message : String(error);
+                    if (message.includes("A pull request already exists for")) {
+                        context.failWithoutThrowing(`A pull request already exists for ${head}`);
+                    }
+                }
+                break;
             }
+            case "push": {
+                if (selfhostedGithubConfig.branch != null) {
+                    context.logger.debug(`Checking out branch ${selfhostedGithubConfig.branch}`);
+                    await repository.checkout(selfhostedGithubConfig.branch);
+                }
+
+                context.logger.debug("Checking for .fernignore file...");
+                const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
+                try {
+                    await fs.access(fernignorePath);
+                    context.logger.debug(".fernignore already exists");
+                } catch {
+                    context.logger.debug("Creating .fernignore file...");
+                    await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
+                }
+
+                context.logger.debug("Committing changes...");
+                const finalCommitMessage = commitMessage ?? "SDK Generation";
+                await repository.commitAllChanges(finalCommitMessage);
+                context.logger.debug(
+                    `Committed changes to local copy of GitHub repository at ${absolutePathToLocalOutput}`
+                );
+
+                if (!selfhostedGithubConfig.previewMode) {
+                    await repository.pushWithRebasingRemote();
+
+                    const pushedBranch = await repository.getCurrentBranch();
+                    context.logger.info(
+                        `Pushed branch: https://github.com/${selfhostedGithubConfig.uri}/tree/${pushedBranch}`
+                    );
+                }
+                break;
+            }
+            default:
+                assertNever(mode);
         }
     } catch (error) {
         context.failAndThrow(`Error during GitHub self-hosted flow: ${String(error)}`);
@@ -344,12 +464,15 @@ function getPublishConfig({
             );
         }
 
+        const irMode = generatorInvocation.raw.github.mode === "pull-request" ? "pull-request" : undefined;
+
         return FernIr.PublishingConfig.github({
             owner,
             repo,
             uri: generatorInvocation.raw.github.uri,
             token: generatorInvocation.raw.github.token,
-            mode: generatorInvocation.raw.github.mode,
+            mode: irMode,
+            branch: generatorInvocation.raw.github.branch,
             target: getPublishTarget({ outputSchema: generatorInvocation.raw.output, version, packageName })
         });
     }

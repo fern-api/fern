@@ -25,6 +25,9 @@ types:
       uri: optional<string>
       token: optional<string>
       mode: optional<literal<"pull-request">>
+      branch:
+        type: optional<string>
+        docs: The branch to use for README cloning and publishing. Defaults to the repository's default branch when omitted.
       target: PublishTarget
 
   DirectPublish:

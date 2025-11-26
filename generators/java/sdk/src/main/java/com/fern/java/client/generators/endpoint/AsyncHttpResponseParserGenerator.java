@@ -70,9 +70,18 @@ public final class AsyncHttpResponseParserGenerator extends AbstractHttpResponse
             MethodSpec endpointWithRequestOptions,
             List<String> paramNamesWoBody,
             ParameterSpec bodyParameterSpec) {
-        endpointWithoutRequestBuilder.addStatement(
-                "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
-                bodyParameterSpec.type);
+        // Handle parameterized types (e.g., OptionalNullable<T>) which need type witness syntax
+        if (bodyParameterSpec.type instanceof ParameterizedTypeName) {
+            ParameterizedTypeName paramType = (ParameterizedTypeName) bodyParameterSpec.type;
+            endpointWithoutRequestBuilder.addStatement(
+                    "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
+                    paramType.rawType,
+                    paramType.typeArguments.get(0));
+        } else {
+            endpointWithoutRequestBuilder.addStatement(
+                    "return " + endpointWithRequestOptions.name + "(" + String.join(",", paramNamesWoBody) + ")",
+                    bodyParameterSpec.type);
+        }
     }
 
     @Override
