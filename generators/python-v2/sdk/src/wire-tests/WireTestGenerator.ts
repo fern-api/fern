@@ -80,46 +80,29 @@ export class WireTestGenerator {
             `Wire tests: ${endpointsByService.size} services, ${Object.keys(this.dynamicIr.endpoints).length} dynamic endpoints`
         );
 
-        let totalEndpointsWithDynamicExamples = 0;
-        let totalEndpointsWithStaticExamples = 0;
+        let totalEndpointsWithExamples = 0;
 
         for (const [serviceName, endpoints] of endpointsByService.entries()) {
-            // First, try to find endpoints with dynamic examples
-            const endpointsWithDynamicExamples = endpoints.filter((endpoint) => {
-                const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-                return dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0;
-            });
-
-            // For endpoints without dynamic examples, check if they have static IR examples
-            const endpointsWithStaticExamples = endpoints.filter((endpoint) => {
-                const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-                const hasDynamicExamples = dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0;
-                if (hasDynamicExamples) {
-                    return false; // Already handled by dynamic examples
-                }
-                // Check for static IR examples
+            // Filter to endpoints that have static IR examples
+            // We MUST use static IR examples to match WireMock mappings (which are generated from static IR)
+            const endpointsWithExamples = endpoints.filter((endpoint) => {
                 const staticExample = this.getStaticIrExample(endpoint);
                 return staticExample !== undefined;
             });
 
-            totalEndpointsWithDynamicExamples += endpointsWithDynamicExamples.length;
-            totalEndpointsWithStaticExamples += endpointsWithStaticExamples.length;
+            totalEndpointsWithExamples += endpointsWithExamples.length;
 
-            const allEndpointsWithExamples = [...endpointsWithDynamicExamples, ...endpointsWithStaticExamples];
-
-            if (allEndpointsWithExamples.length === 0) {
+            if (endpointsWithExamples.length === 0) {
                 continue;
             }
 
-            const serviceTestFile = await this.generateServiceTestFile(serviceName, allEndpointsWithExamples);
+            const serviceTestFile = await this.generateServiceTestFile(serviceName, endpointsWithExamples);
             if (serviceTestFile) {
                 this.context.project.addSourceFiles(serviceTestFile);
             }
         }
 
-        this.context.logger.debug(
-            `Wire tests: ${totalEndpointsWithDynamicExamples} endpoints with dynamic examples, ${totalEndpointsWithStaticExamples} endpoints with static IR fallback`
-        );
+        this.context.logger.debug(`Wire tests: ${totalEndpointsWithExamples} endpoints with static IR examples`);
 
         // Generate docker-compose.test.yml and wiremock-mappings.json for WireMock
         new WireTestSetupGenerator(this.context, this.context.ir, this.packagePathPrefix).generate();
@@ -195,19 +178,6 @@ export class WireTestGenerator {
     // FILE GENERATION
     // =============================================================================
 
-    /**
-     * Converts a dynamic endpoint example to a wire test example format.
-     */
-    private convertDynamicExampleToWireTest(dynamicExample: dynamic.EndpointExample): WireTestExample {
-        return {
-            name: dynamicExample.name,
-            pathParameters: dynamicExample.pathParameters ?? {},
-            queryParameters: dynamicExample.queryParameters ?? {},
-            headers: dynamicExample.headers ?? {},
-            requestBody: dynamicExample.requestBody
-        };
-    }
-
     private async generateServiceTestFile(
         serviceName: string,
         endpoints: HttpEndpoint[]
@@ -228,18 +198,8 @@ export class WireTestGenerator {
                 continue;
             }
 
-            // First, try to use dynamic examples
-            const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-            if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
-                const firstExample = dynamicEndpoint.examples[0];
-                if (firstExample) {
-                    const wireTestExample = this.convertDynamicExampleToWireTest(firstExample);
-                    endpointTestCases.push({ endpoint, example: wireTestExample, service, exampleIndex: 0 });
-                    continue;
-                }
-            }
-
-            // Fallback: use static IR examples
+            // Always use static IR examples to match WireMock mappings
+            // WireMock mappings are generated from static IR examples, so we must use the same examples
             const staticExample = this.getStaticIrExample(endpoint);
             if (staticExample) {
                 const wireTestExample = this.convertStaticExampleToWireTest(endpoint, staticExample);
