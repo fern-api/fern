@@ -36,8 +36,10 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
     private members = lazy({
         client: () => this.classReference.explicit("_client"),
         grpcClient: () => this.classReference.explicit("_grpc"),
+        rawResponseClient: () => this.classReference.explicit("_rawClient"),
         clientName: () => this.model.getPropertyNameFor(this.members.client),
-        grpcClientName: () => this.model.getPropertyNameFor(this.members.grpcClient)
+        grpcClientName: () => this.model.getPropertyNameFor(this.members.grpcClient),
+        rawResponseClientName: () => this.model.getPropertyNameFor(this.members.rawResponseClient)
     });
     /**
      * Generates the c# factory methods to create the websocket api client.
@@ -106,6 +108,24 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
             }
         }
 
+        // Add WithRawResponse property if this client has endpoints
+        if (this.service != null && this.serviceId != null) {
+            const rawClientClassReference = this.context.getRawSubpackageClassReference(this.subpackage);
+            class_.addField({
+                origin: this.members.rawResponseClient,
+                access: ast.Access.Private,
+                type: rawClientClassReference
+            });
+
+            class_.addField({
+                name: "WithRawResponse",
+                access: ast.Access.Public,
+                get: true,
+                type: rawClientClassReference,
+                summary: "Access endpoints with raw HTTP response data (status code, headers)."
+            });
+        }
+
         class_.addConstructor(this.getConstructorMethod());
         if (this.service != null && this.serviceId != null) {
             this.generateEndpoints(class_);
@@ -168,6 +188,19 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
                             arguments_: [this.csharp.codeblock(`${this.members.grpcClient}.Channel`)]
                         })
                     );
+                }
+
+                // Instantiate raw response client if this client has endpoints
+                if (this.service != null && this.serviceId != null) {
+                    const rawClientClassReference = this.context.getRawSubpackageClassReference(this.subpackage);
+                    writer.write(`${this.members.rawResponseClientName} = `);
+                    writer.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: rawClientClassReference,
+                            arguments_: [this.csharp.codeblock(this.members.clientName)]
+                        })
+                    );
+                    writer.writeLine(`WithRawResponse = ${this.members.rawResponseClientName};`);
                 }
 
                 const arguments_ = [this.csharp.codeblock(this.members.clientName)];

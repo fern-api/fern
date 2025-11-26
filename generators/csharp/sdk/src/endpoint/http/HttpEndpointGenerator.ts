@@ -41,15 +41,25 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             serviceId,
             endpoint,
             rawClientReference,
-            rawClient
+            rawClient,
+            generateRawResponse = false
         }: {
             serviceId: ServiceId;
             endpoint: HttpEndpoint;
             rawClientReference: string;
             rawClient: RawClient;
+            generateRawResponse?: boolean;
         }
     ) {
-        if (this.hasPagination(endpoint)) {
+        if (generateRawResponse) {
+            // Generate raw response methods that return RawResponse<T>
+            this.generateRawResponseMethod(cls, {
+                serviceId,
+                endpoint,
+                rawClientReference,
+                rawClient
+            });
+        } else if (this.hasPagination(endpoint)) {
             this.generatePagerMethod(cls, {
                 serviceId,
                 endpoint,
@@ -140,6 +150,213 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             name = name.replace("Async", "InternalAsync");
         }
         return name;
+    }
+
+    private generateRawResponseMethod(
+        cls: ast.Class,
+        {
+            serviceId,
+            endpoint,
+            rawClientReference,
+            rawClient
+        }: {
+            serviceId: ServiceId;
+            endpoint: HttpEndpoint;
+            rawClientReference: string;
+            rawClient: RawClient;
+        }
+    ) {
+        const endpointSignatureInfo = this.getUnpagedEndpointSignatureInfo({ serviceId, endpoint });
+        const parameters = [...endpointSignatureInfo.baseParameters];
+        parameters.push(this.getRequestOptionsParameter({ endpoint }));
+        parameters.push(
+            this.csharp.parameter({
+                type: this.System.Threading.CancellationToken,
+                name: this.names.parameters.cancellationToken,
+                initializer: "default"
+            })
+        );
+
+        const innerReturnType = getEndpointReturnType({ context: this.context, endpoint });
+        const return_ = innerReturnType
+            ? this.Types.RawResponse(innerReturnType)
+            : this.Types.RawResponse(this.Primitive.object);
+
+        const body = this.csharp.codeblock((writer) => {
+            this.writeRawResponseMethodBody(endpointSignatureInfo, writer, rawClient, endpoint, rawClientReference);
+        });
+
+        return cls.addMethod({
+            name: this.context.getEndpointMethodName(endpoint),
+            access: ast.Access.Public,
+            isAsync: true,
+            parameters,
+            summary: endpoint.docs,
+            return_,
+            body: this.wrapWithExceptionHandler({ body, returnType: return_ })
+        });
+    }
+
+    private writeRawResponseMethodBody(
+        endpointSignatureInfo: EndpointSignatureInfo,
+        writer: Writer,
+        rawClient: RawClient,
+        endpoint: HttpEndpoint,
+        rawClientReference: string
+    ) {
+        const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
+        if (queryParameterCodeBlock != null) {
+            queryParameterCodeBlock.code.write(writer);
+        }
+        const headerParameterCodeBlock = endpointSignatureInfo.request?.getHeaderParameterCodeBlock();
+        if (headerParameterCodeBlock != null) {
+            headerParameterCodeBlock.code.write(writer);
+        }
+        const requestBodyCodeBlock = endpointSignatureInfo.request?.getRequestBodyCodeBlock();
+        if (requestBodyCodeBlock?.code != null) {
+            writer.writeNode(requestBodyCodeBlock.code);
+        }
+        const apiRequestCodeBlock = rawClient.createHttpRequestWrapper({
+            baseUrl: this.getBaseURLForEndpoint({ endpoint }),
+            requestType: endpointSignatureInfo.request?.getRequestType(),
+            endpoint,
+            bodyReference: requestBodyCodeBlock?.requestBodyReference,
+            pathParameterReferences: endpointSignatureInfo.pathParameterReferences,
+            headerBagReference: headerParameterCodeBlock?.headerParameterBagReference,
+            queryBagReference: queryParameterCodeBlock?.queryParameterBagReference,
+            endpointRequest: endpointSignatureInfo.request
+        });
+        if (apiRequestCodeBlock.code) {
+            writer.writeNode(apiRequestCodeBlock.code);
+        }
+
+        writer.write(`var ${this.names.variables.response} = `);
+        writer.writeNodeStatement(
+            rawClient.sendRequestWithRequestWrapper({
+                request: apiRequestCodeBlock.requestReference,
+                clientReference: rawClientReference
+            })
+        );
+
+        // Generate raw response return statements
+        writer.writeNode(this.getRawResponseSuccessStatements({ endpoint }));
+        writer.writeNode(this.getEndpointErrorHandling({ endpoint }));
+    }
+
+    private getRawResponseSuccessStatements({ endpoint }: { endpoint: HttpEndpoint }): ast.CodeBlock {
+        const innerReturnType = getEndpointReturnType({ context: this.context, endpoint });
+
+        return this.csharp.codeblock((writer) => {
+            writer.writeLine(`if (${this.names.variables.response}.StatusCode is >= 200 and < 400)`);
+            writer.pushScope();
+
+            if (endpoint.response?.body == null) {
+                // No body, return RawResponse with null body
+                writer.write("return new ");
+                writer.writeNode(this.Types.RawResponse(this.Primitive.object));
+                writer.writeLine();
+                writer.pushScope();
+                writer.writeLine(`Body = null!,`);
+                writer.writeLine(`StatusCode = ${this.names.variables.response}.StatusCode,`);
+                writer.writeLine(`Headers = ${this.names.variables.response}.Raw.Headers`);
+                writer.popScope();
+                writer.writeLine(";");
+            } else {
+                const body = endpoint.response.body;
+                body._visit({
+                    json: (reference) => {
+                        const astType = this.context.csharpTypeMapper.convert({
+                            reference: reference.responseBodyType
+                        });
+                        writer.writeTextStatement(
+                            `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                        );
+                        writer.writeLine("try");
+                        writer.pushScope();
+
+                        writer.write("var body = ");
+                        writer.writeNode(this.Types.JsonUtils);
+                        writer.write(".Deserialize<");
+                        writer.writeNode(astType);
+                        writer.writeLine(`>(${this.names.variables.responseBody})!;`);
+
+                        writer.write("return new ");
+                        writer.writeNode(this.Types.RawResponse(astType));
+                        writer.writeLine();
+                        writer.pushScope();
+                        writer.writeLine(`Body = body,`);
+                        writer.writeLine(`StatusCode = ${this.names.variables.response}.StatusCode,`);
+                        writer.writeLine(`Headers = ${this.names.variables.response}.Raw.Headers`);
+                        writer.popScope();
+                        writer.writeLine(";");
+
+                        writer.popScope();
+
+                        writer.write("catch (");
+                        writer.writeNode(this.System.Text.Json.JsonException);
+                        writer.writeLine(" e)");
+                        writer.pushScope();
+
+                        writer.write("throw new ");
+                        writer.writeNode(this.Types.BaseException);
+                        writer.writeTextStatement('("Failed to deserialize response", e)');
+                        writer.popScope();
+                    },
+                    text: () => {
+                        writer.writeTextStatement(
+                            `var ${this.names.variables.responseBody} = await ${this.names.variables.response}.Raw.Content.ReadAsStringAsync()`
+                        );
+                        writer.write("return new ");
+                        writer.writeNode(this.Types.RawResponse(this.Primitive.string));
+                        writer.writeLine();
+                        writer.pushScope();
+                        writer.writeLine(`Body = ${this.names.variables.responseBody},`);
+                        writer.writeLine(`StatusCode = ${this.names.variables.response}.StatusCode,`);
+                        writer.writeLine(`Headers = ${this.names.variables.response}.Raw.Headers`);
+                        writer.popScope();
+                        writer.writeLine(";");
+                    },
+                    fileDownload: () => {
+                        writer.writeTextStatement(
+                            `var stream = await ${this.names.variables.response}.Raw.Content.ReadAsStreamAsync()`
+                        );
+                        writer.write("return new ");
+                        writer.writeNode(this.Types.RawResponse(this.System.IO.Stream.asFullyQualified()));
+                        writer.writeLine();
+                        writer.pushScope();
+                        writer.writeLine(`Body = stream,`);
+                        writer.writeLine(`StatusCode = ${this.names.variables.response}.StatusCode,`);
+                        writer.writeLine(`Headers = ${this.names.variables.response}.Raw.Headers`);
+                        writer.popScope();
+                        writer.writeLine(";");
+                    },
+                    streaming: () => {
+                        // For streaming responses, we don't support raw response wrapper
+                        writer.write("throw new ");
+                        writer.writeNode(this.System.NotSupportedException);
+                        writer.writeTextStatement('("Raw response is not supported for streaming endpoints")');
+                    },
+                    streamParameter: () => {
+                        // For streaming responses, we don't support raw response wrapper
+                        writer.write("throw new ");
+                        writer.writeNode(this.System.NotSupportedException);
+                        writer.writeTextStatement('("Raw response is not supported for streaming endpoints")');
+                    },
+                    bytes: () => {
+                        writer.write("throw new ");
+                        writer.writeNode(this.System.NotSupportedException);
+                        writer.writeTextStatement('("Raw response is not supported for bytes endpoints")');
+                    },
+                    _other: () => {
+                        writer.write("throw new ");
+                        writer.writeNode(this.System.NotSupportedException);
+                        writer.writeTextStatement('("Raw response is not supported for this endpoint type")');
+                    }
+                });
+            }
+
+            writer.popScope();
+        });
     }
 
     private writeUnpagedMethodBody(

@@ -63,8 +63,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
         clientOptionsParameterName: () => "clientOptions",
         client: () => this.Types.RootClient.explicit("_client"),
         grpcClient: () => this.Types.RootClient.explicit("_grpc"),
+        rawResponseClient: () => this.Types.RootClient.explicit("_rawClient"),
         clientName: () => this.model.getPropertyNameFor(this.members.client),
-        grpcClientName: () => this.model.getPropertyNameFor(this.members.grpcClient)
+        grpcClientName: () => this.model.getPropertyNameFor(this.members.grpcClient),
+        rawResponseClientName: () => this.model.getPropertyNameFor(this.members.rawResponseClient)
     });
 
     protected getFilepath(): RelativeFilePath {
@@ -157,6 +159,21 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     rawGrpcClientReference: this.members.grpcClientName,
                     grpcClientInfo: this.grpcClientInfo
                 });
+            });
+
+            // Add WithRawResponse property if root client has endpoints
+            class_.addField({
+                origin: this.members.rawResponseClient,
+                access: ast.Access.Private,
+                type: this.Types.RawRootClient
+            });
+
+            class_.addField({
+                name: "WithRawResponse",
+                access: ast.Access.Public,
+                get: true,
+                type: this.Types.RawRootClient,
+                summary: "Access endpoints with raw HTTP response data (status code, headers)."
             });
         }
 
@@ -376,6 +393,19 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             })
                         );
                     }
+                }
+
+                // Instantiate raw response client if root client has endpoints
+                const rootServiceId = this.context.ir.rootPackage.service;
+                if (rootServiceId != null) {
+                    writer.write(`${this.members.rawResponseClientName} = `);
+                    writer.writeNodeStatement(
+                        this.csharp.instantiateClass({
+                            classReference: this.Types.RawRootClient,
+                            arguments_: [this.csharp.codeblock(this.members.clientName)]
+                        })
+                    );
+                    writer.writeLine(`WithRawResponse = ${this.members.rawResponseClientName};`);
                 }
             })
         };

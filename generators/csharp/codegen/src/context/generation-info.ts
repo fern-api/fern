@@ -521,6 +521,12 @@ export class Generation {
                 origin: this.model.staticExplicit(this.names.classes.rootClientForSnippets),
                 namespace: this.namespaces.root
             }),
+        /** The raw response client class for root client */
+        RawRootClient: () =>
+            this.csharp.classReference({
+                origin: this.model.staticExplicit(`Raw${this.names.classes.rootClient}`),
+                namespace: this.namespaces.root
+            }),
         /** Base exception class for API errors (HTTP 4xx/5xx responses) */
         BaseApiException: () =>
             this.csharp.classReference({
@@ -855,6 +861,17 @@ export class Generation {
                 origin: this.model.staticExplicit("ReadOnlyAdditionalProperties"),
                 namespace: this.namespaces.publicCore,
                 generics: genericType ? [genericType] : undefined
+            });
+        },
+        /**
+         * Generic raw response wrapper containing body and HTTP metadata.
+         * @param bodyType - The type of the response body
+         */
+        RawResponse: (bodyType: ast.Type | ast.ClassReference): ast.ClassReference => {
+            return this.csharp.classReference({
+                origin: this.model.staticExplicit("RawResponse"),
+                namespace: this.namespaces.publicCore,
+                generics: [bodyType]
             });
         }
     });
