@@ -13,7 +13,7 @@ buildScripts:
 
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-typescript/express-generator-cli dist:cli
+    - pnpm turbo run dist:cli --filter @fern-typescript/express-generator-cli
   docker:
     file: ./generators/typescript/express/cli/Dockerfile
     image: fernapi/fern-typescript-express
@@ -22,15 +22,15 @@ test:
   docker:
     image: fernapi/fern-typescript-express:latest
     command:
-      - pnpm --filter @fern-typescript/express-generator-cli dockerTagLatest
+      - pnpm turbo run dockerTagLatest --filter @fern-typescript/express-generator-cli
   podman:
     image: fernapi/fern-typescript-express:latest
     command:
-      - pnpm --filter @fern-typescript/express-generator-cli podmanTagLatest
+      - pnpm turbo run podmanTagLatest --filter @fern-typescript/express-generator-cli
   local:
     workingDirectory: generators/typescript
     buildCommand:
-      - pnpm --filter @fern-typescript/express-generator-cli dist:cli
+      - pnpm turbo run dist:cli --filter @fern-typescript/express-generator-cli
     runCommand: node --enable-source-maps express/cli/dist/cli.cjs {CONFIG_PATH}
     env:
       NODE_ENV: test

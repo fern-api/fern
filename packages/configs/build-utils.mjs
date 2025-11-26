@@ -9,7 +9,7 @@ import { fileURLToPath } from 'url';
  * @param {Object} options - Build options
  * @param {string} [options.entry='src/cli.ts'] - Entry point for tsup
  * @param {Object} [options.tsupOptions={}] - Additional tsup configuration options to merge
- * @param {string|string[]|Object|Object[]|null} [options.copyFrom=null] - Files/folders to copy after build
+ * @param {string|string[]|Object|Object[]|null} [options.copy=null] - Files/folders to copy after build
  *   Can be:
  *   - string: '../base/src/asIs' - copies to dist/
  *   - array of strings: ['../base/src/asIs', '../base/src/template'] - copies each to dist/
@@ -20,7 +20,7 @@ export async function buildGenerator(dirname, options = {}) {
     const {
         entry = 'src/cli.ts',
         tsupOptions = {},
-        copyFrom = null
+        copy = null
     } = options;
 
     // Build with tsup (merge default options with custom ones)
@@ -38,8 +38,8 @@ export async function buildGenerator(dirname, options = {}) {
     });
 
     // Copy additional files if needed
-    if (copyFrom) {
-        const copyOperations = Array.isArray(copyFrom) ? copyFrom : [copyFrom];
+    if (copy) {
+        const copyOperations = Array.isArray(copy) ? copy : [copy];
 
         for (const copyOp of copyOperations) {
             if (typeof copyOp === 'string') {

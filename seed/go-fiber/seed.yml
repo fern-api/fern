@@ -15,7 +15,7 @@ publish:
   workingDirectory: generators/go
   preBuildCommands:
     - go build ./...
-    - pnpm --filter @fern-api/go-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/go-sdk
   docker:
     file: ./generators/go/fiber/Dockerfile
     image: fernapi/fern-go-fiber
@@ -23,10 +23,10 @@ publish:
 test:
   docker:
     image: fernapi/fern-go-fiber:latest
-    command: pnpm --filter @fern-api/go-sdk dist:cli && docker build -f ./generators/go/fiber/Dockerfile -t fernapi/fern-go-fiber:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && docker build -f ./generators/go/fiber/Dockerfile -t fernapi/fern-go-fiber:latest .
   podman:
     image: fernapi/fern-go-fiber:latest
-    command: pnpm --filter @fern-api/go-sdk dist:cli && podman build -f ./generators/go/fiber/Dockerfile -t fernapi/fern-go-fiber:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && podman build -f ./generators/go/fiber/Dockerfile -t fernapi/fern-go-fiber:latest .
 language: go
 generatorType: Model
 defaultOutputMode: github

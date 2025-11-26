@@ -4,7 +4,7 @@ image: fernapi/fern-php-model
 changelogLocation: ../../generators/php/model/versions.yml
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/php-model dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/php-model
   docker:
     file: ./generators/php/model/Dockerfile
     image: fernapi/fern-php-model
@@ -12,14 +12,14 @@ publish:
 test:
   docker:
     image: fernapi/fern-php-model:latest
-    command: pnpm --filter @fern-api/php-model dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/php-model
   podman:
     image: fernapi/fern-php-model:latest
-    command: pnpm --filter @fern-api/php-model podmanTagLatest
+    command: pnpm turbo run podmanTagLatest --filter @fern-api/php-model
   local:
     workingDirectory: generators/php
     buildCommand:
-      - pnpm --filter @fern-api/php-model dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/php-model
     runCommand: node --enable-source-maps model/dist/cli.cjs {CONFIG_PATH}
 
 language: php

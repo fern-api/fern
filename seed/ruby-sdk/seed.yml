@@ -13,7 +13,7 @@ buildScripts:
 
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/ruby-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
   docker:
     file: ./generators/ruby-v2/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk
@@ -25,7 +25,7 @@ publish:
 test:
   docker:
     image: fernapi/fern-ruby-sdk:latest
-    command: pnpm --filter @fern-api/fern-ruby-sdk dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-ruby-sdk
 language: ruby
 generatorType: SDK
 defaultOutputMode: github

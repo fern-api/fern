@@ -162,6 +162,25 @@
         "$TURBO_ROOT$/tsconfig.eslint.json",
         "$TURBO_ROOT$/packages/configs/**"
       ]
+    },
+    "dockerTagLatest": {
+      "outputs": [],
+      "dependsOn": ["dist:cli"],
+      "inputs": ["dist/**", "Dockerfile", "Dockerfile.*"]
+    },
+    "podmanTagLatest": {
+      "outputs": [],
+      "dependsOn": ["dist:cli"],
+      "inputs": [
+        "Dockerfile",
+        "$TURBO_ROOT$/shared/.prettierignore",
+        "$TURBO_ROOT$/shared/stylelintrc.shared.json",
+        "$TURBO_ROOT$/packages/configs/**",
+        "src/**",
+        "tests/**",
+        "package.json",
+        "tsconfig.json"
+      ]
     }
   }
 }

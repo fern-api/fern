@@ -5,7 +5,7 @@ changelogLocation: ../../generators/python/pydantic/versions.yml
 test:
   docker:
     image: fernapi/fern-pydantic-model-v2:latest
-    command: pnpm --filter @fern-api/fern-pydantic-model dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-pydantic-model
 
 language: python
 generatorType: Model

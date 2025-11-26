@@ -11,7 +11,7 @@ buildScripts:
 publish:
   preBuildCommands:
     - ./.github/actions/install
-    - pnpm --filter @fern-api/fern-csharp-model dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-model
   docker:
     file: ./generators/csharp/model/Dockerfile
     image: fernapi/fern-csharp-model
@@ -19,14 +19,14 @@ publish:
 test:
   docker:
     image: fernapi/fern-csharp-model:latest
-    command: pnpm --filter @fern-api/fern-csharp-model dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-csharp-model
   podman:
     image: fernapi/fern-csharp-model:latest
-    command: pnpm --filter @fern-api/fern-csharp-model podmanTagLatest
+    command: pnpm turbo run podmanTagLatest --filter @fern-api/fern-csharp-model
   local:
     workingDirectory: generators/csharp
     buildCommand:
-      - pnpm --filter @fern-api/fern-csharp-model dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/fern-csharp-model
     runCommand: node --enable-source-maps model/dist/cli.cjs {CONFIG_PATH}
 
 language: csharp

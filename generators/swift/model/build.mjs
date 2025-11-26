@@ -1,5 +1,5 @@
 import { buildGenerator, getDirname } from '@fern-api/configs/build-utils.mjs';
 
-buildGenerator(getDirname(import.meta.url), {
-    copyFrom: ['../base/src/asIs', '../base/src/template']
+await buildGenerator(getDirname(import.meta.url), {
+    copy: [{ from: '../base/src/asIs', to: './dist/asIs' }, { from: '../base/src/template', to: './dist/template' }]
 });

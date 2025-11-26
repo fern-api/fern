@@ -14,17 +14,17 @@ buildScripts:
 test:
   docker:
     image: fernapi/fern-rust-model:latest
-    command: pnpm --filter @fern-api/rust-model dist:cli && docker build -f ./generators/rust/model/Dockerfile -t fernapi/fern-rust-model:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/rust-model && docker build -f ./generators/rust/model/Dockerfile -t fernapi/fern-rust-model:latest .
   local:
     workingDirectory: generators/rust
     buildCommand:
-      - pnpm --filter @fern-api/rust-model dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/rust-model
     runCommand: node --enable-source-maps ./model/dist/cli.cjs {CONFIG_PATH}
 
 publish:
   workingDirectory: generators/rust
   preBuildCommands:
-    - pnpm --filter @fern-api/rust-model dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/rust-model
   docker:
     file: ./generators/rust/model/Dockerfile
     image: fernapi/fern-rust-model

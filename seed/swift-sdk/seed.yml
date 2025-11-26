@@ -5,7 +5,7 @@ changelogLocation: ../../generators/swift/sdk/versions.yml
 
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/swift-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/swift-sdk
   docker:
     file: ./generators/swift/sdk/Dockerfile
     image: fernapi/fern-swift-sdk
@@ -14,14 +14,14 @@ publish:
 test:
   docker:
     image: fernapi/fern-swift-sdk:latest
-    command: pnpm --filter @fern-api/swift-sdk dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/swift-sdk
   podman:
     image: fernapi/fern-swift-sdk:latest
-    command: pnpm --filter @fern-api/swift-sdk podmanTagLatest
+    command: pnpm turbo run podmanTagLatest --filter @fern-api/swift-sdk
   local:
     workingDirectory: generators/swift
     buildCommand:
-      - pnpm --filter @fern-api/swift-sdk dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/swift-sdk
     runCommand: node --enable-source-maps sdk/dist/cli.cjs {CONFIG_PATH}
 
 language: swift
