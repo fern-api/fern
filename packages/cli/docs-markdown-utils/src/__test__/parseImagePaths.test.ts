@@ -460,13 +460,9 @@ describe("parseImagePaths", () => {
         );
     });
 
-    it("should treat double-slash paths without valid hosts as local paths", () => {
+    it("should reject double-slash paths without valid hosts", () => {
         const page = "This is a test page with an image ![image](//assets/images/logo.png)";
-        const result = parseImagePaths(page, PATHS);
-        expect(result.filepaths).toEqual(["/Volume/git/fern/assets/images/logo.png"]);
-        expect(result.markdown.trim()).toMatchInlineSnapshot(
-            '"This is a test page with an image ![image](/Volume/git/fern/assets/images/logo.png)"'
-        );
+        expect(() => parseImagePaths(page, PATHS)).toThrow(/Double-slash paths are not supported/);
     });
 
     it("should ignore img src if it is not a string", () => {

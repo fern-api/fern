@@ -511,10 +511,17 @@ function resolvePath(
         return undefined;
     }
 
+    // Reject double-slash paths that aren't valid external URLs
+    if (pathToImage.startsWith("//")) {
+        throw new Error(
+            `Invalid image path "${pathToImage}". Double-slash paths are not supported for local files. ` +
+                `Use "/${pathToImage.slice(2)}" or a relative path instead.`
+        );
+    }
+
     const filepath = resolve(
         pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
-        // Strip all leading slashes to get the relative path
-        RelativeFilePath.of(pathToImage.replace(/^\/+/, ""))
+        RelativeFilePath.of(pathToImage.replace(/^\//, ""))
     );
 
     return filepath;
