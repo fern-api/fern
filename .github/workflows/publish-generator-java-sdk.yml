@@ -25,7 +25,7 @@ jobs:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: dak/ci/scan-generator-imgs
           fetch-depth: 2
       - name: automated publish
         if: ${{ github.event_name == 'push' }}
