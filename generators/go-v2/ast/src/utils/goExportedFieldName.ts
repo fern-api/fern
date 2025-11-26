@@ -1,58 +1,9 @@
 /**
  * Go keywords and predeclared types that should be avoided as struct field names.
  * We check case-insensitively since PascalCase versions like "String" should also be prefixed.
- * Note: We intentionally exclude predeclared functions (append, len, make, etc.) and
- * constants (true, false, nil, iota) as they don't typically cause issues as field names.
+ * We will just add to this list as needed
  */
-const GO_RESERVED_IDENTIFIERS = new Set([
-    // Keywords
-    "break",
-    "case",
-    "chan",
-    "const",
-    "continue",
-    "default",
-    "defer",
-    "else",
-    "fallthrough",
-    "for",
-    "func",
-    "go",
-    "goto",
-    "if",
-    "import",
-    "interface",
-    "map",
-    "package",
-    "range",
-    "return",
-    "select",
-    "struct",
-    "switch",
-    "type",
-    "var",
-    // Predeclared types
-    "bool",
-    "byte",
-    "complex64",
-    "complex128",
-    "error",
-    "float32",
-    "float64",
-    "int",
-    "int8",
-    "int16",
-    "int32",
-    "int64",
-    "rune",
-    "string",
-    "uint",
-    "uint8",
-    "uint16",
-    "uint32",
-    "uint64",
-    "uintptr"
-]);
+const GO_RESERVED_IDENTIFIERS = new Set(["string"]);
 
 /**
  * Converts a name to a valid Go exported identifier.
