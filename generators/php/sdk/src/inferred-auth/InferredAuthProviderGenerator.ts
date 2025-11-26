@@ -86,14 +86,19 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
     }
 
     private addFields(class_: php.Class): void {
-        class_.addField(
-            php.field({
-                name: "$BUFFER_IN_MINUTES",
-                access: "private",
-                type: php.Type.int(),
-                initializer: php.codeblock(`${InferredAuthProviderGenerator.BUFFER_IN_MINUTES}`)
-            })
-        );
+        const expiryProperty = this.scheme.tokenEndpoint.expiryProperty;
+
+        // Only add BUFFER_IN_MINUTES if we have an expiry property (otherwise it's never read)
+        if (expiryProperty != null) {
+            class_.addField(
+                php.field({
+                    name: "$BUFFER_IN_MINUTES",
+                    access: "private",
+                    type: php.Type.int(),
+                    initializer: php.codeblock(`${InferredAuthProviderGenerator.BUFFER_IN_MINUTES}`)
+                })
+            );
+        }
 
         class_.addField(
             php.field({
@@ -119,7 +124,6 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
             })
         );
 
-        const expiryProperty = this.scheme.tokenEndpoint.expiryProperty;
         if (expiryProperty != null) {
             class_.addField(
                 php.field({
@@ -202,29 +206,63 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
             body: php.codeblock((writer) => {
                 const requestClassReference = this.getTokenEndpointRequestClassReference();
                 if (requestClassReference != null) {
-                    writer.write("$request = new ");
-                    writer.writeNode(requestClassReference);
-                    writer.writeLine("([");
+                    // Build the array shape for PHPDoc annotation
+                    const arrayShapeParts = requestProperties.map((prop) => {
+                        if (prop.isOptional) {
+                            return `${prop.camelName}?: string|null`;
+                        }
+                        return `${prop.camelName}: string`;
+                    });
+                    const arrayShape = `array{${arrayShapeParts.join(", ")}}`;
+
+                    // Add PHPDoc annotation to tell PHPStan the expected type
+                    writer.writeLine(`/** @var ${arrayShape} $values */`);
+                    writer.writeLine("$values = [");
                     writer.indent();
                     for (const prop of requestProperties) {
-                        writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'] ?? null,`);
+                        if (prop.isOptional) {
+                            writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'] ?? null,`);
+                        } else {
+                            writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'],`);
+                        }
                     }
                     writer.dedent();
-                    writer.writeLine("]);");
+                    writer.writeLine("];");
+                    writer.newLine();
+                    writer.write("$request = new ");
+                    writer.writeNode(requestClassReference);
+                    writer.writeLine("($values);");
                     writer.newLine();
                     writer.write("$tokenResponse = $this->authClient->");
                     writer.write(this.getEndpointMethodName());
                     writer.writeLine("($request);");
                 } else {
-                    writer.write("$tokenResponse = $this->authClient->");
-                    writer.write(this.getEndpointMethodName());
-                    writer.writeLine("([");
+                    // Build the array shape for PHPDoc annotation
+                    const arrayShapeParts = requestProperties.map((prop) => {
+                        if (prop.isOptional) {
+                            return `${prop.camelName}?: string|null`;
+                        }
+                        return `${prop.camelName}: string`;
+                    });
+                    const arrayShape = `array{${arrayShapeParts.join(", ")}}`;
+
+                    // Add PHPDoc annotation to tell PHPStan the expected type
+                    writer.writeLine(`/** @var ${arrayShape} $values */`);
+                    writer.writeLine("$values = [");
                     writer.indent();
                     for (const prop of requestProperties) {
-                        writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'] ?? null,`);
+                        if (prop.isOptional) {
+                            writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'] ?? null,`);
+                        } else {
+                            writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'],`);
+                        }
                     }
                     writer.dedent();
-                    writer.writeLine("]);");
+                    writer.writeLine("];");
+                    writer.newLine();
+                    writer.write("$tokenResponse = $this->authClient->");
+                    writer.write(this.getEndpointMethodName());
+                    writer.writeLine("($values);");
                 }
 
                 // Get the access token from the response
@@ -251,18 +289,24 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
         });
     }
 
-    private getTokenEndpointRequestProperties(): Array<{ camelName: string }> {
-        const properties: Array<{ camelName: string }> = [];
+    private getTokenEndpointRequestProperties(): Array<{ camelName: string; isOptional: boolean }> {
+        const properties: Array<{ camelName: string; isOptional: boolean }> = [];
         const service = this.tokenEndpointHttpService;
 
         // Add query parameters
         for (const query of this.tokenEndpoint.queryParameters) {
-            properties.push({ camelName: query.name.name.camelCase.unsafeName });
+            properties.push({
+                camelName: query.name.name.camelCase.unsafeName,
+                isOptional: this.context.isOptional(query.valueType)
+            });
         }
 
         // Add headers (service-level and endpoint-level)
         for (const header of [...service.headers, ...this.tokenEndpoint.headers]) {
-            properties.push({ camelName: header.name.name.camelCase.unsafeName });
+            properties.push({
+                camelName: header.name.name.camelCase.unsafeName,
+                isOptional: this.context.isOptional(header.valueType)
+            });
         }
 
         // Add request body properties
@@ -272,13 +316,19 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
             },
             inlinedRequestBody: (request) => {
                 for (const property of request.properties) {
-                    properties.push({ camelName: property.name.name.camelCase.unsafeName });
+                    properties.push({
+                        camelName: property.name.name.camelCase.unsafeName,
+                        isOptional: this.context.isOptional(property.valueType)
+                    });
                 }
             },
             fileUpload: (fileUpload) => {
                 for (const property of fileUpload.properties) {
                     if (property.type === "bodyProperty") {
-                        properties.push({ camelName: property.name.name.camelCase.unsafeName });
+                        properties.push({
+                            camelName: property.name.name.camelCase.unsafeName,
+                            isOptional: this.context.isOptional(property.valueType)
+                        });
                     }
                 }
             },
