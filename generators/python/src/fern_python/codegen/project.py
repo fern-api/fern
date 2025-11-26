@@ -63,7 +63,9 @@ class Project:
         if package_path is not None:
             # Normalize: strip leading/trailing slashes
             normalized_package_path = package_path.strip("/")
-            source_base_filepath = os.path.join(filepath, normalized_package_path) if normalized_package_path else filepath
+            source_base_filepath = (
+                os.path.join(filepath, normalized_package_path) if normalized_package_path else filepath
+            )
         else:
             normalized_package_path = None
             source_base_filepath = filepath
@@ -74,7 +76,9 @@ class Project:
             self._project_relative_filepath = os.path.join("src", relative_path_to_project)
 
         self._project_filepath = (
-            source_base_filepath if project_config is None else os.path.join(source_base_filepath, self._project_relative_filepath)
+            source_base_filepath
+            if project_config is None
+            else os.path.join(source_base_filepath, self._project_relative_filepath)
         )
         self._generate_readme = True
         # _root_filepath is the original output path for project-level files (pyproject.toml, README, etc.)
