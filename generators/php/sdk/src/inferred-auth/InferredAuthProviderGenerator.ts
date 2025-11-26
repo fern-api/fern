@@ -191,6 +191,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
 
     private getRefreshMethod(): php.Method {
         const authenticatedRequestHeaders = this.scheme.tokenEndpoint.authenticatedRequestHeaders;
+        const requestProperties = this.getTokenEndpointRequestProperties();
 
         return php.method({
             name: "refresh",
@@ -203,7 +204,13 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                 if (requestClassReference != null) {
                     writer.write("$request = new ");
                     writer.writeNode(requestClassReference);
-                    writer.writeLine("($this->options);");
+                    writer.writeLine("([");
+                    writer.indent();
+                    for (const prop of requestProperties) {
+                        writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'] ?? null,`);
+                    }
+                    writer.dedent();
+                    writer.writeLine("]);");
                     writer.newLine();
                     writer.write("$tokenResponse = $this->authClient->");
                     writer.write(this.getEndpointMethodName());
@@ -211,7 +218,13 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                 } else {
                     writer.write("$tokenResponse = $this->authClient->");
                     writer.write(this.getEndpointMethodName());
-                    writer.writeLine("($this->options);");
+                    writer.writeLine("([");
+                    writer.indent();
+                    for (const prop of requestProperties) {
+                        writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'] ?? null,`);
+                    }
+                    writer.dedent();
+                    writer.writeLine("]);");
                 }
 
                 // Get the access token from the response
@@ -236,6 +249,44 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                 writer.writeLine("return $this->accessToken;");
             })
         });
+    }
+
+    private getTokenEndpointRequestProperties(): Array<{ camelName: string }> {
+        const properties: Array<{ camelName: string }> = [];
+        const service = this.tokenEndpointHttpService;
+
+        // Add query parameters
+        for (const query of this.tokenEndpoint.queryParameters) {
+            properties.push({ camelName: query.name.name.camelCase.unsafeName });
+        }
+
+        // Add headers (service-level and endpoint-level)
+        for (const header of [...service.headers, ...this.tokenEndpoint.headers]) {
+            properties.push({ camelName: header.name.name.camelCase.unsafeName });
+        }
+
+        // Add request body properties
+        this.tokenEndpoint.requestBody?._visit({
+            reference: () => {
+                // For referenced request bodies, we don't have individual properties
+            },
+            inlinedRequestBody: (request) => {
+                for (const property of request.properties) {
+                    properties.push({ camelName: property.name.name.camelCase.unsafeName });
+                }
+            },
+            fileUpload: (fileUpload) => {
+                for (const property of fileUpload.properties) {
+                    if (property.type === "bodyProperty") {
+                        properties.push({ camelName: property.name.name.camelCase.unsafeName });
+                    }
+                }
+            },
+            bytes: () => undefined,
+            _other: () => undefined
+        });
+
+        return properties;
     }
 
     private getGetAuthHeadersMethod(): php.Method {
