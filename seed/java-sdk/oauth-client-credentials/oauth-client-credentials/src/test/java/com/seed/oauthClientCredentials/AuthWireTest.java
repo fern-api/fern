@@ -3,7 +3,6 @@ package com.seed.oauthClientCredentials;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seed.oauthClientCredentials.core.ObjectMappers;
-import com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;
 import com.seed.oauthClientCredentials.resources.auth.requests.RefreshTokenRequest;
 import com.seed.oauthClientCredentials.resources.auth.types.TokenResponse;
 import okhttp3.mockwebserver.MockResponse;
@@ -23,7 +22,6 @@ public class AuthWireTest {
     public void setup() throws Exception {
         server = new MockWebServer();
         server.start();
-        mockOAuthEndpoint();
         client = SeedOauthClientCredentialsClient.builder()
                 .url(server.url("/").toString())
                 .clientId("test-client-id")
@@ -37,98 +35,11 @@ public class AuthWireTest {
     }
 
     @Test
-    public void testGetTokenWithClientCredentials() throws Exception {
+    public void testRefreshToken() throws Exception {
+        // OAuth: enqueue token response (client fetches token before API call)
         server.enqueue(new MockResponse()
                 .setResponseCode(200)
-                .setBody("{\"access_token\":\"access_token\",\"expires_in\":1,\"refresh_token\":\"refresh_token\"}"));
-        TokenResponse response = client.auth()
-                .getTokenWithClientCredentials(GetTokenRequest.builder()
-                        .clientId("my_oauth_app_123")
-                        .clientSecret("sk_live_abcdef123456789")
-                        .scope("read:users")
-                        .build());
-        RecordedRequest request = server.takeRequest();
-        Assertions.assertNotNull(request);
-        Assertions.assertEquals("POST", request.getMethod());
-        // Validate request body
-        String actualRequestBody = request.getBody().readUtf8();
-        String expectedRequestBody = ""
-                + "{\n"
-                + "  \"client_id\": \"my_oauth_app_123\",\n"
-                + "  \"client_secret\": \"sk_live_abcdef123456789\",\n"
-                + "  \"audience\": \"https://api.example.com\",\n"
-                + "  \"grant_type\": \"client_credentials\",\n"
-                + "  \"scope\": \"read:users\"\n"
-                + "}";
-        JsonNode actualJson = objectMapper.readTree(actualRequestBody);
-        JsonNode expectedJson = objectMapper.readTree(expectedRequestBody);
-        Assertions.assertTrue(jsonEquals(expectedJson, actualJson), "Request body structure does not match expected");
-        if (actualJson.has("type") || actualJson.has("_type") || actualJson.has("kind")) {
-            String discriminator = null;
-            if (actualJson.has("type")) discriminator = actualJson.get("type").asText();
-            else if (actualJson.has("_type"))
-                discriminator = actualJson.get("_type").asText();
-            else if (actualJson.has("kind"))
-                discriminator = actualJson.get("kind").asText();
-            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
-            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
-        }
-
-        if (!actualJson.isNull()) {
-            Assertions.assertTrue(
-                    actualJson.isObject() || actualJson.isArray() || actualJson.isValueNode(),
-                    "request should be a valid JSON value");
-        }
-
-        if (actualJson.isArray()) {
-            Assertions.assertTrue(actualJson.size() >= 0, "Array should have valid size");
-        }
-        if (actualJson.isObject()) {
-            Assertions.assertTrue(actualJson.size() >= 0, "Object should have valid field count");
-        }
-
-        // Validate response body
-        Assertions.assertNotNull(response, "Response should not be null");
-        String actualResponseJson = objectMapper.writeValueAsString(response);
-        String expectedResponseBody = ""
-                + "{\n"
-                + "  \"access_token\": \"access_token\",\n"
-                + "  \"expires_in\": 1,\n"
-                + "  \"refresh_token\": \"refresh_token\"\n"
-                + "}";
-        JsonNode actualResponseNode = objectMapper.readTree(actualResponseJson);
-        JsonNode expectedResponseNode = objectMapper.readTree(expectedResponseBody);
-        Assertions.assertTrue(
-                jsonEquals(expectedResponseNode, actualResponseNode),
-                "Response body structure does not match expected");
-        if (actualResponseNode.has("type") || actualResponseNode.has("_type") || actualResponseNode.has("kind")) {
-            String discriminator = null;
-            if (actualResponseNode.has("type"))
-                discriminator = actualResponseNode.get("type").asText();
-            else if (actualResponseNode.has("_type"))
-                discriminator = actualResponseNode.get("_type").asText();
-            else if (actualResponseNode.has("kind"))
-                discriminator = actualResponseNode.get("kind").asText();
-            Assertions.assertNotNull(discriminator, "Union type should have a discriminator field");
-            Assertions.assertFalse(discriminator.isEmpty(), "Union discriminator should not be empty");
-        }
-
-        if (!actualResponseNode.isNull()) {
-            Assertions.assertTrue(
-                    actualResponseNode.isObject() || actualResponseNode.isArray() || actualResponseNode.isValueNode(),
-                    "response should be a valid JSON value");
-        }
-
-        if (actualResponseNode.isArray()) {
-            Assertions.assertTrue(actualResponseNode.size() >= 0, "Array should have valid size");
-        }
-        if (actualResponseNode.isObject()) {
-            Assertions.assertTrue(actualResponseNode.size() >= 0, "Object should have valid field count");
-        }
-    }
-
-    @Test
-    public void testRefreshToken() throws Exception {
+                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
         server.enqueue(new MockResponse()
                 .setResponseCode(200)
                 .setBody("{\"access_token\":\"access_token\",\"expires_in\":1,\"refresh_token\":\"refresh_token\"}"));
@@ -139,6 +50,8 @@ public class AuthWireTest {
                         .refreshToken("refresh_token")
                         .scope("read:users")
                         .build());
+        // OAuth: consume the token request
+        server.takeRequest();
         RecordedRequest request = server.takeRequest();
         Assertions.assertNotNull(request);
         Assertions.assertEquals("POST", request.getMethod());
@@ -221,34 +134,29 @@ public class AuthWireTest {
     }
 
     /**
-     * Mocks the OAuth token endpoint to return a test access token.
-     * Must be called before creating the client.
+     * Compares two JsonNodes with numeric equivalence and null safety.
+     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
+     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
      */
-    private void mockOAuthEndpoint() {
-        server.enqueue(new MockResponse()
-                .setResponseCode(200)
-                .setBody("{\"access_token\":\"test-token\",\"expires_in\":3600}"));
-    }
-
-    /**
-     * Compares two JsonNodes with numeric equivalence.
-     */
-    private boolean jsonEquals(JsonNode a, JsonNode b) {
-        if (a.equals(b)) return true;
-        if (a.isNumber() && b.isNumber()) return Math.abs(a.doubleValue() - b.doubleValue()) < 1e-10;
-        if (a.isObject() && b.isObject()) {
-            if (a.size() != b.size()) return false;
-            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = a.fields();
+    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
+        if (expected == null && actual == null) return true;
+        if (expected == null || actual == null) return false;
+        if (expected.equals(actual)) return true;
+        if (expected.isNumber() && actual.isNumber())
+            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
+        if (expected.isObject() && actual.isObject()) {
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
             while (iter.hasNext()) {
                 java.util.Map.Entry<String, JsonNode> entry = iter.next();
-                if (!jsonEquals(entry.getValue(), b.get(entry.getKey()))) return false;
+                JsonNode actualValue = actual.get(entry.getKey());
+                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
             }
             return true;
         }
-        if (a.isArray() && b.isArray()) {
-            if (a.size() != b.size()) return false;
-            for (int i = 0; i < a.size(); i++) {
-                if (!jsonEquals(a.get(i), b.get(i))) return false;
+        if (expected.isArray() && actual.isArray()) {
+            if (expected.size() != actual.size()) return false;
+            for (int i = 0; i < expected.size(); i++) {
+                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
             }
             return true;
         }

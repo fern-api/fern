@@ -163,8 +163,8 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
             }
 
             // Add custom() factory method and Builder class for multi-URL environments
-            TypeSpec.Builder builderClassBuilder = TypeSpec.classBuilder("Builder")
-                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC);
+            TypeSpec.Builder builderClassBuilder =
+                    TypeSpec.classBuilder("Builder").addModifiers(Modifier.PUBLIC, Modifier.STATIC);
 
             MethodSpec.Builder buildMethodBuilder = MethodSpec.methodBuilder("build")
                     .addModifiers(Modifier.PUBLIC)

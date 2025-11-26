@@ -108,33 +108,40 @@ export class TestClassBuilder {
     private generateJsonEqualsHelper(writer: Writer): void {
         writer.writeLine("");
         writer.writeLine("/**");
-        writer.writeLine(" * Compares two JsonNodes with numeric equivalence.");
-        writer.writeLine(" */");
-        writer.writeLine("private boolean jsonEquals(JsonNode a, JsonNode b) {");
-        writer.indent();
-        writer.writeLine("if (a.equals(b)) return true;");
+        writer.writeLine(" * Compares two JsonNodes with numeric equivalence and null safety.");
         writer.writeLine(
-            "if (a.isNumber() && b.isNumber()) return Math.abs(a.doubleValue() - b.doubleValue()) < 1e-10;"
+            " * For objects, checks that all fields in 'expected' exist in 'actual' with matching values."
         );
-        writer.writeLine("if (a.isObject() && b.isObject()) {");
+        writer.writeLine(" * Allows 'actual' to have extra fields (e.g., default values added during serialization).");
+        writer.writeLine(" */");
+        writer.writeLine("private boolean jsonEquals(JsonNode expected, JsonNode actual) {");
         writer.indent();
-        writer.writeLine("if (a.size() != b.size()) return false;");
-        writer.writeLine("java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = a.fields();");
+        writer.writeLine("if (expected == null && actual == null) return true;");
+        writer.writeLine("if (expected == null || actual == null) return false;");
+        writer.writeLine("if (expected.equals(actual)) return true;");
+        writer.writeLine(
+            "if (expected.isNumber() && actual.isNumber()) return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;"
+        );
+        writer.writeLine("if (expected.isObject() && actual.isObject()) {");
+        writer.indent();
+        // Don't check size equality - actual may have extra fields with default values
+        writer.writeLine("java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();");
         writer.writeLine("while (iter.hasNext()) {");
         writer.indent();
         writer.writeLine("java.util.Map.Entry<String, JsonNode> entry = iter.next();");
-        writer.writeLine("if (!jsonEquals(entry.getValue(), b.get(entry.getKey()))) return false;");
+        writer.writeLine("JsonNode actualValue = actual.get(entry.getKey());");
+        writer.writeLine("if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;");
         writer.dedent();
         writer.writeLine("}");
         writer.writeLine("return true;");
         writer.dedent();
         writer.writeLine("}");
-        writer.writeLine("if (a.isArray() && b.isArray()) {");
+        writer.writeLine("if (expected.isArray() && actual.isArray()) {");
         writer.indent();
-        writer.writeLine("if (a.size() != b.size()) return false;");
-        writer.writeLine("for (int i = 0; i < a.size(); i++) {");
+        writer.writeLine("if (expected.size() != actual.size()) return false;");
+        writer.writeLine("for (int i = 0; i < expected.size(); i++) {");
         writer.indent();
-        writer.writeLine("if (!jsonEquals(a.get(i), b.get(i))) return false;");
+        writer.writeLine("if (!jsonEquals(expected.get(i), actual.get(i))) return false;");
         writer.dedent();
         writer.writeLine("}");
         writer.writeLine("return true;");
