@@ -419,10 +419,15 @@ export class EndpointSnippetGenerator {
                 ignoreMissingParameters: true
             });
             for (const parameter of associated) {
+                const value = this.context.dynamicTypeLiteralMapper.convert(parameter);
+                // Skip nop values (undefined/null) to avoid generating empty arguments like "channel: ,"
+                if (ruby.TypeLiteral.isNop(value)) {
+                    continue;
+                }
                 args.push(
                     ruby.keywordArgument({
                         name: this.context.getPropertyName(parameter.name.name),
-                        value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                        value
                     })
                 );
             }
@@ -445,10 +450,15 @@ export class EndpointSnippetGenerator {
             values: this.context.getRecord(snippet.requestBody) ?? {}
         });
         for (const parameter of bodyProperties) {
+            const value = this.context.dynamicTypeLiteralMapper.convert(parameter);
+            // Skip nop values (undefined/null) to avoid generating empty arguments like "channel: ,"
+            if (ruby.TypeLiteral.isNop(value)) {
+                continue;
+            }
             args.push(
                 ruby.keywordArgument({
                     name: this.context.getPropertyName(parameter.name.name),
-                    value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                    value
                 })
             );
         }
