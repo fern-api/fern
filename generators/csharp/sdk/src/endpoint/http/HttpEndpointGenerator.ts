@@ -195,7 +195,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
         // Build the argument list for calling the raw client method
         const argNames = endpointSignatureInfo.baseParameters.map((p) => p.name);
-        argNames.push(this.getRequestOptionsParamNameForEndpoint(endpoint));
+        argNames.push(this.getRequestOptionsParamNameForEndpoint({ endpoint }));
         argNames.push(this.names.parameters.cancellationToken);
         const argsString = argNames.join(", ");
 
