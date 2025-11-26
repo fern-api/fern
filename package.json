@@ -99,7 +99,7 @@
     "stylelint-config-standard-scss": "^5.0.0",
     "tsup": "^8.5.0",
     "tsx": "^4.20.3",
-    "turbo": "^2.5.5",
+    "turbo": "^2.6.1",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   },
