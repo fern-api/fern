@@ -71,16 +71,8 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
                         ClassName.get(String.class),
                         ClassName.get(String.class),
                         ClassName.get("java.util", "ArrayList"))
-                .addStatement(
-                        "messages.add($T.singletonMap($S, $S))",
-                        ClassName.get("java.util", "Collections"),
-                        "message",
-                        "hello")
-                .addStatement(
-                        "messages.add($T.singletonMap($S, $S))",
-                        ClassName.get("java.util", "Collections"),
-                        "message",
-                        "world")
+                .addStatement("messages.add($T.singletonMap($S, $S))", ClassName.get("java.util", "Collections"), "message", "hello")
+                .addStatement("messages.add($T.singletonMap($S, $S))", ClassName.get("java.util", "Collections"), "message", "world")
                 .addStatement(
                         "$T jsonStrings = messages.stream().map($T::mapToJson).collect($T.toList())",
                         ClassName.get("java.util", "List"),
@@ -122,16 +114,8 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
                         ClassName.get(String.class),
                         ClassName.get(String.class),
                         ClassName.get("java.util", "ArrayList"))
-                .addStatement(
-                        "events.add($T.singletonMap($S, $S))",
-                        ClassName.get("java.util", "Collections"),
-                        "event",
-                        "start")
-                .addStatement(
-                        "events.add($T.singletonMap($S, $S))",
-                        ClassName.get("java.util", "Collections"),
-                        "event",
-                        "end")
+                .addStatement("events.add($T.singletonMap($S, $S))", ClassName.get("java.util", "Collections"), "event", "start")
+                .addStatement("events.add($T.singletonMap($S, $S))", ClassName.get("java.util", "Collections"), "event", "end")
                 .addStatement(
                         "$T sseStrings = events.stream().map($T::mapToSse).collect($T.toList())",
                         ClassName.get("java.util", "List"),
@@ -173,16 +157,8 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
                         ClassName.get(String.class),
                         ClassName.get(String.class),
                         ClassName.get("java.util", "ArrayList"))
-                .addStatement(
-                        "events.add($T.singletonMap($S, $S))",
-                        ClassName.get("java.util", "Collections"),
-                        "message",
-                        "first")
-                .addStatement(
-                        "events.add($T.singletonMap($S, $S))",
-                        ClassName.get("java.util", "Collections"),
-                        "message",
-                        "second")
+                .addStatement("events.add($T.singletonMap($S, $S))", ClassName.get("java.util", "Collections"), "message", "first")
+                .addStatement("events.add($T.singletonMap($S, $S))", ClassName.get("java.util", "Collections"), "message", "second")
                 .addStatement(
                         "$T sseStrings = events.stream().map($T::mapToSse).collect($T.toList())",
                         ClassName.get("java.util", "List"),
