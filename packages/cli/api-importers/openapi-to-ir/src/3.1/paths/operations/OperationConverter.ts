@@ -748,12 +748,15 @@ export class OperationConverter extends AbstractOperationConverter {
     }
 
     private isEndpointAuthed(): boolean {
+        // If operation has explicit security defined (including empty array), use it
         if (this.operation.security != null) {
-            return Object.keys(this.operation.security).length > 0;
+            return true;
         }
+        // If global security is defined, use it
         if (this.context.spec.security != null) {
-            return Object.keys(this.context.spec.security).length > 0;
+            return true;
         }
+        // Otherwise, use the authDefaultsToTrue setting (defaults to false for backward compatibility)
         return this.context.settings.authDefaultsToTrue ?? false;
     }
 }
