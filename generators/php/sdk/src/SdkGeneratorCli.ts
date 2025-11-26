@@ -11,6 +11,7 @@ import { WrappedEndpointRequestGenerator } from "./endpoint/request/WrappedEndpo
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
+import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProviderGenerator";
 import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
 import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
@@ -60,6 +61,7 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
         this.generateEnvironment(context);
         this.generateErrors(context);
         this.generateOauthTokenProvider(context);
+        this.generateInferredAuthProvider(context);
         await this.generateWireTestFiles(context);
 
         if (context.config.output.snippetFilepath != null) {
@@ -160,6 +162,17 @@ export class SdkGeneratorCLI extends AbstractPhpGeneratorCli<SdkCustomConfigSche
                 scheme: oauth
             });
             context.project.addSourceFiles(oauthTokenProvider.generate());
+        }
+    }
+
+    private generateInferredAuthProvider(context: SdkGeneratorContext) {
+        const inferredAuth = context.getInferredAuth();
+        if (inferredAuth != null) {
+            const inferredAuthProvider = new InferredAuthProviderGenerator({
+                context,
+                scheme: inferredAuth
+            });
+            context.project.addSourceFiles(inferredAuthProvider.generate());
         }
     }
 

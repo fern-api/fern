@@ -6,7 +6,10 @@ import { php } from "@fern-api/php-codegen";
 import {
     AuthScheme,
     ContainerType,
+    HttpEndpoint,
     HttpHeader,
+    HttpService,
+    InferredAuthScheme,
     Literal,
     OAuthScheme,
     PrimitiveTypeV1,
@@ -289,6 +292,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     this.writeOAuthTokenRetrieval(writer, oauth);
                 }
 
+                const inferredAuth = this.context.getInferredAuth();
+                if (inferredAuth != null) {
+                    this.writeInferredAuthTokenRetrieval(writer, inferredAuth);
+                }
+
                 writer.write("$defaultHeaders = ");
                 writer.writeNodeStatement(headers);
                 for (const param of constructorParameters.optional) {
@@ -315,6 +323,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const oauthScheme = this.context.getOauth();
                 if (oauthScheme != null && oauthScheme.configuration.type === "clientCredentials") {
                     writer.writeLine("$defaultHeaders['Authorization'] = \"Bearer $token\";");
+                }
+
+                const inferredAuthScheme = this.context.getInferredAuth();
+                if (inferredAuthScheme != null) {
+                    writer.writeLine("$defaultHeaders = array_merge($defaultHeaders, $authHeaders);");
                 }
 
                 writer.writeLine();
@@ -591,8 +604,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 ];
             }
             case "inferred": {
-                this.context.logger.warn("Inferred auth scheme is not supported by PHP SDK Generator");
-                return [];
+                return this.getParametersForInferredAuth(scheme);
             }
             default:
                 assertNever(scheme);
@@ -694,6 +706,166 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.writeLine("$token = $oauthTokenProvider->getToken();");
         writer.writeLine();
+    }
+
+    private getParametersForInferredAuth(scheme: InferredAuthScheme): ConstructorParameter[] {
+        const isOptional = !this.context.ir.sdkConfig.isAuthMandatory;
+        const parameters: ConstructorParameter[] = [];
+
+        // Get the token endpoint to extract request properties
+        const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
+        const service = this.context.ir.services[tokenEndpointReference.serviceId];
+        if (service == null) {
+            this.context.logger.warn(`Service with id ${tokenEndpointReference.serviceId} not found for inferred auth`);
+            return [];
+        }
+
+        const endpoint = service.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
+        if (endpoint == null) {
+            this.context.logger.warn(
+                `Endpoint with id ${tokenEndpointReference.endpointId} not found for inferred auth`
+            );
+            return [];
+        }
+
+        // Extract parameters from the token endpoint request
+        const sdkRequest = endpoint.sdkRequest;
+        if (sdkRequest != null && sdkRequest.shape.type === "wrapper") {
+            // Get the request body properties
+            const requestBody = endpoint.requestBody;
+            if (requestBody != null && requestBody.type === "inlinedRequestBody") {
+                for (const property of requestBody.properties) {
+                    const literal = this.context.maybeLiteral(property.valueType);
+                    if (literal == null) {
+                        // Only add non-literal properties as constructor parameters
+                        parameters.push({
+                            name: this.context.getParameterName(property.name.name),
+                            docs: property.docs,
+                            isOptional: isOptional || this.context.isOptional(property.valueType),
+                            typeReference: this.getAuthParameterTypeReference({
+                                typeReference: property.valueType,
+                                envVar: undefined,
+                                isOptional: isOptional || this.context.isOptional(property.valueType)
+                            })
+                        });
+                    }
+                }
+            }
+
+            // Also add header parameters from the endpoint
+            for (const header of endpoint.headers) {
+                const literal = this.context.maybeLiteral(header.valueType);
+                if (literal == null) {
+                    parameters.push({
+                        name: this.context.getParameterName(header.name.name),
+                        docs: header.docs,
+                        isOptional: isOptional || this.context.isOptional(header.valueType),
+                        header: {
+                            name: header.name.wireValue
+                        },
+                        typeReference: this.getAuthParameterTypeReference({
+                            typeReference: header.valueType,
+                            envVar: undefined,
+                            isOptional: isOptional || this.context.isOptional(header.valueType)
+                        })
+                    });
+                }
+            }
+        }
+
+        return parameters;
+    }
+
+    private writeInferredAuthTokenRetrieval(writer: php.Writer, inferredAuth: InferredAuthScheme): void {
+        const tokenEndpointReference = inferredAuth.tokenEndpoint.endpoint;
+        const subpackageId = tokenEndpointReference.subpackageId;
+
+        let authClientClassReference: php.ClassReference;
+        if (subpackageId != null) {
+            const subpackage = this.context.getSubpackageOrThrow(subpackageId);
+            authClientClassReference = this.context.getSubpackageClassReference(subpackage);
+        } else {
+            authClientClassReference = php.classReference({
+                name: this.context.getRootClientClassName(),
+                namespace: this.context.getRootNamespace()
+            });
+        }
+
+        const inferredAuthProviderClassReference = php.classReference({
+            name: "InferredAuthProvider",
+            namespace: this.context.getCoreNamespace()
+        });
+
+        writer.write("$authRawClient = new ");
+        writer.writeNode(this.context.rawClient.getClassReference());
+        writer.writeLine("(['headers' => []]);");
+
+        writer.write("$authClient = new ");
+        writer.writeNode(authClientClassReference);
+        writer.writeLine("($authRawClient);");
+
+        // Build the options array for the InferredAuthProvider
+        writer.writeLine("$inferredAuthOptions = [");
+        writer.indent();
+
+        // Get the token endpoint to extract request properties
+        const service = this.context.ir.services[tokenEndpointReference.serviceId];
+        if (service != null) {
+            const endpoint = service.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
+            if (endpoint != null) {
+                const sdkRequest = endpoint.sdkRequest;
+                if (sdkRequest != null && sdkRequest.shape.type === "wrapper") {
+                    const requestBody = endpoint.requestBody;
+                    if (requestBody != null && requestBody.type === "inlinedRequestBody") {
+                        for (const property of requestBody.properties) {
+                            const paramName = this.context.getParameterName(property.name.name);
+                            const literal = this.context.maybeLiteral(property.valueType);
+                            if (literal != null) {
+                                writer.writeLine(`'${paramName}' => ${this.context.getLiteralAsString(literal)},`);
+                            } else {
+                                writer.writeLine(`'${paramName}' => $${paramName} ?? '',`);
+                            }
+                        }
+                    }
+
+                    // Also add header parameters
+                    for (const header of endpoint.headers) {
+                        const paramName = this.context.getParameterName(header.name.name);
+                        const literal = this.context.maybeLiteral(header.valueType);
+                        if (literal != null) {
+                            writer.writeLine(`'${paramName}' => ${this.context.getLiteralAsString(literal)},`);
+                        } else {
+                            writer.writeLine(`'${paramName}' => $${paramName} ?? '',`);
+                        }
+                    }
+                }
+            }
+        }
+
+        writer.dedent();
+        writer.writeLine("];");
+
+        writer.write("$inferredAuthProvider = new ");
+        writer.writeNode(inferredAuthProviderClassReference);
+        writer.writeLine("($authClient, $inferredAuthOptions);");
+
+        writer.writeLine("$authHeaders = $inferredAuthProvider->getAuthHeaders();");
+        writer.writeLine();
+    }
+
+    private getInferredAuthTokenEndpoint(
+        scheme: InferredAuthScheme
+    ): { service: HttpService; endpoint: HttpEndpoint } | undefined {
+        const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
+        const service = this.context.ir.services[tokenEndpointReference.serviceId];
+        if (service == null) {
+            return undefined;
+        }
+        const endpoint = service.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
+        if (endpoint == null) {
+            return undefined;
+        }
+        return { service, endpoint };
     }
 
     private newRootClientFile(class_: php.Class): PhpFile {
