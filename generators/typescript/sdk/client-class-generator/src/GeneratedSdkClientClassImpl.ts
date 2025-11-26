@@ -1,6 +1,7 @@
 import { SetRequired } from "@fern-api/core-utils";
 import {
     AuthScheme,
+    EndpointReference,
     ExampleEndpointCall,
     HttpEndpoint,
     HttpHeader,
@@ -135,6 +136,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly exportsManager: ExportsManager;
     private readonly authProvider: AuthProviderInstance | undefined;
     private readonly anyEndpointWithAuth: boolean;
+    private readonly isAuthClient: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
 
@@ -190,6 +192,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         const service = packageResolver.getServiceDeclaration(packageId);
 
         this.anyEndpointWithAuth = anyEndpointWithAuth({ packageId, packageResolver });
+        this.isAuthClient = this.isAuthClientPackage();
 
         const websocketChannel = packageResolver.getWebSocketChannelDeclaration(packageId);
         const websocketChannelId = this.package_.websocket ?? undefined;
@@ -619,8 +622,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         maybeAddDocsStructure(serviceClass, this.package_.docs);
 
         // Determine the type for _options based on whether auth is required
+        // Auth clients (packages containing OAuth/inferred auth endpoints) should not use
+        // NormalizedClientOptionsWithAuth to avoid infinite loops when the auth provider
+        // instantiates the auth client.
         const optionsType =
-            this.authProvider && this.anyEndpointWithAuth
+            this.authProvider && this.anyEndpointWithAuth && !this.isAuthClient
                 ? (() => {
                       // Import NormalizedClientOptionsWithAuth and normalizeClientOptionsWithAuth from BaseClient
                       context.importsManager.addImportFromRoot("BaseClient", {
@@ -667,7 +673,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             isReadonly: true
         });
 
-        if (this.authProvider && this.anyEndpointWithAuth) {
+        if (this.authProvider && this.anyEndpointWithAuth && !this.isAuthClient) {
             const parameters = [
                 {
                     name: GeneratedSdkClientClassImpl.OPTIONS_PARAMETER_NAME,
@@ -1198,6 +1204,42 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     public getAuthProviderInstance(): AuthProviderInstance | undefined {
         return this.authProvider;
+    }
+
+    /**
+     * Checks if this package contains an endpoint that is used for OAuth or inferred auth.
+     * Auth clients should not use normalizeClientOptionsWithAuth to avoid infinite loops
+     * when the auth provider instantiates the auth client.
+     */
+    private isAuthClientPackage(): boolean {
+        for (const authScheme of this.intermediateRepresentation.auth.schemes) {
+            if (authScheme.type === "oauth") {
+                const oauthConfig = authScheme.configuration;
+                if (oauthConfig.type === "clientCredentials") {
+                    if (this.matchesPackageId(oauthConfig.tokenEndpoint.endpointReference)) {
+                        return true;
+                    }
+                    if (
+                        oauthConfig.refreshEndpoint &&
+                        this.matchesPackageId(oauthConfig.refreshEndpoint.endpointReference)
+                    ) {
+                        return true;
+                    }
+                }
+            } else if (authScheme.type === "inferred") {
+                if (this.matchesPackageId(authScheme.tokenEndpoint.endpoint)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private matchesPackageId(ref: EndpointReference): boolean {
+        if (this.packageId.isRoot) {
+            return ref.subpackageId == null;
+        }
+        return ref.subpackageId === this.packageId.subpackageId;
     }
 }
 
