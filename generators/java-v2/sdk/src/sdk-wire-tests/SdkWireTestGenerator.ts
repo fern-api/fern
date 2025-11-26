@@ -567,23 +567,16 @@ export class SdkWireTestGenerator {
     }
 
     private shouldBuildTest(endpoint: HttpEndpoint): boolean {
+        // Skip OAuth token endpoints in OAuth APIs - they conflict with the auto-token-fetch mechanism
+        // The OAuth client automatically fetches tokens using these same endpoints, causing mock response conflicts
+        if (this.isOAuthTokenEndpoint(endpoint.id)) {
+            this.context.logger.debug(`Skipping OAuth token endpoint: ${endpoint.id}`);
+            return false;
+        }
+
         // Skip endpoints with custom pagination
         if (endpoint.pagination?.type === "custom") {
             this.context.logger.debug(`Skipping custom pagination endpoint: ${endpoint.id}`);
-            return false;
-        }
-
-        // Skip ALL endpoints if API uses OAuth authentication at the API level
-        // OAuth SDKs don't have a .token() method - they use .clientId()/.clientSecret() instead
-        if (this.context.ir.auth?.schemes?.some((scheme) => scheme.type === "oauth")) {
-            this.context.logger.debug(`Skipping endpoint ${endpoint.id}: API uses OAuth authentication`);
-            return false;
-        }
-
-        // Skip ALL endpoints if API uses multi-URL environments
-        // Multi-URL SDKs don't have a .url() method - they use .environment() with named URLs
-        if (this.isMultiUrlEnvironment()) {
-            this.context.logger.debug(`Skipping endpoint ${endpoint.id}: API uses multi-URL environment`);
             return false;
         }
 
@@ -615,23 +608,42 @@ export class SdkWireTestGenerator {
     }
 
     /**
+     * Checks if the given endpoint is an OAuth token or refresh endpoint.
+     * These endpoints conflict with OAuth auto-fetch when tested directly.
+     */
+    private isOAuthTokenEndpoint(endpointId: string): boolean {
+        const auth = this.context.ir.auth;
+        if (!auth?.schemes) {
+            return false;
+        }
+
+        for (const scheme of auth.schemes) {
+            if (scheme.type === "oauth") {
+                const oauthConfig = scheme;
+                // Check if this endpoint is the token endpoint
+                if (oauthConfig.configuration?.tokenEndpoint?.endpointReference?.endpointId === endpointId) {
+                    return true;
+                }
+                // Check if this endpoint is the refresh endpoint
+                if (oauthConfig.configuration?.refreshEndpoint?.endpointReference?.endpointId === endpointId) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
      * Determines if the API uses multiple base URLs (e.g., separate URLs for different services).
      * Multi-URL environments don't support the .url() builder method.
      */
     private isMultiUrlEnvironment(): boolean {
         const environments = this.context.ir.environments;
-        if (!environments) {
+        if (!environments?.environments) {
             return false;
         }
 
-        // Check if any environment value has a "urls" property (indicating multi-URL)
-        for (const envValue of Object.values(environments)) {
-            if (envValue && typeof envValue === "object" && "urls" in envValue) {
-                return true;
-            }
-        }
-
-        return false;
+        return environments.environments.type === "multipleBaseUrls";
     }
 
     /**

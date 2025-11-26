@@ -1,3 +1,16 @@
+- version: 3.19.0
+  changelogEntry:
+    - summary: |
+        Add wire test support for OAuth APIs and multi-URL environments. Wire tests now:
+        - Properly mock OAuth token endpoints with per-test token enqueuing
+        - Use `.clientId()/.clientSecret()` for OAuth-authenticated APIs
+        - Support custom OAuth headers (e.g., `apiKey`) required by token endpoints
+        - Configure `Environment.custom()` builder for multi-URL environment APIs
+        - Handle flexible JSON comparison allowing extra default fields in responses
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
 - version: 3.18.13
   changelogEntry:
     - summary: |
