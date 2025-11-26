@@ -33,7 +33,8 @@ module Seed
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
 
         _request = Seed::Internal::Multipart::Request.new(
-          method: POST,
+          base_url: request_options[:base_url],
+          method: "POST",
           path: "upload-file",
           body: body
         )
