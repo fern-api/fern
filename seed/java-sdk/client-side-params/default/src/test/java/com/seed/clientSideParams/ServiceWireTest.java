@@ -1479,24 +1479,29 @@ public class ServiceWireTest {
     }
 
     /**
-     * Compares two JsonNodes with numeric equivalence.
+     * Compares two JsonNodes with numeric equivalence and null safety.
+     * For objects, checks that all fields in 'expected' exist in 'actual' with matching values.
+     * Allows 'actual' to have extra fields (e.g., default values added during serialization).
      */
-    private boolean jsonEquals(JsonNode a, JsonNode b) {
-        if (a.equals(b)) return true;
-        if (a.isNumber() && b.isNumber()) return Math.abs(a.doubleValue() - b.doubleValue()) < 1e-10;
-        if (a.isObject() && b.isObject()) {
-            if (a.size() != b.size()) return false;
-            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = a.fields();
+    private boolean jsonEquals(JsonNode expected, JsonNode actual) {
+        if (expected == null && actual == null) return true;
+        if (expected == null || actual == null) return false;
+        if (expected.equals(actual)) return true;
+        if (expected.isNumber() && actual.isNumber())
+            return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;
+        if (expected.isObject() && actual.isObject()) {
+            java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();
             while (iter.hasNext()) {
                 java.util.Map.Entry<String, JsonNode> entry = iter.next();
-                if (!jsonEquals(entry.getValue(), b.get(entry.getKey()))) return false;
+                JsonNode actualValue = actual.get(entry.getKey());
+                if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;
             }
             return true;
         }
-        if (a.isArray() && b.isArray()) {
-            if (a.size() != b.size()) return false;
-            for (int i = 0; i < a.size(); i++) {
-                if (!jsonEquals(a.get(i), b.get(i))) return false;
+        if (expected.isArray() && actual.isArray()) {
+            if (expected.size() != actual.size()) return false;
+            for (int i = 0; i < expected.size(); i++) {
+                if (!jsonEquals(expected.get(i), actual.get(i))) return false;
             }
             return true;
         }
