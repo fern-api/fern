@@ -487,7 +487,6 @@ class PydanticModel:
                 # Only write the function invocation, not the constraint refs
                 writer.write_node(self.func_invocation)
 
-        # Sort kwargs by key for deterministic output
         sorted_kwargs = sorted(
             [
                 (
