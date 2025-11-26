@@ -441,7 +441,7 @@ export class DynamicTypeInstantiationMapper {
             this.context.errors.scope(property.name.wireValue);
             try {
                 return {
-                    name: this.context.getTypeName(property.name.name),
+                    name: this.context.getFieldName(property.name.name),
                     value: this.convert(property)
                 };
             } finally {
@@ -470,7 +470,7 @@ export class DynamicTypeInstantiationMapper {
                 this.context.errors.scope(property.name.wireValue);
                 try {
                     return {
-                        name: this.context.getTypeName(property.name.name),
+                        name: this.context.getFieldName(property.name.name),
                         value: this.convert(property)
                     };
                 } finally {

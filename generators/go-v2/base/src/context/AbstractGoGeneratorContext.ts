@@ -5,7 +5,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { BaseGoCustomConfigSchema, go, resolveRootImportPath } from "@fern-api/go-ast";
+import { BaseGoCustomConfigSchema, go, goExportedFieldName, resolveRootImportPath } from "@fern-api/go-ast";
 import {
     EnumTypeDeclaration,
     ErrorDeclaration,
@@ -126,7 +126,7 @@ export abstract class AbstractGoGeneratorContext<
     }
 
     public getFieldName(name: Name): string {
-        return name.pascalCase.unsafeName;
+        return goExportedFieldName(name.pascalCase.unsafeName);
     }
 
     public getLiteralFieldName(name: Name): string {
