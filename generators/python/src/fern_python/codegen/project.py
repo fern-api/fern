@@ -40,6 +40,7 @@ class Project:
         *,
         filepath: str,
         relative_path_to_project: str,
+        package_path: Optional[str] = None,
         python_version: str = "^3.8",
         project_config: Optional[ProjectConfig] = None,
         sorted_modules: Optional[Sequence[str]] = None,
@@ -56,16 +57,33 @@ class Project:
         generator_exec_wrapper: Optional[GeneratorExecWrapper] = None,
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
+
+        # Determine source filepath with optional package_path prefix
+        # package_path only affects source code location, not project-level files like pyproject.toml
+        if package_path is not None:
+            # Normalize: strip leading/trailing slashes
+            normalized_package_path = package_path.strip("/")
+            source_base_filepath = os.path.join(filepath, normalized_package_path) if normalized_package_path else filepath
+        else:
+            normalized_package_path = None
+            source_base_filepath = filepath
+
         if flat_layout:
             self._project_relative_filepath = relative_path_to_project
         else:
             self._project_relative_filepath = os.path.join("src", relative_path_to_project)
 
         self._project_filepath = (
-            filepath if project_config is None else os.path.join(filepath, self._project_relative_filepath)
+            source_base_filepath if project_config is None else os.path.join(source_base_filepath, self._project_relative_filepath)
         )
         self._generate_readme = True
+        # _root_filepath is the original output path for project-level files (pyproject.toml, README, etc.)
         self._root_filepath = filepath
+        # _source_root_filepath is where source code goes (may include package_path prefix)
+        self._source_root_filepath = source_base_filepath
+        # _package_path is the normalized package_path prefix (None if not set)
+        self._package_path = normalized_package_path
+        self._flat_layout = flat_layout
         self._relative_path_to_project = relative_path_to_project
         self._project_config = project_config
         self._module_manager = ModuleManager(
@@ -139,7 +157,7 @@ class Project:
         return (
             os.path.join(self._project_filepath, str(filepath))
             if include_src_root
-            else os.path.join(self._root_filepath, str(filepath))
+            else os.path.join(self._source_root_filepath, str(filepath))
         )
 
     def register_export_in_project(self, filepath_in_project: Filepath, exports: Set[str]) -> None:
@@ -177,18 +195,30 @@ class Project:
             )
 
     def add_file(self, filepath: str, contents: str) -> None:
+        """Add a file relative to the root output directory (for project-level files like .gitignore)."""
         file = Path(os.path.join(self._root_filepath, filepath))
         file.parent.mkdir(exist_ok=True, parents=True)
         file.write_text(contents)
 
+    def add_source_file(self, filepath: str, contents: str) -> None:
+        """Add a file relative to the source root directory (respects package_path)."""
+        file = Path(os.path.join(self._source_root_filepath, filepath))
+        file.parent.mkdir(exist_ok=True, parents=True)
+        file.write_text(contents)
+
     def finish(self) -> None:
-        self._module_manager.write_modules(base_filepath=self._root_filepath, filepath=self._project_filepath)
+        self._module_manager.write_modules(base_filepath=self._source_root_filepath, filepath=self._project_filepath)
         if self._project_config is not None:
             # generate pyproject.toml
+            # Determine the 'from' path for pyproject.toml packages config
+            if self._flat_layout:
+                package_from = self._package_path if self._package_path else None
+            else:
+                package_from = os.path.join(self._package_path, "src") if self._package_path else "src"
             py_project_toml = PyProjectToml(
                 name=self._project_config.package_name,
                 version=self._project_config.package_version,
-                package=PyProjectTomlPackageConfig(include=self._relative_path_to_project, _from="src"),
+                package=PyProjectTomlPackageConfig(include=self._relative_path_to_project, _from=package_from),
                 path=self._root_filepath,
                 dependency_manager=self._dependency_manager,
                 python_version=self._python_version,
