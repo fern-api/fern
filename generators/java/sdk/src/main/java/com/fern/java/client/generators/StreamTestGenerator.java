@@ -252,9 +252,7 @@ public final class StreamTestGenerator extends AbstractFileGenerator {
         return MethodSpec.methodBuilder("createMap")
                 .addModifiers(Modifier.PRIVATE, Modifier.STATIC)
                 .returns(ParameterizedTypeName.get(
-                        ClassName.get("java.util", "Map"),
-                        ClassName.get(String.class),
-                        ClassName.get(String.class)))
+                        ClassName.get("java.util", "Map"), ClassName.get(String.class), ClassName.get(String.class)))
                 .addParameter(String.class, "key")
                 .addParameter(String.class, "value")
                 .addStatement(
