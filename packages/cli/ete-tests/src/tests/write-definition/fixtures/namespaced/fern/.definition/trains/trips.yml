@@ -24,6 +24,7 @@ service:
   display-name: Trips
   endpoints:
     get-trips:
+      auth: true
       display-name: Get available train trips
       docs: >-
         Returns a list of available train trips between the specified origin and

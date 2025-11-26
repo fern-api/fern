@@ -1,5 +1,30 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.41.1
+  changelogEntry:
+    - summary: More fixes and improvements to wire tests.
+      type: fix
+  createdAt: "2025-11-26"
+  irVersion: 61
+
+- version: 4.41.0
+  changelogEntry:
+    - summary: |
+        `package_path: sub/directory` generates the SDK into the specified subdirectory.
+        Only top-level concerns (`pyproject.toml`, `README.md`, etc.) are exempt.
+      type: feat
+  createdAt: "2025-11-26"
+  irVersion: 61
+
+- version: 4.40.0
+  changelogEntry:
+    - summary: |
+        Add support for X-RateLimit-Reset header
+        Retry strategy matches other SDKs (1s initial delay, 60s max delay).
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
 - version: 4.39.2
   changelogEntry:
     - summary: More fixes and improvements to wire tests.
@@ -217,7 +242,7 @@
 - version: 4.31.0
   changelogEntry:
     - summary: |
-        - Removed external dependency on httpx-sse by bringing SSE handling in-house. 
+        - Removed external dependency on httpx-sse by bringing SSE handling in-house.
         - Fixed SSE handling of events longer than or containing escaped newlines.
       type: feat
   createdAt: "2025-10-06"
@@ -541,7 +566,7 @@
 - version: 4.22.1-rc0
   changelogEntry:
     - summary: |
-        Lazily validate model serialization to reduce memory consumption. Pydantic 2.11.0 introduced an issue where the model_serializer 
+        Lazily validate model serialization to reduce memory consumption. Pydantic 2.11.0 introduced an issue where the model_serializer
         decorator set to wrap mode forced it to eagerly do schema validation at import time. Because we had this decorator on the UniversalBaseModel,
         it would try to validate the schemas of all the Model types at import time. This caused massive memory spikes for more complex SDKs, up to 2.6GB
         in some cases. This change essentially accomplishes the same logic of wrapping the serialization process and modifying the serialization
@@ -659,8 +684,8 @@
 - version: 4.19.5
   changelogEntry:
     - summary: |
-        Fix naming conflicts in streaming endpoints by renaming the stream method to _stream in raw clients, 
-        preventing collisions with endpoint parameters that might also be named "stream", 
+        Fix naming conflicts in streaming endpoints by renaming the stream method to _stream in raw clients,
+        preventing collisions with endpoint parameters that might also be named "stream",
         while maintaining proper functionality for streaming responses.
       type: fix
   createdAt: "2025-05-11"
@@ -669,7 +694,7 @@
 - version: 4.19.4
   changelogEntry:
     - summary: |
-        Fix handling of optional file parameters in multipart form data requests with httpx by properly checking 
+        Fix handling of optional file parameters in multipart form data requests with httpx by properly checking
         for None values before attempting to include them in the request, preventing errors when optional file parameters are not provided.
       type: feat
   createdAt: "2025-05-11"
@@ -710,7 +735,7 @@
 - version: 4.18.6
   changelogEntry:
     - summary: |
-        Fix string enum generation to properly handle enum values containing quotes by automatically escaping them, 
+        Fix string enum generation to properly handle enum values containing quotes by automatically escaping them,
         ensuring valid Python syntax for both single and double quoted string literals.
       type: fix
   createdAt: "2025-05-08"
@@ -1007,8 +1032,8 @@
   changelogEntry:
     - type: fix
       summary: |
-        Fix an issue where the `request_options` parameter name is now properly respected when it's 
-        renamed due to conflicts with other parameter names. Previously, the code would still reference the 
+        Fix an issue where the `request_options` parameter name is now properly respected when it's
+        renamed due to conflicts with other parameter names. Previously, the code would still reference the
         original parameter name internally, causing errors.
 
 - version: 4.3.17
@@ -1016,7 +1041,7 @@
   changelogEntry:
     - type: fix
       summary: |
-        Fix an issue where parameter names that conflict with the `request_options` parameter are now properly deconflicted by 
+        Fix an issue where parameter names that conflict with the `request_options` parameter are now properly deconflicted by
         prepending an underscore to the `request_options` parameter name.
 
 - version: 4.3.16

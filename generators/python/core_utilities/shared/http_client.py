@@ -16,9 +16,9 @@ from .remove_none_from_dict import remove_none_from_dict
 from .request_options import RequestOptions
 from httpx._types import RequestFiles
 
-INITIAL_RETRY_DELAY_SECONDS = 0.5
-MAX_RETRY_DELAY_SECONDS = 10
-MAX_RETRY_DELAY_SECONDS_FROM_HEADER = 30
+INITIAL_RETRY_DELAY_SECONDS = 1.0
+MAX_RETRY_DELAY_SECONDS = 60.0
+JITTER_FACTOR = 0.2  # 20% random jitter
 
 
 def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float]:
@@ -62,6 +62,38 @@ def _parse_retry_after(response_headers: httpx.Headers) -> typing.Optional[float
     return seconds
 
 
+def _add_positive_jitter(delay: float) -> float:
+    """Add positive jitter (0-20%) to prevent thundering herd."""
+    jitter_multiplier = 1 + random() * JITTER_FACTOR
+    return delay * jitter_multiplier
+
+
+def _add_symmetric_jitter(delay: float) -> float:
+    """Add symmetric jitter (±10%) for exponential backoff."""
+    jitter_multiplier = 1 + (random() - 0.5) * JITTER_FACTOR
+    return delay * jitter_multiplier
+
+
+def _parse_x_ratelimit_reset(response_headers: httpx.Headers) -> typing.Optional[float]:
+    """
+    Parse the X-RateLimit-Reset header (Unix timestamp in seconds).
+    Returns seconds to wait, or None if header is missing/invalid.
+    """
+    reset_time_str = response_headers.get("x-ratelimit-reset")
+    if reset_time_str is None:
+        return None
+
+    try:
+        reset_time = int(reset_time_str)
+        delay = reset_time - time.time()
+        if delay > 0:
+            return delay
+    except (ValueError, TypeError):
+        pass
+
+    return None
+
+
 def _retry_timeout(response: httpx.Response, retries: int) -> float:
     """
     Determine the amount of time to wait before retrying a request.
@@ -69,17 +101,19 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
     with a jitter to determine the number of seconds to wait.
     """
 
-    # If the API asks us to wait a certain amount of time (and it's a reasonable amount), just do what it says.
+    # 1. Check Retry-After header first
     retry_after = _parse_retry_after(response.headers)
-    if retry_after is not None and retry_after <= MAX_RETRY_DELAY_SECONDS_FROM_HEADER:
-        return retry_after
+    if retry_after is not None and retry_after > 0:
+        return min(retry_after, MAX_RETRY_DELAY_SECONDS)
 
-    # Apply exponential backoff, capped at MAX_RETRY_DELAY_SECONDS.
-    retry_delay = min(INITIAL_RETRY_DELAY_SECONDS * pow(2.0, retries), MAX_RETRY_DELAY_SECONDS)
+    # 2. Check X-RateLimit-Reset header (with positive jitter)
+    ratelimit_reset = _parse_x_ratelimit_reset(response.headers)
+    if ratelimit_reset is not None:
+        return _add_positive_jitter(min(ratelimit_reset, MAX_RETRY_DELAY_SECONDS))
 
-    # Add a randomness / jitter to the retry delay to avoid overwhelming the server with retries.
-    timeout = retry_delay * (1 - 0.25 * random())
-    return timeout if timeout >= 0 else 0
+    # 3. Fall back to exponential backoff (with symmetric jitter)
+    backoff = min(INITIAL_RETRY_DELAY_SECONDS * pow(2.0, retries), MAX_RETRY_DELAY_SECONDS)
+    return _add_symmetric_jitter(backoff)
 
 
 def _should_retry(response: httpx.Response) -> bool:

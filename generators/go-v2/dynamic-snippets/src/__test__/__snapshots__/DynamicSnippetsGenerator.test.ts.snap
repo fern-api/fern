@@ -223,7 +223,7 @@ func do() {
 		),
 	)
 	request := &types.ObjectWithOptionalField{
-		String: acme.String(
+		FieldString: acme.String(
 			"string",
 		),
 		Integer: acme.Int(
@@ -323,13 +323,13 @@ func do() {
 	)
 	request := []*types.ObjectWithRequiredField{
 		&types.ObjectWithRequiredField{
-			String: "one",
+			FieldString: "one",
 		},
 		&types.ObjectWithRequiredField{
-			String: "two",
+			FieldString: "two",
 		},
 		&types.ObjectWithRequiredField{
-			String: "three",
+			FieldString: "three",
 		},
 	}
 	client.Endpoints.Container.GetAndReturnListOfObjects(
@@ -1070,7 +1070,7 @@ func do() {
 		),
 	)
 	request := &types.ObjectWithOptionalField{
-		String: acme.String(
+		FieldString: acme.String(
 			"string",
 		),
 		Integer: acme.Int(
@@ -1170,13 +1170,13 @@ func do() {
 	)
 	request := []*types.ObjectWithRequiredField{
 		&types.ObjectWithRequiredField{
-			String: "one",
+			FieldString: "one",
 		},
 		&types.ObjectWithRequiredField{
-			String: "two",
+			FieldString: "two",
 		},
 		&types.ObjectWithRequiredField{
-			String: "three",
+			FieldString: "three",
 		},
 	}
 	client.Endpoints.Container.GetAndReturnListOfObjects(
@@ -1917,7 +1917,7 @@ func do() {
 		),
 	)
 	request := &types.ObjectWithOptionalField{
-		String: acme.String(
+		FieldString: acme.String(
 			"string",
 		),
 		Integer: acme.Int(
@@ -2017,13 +2017,13 @@ func do() {
 	)
 	request := []*types.ObjectWithRequiredField{
 		&types.ObjectWithRequiredField{
-			String: "one",
+			FieldString: "one",
 		},
 		&types.ObjectWithRequiredField{
-			String: "two",
+			FieldString: "two",
 		},
 		&types.ObjectWithRequiredField{
-			String: "three",
+			FieldString: "three",
 		},
 	}
 	client.Endpoints.Container.GetAndReturnListOfObjects(

@@ -34,6 +34,7 @@ service:
     chat:
       audiences:
         - v2-beta
+      auth: true
       display-name: Chat with the model
       docs: >
         Generates a message from the model in response to a provided

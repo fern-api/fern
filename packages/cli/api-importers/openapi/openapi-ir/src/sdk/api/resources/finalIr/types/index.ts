@@ -1,4 +1,5 @@
 export * from "./OpenApiIntermediateRepresentation";
+export * from "./GlobalSecurity";
 export * from "./Schemas";
 export * from "./SdkGroupInfo";
 export * from "./GlobalHeader";
