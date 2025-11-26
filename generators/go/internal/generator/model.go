@@ -149,7 +149,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 		// Then collect from this object's properties
 		for _, property := range obj.Properties {
 			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
-				propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
+				propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
 				goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false)
 				propertyTypes = append(propertyTypes, goType)
@@ -325,7 +325,7 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 
 func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Write the union type definition.
-	discriminantName := union.Discriminant.Name.PascalCase.UnsafeName
+	discriminantName := goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName)
 	t.writer.P("type ", t.typeName, " struct {")
 	t.writer.P(discriminantName, " string")
 	var literals []*literal
@@ -344,7 +344,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			literals = append(literals, &literal{Name: property.Name, Value: property.ValueType.Container.Literal})
 			continue
 		}
-		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false))
+		t.writer.P(goExportedFieldName(property.Name.Name.PascalCase.UnsafeName), " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false))
 	}
 	// We handle the union's literals separate from the extended and base
 	// literals because we only want to set them if they were actually
@@ -372,7 +372,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 				continue
 			}
 		}
-		t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName)
+		t.writer.P(goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), " ", typeName)
 	}
 	for _, literal := range literals {
 		t.writer.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
@@ -383,16 +383,16 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Implement the constructors. If UnionVersionV1 is enabled, we only generate
 	// constructors for literal values.
 	for _, unionType := range union.Types {
-		fieldName := unionType.DiscriminantValue.Name.PascalCase.UnsafeName
+		fieldName := goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
 		if unionType.Shape.SingleProperty != nil && unionType.Shape.SingleProperty.Type.Container != nil && unionType.Shape.SingleProperty.Type.Container.Literal != nil {
 			// The constructor for a literal shouldn't take any arguments.
 			literal := unionType.Shape.SingleProperty.Type.Container.Literal
 			fieldName = unionType.DiscriminantValue.Name.CamelCase.SafeName
-			t.writer.P("func New", t.typeName, "With", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "() *", t.typeName, "{")
+			t.writer.P("func New", t.typeName, "With", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), "() *", t.typeName, "{")
 			t.writer.P("return &", t.typeName, "{", discriminantName, ": \"", unionType.DiscriminantValue.WireValue, "\", ", fieldName, ": ", literalToValue(literal), "}")
 		} else if t.unionVersion != UnionVersionV1 {
 			singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
-			t.writer.P("func New", t.typeName, "From", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(value ", singleUnionProperty.goType, ") *", t.typeName, "{")
+			t.writer.P("func New", t.typeName, "From", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), "(value ", singleUnionProperty.goType, ") *", t.typeName, "{")
 			t.writer.P("return &", t.typeName, "{", discriminantName, ": \"", unionType.DiscriminantValue.WireValue, "\", ", fieldName, ": value}")
 		} else {
 			continue
@@ -434,9 +434,9 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		propertyNames = append(propertyNames, extendedObjectProperties.names...)
 	}
 	for _, property := range union.BaseProperties {
-		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
+		t.writer.P(goExportedFieldName(property.Name.Name.PascalCase.UnsafeName), " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
 		if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
-			propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
+			propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 		}
 	}
 	t.writer.P("}")
@@ -471,15 +471,15 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 				literalValue := literalToValue(unionType.Shape.SingleProperty.Type.Container.Literal)
 				literalGoType := literalToGoType(unionType.Shape.SingleProperty.Type.Container.Literal)
 				t.writer.P("var valueUnmarshaler struct {")
-				t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", literalGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types, t.alwaysSendRequiredProperties))
+				t.writer.P(goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), " ", literalGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types, t.alwaysSendRequiredProperties))
 				t.writer.P("}")
 				t.writer.P("if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {")
 				t.writer.P("return err")
 				t.writer.P("}")
-				t.writer.P("if valueUnmarshaler.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "!= ", literalValue, " {")
-				t.writer.P(`return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", `, receiver, ", ", literalValue, ", valueUnmarshaler.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ")")
+				t.writer.P("if valueUnmarshaler.", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), "!= ", literalValue, " {")
+				t.writer.P(`return fmt.Errorf("unexpected value for literal on type %T; expected %v got %v", `, receiver, ", ", literalValue, ", valueUnmarshaler.", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), ")")
 				t.writer.P("}")
-				t.writer.P(receiver, ".", unionType.DiscriminantValue.Name.CamelCase.SafeName, " = valueUnmarshaler.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
+				t.writer.P(receiver, ".", unionType.DiscriminantValue.Name.CamelCase.SafeName, " = valueUnmarshaler.", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName))
 				continue
 			}
 			// If the union is a single property, we need a separate unmarshaler.
@@ -492,19 +492,19 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			//  }
 			t.writer.P("var valueUnmarshaler struct {")
 			singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
-			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", singleUnionProperty.valueMarshalerGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types, t.alwaysSendRequiredProperties))
+			t.writer.P(goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), " ", singleUnionProperty.valueMarshalerGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types, t.alwaysSendRequiredProperties))
 			t.writer.P("}")
 			t.writer.P("if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {")
 			t.writer.P("return err")
 			t.writer.P("}")
-			t.writer.P(receiver, ".", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " = valueUnmarshaler.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, singleUnionProperty.valueUnmarshalerMethodSuffix)
+			t.writer.P(receiver, ".", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), " = valueUnmarshaler.", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), singleUnionProperty.valueUnmarshalerMethodSuffix)
 			continue
 		}
-		t.writer.P(singleUnionTypePropertiesToInitializer(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, unionType.DiscriminantValue.Name.PascalCase.UnsafeName, receiver))
+		t.writer.P(singleUnionTypePropertiesToInitializer(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), receiver))
 		t.writer.P("if err := json.Unmarshal(data, &value); err != nil {")
 		t.writer.P("return err")
 		t.writer.P("}")
-		t.writer.P(receiver, ".", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " = value")
+		t.writer.P(receiver, ".", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), " = value")
 	}
 	t.writer.P("}")
 	t.writer.P("return nil")
@@ -539,7 +539,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		if unionType.Shape.PropertiesType == "singleProperty" {
 			zeroValue = zeroValueForTypeReference(unionType.Shape.SingleProperty.Type, t.writer.types)
 		}
-		unionTypeValue := receiver + "." + unionType.DiscriminantValue.Name.PascalCase.UnsafeName
+		unionTypeValue := receiver + "." + goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
 		if isLiteral {
 			unionTypeValue = receiver + "." + unionType.DiscriminantValue.Name.CamelCase.SafeName
 		}
@@ -556,7 +556,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 				"return internal.MarshalJSONWithExtraProperty(",
 				receiver,
 				".",
-				unionType.DiscriminantValue.Name.PascalCase.UnsafeName+", ",
+				goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)+", ",
 				fmt.Sprintf("%q", union.Discriminant.WireValue)+", ",
 				fmt.Sprintf("%q", unionType.DiscriminantValue.WireValue)+")",
 			)
@@ -583,20 +583,20 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
 				continue
 			}
-			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
+			t.writer.P(goExportedFieldName(property.Name.Name.PascalCase.UnsafeName), " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties))
 		}
 		for _, literal := range literals {
-			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
+			t.writer.P(goExportedFieldName(literal.Name.Name.PascalCase.UnsafeName), " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
 		}
 		singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
 		typeName := singleUnionProperty.goType
 		switch unionType.Shape.PropertiesType {
 		case "singleProperty":
-			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", singleUnionProperty.valueMarshalerGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types, t.alwaysSendRequiredProperties))
+			t.writer.P(goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), " ", singleUnionProperty.valueMarshalerGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types, t.alwaysSendRequiredProperties))
 		case "samePropertiesAsObject":
 		case "noProperties":
 			// For no properties, we always include the omitempty tag.
-			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, " `json:\"", unionType.DiscriminantValue.WireValue, ",omitempty\"`")
+			t.writer.P(goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), " ", typeName, " `json:\"", unionType.DiscriminantValue.WireValue, ",omitempty\"`")
 		default:
 			return fmt.Errorf("%q unions are not supported yet", unionType.Shape.PropertiesType)
 		}
@@ -607,14 +607,14 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			t.writer.P(propertyName, ": ", receiver, ".", propertyName, ",")
 		}
 		for _, literal := range literals {
-			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
+			t.writer.P(goExportedFieldName(literal.Name.Name.PascalCase.UnsafeName), ": ", literalToValue(literal.Value), ",")
 		}
 		if unionType.Shape.SingleProperty != nil && unionType.Shape.SingleProperty.Type.Container != nil && unionType.Shape.SingleProperty.Type.Container.Literal != nil {
 			literal := unionType.Shape.SingleProperty.Type.Container.Literal
-			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ": ", literalToValue(literal), ",")
+			t.writer.P(goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), ": ", literalToValue(literal), ",")
 		} else {
-			marshalerFieldName := unionType.DiscriminantValue.Name.PascalCase.UnsafeName
-			marshalerFieldValue := fmt.Sprintf("%s.%s", receiver, unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
+			marshalerFieldName := goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
+			marshalerFieldValue := fmt.Sprintf("%s.%s", receiver, goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName))
 			if constructor := singleUnionProperty.valueMarshalerConstructor; constructor != "" {
 				marshalerFieldValue = fmt.Sprintf("%s(%s)", constructor, marshalerFieldValue)
 			}
@@ -640,7 +640,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P("type ", t.typeName, "Visitor interface {")
 	for _, unionType := range union.Types {
 		singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
-		t.writer.P("Visit", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(", singleUnionProperty.goType, ") error")
+		t.writer.P("Visit", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), "(", singleUnionProperty.goType, ") error")
 	}
 	t.writer.P("}")
 	t.writer.P()
@@ -671,7 +671,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		if unionType.Shape.PropertiesType == "singleProperty" {
 			zeroValue = zeroValueForTypeReference(unionType.Shape.SingleProperty.Type, t.writer.types)
 		}
-		unionTypeValue := receiver + "." + unionType.DiscriminantValue.Name.PascalCase.UnsafeName
+		unionTypeValue := receiver + "." + goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
 		if isLiteral {
 			unionTypeValue = receiver + "." + unionType.DiscriminantValue.Name.CamelCase.SafeName
 		}
@@ -682,11 +682,11 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		} else {
 			t.writer.P("if ", unionTypeValue, " != ", zeroValue, " {")
 		}
-		fieldName := unionType.DiscriminantValue.Name.PascalCase.UnsafeName
+		fieldName := goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
 		if unionType.Shape.SingleProperty != nil && unionType.Shape.SingleProperty.Type.Container != nil && unionType.Shape.SingleProperty.Type.Container.Literal != nil {
 			fieldName = unionType.DiscriminantValue.Name.CamelCase.SafeName
 		}
-		t.writer.P("return visitor.Visit", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(", receiver, ".", fieldName, ")")
+		t.writer.P("return visitor.Visit", goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName), "(", receiver, ".", fieldName, ")")
 		if t.unionVersion == UnionVersionV1 {
 			// Close the if condition, if present.
 			t.writer.P("}")
@@ -722,7 +722,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		if unionType.Shape.PropertiesType == "singleProperty" {
 			zeroValue = zeroValueForTypeReference(unionType.Shape.SingleProperty.Type, t.writer.types)
 		}
-		unionTypeValue := receiver + "." + unionType.DiscriminantValue.Name.PascalCase.UnsafeName
+		unionTypeValue := receiver + "." + goExportedFieldName(unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
 		if isLiteral {
 			unionTypeValue = receiver + "." + unionType.DiscriminantValue.Name.CamelCase.SafeName
 		}
@@ -1114,12 +1114,13 @@ func (t *typeVisitor) visitObjectProperties(
 				continue
 			}
 		} else {
-			names = append(names, property.Name.Name.PascalCase.UnsafeName)
+			names = append(names, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 		}
 		if date := maybeDateProperty(property.ValueType, property.Name, false); date != nil {
 			dates = append(dates, date)
 		}
 		goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, includeOptionals)
+		fieldName := goExportedFieldName(property.Name.Name.PascalCase.UnsafeName)
 		if includeJSONTags {
 			var structTag string
 			if includeURLTags {
@@ -1127,10 +1128,10 @@ func (t *typeVisitor) visitObjectProperties(
 			} else {
 				structTag = fullFieldTagForTypeWithIgnoredURL(property.Name.WireValue, property.ValueType, t.writer.types, t.alwaysSendRequiredProperties)
 			}
-			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", goType, structTag)
+			t.writer.P(fieldName, " ", goType, structTag)
 			continue
 		}
-		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", goType)
+		t.writer.P(fieldName, " ", goType)
 	}
 	return &objectProperties{
 		names:    names,
@@ -1251,7 +1252,7 @@ func (t *typeVisitor) getTypeFieldsForObject(object *ir.ObjectTypeDeclaration) [
 		}
 		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
 		fields = append(fields, &typeField{
-			Name:             property.Name.Name.PascalCase.UnsafeName,
+			Name:             goExportedFieldName(property.Name.Name.PascalCase.UnsafeName),
 			GoType:           goType,
 			ZeroValue:        zeroValue,
 			Optional:         isOptional,
@@ -1267,7 +1268,7 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 	fields = append(
 		fields,
 		&typeField{
-			Name:             union.Discriminant.Name.PascalCase.UnsafeName,
+			Name:             goExportedFieldName(union.Discriminant.Name.PascalCase.UnsafeName),
 			GoType:           "string",
 			ZeroValue:        `""`,
 			Optional:         false,
@@ -1284,7 +1285,7 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 		}
 		goType, zeroValue, needsDereference, isOptional := processTypeFieldForOptional(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, t.gettersPassByValue)
 		fields = append(fields, &typeField{
-			Name:             property.Name.Name.PascalCase.UnsafeName,
+			Name:             goExportedFieldName(property.Name.Name.PascalCase.UnsafeName),
 			GoType:           goType,
 			ZeroValue:        zeroValue,
 			Optional:         isOptional,
@@ -1303,7 +1304,7 @@ func (t *typeVisitor) getTypeFieldsForUnion(union *ir.UnionTypeDeclaration) []*t
 func (t *typeVisitor) typeFieldForSingleUnionType(singleUnionType *ir.SingleUnionType) *typeField {
 	singleUnionProperty := singleUnionTypePropertiesToGoType(singleUnionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
 	return &typeField{
-		Name:             singleUnionType.DiscriminantValue.Name.PascalCase.UnsafeName,
+		Name:             goExportedFieldName(singleUnionType.DiscriminantValue.Name.PascalCase.UnsafeName),
 		GoType:           singleUnionProperty.goType,
 		ZeroValue:        singleUnionProperty.zeroValue,
 		Optional:         false, // Single union types are typically not optional
@@ -2242,4 +2243,35 @@ func capitalizeFirstLetter(s string) string {
 		return s
 	}
 	return strings.ToUpper(s[:1]) + s[1:]
+}
+
+// goExportedFieldName converts a name to a valid Go exported identifier.
+// Go exported identifiers must start with an uppercase letter.
+// This function handles edge cases like:
+// - Names that are empty or only underscores (e.g., "_") -> "Underscore"
+// - Names that start with a digit (e.g., "1") -> "Field1"
+// - Names that start with underscore followed by digit (e.g., "_1") -> "Field1"
+func goExportedFieldName(name string) string {
+	if name == "" {
+		return "Underscore"
+	}
+
+	// Strip leading underscores
+	stripped := strings.TrimLeft(name, "_")
+	if stripped == "" {
+		// Name was all underscores
+		return "Underscore"
+	}
+
+	// Check if the first character is a digit
+	if len(stripped) > 0 && unicode.IsDigit(rune(stripped[0])) {
+		return "Field" + stripped
+	}
+
+	// Ensure the first letter is uppercase for export
+	if len(stripped) > 0 && !unicode.IsUpper(rune(stripped[0])) {
+		return strings.ToUpper(stripped[:1]) + stripped[1:]
+	}
+
+	return stripped
 }
