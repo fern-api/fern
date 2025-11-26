@@ -511,9 +511,9 @@ export class DynamicSnippetsConverter {
         object: ObjectTypeDeclaration;
         typeId: TypeId;
     }): DynamicSnippets.NamedType {
-        // If this type is extended by other types, it has a self-interface in Java
-        // and its own properties should come first (they're in the self-interface).
-        // Otherwise, inherited properties come first, then own properties.
+        // If this type is extended by other types, its own properties should come first,
+        // followed by inherited properties. This ordering is required for languages with
+        // staged builders (like Java) where method call order is enforced at compile time.
         const hasSelfInterface = this.extendedTypeIds.has(typeId);
         const properties = hasSelfInterface
             ? [...object.properties, ...(object.extendedProperties ?? [])]

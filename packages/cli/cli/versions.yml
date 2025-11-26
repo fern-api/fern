@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix dynamic snippet property ordering for types with inheritance. Types that are extended by other types now have their own properties ordered before inherited properties in the Dynamic IR. This fixes Java SDK staged builder compilation errors where method call order is enforced at compile time.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.8.2
+
+- changelogEntry:
+    - summary: |
         Support a `lines` prop for the `<Code />` component to extract specific lines from a code snippet.
       type: fix
   irVersion: 62

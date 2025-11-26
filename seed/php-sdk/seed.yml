@@ -165,6 +165,8 @@ allowedFailures:
   - examples:readme-config
   # Enums don't support the fromJson method yet.
   - exhaustive
+  # Wire tests have a bug where tests extend TestCase instead of WireMockTestCase
+  - exhaustive:wire-tests
   - trace
   - circular-references
   - circular-references-advanced
