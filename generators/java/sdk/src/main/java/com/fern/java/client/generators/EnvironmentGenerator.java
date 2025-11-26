@@ -162,6 +162,51 @@ public final class EnvironmentGenerator extends AbstractFileGenerator {
                 }
             }
 
+            // Add custom() factory method and Builder class for multi-URL environments
+            TypeSpec.Builder builderClassBuilder = TypeSpec.classBuilder("Builder")
+                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC);
+
+            MethodSpec.Builder buildMethodBuilder = MethodSpec.methodBuilder("build")
+                    .addModifiers(Modifier.PUBLIC)
+                    .returns(className);
+
+            StringBuilder buildArgs = new StringBuilder();
+            multipleBaseUrls.getBaseUrls().forEach(environmentBaseUrlWithId -> {
+                String urlCamelCase =
+                        environmentBaseUrlWithId.getName().getCamelCase().getSafeName();
+
+                // Add field to Builder
+                builderClassBuilder.addField(FieldSpec.builder(String.class, urlCamelCase)
+                        .addModifiers(Modifier.PRIVATE)
+                        .build());
+
+                // Add setter method to Builder
+                builderClassBuilder.addMethod(MethodSpec.methodBuilder(urlCamelCase)
+                        .addModifiers(Modifier.PUBLIC)
+                        .addParameter(String.class, urlCamelCase)
+                        .returns(className.nestedClass("Builder"))
+                        .addStatement("this.$L = $L", urlCamelCase, urlCamelCase)
+                        .addStatement("return this")
+                        .build());
+
+                if (buildArgs.length() > 0) {
+                    buildArgs.append(", ");
+                }
+                buildArgs.append(urlCamelCase);
+            });
+
+            buildMethodBuilder.addStatement("return new $T(" + buildArgs.toString() + ")", className);
+            builderClassBuilder.addMethod(buildMethodBuilder.build());
+
+            environmentsBuilder.addType(builderClassBuilder.build());
+
+            // Add static custom() factory method
+            environmentsBuilder.addMethod(MethodSpec.methodBuilder("custom")
+                    .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                    .returns(className.nestedClass("Builder"))
+                    .addStatement("return new Builder()")
+                    .build());
+
             return MultiUrlEnvironmentsClass.builder()
                     .putAllUrlGetterMethods(urlGetterMethods)
                     .build();

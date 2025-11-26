@@ -1,3 +1,11 @@
+- version: 3.19.0
+  changelogEntry:
+    - summary: |
+        Add wire test support for OAuth APIs. Wire tests now properly mock the OAuth token endpoint and use `.clientId()/.clientSecret()` instead of `.token()` for OAuth-authenticated APIs. Multi-URL environment APIs remain skipped pending Phase 2 implementation.
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
 - version: 3.18.13
   changelogEntry:
     - summary: |

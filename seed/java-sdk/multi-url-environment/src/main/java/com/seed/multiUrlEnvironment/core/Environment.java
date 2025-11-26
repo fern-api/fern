@@ -25,4 +25,28 @@ public final class Environment {
     public String getS3URL() {
         return this.s3;
     }
+
+    public static Builder custom() {
+        return new Builder();
+    }
+
+    public static class Builder {
+        private String ec2;
+
+        private String s3;
+
+        public Builder ec2(String ec2) {
+            this.ec2 = ec2;
+            return this;
+        }
+
+        public Builder s3(String s3) {
+            this.s3 = s3;
+            return this;
+        }
+
+        public Environment build() {
+            return new Environment(ec2, s3);
+        }
+    }
 }
