@@ -8,7 +8,7 @@ client = Acme::Client.new(token: '<YOUR_API_KEY>');
 client.service.get_metadata(
   shallow: false,
   tag: ['development', 'public'],
-  xAPIVersion: '0.0.1'
+  x_api_version: '0.0.1'
 );
 "
 `;
@@ -160,7 +160,7 @@ client = Acme::Client.new();
 
 client.service.just_file_with_query_params(
   integer: 42,
-  maybeString: 'exists'
+  maybe_string: 'exists'
 );
 "
 `;
@@ -214,7 +214,7 @@ client = Acme::Client.new(
   environment: Acme::Environment::PRODUCTION
 );
 
-client.s3.get_presigned_url(s3Key: 'xyz');
+client.s3.get_presigned_url(s3key: 'xyz');
 "
 `;
 
@@ -226,7 +226,7 @@ client = Acme::Client.new(
   environment: Acme::Environment::STAGING
 );
 
-client.s3.get_presigned_url(s3Key: 'xyz');
+client.s3.get_presigned_url(s3key: 'xyz');
 "
 `;
 
