@@ -252,6 +252,9 @@ fixtures:
     - customConfig:
         lazy_imports: false
       outputFolder: eager-imports
+    - customConfig:
+        package_path: in/here/please
+      outputFolder: package-path
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -364,6 +367,7 @@ allowedFailures:
   - exhaustive:additional_init_exports
   - exhaustive:deps_with_min_python_version
   - exhaustive:pydantic-v1-with-utils
+  - exhaustive:package-path  # generates fine and tests fine, but "mypy ./src" fails since src is somewhere else
   - oauth-client-credentials-custom
   - pagination-custom
   - response-property
