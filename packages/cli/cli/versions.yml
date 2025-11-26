@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix file scope type resolution for inline request properties
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-26"
+  version: 2.9.1
+
+- changelogEntry:
+    - summary: |
         When importing OpenAPI specs, endpoints now properly inherit authentication requirements defined at the global level.
       type: fix
   irVersion: 62
