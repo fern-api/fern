@@ -85,6 +85,7 @@ export interface APIDefinitionSettings {
     coerceOptionalSchemasToNullable: boolean | undefined;
     removeDiscriminantsFromSchemas: RemoveDiscriminantsFromSchemas | undefined;
     pathParameterOrder: generatorsYml.PathParameterOrder | undefined;
+    authDefaultsToTrue: boolean | undefined;
 }
 
 export interface APIDefinitionLocation {

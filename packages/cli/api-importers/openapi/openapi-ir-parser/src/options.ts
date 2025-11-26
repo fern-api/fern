@@ -91,6 +91,13 @@ export interface ParseOpenAPIOptions {
      * Defaults to `always`.
      */
     removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas;
+
+    /**
+     * If true, endpoints will default to requiring authentication even if no security scheme is explicitly assigned in the OpenAPI spec.
+     * If false, endpoints without explicit security schemes will not require authentication.
+     * Defaults to false.
+     */
+    authDefaultsToTrue: boolean;
 }
 
 export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
@@ -123,7 +130,8 @@ export const DEFAULT_PARSE_OPENAPI_SETTINGS: ParseOpenAPIOptions = {
     groupEnvironmentsByHost: false,
     wrapReferencesToNullableInOptional: false,
     coerceOptionalSchemasToNullable: false,
-    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always
+    removeDiscriminantsFromSchemas: generatorsYml.RemoveDiscriminantsFromSchemas.Always,
+    authDefaultsToTrue: false
 };
 
 function mergeOptions<T extends object>(params: {

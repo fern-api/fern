@@ -55,4 +55,10 @@ export interface OpenApiSettingsSchema extends FernDefinition.BaseApiSettingsSch
      * This is useful for organizations with multiple APIs deployed to the same set of environments.
      */
     "group-multi-api-environments"?: boolean;
+    /**
+     * If true, endpoints will default to requiring authentication even if no security scheme is explicitly assigned in the OpenAPI spec.
+     * If false, endpoints without explicit security schemes will not require authentication.
+     * Defaults to false.
+     */
+    "auth-defaults-to-true"?: boolean;
 }

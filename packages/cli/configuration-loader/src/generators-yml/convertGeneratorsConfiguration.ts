@@ -35,7 +35,8 @@ const UNDEFINED_API_DEFINITION_SETTINGS: generatorsYml.APIDefinitionSettings = {
     wrapReferencesToNullableInOptional: undefined,
     coerceOptionalSchemasToNullable: undefined,
     removeDiscriminantsFromSchemas: undefined,
-    pathParameterOrder: undefined
+    pathParameterOrder: undefined,
+    authDefaultsToTrue: undefined
 };
 
 export async function convertGeneratorsConfiguration({
@@ -124,7 +125,8 @@ function parseOpenApiDefinitionSettingsSchema(
         inlineAllOfSchemas: settings?.["inline-all-of-schemas"],
         resolveAliases: settings?.["resolve-aliases"],
         groupMultiApiEnvironments: settings?.["group-multi-api-environments"],
-        groupEnvironmentsByHost: settings?.["group-environments-by-host"]
+        groupEnvironmentsByHost: settings?.["group-environments-by-host"],
+        authDefaultsToTrue: settings?.["auth-defaults-to-true"]
     };
 }
 

@@ -32,6 +32,7 @@ export const OpenApiSettingsSchema: core.serialization.ObjectSchema<
         "inline-all-of-schemas": core.serialization.boolean().optional(),
         "resolve-aliases": ResolveAliases.optional(),
         "group-multi-api-environments": core.serialization.boolean().optional(),
+        "auth-defaults-to-true": core.serialization.boolean().optional(),
     })
     .extend(BaseApiSettingsSchema);
 
@@ -53,5 +54,6 @@ export declare namespace OpenApiSettingsSchema {
         "inline-all-of-schemas"?: boolean | null;
         "resolve-aliases"?: ResolveAliases.Raw | null;
         "group-multi-api-environments"?: boolean | null;
+        "auth-defaults-to-true"?: boolean | null;
     }
 }

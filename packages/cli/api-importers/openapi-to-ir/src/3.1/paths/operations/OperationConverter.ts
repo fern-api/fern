@@ -195,7 +195,7 @@ export class OperationConverter extends AbstractOperationConverter {
             ),
             sdkRequest: undefined,
             errors,
-            auth: this.operation.security != null || this.context.spec.security != null,
+            auth: this.isEndpointAuthed(),
             security: this.operation.security ?? this.context.spec.security,
             availability: this.context.getAvailability({
                 node: this.operation,
@@ -745,5 +745,15 @@ export class OperationConverter extends AbstractOperationConverter {
             return lowerCaseRawOperationTag === baseGroupName ? rawOperationTag : undefined;
         }
         return undefined;
+    }
+
+    private isEndpointAuthed(): boolean {
+        if (this.operation.security != null) {
+            return Object.keys(this.operation.security).length > 0;
+        }
+        if (this.context.spec.security != null) {
+            return Object.keys(this.context.spec.security).length > 0;
+        }
+        return this.context.settings.authDefaultsToTrue ?? false;
     }
 }

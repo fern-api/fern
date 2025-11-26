@@ -442,6 +442,13 @@ types:
           If true, automatically group multiple APIs with matching environments into unified environments with multiple base URLs.
           This is useful for organizations with multiple APIs deployed to the same set of environments.
         default: false
+      auth-defaults-to-true:
+        type: optional<boolean>
+        docs: |
+          If true, endpoints will default to requiring authentication even if no security scheme is explicitly assigned in the OpenAPI spec.
+          If false, endpoints without explicit security schemes will not require authentication.
+          Defaults to false.
+        default: false
 
   ResolveAliases:
     discriminated: false

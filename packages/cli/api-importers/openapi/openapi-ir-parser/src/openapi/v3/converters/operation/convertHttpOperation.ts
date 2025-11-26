@@ -292,7 +292,7 @@ export function convertHttpOperation({
                       convertServer(server, { groupMultiApiEnvironments: context.options.groupMultiApiEnvironments })
                   ),
         description: operation.description,
-        authed: isEndpointAuthed(operation, document),
+        authed: isEndpointAuthed({ operation, document, context }),
         security: generateSecurity(operation),
         availability,
         method,
@@ -353,14 +353,22 @@ function generateSecurity(operation: OpenAPIV3.OperationObject): EndpointSecurit
     return operation.security ?? [];
 }
 
-function isEndpointAuthed(operation: OpenAPIV3.OperationObject, document: OpenAPIV3.Document): boolean {
+function isEndpointAuthed({
+    operation,
+    document,
+    context
+}: {
+    operation: OpenAPIV3.OperationObject;
+    document: OpenAPIV3.Document;
+    context: AbstractOpenAPIV3ParserContext;
+}): boolean {
     if (operation.security != null) {
         return Object.keys(operation.security).length > 0;
     }
     if (document.security != null) {
         return Object.keys(document.security).length > 0;
     }
-    return false;
+    return context.options.authDefaultsToTrue;
 }
 
 function endpointHasNonRequestBodyParameters({
