@@ -58,6 +58,10 @@ export class WireTestGenerator {
     public async generate(): Promise<void> {
         const endpointsByService = this.groupEndpointsByService();
 
+        this.context.logger.debug(
+            `Wire tests: ${endpointsByService.size} services, ${Object.keys(this.dynamicIr.endpoints).length} dynamic endpoints`
+        );
+
         for (const [serviceName, endpoints] of endpointsByService.entries()) {
             const endpointsWithExamples = endpoints.filter((endpoint) => {
                 const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
