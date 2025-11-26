@@ -76,16 +76,6 @@ export function validateTheme(
                 severity: "warning",
                 message: `The contrast ratio between the accent color and the background color for ${theme} mode is ${readableRatio}. It should be at least 3:1.`
             });
-        } else if (ratio < 4.5) {
-            ruleViolations.push({
-                severity: "warning",
-                message: `The contrast ratio between the accent color and the background color for ${theme} mode is ${readableRatio}. Fern will adjust the color to meet the minimum contrast ratio of 4.5:1 for WCAG AA and 7:1 for WCAG AAA.`
-            });
-        } else if (ratio < 7) {
-            ruleViolations.push({
-                severity: "warning",
-                message: `The contrast ratio between the accent color and the background color for ${theme} mode is ${readableRatio}. Fern will adjust the color to meet the minimum contrast ratio of 7:1 for WCAG AAA.`
-            });
         }
     }
 
@@ -111,46 +101,4 @@ function getOppositeBrightness(color: tinycolor.Instance | undefined): tinycolor
 
     const { h, s, v } = color.toHsv();
     return tinycolor({ h, s, v: 1 - v });
-}
-
-function getDesiredRatio(ratio: "aaa" | "aa" | "ui"): number {
-    switch (ratio) {
-        case "aaa":
-            return 7;
-        case "aa":
-            return 4.5;
-        case "ui":
-            return 3;
-    }
-}
-
-function getUserReadableRatio(ratio: "aaa" | "aa" | "ui"): string {
-    switch (ratio) {
-        case "aaa":
-            return "7:1";
-        case "aa":
-            return "4.5:1";
-        case "ui":
-            return "3:1";
-    }
-}
-
-function increaseForegroundContrast(
-    foregroundColor: tinycolor.Instance,
-    backgroundColor: tinycolor.Instance,
-    ratio: "aaa" | "aa" | "ui"
-): tinycolor.Instance {
-    let newForgroundColor = foregroundColor;
-    const dark = backgroundColor.isDark();
-    const desiredRatio = getDesiredRatio(ratio);
-    while (tinycolor.readability(newForgroundColor, backgroundColor) < desiredRatio) {
-        if (dark ? newForgroundColor.getBrightness() === 255 : newForgroundColor.getBrightness() === 0) {
-            // if the color is already at its maximum or minimum brightness, stop adjusting
-            break;
-        }
-        // if the accent color is still not readable, adjust it by 1% until it is
-        // if the theme is dark, lighten the color, otherwise darken it
-        newForgroundColor = dark ? newForgroundColor.lighten(1) : newForgroundColor.darken(1);
-    }
-    return newForgroundColor;
 }
