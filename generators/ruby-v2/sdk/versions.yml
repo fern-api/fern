@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc45
+  createdAt: "2025-11-26"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for multi-URL environments. APIs with multiple base URLs per environment
+        (e.g., separate api and identity URLs) now generate a proper Environment class using
+        the first base URL for each environment.
+  irVersion: 61
+
 - version: 1.0.0-rc44
   createdAt: "2025-11-26"
   changelogEntry:
