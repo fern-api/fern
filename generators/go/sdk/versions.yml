@@ -1,15 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
 - version: 1.18.3
   changelogEntry:
-    - summary: |
-        `QueryValuesWithDefaults` now handles `nil` inputs safely.
+    - summary: Fix handling of reserved identifiers in field names and make dynamic snippets match.
       type: fix
   createdAt: "2025-11-26"
   irVersion: 60
 
 - version: 1.18.2
   changelogEntry:
-    - summary: Fix handling of reserved identifiers in field names.
+    - summary: |
+        `QueryValuesWithDefaults` now handles `nil` inputs safely.
       type: fix
   createdAt: "2025-11-26"
   irVersion: 60
