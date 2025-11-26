@@ -191,8 +191,7 @@ export class EndpointSnippetGenerator {
             case "oauth":
                 return values.type === "oauth" ? this.getConstructorOAuthArgs({ auth, values }) : [];
             case "inferred":
-                this.addWarning("The PHP SDK Generator does not support Inferred auth scheme yet");
-                return [];
+                return values.type === "inferred" ? this.getConstructorInferredAuthArgs({ auth, values }) : [];
             default:
                 assertNever(auth);
         }
@@ -533,6 +532,18 @@ export class EndpointSnippetGenerator {
                 assignment: php.TypeLiteral.string(values.clientSecret)
             }
         ];
+    }
+
+    private getConstructorInferredAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.InferredAuth;
+        values: FernIr.dynamic.InferredAuthValues;
+    }): NamedArgument[] {
+        // Inferred auth doesn't require any constructor arguments from the user.
+        // The SDK automatically handles token retrieval via the InferredAuthProvider.
+        return [];
     }
 
     private getConstructorHeaderArgs({
