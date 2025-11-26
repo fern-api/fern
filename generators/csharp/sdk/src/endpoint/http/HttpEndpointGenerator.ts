@@ -54,6 +54,18 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             rawResponseClientReference?: string;
         }
     ) {
+        // Check if this is a streaming endpoint - streaming endpoints can't use wrapper pattern
+        const isStreaming =
+            endpoint.response?.body?._visit({
+                streaming: () => true,
+                streamParameter: () => true,
+                json: () => false,
+                fileDownload: () => false,
+                text: () => false,
+                bytes: () => false,
+                _other: () => false
+            }) ?? false;
+
         if (generateRawResponse) {
             // Generate raw response methods that return RawResponse<T>
             this.generateRawResponseMethod(cls, {
@@ -62,8 +74,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 rawClientReference,
                 rawClient
             });
-        } else if (rawResponseClientReference != null) {
+        } else if (rawResponseClientReference != null && !isStreaming) {
             // Generate wrapper methods that delegate to the raw response client
+            // Skip streaming endpoints - they use yield return which is incompatible with wrapper pattern
             this.generateWrapperMethod(cls, {
                 serviceId,
                 endpoint,
