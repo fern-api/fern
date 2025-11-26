@@ -54,7 +54,6 @@
     "@types/node": "18.15.3",
     "@types/url-join": "4.0.1",
     "depcheck": "^1.4.7",
-    "tsup": "^8.5.0",
     "typescript": "5.9.3",
     "url-join": "^5.0.0",
     "vitest": "^4.0.8"

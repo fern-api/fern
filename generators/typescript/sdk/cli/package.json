@@ -26,7 +26,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm clean && pnpm compile && node build.mjs",
+    "dist:cli": "node build.mjs",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../..",
     "podmanTagLatest": "pnpm dist:cli && podman build -f ./Dockerfile -t fernapi/fern-typescript-node-sdk:latest -t fernapi/fern-typescript-sdk:latest ../../../.."
   },
@@ -44,7 +44,6 @@
     "@fern-typescript/sdk-generator": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "tsup": "^8.5.0",
     "typescript": "5.9.3"
   }
 }

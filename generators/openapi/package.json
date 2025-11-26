@@ -55,7 +55,6 @@
     "js-yaml": "^4.1.1",
     "lodash-es": "^4.17.21",
     "openapi-types": "^12.1.3",
-    "tsup": "^8.5.0",
     "typescript": "5.9.3",
     "url-join": "^5.0.0",
     "vitest": "^4.0.8"

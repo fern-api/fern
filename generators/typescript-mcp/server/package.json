@@ -46,7 +46,6 @@
     "@fern-typescript/sdk-generator-cli": "workspace:*",
     "@types/node": "18.15.3",
     "depcheck": "^1.4.7",
-    "tsup": "^8.5.0",
     "typescript": "5.9.3",
     "vitest": "^4.0.8"
   }

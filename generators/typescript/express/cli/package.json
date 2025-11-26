@@ -26,7 +26,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm clean && pnpm compile && node build.mjs",
+    "dist:cli": "node build.mjs",
     "dockerTagLatest": "pnpm dist:cli && docker build -f ./Dockerfile -t fernapi/fern-typescript-express:latest ../../../..",
     "podmanTagLatest": "pnpm dist:cli && podman build -f ./Dockerfile -t fernapi/fern-typescript-express:latest ../../../.."
   },
@@ -42,7 +42,6 @@
     "@types/lodash-es": "^4.17.12",
     "depcheck": "^1.4.7",
     "lodash-es": "^4.17.21",
-    "tsup": "^8.5.0",
     "typescript": "5.9.3",
     "zod": "^3.22.3"
   }
