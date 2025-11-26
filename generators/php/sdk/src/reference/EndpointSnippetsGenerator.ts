@@ -144,16 +144,8 @@ export class EndpointSnippetsGenerator {
         dynamicSnippetsGenerator: DynamicSnippetsGenerator;
     }): Promise<SingleEndpointSnippet | null> {
         try {
-            this.context.logger.debug(
-                `Generated snippet request for endpoint ${endpoint.id}: ${JSON.stringify(example, null, 2)}`
-            );
-
             const snippetRequest = convertDynamicEndpointSnippetRequest(example);
             const generatedSnippet = await dynamicSnippetsGenerator.generate(snippetRequest);
-
-            this.context.logger.debug(
-                `Generated snippet response for endpoint ${endpoint.id}: ${JSON.stringify(generatedSnippet, null, 2)}`
-            );
 
             if (!generatedSnippet.snippet) {
                 this.context.logger.warn(`Empty snippet returned for endpoint ${endpoint.id}`);
@@ -217,9 +209,7 @@ export class EndpointSnippetsGenerator {
                 .join("\n");
         }
 
-        const extracted = result.trim();
-        this.context.logger.debug(`Extracted method call: ${extracted}`);
-        return extracted;
+        return result.trim();
     }
 
     private getIrEndpointById(endpointId: string): HttpEndpoint | undefined {
