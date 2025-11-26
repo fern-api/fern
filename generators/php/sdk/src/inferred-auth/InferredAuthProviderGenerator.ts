@@ -107,7 +107,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
             php.field({
                 name: "$options",
                 access: "private",
-                type: php.Type.array()
+                type: php.Type.array(php.Type.mixed())
             })
         );
 
@@ -140,7 +140,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
             }),
             php.parameter({
                 name: "options",
-                type: php.Type.array(),
+                type: php.Type.array(php.Type.mixed()),
                 docs: "The options containing credentials for the token endpoint."
             })
         ];
