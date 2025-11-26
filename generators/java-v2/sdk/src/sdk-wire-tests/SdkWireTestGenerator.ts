@@ -573,8 +573,17 @@ export class SdkWireTestGenerator {
             return false;
         }
 
-        if (this.context.ir.auth?.schemes?.some((scheme) => scheme.type === "oauth") && endpoint.auth) {
-            this.context.logger.debug(`Skipping OAuth endpoint: ${endpoint.id}`);
+        // Skip ALL endpoints if API uses OAuth authentication at the API level
+        // OAuth SDKs don't have a .token() method - they use .clientId()/.clientSecret() instead
+        if (this.context.ir.auth?.schemes?.some((scheme) => scheme.type === "oauth")) {
+            this.context.logger.debug(`Skipping endpoint ${endpoint.id}: API uses OAuth authentication`);
+            return false;
+        }
+
+        // Skip ALL endpoints if API uses multi-URL environments
+        // Multi-URL SDKs don't have a .url() method - they use .environment() with named URLs
+        if (this.isMultiUrlEnvironment()) {
+            this.context.logger.debug(`Skipping endpoint ${endpoint.id}: API uses multi-URL environment`);
             return false;
         }
 
@@ -603,6 +612,26 @@ export class SdkWireTestGenerator {
         }
 
         return true;
+    }
+
+    /**
+     * Determines if the API uses multiple base URLs (e.g., separate URLs for different services).
+     * Multi-URL environments don't support the .url() builder method.
+     */
+    private isMultiUrlEnvironment(): boolean {
+        const environments = this.context.ir.environments;
+        if (!environments) {
+            return false;
+        }
+
+        // Check if any environment value has a "urls" property (indicating multi-URL)
+        for (const envValue of Object.values(environments)) {
+            if (envValue && typeof envValue === "object" && "urls" in envValue) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

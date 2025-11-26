@@ -1,3 +1,11 @@
+- version: 3.18.13
+  changelogEntry:
+    - summary: |
+        Skip wire test generation for OAuth and multi-URL environment APIs temporarily.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
 - version: 3.18.12
   changelogEntry:
     - summary: |
