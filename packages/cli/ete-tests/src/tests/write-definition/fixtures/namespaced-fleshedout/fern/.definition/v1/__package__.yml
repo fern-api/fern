@@ -242,6 +242,7 @@ service:
     chat:
       audiences:
         - public
+      auth: true
       display-name: Chat
       docs: >
         Generates a text response to a user message.

@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "uploadJsonDocument": {
-              "auth": undefined,
+              "auth": true,
               "display-name": "Upload document metadata (JSON) or document file",
               "docs": undefined,
               "examples": [
@@ -57,7 +57,7 @@
               },
             },
             "uploadPdfDocument": {
-              "auth": undefined,
+              "auth": true,
               "display-name": "Upload document metadata (JSON) or document file",
               "docs": undefined,
               "method": "POST",
@@ -151,6 +151,7 @@ service:
     uploadJsonDocument:
       path: /documents/upload
       method: POST
+      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Upload document metadata (JSON) or document file
@@ -178,6 +179,7 @@ service:
     uploadPdfDocument:
       path: /documents/upload
       method: POST
+      auth: true
       source:
         openapi: ../openapi.yml
       display-name: Upload document metadata (JSON) or document file

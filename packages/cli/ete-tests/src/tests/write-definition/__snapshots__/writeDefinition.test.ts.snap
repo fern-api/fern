@@ -557,6 +557,7 @@ service:
   base-path: ''
   endpoints:
     createPets:
+      auth: true
       display-name: Create a pet
       examples:
         - {}
@@ -565,6 +566,7 @@ service:
       source:
         openapi: openapi/petstore/openapi.yml
     listPets:
+      auth: true
       display-name: List all pets
       examples:
         - response:
@@ -591,6 +593,7 @@ service:
       source:
         openapi: openapi/petstore/openapi.yml
     showPetById:
+      auth: true
       display-name: Info for a specific pet
       examples:
         - path-parameters:
@@ -1357,6 +1360,7 @@ service:
       source:
         openapi: openapi/trains/openapi.yml
     get-booking:
+      auth: true
       display-name: Get a booking
       docs: Returns the details of a specific booking.
       errors:
@@ -1394,6 +1398,7 @@ service:
       source:
         openapi: openapi/trains/openapi.yml
     get-bookings:
+      auth: true
       display-name: List existing bookings
       docs: Returns a list of all trip bookings by the authenticated user.
       errors:
@@ -1458,6 +1463,7 @@ service:
   display-name: Payments
   endpoints:
     create-booking-payment:
+      auth: true
       display-name: Pay for a Booking
       docs: >-
         A payment is an attempt to pay for the booking, which will confirm the
@@ -1666,6 +1672,7 @@ service:
   display-name: Stations
   endpoints:
     get-stations:
+      auth: true
       display-name: Get a list of train stations
       docs: Returns a list of all train stations in the system.
       errors:
@@ -1782,6 +1789,7 @@ service:
   display-name: Trips
   endpoints:
     get-trips:
+      auth: true
       display-name: Get available train trips
       docs: >-
         Returns a list of available train trips between the specified origin and
@@ -2145,6 +2153,7 @@ service:
     chat:
       audiences:
         - public
+      auth: true
       display-name: Chat
       docs: >
         Generates a text response to a user message.
@@ -2578,6 +2587,7 @@ service:
     chat:
       audiences:
         - v2-beta
+      auth: true
       display-name: Chat with the model
       docs: >
         Generates a message from the model in response to a provided
