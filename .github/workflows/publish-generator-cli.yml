@@ -79,10 +79,15 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - name: 🧪 Build and test
+      - name: Compile
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-        run: pnpm turbo compile test --filter=${{ env.PACKAGE_NAME }}
+        run: pnpm turbo compile --filter=${{ env.PACKAGE_NAME }}
+
+      - name: Test
+        env:
+          GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
+        run: pnpm turbo test --filter=${{ env.PACKAGE_NAME }}
 
       - name: Setup Node for npm publish
         uses: actions/setup-node@v4
