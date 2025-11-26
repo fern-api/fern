@@ -42,13 +42,16 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             endpoint,
             rawClientReference,
             rawClient,
-            generateRawResponse = false
+            generateRawResponse = false,
+            rawResponseClientReference
         }: {
             serviceId: ServiceId;
             endpoint: HttpEndpoint;
             rawClientReference: string;
             rawClient: RawClient;
             generateRawResponse?: boolean;
+            /** If provided, generate wrapper methods that delegate to this raw response client */
+            rawResponseClientReference?: string;
         }
     ) {
         if (generateRawResponse) {
@@ -58,6 +61,13 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 endpoint,
                 rawClientReference,
                 rawClient
+            });
+        } else if (rawResponseClientReference != null) {
+            // Generate wrapper methods that delegate to the raw response client
+            this.generateWrapperMethod(cls, {
+                serviceId,
+                endpoint,
+                rawResponseClientReference
             });
         } else if (this.hasPagination(endpoint)) {
             this.generatePagerMethod(cls, {
@@ -150,6 +160,61 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             name = name.replace("Async", "InternalAsync");
         }
         return name;
+    }
+
+    /**
+     * Generates a wrapper method that delegates to the raw response client and returns .Body
+     * This matches the Java pattern where main client methods call rawClient.method().body()
+     */
+    private generateWrapperMethod(
+        cls: ast.Class,
+        {
+            serviceId,
+            endpoint,
+            rawResponseClientReference
+        }: {
+            serviceId: ServiceId;
+            endpoint: HttpEndpoint;
+            rawResponseClientReference: string;
+        }
+    ) {
+        const endpointSignatureInfo = this.getUnpagedEndpointSignatureInfo({ serviceId, endpoint });
+        const parameters = [...endpointSignatureInfo.baseParameters];
+        parameters.push(this.getRequestOptionsParameter({ endpoint }));
+        parameters.push(
+            this.csharp.parameter({
+                type: this.System.Threading.CancellationToken,
+                name: this.names.parameters.cancellationToken,
+                initializer: "default"
+            })
+        );
+
+        const return_ = getEndpointReturnType({ context: this.context, endpoint });
+        const snippet = this.getHttpMethodSnippet({ endpoint });
+        const methodName = this.context.getEndpointMethodName(endpoint);
+
+        // Build the argument list for calling the raw client method
+        const argNames = endpointSignatureInfo.baseParameters.map((p) => p.name);
+        argNames.push(this.getRequestOptionsParamNameForEndpoint(endpoint));
+        argNames.push(this.names.parameters.cancellationToken);
+        const argsString = argNames.join(", ");
+
+        const body = this.csharp.codeblock((writer) => {
+            writer.writeLine(
+                `return (await ${rawResponseClientReference}.${methodName}(${argsString}).ConfigureAwait(false)).Body;`
+            );
+        });
+
+        return cls.addMethod({
+            name: methodName,
+            access: ast.Access.Public,
+            isAsync: true,
+            parameters,
+            summary: endpoint.docs,
+            return_,
+            body,
+            codeExample: snippet?.endpointCall
+        });
     }
 
     private generateRawResponseMethod(

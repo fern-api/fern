@@ -157,7 +157,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                     rawClientReference: this.members.clientName,
                     rawClient: this.rawClient,
                     rawGrpcClientReference: this.members.grpcClientName,
-                    grpcClientInfo: this.grpcClientInfo
+                    grpcClientInfo: this.grpcClientInfo,
+                    // Pass the raw response client reference so wrapper methods are generated
+                    // that delegate to the raw client and call .Body (like Java pattern)
+                    rawResponseClientReference: "WithRawResponse"
                 });
             });
 
