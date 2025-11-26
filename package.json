@@ -43,7 +43,7 @@
     "fern:local": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/prod/cli.cjs",
     "fern-dev:local": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/dev/cli.cjs",
     "fern:build": "cross-env POSTHOG_API_KEY=\"\" turbo run dist:cli:prod --filter=@fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs'",
-    "fern:build:unminified": "cross-env POSTHOG_API_KEY=\"\" pnpm --filter @fern-api/cli dist:cli:prod:unminified && echo 'Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs'",
+    "fern:build:unminified": "cross-env POSTHOG_API_KEY=\"\" turbo run dist:cli:prod:unminified --filter @fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs'",
     "fern-dev:build": "turbo run dist:cli:dev --filter=@fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/dev/cli.cjs'",
     "fern-local:build": "turbo run dist:cli:local --filter @fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/local/cli.cjs'",
     "generator-cli:generate": "pnpm fern generate --api generator-cli --local && pnpm --filter=@fern-api/generator-cli compile",
@@ -63,7 +63,7 @@
     "root-package:check": "pnpm fern-script check-root-package",
     "root-package:fix": "pnpm root-package:check --fix",
     "seed": "node --enable-source-maps packages/seed/dist/cli.cjs",
-    "seed:local": "pnpm --filter @fern-api/seed-cli dist:cli && node --enable-source-maps packages/seed/dist/cli.cjs",
+    "seed:local": "pnpm turbo run dist:cli --filter @fern-api/seed-cli && node --enable-source-maps packages/seed/dist/cli.cjs",
     "ir:generate": "pnpm --filter @fern-api/ir-sdk generate",
     "ir:generate:go": "cd packages/ir-sdk && fern ir ../../generators/go/internal/fern/ir.json --api ir-types-latest --language go && cd ../../generators/go && make install && make generate",
     "openapi-ir:generate": "pnpm --filter @fern-api/openapi-ir generate",
@@ -75,8 +75,7 @@
     "update:generators": "pnpm generators:generate && pnpm generators-yml:jsonschema",
     "prepare": "husky",
     "pre-commit": "tsx scripts/pre-commit.ts",
-    "fix:references": "npx nx g @nx/js:typescript-sync --updateReferences=true --updatePaths=false",
-    "test:update-package": "sh -c 'for arg in \"$@\"; do if [[ $arg == --package=* ]]; then PACKAGE=${arg#--package=}; break; fi; done; pnpm --filter \"$PACKAGE\" compile && pnpm --filter \"$PACKAGE\" test:update' --"
+    "fix:references": "npx nx g @nx/js:typescript-sync --updateReferences=true --updatePaths=false"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",

@@ -5,7 +5,6 @@ publishGa:
   command:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - pnpm install
-    - pnpm turbo run compile --filter @fern-api/cli
     - pnpm turbo run dist:cli:prod --filter @fern-api/cli -- $VERSION
     - pnpm --filter @fern-api/cli publish:cli:prod --tag latest
 publishRc:
@@ -14,7 +13,6 @@ publishRc:
   command:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
     - pnpm install
-    - pnpm turbo run compile --filter @fern-api/cli
     - pnpm turbo run dist:cli:prod --filter @fern-api/cli -- $VERSION
     - pnpm --filter @fern-api/cli publish:cli:prod --tag prerelease
 publishDev:
@@ -22,6 +20,5 @@ publishDev:
   versionSubstitution: $VERSION
   command:
     - pnpm install
-    - pnpm turbo run compile --filter @fern-api/cli
     - pnpm turbo run dist:cli:dev --filter @fern-api/cli -- $VERSION
     - pnpm --filter @fern-api/cli publish:cli:dev --access restricted
