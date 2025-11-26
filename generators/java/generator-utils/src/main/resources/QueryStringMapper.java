@@ -15,6 +15,15 @@ public class QueryStringMapper {
     private static final ObjectMapper MAPPER = ObjectMappers.JSON_MAPPER;
 
     public static void addQueryParameter(HttpUrl.Builder httpUrl, String key, Object value, boolean arraysAsRepeats) {
+
+        if (value instanceof OptionalNullable) {
+            OptionalNullable<?> opt = (OptionalNullable<?>) value;
+            if (!opt.isPresent()) {
+                return;
+            }
+            value = opt.get();
+        }
+
         JsonNode valueNode = MAPPER.valueToTree(value);
 
         List<Map.Entry<String, JsonNode>> flat;
