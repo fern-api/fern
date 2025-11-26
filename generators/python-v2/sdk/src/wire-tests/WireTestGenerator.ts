@@ -369,6 +369,10 @@ export class WireTestGenerator {
         for (const part of endpoint.fullPath.parts) {
             path += `{${part.pathParameter}}${part.tail}`;
         }
+        // Ensure the path starts with a leading slash to match dynamic IR format
+        if (!path.startsWith("/")) {
+            path = "/" + path;
+        }
         return path;
     }
 
