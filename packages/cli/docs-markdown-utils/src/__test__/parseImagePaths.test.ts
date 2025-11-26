@@ -442,6 +442,33 @@ describe("parseImagePaths", () => {
         );
     });
 
+    it("should ignore protocol-relative urls with valid hosts", () => {
+        const page = "This is a test page with an image ![image](//cdn.example.com/image.png)";
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            '"This is a test page with an image ![image](//cdn.example.com/image.png)"'
+        );
+    });
+
+    it("should ignore protocol-relative urls with localhost", () => {
+        const page = "This is a test page with an image ![image](//localhost:3000/image.png)";
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual([]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            '"This is a test page with an image ![image](//localhost:3000/image.png)"'
+        );
+    });
+
+    it("should treat double-slash paths without valid hosts as local paths", () => {
+        const page = "This is a test page with an image ![image](//assets/images/logo.png)";
+        const result = parseImagePaths(page, PATHS);
+        expect(result.filepaths).toEqual(["/Volume/git/fern/assets/images/logo.png"]);
+        expect(result.markdown.trim()).toMatchInlineSnapshot(
+            '"This is a test page with an image ![image](/Volume/git/fern/assets/images/logo.png)"'
+        );
+    });
+
     it("should ignore img src if it is not a string", () => {
         const page = "This is a test page with an image <img src={pathToImage} />";
         const result = parseImagePaths(page, PATHS);
