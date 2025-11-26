@@ -5,6 +5,7 @@ service:
   base-path: ''
   endpoints:
     createPets:
+      auth: true
       display-name: Create a pet
       examples:
         - {}
@@ -13,6 +14,7 @@ service:
       source:
         openapi: openapi/petstore/openapi.yml
     listPets:
+      auth: true
       display-name: List all pets
       examples:
         - response:
@@ -39,6 +41,7 @@ service:
       source:
         openapi: openapi/petstore/openapi.yml
     showPetById:
+      auth: true
       display-name: Info for a specific pet
       examples:
         - path-parameters:

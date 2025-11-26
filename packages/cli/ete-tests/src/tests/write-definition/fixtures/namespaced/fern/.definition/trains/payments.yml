@@ -21,6 +21,7 @@ service:
   display-name: Payments
   endpoints:
     create-booking-payment:
+      auth: true
       display-name: Pay for a Booking
       docs: >-
         A payment is an attempt to pay for the booking, which will confirm the
