@@ -71,9 +71,6 @@ export async function buildCli(config) {
         outDir,
         sourcemap: true,
         clean: true,
-        esbuildOptions(options) {
-            options.conditions = ['development', 'source', 'import', 'default']
-        },
         env: {
             ...env,
             CLI_VERSION: process.argv[2] || packageJson.version,

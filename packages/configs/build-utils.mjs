@@ -30,9 +30,6 @@ export async function buildGenerator(dirname, options = {}) {
         sourcemap: true,
         clean: true,
         outDir: 'dist',
-        esbuildOptions(options) {
-            options.conditions = ['development', 'source', 'import', 'default']
-        },
     };
 
     await tsup.build({
