@@ -178,6 +178,23 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             rawResponseClientReference: string;
         }
     ) {
+        // Skip wrapper methods for streaming endpoints - they use yield return which is incompatible
+        // with the wrapper pattern. Streaming endpoints keep their original implementation.
+        const isStreaming =
+            endpoint.response?.body?._visit({
+                streaming: () => true,
+                streamParameter: () => true,
+                json: () => false,
+                fileDownload: () => false,
+                text: () => false,
+                bytes: () => false,
+                _other: () => false
+            }) ?? false;
+
+        if (isStreaming) {
+            return;
+        }
+
         const endpointSignatureInfo = this.getUnpagedEndpointSignatureInfo({ serviceId, endpoint });
         const parameters = [...endpointSignatureInfo.baseParameters];
         parameters.push(this.getRequestOptionsParameter({ endpoint }));
