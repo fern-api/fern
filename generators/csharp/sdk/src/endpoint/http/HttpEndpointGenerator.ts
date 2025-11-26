@@ -74,9 +74,10 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                 rawClientReference,
                 rawClient
             });
-        } else if (rawResponseClientReference != null && !isStreaming) {
+        } else if (rawResponseClientReference != null && !isStreaming && !this.hasPagination(endpoint)) {
             // Generate wrapper methods that delegate to the raw response client
             // Skip streaming endpoints - they use yield return which is incompatible with wrapper pattern
+            // Skip pagination endpoints - they return IAsyncEnumerable which also uses iterators
             this.generateWrapperMethod(cls, {
                 serviceId,
                 endpoint,
