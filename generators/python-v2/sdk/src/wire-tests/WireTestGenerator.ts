@@ -1,23 +1,13 @@
+import { FernGeneratorExec } from "@fern-api/browser-compatible-base-generator";
+import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { python } from "@fern-api/python-ast";
 import { WriteablePythonFile } from "@fern-api/python-base";
-import {
-    dynamic,
-    HttpEndpoint,
-    HttpService,
-    IntermediateRepresentation,
-    ObjectProperty,
-    TypeReference
-} from "@fern-fern/ir-sdk/api";
+import { DynamicSnippetsGenerator } from "@fern-api/python-dynamic-snippets";
+import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
-
-/**
- * Reserved method names that are allowed to use their unsafe (original) names.
- * This matches the Python generator's ALLOWED_RESERVED_METHOD_NAMES.
- */
-const ALLOWED_RESERVED_METHOD_NAMES = ["list", "set"];
 
 /**
  * Generates WireMock-based integration tests for Python SDK.
@@ -29,6 +19,7 @@ export class WireTestGenerator {
     private readonly context: SdkGeneratorContext;
     private dynamicIr: dynamic.DynamicIntermediateRepresentation;
     private wireMockConfigContent: Record<string, WireMockMapping>;
+    private snippetGenerator: DynamicSnippetsGenerator;
 
     constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
         this.context = context;
@@ -38,6 +29,16 @@ export class WireTestGenerator {
         }
         this.dynamicIr = dynamicIr;
         this.wireMockConfigContent = this.getWireMockConfigContent();
+
+        // TODO(tjdbdc): Really need a migration framework for dynamic IR
+        this.snippetGenerator = new DynamicSnippetsGenerator({
+            ir: this.dynamicIr,
+            config: {
+                organization: context.config.organization,
+                workspaceName: context.config.workspaceName,
+                customConfig: context.customConfig
+            } as FernGeneratorExec.GeneratorConfig
+        });
     }
 
     // =============================================================================
@@ -132,6 +133,8 @@ export class WireTestGenerator {
 
         // Add raw imports that the AST doesn't support (simple "import X" statements)
         statements.push(python.codeBlock("import pytest"));
+        statements.push(python.codeBlock("from datetime import datetime, date"));
+        statements.push(python.codeBlock("from uuid import UUID"));
 
         // Add an import registration statement (for "from X import Y" style imports)
         statements.push(this.createImportRegistration());
@@ -164,14 +167,9 @@ export class WireTestGenerator {
         // Create an empty code block
         const node = python.codeBlock("");
 
-        // Manually add references for "from X import Y" style imports
-        // Note: simple "import X" statements are added as raw code blocks separately
-        const clientModulePath = this.getClientModulePath();
-        const clientName = this.getClientClassName();
-        node.addReference(python.reference({ name: clientName, modulePath: clientModulePath }));
-
-        // Import verify_request_count from conftest (pytest makes conftest importable)
-        node.addReference(python.reference({ name: "verify_request_count", modulePath: ["conftest"] }));
+        // Import get_client and verify_request_count from .conftest (relative import within tests/wire package)
+        node.addReference(python.reference({ name: "get_client", modulePath: [".conftest"] }));
+        node.addReference(python.reference({ name: "verify_request_count", modulePath: [".conftest"] }));
 
         return node;
     }
@@ -191,7 +189,6 @@ export class WireTestGenerator {
             const testName = this.getTestFunctionName(serviceName, endpoint);
             const basePath = this.buildBasePath(endpoint);
             const queryParamsCode = this.buildQueryParamsCode(endpoint);
-            const clientName = this.getClientClassName();
 
             // Build deterministic test ID based on fully qualified path
             const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
@@ -201,16 +198,13 @@ export class WireTestGenerator {
             // Use deterministic test ID for concurrency safety
             statements.push(python.codeBlock(`test_id = "${testId}"`));
 
-            // Create client with test ID header for request tracking
-            statements.push(
-                python.codeBlock(
-                    `client = ${clientName}(base_url="http://localhost:8080", headers={"X-Test-Id": test_id})`
-                )
-            );
+            // Create client using the get_client helper from conftest.py
+            // This ensures all required auth parameters are supplied with fake values
+            statements.push(python.codeBlock(`client = get_client(test_id)`));
 
-            // Generate the API call
-            const apiCall = this.generateApiCall(endpoint, example, service);
-            statements.push(python.codeBlock(apiCall));
+            // Generate the API call AST directly
+            const apiCallAst = this.generateApiCallAst(endpoint, example);
+            statements.push(apiCallAst);
 
             // Verify request count using test ID for filtering
             statements.push(
@@ -257,227 +251,42 @@ export class WireTestGenerator {
     // API CALL GENERATION
     // =============================================================================
 
-    private generateApiCall(endpoint: HttpEndpoint, example: dynamic.EndpointExample, service: HttpService): string {
-        const methodName = this.getEndpointName(endpoint);
-
-        // Build path parameters
-        const pathParams = this.buildPathParameters(endpoint, example);
-
-        // Build query parameters
-        const queryParams = this.buildQueryParameters(endpoint, example);
-
-        // Build headers
-        const headers = this.buildHeaders(endpoint, example);
-
-        // Build request body
-        const requestBody = this.buildRequestBody(endpoint, example);
-
-        // Build the client accessor path (e.g., "client.endpoints.container")
-        const servicePath = service.name.fernFilepath.allParts.map((part) => part.snakeCase.unsafeName).join(".");
-        const clientAccessor = servicePath ? `client.${servicePath}` : "client";
-
-        // Construct the call
-        let call = `${clientAccessor}.${methodName}(`;
-
-        const args: string[] = [];
-
-        // Add path parameters as positional arguments
-        pathParams.forEach((value) => {
-            args.push(value);
-        });
-
-        // Add headers
-        headers.forEach(([key, value]) => {
-            args.push(`${key}=${value}`);
-        });
-
-        // Add query parameters
-        queryParams.forEach(([key, value]) => {
-            args.push(`${key}=${value}`);
-        });
-
-        // Add request body
-        if (requestBody) {
-            args.push(requestBody);
+    /**
+     * Builds the path template for an endpoint in the format expected by the snippet generator.
+     * Example: "/users/{userId}/posts/{postId}"
+     */
+    private buildPathTemplate(endpoint: HttpEndpoint): string {
+        let path = endpoint.fullPath.head;
+        for (const part of endpoint.fullPath.parts) {
+            path += `{${part.pathParameter}}${part.tail}`;
         }
-
-        call += args.join(", ");
-        call += ")";
-
-        return `result = ${call}`;
+        return path;
     }
 
-    private buildPathParameters(endpoint: HttpEndpoint, example: dynamic.EndpointExample): string[] {
-        const pathParams: string[] = [];
+    private generateApiCallAst(endpoint: HttpEndpoint, example: dynamic.EndpointExample): python.AstNode {
+        try {
+            // Build the snippet request
+            const snippetRequest: FernIr.dynamic.EndpointSnippetRequest = {
+                endpoint: {
+                    method: endpoint.method,
+                    path: this.buildPathTemplate(endpoint)
+                },
+                baseURL: "http://localhost:8080",
+                pathParameters: example.pathParameters,
+                queryParameters: example.queryParameters,
+                headers: example.headers,
+                requestBody: example.requestBody
+            };
 
-        if (example.pathParameters) {
-            for (const part of endpoint.fullPath.parts) {
-                const paramValue = example.pathParameters[part.pathParameter];
-                if (paramValue != null) {
-                    pathParams.push(this.formatValue(paramValue));
-                }
-            }
+            // Generate just the method call AST using DynamicSnippetsGenerator
+            return this.snippetGenerator.generateMethodCallSnippetAst(snippetRequest);
+        } catch (error) {
+            // Fallback: log error and generate a placeholder
+            this.context.logger.error(
+                `Failed to generate API call for endpoint ${endpoint.name.originalName}: ${error}`
+            );
+            throw error;
         }
-
-        return pathParams;
-    }
-
-    private buildQueryParameters(endpoint: HttpEndpoint, example: dynamic.EndpointExample): Array<[string, string]> {
-        const queryParams: Array<[string, string]> = [];
-
-        if (example.queryParameters) {
-            for (const [key, value] of Object.entries(example.queryParameters)) {
-                if (value != null) {
-                    const queryParameterDeclaration = endpoint.queryParameters.find(
-                        (queryParameter) => queryParameter.name.wireValue === key
-                    );
-                    if (queryParameterDeclaration != null) {
-                        // Use the safe name to avoid collisions with reserved keywords
-                        queryParams.push([
-                            queryParameterDeclaration.name.name.snakeCase.safeName,
-                            this.formatValue(value)
-                        ]);
-                    } else {
-                        queryParams.push([key, this.formatValue(value)]);
-                    }
-                }
-            }
-        }
-
-        return queryParams;
-    }
-
-    private buildHeaders(endpoint: HttpEndpoint, example: dynamic.EndpointExample): Array<[string, string]> {
-        const headers: Array<[string, string]> = [];
-
-        if (example.headers) {
-            // Map wire header names to SDK parameter names
-            const headerMap = new Map<string, string>();
-            for (const header of endpoint.headers) {
-                const wireKey = header.name.wireValue;
-                // Convert wire header name to Python parameter name (lowercase with underscores)
-                const pythonName = wireKey.toLowerCase().replace(/-/g, "_");
-                headerMap.set(wireKey, pythonName);
-            }
-
-            for (const [wireKey, value] of Object.entries(example.headers)) {
-                if (value != null) {
-                    const paramName = headerMap.get(wireKey) ?? wireKey.toLowerCase().replace(/-/g, "_");
-                    headers.push([paramName, this.formatValue(value)]);
-                }
-            }
-        }
-
-        return headers;
-    }
-
-    private buildRequestBody(endpoint: HttpEndpoint, example: dynamic.EndpointExample): string | null {
-        if (!endpoint.requestBody || !example.requestBody) {
-            return null;
-        }
-
-        // Use the discriminated union visitor pattern to handle different request body types
-        return endpoint.requestBody._visit<string | null>({
-            inlinedRequestBody: (inlinedBody) => {
-                // For inlined request bodies, generate individual keyword arguments
-                // Example: string="value", integer=1, bool_=True
-                if (
-                    example.requestBody != null &&
-                    typeof example.requestBody === "object" &&
-                    !Array.isArray(example.requestBody)
-                ) {
-                    const params: string[] = [];
-
-                    // Map wire names to property definitions to get correct SDK parameter names
-                    const propertyMap = new Map<string, string>();
-                    for (const prop of inlinedBody.properties) {
-                        const wireKey = prop.name.wireValue;
-                        const pythonName = prop.name.name.snakeCase.safeName;
-                        propertyMap.set(wireKey, pythonName);
-                    }
-
-                    // Generate parameters using the correct SDK names
-                    for (const [wireKey, value] of Object.entries(example.requestBody)) {
-                        const paramName = propertyMap.get(wireKey) ?? wireKey;
-                        params.push(`${paramName}=${this.jsonToPython(value)}`);
-                    }
-                    return params.join(", ");
-                }
-                return null;
-            },
-            reference: (value) => {
-                // For referenced request bodies, check if the type is an object (which gets flattened)
-                // or a primitive/enum (which stays as a single 'request' parameter)
-                const objectTypeDecl = this.getObjectTypeIfFlattened(value.requestBodyType);
-
-                if (objectTypeDecl != null) {
-                    // Object types get flattened into individual parameters
-                    if (
-                        example.requestBody != null &&
-                        typeof example.requestBody === "object" &&
-                        !Array.isArray(example.requestBody)
-                    ) {
-                        const params: string[] = [];
-
-                        // Map wire names to property definitions to get correct SDK parameter names
-                        const propertyMap = new Map<string, string>();
-                        for (const prop of objectTypeDecl.properties) {
-                            const wireKey = prop.name.wireValue;
-                            const pythonName = prop.name.name.snakeCase.safeName;
-                            propertyMap.set(wireKey, pythonName);
-                        }
-
-                        // Generate parameters using the correct SDK names
-                        for (const [wireKey, value] of Object.entries(example.requestBody)) {
-                            const paramName = propertyMap.get(wireKey) ?? wireKey;
-                            params.push(`${paramName}=${this.jsonToPython(value)}`);
-                        }
-                        return params.join(", ");
-                    }
-                } else {
-                    // Primitives and enums stay as a single 'request' parameter
-                    if (example.requestBody != null) {
-                        return `request=${this.jsonToPython(example.requestBody)}`;
-                    }
-                }
-                return null;
-            },
-            fileUpload: () => {
-                // File uploads are not supported in wire tests yet
-                return null;
-            },
-            bytes: () => {
-                // Bytes requests are not supported in wire tests yet
-                return null;
-            },
-            _other: () => {
-                this.context.logger.warn(`Unknown request body type for endpoint ${endpoint.name.originalName}`);
-                return null;
-            }
-        });
-    }
-
-    private getObjectTypeIfFlattened(typeRef: TypeReference): { properties: ObjectProperty[] } | null {
-        // Check if the TypeReference points to an object type declaration
-        // If it does, return the object type so we can access its properties
-        return typeRef._visit<{ properties: ObjectProperty[] } | null>({
-            named: (namedType) => {
-                // Look up the type declaration in the IR
-                const typeDecl = this.context.ir.types[namedType.typeId];
-                if (!typeDecl) {
-                    return null;
-                }
-                // Check if the type shape is an object
-                if (typeDecl.shape.type === "object") {
-                    return typeDecl.shape;
-                }
-                return null;
-            },
-            primitive: () => null,
-            container: () => null,
-            unknown: () => null,
-            _other: () => null
-        });
     }
 
     /**
@@ -491,54 +300,6 @@ export class WireTestGenerator {
             .replace(/\r/g, "\\r") // Escape carriage returns
             .replace(/\t/g, "\\t") // Escape tabs
             .replace(/"/g, '\\"'); // Escape double quotes
-    }
-
-    private formatValue(value: unknown): string {
-        if (typeof value === "string") {
-            return `"${this.escapeStringForPython(value)}"`;
-        }
-        if (typeof value === "number") {
-            return String(value);
-        }
-        if (typeof value === "boolean") {
-            // Python uses True/False (capitalized), not true/false
-            return value ? "True" : "False";
-        }
-        if (value === null) {
-            return "None";
-        }
-        // For complex objects, convert to Python representation
-        return this.jsonToPython(value);
-    }
-
-    /**
-     * Converts JSON representation to Python code representation.
-     * Handles objects, arrays, and nested structures.
-     */
-    private jsonToPython(value: unknown): string {
-        if (value === null) {
-            return "None";
-        }
-        if (typeof value === "boolean") {
-            return value ? "True" : "False";
-        }
-        if (typeof value === "string") {
-            return `"${this.escapeStringForPython(value)}"`;
-        }
-        if (typeof value === "number") {
-            return String(value);
-        }
-        if (Array.isArray(value)) {
-            const items = value.map((item) => this.jsonToPython(item));
-            return `[${items.join(",")}]`;
-        }
-        if (typeof value === "object") {
-            const entries = Object.entries(value).map(
-                ([key, val]) => `"${this.escapeStringForPython(key)}":${this.jsonToPython(val)}`
-            );
-            return `{${entries.join(",")}}`;
-        }
-        return JSON.stringify(value);
     }
 
     // =============================================================================
@@ -574,18 +335,6 @@ export class WireTestGenerator {
     private getTestFunctionName(serviceName: string, endpoint: HttpEndpoint): string {
         const endpointName = endpoint.name.snakeCase.safeName;
         return `test_${serviceName}_${endpointName}`;
-    }
-
-    /**
-     * Gets the endpoint method name, matching the Python generator's get_endpoint_name logic.
-     * If the endpoint's original name (lowercased) is in ALLOWED_RESERVED_METHOD_NAMES,
-     * use the unsafe name; otherwise use the safe name.
-     */
-    private getEndpointName(endpoint: HttpEndpoint): string {
-        if (ALLOWED_RESERVED_METHOD_NAMES.includes(endpoint.name.originalName.toLowerCase())) {
-            return endpoint.name.snakeCase.unsafeName;
-        }
-        return endpoint.name.snakeCase.safeName;
     }
 
     private getClientModulePath(): string[] {

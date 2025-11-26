@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v62
 displayName: PHP SDK
 image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
@@ -25,6 +25,12 @@ language: php
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
+  exhaustive:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: wire-tests
+      customConfig:
+        enable-wire-tests: true
   examples:
     - customConfig: null
       outputFolder: no-custom-config
@@ -159,6 +165,8 @@ allowedFailures:
   - examples:readme-config
   # Enums don't support the fromJson method yet.
   - exhaustive
+  # Wire tests have a bug where tests extend TestCase instead of WireMockTestCase
+  - exhaustive:wire-tests
   - trace
   - circular-references
   - circular-references-advanced

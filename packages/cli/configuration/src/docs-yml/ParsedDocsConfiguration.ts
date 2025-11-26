@@ -310,6 +310,7 @@ export declare namespace DocsNavigationItem {
         audiences: Audiences;
         availability: Availability | undefined;
         showErrors: boolean;
+        tagDescriptionPages: boolean;
         snippetsConfiguration: SnippetsConfiguration | undefined;
         postman: string | undefined;
         overviewAbsolutePath: AbsoluteFilePath | undefined;
