@@ -81,7 +81,6 @@
         }
       ],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/pets",
       "examples": [
@@ -148,7 +147,6 @@
         }
       ],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/pets",
       "examples": [

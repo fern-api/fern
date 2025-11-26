@@ -28,6 +28,7 @@ export interface OpenApiIntermediateRepresentation {
     /** Whether the schema is directly referenced from a response, parameters, or other schemas */
     nonRequestReferencedSchemas: Set<FernOpenapiIr.SchemaId>;
     securitySchemes: Record<FernOpenapiIr.SecuritySchemeId, FernOpenapiIr.SecurityScheme>;
+    security: FernOpenapiIr.GlobalSecurity | undefined;
     globalHeaders: FernOpenapiIr.GlobalHeader[] | undefined;
     idempotencyHeaders: FernOpenapiIr.IdempotencyHeader[] | undefined;
 }

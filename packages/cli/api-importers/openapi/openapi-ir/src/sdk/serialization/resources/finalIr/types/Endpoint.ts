@@ -29,7 +29,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
     core.serialization
         .objectWithoutOptionalProperties({
             authed: core.serialization.boolean(),
-            security: EndpointSecurity,
+            security: EndpointSecurity.optional(),
             internal: core.serialization.boolean().optional(),
             idempotent: core.serialization.boolean().optional(),
             method: HttpMethod,
@@ -60,7 +60,7 @@ export const Endpoint: core.serialization.ObjectSchema<serializers.Endpoint.Raw,
 export declare namespace Endpoint {
     export interface Raw extends WithDescription.Raw, WithAvailability.Raw, WithSource.Raw, WithNamespace.Raw {
         authed: boolean;
-        security: EndpointSecurity.Raw;
+        security?: EndpointSecurity.Raw | null;
         internal?: boolean | null;
         idempotent?: boolean | null;
         method: HttpMethod.Raw;
