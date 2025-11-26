@@ -16,6 +16,18 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
 /**
+ * Local interface for wire test examples.
+ * Contains only the fields needed for wire test generation, avoiding coupling to dynamic.EndpointExample.
+ */
+interface WireTestExample {
+    name?: string;
+    pathParameters: Record<string, unknown>;
+    queryParameters: Record<string, unknown>;
+    headers: Record<string, unknown>;
+    requestBody?: unknown;
+}
+
+/**
  * Generates WireMock-based integration tests for Python SDK.
  *
  * This is a skeleton implementation that sets up the infrastructure for wire tests
@@ -134,12 +146,12 @@ export class WireTestGenerator {
     }
 
     /**
-     * Converts a static IR example to a dynamic endpoint example format.
+     * Converts a static IR example to a wire test example format.
      */
-    private convertStaticExampleToDynamic(
+    private convertStaticExampleToWireTest(
         endpoint: HttpEndpoint,
         staticExample: ExampleEndpointCall
-    ): dynamic.EndpointExample {
+    ): WireTestExample {
         // Extract path parameters
         const pathParameters: Record<string, unknown> = {};
         for (const param of [
@@ -183,13 +195,26 @@ export class WireTestGenerator {
     // FILE GENERATION
     // =============================================================================
 
+    /**
+     * Converts a dynamic endpoint example to a wire test example format.
+     */
+    private convertDynamicExampleToWireTest(dynamicExample: dynamic.EndpointExample): WireTestExample {
+        return {
+            name: dynamicExample.name,
+            pathParameters: dynamicExample.pathParameters ?? {},
+            queryParameters: dynamicExample.queryParameters ?? {},
+            headers: dynamicExample.headers ?? {},
+            requestBody: dynamicExample.requestBody
+        };
+    }
+
     private async generateServiceTestFile(
         serviceName: string,
         endpoints: HttpEndpoint[]
     ): Promise<WriteablePythonFile | null> {
         const endpointTestCases: Array<{
             endpoint: HttpEndpoint;
-            example: dynamic.EndpointExample;
+            example: WireTestExample;
             service: HttpService;
             exampleIndex: number;
         }> = [];
@@ -208,7 +233,8 @@ export class WireTestGenerator {
             if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
                 const firstExample = dynamicEndpoint.examples[0];
                 if (firstExample) {
-                    endpointTestCases.push({ endpoint, example: firstExample, service, exampleIndex: 0 });
+                    const wireTestExample = this.convertDynamicExampleToWireTest(firstExample);
+                    endpointTestCases.push({ endpoint, example: wireTestExample, service, exampleIndex: 0 });
                     continue;
                 }
             }
@@ -216,8 +242,8 @@ export class WireTestGenerator {
             // Fallback: use static IR examples
             const staticExample = this.getStaticIrExample(endpoint);
             if (staticExample) {
-                const convertedExample = this.convertStaticExampleToDynamic(endpoint, staticExample);
-                endpointTestCases.push({ endpoint, example: convertedExample, service, exampleIndex: 0 });
+                const wireTestExample = this.convertStaticExampleToWireTest(endpoint, staticExample);
+                endpointTestCases.push({ endpoint, example: wireTestExample, service, exampleIndex: 0 });
             }
         }
 
@@ -246,7 +272,7 @@ export class WireTestGenerator {
         serviceName: string,
         testCases: Array<{
             endpoint: HttpEndpoint;
-            example: dynamic.EndpointExample;
+            example: WireTestExample;
             service: HttpService;
             exampleIndex: number;
         }>
@@ -304,7 +330,7 @@ export class WireTestGenerator {
     private generateEndpointTestFunction(
         serviceName: string,
         endpoint: HttpEndpoint,
-        example: dynamic.EndpointExample,
+        example: WireTestExample,
         service: HttpService,
         exampleIndex: number
     ): python.Method | null {
@@ -386,7 +412,7 @@ export class WireTestGenerator {
         return path;
     }
 
-    private generateApiCallAst(endpoint: HttpEndpoint, example: dynamic.EndpointExample): python.AstNode {
+    private generateApiCallAst(endpoint: HttpEndpoint, example: WireTestExample): python.AstNode {
         try {
             // Build the snippet request
             const snippetRequest: FernIr.dynamic.EndpointSnippetRequest = {
