@@ -20,7 +20,7 @@ jobs:
       id-token: write
     runs-on: ubuntu-latest
     env:
-      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+      BRANCH_NAME: ${{ github.head_ref || github.ref_name || 'main' }}
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
