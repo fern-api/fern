@@ -23,14 +23,14 @@ class MultipleFilterSearchRequest(UniversalBaseModel):
 
 
 from .multiple_filter_search_request_operator import MultipleFilterSearchRequestOperator  # noqa: E402, I001
-from .single_filter_search_request import SingleFilterSearchRequest  # noqa: E402, I001
 from .multiple_filter_search_request_value import MultipleFilterSearchRequestValue  # noqa: E402, I001
 from .single_filter_search_request_operator import SingleFilterSearchRequestOperator  # noqa: E402, I001
+from .single_filter_search_request import SingleFilterSearchRequest  # noqa: E402, I001
 
 update_forward_refs(
     MultipleFilterSearchRequest,
     MultipleFilterSearchRequestOperator=MultipleFilterSearchRequestOperator,
-    SingleFilterSearchRequest=SingleFilterSearchRequest,
     MultipleFilterSearchRequestValue=MultipleFilterSearchRequestValue,
     SingleFilterSearchRequestOperator=SingleFilterSearchRequestOperator,
+    SingleFilterSearchRequest=SingleFilterSearchRequest,
 )
