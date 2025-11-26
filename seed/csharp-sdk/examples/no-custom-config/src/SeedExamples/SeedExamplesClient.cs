@@ -1,4 +1,3 @@
-using System.Text.Json;
 using OneOf;
 using SeedExamples.Core;
 using SeedExamples.File_;
@@ -9,6 +8,8 @@ namespace SeedExamples;
 public partial class SeedExamplesClient
 {
     private readonly RawClient _client;
+
+    private RawSeedExamplesClient _rawClient;
 
     public SeedExamplesClient(string token, ClientOptions? clientOptions = null)
     {
@@ -34,6 +35,8 @@ public partial class SeedExamplesClient
         File = new FileClient(_client);
         Health = new HealthClient(_client);
         Service = new ServiceClient(_client);
+        _rawClient = new RawSeedExamplesClient(_client);
+        WithRawResponse = _rawClient;
     }
 
     public FileClient File { get; }
@@ -41,6 +44,11 @@ public partial class SeedExamplesClient
     public HealthClient Health { get; }
 
     public ServiceClient Service { get; }
+
+    /// <summary>
+    /// Access endpoints with raw HTTP response data (status code, headers).
+    /// </summary>
+    public RawSeedExamplesClient WithRawResponse { get; }
 
     /// <example><code>
     /// await client.EchoAsync("Hello world!\\n\\nwith\\n\\tnewlines");
@@ -51,40 +59,11 @@ public partial class SeedExamplesClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<string>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedExamplesException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamplesApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return (
+            await WithRawResponse
+                .EchoAsync(request, options, cancellationToken)
+                .ConfigureAwait(false)
+        ).Body;
     }
 
     /// <example><code>
@@ -96,39 +75,10 @@ public partial class SeedExamplesClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<Identifier>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedExamplesException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedExamplesApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return (
+            await WithRawResponse
+                .CreateTypeAsync(request, options, cancellationToken)
+                .ConfigureAwait(false)
+        ).Body;
     }
 }

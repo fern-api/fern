@@ -1,4 +1,3 @@
-using System.Text.Json;
 using SeedExamples;
 using SeedExamples.Core;
 
@@ -8,10 +7,19 @@ public partial class ServiceClient
 {
     private RawClient _client;
 
+    private RawServiceClient _rawClient;
+
     internal ServiceClient(RawClient client)
     {
         _client = client;
+        _rawClient = new RawServiceClient(_client);
+        WithRawResponse = _rawClient;
     }
+
+    /// <summary>
+    /// Access endpoints with raw HTTP response data (status code, headers).
+    /// </summary>
+    public RawServiceClient WithRawResponse { get; }
 
     /// <summary>
     /// This endpoint returns a file by its name.
@@ -29,54 +37,10 @@ public partial class ServiceClient
         CancellationToken cancellationToken = default
     )
     {
-        var _headers = new Headers(
-            new Dictionary<string, string>() { { "X-File-API-Version", request.XFileApiVersion } }
-        );
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Get,
-                    Path = string.Format("/file/{0}", ValueConvert.ToPathParameterString(filename)),
-                    Headers = _headers,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<SeedExamples.File>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedExamplesException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                switch (response.StatusCode)
-                {
-                    case 404:
-                        throw new NotFoundError(JsonUtils.Deserialize<string>(responseBody));
-                }
-            }
-            catch (JsonException)
-            {
-                // unable to map error response, throwing generic error
-            }
-            throw new SeedExamplesApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return (
+            await WithRawResponse
+                .GetFileAsync(filename, request, options, cancellationToken)
+                .ConfigureAwait(false)
+        ).Body;
     }
 }
