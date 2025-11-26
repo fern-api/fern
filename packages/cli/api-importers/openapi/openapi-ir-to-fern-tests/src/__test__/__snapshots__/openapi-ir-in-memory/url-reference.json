@@ -68,6 +68,7 @@
     "groupEnvironmentsByHost": false,
     "wrapReferencesToNullableInOptional": false,
     "coerceOptionalSchemasToNullable": false,
-    "removeDiscriminantsFromSchemas": "always"
+    "removeDiscriminantsFromSchemas": "always",
+    "authDefaultsToTrue": false
   }
 }
