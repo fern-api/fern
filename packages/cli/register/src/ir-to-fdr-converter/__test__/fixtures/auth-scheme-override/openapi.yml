@@ -1,0 +1,112 @@
+openapi: 3.0.3
+info:
+  title: Auth Scheme Override Test API
+  version: 1.0.0
+  description: OpenAPI spec with specific security scheme names that get overridden by generators.yml
+
+servers:
+  - url: https://api.example.com/v1
+
+# No global security defined - generators.yml should provide it via api.auth
+
+paths:
+  /protected-api-key:
+    get:
+      operationId: getProtectedApiKey
+      summary: Get resource protected by API key
+      security:
+        - api-key: []
+      responses:
+        "200":
+          description: Protected resource accessed with API key
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProtectedResource"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /protected-token:
+    get:
+      operationId: getProtectedToken
+      summary: Get resource protected by bearer token
+      security:
+        - token: []
+      responses:
+        "200":
+          description: Protected resource accessed with bearer token
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProtectedResource"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /public:
+    get:
+      operationId: getPublic
+      summary: Get public resource (will inherit global auth from generators.yml)
+      responses:
+        "200":
+          description: Public resource
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "public data"
+
+components:
+  securitySchemes:
+    api-key:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key authentication using custom header
+
+    token:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Bearer token authentication with JWT format
+
+  schemas:
+    ProtectedResource:
+      type: object
+      required:
+        - id
+        - data
+        - accessedWith
+      properties:
+        id:
+          type: string
+          description: Resource identifier
+          example: "resource123"
+        data:
+          type: string
+          description: Protected data
+          example: "sensitive information"
+        accessedWith:
+          type: string
+          description: Authentication method used
+          example: "api-key"
+
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: string
+          example: "UNAUTHORIZED"
+        message:
+          type: string
+          example: "Authentication required"

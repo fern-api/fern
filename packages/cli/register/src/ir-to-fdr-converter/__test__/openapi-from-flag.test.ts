@@ -741,4 +741,106 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/wildcard-status-conflict-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/wildcard-status-conflict-ir.snap");
     });
+
+    it("should handle OpenAPI auth scheme override with generators.yml", async () => {
+        // Test OpenAPI spec with security schemes named 'api-key' and 'token'
+        // combined with generators.yml auth-schemes configuration 'bearerAuth'
+        // All schemes should be preserved so endpoints can reference original OpenAPI schemes
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/auth-scheme-override")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "auth-scheme-override"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate that auth schemes were processed with both override and original schemes
+        expect(intermediateRepresentation.auth).toBeDefined();
+        expect(intermediateRepresentation.auth.schemes).toBeDefined();
+        expect(intermediateRepresentation.auth.schemes.length).toBeGreaterThan(0);
+
+        // The OpenAPI spec has two security schemes: 'api-key' (apiKey type) and 'token' (bearer type)
+        // Plus generators.yml defines 'bearerAuth' override
+        // All three should be present in the IR
+        const authSchemes = intermediateRepresentation.auth.schemes;
+
+        // Check that we have all 3 auth schemes in the IR (bearerAuth override + 2 OpenAPI schemes)
+        expect(authSchemes.length).toBe(3);
+
+        // Validate that all expected scheme keys exist
+        const schemeKeys = authSchemes.map((scheme) => scheme.key);
+        expect(schemeKeys).toContain("bearerAuth"); // From generators.yml override
+        expect(schemeKeys).toContain("api-key"); // From OpenAPI
+        expect(schemeKeys).toContain("token"); // From OpenAPI
+
+        // Validate FDR auth schemes contain all three schemes
+        expect(fdrApiDefinition.authSchemes).toBeDefined();
+        expect(Object.keys(fdrApiDefinition.authSchemes ?? {})).toContain("bearerAuth");
+        expect(Object.keys(fdrApiDefinition.authSchemes ?? {})).toContain("api-key");
+        expect(Object.keys(fdrApiDefinition.authSchemes ?? {})).toContain("token");
+        expect(Object.keys(fdrApiDefinition.authSchemes ?? {}).length).toBe(3);
+
+        // Validate services and endpoints exist
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        const service = services[0];
+        expect(service).toBeDefined();
+        if (service && typeof service === "object" && "endpoints" in service) {
+            const serviceWithEndpoints = service as { endpoints?: unknown[] };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            // Should have 3 endpoints: /protected-api-key, /protected-token, /public
+            expect(serviceWithEndpoints.endpoints?.length).toBe(3);
+        }
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.types).toBeDefined();
+        expect(fdrApiDefinition.subpackages).toBeDefined();
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/auth-scheme-override-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-scheme-override-ir.snap");
+    });
 });
