@@ -1975,7 +1975,7 @@ func getEndpointParameters(
 			fields = append(
 				fields,
 				&ast.Field{
-					Key:   pathParameter.Name.PascalCase.UnsafeName,
+					Key:   goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName),
 					Value: f.snippetWriter.GetSnippetForExampleTypeReference(pathParameter.Value),
 				},
 			)
@@ -1996,7 +1996,7 @@ func getEndpointParameters(
 		fields = append(
 			fields,
 			&ast.Field{
-				Key:   header.Name.Name.PascalCase.UnsafeName,
+				Key:   goExportedFieldName(header.Name.Name.PascalCase.UnsafeName),
 				Value: f.snippetWriter.GetSnippetForExampleTypeReference(header.Value),
 			},
 		)
@@ -2024,7 +2024,7 @@ func getEndpointParameters(
 		fields = append(
 			fields,
 			&ast.Field{
-				Key:   queryParameter.Name.Name.PascalCase.UnsafeName,
+				Key:   goExportedFieldName(queryParameter.Name.Name.PascalCase.UnsafeName),
 				Value: exampleValue,
 			},
 		)
@@ -2083,7 +2083,7 @@ func exampleRequestBodyToFields(
 			fields = append(
 				fields,
 				&ast.Field{
-					Key:   property.Name.Name.PascalCase.UnsafeName,
+					Key:   goExportedFieldName(property.Name.Name.PascalCase.UnsafeName),
 					Value: f.snippetWriter.GetSnippetForExampleTypeReference(property.Value),
 				},
 			)
@@ -2813,7 +2813,7 @@ func (f *fileWriter) WriteRequestType(
 	// Collect from headers (exclude literals as they don't need setters)
 	for _, header := range append(serviceHeaders, endpoint.Headers...) {
 		if header.ValueType.Container == nil || header.ValueType.Container.Literal == nil {
-			propertyNames = append(propertyNames, header.Name.Name.PascalCase.UnsafeName)
+			propertyNames = append(propertyNames, goExportedFieldName(header.Name.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, header.Name.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			propertyTypes = append(propertyTypes, goType)
@@ -2823,7 +2823,7 @@ func (f *fileWriter) WriteRequestType(
 	// Collect from path parameters (always include these)
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
 		for _, pathParameter := range endpoint.AllPathParameters {
-			propertyNames = append(propertyNames, pathParameter.Name.PascalCase.UnsafeName)
+			propertyNames = append(propertyNames, goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, pathParameter.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			propertyTypes = append(propertyTypes, goType)
@@ -2833,7 +2833,7 @@ func (f *fileWriter) WriteRequestType(
 	// Collect from query parameters (always include these, exclude literals)
 	for _, queryParam := range endpoint.QueryParameters {
 		if queryParam.ValueType.Container == nil || queryParam.ValueType.Container.Literal == nil {
-			propertyNames = append(propertyNames, queryParam.Name.Name.PascalCase.UnsafeName)
+			propertyNames = append(propertyNames, goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, queryParam.Name.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			if queryParam.AllowMultiple {
@@ -2847,7 +2847,7 @@ func (f *fileWriter) WriteRequestType(
 	if endpoint.RequestBody != nil && endpoint.RequestBody.InlinedRequestBody != nil {
 		for _, property := range endpoint.RequestBody.InlinedRequestBody.Properties {
 			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
-				propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
+				propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
 				goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 				propertyTypes = append(propertyTypes, goType)
@@ -2873,13 +2873,13 @@ func (f *fileWriter) WriteRequestType(
 			continue
 		}
 		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
-		f.P(header.Name.Name.PascalCase.UnsafeName, " ", goType, " `json:\"-\" url:\"-\"`")
+		f.P(goExportedFieldName(header.Name.Name.PascalCase.UnsafeName), " ", goType, " `json:\"-\" url:\"-\"`")
 	}
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
 		for _, pathParameter := range endpoint.AllPathParameters {
 			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			f.WriteDocs(pathParameter.Docs)
-			f.P(pathParameter.Name.PascalCase.UnsafeName, " ", value, " `json:\"-\" url:\"-\"`")
+			f.P(goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName), " ", value, " `json:\"-\" url:\"-\"`")
 		}
 	}
 	for _, queryParam := range endpoint.QueryParameters {
@@ -2898,7 +2898,7 @@ func (f *fileWriter) WriteRequestType(
 			)
 			continue
 		}
-		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types, f.alwaysSendRequiredProperties))
+		f.P(goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName), " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types, f.alwaysSendRequiredProperties))
 	}
 	if endpoint.RequestBody == nil {
 		// If the request doesn't have a body, we don't need any custom [de]serialization logic.

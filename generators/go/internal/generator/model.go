@@ -2245,9 +2245,11 @@ func capitalizeFirstLetter(s string) string {
 	return strings.ToUpper(s[:1]) + s[1:]
 }
 
-// goReservedIdentifiers contains Go keywords and predeclared identifiers that should be
+// goReservedIdentifiers contains Go keywords and predeclared types that should be
 // avoided as struct field names. We check case-insensitively since PascalCase versions
 // like "String" should also be prefixed.
+// Note: We intentionally exclude predeclared functions (append, len, make, etc.) and
+// constants (true, false, nil, iota) as they don't typically cause issues as field names.
 var goReservedIdentifiers = map[string]bool{
 	// Keywords
 	"break": true, "case": true, "chan": true, "const": true, "continue": true,
@@ -2260,12 +2262,6 @@ var goReservedIdentifiers = map[string]bool{
 	"float32": true, "float64": true, "int": true, "int8": true, "int16": true,
 	"int32": true, "int64": true, "rune": true, "string": true, "uint": true,
 	"uint8": true, "uint16": true, "uint32": true, "uint64": true, "uintptr": true,
-	// Predeclared functions
-	"append": true, "cap": true, "close": true, "complex": true, "copy": true,
-	"delete": true, "imag": true, "len": true, "make": true, "new": true,
-	"panic": true, "print": true, "println": true, "real": true, "recover": true,
-	// Predeclared constants
-	"true": true, "false": true, "iota": true, "nil": true,
 }
 
 // goExportedFieldName converts a name to a valid Go exported identifier.

@@ -125,7 +125,7 @@ func (s *SnippetWriter) getSnippetForExampleObjectType(
 		fields = append(
 			fields,
 			&ast.Field{
-				Key:   property.Name.Name.PascalCase.UnsafeName,
+				Key:   goExportedFieldName(property.Name.Name.PascalCase.UnsafeName),
 				Value: s.GetSnippetForExampleTypeReference(property.Value),
 			},
 		)
