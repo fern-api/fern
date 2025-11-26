@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.40.0
+  changelogEntry:
+    - summary: |
+        Add support for X-RateLimit-Reset header
+        Tweak retry delay values slightly (1s initial delay, 60s max delay).
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
 - version: 4.39.2
   changelogEntry:
     - summary: More fixes and improvements to wire tests.
