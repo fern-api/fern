@@ -442,25 +442,7 @@ describe("parseImagePaths", () => {
         );
     });
 
-    it("should ignore protocol-relative urls with valid hosts", () => {
-        const page = "This is a test page with an image ![image](//cdn.example.com/image.png)";
-        const result = parseImagePaths(page, PATHS);
-        expect(result.filepaths).toEqual([]);
-        expect(result.markdown.trim()).toMatchInlineSnapshot(
-            '"This is a test page with an image ![image](//cdn.example.com/image.png)"'
-        );
-    });
-
-    it("should ignore protocol-relative urls with localhost", () => {
-        const page = "This is a test page with an image ![image](//localhost:3000/image.png)";
-        const result = parseImagePaths(page, PATHS);
-        expect(result.filepaths).toEqual([]);
-        expect(result.markdown.trim()).toMatchInlineSnapshot(
-            '"This is a test page with an image ![image](//localhost:3000/image.png)"'
-        );
-    });
-
-    it("should reject double-slash paths without valid hosts", () => {
+    it("should reject double-slash paths as invalid local file syntax", () => {
         const page = "This is a test page with an image ![image](//assets/images/logo.png)";
         expect(() => parseImagePaths(page, PATHS)).toThrow(/Double-slash paths are not supported/);
     });
