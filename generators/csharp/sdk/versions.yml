@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.9.5
+- version: 2.10.0
   changelogEntry:
     - summary: |
         Add `WithRawResponse` property to SDK clients that returns a raw client with methods that return `RawResponse<T>` containing both the parsed response body and HTTP response metadata (status code, headers).
