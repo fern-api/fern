@@ -24,7 +24,7 @@
   "bin": {
     "protoc-gen-fern": "bin/protoc-gen-fern"
   },
-  "files": ["lib"],
+  "files": ["bin", "lib"],
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",

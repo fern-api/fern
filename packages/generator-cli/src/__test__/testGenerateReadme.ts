@@ -26,7 +26,7 @@ export function testGenerateReadme({
             const json = JSON.stringify(await serializers.ReadmeConfig.jsonOrThrow(config), undefined, 2);
             await writeFile(file.path, json);
 
-            const args = [path.join(__dirname, "../../dist/cli.cjs"), "generate", "readme", "--config", file.path];
+            const args = [path.join(__dirname, "../../bin/cli"), "generate", "readme", "--config", file.path];
             if (originalReadme != null) {
                 args.push(
                     ...[

@@ -79,10 +79,10 @@ jobs:
       - name: Update npm
         run: npm install -g npm@latest
 
-      - name: Compile
+      - name: Build CLI
         env:
           GITHUB_TOKEN: ${{ env.GITHUB_TOKEN }}
-        run: pnpm turbo run compile --filter=${{ env.PACKAGE_NAME }}
+        run: pnpm turbo run dist:cli --filter=${{ env.PACKAGE_NAME }}
 
       - name: Test
         env:

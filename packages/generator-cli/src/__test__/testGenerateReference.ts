@@ -19,7 +19,7 @@ export function testGenerateReference({
             const json = JSON.stringify(await serializers.ReferenceConfig.jsonOrThrow(config), undefined, 2);
             await writeFile(file.path, json);
 
-            const args = [path.join(__dirname, "../../dist/cli.cjs"), "generate-reference", "--config", file.path];
+            const args = [path.join(__dirname, "../../bin/cli"), "generate-reference", "--config", file.path];
             const { stdout } = await execa("node", args);
             expect(stdout).toMatchFileSnapshot(`__snapshots__/${fixtureName}.md`);
         });

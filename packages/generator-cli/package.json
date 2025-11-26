@@ -5,19 +5,18 @@
     "type": "git",
     "url": "https://github.com/fern-api/fern"
   },
-  "type": "module",
-  "main": "dist/api.cjs",
+  "type": "commonjs",
+  "main": "dist/api.js",
   "source": "src/index.ts",
-  "types": "dist/api.d.cts",
+  "types": "dist/api.d.ts",
   "bin": {
-    "generator-cli": "dist/cli.cjs"
+    "generator-cli": "dist/cli"
   },
-  "files": ["dist"],
+  "files": ["bin", "dist"],
   "scripts": {
-    "clean": "rm -rf ./dist && tsc --build --clean",
-    "compile": "tsup && pnpm compile:api:dts && echo '#!/usr/bin/env node' | cat - dist/cli.cjs > dist/tmp && mv dist/tmp dist/cli.cjs",
-    "compile:api:dts": "tsup ./src/api.ts --format cjs --dts --dts-only",
+    "clean": "rm -rf ./lib && rm -rf ./dist && tsc --build --clean",
     "depcheck": "depcheck",
+    "dist:cli": "node build.mjs",
     "test": "vitest --run --passWithNoTests --globals --disable-console-intercept",
     "test:update": "vitest -u --run --passWithNoTests --globals --disable-console-intercept"
   },
