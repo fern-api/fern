@@ -2245,12 +2245,36 @@ func capitalizeFirstLetter(s string) string {
 	return strings.ToUpper(s[:1]) + s[1:]
 }
 
+// goReservedIdentifiers contains Go keywords and predeclared identifiers that should be
+// avoided as struct field names. We check case-insensitively since PascalCase versions
+// like "String" should also be prefixed.
+var goReservedIdentifiers = map[string]bool{
+	// Keywords
+	"break": true, "case": true, "chan": true, "const": true, "continue": true,
+	"default": true, "defer": true, "else": true, "fallthrough": true, "for": true,
+	"func": true, "go": true, "goto": true, "if": true, "import": true,
+	"interface": true, "map": true, "package": true, "range": true, "return": true,
+	"select": true, "struct": true, "switch": true, "type": true, "var": true,
+	// Predeclared types
+	"bool": true, "byte": true, "complex64": true, "complex128": true, "error": true,
+	"float32": true, "float64": true, "int": true, "int8": true, "int16": true,
+	"int32": true, "int64": true, "rune": true, "string": true, "uint": true,
+	"uint8": true, "uint16": true, "uint32": true, "uint64": true, "uintptr": true,
+	// Predeclared functions
+	"append": true, "cap": true, "close": true, "complex": true, "copy": true,
+	"delete": true, "imag": true, "len": true, "make": true, "new": true,
+	"panic": true, "print": true, "println": true, "real": true, "recover": true,
+	// Predeclared constants
+	"true": true, "false": true, "iota": true, "nil": true,
+}
+
 // goExportedFieldName converts a name to a valid Go exported identifier.
 // Go exported identifiers must start with an uppercase letter.
 // This function handles edge cases like:
 // - Names that are empty or only underscores (e.g., "_") -> "Underscore"
 // - Names that start with a digit (e.g., "1") -> "Field1"
 // - Names that start with underscore followed by digit (e.g., "_1") -> "Field1"
+// - Names that match Go reserved words/predeclared identifiers (e.g., "String") -> "FieldString"
 func goExportedFieldName(name string) string {
 	if name == "" {
 		return "Underscore"
@@ -2269,9 +2293,15 @@ func goExportedFieldName(name string) string {
 	}
 
 	// Ensure the first letter is uppercase for export
+	result := stripped
 	if len(stripped) > 0 && !unicode.IsUpper(rune(stripped[0])) {
-		return strings.ToUpper(stripped[:1]) + stripped[1:]
+		result = strings.ToUpper(stripped[:1]) + stripped[1:]
 	}
 
-	return stripped
+	// Check if the name matches a Go reserved word or predeclared identifier (case-insensitive)
+	if goReservedIdentifiers[strings.ToLower(result)] {
+		return "Field" + result
+	}
+
+	return result
 }
