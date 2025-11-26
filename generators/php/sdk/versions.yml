@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.23.1
+  changelogEntry:
+    - summary: |
+        Remove error on null config in README generation.
+      type: fix
+  createdAt: "2025-11-26"
+  irVersion: 62
+
 - version: 1.23.0
   changelogEntry:
     - summary: |
