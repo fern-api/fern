@@ -251,16 +251,29 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
             writer.pushScope();
 
             if (endpoint.response?.body == null) {
-                // No body, return RawResponse with null body
-                writer.write("return new ");
-                writer.writeNode(this.Types.RawResponse(this.Primitive.object));
-                writer.writeLine();
-                writer.pushScope();
-                writer.writeLine(`Body = null!,`);
-                writer.writeLine(`StatusCode = ${this.names.variables.response}.StatusCode,`);
-                writer.writeLine(`Headers = ${this.names.variables.response}.Raw.Headers`);
-                writer.popScope();
-                writer.writeLine(";");
+                if (endpoint.method === FernIr.HttpMethod.Head) {
+                    // HEAD requests return HttpResponseHeaders
+                    writer.write("return new ");
+                    writer.writeNode(this.Types.RawResponse(this.System.Net.Http.HttpResponseHeaders));
+                    writer.writeLine();
+                    writer.pushScope();
+                    writer.writeLine(`Body = ${this.names.variables.response}.Raw.Headers,`);
+                    writer.writeLine(`StatusCode = ${this.names.variables.response}.StatusCode,`);
+                    writer.writeLine(`Headers = ${this.names.variables.response}.Raw.Headers`);
+                    writer.popScope();
+                    writer.writeLine(";");
+                } else {
+                    // No body, return RawResponse with null body
+                    writer.write("return new ");
+                    writer.writeNode(this.Types.RawResponse(this.Primitive.object));
+                    writer.writeLine();
+                    writer.pushScope();
+                    writer.writeLine(`Body = null!,`);
+                    writer.writeLine(`StatusCode = ${this.names.variables.response}.StatusCode,`);
+                    writer.writeLine(`Headers = ${this.names.variables.response}.Raw.Headers`);
+                    writer.popScope();
+                    writer.writeLine(";");
+                }
             } else {
                 const body = endpoint.response.body;
                 body._visit({
