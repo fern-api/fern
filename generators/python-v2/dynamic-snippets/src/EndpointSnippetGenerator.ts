@@ -53,6 +53,21 @@ export class EndpointSnippetGenerator {
         return this.buildPythonFile({ endpoint, snippet: request });
     }
 
+    /**
+     * Generates just the method call AST without the client instantiation.
+     * This is useful for wire tests where the client is created separately
+     * with test-specific configuration.
+     */
+    public generateMethodCallSnippetAst({
+        endpoint,
+        request
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+    }): python.AstNode {
+        return this.callMethod({ endpoint, snippet: request });
+    }
+
     private buildPythonFile({
         endpoint,
         snippet
