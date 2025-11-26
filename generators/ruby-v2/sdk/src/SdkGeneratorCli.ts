@@ -7,6 +7,7 @@ import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
 import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
@@ -89,7 +90,14 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 });
                 context.project.addRawFiles(environments.generate());
             },
-            multipleBaseUrls: () => undefined,
+            multipleBaseUrls: (value) => {
+                context.logger.info("Visiting multipleBaseUrls environment case.");
+                const environments = new MultiUrlEnvironmentGenerator({
+                    context,
+                    multiUrlEnvironments: value
+                });
+                context.project.addRawFiles(environments.generate());
+            },
             _other: () => undefined
         });
 
