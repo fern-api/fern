@@ -7,6 +7,13 @@
   createdAt: "2025-11-26"
   irVersion: 60
 
+- version: 1.18.2
+  changelogEntry:
+    - summary: Fix handling of reserved identifiers in field names.
+      type: fix
+  createdAt: "2025-11-26"
+  irVersion: 60
+
 - version: 1.18.1
   changelogEntry:
     - summary: Fix linting in test files
