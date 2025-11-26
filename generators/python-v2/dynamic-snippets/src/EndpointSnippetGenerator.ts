@@ -1,4 +1,4 @@
-import { AbstractAstNode, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
@@ -45,14 +45,12 @@ export class EndpointSnippetGenerator {
 
     public async generateSnippetAst({
         endpoint,
-        request,
-        options
+        request
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
-        options?: Options;
     }): Promise<AbstractAstNode> {
-        throw new Error("Unsupported");
+        return this.buildPythonFile({ endpoint, snippet: request });
     }
 
     private buildPythonFile({
