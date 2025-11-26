@@ -487,18 +487,24 @@ class PydanticModel:
                 # Only write the function invocation, not the constraint refs
                 writer.write_node(self.func_invocation)
 
+        # Sort kwargs by key for deterministic output
+        sorted_kwargs = sorted(
+            [
+                (
+                    get_named_import_or_throw(kwarg_ref),
+                    AST.Expression(kwarg_ref),
+                )
+                for kwarg_ref in kwarg_refs
+            ],
+            key=lambda x: x[0],
+        )
+
         update_node = UpdateForwardRefsNode(
             constraint_refs=constraint_refs,
             func_invocation=AST.FunctionInvocation(
                 function_definition=self._update_forward_ref_function_reference,
                 args=[AST.Expression(self._local_class_reference)],
-                kwargs=[
-                    (
-                        get_named_import_or_throw(kwarg_ref),
-                        AST.Expression(kwarg_ref),
-                    )
-                    for kwarg_ref in kwarg_refs
-                ],
+                kwargs=sorted_kwargs,
             ),
         )
 
