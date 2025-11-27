@@ -1,8 +1,7 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
 - changelogEntry:
-    - summary: |
-        Allow all API settings to be overridden at the generator level in generators.yml. Settings like `title-as-schema-name`, `type-dates-as-strings`, `object-query-parameters`, and `coerce-enums-to-literals` can now be configured per-generator.
+    - summary: Allow all API settings to be overridden at the generator level in generators.yml.
       type: feat
     - summary: |
         Add CLI migration to automatically convert deprecated generator-level API settings keys to their new equivalents: `use-title` to `title-as-schema-name`, and `unions: v1` to `prefer-undiscriminated-unions-with-literals: true`.
