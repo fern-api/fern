@@ -55,9 +55,6 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self._types_with_non_union_self_referencing_dependencies: Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]] = (
             defaultdict(OrderedSet)
         )
-        self._types_with_union_self_referencing_members: Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]] = (
-            defaultdict(OrderedSet)
-        )
 
         for id, type in self.ir.types.items():
             ordered_reference_types = OrderedSet(list(sorted(type.referenced_types)))
@@ -68,14 +65,6 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
                     # This referenced type is self-referential
                     if referenced_id in referenced_type.referenced_types:
                         self._types_with_non_union_self_referencing_dependencies[id].add(referenced_id)
-                # TODO(tjb9dc): handle discriminated unions as well
-                elif referenced_type_shape.type == "undiscriminatedUnion":
-                    # For unions, apply the same logic but looking at the variants, and import more shallowly
-                    for member in referenced_type_shape.members:
-                        member_type_ids = self.get_type_names_in_type_reference(member.type)
-                        member_references = self.get_referenced_types_of_type_reference(member.type)
-                        if id in member_references:
-                            self._types_with_union_self_referencing_members[referenced_id].update(member_type_ids)
 
     def get_module_path_in_project(self, module_path: AST.ModulePath) -> AST.ModulePath:
         return self._project_module_path + module_path
@@ -174,11 +163,6 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
         self,
     ) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]:
         return self._types_with_non_union_self_referencing_dependencies
-
-    def get_union_self_referencing_members_from_types(
-        self,
-    ) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]:
-        return self._types_with_union_self_referencing_members
 
     def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool:
         return self.does_type_reference_other_type(a, b) and self.does_type_reference_other_type(b, a)
