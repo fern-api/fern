@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 1.10.2
+  changelogEntry:
+    - summary: Fix forward ref detection for complex circular type cycles.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 61
+
 - version: 1.10.1
   changelogEntry:
     - summary: Fix discriminated union Field(discriminator=...) and UnionMetadata(discriminant=...) to use Python field names instead of JSON aliases for Pydantic v2 compatibility.
