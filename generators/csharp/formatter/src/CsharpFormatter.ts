@@ -123,14 +123,15 @@ export class CsharpFormatter extends AbstractFormatter {
 
         return new Promise<string>((resolve, reject) => {
             const timeoutId = setTimeout(() => {
-                // Remove this request from pending queue
+                // Remove this request from pending queue before cleanup
                 const index = this.pendingRequests.findIndex((r) => r.timeoutId === timeoutId);
                 if (index !== -1) {
                     this.pendingRequests.splice(index, 1);
                 }
-                // Kill and restart the process on timeout
-                this.cleanup();
-                reject(new Error("csharpier format request timed out after 30 seconds"));
+                // Kill the process and reject all other pending requests
+                const timeoutError = new Error("csharpier format request timed out after 30 seconds");
+                this.cleanup(timeoutError);
+                reject(timeoutError);
             }, FORMAT_TIMEOUT_MS);
 
             this.pendingRequests.push({ resolve, reject, timeoutId });
@@ -164,8 +165,9 @@ export class CsharpFormatter extends AbstractFormatter {
     /**
      * Cleanup the persistent csharpier process.
      * Call this when the formatter is no longer needed.
+     * If an error is provided, all pending requests will be rejected with that error.
      */
-    public cleanup(): void {
+    public cleanup(error?: Error): void {
         if (this.process != null && !this.process.killed) {
             this.process.stdin?.end();
             this.process.kill();
@@ -174,10 +176,16 @@ export class CsharpFormatter extends AbstractFormatter {
         this.isProcessReady = false;
         this.buffer = "";
         this.stderrBuffer = "";
-        // Clear all pending timeouts before clearing the queue
-        for (const request of this.pendingRequests) {
-            clearTimeout(request.timeoutId);
+
+        if (error != null) {
+            // Reject all pending requests with the error
+            this.rejectAllPending(error);
+        } else {
+            // Just clear timeouts without rejecting (normal cleanup)
+            for (const request of this.pendingRequests) {
+                clearTimeout(request.timeoutId);
+            }
+            this.pendingRequests = [];
         }
-        this.pendingRequests = [];
     }
 }
