@@ -73,8 +73,14 @@ export class BaseApiExceptionGenerator extends FileGenerator<PhpFile, SdkCustomC
                 writer.controlFlow("if", php.codeblock("empty($this->body)"));
                 writer.writeTextStatement('return "$this->message; Status Code: $this->code\\n"');
                 writer.endControlFlow();
+                writer.write("$redactedBody = ");
+                writer.writeNode(this.context.getCoreClientClassReference("Redactor"));
+                writer.writeTextStatement("::redactBody($this->body)");
+                writer.controlFlow("if", php.codeblock("!is_string($redactedBody)"));
+                writer.writeTextStatement("$redactedBody = json_encode($redactedBody) ?: ''");
+                writer.endControlFlow();
                 writer.writeTextStatement(
-                    'return "$this->message; Status Code: $this->code; Body: " . $this->body . "\\n"'
+                    'return "$this->message; Status Code: $this->code; Body: " . $redactedBody . "\\n"'
                 );
             })
         });

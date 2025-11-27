@@ -3,6 +3,7 @@
 namespace Seed\Exceptions;
 
 use Throwable;
+use Seed\Core\Client\Redactor;
 
 /**
  * This exception type will be thrown for any non-2XX API responses.
@@ -48,6 +49,10 @@ class SeedApiException extends SeedException
         if (empty($this->body)) {
             return "$this->message; Status Code: $this->code\n";
         }
-        return "$this->message; Status Code: $this->code; Body: " . $this->body . "\n";
+        $redactedBody = Redactor::redactBody($this->body);
+        if (!is_string($redactedBody)) {
+            $redactedBody = json_encode($redactedBody) ?: '';
+        }
+        return "$this->message; Status Code: $this->code; Body: " . $redactedBody . "\n";
     }
 }

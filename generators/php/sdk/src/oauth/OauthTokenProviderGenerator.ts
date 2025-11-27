@@ -70,6 +70,8 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
             class_.addMethod(this.getExpiresAtMethod());
         }
 
+        class_.addMethod(this.getDebugInfoMethod());
+
         return new PhpFile({
             clazz: class_,
             directory: RelativeFilePath.of("Core"),
@@ -313,6 +315,29 @@ export class OauthTokenProviderGenerator extends FileGenerator<PhpFile, SdkCusto
                 writer.writeLine("$expiresInSecondsWithBuffer = $expiresInSeconds - ($bufferInMinutes * 60);");
                 writer.writeLine('$now->modify("+{$expiresInSecondsWithBuffer} seconds");');
                 writer.writeLine("return $now;");
+            })
+        });
+    }
+
+    private getDebugInfoMethod(): php.Method {
+        const expiresIn = this.scheme.configuration.tokenEndpoint.responseProperties.expiresIn;
+        return php.method({
+            name: "__debugInfo",
+            access: "public",
+            parameters: [],
+            return_: php.Type.array(php.Type.mixed()),
+            docs: "Returns debug information with sensitive credentials redacted.",
+            body: php.codeblock((writer) => {
+                writer.writeLine("return [");
+                writer.indent();
+                writer.writeLine("'clientId' => '[REDACTED]',");
+                writer.writeLine("'clientSecret' => '[REDACTED]',");
+                writer.writeLine("'hasAccessToken' => $this->accessToken !== null,");
+                if (expiresIn != null) {
+                    writer.writeLine("'expiresAt' => $this->expiresAt,");
+                }
+                writer.dedent();
+                writer.writeLine("];");
             })
         });
     }

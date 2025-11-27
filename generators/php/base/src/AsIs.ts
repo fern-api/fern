@@ -9,6 +9,7 @@ export enum AsIsFiles {
     BaseApiRequest = "Client/BaseApiRequest.Template.php",
     HttpMethod = "Client/HttpMethod.Template.php",
     RawClient = "Client/RawClient.Template.php",
+    Redactor = "Client/Redactor.Template.php",
     RetryMiddleware = "Client/RetryMiddleware.Template.php",
     RawClientTest = "Client/RawClientTest.Template.php",
 
