@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- changelogEntry:
+    - summary: |
+        When converting OpenAPI to Fern Definition, if all endpoints in a service have `auth: true`, set the `auth: true` at the service level, and remove it from individual endpoints.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-26"
+  version: 2.11.0
+
 - changelogEntry:
     - summary: |
         Support per-generator specs override in generators.yml. Generators can now redefine the `api.specs` configuration at the individual generator level, allowing different specs configurations for different generators.
