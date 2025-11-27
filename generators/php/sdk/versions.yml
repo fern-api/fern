@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.23.6
+  changelogEntry:
+    - summary: |
+        Fix wire tests to pass X-Test-Id header via method call options. Dynamic snippets now pass arbitrary headers from the snippet request as per-request options when generating calls on existing clients (skipClientInstantiation mode). This enables wire tests to properly correlate requests with WireMock verification.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 62
+
 - version: 1.23.5
   changelogEntry:
     - summary: |
