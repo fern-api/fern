@@ -4,10 +4,12 @@ import { ChildProcess, spawn } from "child_process";
 import execa from "execa";
 
 const ETX = "\u0003";
+const FORMAT_TIMEOUT_MS = 30000; // 30 second timeout per format request
 
 interface PendingRequest {
     resolve: (value: string) => void;
     reject: (error: Error) => void;
+    timeoutId: NodeJS.Timeout;
 }
 
 /**
@@ -92,6 +94,7 @@ export class CsharpFormatter extends AbstractFormatter {
 
             const pendingRequest = this.pendingRequests.shift();
             if (pendingRequest != null) {
+                clearTimeout(pendingRequest.timeoutId);
                 pendingRequest.resolve(formattedContent);
             }
         }
@@ -99,6 +102,7 @@ export class CsharpFormatter extends AbstractFormatter {
 
     private rejectAllPending(error: Error): void {
         for (const request of this.pendingRequests) {
+            clearTimeout(request.timeoutId);
             request.reject(error);
         }
         this.pendingRequests = [];
@@ -118,7 +122,18 @@ export class CsharpFormatter extends AbstractFormatter {
         }
 
         return new Promise<string>((resolve, reject) => {
-            this.pendingRequests.push({ resolve, reject });
+            const timeoutId = setTimeout(() => {
+                // Remove this request from pending queue
+                const index = this.pendingRequests.findIndex((r) => r.timeoutId === timeoutId);
+                if (index !== -1) {
+                    this.pendingRequests.splice(index, 1);
+                }
+                // Kill and restart the process on timeout
+                this.cleanup();
+                reject(new Error("csharpier format request timed out after 30 seconds"));
+            }, FORMAT_TIMEOUT_MS);
+
+            this.pendingRequests.push({ resolve, reject, timeoutId });
 
             // Format: filename\u0003content\u0003
             const input = `Dummy.cs${ETX}${content}${ETX}`;
@@ -159,6 +174,10 @@ export class CsharpFormatter extends AbstractFormatter {
         this.isProcessReady = false;
         this.buffer = "";
         this.stderrBuffer = "";
+        // Clear all pending timeouts before clearing the queue
+        for (const request of this.pendingRequests) {
+            clearTimeout(request.timeoutId);
+        }
         this.pendingRequests = [];
     }
 }
