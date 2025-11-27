@@ -699,12 +699,9 @@ public abstract class AbstractHttpResponseParserGenerator {
             }
 
             if (pagination) {
-                ObjectMapperUtils objectMapperUtils =
-                        new ObjectMapperUtils(clientGeneratorContext, generatedObjectMapper);
-                httpResponseBuilder.add("$T $L = ", responseType, variables.getParsedResponseVariableName());
-                httpResponseBuilder.addStatement(objectMapperUtils.readValueCall(
-                        CodeBlock.of("$L", variables.getResponseBodyStringName()),
-                        Optional.of(body.getResponseBodyType())));
+                // Note: Response parsing is now done inside each pagination visitor method
+                // to support defensive array vs object detection for APIs like Auth0
+                // that may return raw arrays instead of wrapped objects
                 ParameterSpec requestParameterSpec = variables
                         .requestParameterSpec()
                         .orElseThrow(() -> new RuntimeException("Unexpected no parameter spec for paginated endpoint"));
@@ -1286,8 +1283,62 @@ public abstract class AbstractHttpResponseParserGenerator {
             this.methodParameters = methodParameters;
         }
 
+        private void generateDefensivePaginationParsing(
+                ObjectProperty resultsProperty,
+                com.fern.ir.model.types.TypeReference resultsTypeReference) {
+            TypeName responseType =
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, body.getResponseBodyType());
+
+            String resultsPropertyName =
+                    resultsProperty.getName().getName().getCamelCase().getSafeName();
+
+            TypeName resultsTypeName =
+                    clientGeneratorContext.getPoetTypeNameMapper().convertToTypeName(true, resultsTypeReference);
+
+            httpResponseBuilder.addStatement(
+                    "$T responseNode = $T.$L.readTree($L)",
+                    ClassName.get("com.fasterxml.jackson.databind", "JsonNode"),
+                    generatedObjectMapper.getClassName(),
+                    generatedObjectMapper.jsonMapperStaticField().name,
+                    variables.getResponseBodyStringName());
+
+            httpResponseBuilder.addStatement("$T $L", responseType, variables.getParsedResponseVariableName());
+
+            httpResponseBuilder.beginControlFlow("if (responseNode.isArray())");
+
+            httpResponseBuilder.addStatement(
+                    "$T items = $T.$L.convertValue(responseNode, new $T<$T>() {})",
+                    resultsTypeName,
+                    generatedObjectMapper.getClassName(),
+                    generatedObjectMapper.jsonMapperStaticField().name,
+                    ClassName.get("com.fasterxml.jackson.core.type", "TypeReference"),
+                    resultsTypeName);
+
+            httpResponseBuilder.addStatement(
+                    "$L = $T.builder().$L(items).build()",
+                    variables.getParsedResponseVariableName(),
+                    responseType,
+                    resultsPropertyName);
+
+            httpResponseBuilder.endControlFlow();
+            httpResponseBuilder.beginControlFlow("else");
+
+            // Normal object parsing
+            httpResponseBuilder.addStatement(
+                    "$L = $T.$L.convertValue(responseNode, $T.class)",
+                    variables.getParsedResponseVariableName(),
+                    generatedObjectMapper.getClassName(),
+                    generatedObjectMapper.jsonMapperStaticField().name,
+                    responseType);
+
+            httpResponseBuilder.endControlFlow();
+        }
+
         @Override
         public Void visitCursor(CursorPagination cursor) {
+            generateDefensivePaginationParsing(
+                    cursor.getResults().getProperty(), cursor.getResults().getProperty().getValueType());
+
             SnippetAndResultType nextSnippet = getNestedPropertySnippet(
                     cursor.getNext().getPropertyPath().map(path -> path.stream()
                             .map(PropertyPathItem::getName)
@@ -1427,6 +1478,9 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitOffset(OffsetPagination offset) {
+            generateDefensivePaginationParsing(
+                    offset.getResults().getProperty(), offset.getResults().getProperty().getValueType());
+
             com.fern.ir.model.types.TypeReference pageType = offset.getPage()
                     .getProperty()
                     .visit(new RequestPropertyValue.Visitor<com.fern.ir.model.types.TypeReference>() {
@@ -1660,6 +1714,10 @@ public abstract class AbstractHttpResponseParserGenerator {
 
         @Override
         public Void visitCustom(CustomPagination customPagination) {
+            generateDefensivePaginationParsing(
+                    customPagination.getResults().getProperty(),
+                    customPagination.getResults().getProperty().getValueType());
+
             TypeName responseType = getResponseType(httpEndpoint, clientGeneratorContext);
 
             if (AbstractHttpResponseParserGenerator.this instanceof AsyncHttpResponseParserGenerator) {

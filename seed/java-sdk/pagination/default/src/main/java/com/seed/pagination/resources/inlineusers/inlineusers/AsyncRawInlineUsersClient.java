@@ -4,6 +4,8 @@
 package com.seed.pagination.resources.inlineusers.inlineusers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.MediaTypes;
 import com.seed.pagination.core.ObjectMappers;
@@ -109,8 +111,18 @@ public class AsyncRawInlineUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, ListUsersPaginationResponse.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        ListUsersPaginationResponse parsedResponse;
+                        if (responseNode.isArray()) {
+                            List<User> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<List<User>>() {});
+                            parsedResponse = ListUsersPaginationResponse.builder()
+                                    .users(items)
+                                    .build();
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, ListUsersPaginationResponse.class);
+                        }
                         Optional<String> startingAfter =
                                 parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
                         ListUsersCursorPaginationRequest nextRequest = ListUsersCursorPaginationRequest.builder()
@@ -185,8 +197,18 @@ public class AsyncRawInlineUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        ListUsersMixedTypePaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, ListUsersMixedTypePaginationResponse.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        ListUsersMixedTypePaginationResponse parsedResponse;
+                        if (responseNode.isArray()) {
+                            List<User> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<List<User>>() {});
+                            parsedResponse = ListUsersMixedTypePaginationResponse.builder()
+                                    .users(items)
+                                    .build();
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, ListUsersMixedTypePaginationResponse.class);
+                        }
                         String startingAfter = parsedResponse.getNext();
                         ListUsersMixedTypeCursorPaginationRequest nextRequest =
                                 ListUsersMixedTypeCursorPaginationRequest.builder()
@@ -266,8 +288,18 @@ public class AsyncRawInlineUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, ListUsersPaginationResponse.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        ListUsersPaginationResponse parsedResponse;
+                        if (responseNode.isArray()) {
+                            List<User> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<List<User>>() {});
+                            parsedResponse = ListUsersPaginationResponse.builder()
+                                    .users(items)
+                                    .build();
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, ListUsersPaginationResponse.class);
+                        }
                         Optional<String> startingAfter =
                                 parsedResponse.getPage().flatMap(Page::getNext).map(NextPage::getStartingAfter);
                         Optional<WithCursor> pagination = request.getPagination()
@@ -360,8 +392,18 @@ public class AsyncRawInlineUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, ListUsersPaginationResponse.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        ListUsersPaginationResponse parsedResponse;
+                        if (responseNode.isArray()) {
+                            List<User> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<List<User>>() {});
+                            parsedResponse = ListUsersPaginationResponse.builder()
+                                    .users(items)
+                                    .build();
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, ListUsersPaginationResponse.class);
+                        }
                         int newPageNumber = request.getPage()
                                 .map((Integer page) -> page + 1)
                                 .orElse(1);
@@ -449,8 +491,18 @@ public class AsyncRawInlineUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, ListUsersPaginationResponse.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        ListUsersPaginationResponse parsedResponse;
+                        if (responseNode.isArray()) {
+                            List<User> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<List<User>>() {});
+                            parsedResponse = ListUsersPaginationResponse.builder()
+                                    .users(items)
+                                    .build();
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, ListUsersPaginationResponse.class);
+                        }
                         double newPageNumber = request.getPage()
                                 .map((Double page) -> page + 1.0)
                                 .orElse(1.0);
@@ -532,8 +584,18 @@ public class AsyncRawInlineUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, ListUsersPaginationResponse.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        ListUsersPaginationResponse parsedResponse;
+                        if (responseNode.isArray()) {
+                            List<User> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<List<User>>() {});
+                            parsedResponse = ListUsersPaginationResponse.builder()
+                                    .users(items)
+                                    .build();
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, ListUsersPaginationResponse.class);
+                        }
                         int newPageNumber = request.getPagination()
                                 .flatMap(WithPage::getPage)
                                 .map((Integer page) -> page + 1)
@@ -624,8 +686,18 @@ public class AsyncRawInlineUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, ListUsersPaginationResponse.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        ListUsersPaginationResponse parsedResponse;
+                        if (responseNode.isArray()) {
+                            List<User> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<List<User>>() {});
+                            parsedResponse = ListUsersPaginationResponse.builder()
+                                    .users(items)
+                                    .build();
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, ListUsersPaginationResponse.class);
+                        }
                         int newPageNumber = request.getPage()
                                 .map((Integer page) -> page + 1)
                                 .orElse(1);
@@ -711,8 +783,18 @@ public class AsyncRawInlineUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        ListUsersPaginationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, ListUsersPaginationResponse.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        ListUsersPaginationResponse parsedResponse;
+                        if (responseNode.isArray()) {
+                            List<User> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<List<User>>() {});
+                            parsedResponse = ListUsersPaginationResponse.builder()
+                                    .users(items)
+                                    .build();
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, ListUsersPaginationResponse.class);
+                        }
                         int newPageNumber = request.getPage()
                                 .map((Integer page) -> page + 1)
                                 .orElse(1);
@@ -788,8 +870,18 @@ public class AsyncRawInlineUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        ListUsersExtendedResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, ListUsersExtendedResponse.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        ListUsersExtendedResponse parsedResponse;
+                        if (responseNode.isArray()) {
+                            List<User> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<List<User>>() {});
+                            parsedResponse = ListUsersExtendedResponse.builder()
+                                    .users(items)
+                                    .build();
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, ListUsersExtendedResponse.class);
+                        }
                         Optional<UUID> startingAfter = parsedResponse.getNext();
                         ListUsersExtendedRequest nextRequest = ListUsersExtendedRequest.builder()
                                 .from(request)
@@ -865,8 +957,18 @@ public class AsyncRawInlineUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        ListUsersExtendedOptionalListResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, ListUsersExtendedOptionalListResponse.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        ListUsersExtendedOptionalListResponse parsedResponse;
+                        if (responseNode.isArray()) {
+                            Optional<List<User>> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<Optional<List<User>>>() {});
+                            parsedResponse = ListUsersExtendedOptionalListResponse.builder()
+                                    .users(items)
+                                    .build();
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, ListUsersExtendedOptionalListResponse.class);
+                        }
                         Optional<UUID> startingAfter = parsedResponse.getNext();
                         ListUsersExtendedRequestForOptionalData nextRequest =
                                 ListUsersExtendedRequestForOptionalData.builder()
@@ -940,8 +1042,16 @@ public class AsyncRawInlineUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        UsernameCursor parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsernameCursor.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        UsernameCursor parsedResponse;
+                        if (responseNode.isArray()) {
+                            List<String> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<List<String>>() {});
+                            parsedResponse =
+                                    UsernameCursor.builder().data(items).build();
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(responseNode, UsernameCursor.class);
+                        }
                         Optional<String> startingAfter =
                                 parsedResponse.getCursor().getAfter();
                         ListUsernamesRequest nextRequest = ListUsernamesRequest.builder()
@@ -1016,8 +1126,17 @@ public class AsyncRawInlineUsersClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        UsernameContainer parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, UsernameContainer.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        UsernameContainer parsedResponse;
+                        if (responseNode.isArray()) {
+                            List<String> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<List<String>>() {});
+                            parsedResponse =
+                                    UsernameContainer.builder().results(items).build();
+                        } else {
+                            parsedResponse =
+                                    ObjectMappers.JSON_MAPPER.convertValue(responseNode, UsernameContainer.class);
+                        }
                         int newPageNumber = request.getOffset()
                                 .map((Integer page) -> page + 1)
                                 .orElse(1);

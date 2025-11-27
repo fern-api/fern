@@ -4,6 +4,8 @@
 package com.seed.pagination.resources.complex;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.MediaTypes;
 import com.seed.pagination.core.ObjectMappers;
@@ -79,8 +81,18 @@ public class AsyncRawComplexClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        PaginatedConversationResponse parsedResponse = ObjectMappers.JSON_MAPPER.readValue(
-                                responseBodyString, PaginatedConversationResponse.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        PaginatedConversationResponse parsedResponse;
+                        if (responseNode.isArray()) {
+                            List<Conversation> items = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, new TypeReference<List<Conversation>>() {});
+                            parsedResponse = PaginatedConversationResponse.builder()
+                                    .conversations(items)
+                                    .build();
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode, PaginatedConversationResponse.class);
+                        }
                         Optional<String> startingAfter = parsedResponse
                                 .getPages()
                                 .flatMap(CursorPages::getNext)
