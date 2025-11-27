@@ -4,7 +4,6 @@
 package com.seed.deepCursorPath.resources.deepcursorpath;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.seed.deepCursorPath.core.ClientOptions;
 import com.seed.deepCursorPath.core.MediaTypes;
@@ -88,17 +87,10 @@ public class AsyncRawDeepCursorPathClient {
                         JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                         com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse;
                         if (responseNode.isArray()) {
-                            List<String> items = ObjectMappers.JSON_MAPPER.convertValue(
-                                    responseNode, new TypeReference<List<String>>() {});
-                            parsedResponse = com.seed
-                                    .deepCursorPath
-                                    .resources
-                                    .deepcursorpath
-                                    .types
-                                    .Response
-                                    .builder()
-                                    .results(items)
-                                    .build();
+                            JsonNode wrapper =
+                                    ObjectMappers.JSON_MAPPER.createObjectNode().set("results", responseNode);
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    wrapper, com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                         } else {
                             parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
                                     responseNode,
@@ -191,17 +183,10 @@ public class AsyncRawDeepCursorPathClient {
                         JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                         com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse;
                         if (responseNode.isArray()) {
-                            List<String> items = ObjectMappers.JSON_MAPPER.convertValue(
-                                    responseNode, new TypeReference<List<String>>() {});
-                            parsedResponse = com.seed
-                                    .deepCursorPath
-                                    .resources
-                                    .deepcursorpath
-                                    .types
-                                    .Response
-                                    .builder()
-                                    .results(items)
-                                    .build();
+                            JsonNode wrapper =
+                                    ObjectMappers.JSON_MAPPER.createObjectNode().set("results", responseNode);
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    wrapper, com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                         } else {
                             parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
                                     responseNode,
@@ -293,17 +278,10 @@ public class AsyncRawDeepCursorPathClient {
                         JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                         com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse;
                         if (responseNode.isArray()) {
-                            List<String> items = ObjectMappers.JSON_MAPPER.convertValue(
-                                    responseNode, new TypeReference<List<String>>() {});
-                            parsedResponse = com.seed
-                                    .deepCursorPath
-                                    .resources
-                                    .deepcursorpath
-                                    .types
-                                    .Response
-                                    .builder()
-                                    .results(items)
-                                    .build();
+                            JsonNode wrapper =
+                                    ObjectMappers.JSON_MAPPER.createObjectNode().set("results", responseNode);
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    wrapper, com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
                         } else {
                             parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
                                     responseNode,

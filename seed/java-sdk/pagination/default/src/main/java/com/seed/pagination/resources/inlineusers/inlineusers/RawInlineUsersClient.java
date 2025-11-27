@@ -4,7 +4,6 @@
 package com.seed.pagination.resources.inlineusers.inlineusers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.MediaTypes;
@@ -106,10 +105,9 @@ public class RawInlineUsersClient {
                 JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                 ListUsersPaginationResponse parsedResponse;
                 if (responseNode.isArray()) {
-                    List<User> items =
-                            ObjectMappers.JSON_MAPPER.convertValue(responseNode, new TypeReference<List<User>>() {});
-                    parsedResponse =
-                            ListUsersPaginationResponse.builder().users(items).build();
+                    JsonNode wrapper =
+                            ObjectMappers.JSON_MAPPER.createObjectNode().set("users", responseNode);
+                    parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(wrapper, ListUsersPaginationResponse.class);
                 } else {
                     parsedResponse =
                             ObjectMappers.JSON_MAPPER.convertValue(responseNode, ListUsersPaginationResponse.class);
@@ -172,11 +170,10 @@ public class RawInlineUsersClient {
                 JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                 ListUsersMixedTypePaginationResponse parsedResponse;
                 if (responseNode.isArray()) {
-                    List<User> items =
-                            ObjectMappers.JSON_MAPPER.convertValue(responseNode, new TypeReference<List<User>>() {});
-                    parsedResponse = ListUsersMixedTypePaginationResponse.builder()
-                            .users(items)
-                            .build();
+                    JsonNode wrapper =
+                            ObjectMappers.JSON_MAPPER.createObjectNode().set("users", responseNode);
+                    parsedResponse =
+                            ObjectMappers.JSON_MAPPER.convertValue(wrapper, ListUsersMixedTypePaginationResponse.class);
                 } else {
                     parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
                             responseNode, ListUsersMixedTypePaginationResponse.class);
@@ -246,10 +243,9 @@ public class RawInlineUsersClient {
                 JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                 ListUsersPaginationResponse parsedResponse;
                 if (responseNode.isArray()) {
-                    List<User> items =
-                            ObjectMappers.JSON_MAPPER.convertValue(responseNode, new TypeReference<List<User>>() {});
-                    parsedResponse =
-                            ListUsersPaginationResponse.builder().users(items).build();
+                    JsonNode wrapper =
+                            ObjectMappers.JSON_MAPPER.createObjectNode().set("users", responseNode);
+                    parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(wrapper, ListUsersPaginationResponse.class);
                 } else {
                     parsedResponse =
                             ObjectMappers.JSON_MAPPER.convertValue(responseNode, ListUsersPaginationResponse.class);
@@ -329,10 +325,9 @@ public class RawInlineUsersClient {
                 JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                 ListUsersPaginationResponse parsedResponse;
                 if (responseNode.isArray()) {
-                    List<User> items =
-                            ObjectMappers.JSON_MAPPER.convertValue(responseNode, new TypeReference<List<User>>() {});
-                    parsedResponse =
-                            ListUsersPaginationResponse.builder().users(items).build();
+                    JsonNode wrapper =
+                            ObjectMappers.JSON_MAPPER.createObjectNode().set("users", responseNode);
+                    parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(wrapper, ListUsersPaginationResponse.class);
                 } else {
                     parsedResponse =
                             ObjectMappers.JSON_MAPPER.convertValue(responseNode, ListUsersPaginationResponse.class);
@@ -406,10 +401,9 @@ public class RawInlineUsersClient {
                 JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                 ListUsersPaginationResponse parsedResponse;
                 if (responseNode.isArray()) {
-                    List<User> items =
-                            ObjectMappers.JSON_MAPPER.convertValue(responseNode, new TypeReference<List<User>>() {});
-                    parsedResponse =
-                            ListUsersPaginationResponse.builder().users(items).build();
+                    JsonNode wrapper =
+                            ObjectMappers.JSON_MAPPER.createObjectNode().set("users", responseNode);
+                    parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(wrapper, ListUsersPaginationResponse.class);
                 } else {
                     parsedResponse =
                             ObjectMappers.JSON_MAPPER.convertValue(responseNode, ListUsersPaginationResponse.class);
@@ -476,10 +470,9 @@ public class RawInlineUsersClient {
                 JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                 ListUsersPaginationResponse parsedResponse;
                 if (responseNode.isArray()) {
-                    List<User> items =
-                            ObjectMappers.JSON_MAPPER.convertValue(responseNode, new TypeReference<List<User>>() {});
-                    parsedResponse =
-                            ListUsersPaginationResponse.builder().users(items).build();
+                    JsonNode wrapper =
+                            ObjectMappers.JSON_MAPPER.createObjectNode().set("users", responseNode);
+                    parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(wrapper, ListUsersPaginationResponse.class);
                 } else {
                     parsedResponse =
                             ObjectMappers.JSON_MAPPER.convertValue(responseNode, ListUsersPaginationResponse.class);
@@ -555,10 +548,9 @@ public class RawInlineUsersClient {
                 JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                 ListUsersPaginationResponse parsedResponse;
                 if (responseNode.isArray()) {
-                    List<User> items =
-                            ObjectMappers.JSON_MAPPER.convertValue(responseNode, new TypeReference<List<User>>() {});
-                    parsedResponse =
-                            ListUsersPaginationResponse.builder().users(items).build();
+                    JsonNode wrapper =
+                            ObjectMappers.JSON_MAPPER.createObjectNode().set("users", responseNode);
+                    parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(wrapper, ListUsersPaginationResponse.class);
                 } else {
                     parsedResponse =
                             ObjectMappers.JSON_MAPPER.convertValue(responseNode, ListUsersPaginationResponse.class);
@@ -628,10 +620,9 @@ public class RawInlineUsersClient {
                 JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                 ListUsersPaginationResponse parsedResponse;
                 if (responseNode.isArray()) {
-                    List<User> items =
-                            ObjectMappers.JSON_MAPPER.convertValue(responseNode, new TypeReference<List<User>>() {});
-                    parsedResponse =
-                            ListUsersPaginationResponse.builder().users(items).build();
+                    JsonNode wrapper =
+                            ObjectMappers.JSON_MAPPER.createObjectNode().set("users", responseNode);
+                    parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(wrapper, ListUsersPaginationResponse.class);
                 } else {
                     parsedResponse =
                             ObjectMappers.JSON_MAPPER.convertValue(responseNode, ListUsersPaginationResponse.class);
@@ -694,10 +685,9 @@ public class RawInlineUsersClient {
                 JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                 ListUsersExtendedResponse parsedResponse;
                 if (responseNode.isArray()) {
-                    List<User> items =
-                            ObjectMappers.JSON_MAPPER.convertValue(responseNode, new TypeReference<List<User>>() {});
-                    parsedResponse =
-                            ListUsersExtendedResponse.builder().users(items).build();
+                    JsonNode wrapper =
+                            ObjectMappers.JSON_MAPPER.createObjectNode().set("users", responseNode);
+                    parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(wrapper, ListUsersExtendedResponse.class);
                 } else {
                     parsedResponse =
                             ObjectMappers.JSON_MAPPER.convertValue(responseNode, ListUsersExtendedResponse.class);
@@ -759,11 +749,10 @@ public class RawInlineUsersClient {
                 JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                 ListUsersExtendedOptionalListResponse parsedResponse;
                 if (responseNode.isArray()) {
-                    Optional<List<User>> items = ObjectMappers.JSON_MAPPER.convertValue(
-                            responseNode, new TypeReference<Optional<List<User>>>() {});
-                    parsedResponse = ListUsersExtendedOptionalListResponse.builder()
-                            .users(items)
-                            .build();
+                    JsonNode wrapper =
+                            ObjectMappers.JSON_MAPPER.createObjectNode().set("users", responseNode);
+                    parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                            wrapper, ListUsersExtendedOptionalListResponse.class);
                 } else {
                     parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
                             responseNode, ListUsersExtendedOptionalListResponse.class);
@@ -825,9 +814,9 @@ public class RawInlineUsersClient {
                 JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                 UsernameCursor parsedResponse;
                 if (responseNode.isArray()) {
-                    List<String> items =
-                            ObjectMappers.JSON_MAPPER.convertValue(responseNode, new TypeReference<List<String>>() {});
-                    parsedResponse = UsernameCursor.builder().data(items).build();
+                    JsonNode wrapper =
+                            ObjectMappers.JSON_MAPPER.createObjectNode().set("data", responseNode);
+                    parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(wrapper, UsernameCursor.class);
                 } else {
                     parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(responseNode, UsernameCursor.class);
                 }
@@ -887,9 +876,9 @@ public class RawInlineUsersClient {
                 JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                 UsernameContainer parsedResponse;
                 if (responseNode.isArray()) {
-                    List<String> items =
-                            ObjectMappers.JSON_MAPPER.convertValue(responseNode, new TypeReference<List<String>>() {});
-                    parsedResponse = UsernameContainer.builder().results(items).build();
+                    JsonNode wrapper =
+                            ObjectMappers.JSON_MAPPER.createObjectNode().set("results", responseNode);
+                    parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(wrapper, UsernameContainer.class);
                 } else {
                     parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(responseNode, UsernameContainer.class);
                 }

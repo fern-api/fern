@@ -4,7 +4,6 @@
 package com.seed.pagination.resources.complex;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.MediaTypes;
@@ -84,11 +83,10 @@ public class AsyncRawComplexClient {
                         JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
                         PaginatedConversationResponse parsedResponse;
                         if (responseNode.isArray()) {
-                            List<Conversation> items = ObjectMappers.JSON_MAPPER.convertValue(
-                                    responseNode, new TypeReference<List<Conversation>>() {});
-                            parsedResponse = PaginatedConversationResponse.builder()
-                                    .conversations(items)
-                                    .build();
+                            JsonNode wrapper =
+                                    ObjectMappers.JSON_MAPPER.createObjectNode().set("conversations", responseNode);
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    wrapper, PaginatedConversationResponse.class);
                         } else {
                             parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
                                     responseNode, PaginatedConversationResponse.class);
