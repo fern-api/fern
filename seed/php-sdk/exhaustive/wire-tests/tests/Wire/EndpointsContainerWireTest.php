@@ -8,21 +8,24 @@ use Seed\Types\Object\Types\ObjectWithRequiredField;
 
 class EndpointsContainerWireTest extends WireMockTestCase
 {
+    /**
+     * @var SeedClient $client
+     */
+    private SeedClient $client;
 
     /**
      */
     public function testGetAndReturnListOfPrimitives(): void {
         $testId = 'endpoints.container.get_and_return_list_of_primitives.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->container->getAndReturnListOfPrimitives(
+        $this->client->endpoints->container->getAndReturnListOfPrimitives(
             [
                 'string',
                 'string',
+            ],
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.container.get_and_return_list_of_primitives.0',
+                ],
             ],
         );
         $this->verifyRequestCount(
@@ -38,13 +41,7 @@ class EndpointsContainerWireTest extends WireMockTestCase
      */
     public function testGetAndReturnListOfObjects(): void {
         $testId = 'endpoints.container.get_and_return_list_of_objects.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->container->getAndReturnListOfObjects(
+        $this->client->endpoints->container->getAndReturnListOfObjects(
             [
                 new ObjectWithRequiredField([
                     'string' => 'string',
@@ -52,6 +49,11 @@ class EndpointsContainerWireTest extends WireMockTestCase
                 new ObjectWithRequiredField([
                     'string' => 'string',
                 ]),
+            ],
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.container.get_and_return_list_of_objects.0',
+                ],
             ],
         );
         $this->verifyRequestCount(
@@ -67,15 +69,14 @@ class EndpointsContainerWireTest extends WireMockTestCase
      */
     public function testGetAndReturnSetOfPrimitives(): void {
         $testId = 'endpoints.container.get_and_return_set_of_primitives.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->container->getAndReturnSetOfPrimitives(
+        $this->client->endpoints->container->getAndReturnSetOfPrimitives(
             [
                 'string',
+            ],
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.container.get_and_return_set_of_primitives.0',
+                ],
             ],
         );
         $this->verifyRequestCount(
@@ -91,17 +92,16 @@ class EndpointsContainerWireTest extends WireMockTestCase
      */
     public function testGetAndReturnSetOfObjects(): void {
         $testId = 'endpoints.container.get_and_return_set_of_objects.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->container->getAndReturnSetOfObjects(
+        $this->client->endpoints->container->getAndReturnSetOfObjects(
             [
                 new ObjectWithRequiredField([
                     'string' => 'string',
                 ]),
+            ],
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.container.get_and_return_set_of_objects.0',
+                ],
             ],
         );
         $this->verifyRequestCount(
@@ -117,15 +117,14 @@ class EndpointsContainerWireTest extends WireMockTestCase
      */
     public function testGetAndReturnMapPrimToPrim(): void {
         $testId = 'endpoints.container.get_and_return_map_prim_to_prim.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->container->getAndReturnMapPrimToPrim(
+        $this->client->endpoints->container->getAndReturnMapPrimToPrim(
             [
                 'string' => 'string',
+            ],
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.container.get_and_return_map_prim_to_prim.0',
+                ],
             ],
         );
         $this->verifyRequestCount(
@@ -141,17 +140,16 @@ class EndpointsContainerWireTest extends WireMockTestCase
      */
     public function testGetAndReturnMapOfPrimToObject(): void {
         $testId = 'endpoints.container.get_and_return_map_of_prim_to_object.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->container->getAndReturnMapOfPrimToObject(
+        $this->client->endpoints->container->getAndReturnMapOfPrimToObject(
             [
                 'string' => new ObjectWithRequiredField([
                     'string' => 'string',
                 ]),
+            ],
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.container.get_and_return_map_of_prim_to_object.0',
+                ],
             ],
         );
         $this->verifyRequestCount(
@@ -167,16 +165,15 @@ class EndpointsContainerWireTest extends WireMockTestCase
      */
     public function testGetAndReturnOptional(): void {
         $testId = 'endpoints.container.get_and_return_optional.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->container->getAndReturnOptional(
+        $this->client->endpoints->container->getAndReturnOptional(
             new ObjectWithRequiredField([
                 'string' => 'string',
             ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.container.get_and_return_optional.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -184,6 +181,18 @@ class EndpointsContainerWireTest extends WireMockTestCase
             "/container/opt-objects",
             null,
             1
+        );
+    }
+
+    /**
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->client = new SeedClient(
+            token: 'test-token',
+        options: [
+            'baseUrl' => 'http://localhost:8080',
+        ],
         );
     }
 }

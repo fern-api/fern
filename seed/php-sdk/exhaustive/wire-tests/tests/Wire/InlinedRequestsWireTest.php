@@ -10,18 +10,16 @@ use DateTime;
 
 class InlinedRequestsWireTest extends WireMockTestCase
 {
+    /**
+     * @var SeedClient $client
+     */
+    private SeedClient $client;
 
     /**
      */
     public function testPostWithObjectBodyandResponse(): void {
         $testId = 'inlined_requests.post_with_object_bodyand_response.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->inlinedRequests->postWithObjectBodyandResponse(
+        $this->client->inlinedRequests->postWithObjectBodyandResponse(
             new PostWithObjectBody([
                 'string' => 'string',
                 'integer' => 1,
@@ -48,6 +46,11 @@ class InlinedRequestsWireTest extends WireMockTestCase
                     'bigint' => '1000000',
                 ]),
             ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'inlined_requests.post_with_object_bodyand_response.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -55,6 +58,18 @@ class InlinedRequestsWireTest extends WireMockTestCase
             "/req-bodies/object",
             null,
             1
+        );
+    }
+
+    /**
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->client = new SeedClient(
+            token: 'test-token',
+        options: [
+            'baseUrl' => 'http://localhost:8080',
+        ],
         );
     }
 }

@@ -8,19 +8,22 @@ use DateTime;
 
 class EndpointsPrimitiveWireTest extends WireMockTestCase
 {
+    /**
+     * @var SeedClient $client
+     */
+    private SeedClient $client;
 
     /**
      */
     public function testGetAndReturnString(): void {
         $testId = 'endpoints.primitive.get_and_return_string.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->primitive->getAndReturnString(
+        $this->client->endpoints->primitive->getAndReturnString(
             'string',
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.primitive.get_and_return_string.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -35,14 +38,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
      */
     public function testGetAndReturnInt(): void {
         $testId = 'endpoints.primitive.get_and_return_int.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->primitive->getAndReturnInt(
+        $this->client->endpoints->primitive->getAndReturnInt(
             1,
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.primitive.get_and_return_int.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -57,14 +59,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
      */
     public function testGetAndReturnLong(): void {
         $testId = 'endpoints.primitive.get_and_return_long.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->primitive->getAndReturnLong(
+        $this->client->endpoints->primitive->getAndReturnLong(
             1000000,
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.primitive.get_and_return_long.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -79,14 +80,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
      */
     public function testGetAndReturnDouble(): void {
         $testId = 'endpoints.primitive.get_and_return_double.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->primitive->getAndReturnDouble(
+        $this->client->endpoints->primitive->getAndReturnDouble(
             1.1,
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.primitive.get_and_return_double.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -101,14 +101,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
      */
     public function testGetAndReturnBool(): void {
         $testId = 'endpoints.primitive.get_and_return_bool.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->primitive->getAndReturnBool(
+        $this->client->endpoints->primitive->getAndReturnBool(
             true,
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.primitive.get_and_return_bool.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -123,14 +122,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
      */
     public function testGetAndReturnDatetime(): void {
         $testId = 'endpoints.primitive.get_and_return_datetime.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->primitive->getAndReturnDatetime(
+        $this->client->endpoints->primitive->getAndReturnDatetime(
             new DateTime('2024-01-15T09:30:00Z'),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.primitive.get_and_return_datetime.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -145,14 +143,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
      */
     public function testGetAndReturnDate(): void {
         $testId = 'endpoints.primitive.get_and_return_date.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->primitive->getAndReturnDate(
+        $this->client->endpoints->primitive->getAndReturnDate(
             new DateTime('2023-01-15'),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.primitive.get_and_return_date.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -167,14 +164,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
      */
     public function testGetAndReturnUuid(): void {
         $testId = 'endpoints.primitive.get_and_return_uuid.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->primitive->getAndReturnUuid(
+        $this->client->endpoints->primitive->getAndReturnUuid(
             'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.primitive.get_and_return_uuid.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -189,14 +185,13 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
      */
     public function testGetAndReturnBase64(): void {
         $testId = 'endpoints.primitive.get_and_return_base_64.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->primitive->getAndReturnBase64(
+        $this->client->endpoints->primitive->getAndReturnBase64(
             'SGVsbG8gd29ybGQh',
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.primitive.get_and_return_base_64.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -204,6 +199,18 @@ class EndpointsPrimitiveWireTest extends WireMockTestCase
             "/primitive/base64",
             null,
             1
+        );
+    }
+
+    /**
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->client = new SeedClient(
+            token: 'test-token',
+        options: [
+            'baseUrl' => 'http://localhost:8080',
+        ],
         );
     }
 }
