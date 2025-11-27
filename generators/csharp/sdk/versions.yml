@@ -1,12 +1,4 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.9.6
-  changelogEntry:
-    - summary: |
-        Improve csharpier formatter performance by keeping a persistent process alive instead of spawning a new process for each formatting request.
-      type: fix
-  createdAt: "2025-11-27"
-  irVersion: 61
-
 - version: 2.9.5
   changelogEntry:
     - summary: |
