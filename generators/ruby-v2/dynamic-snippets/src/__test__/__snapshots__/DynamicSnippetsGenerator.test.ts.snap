@@ -31,7 +31,7 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
 client.service.create_big_entity({
-  extendedMovie: {
+  extended_movie: {
     cast: ['John Travolta', 'Samuel L. Jackson', 'Uma Thurman', 'Bruce Willis'],
     id: 'movie-sda231x',
     title: 'Pulp Fiction',
@@ -249,8 +249,8 @@ client.nullable.create_user(
   username: 'john.doe',
   tags: ['admin'],
   metadata: {
-    createdAt: '1980-01-01T00:00:00Z',
-    updatedAt: '1980-01-01T00:00:00Z',
+    created_at: '1980-01-01T00:00:00Z',
+    updated_at: '1980-01-01T00:00:00Z',
     avatar: nil,
     activated: nil
   },

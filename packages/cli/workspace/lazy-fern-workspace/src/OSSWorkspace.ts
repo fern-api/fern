@@ -395,8 +395,14 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
 
     public async toFernWorkspace(
         { context }: { context: TaskContext },
-        settings?: OSSWorkspace.Settings
+        settings?: OSSWorkspace.Settings,
+        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<FernWorkspace> {
+        // If specs override is provided, create a temporary workspace with the override specs
+        if (specsOverride != null) {
+            return this.createWorkspaceWithSpecsOverride({ context }, specsOverride, settings);
+        }
+
         const definition = await this.getDefinition({ context }, settings);
         return new FernWorkspace({
             absoluteFilePath: this.absoluteFilePath,
@@ -409,6 +415,88 @@ export class OSSWorkspace extends BaseOpenAPIWorkspace {
             cliVersion: this.cliVersion,
             sources: this.sources
         });
+    }
+
+    private async createWorkspaceWithSpecsOverride(
+        { context }: { context: TaskContext },
+        specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema,
+        settings?: OSSWorkspace.Settings
+    ): Promise<FernWorkspace> {
+        // Convert specsOverride to Spec[] format directly
+        const overrideSpecs = await this.convertSpecsOverrideToSpecs(specsOverride);
+        const overrideAllSpecs = overrideSpecs.filter((spec) => spec.type !== "protobuf" || !spec.fromOpenAPI);
+
+        // Create a new temporary workspace with the override specs
+        const tempWorkspace = new OSSWorkspace({
+            allSpecs: overrideAllSpecs,
+            specs: overrideSpecs.filter((spec) => spec.type === "openapi" || spec.type === "protobuf") as (
+                | OpenAPISpec
+                | ProtobufSpec
+            )[],
+            generatorsConfiguration: this.generatorsConfiguration,
+            workspaceName: this.workspaceName,
+            cliVersion: this.cliVersion,
+            absoluteFilePath: this.absoluteFilePath,
+            changelog: this.changelog
+        });
+
+        // Get the definition from the temporary workspace
+        const definition = await tempWorkspace.getDefinition({ context }, settings);
+
+        return new FernWorkspace({
+            absoluteFilePath: this.absoluteFilePath,
+            workspaceName: this.workspaceName,
+            generatorsConfiguration: this.generatorsConfiguration,
+            dependenciesConfiguration: {
+                dependencies: {}
+            },
+            definition,
+            cliVersion: this.cliVersion,
+            sources: tempWorkspace.sources
+        });
+    }
+
+    private async convertSpecsOverrideToSpecs(
+        specsOverride: generatorsYml.ApiConfigurationV2SpecsSchema
+    ): Promise<Spec[]> {
+        // Handle conjure schema case
+        if (!Array.isArray(specsOverride)) {
+            throw new Error("Conjure specs override is not yet supported");
+        }
+
+        const specs: Spec[] = [];
+
+        for (const spec of specsOverride) {
+            if (generatorsYml.isOpenApiSpecSchema(spec)) {
+                const absoluteFilepath = join(this.absoluteFilePath, RelativeFilePath.of(spec.openapi));
+                const absoluteFilepathToOverrides = spec.overrides
+                    ? join(this.absoluteFilePath, RelativeFilePath.of(spec.overrides))
+                    : undefined;
+
+                // Create a minimal OpenAPI spec with default settings
+                const openApiSpec: OpenAPISpec = {
+                    type: "openapi",
+                    absoluteFilepath,
+                    absoluteFilepathToOverrides,
+                    // Use default settings from existing specs for compatibility
+                    settings: this.specs.length > 0 ? this.specs[0]?.settings : undefined,
+                    source: {
+                        type: "openapi",
+                        file: absoluteFilepath
+                    },
+                    namespace: spec.namespace ?? this.workspaceName
+                };
+
+                specs.push(openApiSpec);
+            } else {
+                // For now, only support OpenAPI specs override to keep it simple
+                throw new Error(
+                    `Spec type override not yet supported. Only OpenAPI specs are currently supported in specs override.`
+                );
+            }
+        }
+
+        return specs;
     }
 
     public getAbsoluteFilePaths(): AbsoluteFilePath[] {

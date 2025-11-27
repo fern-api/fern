@@ -365,7 +365,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
             return undefined;
         }
 
-        return `${this.rootPackageClientName}::Environment::${defaultEnvironment.name.pascalCase.unsafeName}`;
+        return `${this.rootPackageClientName}::Environment::${defaultEnvironment.name.screamingSnakeCase.safeName}`;
     }
 
     private getRootPackageClientName(): string {

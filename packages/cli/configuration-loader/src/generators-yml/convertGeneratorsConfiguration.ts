@@ -567,7 +567,13 @@ async function convertGenerator({
         irVersionOverride: generator["ir-version"] ?? undefined,
         publishMetadata: getPublishMetadata({ generatorInvocation: generator }),
         readme,
-        settings: generator.api?.settings ?? undefined
+        settings: generator.api?.settings ?? undefined,
+        apiOverride:
+            generator.api?.specs != null
+                ? {
+                      specs: generator.api.specs
+                  }
+                : undefined
     };
 }
 

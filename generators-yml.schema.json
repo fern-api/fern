@@ -3558,6 +3558,16 @@
               "type": "null"
             }
           ]
+        },
+        "specs": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.APIConfigurationV2SpecsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

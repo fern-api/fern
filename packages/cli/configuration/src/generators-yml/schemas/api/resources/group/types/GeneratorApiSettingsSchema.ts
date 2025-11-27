@@ -4,7 +4,16 @@
 
 import * as FernDefinition from "../../../index";
 
+/**
+ * Override API configuration settings for a specific generator.
+ * When specs is provided, it completely replaces the top-level api.specs configuration for this generator.
+ */
 export interface GeneratorApiSettingsSchema {
     auth?: FernDefinition.fernDefinition.ApiAuthSchema;
     settings?: FernDefinition.ApiDefinitionSettingsSchema;
+    /**
+     * Override the specs configuration for this generator.
+     * When provided, this completely replaces the top-level api.specs configuration.
+     */
+    specs?: FernDefinition.ApiConfigurationV2SpecsSchema;
 }
