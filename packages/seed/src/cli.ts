@@ -9,6 +9,7 @@ import { hideBin } from "yargs/helpers";
 import { cleanOrphanedSeedFolders } from "./commands/clean";
 import { generateCliChangelog } from "./commands/generate/generateCliChangelog";
 import { generateGeneratorChangelog } from "./commands/generate/generateGeneratorChangelog";
+import { generateGithubReleaseNotes } from "./commands/generate/generateGithubReleaseNotes";
 import { buildGeneratorImage } from "./commands/img/buildGeneratorImage";
 import { getLatestCli } from "./commands/latest/getLatestCli";
 import { getLatestGenerator } from "./commands/latest/getLatestGenerator";
@@ -1248,6 +1249,63 @@ function addGenerateCommands(cli: Argv) {
                     }
                 );
         });
+        yargs.command(
+            "release-notes <generator> <version>",
+            "Generate GitHub release notes for a specific generator version",
+            (addtlYargs) =>
+                addtlYargs
+                    .positional("generator", {
+                        type: "string",
+                        demandOption: true,
+                        description: "Generator to generate release notes for"
+                    })
+                    .positional("version", {
+                        type: "string",
+                        demandOption: true,
+                        description: "Version to generate release notes for"
+                    })
+                    .option("log-level", {
+                        default: LogLevel.Info,
+                        choices: LOG_LEVELS
+                    })
+                    .option("output", {
+                        alias: "o",
+                        description: "Path to write the release notes to (writes to stdout if not provided)",
+                        string: true,
+                        demandOption: false
+                    }),
+            async (argv) => {
+                const generators = await loadGeneratorWorkspaces();
+                throwIfGeneratorDoesNotExist({ seedWorkspaces: generators, generators: [argv.generator] });
+
+                const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                const context = taskContextFactory.create("ReleaseNotes");
+
+                const maybeGeneratorWorkspace = generators.find((g) => g.workspaceName === argv.generator);
+                if (maybeGeneratorWorkspace == null) {
+                    context.failAndThrow(`Specified generator ${argv.generator} not found.`);
+                    return;
+                }
+
+                const result = await generateGithubReleaseNotes({
+                    context,
+                    generator: maybeGeneratorWorkspace,
+                    version: argv.version
+                });
+
+                if (result == null) {
+                    context.failAndThrow(`Failed to generate release notes for ${argv.generator}@${argv.version}`);
+                    return;
+                }
+
+                if (argv.output) {
+                    await writeFile(argv.output, result.releaseNotes);
+                    context.logger.info(`Wrote release notes to ${argv.output}`);
+                } else {
+                    process.stdout.write(result.releaseNotes);
+                }
+            }
+        );
     });
 }
 
