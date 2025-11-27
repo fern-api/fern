@@ -1,5 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.23.3
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for inferred auth. Wire tests now correctly pass the required auth parameters (e.g., apiKey) extracted from the token endpoint's request body and headers, matching the root client constructor signature.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 62
+
+- version: 1.23.2
+  changelogEntry:
+    - summary: |
+        Fix constructor signature mismatches in multi-URL environments. Subpackage clients now consistently use `isMultiUrl` to determine whether to accept `Environments` or `options` as the second constructor parameter, matching the root client's behavior. Also fixes OAuth and inferred auth client instantiation to pass the environment parameter when in multi-URL mode, and updates wire tests to extend `WireMockTestCase` and include auth parameters.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 62
+
 - version: 1.23.1
   changelogEntry:
     - summary: |

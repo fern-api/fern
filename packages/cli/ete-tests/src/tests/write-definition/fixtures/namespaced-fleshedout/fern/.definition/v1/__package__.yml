@@ -236,13 +236,12 @@ errors:
     status-code: 422
     type: unknown
 service:
-  auth: false
+  auth: true
   base-path: ''
   endpoints:
     chat:
       audiences:
         - public
-      auth: true
       display-name: Chat
       docs: >
         Generates a text response to a user message.

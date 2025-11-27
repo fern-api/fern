@@ -289,12 +289,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
                 const oauth = this.context.getOauth();
                 if (oauth != null && oauth.configuration.type === "clientCredentials") {
-                    this.writeOAuthTokenRetrieval(writer, oauth);
+                    this.writeOAuthTokenRetrieval(writer, oauth, isMultiUrl);
                 }
 
                 const inferredAuth = this.context.getInferredAuth();
                 if (inferredAuth != null) {
-                    this.writeInferredAuthTokenRetrieval(writer, inferredAuth);
+                    this.writeInferredAuthTokenRetrieval(writer, inferredAuth, isMultiUrl);
                 }
 
                 writer.write("$defaultHeaders = ");
@@ -672,7 +672,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
     }
 
-    private writeOAuthTokenRetrieval(writer: php.Writer, oauth: OAuthScheme): void {
+    private writeOAuthTokenRetrieval(writer: php.Writer, oauth: OAuthScheme, isMultiUrl: boolean): void {
         const tokenEndpointReference = oauth.configuration.tokenEndpoint.endpointReference;
         const subpackageId = tokenEndpointReference.subpackageId;
 
@@ -698,7 +698,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$authClient = new ");
         writer.writeNode(authClientClassReference);
-        writer.writeLine("($authRawClient);");
+        if (isMultiUrl) {
+            writer.writeLine("($authRawClient, $environment);");
+        } else {
+            writer.writeLine("($authRawClient);");
+        }
 
         writer.write("$oauthTokenProvider = new ");
         writer.writeNode(oauthTokenProviderClassReference);
@@ -776,7 +780,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         return parameters;
     }
 
-    private writeInferredAuthTokenRetrieval(writer: php.Writer, inferredAuth: InferredAuthScheme): void {
+    private writeInferredAuthTokenRetrieval(
+        writer: php.Writer,
+        inferredAuth: InferredAuthScheme,
+        isMultiUrl: boolean
+    ): void {
         const tokenEndpointReference = inferredAuth.tokenEndpoint.endpoint;
         const subpackageId = tokenEndpointReference.subpackageId;
 
@@ -802,7 +810,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$authClient = new ");
         writer.writeNode(authClientClassReference);
-        writer.writeLine("($authRawClient);");
+        if (isMultiUrl) {
+            writer.writeLine("($authRawClient, $environment);");
+        } else {
+            writer.writeLine("($authRawClient);");
+        }
 
         // Build the options array for the InferredAuthProvider
         writer.writeLine("$inferredAuthOptions = [");
