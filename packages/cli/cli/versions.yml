@@ -2,6 +2,17 @@
 
 - changelogEntry:
     - summary: |
+        Allow all API settings to be overridden at the generator level in generators.yml. Settings like `title-as-schema-name`, `type-dates-as-strings`, `object-query-parameters`, and `coerce-enums-to-literals` can now be configured per-generator.
+      type: feat
+    - summary: |
+        Add CLI migration to automatically convert deprecated generator-level API settings keys to their new equivalents: `use-title` to `title-as-schema-name`, and `unions: v1` to `prefer-undiscriminated-unions-with-literals: true`.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.12.0
+
+- changelogEntry:
+    - summary: |
         When converting OpenAPI to Fern Definition, if all endpoints in a service have `auth: true`, set the `auth: true` at the service level, and remove it from individual endpoints.
       type: feat
   irVersion: 62
