@@ -86,7 +86,8 @@ export abstract class BaseOpenAPIWorkspace extends AbstractAPIWorkspace<BaseOpen
 
     public async toFernWorkspace(
         { context }: { context: TaskContext },
-        settings?: BaseOpenAPIWorkspace.Settings
+        settings?: BaseOpenAPIWorkspace.Settings,
+        specsOverride?: generatorsYml.ApiConfigurationV2SpecsSchema
     ): Promise<FernWorkspace> {
         const definition = await this.getDefinition({ context }, settings);
         return new FernWorkspace({
