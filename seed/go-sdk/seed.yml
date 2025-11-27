@@ -245,8 +245,8 @@ allowedFailures:
   - request-parameters
   - reserved-keywords
   - streaming-parameter
-  - server-sent-event-examples:with-wire-tests
-  - server-sent-events:with-wire-tests
+  - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
+  - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
   - property-access
 
