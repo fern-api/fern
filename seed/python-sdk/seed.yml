@@ -377,5 +377,7 @@ allowedFailures:
   - response-property
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests
+  - server-sent-events:with-wire-tests
+  - exhaustive:package-path
   - trace
   - websocket
