@@ -133,7 +133,10 @@ export class WireTestGenerator {
         const class_ = php.class_({
             name: testClassName,
             namespace: this.context.getTestsNamespace(),
-            parentClassReference: php.classReference({ namespace: "PHPUnit\\Framework", name: "TestCase" })
+            parentClassReference: php.classReference({
+                namespace: `${this.context.getTestsNamespace()}\\Wire`,
+                name: "WireMockTestCase"
+            })
         });
 
         for (const { endpoint, example, service, exampleIndex } of testCases) {
@@ -185,9 +188,10 @@ export class WireTestGenerator {
                     writer.writeStatement(`$testId = '${testId}'`);
 
                     // $client = new Client(...);
+                    const authParams = this.buildAuthParamsForTest();
                     writer.writeStatement(
                         `$client = new ${this.context.getRootClientClassName()}(
-    options: [
+    ${authParams}options: [
         'baseUrl' => 'http://localhost:8080',
         'headers' => ['X-Test-Id' => $testId],
     ]
@@ -360,5 +364,42 @@ export class WireTestGenerator {
             result[baseUrl.id] = "http://localhost:8080";
         }
         return result;
+    }
+
+    private buildAuthParamsForTest(): string {
+        const authParams: string[] = [];
+
+        for (const scheme of this.context.ir.auth.schemes) {
+            scheme._visit({
+                bearer: () => {
+                    authParams.push("token: 'test-token'");
+                },
+                basic: () => {
+                    authParams.push("username: 'test-user'");
+                    authParams.push("password: 'test-password'");
+                },
+                header: (header) => {
+                    const paramName = header.name.name.camelCase.safeName;
+                    authParams.push(`${paramName}: 'test-${paramName}'`);
+                },
+                oauth: () => {
+                    authParams.push("clientId: 'test-client-id'");
+                    authParams.push("clientSecret: 'test-client-secret'");
+                },
+                inferred: () => {
+                    // Inferred auth parameters are handled by the InferredAuthProvider
+                    // No explicit parameters needed in tests
+                },
+                _other: () => {
+                    // Skip unknown auth schemes
+                }
+            });
+        }
+
+        if (authParams.length === 0) {
+            return "";
+        }
+
+        return authParams.map((param) => `${param},\n    `).join("");
     }
 }
