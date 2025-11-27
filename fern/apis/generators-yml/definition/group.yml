@@ -53,7 +53,7 @@ types:
     properties:
       auth: optional<auth.ApiAuthSchema>
       auth-schemes: optional<map<string, auth.AuthSchemeDeclarationSchema>>
-      settings: optional<generators.APIDefinitionSettingsSchema>
+      settings: optional<generators.APIConfigurationV2SettingsSchema>
       specs:
         type: optional<generators.APIConfigurationV2SpecsSchema>
         docs: |

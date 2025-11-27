@@ -1,20 +1,12 @@
 # yaml-language-server: $schema=https://schema.buildwithfern.dev/generators-yml.json
 api:
   specs:
-    - openapi: ./openapi/cohere.yaml
-      namespace: v1
-    - openapi: ./openapi/cohere-v2.yaml
-      namespace: v2
+    - openapi: openapi.yml
 groups:
   python-sdk:
-    audiences:
-      - public
-      - v2-beta
     generators:
       - name: fernapi/fern-python-sdk
-        version: 3.11.0-rc0
-        smart-casing: true
-        config: {}
+        version: 1.0.0
         api:
           settings:
             prefer-undiscriminated-unions-with-literals: true
