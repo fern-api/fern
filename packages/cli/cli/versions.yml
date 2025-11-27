@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Log the pull request URL when an SDK is generated with self-hosted GitHub pull-request mode.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.12.0
+
+- changelogEntry:
+    - summary: |
         When converting OpenAPI to Fern Definition, if all endpoints in a service have `auth: true`, set the `auth: true` at the service level, and remove it from individual endpoints.
       type: feat
   irVersion: 62
