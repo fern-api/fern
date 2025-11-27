@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         Improve csharpier formatter performance by keeping a persistent process alive instead of spawning a new process for each formatting request.
-      type: feat
+      type: fix
   createdAt: "2025-11-27"
   irVersion: 61
 
