@@ -10,6 +10,7 @@ import {
     HttpEndpoint,
     HttpMethod,
     HttpService,
+    InferredAuthScheme,
     IntermediateRepresentation,
     Name,
     OAuthScheme,
@@ -715,6 +716,15 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             this.config.generateOauthClients
         ) {
             return this.ir.auth.schemes[0];
+        }
+        return undefined;
+    }
+
+    public getInferredAuth(): InferredAuthScheme | undefined {
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "inferred") {
+                return scheme;
+            }
         }
         return undefined;
     }

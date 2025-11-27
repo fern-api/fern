@@ -117,7 +117,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/upload",
       "examples": [
@@ -301,7 +300,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/upload-multiple",
       "examples": [
@@ -468,7 +466,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/upload-with-json",
       "examples": [

@@ -1,3 +1,48 @@
+- version: 3.20.1
+  changelogEntry:
+    - summary: |
+        Fix StreamTest generator to use Java 8 compatible constructs. Replaced List.of() and Map.of() (Java 9+) with Arrays.asList() and a createMap() helper method using HashMap.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 61
+
+- version: 3.20.0
+  changelogEntry:
+    - summary: |
+        Update vulnerable dependencies.
+      type: fix
+  createdAt: "2025-11-26"
+  irVersion: 61
+
+- version: 3.19.0
+  changelogEntry:
+    - summary: |
+        Add wire test support for OAuth APIs and multi-URL environments. Wire tests now:
+        - Properly mock OAuth token endpoints with per-test token enqueuing
+        - Use `.clientId()/.clientSecret()` for OAuth-authenticated APIs
+        - Support custom OAuth headers (e.g., `apiKey`) required by token endpoints
+        - Configure `Environment.custom()` builder for multi-URL environment APIs
+        - Handle flexible JSON comparison allowing extra default fields in responses
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.13
+  changelogEntry:
+    - summary: |
+        Skip wire test generation for OAuth and multi-URL environment APIs temporarily.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.12
+  changelogEntry:
+    - summary: |
+        Fix Java dynamic snippets for query parameters with `allow-multiple: true` and optional types. Snippets now generate `List<T>` instead of `List<Optional<T>>`, which matches the SDK builder's convenience overload.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
 - version: 3.18.11
   changelogEntry:
     - summary: |

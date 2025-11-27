@@ -7,6 +7,7 @@ import { WireTestExample } from "../extractors/TestDataExtractor";
 import { HeaderValidator } from "../validators/HeaderValidator";
 import { JsonValidator } from "../validators/JsonValidator";
 import { PaginationValidator } from "../validators/PaginationValidator";
+import { TestClassBuilder } from "./TestClassBuilder";
 
 /**
  * Builder for generating individual test methods in wire tests.
@@ -16,12 +17,14 @@ export class TestMethodBuilder {
     private readonly jsonValidator: JsonValidator;
     private readonly paginationValidator: PaginationValidator;
     private readonly snippetExtractor: SnippetExtractor;
+    private readonly testClassBuilder: TestClassBuilder;
 
     constructor(private readonly context: SdkGeneratorContext) {
         this.headerValidator = new HeaderValidator();
         this.jsonValidator = new JsonValidator(context);
         this.paginationValidator = new PaginationValidator(context);
         this.snippetExtractor = new SnippetExtractor(context);
+        this.testClassBuilder = new TestClassBuilder(context);
     }
 
     /**
@@ -48,6 +51,18 @@ export class TestMethodBuilder {
             writer.writeLine(`public void ${testMethodName}() throws Exception {`);
             writer.indent();
 
+            // For OAuth APIs, we need to enqueue an OAuth token response FIRST
+            // because the client will fetch a token before making the actual API call
+            const isOAuth = this.testClassBuilder.isOAuthApi();
+            if (isOAuth) {
+                writer.writeLine("// OAuth: enqueue token response (client fetches token before API call)");
+                writer.writeLine("server.enqueue(new MockResponse()");
+                writer.indent();
+                writer.writeLine(".setResponseCode(200)");
+                writer.writeLine('.setBody("{\\"access_token\\":\\"test-token\\",\\"expires_in\\":3600}"));');
+                writer.dedent();
+            }
+
             const expectedRequestJson = testExample.request.body;
             const expectedResponseJson = testExample.response.body;
             const responseStatusCode = testExample.response.statusCode;
@@ -72,6 +87,11 @@ export class TestMethodBuilder {
                 writer.writeLine(methodCall.endsWith(";") ? methodCall : `${methodCall};`);
             }
 
+            // For OAuth APIs, consume the OAuth token request first
+            if (isOAuth) {
+                writer.writeLine("// OAuth: consume the token request");
+                writer.writeLine("server.takeRequest();");
+            }
             writer.writeLine("RecordedRequest request = server.takeRequest();");
             writer.writeLine("Assertions.assertNotNull(request);");
             writer.writeLine(`Assertions.assertEquals("${endpoint.method}", request.getMethod());`);

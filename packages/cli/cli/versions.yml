@@ -1,4 +1,108 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- changelogEntry:
+    - summary: Allow all API settings to be overridden at the generator level in generators.yml.
+      type: feat
+    - summary: |
+        Add CLI migration to automatically convert deprecated generator-level API settings keys to their new equivalents: `use-title` to `title-as-schema-name`, and `unions: v1` to `prefer-undiscriminated-unions-with-literals: true`.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.13.0
+
+- changelogEntry:
+    - summary: |
+        Support per-generator auth-schemes override in generators.yml. Generators can now define their own `auth-schemes` at the generator level, which takes precedence over top-level definitions.
+
+        ```yml
+        # generators.yml
+        api:
+          auth: Bearer
+          auth-schemes:
+            Bearer:
+              scheme: bearer
+
+        groups:
+          php-sdk:
+            generators:
+              - name: fernapi/fern-php-sdk
+                version: 1.23.0
+                api:
+                  auth: Bearer
+                  auth-schemes:
+                    Bearer:
+                      scheme: bearer
+                      get-token: POST /authorize
+        ```
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.12.0
+
+- changelogEntry:
+    - summary: |
+        When converting OpenAPI to Fern Definition, if all endpoints in a service have `auth: true`, set the `auth: true` at the service level, and remove it from individual endpoints.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-26"
+  version: 2.11.0
+
+- changelogEntry:
+    - summary: |
+        Support per-generator specs override in generators.yml. Generators can now redefine the `api.specs` configuration at the individual generator level, allowing different specs configurations for different generators.
+
+        ```yml
+        # generators.yml
+        api:
+          specs:
+            - openapi: openapi.yml
+
+        groups:
+          php-sdk:
+            generators:
+              - name: fernapi/fern-php-sdk
+                version: 1.23.1
+                api:
+                  specs:
+                    - openapi: custom-openapi.yml
+        ```
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.10.0
+
+- changelogEntry:
+    - summary: |
+        When importing OpenAPI specs, endpoints now properly inherit authentication requirements defined at the global level.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-26"
+  version: 2.9.0
+
+- changelogEntry:
+    - summary: |
+        Fix dynamic snippet property ordering for types with inheritance. Types that are extended by other types now have their own properties ordered before inherited properties in the Dynamic IR. This fixes Java SDK staged builder compilation errors where method call order is enforced at compile time.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.8.2
+
+- changelogEntry:
+    - summary: |
+        Support a `lines` prop for the `<Code />` component to extract specific lines from a code snippet.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.8.1
+
+- changelogEntry:
+    - summary: |
+        Adds an option for `api.tag-description-pages: true` to create summary pages from tag descriptions within an API reference.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-25"
+  version: 2.8.0
+
 - changelogEntry:
     - summary: |
         Fix fern docs dev bug on Windows where asset paths were not parsing correctly

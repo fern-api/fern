@@ -1,4 +1,4 @@
-import { NamedArgument, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, NamedArgument, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
@@ -53,7 +53,17 @@ export class EndpointSnippetGenerator {
         );
     }
 
-    private buildCodeBlock({
+    public async generateSnippetAst({
+        endpoint,
+        request
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+    }): Promise<AbstractAstNode> {
+        return this.buildCodeBlock({ endpoint, snippet: request });
+    }
+
+    public buildCodeBlock({
         endpoint,
         snippet
     }: {
@@ -181,8 +191,7 @@ export class EndpointSnippetGenerator {
             case "oauth":
                 return values.type === "oauth" ? this.getConstructorOAuthArgs({ auth, values }) : [];
             case "inferred":
-                this.addWarning("The PHP SDK Generator does not support Inferred auth scheme yet");
-                return [];
+                return values.type === "inferred" ? this.getConstructorInferredAuthArgs({ auth, values }) : [];
             default:
                 assertNever(auth);
         }
@@ -344,6 +353,11 @@ export class EndpointSnippetGenerator {
             return undefined;
         }
 
+        // Validate that all required base URLs are provided
+        if (!this.context.validateMultiEnvironmentUrlValues(environment)) {
+            return undefined;
+        }
+
         const firstBaseUrlId = baseUrlIds[0];
         if (firstBaseUrlId == null) {
             return undefined;
@@ -354,37 +368,36 @@ export class EndpointSnippetGenerator {
             return undefined;
         }
 
-        if (this.context.isSingleEnvironmentID(firstBaseUrlValue)) {
-            const environmentName = this.context.resolveEnvironmentName(firstBaseUrlValue);
-            if (environmentName == null) {
-                return undefined;
-            }
-
+        // Check if the first value is a valid environment ID (not just any string)
+        const firstEnvironmentName = this.context.resolveEnvironmentName(firstBaseUrlValue);
+        if (firstEnvironmentName != null) {
+            // Check if all values point to the same environment
             const allSameEnvironment = baseUrlIds.every((baseUrlId) => {
                 const value = environment[baseUrlId];
-                return value != null && this.context.isSingleEnvironmentID(value) && value === firstBaseUrlValue;
+                if (value == null) {
+                    return false;
+                }
+                const envName = this.context.resolveEnvironmentName(value);
+                return envName != null && value === firstBaseUrlValue;
             });
 
             if (allSameEnvironment) {
-                return { type: "named", name: this.context.getClassName(environmentName) };
+                return { type: "named", name: this.context.getClassName(firstEnvironmentName) };
             }
         }
 
+        // Treat all values as custom URLs
         const urls: Record<string, string> = {};
-        let hasAnyLiteralUrl = false;
         for (const baseUrlId of baseUrlIds) {
             const value = environment[baseUrlId];
             if (value == null) {
                 continue;
             }
-            if (!this.context.isSingleEnvironmentID(value)) {
-                hasAnyLiteralUrl = true;
-                const paramName = this.getBaseUrlPropertyName(baseUrlId);
-                urls[paramName] = value;
-            }
+            const paramName = this.getBaseUrlPropertyName(baseUrlId);
+            urls[paramName] = value;
         }
 
-        if (hasAnyLiteralUrl && Object.keys(urls).length > 0) {
+        if (Object.keys(urls).length > 0) {
             return { type: "custom", urls };
         }
 
@@ -519,6 +532,18 @@ export class EndpointSnippetGenerator {
                 assignment: php.TypeLiteral.string(values.clientSecret)
             }
         ];
+    }
+
+    private getConstructorInferredAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.InferredAuth;
+        values: FernIr.dynamic.InferredAuthValues;
+    }): NamedArgument[] {
+        // Inferred auth doesn't require any constructor arguments from the user.
+        // The SDK automatically handles token retrieval via the InferredAuthProvider.
+        return [];
     }
 
     private getConstructorHeaderArgs({

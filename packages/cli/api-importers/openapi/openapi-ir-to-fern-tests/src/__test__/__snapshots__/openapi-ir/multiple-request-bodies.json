@@ -157,7 +157,6 @@
       "errors": {},
       "servers": [],
       "authed": true,
-      "security": [],
       "method": "POST",
       "path": "/documents/upload",
       "examples": [
@@ -297,7 +296,6 @@
       "errors": {},
       "servers": [],
       "authed": true,
-      "security": [],
       "method": "POST",
       "path": "/documents/upload",
       "examples": [],
@@ -464,6 +462,11 @@
       "type": "bearer"
     }
   },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
   "globalHeaders": [],
   "idempotencyHeaders": [],
   "groups": {}

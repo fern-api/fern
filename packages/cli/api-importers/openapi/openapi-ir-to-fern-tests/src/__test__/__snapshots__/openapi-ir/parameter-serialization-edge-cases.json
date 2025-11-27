@@ -44,7 +44,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/items",
       "examples": [
@@ -98,7 +97,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/search",
       "examples": [
@@ -152,7 +150,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/filter",
       "examples": [
@@ -196,7 +193,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/items/{id}",
       "examples": [
@@ -261,7 +257,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/data",
       "examples": [
@@ -373,7 +368,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/complex",
       "examples": [
@@ -417,7 +411,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/files/{path}",
       "examples": [
@@ -456,7 +449,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/session",
       "examples": [
@@ -515,7 +507,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/users/{userId}/posts/{postId}",
       "examples": [

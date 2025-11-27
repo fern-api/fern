@@ -5,6 +5,8 @@ groups:
       - name: fernapi/fern-php-sdk
         version: latest
         ir-version: v61
+        config:
+          enable-wire-tests: true
         github:
           token: ${GITHUB_TOKEN}
           mode: push
