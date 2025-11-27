@@ -19,12 +19,11 @@ docs: |
   Timetables and routes for train trips between stations, including pricing
   and availability.
 service:
-  auth: false
+  auth: true
   base-path: ''
   display-name: Trips
   endpoints:
     get-trips:
-      auth: true
       display-name: Get available train trips
       docs: >-
         Returns a list of available train trips between the specified origin and
