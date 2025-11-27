@@ -27,8 +27,10 @@ import { IdempotentRequestOptionsInterfaceGenerator } from "./options/Idempotent
 import { RequestOptionsGenerator } from "./options/RequestOptionsGenerator";
 import { RequestOptionsInterfaceGenerator } from "./options/RequestOptionsInterfaceGenerator";
 import { buildReference } from "./reference/buildReference";
+import { RawRootClientGenerator } from "./root-client/RawRootClientGenerator";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkGeneratorContext } from "./SdkGeneratorContext";
+import { RawSubPackageClientGenerator } from "./subpackage-client/RawSubPackageClientGenerator";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { WebSocketClientGenerator } from "./websocket/WebsocketClientGenerator";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
@@ -137,7 +139,16 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 });
                 context.project.addSourceFiles(subClient.generate());
 
+                // Generate raw client for subpackages with endpoints
                 if (subpackage.service != null && service != null) {
+                    const rawSubClient = new RawSubPackageClientGenerator({
+                        context,
+                        subpackage,
+                        serviceId: subpackage.service,
+                        service
+                    });
+                    context.project.addSourceFiles(rawSubClient.generate());
+
                     this.generateRequests(context, service, subpackage.service);
                 }
             }
@@ -196,6 +207,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
         const rootServiceId = context.ir.rootPackage.service;
         if (rootServiceId != null) {
             const service = context.getHttpService(rootServiceId);
+
+            // Generate raw root client if root has endpoints
+            const rawRootClient = new RawRootClientGenerator(context);
+            context.project.addSourceFiles(rawRootClient.generate());
+
             this.generateRequests(
                 context,
                 service ?? fail(`Service with id ${rootServiceId} not found`),

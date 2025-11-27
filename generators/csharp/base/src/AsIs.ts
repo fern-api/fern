@@ -23,6 +23,7 @@ export const AsIsFiles = {
     Pager: "Pager.Template.cs",
     // HTTP
     ApiResponse: "ApiResponse.Template.cs",
+    RawResponse: "RawResponse.Template.cs",
     BaseRequest: "BaseRequest.Template.cs",
     EmptyRequest: "EmptyRequest.Template.cs",
     EncodingCache: "EncodingCache.Template.cs",

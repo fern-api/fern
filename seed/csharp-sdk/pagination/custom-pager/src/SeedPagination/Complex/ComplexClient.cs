@@ -7,10 +7,19 @@ public partial class ComplexClient
 {
     private RawClient _client;
 
+    private RawComplexClient _rawClient;
+
     internal ComplexClient(RawClient client)
     {
         _client = client;
+        _rawClient = new RawComplexClient(_client);
+        WithRawResponse = _rawClient;
     }
+
+    /// <summary>
+    /// Access endpoints with raw HTTP response data (status code, headers).
+    /// </summary>
+    public RawComplexClient WithRawResponse { get; }
 
     private async Task<PaginatedConversationResponse> SearchInternalAsync(
         string index,

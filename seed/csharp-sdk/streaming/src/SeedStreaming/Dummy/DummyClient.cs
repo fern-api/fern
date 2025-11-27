@@ -1,4 +1,3 @@
-using System.Text.Json;
 using SeedStreaming.Core;
 
 namespace SeedStreaming;
@@ -7,10 +6,19 @@ public partial class DummyClient
 {
     private RawClient _client;
 
+    private RawDummyClient _rawClient;
+
     internal DummyClient(RawClient client)
     {
         _client = client;
+        _rawClient = new RawDummyClient(_client);
+        WithRawResponse = _rawClient;
     }
+
+    /// <summary>
+    /// Access endpoints with raw HTTP response data (status code, headers).
+    /// </summary>
+    public RawDummyClient WithRawResponse { get; }
 
     /// <example><code>
     /// client.Dummy.GenerateStreamAsync(new GenerateStreamRequest { Stream = true, NumEvents = 1 });
@@ -71,39 +79,10 @@ public partial class DummyClient
         CancellationToken cancellationToken = default
     )
     {
-        var response = await _client
-            .SendRequestAsync(
-                new JsonRequest
-                {
-                    BaseUrl = _client.Options.BaseUrl,
-                    Method = HttpMethod.Post,
-                    Path = "generate",
-                    Body = request,
-                    Options = options,
-                },
-                cancellationToken
-            )
-            .ConfigureAwait(false);
-        if (response.StatusCode is >= 200 and < 400)
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            try
-            {
-                return JsonUtils.Deserialize<StreamResponse>(responseBody)!;
-            }
-            catch (JsonException e)
-            {
-                throw new SeedStreamingException("Failed to deserialize response", e);
-            }
-        }
-
-        {
-            var responseBody = await response.Raw.Content.ReadAsStringAsync();
-            throw new SeedStreamingApiException(
-                $"Error with status code {response.StatusCode}",
-                response.StatusCode,
-                responseBody
-            );
-        }
+        return (
+            await WithRawResponse
+                .GenerateAsync(request, options, cancellationToken)
+                .ConfigureAwait(false)
+        ).Body;
     }
 }

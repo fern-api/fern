@@ -7,10 +7,19 @@ public partial class UsersClient
 {
     private RawClient _client;
 
+    private RawUsersClient _rawClient;
+
     internal UsersClient(RawClient client)
     {
         _client = client;
+        _rawClient = new RawUsersClient(_client);
+        WithRawResponse = _rawClient;
     }
+
+    /// <summary>
+    /// Access endpoints with raw HTTP response data (status code, headers).
+    /// </summary>
+    public RawUsersClient WithRawResponse { get; }
 
     private async Task<ListUsersPaginationResponse> ListWithCursorPaginationInternalAsync(
         ListUsersCursorPaginationRequest request,
