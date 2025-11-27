@@ -386,9 +386,41 @@ export class WireTestGenerator {
                     authParams.push("clientId: 'test-client-id'");
                     authParams.push("clientSecret: 'test-client-secret'");
                 },
-                inferred: () => {
-                    // Inferred auth parameters are handled by the InferredAuthProvider
-                    // No explicit parameters needed in tests
+                inferred: (scheme) => {
+                    // Extract parameters from the token endpoint's request body and headers
+                    const tokenEndpointRef = scheme.tokenEndpoint.endpoint;
+                    const service = this.context.ir.services[tokenEndpointRef.serviceId];
+                    if (service == null) {
+                        return;
+                    }
+                    const endpoint = service.endpoints.find((e) => e.id === tokenEndpointRef.endpointId);
+                    if (endpoint == null) {
+                        return;
+                    }
+
+                    const sdkRequest = endpoint.sdkRequest;
+                    if (sdkRequest != null && sdkRequest.shape.type === "wrapper") {
+                        // Extract parameters from request body properties
+                        const requestBody = endpoint.requestBody;
+                        if (requestBody != null && requestBody.type === "inlinedRequestBody") {
+                            for (const property of requestBody.properties) {
+                                const literal = this.context.maybeLiteral(property.valueType);
+                                if (literal == null) {
+                                    const paramName = this.context.getParameterName(property.name.name);
+                                    authParams.push(`${paramName}: 'test-${paramName}'`);
+                                }
+                            }
+                        }
+
+                        // Extract parameters from endpoint headers
+                        for (const header of endpoint.headers) {
+                            const literal = this.context.maybeLiteral(header.valueType);
+                            if (literal == null) {
+                                const paramName = this.context.getParameterName(header.name.name);
+                                authParams.push(`${paramName}: 'test-${paramName}'`);
+                            }
+                        }
+                    }
                 },
                 _other: () => {
                     // Skip unknown auth schemes
