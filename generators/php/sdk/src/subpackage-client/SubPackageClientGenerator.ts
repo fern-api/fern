@@ -41,7 +41,8 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             php.field({
                 name: `$${this.context.getClientOptionsName()}`,
                 access: "private",
-                type: this.context.getClientOptionsType()
+                type: this.context.getClientOptionsType(),
+                docs: "@phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator"
             })
         );
         class_.addField(this.context.rawClient.getField());

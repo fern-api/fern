@@ -1,21 +1,17 @@
+<?php
+
 namespace Seed\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 
-class EndpointsUrlsWireTest extends TestCase
+class EndpointsUrlsWireTest extends WireMockTestCase
 {
 
     /**
      */
     public function testWithMixedCase(): void {
         $testId = 'endpoints.urls.with_mixed_case.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -37,12 +33,6 @@ class EndpointsUrlsWireTest extends TestCase
     public function testNoEndingSlash(): void {
         $testId = 'endpoints.urls.no_ending_slash.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -63,12 +53,6 @@ class EndpointsUrlsWireTest extends TestCase
     public function testWithEndingSlash(): void {
         $testId = 'endpoints.urls.with_ending_slash.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -88,12 +72,6 @@ class EndpointsUrlsWireTest extends TestCase
      */
     public function testWithUnderscores(): void {
         $testId = 'endpoints.urls.with_underscores.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [

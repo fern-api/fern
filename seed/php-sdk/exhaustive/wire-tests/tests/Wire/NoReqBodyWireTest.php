@@ -1,21 +1,17 @@
+<?php
+
 namespace Seed\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 
-class NoReqBodyWireTest extends TestCase
+class NoReqBodyWireTest extends WireMockTestCase
 {
 
     /**
      */
     public function testGetWithNoRequestBody(): void {
         $testId = 'no_req_body.get_with_no_request_body.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -36,12 +32,6 @@ class NoReqBodyWireTest extends TestCase
      */
     public function testPostWithNoRequestBody(): void {
         $testId = 'no_req_body.post_with_no_request_body.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [

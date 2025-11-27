@@ -1,4 +1,4 @@
-import { AbstractAstNode, NamedArgument, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, NamedArgument, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
@@ -55,11 +55,16 @@ export class EndpointSnippetGenerator {
 
     public async generateSnippetAst({
         endpoint,
-        request
+        request,
+        options
     }: {
         endpoint: FernIr.dynamic.Endpoint;
         request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
     }): Promise<AbstractAstNode> {
+        if (options?.skipClientInstantiation) {
+            return this.buildCodeBlockWithoutClient({ endpoint, snippet: request });
+        }
         return this.buildCodeBlock({ endpoint, snippet: request });
     }
 
@@ -73,6 +78,19 @@ export class EndpointSnippetGenerator {
         return php.codeblock((writer) => {
             writer.writeNodeStatement(this.constructClient({ endpoint, snippet }));
             writer.writeNodeStatement(this.callMethod({ endpoint, snippet }));
+        });
+    }
+
+    public buildCodeBlockWithoutClient({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): php.AstNode {
+        return php.codeblock((writer) => {
+            // Skip client instantiation - assume client is already available as $this->client
+            writer.writeNodeStatement(this.callMethodOnExistingClient({ endpoint, snippet }));
         });
     }
 
@@ -104,6 +122,21 @@ export class EndpointSnippetGenerator {
         });
     }
 
+    private callMethodOnExistingClient({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): php.MethodInvocation {
+        return php.invokeMethod({
+            on: php.codeblock("$this->client"),
+            method: this.getMethod({ endpoint }),
+            arguments_: this.getMethodArgs({ endpoint, snippet }),
+            multiline: true
+        });
+    }
+
     private getConstructorArgs({
         endpoint,
         snippet
@@ -116,10 +149,24 @@ export class EndpointSnippetGenerator {
             if (snippet.auth != null) {
                 authArgs.push(...this.getConstructorAuthArgs({ auth: endpoint.auth, values: snippet.auth }));
             } else {
-                this.context.errors.add({
-                    severity: Severity.Warning,
-                    message: `Auth with ${endpoint.auth.type} configuration is required for this endpoint`
-                });
+                // Provide default auth values for endpoints that require authentication
+                if (endpoint.auth.type === "inferred") {
+                    // For inferred auth, provide default test values
+                    const defaultInferredAuthValues: any = {
+                        type: "inferred"
+                    };
+                    authArgs.push(
+                        ...this.getConstructorInferredAuthArgs({
+                            auth: endpoint.auth,
+                            values: defaultInferredAuthValues
+                        })
+                    );
+                } else {
+                    this.context.errors.add({
+                        severity: Severity.Warning,
+                        message: `Auth with ${endpoint.auth.type} configuration is required for this endpoint`
+                    });
+                }
             }
         }
 
@@ -541,8 +588,9 @@ export class EndpointSnippetGenerator {
         auth: FernIr.dynamic.InferredAuth;
         values: FernIr.dynamic.InferredAuthValues;
     }): NamedArgument[] {
-        // Inferred auth doesn't require any constructor arguments from the user.
-        // The SDK automatically handles token retrieval via the InferredAuthProvider.
+        // For now, return empty array to avoid the RangeError issue
+        // The inferred auth parameters should be extracted from the normal IR,
+        // not the dynamic IR which doesn't contain the detailed endpoint information
         return [];
     }
 

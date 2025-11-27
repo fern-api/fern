@@ -127,6 +127,91 @@ export class WireTestGenerator {
         return `${pascalCase}WireTest`;
     }
 
+    private generateSetUpMethod(): php.Method {
+        return php.method({
+            name: "setUp",
+            access: "protected",
+            parameters: [],
+            body: php.codeblock((writer) => {
+                writer.writeTextStatement("parent::setUp()");
+
+                // Build auth parameters
+                const authParams = this.buildAuthParamsForTest();
+
+                // Instantiate the client with auth and environment
+                writer.write("$this->client = new ");
+                writer.writeNode(
+                    php.classReference({
+                        namespace: this.context.getRootNamespace(),
+                        name: this.context.getRootClientClassName()
+                    })
+                );
+                writer.write("(");
+
+                if (authParams.length > 0) {
+                    writer.write("\n");
+                    writer.indent();
+                    writer.write(authParams.trimEnd());
+                    if (!authParams.trimEnd().endsWith(",")) {
+                        writer.write(",");
+                    }
+                    writer.write("\n");
+                    writer.dedent();
+                }
+
+                // Add options parameter
+                if (this.isMultiUrlEnvironment()) {
+                    const environment = this.getMultiUrlEnvironmentForTest();
+                    if (environment) {
+                        // Create environment parameter using Environments::custom()
+                        const envValues = Object.values(environment);
+                        if (envValues.length > 0) {
+                            if (authParams.length === 0) {
+                                writer.write("\n");
+                                writer.indent();
+                            } else {
+                                // When auth params exist, we need to add the proper indentation
+                                writer.write("    ");
+                            }
+                            writer.write("environment: ");
+                            writer.writeNode(
+                                php.classReference({
+                                    namespace: this.context.getRootNamespace(),
+                                    name: "Environments"
+                                })
+                            );
+                            writer.write(`::custom(${envValues.map((value) => `'${value}'`).join(", ")}),`);
+                            if (authParams.length === 0) {
+                                writer.write("\n");
+                                writer.dedent();
+                            } else {
+                                writer.write("\n");
+                            }
+                        }
+                    }
+                } else {
+                    if (authParams.length === 0) {
+                        writer.write("\n");
+                        writer.indent();
+                    }
+                    writer.writeLine("options: [");
+                    writer.indent();
+                    writer.writeLine("'baseUrl' => 'http://localhost:8080',");
+                    writer.dedent();
+                    writer.write("]");
+                    if (authParams.length === 0) {
+                        writer.write("\n");
+                        writer.dedent();
+                    } else {
+                        writer.write(",\n");
+                    }
+                }
+
+                writer.writeTextStatement(")");
+            })
+        });
+    }
+
     private async buildTestFileContent(
         testClassName: string,
         testCases: Array<{
@@ -144,6 +229,23 @@ export class WireTestGenerator {
                 name: "WireMockTestCase"
             })
         });
+
+        // Add client field
+        class_.addField(
+            php.field({
+                name: "$client",
+                access: "private",
+                type: php.Type.reference(
+                    php.classReference({
+                        namespace: this.context.getRootNamespace(),
+                        name: this.context.getRootClientClassName()
+                    })
+                )
+            })
+        );
+
+        // Add setUp method that instantiates the client once
+        class_.addMethod(this.generateSetUpMethod());
 
         for (const { endpoint, example, service, exampleIndex } of testCases) {
             const testMethod = await this.generateEndpointTestMethod({
@@ -177,13 +279,19 @@ export class WireTestGenerator {
             const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
 
             // Generate the API call using dynamic snippets generator
-            // For multi-URL environments, pass environment object with all URLs pointing to localhost
+            // Skip client instantiation since we instantiate it once in setUp()
             const snippetRequest = convertDynamicEndpointSnippetRequest({
                 ...example,
                 baseUrl: this.isMultiUrlEnvironment() ? undefined : "http://localhost:8080",
-                environment: this.isMultiUrlEnvironment() ? this.getMultiUrlEnvironmentForTest() : undefined
+                environment: this.isMultiUrlEnvironment() ? this.getMultiUrlEnvironmentForTest() : undefined,
+                headers: {
+                    ...example.headers,
+                    "X-Test-Id": testId
+                }
             });
-            const snippetAst = await this.dynamicSnippetsGenerator.generateSnippetAst(snippetRequest);
+            const snippetAst = await this.dynamicSnippetsGenerator.generateSnippetAst(snippetRequest, {
+                skipClientInstantiation: true
+            });
 
             return php.method({
                 name: testName,
@@ -192,17 +300,6 @@ export class WireTestGenerator {
                 body: php.codeblock((writer) => {
                     // $testId = '...';
                     writer.writeStatement(`$testId = '${testId}'`);
-
-                    // $client = new Client(...);
-                    const authParams = this.buildAuthParamsForTest();
-                    writer.writeStatement(
-                        `$client = new ${this.context.getRootClientClassName()}(
-    ${authParams}options: [
-        'baseUrl' => 'http://localhost:8080',
-        'headers' => ['X-Test-Id' => $testId],
-    ]
-)`
-                    );
 
                     // API call from dynamic snippet AST
                     writer.writeNode(snippetAst as php.AstNode);

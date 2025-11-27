@@ -1,23 +1,19 @@
+<?php
+
 namespace Seed\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 use Seed\Endpoints\Params\Requests\GetWithQuery;
 use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
 
-class EndpointsParamsWireTest extends TestCase
+class EndpointsParamsWireTest extends WireMockTestCase
 {
 
     /**
      */
     public function testGetWithPath(): void {
         $testId = 'endpoints.params.get_with_path.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -41,12 +37,6 @@ class EndpointsParamsWireTest extends TestCase
     public function testGetWithInlinePath(): void {
         $testId = 'endpoints.params.get_with_inline_path.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -68,12 +58,6 @@ class EndpointsParamsWireTest extends TestCase
      */
     public function testGetWithQuery(): void {
         $testId = 'endpoints.params.get_with_query.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -100,12 +84,6 @@ class EndpointsParamsWireTest extends TestCase
     public function testGetWithAllowMultipleQuery(): void {
         $testId = 'endpoints.params.get_with_allow_multiple_query.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -130,12 +108,6 @@ class EndpointsParamsWireTest extends TestCase
      */
     public function testGetWithPathAndQuery(): void {
         $testId = 'endpoints.params.get_with_path_and_query.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -162,12 +134,6 @@ class EndpointsParamsWireTest extends TestCase
     public function testGetWithInlinePathAndQuery(): void {
         $testId = 'endpoints.params.get_with_inline_path_and_query.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -193,12 +159,6 @@ class EndpointsParamsWireTest extends TestCase
     public function testModifyWithPath(): void {
         $testId = 'endpoints.params.modify_with_path.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -221,12 +181,6 @@ class EndpointsParamsWireTest extends TestCase
      */
     public function testModifyWithInlinePath(): void {
         $testId = 'endpoints.params.modify_with_inline_path.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [

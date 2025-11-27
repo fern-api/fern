@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.23.5
+  changelogEntry:
+    - summary: |
+        Fix wire test environment parameter generation and inferred auth parameter handling. Wire tests now properly indent environment parameters and use Environments::custom() instead of raw arrays for type safety. Additionally, required inferred auth parameters no longer use unnecessary null coalescing operators (??), resolving PHPStan static analysis warnings.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 62
+
 - version: 1.23.4
   changelogEntry:
     - summary: |
