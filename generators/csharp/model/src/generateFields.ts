@@ -59,7 +59,7 @@ export function generateField(
             set: (writer: Writer) => {
                 writer.write("value.Assert(value ==");
                 writer.writeNode(maybeLiteralInitializer);
-                writer.write(`, "'${property.name}' must be " + `);
+                writer.write(`, "'${property.name.name.pascalCase.safeName}' must be " + `);
 
                 writer.writeNode(maybeLiteralInitializer);
                 writer.write(")");
