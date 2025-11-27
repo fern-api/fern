@@ -10,7 +10,7 @@ import * as FernDefinition from "../../../index";
  */
 export interface GeneratorApiSettingsSchema {
     auth?: FernDefinition.fernDefinition.ApiAuthSchema;
-    settings?: FernDefinition.ApiDefinitionSettingsSchema;
+    settings?: FernDefinition.ApiConfigurationV2SettingsSchema;
     /**
      * Override the specs configuration for this generator.
      * When provided, this completely replaces the top-level api.specs configuration.
