@@ -3,7 +3,13 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets";
-import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import {
+    dynamic,
+    HttpEndpoint,
+    HttpService,
+    InferredAuthScheme,
+    IntermediateRepresentation
+} from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
@@ -121,6 +127,91 @@ export class WireTestGenerator {
         return `${pascalCase}WireTest`;
     }
 
+    private generateSetUpMethod(): php.Method {
+        return php.method({
+            name: "setUp",
+            access: "protected",
+            parameters: [],
+            body: php.codeblock((writer) => {
+                writer.writeTextStatement("parent::setUp()");
+
+                // Build auth parameters
+                const authParams = this.buildAuthParamsForTest();
+
+                // Instantiate the client with auth and environment
+                writer.write("$this->client = new ");
+                writer.writeNode(
+                    php.classReference({
+                        namespace: this.context.getRootNamespace(),
+                        name: this.context.getRootClientClassName()
+                    })
+                );
+                writer.write("(");
+
+                if (authParams.length > 0) {
+                    writer.write("\n");
+                    writer.indent();
+                    writer.write(authParams.trimEnd());
+                    if (!authParams.trimEnd().endsWith(",")) {
+                        writer.write(",");
+                    }
+                    writer.write("\n");
+                    writer.dedent();
+                }
+
+                // Add options parameter
+                if (this.isMultiUrlEnvironment()) {
+                    const environment = this.getMultiUrlEnvironmentForTest();
+                    if (environment) {
+                        // Create environment parameter using Environments::custom()
+                        const envValues = Object.values(environment);
+                        if (envValues.length > 0) {
+                            if (authParams.length === 0) {
+                                writer.write("\n");
+                                writer.indent();
+                            } else {
+                                // When auth params exist, we need to add the proper indentation
+                                writer.write("    ");
+                            }
+                            writer.write("environment: ");
+                            writer.writeNode(
+                                php.classReference({
+                                    namespace: this.context.getRootNamespace(),
+                                    name: "Environments"
+                                })
+                            );
+                            writer.write(`::custom(${envValues.map((value) => `'${value}'`).join(", ")}),`);
+                            if (authParams.length === 0) {
+                                writer.write("\n");
+                                writer.dedent();
+                            } else {
+                                writer.write("\n");
+                            }
+                        }
+                    }
+                } else {
+                    if (authParams.length === 0) {
+                        writer.write("\n");
+                        writer.indent();
+                    }
+                    writer.writeLine("options: [");
+                    writer.indent();
+                    writer.writeLine("'baseUrl' => 'http://localhost:8080',");
+                    writer.dedent();
+                    writer.write("]");
+                    if (authParams.length === 0) {
+                        writer.write("\n");
+                        writer.dedent();
+                    } else {
+                        writer.write(",\n");
+                    }
+                }
+
+                writer.writeTextStatement(")");
+            })
+        });
+    }
+
     private async buildTestFileContent(
         testClassName: string,
         testCases: Array<{
@@ -138,6 +229,23 @@ export class WireTestGenerator {
                 name: "WireMockTestCase"
             })
         });
+
+        // Add client field
+        class_.addField(
+            php.field({
+                name: "$client",
+                access: "private",
+                type: php.Type.reference(
+                    php.classReference({
+                        namespace: this.context.getRootNamespace(),
+                        name: this.context.getRootClientClassName()
+                    })
+                )
+            })
+        );
+
+        // Add setUp method that instantiates the client once
+        class_.addMethod(this.generateSetUpMethod());
 
         for (const { endpoint, example, service, exampleIndex } of testCases) {
             const testMethod = await this.generateEndpointTestMethod({
@@ -171,13 +279,19 @@ export class WireTestGenerator {
             const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
 
             // Generate the API call using dynamic snippets generator
-            // For multi-URL environments, pass environment object with all URLs pointing to localhost
+            // Skip client instantiation since we instantiate it once in setUp()
             const snippetRequest = convertDynamicEndpointSnippetRequest({
                 ...example,
                 baseUrl: this.isMultiUrlEnvironment() ? undefined : "http://localhost:8080",
-                environment: this.isMultiUrlEnvironment() ? this.getMultiUrlEnvironmentForTest() : undefined
+                environment: this.isMultiUrlEnvironment() ? this.getMultiUrlEnvironmentForTest() : undefined,
+                headers: {
+                    ...example.headers,
+                    "X-Test-Id": testId
+                }
             });
-            const snippetAst = await this.dynamicSnippetsGenerator.generateSnippetAst(snippetRequest);
+            const snippetAst = await this.dynamicSnippetsGenerator.generateSnippetAst(snippetRequest, {
+                skipClientInstantiation: true
+            });
 
             return php.method({
                 name: testName,
@@ -186,17 +300,6 @@ export class WireTestGenerator {
                 body: php.codeblock((writer) => {
                     // $testId = '...';
                     writer.writeStatement(`$testId = '${testId}'`);
-
-                    // $client = new Client(...);
-                    const authParams = this.buildAuthParamsForTest();
-                    writer.writeStatement(
-                        `$client = new ${this.context.getRootClientClassName()}(
-    ${authParams}options: [
-        'baseUrl' => 'http://localhost:8080',
-        'headers' => ['X-Test-Id' => $testId],
-    ]
-)`
-                    );
 
                     // API call from dynamic snippet AST
                     writer.writeNode(snippetAst as php.AstNode);
@@ -386,41 +489,8 @@ export class WireTestGenerator {
                     authParams.push("clientId: 'test-client-id'");
                     authParams.push("clientSecret: 'test-client-secret'");
                 },
-                inferred: (scheme) => {
-                    // Extract parameters from the token endpoint's request body and headers
-                    const tokenEndpointRef = scheme.tokenEndpoint.endpoint;
-                    const service = this.context.ir.services[tokenEndpointRef.serviceId];
-                    if (service == null) {
-                        return;
-                    }
-                    const endpoint = service.endpoints.find((e) => e.id === tokenEndpointRef.endpointId);
-                    if (endpoint == null) {
-                        return;
-                    }
-
-                    const sdkRequest = endpoint.sdkRequest;
-                    if (sdkRequest != null && sdkRequest.shape.type === "wrapper") {
-                        // Extract parameters from request body properties
-                        const requestBody = endpoint.requestBody;
-                        if (requestBody != null && requestBody.type === "inlinedRequestBody") {
-                            for (const property of requestBody.properties) {
-                                const literal = this.context.maybeLiteral(property.valueType);
-                                if (literal == null) {
-                                    const paramName = this.context.getParameterName(property.name.name);
-                                    authParams.push(`${paramName}: 'test-${paramName}'`);
-                                }
-                            }
-                        }
-
-                        // Extract parameters from endpoint headers
-                        for (const header of endpoint.headers) {
-                            const literal = this.context.maybeLiteral(header.valueType);
-                            if (literal == null) {
-                                const paramName = this.context.getParameterName(header.name.name);
-                                authParams.push(`${paramName}: 'test-${paramName}'`);
-                            }
-                        }
-                    }
+                inferred: () => {
+                    // Inferred auth is handled separately below using getInferredAuth()
                 },
                 _other: () => {
                     // Skip unknown auth schemes
@@ -428,10 +498,54 @@ export class WireTestGenerator {
             });
         }
 
+        // Handle inferred auth explicitly using the same method as RootClientGenerator
+        const inferredAuth = this.context.getInferredAuth();
+        if (inferredAuth != null) {
+            this.addInferredAuthParams(inferredAuth, authParams);
+        }
+
         if (authParams.length === 0) {
             return "";
         }
 
         return authParams.map((param) => `${param},\n    `).join("");
+    }
+
+    private addInferredAuthParams(scheme: InferredAuthScheme, authParams: string[]): void {
+        // Extract parameters from the token endpoint's request body and headers
+        // This mirrors the logic in RootClientGenerator.getParametersForInferredAuth()
+        const tokenEndpointRef = scheme.tokenEndpoint.endpoint;
+        const service = this.context.ir.services[tokenEndpointRef.serviceId];
+        if (service == null) {
+            return;
+        }
+        const endpoint = service.endpoints.find((e) => e.id === tokenEndpointRef.endpointId);
+        if (endpoint == null) {
+            return;
+        }
+
+        const sdkRequest = endpoint.sdkRequest;
+        if (sdkRequest != null && sdkRequest.shape.type === "wrapper") {
+            // Extract parameters from request body properties
+            const requestBody = endpoint.requestBody;
+            if (requestBody != null && requestBody.type === "inlinedRequestBody") {
+                for (const property of requestBody.properties) {
+                    const literal = this.context.maybeLiteral(property.valueType);
+                    if (literal == null) {
+                        const paramName = this.context.getParameterName(property.name.name);
+                        authParams.push(`${paramName}: 'test-${paramName}'`);
+                    }
+                }
+            }
+
+            // Extract parameters from endpoint headers
+            for (const header of endpoint.headers) {
+                const literal = this.context.maybeLiteral(header.valueType);
+                if (literal == null) {
+                    const paramName = this.context.getParameterName(header.name.name);
+                    authParams.push(`${paramName}: 'test-${paramName}'`);
+                }
+            }
+        }
     }
 }

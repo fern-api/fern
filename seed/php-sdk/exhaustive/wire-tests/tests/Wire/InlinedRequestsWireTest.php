@@ -1,24 +1,20 @@
+<?php
+
 namespace Seed\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 use Seed\InlinedRequests\Requests\PostWithObjectBody;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
 use DateTime;
 
-class InlinedRequestsWireTest extends TestCase
+class InlinedRequestsWireTest extends WireMockTestCase
 {
 
     /**
      */
     public function testPostWithObjectBodyandResponse(): void {
         $testId = 'inlined_requests.post_with_object_bodyand_response.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [

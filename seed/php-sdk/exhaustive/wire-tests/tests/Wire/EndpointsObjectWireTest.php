@@ -1,6 +1,8 @@
+<?php
+
 namespace Seed\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
 use DateTime;
@@ -9,19 +11,13 @@ use Seed\Types\Object\Types\ObjectWithMapOfMap;
 use Seed\Types\Object\Types\NestedObjectWithOptionalField;
 use Seed\Types\Object\Types\NestedObjectWithRequiredField;
 
-class EndpointsObjectWireTest extends TestCase
+class EndpointsObjectWireTest extends WireMockTestCase
 {
 
     /**
      */
     public function testGetAndReturnWithOptionalField(): void {
         $testId = 'endpoints.object.get_and_return_with_optional_field.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -66,12 +62,6 @@ class EndpointsObjectWireTest extends TestCase
     public function testGetAndReturnWithRequiredField(): void {
         $testId = 'endpoints.object.get_and_return_with_required_field.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -95,12 +85,6 @@ class EndpointsObjectWireTest extends TestCase
      */
     public function testGetAndReturnWithMapOfMap(): void {
         $testId = 'endpoints.object.get_and_return_with_map_of_map.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -129,12 +113,6 @@ class EndpointsObjectWireTest extends TestCase
      */
     public function testGetAndReturnNestedWithOptionalField(): void {
         $testId = 'endpoints.object.get_and_return_nested_with_optional_field.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -182,12 +160,6 @@ class EndpointsObjectWireTest extends TestCase
     public function testGetAndReturnNestedWithRequiredField(): void {
         $testId = 'endpoints.object.get_and_return_nested_with_required_field.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -234,12 +206,6 @@ class EndpointsObjectWireTest extends TestCase
      */
     public function testGetAndReturnNestedWithRequiredFieldAsList(): void {
         $testId = 'endpoints.object.get_and_return_nested_with_required_field_as_list.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [

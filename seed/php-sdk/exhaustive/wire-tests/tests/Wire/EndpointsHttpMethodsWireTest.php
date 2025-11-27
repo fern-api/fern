@@ -1,24 +1,20 @@
+<?php
+
 namespace Seed\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 use Seed\Types\Object\Types\ObjectWithRequiredField;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
 use DateTime;
 
-class EndpointsHttpMethodsWireTest extends TestCase
+class EndpointsHttpMethodsWireTest extends WireMockTestCase
 {
 
     /**
      */
     public function testTestGet(): void {
         $testId = 'endpoints.http_methods.test_get.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -41,12 +37,6 @@ class EndpointsHttpMethodsWireTest extends TestCase
      */
     public function testTestPost(): void {
         $testId = 'endpoints.http_methods.test_post.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -72,12 +62,6 @@ class EndpointsHttpMethodsWireTest extends TestCase
     public function testTestPut(): void {
         $testId = 'endpoints.http_methods.test_put.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -102,12 +86,6 @@ class EndpointsHttpMethodsWireTest extends TestCase
      */
     public function testTestPatch(): void {
         $testId = 'endpoints.http_methods.test_patch.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -152,12 +130,6 @@ class EndpointsHttpMethodsWireTest extends TestCase
      */
     public function testTestDelete(): void {
         $testId = 'endpoints.http_methods.test_delete.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [

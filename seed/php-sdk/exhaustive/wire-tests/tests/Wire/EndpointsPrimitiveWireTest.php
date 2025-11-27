@@ -1,22 +1,18 @@
+<?php
+
 namespace Seed\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 use DateTime;
 
-class EndpointsPrimitiveWireTest extends TestCase
+class EndpointsPrimitiveWireTest extends WireMockTestCase
 {
 
     /**
      */
     public function testGetAndReturnString(): void {
         $testId = 'endpoints.primitive.get_and_return_string.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -40,12 +36,6 @@ class EndpointsPrimitiveWireTest extends TestCase
     public function testGetAndReturnInt(): void {
         $testId = 'endpoints.primitive.get_and_return_int.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -67,12 +57,6 @@ class EndpointsPrimitiveWireTest extends TestCase
      */
     public function testGetAndReturnLong(): void {
         $testId = 'endpoints.primitive.get_and_return_long.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -96,12 +80,6 @@ class EndpointsPrimitiveWireTest extends TestCase
     public function testGetAndReturnDouble(): void {
         $testId = 'endpoints.primitive.get_and_return_double.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -123,12 +101,6 @@ class EndpointsPrimitiveWireTest extends TestCase
      */
     public function testGetAndReturnBool(): void {
         $testId = 'endpoints.primitive.get_and_return_bool.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -152,12 +124,6 @@ class EndpointsPrimitiveWireTest extends TestCase
     public function testGetAndReturnDatetime(): void {
         $testId = 'endpoints.primitive.get_and_return_datetime.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -179,12 +145,6 @@ class EndpointsPrimitiveWireTest extends TestCase
      */
     public function testGetAndReturnDate(): void {
         $testId = 'endpoints.primitive.get_and_return_date.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
@@ -208,12 +168,6 @@ class EndpointsPrimitiveWireTest extends TestCase
     public function testGetAndReturnUuid(): void {
         $testId = 'endpoints.primitive.get_and_return_uuid.0';
         $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
             token: '<token>',
             options: [
                 'baseUrl' => 'http://localhost:8080',
@@ -235,12 +189,6 @@ class EndpointsPrimitiveWireTest extends TestCase
      */
     public function testGetAndReturnBase64(): void {
         $testId = 'endpoints.primitive.get_and_return_base_64.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [

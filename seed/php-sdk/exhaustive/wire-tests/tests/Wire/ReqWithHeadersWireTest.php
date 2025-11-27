@@ -1,22 +1,18 @@
+<?php
+
 namespace Seed\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 use Seed\ReqWithHeaders\Requests\ReqWithHeaders;
 
-class ReqWithHeadersWireTest extends TestCase
+class ReqWithHeadersWireTest extends WireMockTestCase
 {
 
     /**
      */
     public function testGetWithCustomHeader(): void {
         $testId = 'req_with_headers.get_with_custom_header.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [

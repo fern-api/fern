@@ -1,22 +1,18 @@
+<?php
+
 namespace Seed\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 use Seed\Types\Enum\Types\WeatherReport;
 
-class EndpointsEnumWireTest extends TestCase
+class EndpointsEnumWireTest extends WireMockTestCase
 {
 
     /**
      */
     public function testGetAndReturnEnum(): void {
         $testId = 'endpoints.enum.get_and_return_enum.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
         $client = new SeedClient(
             token: '<token>',
             options: [
