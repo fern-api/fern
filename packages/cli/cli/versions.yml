@@ -2,6 +2,35 @@
 
 - changelogEntry:
     - summary: |
+        Support per-generator auth-schemes override in generators.yml. Generators can now define their own `auth-schemes` at the generator level, which takes precedence over top-level definitions.
+
+        ```yml
+        # generators.yml
+        api:
+          auth: Bearer
+          auth-schemes:
+            Bearer:
+              scheme: bearer
+
+        groups:
+          php-sdk:
+            generators:
+              - name: fernapi/fern-php-sdk
+                version: 1.23.0
+                api:
+                  auth: Bearer
+                  auth-schemes:
+                    Bearer:
+                      scheme: bearer
+                      get-token: POST /authorize
+        ```
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.12.0
+
+- changelogEntry:
+    - summary: |
         When converting OpenAPI to Fern Definition, if all endpoints in a service have `auth: true`, set the `auth: true` at the service level, and remove it from individual endpoints.
       type: feat
   irVersion: 62

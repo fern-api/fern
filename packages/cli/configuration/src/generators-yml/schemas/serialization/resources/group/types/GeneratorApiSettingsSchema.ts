@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { ApiAuthSchema } from "../../fernDefinition/resources/auth/types/ApiAuthSchema";
+import { AuthSchemeDeclarationSchema } from "../../fernDefinition/resources/auth/types/AuthSchemeDeclarationSchema";
 import { ApiDefinitionSettingsSchema } from "../../generators/types/ApiDefinitionSettingsSchema";
 import { ApiConfigurationV2SpecsSchema } from "../../generators/types/ApiConfigurationV2SpecsSchema";
 
@@ -14,6 +15,7 @@ export const GeneratorApiSettingsSchema: core.serialization.ObjectSchema<
     FernDefinition.GeneratorApiSettingsSchema
 > = core.serialization.object({
     auth: ApiAuthSchema.optional(),
+    "auth-schemes": core.serialization.record(core.serialization.string(), AuthSchemeDeclarationSchema).optional(),
     settings: ApiDefinitionSettingsSchema.optional(),
     specs: ApiConfigurationV2SpecsSchema.optional(),
 });
@@ -21,6 +23,7 @@ export const GeneratorApiSettingsSchema: core.serialization.ObjectSchema<
 export declare namespace GeneratorApiSettingsSchema {
     export interface Raw {
         auth?: ApiAuthSchema.Raw | null;
+        "auth-schemes"?: Record<string, AuthSchemeDeclarationSchema.Raw> | null;
         settings?: ApiDefinitionSettingsSchema.Raw | null;
         specs?: ApiConfigurationV2SpecsSchema.Raw | null;
     }

@@ -52,6 +52,7 @@ types:
       When specs is provided, it completely replaces the top-level api.specs configuration for this generator.
     properties:
       auth: optional<auth.ApiAuthSchema>
+      auth-schemes: optional<map<string, auth.AuthSchemeDeclarationSchema>>
       settings: optional<generators.APIDefinitionSettingsSchema>
       specs:
         type: optional<generators.APIConfigurationV2SpecsSchema>
