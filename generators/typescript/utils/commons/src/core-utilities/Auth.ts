@@ -30,6 +30,10 @@ export interface Auth {
             getReturnTypeNode: () => ts.TypeNode;
         };
     };
+
+    NoOpAuthProvider: {
+        _getReferenceTo: () => ts.Expression;
+    };
 }
 
 export const MANIFEST: CoreUtility.Manifest = {
@@ -158,5 +162,12 @@ export class AuthImpl extends CoreUtility implements Auth {
                     this.AuthRequest._getReferenceToType()
                 ])
         }
+    };
+
+    public readonly NoOpAuthProvider = {
+        _getReferenceTo: this.withExportedName(
+            "NoOpAuthProvider",
+            (NoOpAuthProvider) => () => NoOpAuthProvider.getExpression()
+        )
     };
 }
