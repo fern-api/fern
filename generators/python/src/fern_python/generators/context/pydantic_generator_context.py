@@ -75,11 +75,6 @@ class PydanticGeneratorContext(ABC):
     ) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]: ...
 
     @abstractmethod
-    def get_union_self_referencing_members_from_types(
-        self,
-    ) -> Dict[ir_types.TypeId, OrderedSet[ir_types.TypeId]]: ...
-
-    @abstractmethod
     def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool: ...
 
     @abstractmethod
