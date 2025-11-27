@@ -13,12 +13,13 @@ interface PendingRequest {
 /**
  * CsharpFormatter uses a persistent csharpier process to format C# code.
  * This avoids the overhead of starting a new process for each formatting request.
- * The process is kept alive using the --pipe-multiple-files flag.
+ * The process is kept alive using the pipe-files subcommand.
  */
 export class CsharpFormatter extends AbstractFormatter {
     private readonly csharpierPath: string;
     private process: ChildProcess | null = null;
     private buffer: string = "";
+    private stderrBuffer: string = "";
     private pendingRequests: PendingRequest[] = [];
     private isProcessReady: boolean = false;
     private processError: Error | null = null;
@@ -38,10 +39,13 @@ export class CsharpFormatter extends AbstractFormatter {
         }
 
         this.buffer = "";
+        this.stderrBuffer = "";
         this.processError = null;
         this.isProcessReady = true;
 
-        this.process = spawn(this.csharpierPath, ["--pipe-multiple-files"], {
+        // Use pipe-files subcommand which keeps the process alive and accepts multiple files
+        // Protocol: send "filename\u0003content\u0003", receive "formatted_content\u0003"
+        this.process = spawn(this.csharpierPath, ["pipe-files"], {
             stdio: ["pipe", "pipe", "pipe"]
         });
 
@@ -53,8 +57,9 @@ export class CsharpFormatter extends AbstractFormatter {
             this.processBuffer();
         });
 
-        this.process.stderr?.on("data", (_data: string) => {
-            // Ignore stderr - csharpier may output warnings that don't affect formatting
+        this.process.stderr?.on("data", (data: string) => {
+            // Capture stderr for error reporting
+            this.stderrBuffer += data;
         });
 
         this.process.on("error", (error: Error) => {
@@ -66,7 +71,10 @@ export class CsharpFormatter extends AbstractFormatter {
         this.process.on("close", (code: number | null) => {
             this.isProcessReady = false;
             if (code !== 0 && code !== null) {
-                const error = new Error(`csharpier process exited with code ${code}`);
+                const stderrMsg = this.stderrBuffer.trim();
+                const error = new Error(
+                    `csharpier process exited with code ${code}${stderrMsg ? `: ${stderrMsg}` : ""}`
+                );
                 this.processError = error;
                 this.rejectAllPending(error);
             }
@@ -150,6 +158,7 @@ export class CsharpFormatter extends AbstractFormatter {
         }
         this.isProcessReady = false;
         this.buffer = "";
+        this.stderrBuffer = "";
         this.pendingRequests = [];
     }
 }
