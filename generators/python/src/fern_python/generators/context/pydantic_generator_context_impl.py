@@ -183,6 +183,18 @@ class PydanticGeneratorContextImpl(PydanticGeneratorContext):
     def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool:
         return self.does_type_reference_other_type(a, b) and self.does_type_reference_other_type(b, a)
 
+    def get_types_in_cycle_with(self, type_id: ir_types.TypeId) -> OrderedSet[ir_types.TypeId]:
+        """
+        Returns all types that are in a mutual reference cycle with the given type.
+        A type B is in a cycle with type A if A references B and B references A (directly or transitively).
+        """
+        cycle_types: OrderedSet[ir_types.TypeId] = OrderedSet()
+        referenced_types = self.get_referenced_types_ordered(type_id)
+        for dep in referenced_types:
+            if self.do_types_reference_each_other(type_id, dep):
+                cycle_types.add(dep)
+        return cycle_types
+
     def does_type_reference_other_type(self, type_id: ir_types.TypeId, other_type_id: ir_types.TypeId) -> bool:
         referenced_types = self.get_referenced_types(type_id)
         return other_type_id in referenced_types

@@ -83,6 +83,9 @@ class PydanticGeneratorContext(ABC):
     def do_types_reference_each_other(self, a: ir_types.TypeId, b: ir_types.TypeId) -> bool: ...
 
     @abstractmethod
+    def get_types_in_cycle_with(self, type_id: ir_types.TypeId) -> OrderedSet[ir_types.TypeId]: ...
+
+    @abstractmethod
     def does_type_reference_other_type(self, type_id: ir_types.TypeId, other_type_id: ir_types.TypeId) -> bool: ...
 
     @abstractmethod
