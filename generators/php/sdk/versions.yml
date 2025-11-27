@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.23.4
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for inferred auth by using getInferredAuth() explicitly. The previous fix relied on the visitor pattern which may not correctly identify inferred auth schemes in all cases.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 62
+
 - version: 1.23.3
   changelogEntry:
     - summary: |

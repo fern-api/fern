@@ -3,7 +3,7 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets";
-import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { dynamic, HttpEndpoint, HttpService, InferredAuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
@@ -386,41 +386,8 @@ export class WireTestGenerator {
                     authParams.push("clientId: 'test-client-id'");
                     authParams.push("clientSecret: 'test-client-secret'");
                 },
-                inferred: (scheme) => {
-                    // Extract parameters from the token endpoint's request body and headers
-                    const tokenEndpointRef = scheme.tokenEndpoint.endpoint;
-                    const service = this.context.ir.services[tokenEndpointRef.serviceId];
-                    if (service == null) {
-                        return;
-                    }
-                    const endpoint = service.endpoints.find((e) => e.id === tokenEndpointRef.endpointId);
-                    if (endpoint == null) {
-                        return;
-                    }
-
-                    const sdkRequest = endpoint.sdkRequest;
-                    if (sdkRequest != null && sdkRequest.shape.type === "wrapper") {
-                        // Extract parameters from request body properties
-                        const requestBody = endpoint.requestBody;
-                        if (requestBody != null && requestBody.type === "inlinedRequestBody") {
-                            for (const property of requestBody.properties) {
-                                const literal = this.context.maybeLiteral(property.valueType);
-                                if (literal == null) {
-                                    const paramName = this.context.getParameterName(property.name.name);
-                                    authParams.push(`${paramName}: 'test-${paramName}'`);
-                                }
-                            }
-                        }
-
-                        // Extract parameters from endpoint headers
-                        for (const header of endpoint.headers) {
-                            const literal = this.context.maybeLiteral(header.valueType);
-                            if (literal == null) {
-                                const paramName = this.context.getParameterName(header.name.name);
-                                authParams.push(`${paramName}: 'test-${paramName}'`);
-                            }
-                        }
-                    }
+                inferred: () => {
+                    // Inferred auth is handled separately below using getInferredAuth()
                 },
                 _other: () => {
                     // Skip unknown auth schemes
@@ -428,10 +395,54 @@ export class WireTestGenerator {
             });
         }
 
+        // Handle inferred auth explicitly using the same method as RootClientGenerator
+        const inferredAuth = this.context.getInferredAuth();
+        if (inferredAuth != null) {
+            this.addInferredAuthParams(inferredAuth, authParams);
+        }
+
         if (authParams.length === 0) {
             return "";
         }
 
         return authParams.map((param) => `${param},\n    `).join("");
+    }
+
+    private addInferredAuthParams(scheme: InferredAuthScheme, authParams: string[]): void {
+        // Extract parameters from the token endpoint's request body and headers
+        // This mirrors the logic in RootClientGenerator.getParametersForInferredAuth()
+        const tokenEndpointRef = scheme.tokenEndpoint.endpoint;
+        const service = this.context.ir.services[tokenEndpointRef.serviceId];
+        if (service == null) {
+            return;
+        }
+        const endpoint = service.endpoints.find((e) => e.id === tokenEndpointRef.endpointId);
+        if (endpoint == null) {
+            return;
+        }
+
+        const sdkRequest = endpoint.sdkRequest;
+        if (sdkRequest != null && sdkRequest.shape.type === "wrapper") {
+            // Extract parameters from request body properties
+            const requestBody = endpoint.requestBody;
+            if (requestBody != null && requestBody.type === "inlinedRequestBody") {
+                for (const property of requestBody.properties) {
+                    const literal = this.context.maybeLiteral(property.valueType);
+                    if (literal == null) {
+                        const paramName = this.context.getParameterName(property.name.name);
+                        authParams.push(`${paramName}: 'test-${paramName}'`);
+                    }
+                }
+            }
+
+            // Extract parameters from endpoint headers
+            for (const header of endpoint.headers) {
+                const literal = this.context.maybeLiteral(header.valueType);
+                if (literal == null) {
+                    const paramName = this.context.getParameterName(header.name.name);
+                    authParams.push(`${paramName}: 'test-${paramName}'`);
+                }
+            }
+        }
     }
 }
