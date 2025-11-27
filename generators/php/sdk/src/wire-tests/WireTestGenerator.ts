@@ -3,7 +3,13 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
 import { php } from "@fern-api/php-codegen";
 import { DynamicSnippetsGenerator } from "@fern-api/php-dynamic-snippets";
-import { dynamic, HttpEndpoint, HttpService, InferredAuthScheme, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import {
+    dynamic,
+    HttpEndpoint,
+    HttpService,
+    InferredAuthScheme,
+    IntermediateRepresentation
+} from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
