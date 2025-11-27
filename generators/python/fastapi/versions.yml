@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
+- version: 1.13.1
+  changelogEntry:
+    - summary: Fix forward ref detection for complex circular type cycles.
+      type: fix
+  createdAt: "2025-12-10"
+  irVersion: 61
+
 - version: 1.13.0
   changelogEntry:
     - summary: |

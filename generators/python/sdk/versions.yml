@@ -96,6 +96,13 @@
   createdAt: "2025-12-04"
   irVersion: 61
 
+- version: 4.41.9
+  changelogEntry:
+    - summary: Fix forward ref detection for complex circular type cycles.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
 - version: 4.41.8
   changelogEntry:
     - summary: |
