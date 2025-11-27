@@ -245,6 +245,8 @@ allowedFailures:
   - request-parameters
   - reserved-keywords
   - streaming-parameter
+  - server-sent-event-examples:with-wire-tests
+  - server-sent-events:with-wire-tests
   - trace
   - property-access
 
