@@ -129,11 +129,46 @@ export class EndpointSnippetGenerator {
         endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): php.MethodInvocation {
+        const args = this.getMethodArgs({ endpoint, snippet });
+        const requestOptions = this.getRequestOptions({ snippet });
+        if (!php.TypeLiteral.isNop(requestOptions)) {
+            args.push(requestOptions);
+        }
         return php.invokeMethod({
             on: php.codeblock("$this->client"),
             method: this.getMethod({ endpoint }),
-            arguments_: this.getMethodArgs({ endpoint, snippet }),
+            arguments_: args,
             multiline: true
+        });
+    }
+
+    /**
+     * Builds request options from snippet headers for per-request options.
+     * This is used when generating snippets for existing clients (e.g., wire tests)
+     * where headers should be passed as method call options rather than client constructor options.
+     */
+    private getRequestOptions({
+        snippet
+    }: {
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): php.TypeLiteral {
+        const headers = snippet.headers ?? {};
+        const entries = Object.entries(headers);
+        if (entries.length === 0) {
+            return php.TypeLiteral.nop();
+        }
+        return php.TypeLiteral.map({
+            entries: [
+                {
+                    key: php.TypeLiteral.string("headers"),
+                    value: php.TypeLiteral.map({
+                        entries: entries.map(([name, value]) => ({
+                            key: php.TypeLiteral.string(name),
+                            value: php.TypeLiteral.string(String(value))
+                        }))
+                    })
+                }
+            ]
         });
     }
 
