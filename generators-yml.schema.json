@@ -3552,7 +3552,7 @@
         "settings": {
           "oneOf": [
             {
-              "$ref": "#/definitions/generators.APIDefinitionSettingsSchema"
+              "$ref": "#/definitions/generators.APIConfigurationV2SettingsSchema"
             },
             {
               "type": "null"
