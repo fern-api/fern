@@ -130,7 +130,7 @@ export class EndpointSnippetGenerator {
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): php.MethodInvocation {
         const args = this.getMethodArgs({ endpoint, snippet });
-        const requestOptions = this.getRequestOptions({ snippet });
+        const requestOptions = this.getRequestOptions({ endpoint, snippet });
         if (!php.TypeLiteral.isNop(requestOptions)) {
             args.push(requestOptions);
         }
@@ -146,10 +146,13 @@ export class EndpointSnippetGenerator {
      * Builds request options from snippet headers for per-request options.
      * This is used when generating snippets for existing clients (e.g., wire tests)
      * where headers should be passed as method call options rather than client constructor options.
+     * Only includes headers that are NOT already mapped to the request directly (i.e., not defined in the IR).
      */
     private getRequestOptions({
+        endpoint,
         snippet
     }: {
+        endpoint: FernIr.dynamic.Endpoint;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): php.TypeLiteral {
         const headers = snippet.headers ?? {};
@@ -157,12 +160,36 @@ export class EndpointSnippetGenerator {
         if (entries.length === 0) {
             return php.TypeLiteral.nop();
         }
+
+        // Build a set of header names that are already mapped to the request directly
+        const mappedHeaderNames = new Set<string>();
+
+        // Add global headers from IR
+        if (this.context.ir.headers != null) {
+            for (const header of this.context.ir.headers) {
+                mappedHeaderNames.add(header.name.wireValue.toLowerCase());
+            }
+        }
+
+        // Add endpoint-level headers from inlined request
+        if (endpoint.request.type === "inlined" && endpoint.request.headers != null) {
+            for (const header of endpoint.request.headers) {
+                mappedHeaderNames.add(header.name.wireValue.toLowerCase());
+            }
+        }
+
+        // Filter out headers that are already mapped to the request
+        const unmappedEntries = entries.filter(([name]) => !mappedHeaderNames.has(name.toLowerCase()));
+        if (unmappedEntries.length === 0) {
+            return php.TypeLiteral.nop();
+        }
+
         return php.TypeLiteral.map({
             entries: [
                 {
                     key: php.TypeLiteral.string("headers"),
                     value: php.TypeLiteral.map({
-                        entries: entries.map(([name, value]) => ({
+                        entries: unmappedEntries.map(([name, value]) => ({
                             key: php.TypeLiteral.string(name),
                             value: php.TypeLiteral.string(String(value))
                         }))
