@@ -1,6 +1,30 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Support per-generator specs override in generators.yml. Generators can now redefine the `api.specs` configuration at the individual generator level, allowing different specs configurations for different generators.
+
+        ```yml
+        # generators.yml
+        api:
+          specs:
+            - openapi: openapi.yml
+
+        groups:
+          php-sdk:
+            generators:
+              - name: fernapi/fern-php-sdk
+                version: 1.23.1
+                api:
+                  specs:
+                    - openapi: custom-openapi.yml
+        ```
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.10.0
+
+- changelogEntry:
+    - summary: |
         When importing OpenAPI specs, endpoints now properly inherit authentication requirements defined at the global level.
       type: fix
   irVersion: 62
