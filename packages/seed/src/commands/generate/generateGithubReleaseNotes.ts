@@ -29,6 +29,9 @@ const GENERATOR_TO_DISPLAY_NAME: Record<string, string> = {
     "rust-sdk": "Rust SDK"
 };
 
+const CLI_CHANGELOG_URL = "https://buildwithfern.com/learn/cli-api-reference/cli-changelog";
+const CLI_DISPLAY_NAME = "Fern CLI";
+
 export interface ReleaseNotesResult {
     version: string;
     releaseNotes: string;
@@ -170,6 +173,123 @@ function formatReleaseNotes({
         releaseNotes += `---\n\n`;
         releaseNotes += `[View full changelog](${changelogUrl})\n`;
     }
+
+    return releaseNotes;
+}
+
+export async function generateCliGithubReleaseNotes({
+    context,
+    version,
+    changelogPath
+}: {
+    context: TaskContext;
+    version: string;
+    changelogPath: AbsoluteFilePath;
+}): Promise<ReleaseNotesResult | undefined> {
+    if (!(await doesPathExist(changelogPath))) {
+        context.logger.error(`CLI changelog file not found at ${changelogPath}`);
+        return undefined;
+    }
+
+    let releaseNotes: string | undefined;
+
+    await parseGeneratorReleasesFile({
+        generatorId: "cli",
+        changelogPath,
+        context,
+        action: async (release) => {
+            if (release.version === version) {
+                releaseNotes = formatCliReleaseNotes({
+                    version: release.version,
+                    entries: release.changelogEntry
+                });
+            }
+        }
+    });
+
+    if (releaseNotes == null) {
+        context.logger.error(`Version ${version} not found in CLI changelog`);
+        return undefined;
+    }
+
+    return {
+        version,
+        releaseNotes
+    };
+}
+
+function formatCliReleaseNotes({
+    version,
+    entries
+}: {
+    version: string;
+    entries: ChangelogEntry[] | undefined;
+}): string {
+    let releaseNotes = `## ${CLI_DISPLAY_NAME} ${version}\n\n`;
+
+    if (entries == null || entries.length === 0) {
+        releaseNotes += "No changelog entries for this release.\n";
+    } else {
+        const features: string[] = [];
+        const fixes: string[] = [];
+        const chores: string[] = [];
+        const breaking: string[] = [];
+
+        for (const entry of entries) {
+            const summary = entry.summary.trim();
+            switch (entry.type) {
+                case "feat":
+                    features.push(summary);
+                    break;
+                case "fix":
+                    fixes.push(summary);
+                    break;
+                case "chore":
+                    chores.push(summary);
+                    break;
+                case "break":
+                    breaking.push(summary);
+                    break;
+                default:
+                    features.push(summary);
+            }
+        }
+
+        if (breaking.length > 0) {
+            releaseNotes += "### Breaking Changes\n\n";
+            for (const item of breaking) {
+                releaseNotes += `- ${item}\n`;
+            }
+            releaseNotes += "\n";
+        }
+
+        if (features.length > 0) {
+            releaseNotes += "### Features\n\n";
+            for (const item of features) {
+                releaseNotes += `- ${item}\n`;
+            }
+            releaseNotes += "\n";
+        }
+
+        if (fixes.length > 0) {
+            releaseNotes += "### Bug Fixes\n\n";
+            for (const item of fixes) {
+                releaseNotes += `- ${item}\n`;
+            }
+            releaseNotes += "\n";
+        }
+
+        if (chores.length > 0) {
+            releaseNotes += "### Maintenance\n\n";
+            for (const item of chores) {
+                releaseNotes += `- ${item}\n`;
+            }
+            releaseNotes += "\n";
+        }
+    }
+
+    releaseNotes += `---\n\n`;
+    releaseNotes += `[View full changelog](${CLI_CHANGELOG_URL})\n`;
 
     return releaseNotes;
 }

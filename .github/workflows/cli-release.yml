@@ -66,6 +66,16 @@ jobs:
             echo "IS_PRERELEASE=false" >> $GITHUB_OUTPUT
           fi
 
+      - name: Build seed CLI
+        if: steps.get_version.outputs.HAS_NEW_VERSION
+        run: pnpm turbo run dist:cli --filter=@fern-api/seed-cli
+
+      - name: Generate CLI release notes
+        if: steps.get_version.outputs.HAS_NEW_VERSION
+        run: |
+          node --enable-source-maps packages/seed/dist/cli.cjs generate cli-release-notes ${{ steps.get_version.outputs.VERSION }} -o cli_release_notes.md
+          echo "Generated CLI release notes for ${{ steps.get_version.outputs.VERSION }}"
+
       - name: Create Release
         id: create_release
         uses: softprops/action-gh-release@v2
@@ -74,6 +84,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           tag_name: ${{ steps.get_version.outputs.VERSION }}
           name: ${{ steps.get_version.outputs.VERSION }}
+          body_path: cli_release_notes.md
           draft: false
           prerelease: ${{ steps.check_prerelease.outputs.IS_PRERELEASE }}
 
