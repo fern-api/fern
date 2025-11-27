@@ -569,9 +569,11 @@ async function convertGenerator({
         readme,
         settings: generator.api?.settings ?? undefined,
         apiOverride:
-            generator.api?.specs != null
+            generator.api?.specs != null || generator.api?.auth != null || generator.api?.["auth-schemes"] != null
                 ? {
-                      specs: generator.api.specs
+                      specs: generator.api?.specs,
+                      auth: generator.api?.auth,
+                      "auth-schemes": generator.api?.["auth-schemes"]
                   }
                 : undefined
     };
