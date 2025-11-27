@@ -7,19 +7,22 @@ use Seed\SeedClient;
 
 class EndpointsPutWireTest extends WireMockTestCase
 {
+    /**
+     * @var SeedClient $client
+     */
+    private SeedClient $client;
 
     /**
      */
     public function testAdd(): void {
         $testId = 'endpoints.put.add.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->put->add(
+        $this->client->endpoints->put->add(
             'id',
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.put.add.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -27,6 +30,18 @@ class EndpointsPutWireTest extends WireMockTestCase
             "/id",
             null,
             1
+        );
+    }
+
+    /**
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->client = new SeedClient(
+            token: 'test-token',
+        options: [
+            'baseUrl' => 'http://localhost:8080',
+        ],
         );
     }
 }

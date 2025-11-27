@@ -10,19 +10,22 @@ use DateTime;
 
 class EndpointsHttpMethodsWireTest extends WireMockTestCase
 {
+    /**
+     * @var SeedClient $client
+     */
+    private SeedClient $client;
 
     /**
      */
     public function testTestGet(): void {
         $testId = 'endpoints.http_methods.test_get.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->httpMethods->testGet(
+        $this->client->endpoints->httpMethods->testGet(
             'id',
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.http_methods.test_get.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -37,16 +40,15 @@ class EndpointsHttpMethodsWireTest extends WireMockTestCase
      */
     public function testTestPost(): void {
         $testId = 'endpoints.http_methods.test_post.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->httpMethods->testPost(
+        $this->client->endpoints->httpMethods->testPost(
             new ObjectWithRequiredField([
                 'string' => 'string',
             ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.http_methods.test_post.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -61,17 +63,16 @@ class EndpointsHttpMethodsWireTest extends WireMockTestCase
      */
     public function testTestPut(): void {
         $testId = 'endpoints.http_methods.test_put.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->httpMethods->testPut(
+        $this->client->endpoints->httpMethods->testPut(
             'id',
             new ObjectWithRequiredField([
                 'string' => 'string',
             ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.http_methods.test_put.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -86,13 +87,7 @@ class EndpointsHttpMethodsWireTest extends WireMockTestCase
      */
     public function testTestPatch(): void {
         $testId = 'endpoints.http_methods.test_patch.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->httpMethods->testPatch(
+        $this->client->endpoints->httpMethods->testPatch(
             'id',
             new ObjectWithOptionalField([
                 'string' => 'string',
@@ -116,6 +111,11 @@ class EndpointsHttpMethodsWireTest extends WireMockTestCase
                 ],
                 'bigint' => '1000000',
             ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.http_methods.test_patch.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -130,14 +130,13 @@ class EndpointsHttpMethodsWireTest extends WireMockTestCase
      */
     public function testTestDelete(): void {
         $testId = 'endpoints.http_methods.test_delete.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->httpMethods->testDelete(
+        $this->client->endpoints->httpMethods->testDelete(
             'id',
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.http_methods.test_delete.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -145,6 +144,18 @@ class EndpointsHttpMethodsWireTest extends WireMockTestCase
             "/http-methods/id",
             null,
             1
+        );
+    }
+
+    /**
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->client = new SeedClient(
+            token: 'test-token',
+        options: [
+            'baseUrl' => 'http://localhost:8080',
+        ],
         );
     }
 }

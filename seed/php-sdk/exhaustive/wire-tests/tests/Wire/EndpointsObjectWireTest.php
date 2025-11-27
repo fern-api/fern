@@ -13,18 +13,16 @@ use Seed\Types\Object\Types\NestedObjectWithRequiredField;
 
 class EndpointsObjectWireTest extends WireMockTestCase
 {
+    /**
+     * @var SeedClient $client
+     */
+    private SeedClient $client;
 
     /**
      */
     public function testGetAndReturnWithOptionalField(): void {
         $testId = 'endpoints.object.get_and_return_with_optional_field.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->object->getAndReturnWithOptionalField(
+        $this->client->endpoints->object->getAndReturnWithOptionalField(
             new ObjectWithOptionalField([
                 'string' => 'string',
                 'integer' => 1,
@@ -47,6 +45,11 @@ class EndpointsObjectWireTest extends WireMockTestCase
                 ],
                 'bigint' => '1000000',
             ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.object.get_and_return_with_optional_field.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -61,16 +64,15 @@ class EndpointsObjectWireTest extends WireMockTestCase
      */
     public function testGetAndReturnWithRequiredField(): void {
         $testId = 'endpoints.object.get_and_return_with_required_field.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->object->getAndReturnWithRequiredField(
+        $this->client->endpoints->object->getAndReturnWithRequiredField(
             new ObjectWithRequiredField([
                 'string' => 'string',
             ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.object.get_and_return_with_required_field.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -85,13 +87,7 @@ class EndpointsObjectWireTest extends WireMockTestCase
      */
     public function testGetAndReturnWithMapOfMap(): void {
         $testId = 'endpoints.object.get_and_return_with_map_of_map.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->object->getAndReturnWithMapOfMap(
+        $this->client->endpoints->object->getAndReturnWithMapOfMap(
             new ObjectWithMapOfMap([
                 'map' => [
                     'map' => [
@@ -99,6 +95,11 @@ class EndpointsObjectWireTest extends WireMockTestCase
                     ],
                 ],
             ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.object.get_and_return_with_map_of_map.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -113,13 +114,7 @@ class EndpointsObjectWireTest extends WireMockTestCase
      */
     public function testGetAndReturnNestedWithOptionalField(): void {
         $testId = 'endpoints.object.get_and_return_nested_with_optional_field.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->object->getAndReturnNestedWithOptionalField(
+        $this->client->endpoints->object->getAndReturnNestedWithOptionalField(
             new NestedObjectWithOptionalField([
                 'string' => 'string',
                 'nestedObject' => new ObjectWithOptionalField([
@@ -145,6 +140,11 @@ class EndpointsObjectWireTest extends WireMockTestCase
                     'bigint' => '1000000',
                 ]),
             ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.object.get_and_return_nested_with_optional_field.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -159,13 +159,7 @@ class EndpointsObjectWireTest extends WireMockTestCase
      */
     public function testGetAndReturnNestedWithRequiredField(): void {
         $testId = 'endpoints.object.get_and_return_nested_with_required_field.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->object->getAndReturnNestedWithRequiredField(
+        $this->client->endpoints->object->getAndReturnNestedWithRequiredField(
             'string',
             new NestedObjectWithRequiredField([
                 'string' => 'string',
@@ -192,6 +186,11 @@ class EndpointsObjectWireTest extends WireMockTestCase
                     'bigint' => '1000000',
                 ]),
             ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.object.get_and_return_nested_with_required_field.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -206,13 +205,7 @@ class EndpointsObjectWireTest extends WireMockTestCase
      */
     public function testGetAndReturnNestedWithRequiredFieldAsList(): void {
         $testId = 'endpoints.object.get_and_return_nested_with_required_field_as_list.0';
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
+        $this->client->endpoints->object->getAndReturnNestedWithRequiredFieldAsList(
             [
                 new NestedObjectWithRequiredField([
                     'string' => 'string',
@@ -265,6 +258,11 @@ class EndpointsObjectWireTest extends WireMockTestCase
                     ]),
                 ]),
             ],
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.object.get_and_return_nested_with_required_field_as_list.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -272,6 +270,18 @@ class EndpointsObjectWireTest extends WireMockTestCase
             "/object/get-and-return-nested-with-required-field-list",
             null,
             1
+        );
+    }
+
+    /**
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->client = new SeedClient(
+            token: 'test-token',
+        options: [
+            'baseUrl' => 'http://localhost:8080',
+        ],
         );
     }
 }
