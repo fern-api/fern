@@ -10,6 +10,7 @@ import yaml from "js-yaml";
 import path from "path";
 
 import { convertGeneratorsConfiguration } from "./convertGeneratorsConfiguration";
+import { migrateDeprecatedGeneratorApiSettings } from "./migrateDeprecatedGeneratorApiSettings";
 
 export async function loadRawGeneratorsConfiguration({
     absolutePathToWorkspace,
@@ -26,7 +27,11 @@ export async function loadRawGeneratorsConfiguration({
     const contentsStr = await readFile(filepath);
     try {
         const contentsParsed = yaml.load(contentsStr.toString());
-        const parsed = generatorsYml.serialization.GeneratorsConfigurationSchema.parse(contentsParsed, {
+
+        // Migrate deprecated generator-level API settings keys before schema validation
+        const migrated = migrateDeprecatedGeneratorApiSettings(contentsParsed, context);
+
+        const parsed = generatorsYml.serialization.GeneratorsConfigurationSchema.parse(migrated, {
             allowUnrecognizedEnumValues: false,
             unrecognizedObjectKeys: "fail",
             allowUnrecognizedUnionMembers: false,
