@@ -444,7 +444,7 @@ describe("parseImagePaths", () => {
 
     it("should reject double-slash paths as invalid local file syntax", () => {
         const page = "This is a test page with an image ![image](//assets/images/logo.png)";
-        expect(() => parseImagePaths(page, PATHS)).toThrow(/Double-slash paths are not supported/);
+        expect(() => parseImagePaths(page, PATHS)).toThrow(/reserved for external URLs/);
     });
 
     it("should ignore img src if it is not a string", () => {

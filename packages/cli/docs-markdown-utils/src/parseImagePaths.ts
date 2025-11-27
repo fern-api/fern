@@ -511,11 +511,12 @@ function resolvePath(
         return undefined;
     }
 
-    // Reject double-slash paths that aren't valid external URLs
+    // Reject double-slash paths that aren't valid external URLs (e.g., //cdn.example.com/image.png)
     if (pathToImage.startsWith("//")) {
         throw new Error(
-            `Invalid image path "${pathToImage}". Double-slash paths are not supported for local files. ` +
-                `Use "/${pathToImage.slice(2)}" or a relative path instead.`
+            `Invalid image path "${pathToImage}". ` +
+                `Paths starting with "//" are reserved for external URLs (e.g., //cdn.example.com/image.png). ` +
+                `For local files, use "/${pathToImage.slice(2)}" or a relative path instead.`
         );
     }
 
