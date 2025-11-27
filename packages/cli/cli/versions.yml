@@ -1,6 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
 - changelogEntry:
+    - summary: Allow all API settings to be overridden at the generator level in generators.yml.
+      type: feat
+    - summary: |
+        Add CLI migration to automatically convert deprecated generator-level API settings keys to their new equivalents: `use-title` to `title-as-schema-name`, and `unions: v1` to `prefer-undiscriminated-unions-with-literals: true`.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.13.0
+
+- changelogEntry:
     - summary: |
         Support per-generator auth-schemes override in generators.yml. Generators can now define their own `auth-schemes` at the generator level, which takes precedence over top-level definitions.
 
