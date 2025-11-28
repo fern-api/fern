@@ -30,10 +30,6 @@ language: ruby
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
-  pagination-custom:
-    - customConfig:
-        customPagerName: PayrocPager
-      outputFolder: .
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config

@@ -262,19 +262,15 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderCustomPaginationSnippet(endpoint: EndpointWithFilepath): string {
+        const pagerClassName = this.context.customConfig.customPagerName ?? "CustomPager";
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
             # For custom pagination, the response is returned directly.
-            # You can use the CustomPager utility class to help with navigation.
             response = ${this.getMethodCall(endpoint)}(
                 ...
             )
 
-            # Access the response data directly
-            puts "Got response: #{response}"
-
-            # If using the CustomPager utility:
-            pager = ${this.rootPackageClientName}::Internal::CustomPager.new(
+            pager = ${this.rootPackageClientName}::Internal::${pagerClassName}.new(
                 response,
                 has_next_proc: ->(page) { page.has_more },
                 get_next_proc: ->(page) { ${this.getMethodCall(endpoint)}(cursor: page.next_cursor) }
