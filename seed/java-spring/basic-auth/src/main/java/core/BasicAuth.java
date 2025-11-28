@@ -51,7 +51,7 @@ public final class BasicAuth {
 
   @java.lang.Override
   public String toString() {
-    return "Basic " + getToken();
+    return "BasicAuth{credentials=[REDACTED]}";
   }
 
   public static BasicAuth of(String username, String password) {

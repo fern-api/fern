@@ -21,7 +21,7 @@ public final class BearerAuth {
 
   @java.lang.Override
   public String toString() {
-    return "Bearer " + getToken();
+    return "BearerAuth{token=[REDACTED]}";
   }
 
   public static BearerAuth of(String token) {
