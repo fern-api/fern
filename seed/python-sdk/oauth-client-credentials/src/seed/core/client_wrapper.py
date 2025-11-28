@@ -76,12 +76,22 @@ class AsyncClientWrapper(BaseClientWrapper):
         headers: typing.Optional[typing.Dict[str, str]] = None,
         base_url: str,
         timeout: typing.Optional[float] = None,
+        async_token: typing.Optional[typing.Callable[[], typing.Awaitable[str]]] = None,
         httpx_client: httpx.AsyncClient,
     ):
         super().__init__(token=token, headers=headers, base_url=base_url, timeout=timeout)
+        self._async_token = async_token
         self.httpx_client = AsyncHttpClient(
             httpx_client=httpx_client,
             base_headers=self.get_headers,
             base_timeout=self.get_timeout,
             base_url=self.get_base_url,
+            async_base_headers=self.async_get_headers,
         )
+
+    async def async_get_headers(self) -> typing.Dict[str, str]:
+        headers = self.get_headers()
+        if self._async_token is not None:
+            token = await self._async_token()
+            headers["Authorization"] = f"Bearer {token}"
+        return headers

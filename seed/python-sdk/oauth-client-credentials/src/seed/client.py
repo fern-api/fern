@@ -179,7 +179,8 @@ class AsyncSeedOauthClientCredentials:
         )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
-            token=_token_getter_override if _token_getter_override is not None else oauth_token_provider.get_token,
+            token=_token_getter_override,
+            async_token=oauth_token_provider.get_token,
             httpx_client=httpx_client
             if httpx_client is not None
             else httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
