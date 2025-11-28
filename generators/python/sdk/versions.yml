@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.42.0
+  changelogEntry:
+    - summary: |
+        Add async support for OAuth token provider. The generated SDK now includes an AsyncOAuthTokenProvider
+        class that uses asyncio.Lock for async-safe token refresh, alongside the existing sync OAuthTokenProvider
+        that uses threading.Lock. The async client now uses the async token provider for proper async token management.
+      type: feat
+  createdAt: "2025-11-28"
+  irVersion: 61
+
 - version: 4.41.3
   changelogEntry:
     - summary: |

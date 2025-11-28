@@ -6,7 +6,7 @@ import typing
 
 import httpx
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .core.oauth_token_provider import OAuthTokenProvider
+from .core.oauth_token_provider import AsyncOAuthTokenProvider, OAuthTokenProvider
 
 if typing.TYPE_CHECKING:
     from .auth.client import AsyncAuthClient, AuthClient
@@ -166,14 +166,14 @@ class AsyncSeedOauthClientCredentials:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        oauth_token_provider = OAuthTokenProvider(
+        oauth_token_provider = AsyncOAuthTokenProvider(
             client_id=client_id,
             client_secret=client_secret,
-            client_wrapper=SyncClientWrapper(
+            client_wrapper=AsyncClientWrapper(
                 base_url=base_url,
-                httpx_client=httpx.Client(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
+                httpx_client=httpx.AsyncClient(timeout=_defaulted_timeout, follow_redirects=follow_redirects)
                 if follow_redirects is not None
-                else httpx.Client(timeout=_defaulted_timeout),
+                else httpx.AsyncClient(timeout=_defaulted_timeout),
                 timeout=_defaulted_timeout,
             ),
         )

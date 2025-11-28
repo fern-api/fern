@@ -361,6 +361,15 @@ class CoreUtilities:
             ),
         )
 
+    def get_async_oauth_token_provider(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "oauth_token_provider"),
+                named_import="AsyncOAuthTokenProvider",
+            ),
+        )
+
     def instantiate_api_error(
         self,
         *,
