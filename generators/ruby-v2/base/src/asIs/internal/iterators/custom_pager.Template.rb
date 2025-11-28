@@ -1,13 +1,13 @@
 module <%= gem_namespace %>
   module Internal
-    # CustomPager wraps a paginated response and provides navigation methods.
+    # <%= custom_pager_class_name %> wraps a paginated response and provides navigation methods.
     # This is used for custom pagination endpoints where the pagination pattern
     # doesn't fit the standard cursor or offset patterns.
     #
     # The pager provides methods to check for and navigate to next/previous pages,
     # but the actual page fetching logic must be implemented by the user through
     # the provided fetcher block.
-    class CustomPager
+    class <%= custom_pager_class_name %>
       include Enumerable
 
       # @return [Object] The current page response
@@ -21,7 +21,7 @@ module <%= gem_namespace %>
       # @param get_next_proc [Proc, nil] A proc that fetches the next page
       # @param get_prev_proc [Proc, nil] A proc that fetches the previous page
       # @param item_field [Symbol, nil] The field name containing items for iteration
-      # @return [<%= gem_namespace %>::Internal::CustomPager]
+      # @return [<%= gem_namespace %>::Internal::<%= custom_pager_class_name %>]
       def initialize(initial, has_next_proc: nil, has_prev_proc: nil, get_next_proc: nil, get_prev_proc: nil, item_field: nil)
         @current = initial
         @has_next_proc = has_next_proc
