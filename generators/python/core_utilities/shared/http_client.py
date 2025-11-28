@@ -242,6 +242,11 @@ class HttpClient:
         if (request_files is None or len(request_files) == 0) and force_multipart:
             request_files = FORCE_MULTIPART
 
+        # Filter None values from data body for multipart/form requests to prevent
+        # httpx from converting None to empty strings
+        if data_body is not None and isinstance(data_body, typing.Mapping) and (request_files or force_multipart):
+            data_body = remove_none_from_dict(data_body)
+
         response = self.httpx_client.request(
             method=method,
             url=urllib.parse.urljoin(f"{base_url}/", path),
@@ -338,6 +343,11 @@ class HttpClient:
             request_files = FORCE_MULTIPART
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+
+        # Filter None values from data body for multipart/form requests to prevent
+        # httpx from converting None to empty strings
+        if data_body is not None and isinstance(data_body, typing.Mapping) and (request_files or force_multipart):
+            data_body = remove_none_from_dict(data_body)
 
         with self.httpx_client.stream(
             method=method,
@@ -440,6 +450,11 @@ class AsyncHttpClient:
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
 
+        # Filter None values from data body for multipart/form requests to prevent
+        # httpx from converting None to empty strings
+        if data_body is not None and isinstance(data_body, typing.Mapping) and (request_files or force_multipart):
+            data_body = remove_none_from_dict(data_body)
+
         # Add the input to each of these and do None-safety checks
         response = await self.httpx_client.request(
             method=method,
@@ -536,6 +551,11 @@ class AsyncHttpClient:
             request_files = FORCE_MULTIPART
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+
+        # Filter None values from data body for multipart/form requests to prevent
+        # httpx from converting None to empty strings
+        if data_body is not None and isinstance(data_body, typing.Mapping) and (request_files or force_multipart):
+            data_body = remove_none_from_dict(data_body)
 
         async with self.httpx_client.stream(
             method=method,
