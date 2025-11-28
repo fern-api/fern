@@ -11,9 +11,7 @@ def get_request_options_with_none() -> RequestOptions:
 
 
 def test_get_json_request_body() -> None:
-    json_body, data_body = get_request_body(
-        json={"hello": "world"}, data=None, request_options=None, omit=None
-    )
+    json_body, data_body = get_request_body(json={"hello": "world"}, data=None, request_options=None, omit=None)
     assert json_body == {"hello": "world"}
     assert data_body is None
 
@@ -29,9 +27,7 @@ def test_get_json_request_body() -> None:
 
 
 def test_get_files_request_body() -> None:
-    json_body, data_body = get_request_body(
-        json=None, data={"hello": "world"}, request_options=None, omit=None
-    )
+    json_body, data_body = get_request_body(json=None, data={"hello": "world"}, request_options=None, omit=None)
     assert data_body == {"hello": "world"}
     assert json_body is None
 
@@ -47,9 +43,7 @@ def test_get_files_request_body() -> None:
 
 
 def test_get_none_request_body() -> None:
-    json_body, data_body = get_request_body(
-        json=None, data=None, request_options=None, omit=None
-    )
+    json_body, data_body = get_request_body(json=None, data=None, request_options=None, omit=None)
     assert data_body is None
     assert json_body is None
 
@@ -64,9 +58,7 @@ def test_get_none_request_body() -> None:
 def test_get_empty_json_request_body_when_json_is_none() -> None:
     """Test that when json=None and no additional body params, we send no body."""
     unrelated_request_options: RequestOptions = {"max_retries": 3}
-    json_body, data_body = get_request_body(
-        json=None, data=None, request_options=unrelated_request_options, omit=None
-    )
+    json_body, data_body = get_request_body(json=None, data=None, request_options=unrelated_request_options, omit=None)
     assert json_body is None
     assert data_body is None
 
@@ -78,9 +70,7 @@ def test_get_empty_json_request_body_when_json_is_explicit_empty_dict() -> None:
     e.g., when an endpoint has a request body type but all fields are optional.
     """
     unrelated_request_options: RequestOptions = {"max_retries": 3}
-    json_body, data_body = get_request_body(
-        json={}, data=None, request_options=unrelated_request_options, omit=None
-    )
+    json_body, data_body = get_request_body(json={}, data=None, request_options=unrelated_request_options, omit=None)
 
     assert json_body == {}
     assert data_body is None
@@ -88,9 +78,7 @@ def test_get_empty_json_request_body_when_json_is_explicit_empty_dict() -> None:
 
 def test_get_empty_json_request_body_with_empty_additional_body_params() -> None:
     """Test that when json=None and additional_body_parameters={}, we send no body."""
-    request_options_with_empty_additional: RequestOptions = {
-        "additional_body_parameters": {}
-    }
+    request_options_with_empty_additional: RequestOptions = {"additional_body_parameters": {}}
     json_body, data_body = get_request_body(
         json=None,
         data=None,
