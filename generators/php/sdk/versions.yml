@@ -75,7 +75,7 @@
 - version: 1.22.2
   changelogEntry:
     - summary: |
-        Add missing <?php opening tag to generated wire test files for proper syntax highlighting.
+        Add missing `<?php` opening tag to generated wire test files for proper syntax highlighting.
       type: fix
   createdAt: "2025-11-25"
   irVersion: 62
