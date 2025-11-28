@@ -69,7 +69,12 @@ export class HttpEndpointGenerator {
             bodyReference: requestBodyCodeBlock?.requestBodyReference
         });
 
-        let requestStatements = this.generateRequestProcedure({ endpoint, sendRequestCodeBlock });
+        const isCustomPagination = endpoint.pagination?.type === "custom";
+        let requestStatements = this.generateRequestProcedure({
+            endpoint,
+            sendRequestCodeBlock,
+            storeResponseInVariable: isCustomPagination
+        });
 
         const enhancedDocstring = this.generateEnhancedDocstring({ endpoint, request });
         const splatOptionDocs = this.generateSplatOptionDocs({ endpoint });
@@ -77,8 +82,28 @@ export class HttpEndpointGenerator {
 
         if (endpoint.pagination) {
             switch (endpoint.pagination.type) {
-                case "custom":
+                case "custom": {
+                    const customPagerClassName = this.context.customConfig.customPagerName ?? "CustomPager";
+                    const itemField = endpoint.pagination.results.property.name.wireValue;
+                    requestStatements = [
+                        ...requestStatements,
+                        ruby.invokeMethod({
+                            on: ruby.classReference({
+                                name: customPagerClassName,
+                                modules: [this.context.getRootModuleName(), "Internal"]
+                            }),
+                            method: "new",
+                            arguments_: [ruby.codeblock("_parsed_response")],
+                            keywordArguments: [
+                                ruby.keywordArgument({
+                                    name: "item_field",
+                                    value: ruby.codeblock(`:${itemField}`)
+                                })
+                            ]
+                        })
+                    ];
                     break;
+                }
                 case "cursor":
                     requestStatements = [
                         ruby.invokeMethod({
@@ -190,10 +215,12 @@ export class HttpEndpointGenerator {
 
     private generateRequestProcedure({
         endpoint,
-        sendRequestCodeBlock
+        sendRequestCodeBlock,
+        storeResponseInVariable
     }: {
         endpoint: HttpEndpoint;
         sendRequestCodeBlock?: ruby.CodeBlock;
+        storeResponseInVariable?: boolean;
     }): ruby.AstNode[] {
         const statements: ruby.AstNode[] = [];
 
@@ -239,7 +266,8 @@ export class HttpEndpointGenerator {
                                     case "json":
                                         this.loadResponseBodyFromJson({
                                             writer,
-                                            typeReference: endpoint.response.body.value.responseBodyType
+                                            typeReference: endpoint.response.body.value.responseBodyType,
+                                            storeInVariable: storeResponseInVariable
                                         });
                                         break;
                                     default:
@@ -282,17 +310,23 @@ export class HttpEndpointGenerator {
 
     private loadResponseBodyFromJson({
         writer,
-        typeReference
+        typeReference,
+        storeInVariable
     }: {
         writer: ruby.Writer;
         typeReference: TypeReference;
+        storeInVariable?: boolean;
     }): void {
         switch (typeReference.type) {
-            case "named":
-                writer.writeLine(
-                    `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`
-                );
+            case "named": {
+                const loadExpression = `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`;
+                if (storeInVariable) {
+                    writer.writeLine(`_parsed_response = ${loadExpression}`);
+                } else {
+                    writer.writeLine(loadExpression);
+                }
                 break;
+            }
             default:
                 break;
         }

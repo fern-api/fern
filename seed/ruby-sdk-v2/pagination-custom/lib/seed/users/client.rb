@@ -40,11 +40,16 @@ module Seed
         end
         code = _response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::UsernameCursor.load(_response.body)
+          _parsed_response = Seed::Types::UsernameCursor.load(_response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
           raise error_class.new(_response.body, code: code)
         end
+
+        Seed::Internal::FooPager.new(
+          _parsed_response,
+          item_field: :data
+        )
       end
     end
   end

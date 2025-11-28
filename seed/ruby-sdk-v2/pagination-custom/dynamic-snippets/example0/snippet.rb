@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.users.list_usernames_custom(startingAfter: 'starting_after');
+client.users.list_usernames_custom(starting_after: 'starting_after');
