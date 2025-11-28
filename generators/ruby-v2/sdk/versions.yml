@@ -1,4 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc48
+  createdAt: "2025-11-28"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add custom pagination support with customPagerName configuration option.
+        When customPagerName is configured, the generator includes a CustomPager utility class
+        that provides navigation methods (has_next_page?, has_prev_page?, get_next_page, get_prev_page)
+        for custom pagination endpoints.
+  irVersion: 61
+
 - version: 1.0.0-rc47
   createdAt: "2025-11-26"
   changelogEntry:

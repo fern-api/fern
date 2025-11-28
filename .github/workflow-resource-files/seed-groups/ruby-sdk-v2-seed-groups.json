@@ -95,7 +95,6 @@
         "license",
         "multiple-request-bodies",
         "circular-references-advanced",
-        "pagination-custom",
         "cross-package-type-names",
         "examples:no-custom-config"
       ],
