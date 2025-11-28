@@ -12,7 +12,7 @@ from .file import File, convert_file_dict_to_httpx_tuples
 from .force_multipart import FORCE_MULTIPART
 from .jsonable_encoder import jsonable_encoder
 from .query_encoder import encode_query
-from .remove_none_from_dict import remove_none_from_dict
+from .remove_none_from_dict import remove_none_from_dict as remove_none_from_dict
 from .request_options import RequestOptions
 from httpx._types import RequestFiles
 
