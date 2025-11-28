@@ -18,6 +18,7 @@ from .environment_generators import (
     SingleBaseUrlEnvironmentGenerator,
 )
 from .error_generator.error_generator import ErrorGenerator
+from .meta_test_generator import MetaTestGenerator
 from .v2.generator import PythonV2Generator
 from fern_python.cli.abstract_generator import AbstractGenerator
 from fern_python.codegen import AST, Project
@@ -361,6 +362,14 @@ class SdkGenerator(AbstractGenerator):
                 ir=ir,
             )
 
+        self._write_meta_tests(
+            context=context,
+            project=project,
+            generator_exec_wrapper=generator_exec_wrapper,
+            generated_root_client=generated_root_client,
+            ir=ir,
+        )
+
     def postrun(self, *, generator_exec_wrapper: GeneratorExecWrapper) -> None:
         # Finally, run the python-v2 generator.
         pythonv2 = PythonV2Generator(
@@ -658,6 +667,23 @@ __version__ = metadata.version("{project._project_config.package_name}")
         ir: ir_types.IntermediateRepresentation,
     ) -> None:
         snippet_test_factory.tests(ir, snippet_writer)
+
+    def _write_meta_tests(
+        self,
+        context: SdkGeneratorContext,
+        project: Project,
+        generator_exec_wrapper: GeneratorExecWrapper,
+        generated_root_client: GeneratedRootClient,
+        ir: ir_types.IntermediateRepresentation,
+    ) -> None:
+        meta_test_generator = MetaTestGenerator(
+            project=project,
+            context=context,
+            generator_exec_wrapper=generator_exec_wrapper,
+            generated_root_client=generated_root_client,
+            ir=ir,
+        )
+        meta_test_generator.generate()
 
     def get_sorted_modules(self) -> Sequence[str]:
         # always import types/errors before resources (nested packages)
