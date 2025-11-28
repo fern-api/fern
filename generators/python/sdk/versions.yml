@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.41.3
+  changelogEntry:
+    - summary: |
+        Fix multipart form data requests to omit None values instead of converting them to empty strings.
+        This prevents httpx from sending empty strings for optional parameters that should be absent.
+      type: fix
+  createdAt: "2025-11-28"
+  irVersion: 61
+
 - version: 4.41.2
   changelogEntry:
     - summary: More fixes and improvements to wire tests.

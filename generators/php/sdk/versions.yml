@@ -3,7 +3,7 @@
 - version: 1.23.7
   changelogEntry:
     - summary: |
-        Fix DateTime formatting for optional and nullable query parameters. Previously, optional and nullable DateTime query parameters were passed as raw DateTime objects to Guzzle HTTP client, causing request failures. The fix ensures that `Optional<DateTime>` and `Nullable<DateTime>` types are correctly identified and formatted using .format() method with proper date/datetime constants.
+        Fix DateTime formatting for optional and nullable query parameters. Previously, optional and nullable DateTime query parameters were passed as raw DateTime objects to Guzzle HTTP client, causing request failures. The fix ensures that `Optional<DateTime>` and `Nullable<DateTime>` types are correctly identified and formatted using `.format()` method with proper date/datetime constants.
       type: fix
   createdAt: "2025-11-27"
   irVersion: 62
