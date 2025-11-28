@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.41.4
+  changelogEntry:
+    - summary: |
+        Include literal types with single values in function signatures instead of omitting them.
+        Literal parameters now appear in the function signature with their literal type hint and a default value.
+      type: feat
+  createdAt: "2025-11-28"
+  irVersion: 61
+
 - version: 4.41.3
   changelogEntry:
     - summary: |

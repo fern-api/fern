@@ -15,7 +15,9 @@ class RawPathClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def send(self, *, request_options: typing.Optional[RequestOptions] = None) -> HttpResponse[SendResponse]:
+    def send(
+        self, id: typing.Literal["123"], *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[SendResponse]:
         """
         Parameters
         ----------
@@ -51,7 +53,9 @@ class AsyncRawPathClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def send(self, *, request_options: typing.Optional[RequestOptions] = None) -> AsyncHttpResponse[SendResponse]:
+    async def send(
+        self, id: typing.Literal["123"], *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[SendResponse]:
         """
         Parameters
         ----------

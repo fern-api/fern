@@ -64,28 +64,27 @@ class ReferencedRequestBodyParameters(AbstractRequestBodyParameters):
     ) -> List[AST.NamedFunctionParameter]:
         parameters: List[AST.NamedFunctionParameter] = []
         for property in self._get_all_properties_for_inlined_request_body():
-            if not self._is_type_literal(property.value_type):
-                type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                    property.value_type,
-                    in_endpoint=True,
-                )
+            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                property.value_type,
+                in_endpoint=True,
+            )
 
-                property_name = self._get_property_name(property)
-                if names_to_deconflict is not None and property_name in names_to_deconflict:
-                    maybe_body_name = self.get_body_name()
-                    property_name = f"{(maybe_body_name.snake_case.safe_name if maybe_body_name is not None else 'request')}_{property_name}"
+            property_name = self._get_property_name(property)
+            if names_to_deconflict is not None and property_name in names_to_deconflict:
+                maybe_body_name = self.get_body_name()
+                property_name = f"{(maybe_body_name.snake_case.safe_name if maybe_body_name is not None else 'request')}_{property_name}"
 
-                self.parameter_name_rewrites[property.name.name] = property_name
-                parameters.append(
-                    AST.NamedFunctionParameter(
-                        name=property_name,
-                        docs=property.docs,
-                        type_hint=type_hint,
-                        initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
-                        raw_type=property.value_type,
-                        raw_name=property.name.wire_value,
-                    ),
-                )
+            self.parameter_name_rewrites[property.name.name] = property_name
+            parameters.append(
+                AST.NamedFunctionParameter(
+                    name=property_name,
+                    docs=property.docs,
+                    type_hint=type_hint,
+                    initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
+                    raw_type=property.value_type,
+                    raw_name=property.name.wire_value,
+                ),
+            )
         return parameters
 
     def _get_non_parameter_properties(self) -> List[AST.NamedFunctionParameter]:

@@ -36,6 +36,22 @@ client.headers.send(
 <dl>
 <dd>
 
+**endpoint_version:** `typing.Literal["02-12-2024"]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**async_:** `typing.Literal[True]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **query:** `str` 
     
 </dd>
@@ -97,7 +113,31 @@ client.inlined.send(
 <dl>
 <dd>
 
+**prompt:** `typing.Literal["You are a helpful assistant"]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream:** `typing.Literal[False]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**aliased_context:** `SomeAliasedLiteral` 
     
 </dd>
 </dl>
@@ -233,7 +273,39 @@ client.query.send(
 <dl>
 <dd>
 
+**prompt:** `typing.Literal["You are a helpful assistant"]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alias_prompt:** `AliasToPrompt` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream:** `typing.Literal[False]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**alias_stream:** `AliasToStream` 
     
 </dd>
 </dl>
@@ -331,7 +403,39 @@ client.reference.send(
 <dl>
 <dd>
 
+**prompt:** `typing.Literal["You are a helpful assistant"]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **query:** `str` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**stream:** `typing.Literal[False]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**ending:** `typing.Literal["$ending"]` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**context:** `SomeLiteral` 
     
 </dd>
 </dl>

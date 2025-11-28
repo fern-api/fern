@@ -31,7 +31,11 @@ class ReferenceClient:
     def send(
         self,
         *,
+        prompt: typing.Literal["You are a helpful assistant"],
         query: str,
+        stream: typing.Literal[False],
+        ending: typing.Literal["$ending"],
+        context: SomeLiteral,
         container_object: ContainerObjectParams,
         maybe_context: typing.Optional[SomeLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -39,7 +43,15 @@ class ReferenceClient:
         """
         Parameters
         ----------
+        prompt : typing.Literal["You are a helpful assistant"]
+
         query : str
+
+        stream : typing.Literal[False]
+
+        ending : typing.Literal["$ending"]
+
+        context : SomeLiteral
 
         container_object : ContainerObjectParams
 
@@ -73,7 +85,14 @@ class ReferenceClient:
         )
         """
         _response = self._raw_client.send(
-            query=query, container_object=container_object, maybe_context=maybe_context, request_options=request_options
+            prompt=prompt,
+            query=query,
+            stream=stream,
+            ending=ending,
+            context=context,
+            container_object=container_object,
+            maybe_context=maybe_context,
+            request_options=request_options,
         )
         return _response.data
 
@@ -96,7 +115,11 @@ class AsyncReferenceClient:
     async def send(
         self,
         *,
+        prompt: typing.Literal["You are a helpful assistant"],
         query: str,
+        stream: typing.Literal[False],
+        ending: typing.Literal["$ending"],
+        context: SomeLiteral,
         container_object: ContainerObjectParams,
         maybe_context: typing.Optional[SomeLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -104,7 +127,15 @@ class AsyncReferenceClient:
         """
         Parameters
         ----------
+        prompt : typing.Literal["You are a helpful assistant"]
+
         query : str
+
+        stream : typing.Literal[False]
+
+        ending : typing.Literal["$ending"]
+
+        context : SomeLiteral
 
         container_object : ContainerObjectParams
 
@@ -146,6 +177,13 @@ class AsyncReferenceClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.send(
-            query=query, container_object=container_object, maybe_context=maybe_context, request_options=request_options
+            prompt=prompt,
+            query=query,
+            stream=stream,
+            ending=ending,
+            context=context,
+            container_object=container_object,
+            maybe_context=maybe_context,
+            request_options=request_options,
         )
         return _response.data
