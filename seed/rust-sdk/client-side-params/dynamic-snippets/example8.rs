@@ -15,6 +15,7 @@ async fn main() {
                 strategy: Some("strategy".to_string()),
                 name: Some("name".to_string()),
                 fields: Some("fields".to_string()),
+                ..Default::default()
             },
             None,
         )

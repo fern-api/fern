@@ -25,6 +25,8 @@ async fn main() {
             &GetFooQueryRequest {
                 required_baz: "required_baz".to_string(),
                 required_nullable_baz: Some("required_nullable_baz".to_string()),
+                optional_baz: None,
+                optional_nullable_baz: None,
             },
             None,
         )
@@ -108,6 +110,7 @@ async fn main() {
                 nullable_text: Some(Some("nullable_text".to_string())),
                 nullable_number: Some(Some(1.1)),
                 non_nullable_text: Some("non_nullable_text".to_string()),
+                ..Default::default()
             },
             Some(
                 RequestOptions::new()

@@ -163,7 +163,10 @@ async fn main() {
         .search_organizations(
             &"tenant_id".to_string(),
             &"organization_id".to_string(),
-            &SearchOrganizationsQueryRequest { limit: Some(1) },
+            &SearchOrganizationsQueryRequest {
+                limit: Some(1),
+                ..Default::default()
+            },
             None,
         )
         .await;
@@ -426,7 +429,10 @@ async fn main() {
         .search_users(
             &"tenant_id".to_string(),
             &"user_id".to_string(),
-            &SearchUsersQueryRequest { limit: Some(1) },
+            &SearchUsersQueryRequest {
+                limit: Some(1),
+                ..Default::default()
+            },
             None,
         )
         .await;

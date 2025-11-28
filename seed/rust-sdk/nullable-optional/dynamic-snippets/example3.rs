@@ -15,6 +15,7 @@ async fn main() {
                 offset: Some(1),
                 include_deleted: Some(true),
                 sort_by: Some(Some("sortBy".to_string())),
+                ..Default::default()
             },
             None,
         )

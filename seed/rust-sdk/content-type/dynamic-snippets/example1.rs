@@ -28,6 +28,7 @@ async fn main() {
                     "settings".to_string(),
                     serde_json::json!({"key":"value"}),
                 )]))),
+                ..Default::default()
             },
             None,
         )

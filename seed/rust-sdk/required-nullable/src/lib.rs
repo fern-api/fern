@@ -18,6 +18,8 @@
 //!             &GetFooQueryRequest {
 //!                 required_baz: "required_baz".to_string(),
 //!                 required_nullable_baz: Some("required_nullable_baz".to_string()),
+//!                 optional_baz: None,
+//!                 optional_nullable_baz: None,
 //!             },
 //!             None,
 //!         )

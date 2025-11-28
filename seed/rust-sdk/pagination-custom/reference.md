@@ -27,6 +27,7 @@ async fn main() {
         .list_usernames_custom(
             &ListUsernamesCustomQueryRequest {
                 starting_after: Some("starting_after".to_string()),
+                ..Default::default()
             },
             None,
         )

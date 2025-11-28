@@ -50,6 +50,7 @@ async fn main() {
                     "nullableArray".to_string(),
                     "nullableArray".to_string(),
                 ])),
+                ..Default::default()
             },
             None,
         )

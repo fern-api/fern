@@ -259,6 +259,7 @@ async fn main() {
                 offset: Some(1),
                 include_deleted: Some(true),
                 sort_by: Some(Some("sortBy".to_string())),
+                ..Default::default()
             },
             None,
         )
@@ -737,6 +738,7 @@ async fn main() {
                     "nullableArray".to_string(),
                     "nullableArray".to_string(),
                 ])),
+                ..Default::default()
             },
             None,
         )
@@ -960,6 +962,7 @@ async fn main() {
                 role: Some(UserRole::Admin),
                 status: Some(UserStatus::Active),
                 secondary_role: Some(Some(UserRole::Admin)),
+                ..Default::default()
             },
             None,
         )
@@ -1116,6 +1119,7 @@ async fn main() {
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 categories: Some(vec!["categories".to_string(), "categories".to_string()]),
                 labels: Some(Some(vec!["labels".to_string(), "labels".to_string()])),
+                ..Default::default()
             },
             None,
         )

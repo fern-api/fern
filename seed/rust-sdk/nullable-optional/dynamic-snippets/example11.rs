@@ -15,6 +15,7 @@ async fn main() {
                 tags: Some(vec!["tags".to_string(), "tags".to_string()]),
                 categories: Some(vec!["categories".to_string(), "categories".to_string()]),
                 labels: Some(Some(vec!["labels".to_string(), "labels".to_string()])),
+                ..Default::default()
             },
             None,
         )

@@ -28,6 +28,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     private errorStack: string[] = [];
     private registry: RustFilenameRegistry;
     private declarationToTypeId: Map<string, string> = new Map();
+    private endpointDeclarationToQueryRequestName: Map<string, string> = new Map();
 
     constructor({
         ir,
@@ -45,6 +46,9 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
         // Pre-register all type names from IR to match model generator naming
         this.preregisterTypeNames();
+
+        // Pre-register query request names to match SDK generator naming
+        this.preregisterQueryRequestNames();
 
         this.dynamicTypeMapper = new DynamicTypeMapper({ context: this });
         this.dynamicTypeLiteralMapper = new DynamicTypeLiteralMapper({ context: this });
@@ -64,10 +68,57 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     /**
+     * Pre-register query request type names to ensure consistent naming with SDK generator.
+     * Query requests are synthetic types generated for endpoints with query parameters but no body.
+     */
+    private preregisterQueryRequestNames(): void {
+        // Loop through all endpoints in the dynamic IR
+        for (const [endpointId, endpoint] of Object.entries(this.ir.endpoints)) {
+            // Check if this is a query-only endpoint (has query parameters but no body)
+            const request = endpoint.request;
+            if (request.type !== "inlined") {
+                continue;
+            }
+
+            const hasQueryParams = (request.queryParameters ?? []).length > 0;
+            const hasBody = request.body != null;
+
+            if (hasQueryParams && !hasBody) {
+                // This is a query-only endpoint - register its query request type
+                const methodName = endpoint.declaration.name.pascalCase.safeName;
+                const baseQueryRequestName = `${methodName}QueryRequest`;
+
+                // Register the name in the type registry to handle deduplication
+                // We use a synthetic ID for query requests: "query_request:<endpointId>"
+                const syntheticTypeId = `query_request:${endpointId}`;
+                const deduplicatedName = this.registry.registerSchemaTypeTypeName(
+                    syntheticTypeId,
+                    baseQueryRequestName
+                );
+
+                // Store the mapping from endpoint declaration to deduplicated name
+                const key = this.getEndpointDeclarationKey(endpoint.declaration);
+                this.endpointDeclarationToQueryRequestName.set(key, deduplicatedName);
+            }
+        }
+    }
+
+    /**
      * Create a unique key for a type declaration based on its file path and name.
      * This helps us look up the typeId when we only have the declaration.
      */
     private getDeclarationKey(declaration: FernIr.dynamic.Declaration): string {
+        const fernFilepath = declaration.fernFilepath.packagePath.join("/");
+        const name = declaration.name.pascalCase.safeName;
+        return `${fernFilepath}::${name}`;
+    }
+
+    /**
+     * Create a unique key for an endpoint declaration based on its file path and name.
+     * This helps us look up the query request name when we only have the endpoint declaration.
+     */
+    private getEndpointDeclarationKey(declaration: FernIr.dynamic.Declaration): string {
+        // Use the same format as getDeclarationKey for consistency
         const fernFilepath = declaration.fernFilepath.packagePath.join("/");
         const name = declaration.name.pascalCase.safeName;
         return `${fernFilepath}::${name}`;
@@ -98,6 +149,16 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         }
         // Fallback to basic name if not found in registry
         return getName(declaration.name.pascalCase.safeName);
+    }
+
+    /**
+     * Get the deduplicated query request type name for an endpoint.
+     * This returns the name that was pre-registered during initialization,
+     * accounting for any naming collisions (e.g., "ListUsersQueryRequest2" instead of "ListUsersQueryRequest").
+     */
+    public getQueryRequestNameByEndpoint(endpointDeclaration: FernIr.dynamic.Declaration): string | undefined {
+        const key = this.getEndpointDeclarationKey(endpointDeclaration);
+        return this.endpointDeclarationToQueryRequestName.get(key);
     }
 
     public getEnumName(name: FernIr.Name): string {
@@ -322,5 +383,69 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     // Enhanced nullable checking
     public isNullable(typeRef: FernIr.dynamic.TypeReference): boolean {
         return typeRef.type === "nullable" || typeRef.type === "optional";
+    }
+
+    /**
+     * Check if a type reference is optional or nullable.
+     * This is the dynamic IR equivalent of the model generator's isOptionalType.
+     */
+    public isOptionalType(typeRef: FernIr.dynamic.TypeReference): boolean {
+        return typeRef.type === "optional" || typeRef.type === "nullable";
+    }
+
+    /**
+     * Check if all parameters in a list are optional.
+     * This determines whether a request type can have Default derived.
+     *
+     * In the Rust model generator, Default is only derived when ALL properties are optional
+     * and there are no extended properties (inheritance).
+     */
+    public allParametersAreOptional(parameters: FernIr.dynamic.NamedParameter[]): boolean {
+        return parameters.every((param) => this.isOptionalType(param.typeReference));
+    }
+
+    /**
+     * Check if an inlined request can use ..Default::default() pattern.
+     * This checks if the generated request struct will have Default derived.
+     *
+     * According to the model generator logic:
+     * - Default is derived only when all properties are optional
+     * - Extended properties (inheritance) prevent Default derivation
+     */
+    public canRequestUseDefault(request: FernIr.dynamic.InlinedRequest): boolean {
+        const queryParams = request.queryParameters ?? [];
+
+        // Collect all properties that will be in the request struct
+        const allProperties: FernIr.dynamic.NamedParameter[] = [...queryParams];
+
+        // Add body properties if present
+        if (request.body != null) {
+            if (request.body.type === "properties") {
+                allProperties.push(...request.body.value);
+            } else if (request.body.type === "referenced") {
+                // For referenced body, check if the body type itself is optional
+                const bodyTypeRef =
+                    request.body.bodyType.type === "typeReference"
+                        ? request.body.bodyType.value
+                        : ({ type: "primitive", value: "STRING" } as FernIr.dynamic.TypeReference);
+
+                // If the referenced body type is not optional, the request doesn't have all optional fields
+                if (!this.isOptionalType(bodyTypeRef)) {
+                    return false;
+                }
+            }
+            // Note: file upload requests have complex structure, be conservative
+            else if (request.body.type === "fileUpload") {
+                // File upload requests may have required file fields
+                // Be conservative and don't use Default for these
+                return false;
+            }
+        }
+
+        // Headers are handled separately via RequestOptions, not in the request struct
+        // So we don't need to check them
+
+        // Check if all collected properties are optional
+        return this.allParametersAreOptional(allProperties);
     }
 }
