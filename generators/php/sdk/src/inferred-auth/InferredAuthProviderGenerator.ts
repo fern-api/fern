@@ -219,6 +219,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                     if (prop.isOptional) {
                         return `${prop.camelName}?: string|null`;
                     }
+                    // Required parameters can be empty strings to satisfy PHPStan
                     return `${prop.camelName}: string`;
                 });
                 const arrayShape = `array{${arrayShapeParts.join(", ")}}`;
@@ -234,7 +235,8 @@ export class InferredAuthProviderGenerator extends FileGenerator<PhpFile, SdkCus
                     } else if (prop.isOptional) {
                         writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'] ?? null,`);
                     } else {
-                        writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'],`);
+                        // For required parameters, provide a default empty string to satisfy PHPStan
+                        writer.writeLine(`'${prop.camelName}' => $this->options['${prop.camelName}'] ?? '',`);
                     }
                 }
                 writer.dedent();
