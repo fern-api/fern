@@ -64,3 +64,9 @@ export interface AnalyzeCommitDiffResponse {
   version_bump: VersionBump
   
 }
+
+export interface PrettifiedDocsResponse {
+  improved_markdown: string
+  changes_summary: string
+  
+}

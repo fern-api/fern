@@ -28,6 +28,7 @@ import { addGeneratorCommands, addGetOrganizationCommand } from "./cliV2";
 import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorToWorkspaces";
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
+import { prettifyDocsCommand } from "./commands/docs-prettify/prettifyDocsCommand";
 import { downgrade } from "./commands/downgrade/downgrade";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
@@ -1371,6 +1372,7 @@ function addDocsCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
         // Add subcommands directly
         addDocsPreviewCommand(yargs, cliContext);
         addDocsBrokenLinksCommand(yargs, cliContext);
+        addDocsPrettifyCommand(yargs, cliContext);
         return yargs;
     });
 }
@@ -1464,6 +1466,40 @@ function addDocsBrokenLinksCommand(cli: Argv<GlobalCliOptions>, cliContext: CliC
                 project,
                 cliContext,
                 errorOnBrokenLinks: argv.strict
+            });
+        }
+    );
+}
+
+function addDocsPrettifyCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "prettify <path>",
+        "Enhance documentation with Fern components using AI",
+        (yargs) =>
+            yargs
+                .positional("path", {
+                    type: "string",
+                    description: "Path to a markdown file or directory containing markdown files",
+                    demandOption: true
+                })
+                .option("dry-run", {
+                    boolean: true,
+                    default: true,
+                    description: "Preview changes without modifying files"
+                }),
+        async (argv) => {
+            await cliContext.instrumentPostHogEvent({
+                command: "fern docs prettify",
+                properties: {
+                    path: argv.path,
+                    dryRun: argv.dryRun
+                }
+            });
+
+            await prettifyDocsCommand({
+                context: cliContext,
+                path: argv.path,
+                dryRun: argv.dryRun
             });
         }
     );
