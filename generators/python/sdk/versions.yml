@@ -3,9 +3,9 @@
 - version: 4.41.4
   changelogEntry:
     - summary: |
-        Include literal types with single values in function signatures instead of omitting them.
-        Literal parameters now appear in the function signature with their literal type hint and a default value.
-      type: feat
+        Fix omission of literal types with single values from function signatures.
+        Literal parameters now appear in signatures with their literal type hint and a default value.
+      type: fix
   createdAt: "2025-11-28"
   irVersion: 61
 
