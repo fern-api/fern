@@ -235,6 +235,9 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     }
 
     private renderPaginationSnippet(endpoint: EndpointWithFilepath): string {
+        if (endpoint.endpoint.pagination?.type === "custom") {
+            return this.renderCustomPaginationSnippet(endpoint);
+        }
         return this.writeCode(dedent`require "${this.rootPackageName}"
 
             # Loop over the items using the provided iterator.
@@ -253,6 +256,33 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
                 end
                 current_page = current_page.next_page
                 break if current_page.nil?
+            end
+
+        `);
+    }
+
+    private renderCustomPaginationSnippet(endpoint: EndpointWithFilepath): string {
+        return this.writeCode(dedent`require "${this.rootPackageName}"
+
+            # For custom pagination, the response is returned directly.
+            # You can use the CustomPager utility class to help with navigation.
+            response = ${this.getMethodCall(endpoint)}(
+                ...
+            )
+
+            # Access the response data directly
+            puts "Got response: #{response}"
+
+            # If using the CustomPager utility:
+            pager = ${this.rootPackageClientName}::Internal::CustomPager.new(
+                response,
+                has_next_proc: ->(page) { page.has_more },
+                get_next_proc: ->(page) { ${this.getMethodCall(endpoint)}(cursor: page.next_cursor) }
+            )
+
+            # Iterate over pages
+            pager.each_page do |page|
+                puts "Got page: #{page}"
             end
 
         `);

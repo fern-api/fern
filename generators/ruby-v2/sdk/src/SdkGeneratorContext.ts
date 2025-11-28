@@ -329,6 +329,7 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
             AsIsFiles.CursorPageIterator,
             AsIsFiles.OffsetItemIterator,
             AsIsFiles.OffsetPageIterator,
+            ...(this.customConfig.customPagerName != null ? [AsIsFiles.CustomPager] : []),
 
             // HTTP
             AsIsFiles.HttpBaseRequest,
