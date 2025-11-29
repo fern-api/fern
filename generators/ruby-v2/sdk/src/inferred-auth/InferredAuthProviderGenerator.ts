@@ -1,5 +1,5 @@
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
-import { MethodVisibility, ruby } from "@fern-api/ruby-ast";
+import { ruby } from "@fern-api/ruby-ast";
 import { FileGenerator, RubyFile } from "@fern-api/ruby-base";
 import {
     EndpointReference,
@@ -173,7 +173,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         const method = ruby.method({
             name: "refresh",
             kind: ruby.MethodKind.Instance,
-            visibility: MethodVisibility.Private,
+            visibility: "private",
             docstring: "Refreshes the access token by calling the token endpoint.",
             returnType: ruby.Type.string()
         });
@@ -322,7 +322,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         const method = ruby.method({
             name: "get_expires_at",
             kind: ruby.MethodKind.Instance,
-            visibility: MethodVisibility.Private,
+            visibility: "private",
             docstring: "Calculates the expiration time with a buffer.",
             parameters: {
                 positional: [

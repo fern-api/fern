@@ -8,7 +8,7 @@ export { Writer } from "./core/Writer";
 export { KeywordArgument } from "./KeywordArgument";
 export { KeywordParameter } from "./KeywordParameter";
 export { KeywordSplatParameter } from "./KeywordSplatParameter";
-export { Method, MethodKind, MethodVisibility } from "./Method";
+export { Method, MethodKind } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
 export { Module_ } from "./Module";
 export { Parameter } from "./Parameter";
