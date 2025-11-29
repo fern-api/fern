@@ -103,28 +103,98 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
     private getInferredAuthInitializationStatement(scheme: InferredAuthScheme): ruby.AstNode {
         const inferredParams = this.getParametersForInferredAuth(scheme);
+
+        // Get the auth service/endpoint info to determine the auth client class
+        const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
+        const service = this.context.ir.services[tokenEndpointReference.serviceId];
+        const subpackageId = service?.name.fernFilepath.packagePath[0]?.pascalCase.safeName ?? "Auth";
+
         return ruby.codeblock((writer) => {
+            // Create an unauthenticated raw client for the auth endpoint
+            writer.writeLine(`# Create an unauthenticated client for the auth endpoint`);
+            writer.write(`auth_raw_client = `);
+            writer.writeNode(this.context.getRawClientClassReference());
+            writer.writeLine(`.new(`);
+            writer.indent();
+            writer.writeLine(`base_url: base_url,`);
+            writer.writeLine(`headers: {`);
+            writer.indent();
+
+            // Add X-Fern-Language header
+            const hasParams = inferredParams.length > 0;
+            writer.writeLine(`"X-Fern-Language": "Ruby"${hasParams ? "," : ""}`);
+
+            // Add any header-based auth params to the auth client headers
+            for (let i = 0; i < inferredParams.length; i++) {
+                const param = inferredParams[i];
+                if (param == null) {
+                    continue;
+                }
+                const headerName = this.snakeToHeaderCase(param.snakeName);
+                const isLast = i === inferredParams.length - 1;
+                writer.writeLine(`"${headerName}": ${param.snakeName}${isLast ? "" : ","}`);
+            }
+
+            writer.dedent();
+            writer.writeLine(`}`);
+            writer.dedent();
+            writer.writeLine(`)`);
+            writer.newLine();
+
+            // Create the auth client
+            writer.writeLine(`# Create the auth client for token retrieval`);
+            writer.write(`auth_client = `);
+            writer.writeNode(
+                ruby.classReference({
+                    name: "Client",
+                    modules: [this.context.getRootModule().name, subpackageId],
+                    fullyQualified: true
+                })
+            );
+            writer.writeLine(`.new(client: auth_raw_client)`);
+            writer.newLine();
+
+            // Create the auth provider with auth_client and options
+            writer.writeLine(`# Create the auth provider with the auth client and credentials`);
             writer.write(`@auth_provider = `);
             writer.writeNode(this.getInferredAuthProviderClassReference());
             writer.writeLine(`.new(`);
             writer.indent();
+            writer.writeLine(`auth_client: auth_client,`);
+            writer.write(`options: { `);
             for (let i = 0; i < inferredParams.length; i++) {
                 const param = inferredParams[i];
                 if (param == null) {
                     continue;
                 }
                 const isLast = i === inferredParams.length - 1;
-                writer.writeLine(`${param.snakeName}: ${param.snakeName}${isLast ? "" : ","}`);
+                writer.write(`${param.snakeName}: ${param.snakeName}${isLast ? "" : ", "}`);
             }
+            writer.writeLine(` }`);
             writer.dedent();
             writer.writeLine(`)`);
         });
     }
 
+    private snakeToHeaderCase(snakeName: string): string {
+        // Convert snake_case to X-Header-Case (e.g., api_key -> X-Api-Key)
+        // If the name already starts with x_, don't add another X- prefix
+        const parts = snakeName.split("_");
+        const startsWithX = parts[0]?.toLowerCase() === "x";
+
+        if (startsWithX) {
+            // x_api_key -> X-Api-Key (use existing x as the X- prefix)
+            return parts.map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join("-");
+        } else {
+            // api_key -> X-Api-Key (add X- prefix)
+            return "X-" + parts.map((part) => part.charAt(0).toUpperCase() + part.slice(1)).join("-");
+        }
+    }
+
     private getInferredAuthProviderClassReference(): ruby.ClassReference {
         return ruby.classReference({
             name: "InferredAuthProvider",
-            modules: [this.context.getRootModule().name],
+            modules: [this.context.getRootModule().name, "Internal"],
             fullyQualified: true
         });
     }
