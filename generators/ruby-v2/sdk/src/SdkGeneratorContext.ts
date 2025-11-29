@@ -9,6 +9,7 @@ import {
     ExampleEndpointCall,
     HttpEndpoint,
     HttpService,
+    InferredAuthScheme,
     IntermediateRepresentation,
     Name,
     ServiceId,
@@ -371,5 +372,14 @@ export class SdkGeneratorContext extends AbstractRubyGeneratorContext<SdkCustomC
         ];
 
         return files;
+    }
+
+    public getInferredAuth(): InferredAuthScheme | undefined {
+        for (const scheme of this.ir.auth.schemes) {
+            if (scheme.type === "inferred") {
+                return scheme;
+            }
+        }
+        return undefined;
     }
 }
