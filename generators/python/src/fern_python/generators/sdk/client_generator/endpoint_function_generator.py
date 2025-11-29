@@ -354,7 +354,7 @@ class EndpointFunctionGenerator:
 
     def _get_stream_func_return_type(self) -> AST.TypeHint:
         underlying_type = self._get_response_body_underlying_type(
-            response_body=self._endpoint.response.body if self._endpoint.response is not None else None,
+            response_body=(self._endpoint.response.body if self._endpoint.response is not None else None),
             is_async=self._is_async,
         )
         underlying_type_wrapped = (
@@ -1125,7 +1125,10 @@ class EndpointFunctionGenerator:
             # Check if this is custom pagination
             is_custom_pagination = self.pagination is not None and self.pagination.get_as_union().type == "custom"
             return self._context.core_utilities.get_paginator_type(
-                underlying_type_hint, type_hint, is_async=is_async, is_custom=is_custom_pagination
+                underlying_type_hint,
+                type_hint,
+                is_async=is_async,
+                is_custom=is_custom_pagination,
             )
 
         # Handle streaming case
@@ -1407,7 +1410,7 @@ class EndpointFunctionGenerator:
         if possible_query_literal is not None and type(possible_query_literal) is str:
             return AST.Expression(f'"{possible_query_literal}"')
         elif possible_query_literal is not None and type(possible_query_literal) is bool:
-            return AST.Expression(f"{possible_query_literal}")
+            return AST.Expression(f'"{str(possible_query_literal).lower()}"')
         return self._get_reference_to_query_parameter(query_parameter)
 
     def _get_query_parameters_for_endpoint(
@@ -2123,5 +2126,7 @@ def unwrap_optional_type(
     return type_reference
 
 
-def filter_variable_path_parameters(path_parameters: List[ir_types.PathParameter]) -> List[ir_types.PathParameter]:
+def filter_variable_path_parameters(
+    path_parameters: List[ir_types.PathParameter],
+) -> List[ir_types.PathParameter]:
     return [param for param in path_parameters if param.variable is None]

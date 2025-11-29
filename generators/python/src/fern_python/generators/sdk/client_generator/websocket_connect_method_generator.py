@@ -6,7 +6,9 @@ from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import Contextlib, HttpX, Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
-from fern_python.generators.sdk.client_generator.endpoint_function_generator import EndpointFunctionGenerator
+from fern_python.generators.sdk.client_generator.endpoint_function_generator import (
+    EndpointFunctionGenerator,
+)
 from fern_python.generators.sdk.context.sdk_generator_context import SdkGeneratorContext
 from fern_python.generators.sdk.environment_generators.multiple_base_urls_environment_generator import (
     get_base_url,
@@ -615,7 +617,9 @@ class WebsocketConnectMethodGenerator:
             )
 
         return self.convert_and_respect_annotation_metadata_raw(
-            context=self._context, object_=reference, type_reference=query_parameter.value_type
+            context=self._context,
+            object_=reference,
+            type_reference=query_parameter.value_type,
         )
 
     def _get_multiple_base_url_environment_as_string(self, *, websocket: ir_types.WebSocketChannel) -> Optional[str]:
@@ -644,9 +648,19 @@ class WebsocketConnectMethodGenerator:
         for header in websocket.headers:
             literal_header_value = self._context.get_literal_header_value(header)
             if literal_header_value is not None and type(literal_header_value) is str:
-                headers.append((header.name.wire_value, AST.Expression(f'"{literal_header_value}"')))
+                headers.append(
+                    (
+                        header.name.wire_value,
+                        AST.Expression(f'"{literal_header_value}"'),
+                    )
+                )
             elif literal_header_value is not None and type(literal_header_value) is bool:
-                headers.append((header.name.wire_value, AST.Expression(f'"{str(literal_header_value).lower()}"')))
+                headers.append(
+                    (
+                        header.name.wire_value,
+                        AST.Expression(f'"{str(literal_header_value).lower()}"'),
+                    )
+                )
             else:
                 headers.append(
                     (
@@ -676,14 +690,17 @@ class WebsocketConnectMethodGenerator:
         if possible_query_literal is not None and type(possible_query_literal) is str:
             return AST.Expression(f'"{possible_query_literal}"')
         elif possible_query_literal is not None and type(possible_query_literal) is bool:
-            return AST.Expression(f"{possible_query_literal}")
+            return AST.Expression(f'"{str(possible_query_literal).lower()}"')
         return self._get_reference_to_query_parameter(query_parameter)
 
     def _build_query_parameters(
         self, *, channel: ir_types.WebSocketChannel, parent_writer: AST.NodeWriter
     ) -> Optional[AST.Expression]:
         query_parameters = [
-            (query_parameter.name.wire_value, self._get_query_parameter_reference(query_parameter))
+            (
+                query_parameter.name.wire_value,
+                self._get_query_parameter_reference(query_parameter),
+            )
             for query_parameter in channel.query_parameters
         ]
 
@@ -738,7 +755,10 @@ class WebsocketConnectMethodGenerator:
 
     def _is_httpx_primitive_data(self, type_reference: ir_types.TypeReference, *, allow_optional: bool) -> bool:
         return self._does_type_reference_match_primitives(
-            type_reference, expected=HTTPX_PRIMITIVE_DATA_TYPES, allow_optional=allow_optional, allow_enum=True
+            type_reference,
+            expected=HTTPX_PRIMITIVE_DATA_TYPES,
+            allow_optional=allow_optional,
+            allow_enum=True,
         )
 
     def _does_type_reference_match_primitives(
@@ -802,7 +822,9 @@ class WebsocketConnectMethodGenerator:
         )
 
     def _get_typehint_for_query_param(
-        self, query_parameter: ir_types.QueryParameter, query_parameter_type_hint: AST.TypeHint
+        self,
+        query_parameter: ir_types.QueryParameter,
+        query_parameter_type_hint: AST.TypeHint,
     ) -> AST.TypeHint:
         value_type = query_parameter.value_type.get_as_union()
         is_optional = value_type.type == "container" and (
@@ -837,7 +859,10 @@ class WebsocketConnectMethodGenerator:
         return query_parameter_type_hint
 
     def convert_and_respect_annotation_metadata_raw(
-        self, context: SdkGeneratorContext, object_: AST.Expression, type_reference: ir_types.TypeReference
+        self,
+        context: SdkGeneratorContext,
+        object_: AST.Expression,
+        type_reference: ir_types.TypeReference,
     ) -> AST.Expression:
         if (
             self._is_datetime(type_reference, allow_optional=True)
@@ -869,7 +894,9 @@ def get_parameter_name(name: ir_types.Name) -> str:
     return name.snake_case.safe_name
 
 
-def unwrap_optional_type(type_reference: ir_types.TypeReference) -> ir_types.TypeReference:
+def unwrap_optional_type(
+    type_reference: ir_types.TypeReference,
+) -> ir_types.TypeReference:
     type_as_union = type_reference.get_as_union()
     if type_as_union.type == "container":
         container_as_union = type_as_union.container.get_as_union()
