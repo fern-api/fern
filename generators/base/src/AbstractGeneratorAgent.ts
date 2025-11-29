@@ -76,7 +76,7 @@ export abstract class AbstractGeneratorAgent<GeneratorContext extends AbstractGe
             featureConfig: await this.readFeatureConfig(),
             endpointSnippets
         });
-        return this.cli.generateReadme({ readmeConfig });
+        return await this.cli.generateReadme({ readmeConfig });
     }
 
     /**
