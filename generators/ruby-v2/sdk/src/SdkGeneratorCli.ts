@@ -173,7 +173,7 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 context,
                 scheme: inferredAuth
             });
-            context.project.addSourceFiles(inferredAuthProvider.generate());
+            context.project.addRawFiles(inferredAuthProvider.generate());
         }
     }
 

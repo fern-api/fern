@@ -110,6 +110,9 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.indent();
             for (let i = 0; i < inferredParams.length; i++) {
                 const param = inferredParams[i];
+                if (param == null) {
+                    continue;
+                }
                 const isLast = i === inferredParams.length - 1;
                 writer.writeLine(`${param.snakeName}: ${param.snakeName}${isLast ? "" : ","}`);
             }
