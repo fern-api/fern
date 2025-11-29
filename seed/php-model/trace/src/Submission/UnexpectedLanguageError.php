@@ -28,16 +28,15 @@ class UnexpectedLanguageError extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->expectedLanguage = $values['expectedLanguage'];
-        $this->actualLanguage = $values['actualLanguage'];
+    )
+    {
+        $this->expectedLanguage = $values['expectedLanguage'];$this->actualLanguage = $values['actualLanguage'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

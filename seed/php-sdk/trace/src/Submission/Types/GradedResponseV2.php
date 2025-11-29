@@ -28,16 +28,15 @@ class GradedResponseV2 extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->submissionId = $values['submissionId'];
-        $this->testCases = $values['testCases'];
+    )
+    {
+        $this->submissionId = $values['submissionId'];$this->testCases = $values['testCases'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

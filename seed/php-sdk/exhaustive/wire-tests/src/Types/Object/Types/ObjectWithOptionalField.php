@@ -107,27 +107,15 @@ class ObjectWithOptionalField extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->string = $values['string'] ?? null;
-        $this->integer = $values['integer'] ?? null;
-        $this->long = $values['long'] ?? null;
-        $this->double = $values['double'] ?? null;
-        $this->bool = $values['bool'] ?? null;
-        $this->datetime = $values['datetime'] ?? null;
-        $this->date = $values['date'] ?? null;
-        $this->uuid = $values['uuid'] ?? null;
-        $this->base64 = $values['base64'] ?? null;
-        $this->list = $values['list'] ?? null;
-        $this->set = $values['set'] ?? null;
-        $this->map = $values['map'] ?? null;
-        $this->bigint = $values['bigint'] ?? null;
+    )
+    {
+        $this->string = $values['string'] ?? null;$this->integer = $values['integer'] ?? null;$this->long = $values['long'] ?? null;$this->double = $values['double'] ?? null;$this->bool = $values['bool'] ?? null;$this->datetime = $values['datetime'] ?? null;$this->date = $values['date'] ?? null;$this->uuid = $values['uuid'] ?? null;$this->base64 = $values['base64'] ?? null;$this->list = $values['list'] ?? null;$this->set = $values['set'] ?? null;$this->map = $values['map'] ?? null;$this->bigint = $values['bigint'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

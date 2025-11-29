@@ -41,18 +41,15 @@ class BinaryTreeNodeValue extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->nodeId = $values['nodeId'];
-        $this->val = $values['val'];
-        $this->right = $values['right'] ?? null;
-        $this->left = $values['left'] ?? null;
+    )
+    {
+        $this->nodeId = $values['nodeId'];$this->val = $values['val'];$this->right = $values['right'] ?? null;$this->left = $values['left'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

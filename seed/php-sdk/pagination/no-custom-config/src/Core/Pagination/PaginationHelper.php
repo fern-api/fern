@@ -100,7 +100,8 @@ class PaginationHelper
                 $type = $property->getType();
                 $value = self::getDefaultValueForType($type);
                 // if something is nullable, don't explicitly pass the null value as a parameter
-                if ($value === null) {
+                if($value === null)
+                {
                     continue;
                 }
 

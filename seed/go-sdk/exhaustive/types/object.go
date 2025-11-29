@@ -90,12 +90,12 @@ func (d *DoubleOptional) String() string {
 }
 
 var (
-	nestedObjectWithOptionalFieldFieldString       = big.NewInt(1 << 0)
+	nestedObjectWithOptionalFieldFieldFieldString  = big.NewInt(1 << 0)
 	nestedObjectWithOptionalFieldFieldNestedObject = big.NewInt(1 << 1)
 )
 
 type NestedObjectWithOptionalField struct {
-	String       *string                  `json:"string,omitempty" url:"string,omitempty"`
+	FieldString  *string                  `json:"string,omitempty" url:"string,omitempty"`
 	NestedObject *ObjectWithOptionalField `json:"NestedObject,omitempty" url:"NestedObject,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -105,11 +105,11 @@ type NestedObjectWithOptionalField struct {
 	rawJSON         json.RawMessage
 }
 
-func (n *NestedObjectWithOptionalField) GetString() *string {
+func (n *NestedObjectWithOptionalField) GetFieldString() *string {
 	if n == nil {
 		return nil
 	}
-	return n.String
+	return n.FieldString
 }
 
 func (n *NestedObjectWithOptionalField) GetNestedObject() *ObjectWithOptionalField {
@@ -130,11 +130,11 @@ func (n *NestedObjectWithOptionalField) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
-// SetString sets the String field and marks it as non-optional;
+// SetFieldString sets the FieldString field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NestedObjectWithOptionalField) SetString(string_ *string) {
-	n.String = string_
-	n.require(nestedObjectWithOptionalFieldFieldString)
+func (n *NestedObjectWithOptionalField) SetFieldString(string_ *string) {
+	n.FieldString = string_
+	n.require(nestedObjectWithOptionalFieldFieldFieldString)
 }
 
 // SetNestedObject sets the NestedObject field and marks it as non-optional;
@@ -184,12 +184,12 @@ func (n *NestedObjectWithOptionalField) String() string {
 }
 
 var (
-	nestedObjectWithRequiredFieldFieldString       = big.NewInt(1 << 0)
+	nestedObjectWithRequiredFieldFieldFieldString  = big.NewInt(1 << 0)
 	nestedObjectWithRequiredFieldFieldNestedObject = big.NewInt(1 << 1)
 )
 
 type NestedObjectWithRequiredField struct {
-	String       string                   `json:"string" url:"string"`
+	FieldString  string                   `json:"string" url:"string"`
 	NestedObject *ObjectWithOptionalField `json:"NestedObject" url:"NestedObject"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -199,11 +199,11 @@ type NestedObjectWithRequiredField struct {
 	rawJSON         json.RawMessage
 }
 
-func (n *NestedObjectWithRequiredField) GetString() string {
+func (n *NestedObjectWithRequiredField) GetFieldString() string {
 	if n == nil {
 		return ""
 	}
-	return n.String
+	return n.FieldString
 }
 
 func (n *NestedObjectWithRequiredField) GetNestedObject() *ObjectWithOptionalField {
@@ -224,11 +224,11 @@ func (n *NestedObjectWithRequiredField) require(field *big.Int) {
 	n.explicitFields.Or(n.explicitFields, field)
 }
 
-// SetString sets the String field and marks it as non-optional;
+// SetFieldString sets the FieldString field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (n *NestedObjectWithRequiredField) SetString(string_ string) {
-	n.String = string_
-	n.require(nestedObjectWithRequiredFieldFieldString)
+func (n *NestedObjectWithRequiredField) SetFieldString(string_ string) {
+	n.FieldString = string_
+	n.require(nestedObjectWithRequiredFieldFieldFieldString)
 }
 
 // SetNestedObject sets the NestedObject field and marks it as non-optional;
@@ -356,36 +356,36 @@ func (o *ObjectWithMapOfMap) String() string {
 }
 
 var (
-	objectWithOptionalFieldFieldString   = big.NewInt(1 << 0)
-	objectWithOptionalFieldFieldInteger  = big.NewInt(1 << 1)
-	objectWithOptionalFieldFieldLong     = big.NewInt(1 << 2)
-	objectWithOptionalFieldFieldDouble   = big.NewInt(1 << 3)
-	objectWithOptionalFieldFieldBool     = big.NewInt(1 << 4)
-	objectWithOptionalFieldFieldDatetime = big.NewInt(1 << 5)
-	objectWithOptionalFieldFieldDate     = big.NewInt(1 << 6)
-	objectWithOptionalFieldFieldUuid     = big.NewInt(1 << 7)
-	objectWithOptionalFieldFieldBase64   = big.NewInt(1 << 8)
-	objectWithOptionalFieldFieldList     = big.NewInt(1 << 9)
-	objectWithOptionalFieldFieldSet      = big.NewInt(1 << 10)
-	objectWithOptionalFieldFieldMap      = big.NewInt(1 << 11)
-	objectWithOptionalFieldFieldBigint   = big.NewInt(1 << 12)
+	objectWithOptionalFieldFieldFieldString = big.NewInt(1 << 0)
+	objectWithOptionalFieldFieldInteger     = big.NewInt(1 << 1)
+	objectWithOptionalFieldFieldLong        = big.NewInt(1 << 2)
+	objectWithOptionalFieldFieldDouble      = big.NewInt(1 << 3)
+	objectWithOptionalFieldFieldBool        = big.NewInt(1 << 4)
+	objectWithOptionalFieldFieldDatetime    = big.NewInt(1 << 5)
+	objectWithOptionalFieldFieldDate        = big.NewInt(1 << 6)
+	objectWithOptionalFieldFieldUuid        = big.NewInt(1 << 7)
+	objectWithOptionalFieldFieldBase64      = big.NewInt(1 << 8)
+	objectWithOptionalFieldFieldList        = big.NewInt(1 << 9)
+	objectWithOptionalFieldFieldSet         = big.NewInt(1 << 10)
+	objectWithOptionalFieldFieldMap         = big.NewInt(1 << 11)
+	objectWithOptionalFieldFieldBigint      = big.NewInt(1 << 12)
 )
 
 type ObjectWithOptionalField struct {
 	// This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
-	String   *string        `json:"string,omitempty" url:"string,omitempty"`
-	Integer  *int           `json:"integer,omitempty" url:"integer,omitempty"`
-	Long     *int64         `json:"long,omitempty" url:"long,omitempty"`
-	Double   *float64       `json:"double,omitempty" url:"double,omitempty"`
-	Bool     *bool          `json:"bool,omitempty" url:"bool,omitempty"`
-	Datetime *time.Time     `json:"datetime,omitempty" url:"datetime,omitempty"`
-	Date     *time.Time     `json:"date,omitempty" url:"date,omitempty" format:"date"`
-	Uuid     *uuid.UUID     `json:"uuid,omitempty" url:"uuid,omitempty"`
-	Base64   *[]byte        `json:"base64,omitempty" url:"base64,omitempty"`
-	List     []string       `json:"list,omitempty" url:"list,omitempty"`
-	Set      []string       `json:"set,omitempty" url:"set,omitempty"`
-	Map      map[int]string `json:"map,omitempty" url:"map,omitempty"`
-	Bigint   *string        `json:"bigint,omitempty" url:"bigint,omitempty"`
+	FieldString *string        `json:"string,omitempty" url:"string,omitempty"`
+	Integer     *int           `json:"integer,omitempty" url:"integer,omitempty"`
+	Long        *int64         `json:"long,omitempty" url:"long,omitempty"`
+	Double      *float64       `json:"double,omitempty" url:"double,omitempty"`
+	Bool        *bool          `json:"bool,omitempty" url:"bool,omitempty"`
+	Datetime    *time.Time     `json:"datetime,omitempty" url:"datetime,omitempty"`
+	Date        *time.Time     `json:"date,omitempty" url:"date,omitempty" format:"date"`
+	Uuid        *uuid.UUID     `json:"uuid,omitempty" url:"uuid,omitempty"`
+	Base64      *[]byte        `json:"base64,omitempty" url:"base64,omitempty"`
+	List        []string       `json:"list,omitempty" url:"list,omitempty"`
+	Set         []string       `json:"set,omitempty" url:"set,omitempty"`
+	Map         map[int]string `json:"map,omitempty" url:"map,omitempty"`
+	Bigint      *string        `json:"bigint,omitempty" url:"bigint,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -394,11 +394,11 @@ type ObjectWithOptionalField struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *ObjectWithOptionalField) GetString() *string {
+func (o *ObjectWithOptionalField) GetFieldString() *string {
 	if o == nil {
 		return nil
 	}
-	return o.String
+	return o.FieldString
 }
 
 func (o *ObjectWithOptionalField) GetInteger() *int {
@@ -496,11 +496,11 @@ func (o *ObjectWithOptionalField) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetString sets the String field and marks it as non-optional;
+// SetFieldString sets the FieldString field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *ObjectWithOptionalField) SetString(string_ *string) {
-	o.String = string_
-	o.require(objectWithOptionalFieldFieldString)
+func (o *ObjectWithOptionalField) SetFieldString(string_ *string) {
+	o.FieldString = string_
+	o.require(objectWithOptionalFieldFieldFieldString)
 }
 
 // SetInteger sets the Integer field and marks it as non-optional;
@@ -639,11 +639,11 @@ func (o *ObjectWithOptionalField) String() string {
 }
 
 var (
-	objectWithRequiredFieldFieldString = big.NewInt(1 << 0)
+	objectWithRequiredFieldFieldFieldString = big.NewInt(1 << 0)
 )
 
 type ObjectWithRequiredField struct {
-	String string `json:"string" url:"string"`
+	FieldString string `json:"string" url:"string"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -652,11 +652,11 @@ type ObjectWithRequiredField struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *ObjectWithRequiredField) GetString() string {
+func (o *ObjectWithRequiredField) GetFieldString() string {
 	if o == nil {
 		return ""
 	}
-	return o.String
+	return o.FieldString
 }
 
 func (o *ObjectWithRequiredField) GetExtraProperties() map[string]interface{} {
@@ -670,11 +670,11 @@ func (o *ObjectWithRequiredField) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetString sets the String field and marks it as non-optional;
+// SetFieldString sets the FieldString field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *ObjectWithRequiredField) SetString(string_ string) {
-	o.String = string_
-	o.require(objectWithRequiredFieldFieldString)
+func (o *ObjectWithRequiredField) SetFieldString(string_ string) {
+	o.FieldString = string_
+	o.require(objectWithRequiredFieldFieldFieldString)
 }
 
 func (o *ObjectWithRequiredField) UnmarshalJSON(data []byte) error {

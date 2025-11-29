@@ -27,16 +27,15 @@ class PlainObject extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->id = $values['id'] ?? null;
-        $this->name = $values['name'] ?? null;
+    )
+    {
+        $this->id = $values['id'] ?? null;$this->name = $values['name'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

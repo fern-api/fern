@@ -20,32 +20,27 @@ class GetShapeRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->id = $values['id'];
     }
 
     /**
      * @return string
      */
-    public function getId(): string
-    {
-        return $this->id;
-    }
+    public function getId(): string {
+        return $this->id;}
 
     /**
      * @param string $value
      */
-    public function setId(string $value): self
-    {
-        $this->id = $value;
-        return $this;
-    }
+    public function setId(string $value): self {
+        $this->id = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

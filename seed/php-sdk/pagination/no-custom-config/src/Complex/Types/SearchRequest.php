@@ -20,7 +20,7 @@ class SearchRequest extends JsonSerializableType
      *   |MultipleFilterSearchRequest
      * ) $query
      */
-    #[JsonProperty('query'), Union(SingleFilterSearchRequest::class, MultipleFilterSearchRequest::class)]
+    #[JsonProperty('query'), Union(SingleFilterSearchRequest::class,MultipleFilterSearchRequest::class)]
     public SingleFilterSearchRequest|MultipleFilterSearchRequest $query;
 
     /**
@@ -34,16 +34,15 @@ class SearchRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->pagination = $values['pagination'] ?? null;
-        $this->query = $values['query'];
+    )
+    {
+        $this->pagination = $values['pagination'] ?? null;$this->query = $values['query'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

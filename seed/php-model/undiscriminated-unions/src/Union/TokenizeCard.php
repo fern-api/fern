@@ -27,16 +27,15 @@ class TokenizeCard extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->method = $values['method'];
-        $this->cardNumber = $values['cardNumber'];
+    )
+    {
+        $this->method = $values['method'];$this->cardNumber = $values['cardNumber'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

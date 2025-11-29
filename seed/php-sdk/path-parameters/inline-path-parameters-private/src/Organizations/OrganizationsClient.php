@@ -17,7 +17,7 @@ use Seed\User\Types\User;
 use Seed\Organizations\Requests\SearchOrganizationsRequest;
 use Seed\Core\Json\JsonDecoder;
 
-class OrganizationsClient
+class OrganizationsClient 
 {
     /**
      * @var array{
@@ -26,7 +26,7 @@ class OrganizationsClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -45,10 +45,11 @@ class OrganizationsClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -68,8 +69,7 @@ class OrganizationsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getOrganization(string $tenantId, string $organizationId, ?array $options = null): Organization
-    {
+    public function getOrganization(string $tenantId, string $organizationId, ?array $options = null): Organization {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -81,15 +81,15 @@ class OrganizationsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return Organization::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -121,8 +121,7 @@ class OrganizationsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getOrganizationUser(GetOrganizationUserRequest $request, ?array $options = null): User
-    {
+    public function getOrganizationUser(GetOrganizationUserRequest $request, ?array $options = null): User {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -134,15 +133,15 @@ class OrganizationsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return User::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -176,11 +175,10 @@ class OrganizationsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function searchOrganizations(string $tenantId, string $organizationId, SearchOrganizationsRequest $request = new SearchOrganizationsRequest(), ?array $options = null): array
-    {
+    public function searchOrganizations(string $tenantId, string $organizationId, SearchOrganizationsRequest $request = new SearchOrganizationsRequest(), ?array $options = null): array {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->getLimit() != null) {
+        if ($request->getLimit() != null){
             $query['limit'] = $request->getLimit();
         }
         try {
@@ -194,15 +192,15 @@ class OrganizationsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeArray($json, [Organization::class]); // @phpstan-ignore-line
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

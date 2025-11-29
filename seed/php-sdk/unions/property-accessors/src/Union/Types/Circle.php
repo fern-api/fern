@@ -20,32 +20,27 @@ class Circle extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->radius = $values['radius'];
     }
 
     /**
      * @return float
      */
-    public function getRadius(): float
-    {
-        return $this->radius;
-    }
+    public function getRadius(): float {
+        return $this->radius;}
 
     /**
      * @param float $value
      */
-    public function setRadius(float $value): self
-    {
-        $this->radius = $value;
-        return $this;
-    }
+    public function setRadius(float $value): self {
+        $this->radius = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

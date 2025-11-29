@@ -27,8 +27,8 @@ class UploadFileRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->name = $values['name'];
-        $this->file = $values['file'] ?? null;
+    )
+    {
+        $this->name = $values['name'];$this->file = $values['file'] ?? null;
     }
 }

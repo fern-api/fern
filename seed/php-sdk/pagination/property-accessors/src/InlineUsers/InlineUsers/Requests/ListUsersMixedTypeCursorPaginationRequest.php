@@ -18,24 +18,20 @@ class ListUsersMixedTypeCursorPaginationRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
+    )
+    {
         $this->cursor = $values['cursor'] ?? null;
     }
 
     /**
      * @return ?string
      */
-    public function getCursor(): ?string
-    {
-        return $this->cursor;
-    }
+    public function getCursor(): ?string {
+        return $this->cursor;}
 
     /**
      * @param ?string $value
      */
-    public function setCursor(?string $value = null): self
-    {
-        $this->cursor = $value;
-        return $this;
-    }
+    public function setCursor(?string $value = null): self {
+        $this->cursor = $value;return $this;}
 }

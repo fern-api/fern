@@ -60,14 +60,8 @@ class ListClientsRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->fields = $values['fields'] ?? null;
-        $this->includeFields = $values['includeFields'] ?? null;
-        $this->page = $values['page'] ?? null;
-        $this->perPage = $values['perPage'] ?? null;
-        $this->includeTotals = $values['includeTotals'] ?? null;
-        $this->isGlobal = $values['isGlobal'] ?? null;
-        $this->isFirstParty = $values['isFirstParty'] ?? null;
-        $this->appType = $values['appType'] ?? null;
+    )
+    {
+        $this->fields = $values['fields'] ?? null;$this->includeFields = $values['includeFields'] ?? null;$this->page = $values['page'] ?? null;$this->perPage = $values['perPage'] ?? null;$this->includeTotals = $values['includeTotals'] ?? null;$this->isGlobal = $values['isGlobal'] ?? null;$this->isFirstParty = $values['isFirstParty'] ?? null;$this->appType = $values['appType'] ?? null;
     }
 }

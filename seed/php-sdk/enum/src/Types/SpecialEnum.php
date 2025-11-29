@@ -2,8 +2,8 @@
 
 namespace Seed\Types;
 
-enum SpecialEnum: string
-{
+enum SpecialEnum
+ : string {
     case A = "";
     case B = "Hello \\\"World\\\"";
     case C = "Hello 'World'";

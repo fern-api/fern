@@ -18,7 +18,7 @@ use Seed\User\Types\User;
 use Seed\Core\Types\Constant;
 use JsonException;
 
-class UserClient
+class UserClient 
 {
     /**
      * @var array{
@@ -27,7 +27,7 @@ class UserClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -46,10 +46,11 @@ class UserClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -67,8 +68,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createUsername(CreateUsernameRequest $request, ?array $options = null): void
-    {
+    public function createUsername(CreateUsernameRequest $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['tags'] = $request->tags;
@@ -84,12 +84,12 @@ class UserClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -120,8 +120,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createUsernameWithReferencedType(CreateUsernameReferencedRequest $request, ?array $options = null): void
-    {
+    public function createUsernameWithReferencedType(CreateUsernameReferencedRequest $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['tags'] = $request->tags;
@@ -137,12 +136,12 @@ class UserClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -173,8 +172,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createUsernameOptional(?CreateUsernameBodyOptionalProperties $request = null, ?array $options = null): void
-    {
+    public function createUsernameOptional(?CreateUsernameBodyOptionalProperties $request = null, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -187,12 +185,12 @@ class UserClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -224,8 +222,7 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUsername(GetUsersRequest $request, ?array $options = null): User
-    {
+    public function getUsername(GetUsersRequest $request, ?array $options = null): User {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['limit'] = $request->limit;
@@ -241,13 +238,13 @@ class UserClient
         $query['filter'] = $request->filter;
         $query['longParam'] = $request->longParam;
         $query['bigIntParam'] = $request->bigIntParam;
-        if ($request->optionalDeadline != null) {
-            $query['optionalDeadline'] = $request->optionalDeadline;
+        if ($request->optionalDeadline != null){
+            $query['optionalDeadline'] = $request->optionalDeadline->format(Constant::DateTimeFormat);
         }
-        if ($request->optionalString != null) {
+        if ($request->optionalString != null){
             $query['optionalString'] = $request->optionalString;
         }
-        if ($request->optionalUser != null) {
+        if ($request->optionalUser != null){
             $query['optionalUser'] = $request->optionalUser;
         }
         try {
@@ -261,15 +258,15 @@ class UserClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return User::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

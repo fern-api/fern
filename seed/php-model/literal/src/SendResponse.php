@@ -34,17 +34,15 @@ class SendResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->message = $values['message'];
-        $this->status = $values['status'];
-        $this->success = $values['success'];
+    )
+    {
+        $this->message = $values['message'];$this->status = $values['status'];$this->success = $values['success'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

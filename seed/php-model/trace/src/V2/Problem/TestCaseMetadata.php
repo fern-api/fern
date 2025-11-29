@@ -34,17 +34,15 @@ class TestCaseMetadata extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->name = $values['name'];
-        $this->hidden = $values['hidden'];
+    )
+    {
+        $this->id = $values['id'];$this->name = $values['name'];$this->hidden = $values['hidden'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

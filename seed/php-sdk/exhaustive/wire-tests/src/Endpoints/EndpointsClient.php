@@ -15,7 +15,7 @@ use Seed\Endpoints\Urls\UrlsClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class EndpointsClient
+class EndpointsClient 
 {
     /**
      * @var ContainerClient $container
@@ -93,10 +93,11 @@ class EndpointsClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->container = new ContainerClient($this->client, $this->options);

@@ -2,8 +2,8 @@
 
 namespace Seed\Types\Enum\Types;
 
-enum WeatherReport: string
-{
+enum WeatherReport
+ : string {
     case Sunny = "SUNNY";
     case Cloudy = "CLOUDY";
     case Raining = "RAINING";
