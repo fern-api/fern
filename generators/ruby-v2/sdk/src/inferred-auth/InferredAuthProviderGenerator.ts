@@ -26,7 +26,7 @@ export declare namespace InferredAuthProviderGenerator {
 
 export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCustomConfigSchema, SdkGeneratorContext> {
     private static readonly CLASS_NAME = "InferredAuthProvider";
-    private static readonly BUFFER_IN_MINUTES = 2;
+    private static readonly BUFFER_IN_SECONDS = 120; // 2 minutes
 
     private scheme: InferredAuthScheme;
     private tokenEndpointHttpService: HttpService;
@@ -59,7 +59,9 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         const class_ = ruby.class_({ name: InferredAuthProviderGenerator.CLASS_NAME });
 
         // Add constants
-        class_.addStatement(ruby.codeblock(`BUFFER_IN_MINUTES = ${InferredAuthProviderGenerator.BUFFER_IN_MINUTES}`));
+        class_.addStatement(
+            ruby.codeblock(`BUFFER_IN_SECONDS = ${InferredAuthProviderGenerator.BUFFER_IN_SECONDS} # 2 minutes`)
+        );
 
         // Add initialize method
         class_.addMethod(this.getInitializeMethod());
@@ -67,17 +69,17 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         // Add get_token method
         class_.addMethod(this.getGetTokenMethod());
 
-        // Add refresh method
-        class_.addMethod(this.getRefreshMethod());
-
         // Add get_auth_headers method
         class_.addMethod(this.getGetAuthHeadersMethod());
 
-        // Add expires_at method if we have an expiry property
+        // Add token_needs_refresh? method if we have an expiry property
         const expiryProperty = this.scheme.tokenEndpoint.expiryProperty;
         if (expiryProperty != null) {
-            class_.addMethod(this.getExpiresAtMethod());
+            class_.addMethod(this.getTokenNeedsRefreshMethod());
         }
+
+        // Add refresh method
+        class_.addMethod(this.getRefreshMethod());
 
         internalModule.addStatement(class_);
         rootModule.addStatement(internalModule);
@@ -145,21 +147,20 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         const method = ruby.method({
             name: "get_token",
             kind: ruby.MethodKind.Instance,
-            docstring: "Returns a cached access token, refreshing if necessary.",
+            docstring:
+                "Returns a cached access token, refreshing if necessary.\nRefreshes the token if it's nil, or if we're within the buffer period before expiration.",
             returnType: ruby.Type.string()
         });
 
         method.addStatement(
             ruby.codeblock((writer) => {
                 if (expiryProperty != null) {
-                    writer.writeLine(
-                        "return @access_token if @access_token && (@expires_at.nil? || @expires_at > Time.now)"
-                    );
+                    writer.writeLine("return refresh if @access_token.nil? || token_needs_refresh?");
                 } else {
-                    writer.writeLine("return @access_token if @access_token");
+                    writer.writeLine("return refresh if @access_token.nil?");
                 }
                 writer.newLine();
-                writer.writeLine("refresh");
+                writer.writeLine("@access_token");
             })
         );
 
@@ -212,9 +213,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
                 const expiryProperty = this.scheme.tokenEndpoint.expiryProperty;
                 if (expiryProperty != null) {
                     const expiresInProperty = this.getResponsePropertyAccess(expiryProperty);
-                    writer.writeLine(
-                        `@expires_at = get_expires_at(token_response${expiresInProperty}, BUFFER_IN_MINUTES)`
-                    );
+                    writer.writeLine(`@expires_at = Time.now + token_response${expiresInProperty}`);
                 }
 
                 writer.newLine();
@@ -318,31 +317,21 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         return method;
     }
 
-    private getExpiresAtMethod(): ruby.Method {
+    private getTokenNeedsRefreshMethod(): ruby.Method {
         const method = ruby.method({
-            name: "get_expires_at",
+            name: "token_needs_refresh?",
             kind: ruby.MethodKind.Instance,
             visibility: "private",
-            docstring: "Calculates the expiration time with a buffer.",
-            parameters: {
-                positional: [
-                    ruby.parameters.positional({
-                        name: "expires_in_seconds",
-                        type: ruby.Type.integer()
-                    }),
-                    ruby.parameters.positional({
-                        name: "buffer_in_minutes",
-                        type: ruby.Type.integer()
-                    })
-                ]
-            },
-            returnType: ruby.Type.class_(ruby.classReference({ name: "Time", modules: [] }))
+            docstring:
+                "Checks if the token needs to be refreshed.\nReturns true if the token will expire within the buffer period.",
+            returnType: ruby.Type.boolean()
         });
 
         method.addStatement(
             ruby.codeblock((writer) => {
-                writer.writeLine("expires_in_seconds_with_buffer = expires_in_seconds - (buffer_in_minutes * 60)");
-                writer.writeLine("Time.now + expires_in_seconds_with_buffer");
+                writer.writeLine("return true if @expires_at.nil?");
+                writer.newLine();
+                writer.writeLine("Time.now >= (@expires_at - BUFFER_IN_SECONDS)");
             })
         );
 
