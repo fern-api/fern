@@ -1,11 +1,13 @@
 from typing import List, Optional, Union
 
+import fern.ir.resources as ir_types
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
 from ..discriminated_union.simple_discriminated_union_generator import (
     AbstractDiscriminatedUnionSnippetGenerator,
     AbstractSimpleDiscriminatedUnionGenerator,
 )
+
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.external_dependencies import Pydantic
 from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
@@ -19,8 +21,6 @@ from fern_python.pydantic_codegen import PydanticField, PydanticModel
 from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
 from ordered_set import OrderedSet
-
-import fern.ir.resources as ir_types
 
 
 class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminatedUnionGenerator):

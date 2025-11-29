@@ -1,7 +1,9 @@
 from dataclasses import dataclass
 from typing import Dict, List, Optional, Set, Tuple, Union
 
+import fern.ir.resources as ir_types
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
+
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
 from fern_python.external_dependencies import Contextlib, HttpX, Websockets
@@ -12,8 +14,6 @@ from fern_python.generators.sdk.environment_generators.multiple_base_urls_enviro
     get_base_url,
     get_base_url_property_name,
 )
-
-import fern.ir.resources as ir_types
 
 HTTPX_PRIMITIVE_DATA_TYPES = set(
     [

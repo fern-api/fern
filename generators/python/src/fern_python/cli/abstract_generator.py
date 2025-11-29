@@ -6,12 +6,8 @@ import textwrap
 from abc import ABC, abstractmethod
 from typing import Literal, Optional, Sequence, Tuple, cast
 
-from .publisher import Publisher
-from fern_python.codegen.project import Project, ProjectConfig
-from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-
 import fern.ir.resources as ir_types
+from .publisher import Publisher
 from fern.generator_exec import (
     GeneratorConfig,
     PypiMetadata,
@@ -22,6 +18,10 @@ from fern.generator_exec.config import (
     OutputMode,
     PypiGithubPublishInfo,
 )
+
+from fern_python.codegen.project import Project, ProjectConfig
+from fern_python.external_dependencies.ruff import RUFF_DEPENDENCY
+from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 
 class AbstractGenerator(ABC):

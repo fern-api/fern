@@ -2,9 +2,9 @@ import subprocess
 import sys
 from pathlib import Path
 
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-
 import fern.generator_exec as generator_exec
+
+from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 # v2BinPath is the path to the python-v2 binary included in the SDK
 # generator docker image.

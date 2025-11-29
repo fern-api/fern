@@ -1,12 +1,12 @@
 from typing import Optional
 
+import fern.ir.resources as ir_types
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig
 from ..alias_generator import AbstractAliasGenerator, AbstractAliasSnippetGenerator
+
 from fern_python.codegen import AST, SourceFile
 from fern_python.snippet import SnippetWriter
-
-import fern.ir.resources as ir_types
 
 
 class TypedDictAliasGenerator(AbstractAliasGenerator):

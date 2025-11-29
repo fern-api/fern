@@ -1,9 +1,9 @@
+import fern.ir.resources as ir_types
 from ..context import FastApiGeneratorContext
 from .endpoint_generator import EndpointGenerator
+
 from fern_python.codegen import AST, SourceFile
 from fern_python.external_dependencies import FastAPI
-
-import fern.ir.resources as ir_types
 
 
 class ServiceGenerator:
