@@ -1,6 +1,7 @@
 export * from "./accent-color-contrast";
 export * from "./all-roles-must-be-declared";
 export * from "./filepaths-exist";
+export * from "./no-external-npm-dependencies";
 export * from "./only-versioned-navigation";
 export * from "./tab-with-href";
 export * from "./valid-docs-endpoints";
