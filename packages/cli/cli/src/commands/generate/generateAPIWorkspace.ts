@@ -5,7 +5,7 @@ import {
     GENERATORS_CONFIGURATION_FILENAME,
     generatorsYml
 } from "@fern-api/configuration-loader";
-import { ContainerRunner } from "@fern-api/core-utils";
+import { ContainerRunner, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import { AbsoluteFilePath, cwd, join, RelativeFilePath, resolve } from "@fern-api/fs-utils";
 import { runLocalGenerationForWorkspace } from "@fern-api/local-workspace-runner";
 import { runRemoteGenerationForAPIWorkspace } from "@fern-api/remote-workspace-runner";
@@ -32,7 +32,9 @@ export async function generateWorkspace({
     mode,
     runner,
     inspect,
-    lfsOverride
+    lfsOverride,
+    githubMode,
+    githubBranch
 }: {
     organization: string;
     workspace: AbstractAPIWorkspace<unknown>;
@@ -49,6 +51,8 @@ export async function generateWorkspace({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     lfsOverride: string | undefined;
+    githubMode: string | undefined;
+    githubBranch: string | undefined;
 }): Promise<void> {
     if (workspace.generatorsConfiguration == null) {
         context.logger.warn("This workspaces has no generators.yml");
@@ -79,6 +83,11 @@ export async function generateWorkspace({
     // Apply lfs-override if specified
     if (lfsOverride != null) {
         group = applyLfsOverride(group, lfsOverride, context);
+    }
+
+    // Apply github overrides if specified
+    if (githubMode != null || githubBranch != null) {
+        group = applyGithubOverrides(group, githubMode, githubBranch, context);
     }
 
     await validateAPIWorkspaceAndLogIssues({
@@ -166,6 +175,160 @@ function applyLfsOverride(
 
         context.logger.info(
             `Overriding output for generator '${generator.name}' to local-file-system at: ${outputPath}`
+        );
+    }
+
+    return {
+        ...group,
+        generators: modifiedGenerators
+    };
+}
+
+function applyGithubOverrides(
+    group: generatorsYml.GeneratorGroup,
+    githubMode: string | undefined,
+    githubBranch: string | undefined,
+    context: TaskContext
+): generatorsYml.GeneratorGroup {
+    type TargetMode = "push" | "pullRequest" | "commitAndRelease";
+
+    const normalizeTargetMode = (mode: string | undefined, currentMode: TargetMode): TargetMode => {
+        if (mode == null) {
+            return currentMode;
+        }
+        switch (mode) {
+            case "push":
+                return "push";
+            case "pull-request":
+                return "pullRequest";
+            case "release":
+                return "commitAndRelease";
+            default:
+                return currentMode;
+        }
+    };
+
+    const modifiedGenerators: generatorsYml.GeneratorInvocation[] = [];
+    let hasGithubGenerator = false;
+
+    for (const generator of group.generators) {
+        // Check if this generator uses github output mode
+        if (generator.outputMode.type === "githubV2") {
+            hasGithubGenerator = true;
+
+            const currentGithubConfig = generator.outputMode.githubV2;
+
+            // Create a new github output mode with overridden values
+            const newGithubConfig = visitDiscriminatedUnion(currentGithubConfig, "type")._visit({
+                push: (cfg) => {
+                    const target = normalizeTargetMode(githubMode, "push");
+
+                    if (githubBranch != null && target !== "push") {
+                        return context.failAndThrow(
+                            `--github-branch is only valid with 'push' mode. Generator '${generator.name}' is currently '${target}'. Pass --github-mode push to use --github-branch.`
+                        );
+                    }
+
+                    const { branch: _branch, ...base } = cfg;
+
+                    switch (target) {
+                        case "push":
+                            return FernFiddle.GithubOutputModeV2.push({
+                                ...base,
+                                branch: githubBranch ?? cfg.branch
+                            });
+                        case "pullRequest":
+                            return FernFiddle.GithubOutputModeV2.pullRequest({
+                                ...base,
+                                reviewers: undefined
+                            });
+                        case "commitAndRelease":
+                            return FernFiddle.GithubOutputModeV2.commitAndRelease(base);
+                    }
+                },
+                pullRequest: (cfg) => {
+                    const target = normalizeTargetMode(githubMode, "pullRequest");
+
+                    if (githubBranch != null && target !== "push") {
+                        return context.failAndThrow(
+                            `--github-branch is only valid with 'push' mode. Generator '${generator.name}' is currently '${target}'. Pass --github-mode push to use --github-branch.`
+                        );
+                    }
+
+                    const { reviewers: _reviewers, ...base } = cfg;
+
+                    switch (target) {
+                        case "push":
+                            return FernFiddle.GithubOutputModeV2.push({
+                                ...base,
+                                branch: githubBranch
+                            });
+                        case "pullRequest":
+                            return FernFiddle.GithubOutputModeV2.pullRequest({
+                                ...base,
+                                reviewers: cfg.reviewers
+                            });
+                        case "commitAndRelease":
+                            return FernFiddle.GithubOutputModeV2.commitAndRelease(base);
+                    }
+                },
+                commitAndRelease: (cfg) => {
+                    const target = normalizeTargetMode(githubMode, "commitAndRelease");
+
+                    if (githubBranch != null && target !== "push") {
+                        return context.failAndThrow(
+                            `--github-branch is only valid with 'push' mode. Generator '${generator.name}' is currently '${target}'. Pass --github-mode push to use --github-branch.`
+                        );
+                    }
+
+                    const base = cfg;
+
+                    switch (target) {
+                        case "push":
+                            return FernFiddle.GithubOutputModeV2.push({
+                                ...base,
+                                branch: githubBranch
+                            });
+                        case "pullRequest":
+                            return FernFiddle.GithubOutputModeV2.pullRequest({
+                                ...base,
+                                reviewers: undefined
+                            });
+                        case "commitAndRelease":
+                            return FernFiddle.GithubOutputModeV2.commitAndRelease(base);
+                    }
+                },
+                _other: () => currentGithubConfig
+            });
+
+            const modifiedGenerator: generatorsYml.GeneratorInvocation = {
+                ...generator,
+                outputMode: FernFiddle.OutputMode.githubV2(newGithubConfig)
+            };
+
+            modifiedGenerators.push(modifiedGenerator);
+
+            const overrideMessages: string[] = [];
+            if (githubMode != null) {
+                overrideMessages.push(`mode=${githubMode}`);
+            }
+            if (githubBranch != null) {
+                overrideMessages.push(`branch=${githubBranch}`);
+            }
+            if (overrideMessages.length > 0) {
+                context.logger.info(
+                    `Overriding github config for generator '${generator.name}': ${overrideMessages.join(", ")}`
+                );
+            }
+        } else {
+            // Keep the generator as-is if it doesn't use github output mode
+            modifiedGenerators.push(generator);
+        }
+    }
+
+    if (!hasGithubGenerator && (githubMode != null || githubBranch != null)) {
+        context.logger.warn(
+            "GitHub override flags were specified, but no generators in this group use GitHub output mode"
         );
     }
 
