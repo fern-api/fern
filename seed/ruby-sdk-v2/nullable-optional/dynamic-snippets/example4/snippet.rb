@@ -6,5 +6,5 @@ client.nullable_optional.search_users(
   query: 'query',
   department: 'department',
   role: 'role',
-  isActive: true
+  is_active: true
 );

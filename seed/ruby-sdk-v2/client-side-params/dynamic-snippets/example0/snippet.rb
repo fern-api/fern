@@ -7,10 +7,10 @@ client = Seed::Client.new(
 
 client.service.list_resources(
   page: 1,
-  perPage: 1,
+  per_page: 1,
   sort: 'created_at',
   order: 'desc',
-  includeTotals: true,
+  include_totals: true,
   fields: 'fields',
   search: 'search'
 );
