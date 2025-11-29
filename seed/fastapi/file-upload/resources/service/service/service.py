@@ -131,9 +131,9 @@ class AbstractServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "maybe_string":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             elif parameter_name == "integer":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             elif parameter_name == "file_list":
@@ -143,23 +143,23 @@ class AbstractServiceService(AbstractFernService):
             elif parameter_name == "maybe_file_list":
                 new_parameters.append(parameter.replace(default=typing.Optional[typing.List[fastapi.UploadFile]]))
             elif parameter_name == "maybe_integer":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             elif parameter_name == "optional_list_of_strings":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             elif parameter_name == "list_of_objects":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             elif parameter_name == "optional_metadata":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             elif parameter_name == "optional_object_type":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             elif parameter_name == "optional_id":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             elif parameter_name == "alias_object":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             elif parameter_name == "list_of_alias_object":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             elif parameter_name == "alias_list_of_object":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             else:
                 new_parameters.append(parameter)
         setattr(cls.post, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -284,11 +284,11 @@ class AbstractServiceService(AbstractFernService):
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             elif parameter_name == "foo":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             elif parameter_name == "bar":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             elif parameter_name == "foo_bar":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             else:
                 new_parameters.append(parameter)
         setattr(cls.with_content_type, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -327,9 +327,9 @@ class AbstractServiceService(AbstractFernService):
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             elif parameter_name == "foo":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             elif parameter_name == "bar":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             else:
                 new_parameters.append(parameter)
         setattr(cls.with_form_encoding, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -366,9 +366,9 @@ class AbstractServiceService(AbstractFernService):
             if index == 0:
                 new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
             elif parameter_name == "maybe_string":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             elif parameter_name == "integer":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             elif parameter_name == "file_list":
@@ -378,25 +378,25 @@ class AbstractServiceService(AbstractFernService):
             elif parameter_name == "maybe_file_list":
                 new_parameters.append(parameter.replace(default=typing.Optional[typing.List[fastapi.UploadFile]]))
             elif parameter_name == "maybe_integer":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             elif parameter_name == "optional_list_of_strings":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             elif parameter_name == "list_of_objects":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             elif parameter_name == "optional_metadata":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             elif parameter_name == "optional_object_type":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             elif parameter_name == "optional_id":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             elif parameter_name == "list_of_objects_with_optionals":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             elif parameter_name == "alias_object":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             elif parameter_name == "list_of_alias_object":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             elif parameter_name == "alias_list_of_object":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             else:
                 new_parameters.append(parameter)
         setattr(cls.with_form_encoded_containers, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -435,7 +435,7 @@ class AbstractServiceService(AbstractFernService):
             elif parameter_name == "image_file":
                 new_parameters.append(parameter.replace(default=typing.Union[fastapi.UploadFile, None]))
             elif parameter_name == "request":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(default=None)))
             else:
                 new_parameters.append(parameter)
         setattr(cls.optional_args, "__signature__", endpoint_function.replace(parameters=new_parameters))
@@ -473,7 +473,7 @@ class AbstractServiceService(AbstractFernService):
             elif parameter_name == "file":
                 new_parameters.append(parameter.replace(default=fastapi.UploadFile))
             elif parameter_name == "request":
-                new_parameters.append(parameter.replace(default=fastapi.Body(...)))
+                new_parameters.append(parameter.replace(default=fastapi.Form(...)))
             else:
                 new_parameters.append(parameter)
         setattr(cls.with_inline_type, "__signature__", endpoint_function.replace(parameters=new_parameters))
