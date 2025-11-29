@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc49
+  createdAt: "2025-11-28"
+  changelogEntry:
+    - type: fix
+      summary: Added automatic redaction of sensitive fields in inspect output to prevent accidental exposure of credentials and tokens in logs and debug output.
+  irVersion: 61
+
 - version: 1.0.0-rc48
   createdAt: "2025-11-28"
   changelogEntry:
@@ -15,7 +22,8 @@
   changelogEntry:
     - type: fix
       summary: |
-        Fix request_options[:base_url] being ignored. The RawClient.build_url method now correctly uses the per-request base_url override when provided.
+        Fix request_options[:base_url] being ignored.
+        The RawClient.build_url method now correctly uses the per-request base_url override when provided.
   irVersion: 61
 
 - version: 1.0.0-rc46
