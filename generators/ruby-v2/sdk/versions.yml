@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc53
+  createdAt: "2025-11-29"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Pass raw_client to custom pager for pagination. This allows custom pager implementations
+        to fetch additional pages using the HTTP client.
+  irVersion: 61
+
 - version: 1.0.0-rc52
   createdAt: "2025-11-29"
   changelogEntry:
