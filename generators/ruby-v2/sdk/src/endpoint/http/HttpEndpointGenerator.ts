@@ -98,6 +98,10 @@ export class HttpEndpointGenerator {
                                 ruby.keywordArgument({
                                     name: "item_field",
                                     value: ruby.codeblock(`:${itemField}`)
+                                }),
+                                ruby.keywordArgument({
+                                    name: "raw_client",
+                                    value: ruby.codeblock("@client")
                                 })
                             ]
                         })

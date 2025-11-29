@@ -16,19 +16,22 @@ module <%= gem_namespace %>
       # Creates a new custom pager with the given initial response.
       #
       # @param initial [Object] The initial page response
+      # @param item_field [Symbol, nil] The field name containing items for iteration
+      # @param raw_client [Object, nil] The HTTP client for fetching additional pages
       # @param has_next_proc [Proc, nil] A proc that returns true if there's a next page
       # @param has_prev_proc [Proc, nil] A proc that returns true if there's a previous page
       # @param get_next_proc [Proc, nil] A proc that fetches the next page
       # @param get_prev_proc [Proc, nil] A proc that fetches the previous page
-      # @param item_field [Symbol, nil] The field name containing items for iteration
       # @return [<%= gem_namespace %>::Internal::<%= custom_pager_class_name %>]
-      def initialize(initial, has_next_proc: nil, has_prev_proc: nil, get_next_proc: nil, get_prev_proc: nil, item_field: nil)
+      def initialize(initial, item_field: nil, raw_client: nil, has_next_proc: nil, has_prev_proc: nil,
+                     get_next_proc: nil, get_prev_proc: nil)
         @current = initial
+        @item_field = item_field
+        @raw_client = raw_client
         @has_next_proc = has_next_proc
         @has_prev_proc = has_prev_proc
         @get_next_proc = get_next_proc
         @get_prev_proc = get_prev_proc
-        @item_field = item_field
       end
 
       # Returns true if there is a next page available.
