@@ -31,6 +31,7 @@ export {
     Method,
     MethodInvocation,
     MethodKind,
+    MethodVisibility,
     Module_,
     Parameter,
     Type,
