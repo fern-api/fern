@@ -3,7 +3,7 @@
 module Seed
   module Internal
     class InferredAuthProvider
-      BUFFER_IN_MINUTES = 2
+      BUFFER_IN_SECONDS = 120 # 2 minutes
 
       # @param auth_client [untyped]
       # @param options [Hash[String, untyped]]
@@ -17,12 +17,32 @@ module Seed
       end
 
       # Returns a cached access token, refreshing if necessary.
+      # Refreshes the token if it's nil, or if we're within the buffer period before expiration.
       #
       # @return [String]
       def get_token
-        return @access_token if @access_token && (@expires_at.nil? || @expires_at > Time.now)
+        return refresh if @access_token.nil? || token_needs_refresh?
 
-        refresh
+        @access_token
+      end
+
+      # Returns the authentication headers to be included in requests.
+      #
+      # @return [Hash[String, String]]
+      def get_auth_headers
+        token = get_token
+        {
+          "Authorization" => "Bearer #{token}"
+        }
+      end
+      # Checks if the token needs to be refreshed.
+      # Returns true if the token will expire within the buffer period.
+      #
+      # @return [Boolean]
+      private def token_needs_refresh?
+        return true if @expires_at.nil?
+
+        Time.now >= (@expires_at - BUFFER_IN_SECONDS)
       end
       # Refreshes the access token by calling the token endpoint.
       #
@@ -40,28 +60,9 @@ module Seed
         token_response = @auth_client.get_token_with_client_credentials(**request_params)
 
         @access_token = token_response.access_token
-        @expires_at = get_expires_at(token_response.expires_in, BUFFER_IN_MINUTES)
+        @expires_at = Time.now + token_response.expires_in
 
         @access_token
-      end
-      # Returns the authentication headers to be included in requests.
-      #
-      # @return [Hash[String, String]]
-      def get_auth_headers
-        token = get_token
-        {
-          "Authorization" => "Bearer #{token}"
-        }
-      end
-      # Calculates the expiration time with a buffer.
-      #
-      # @option expires_in_seconds [Integer]
-      # @option buffer_in_minutes [Integer]
-      #
-      # @return [Time]
-      private def get_expires_at(expires_in_seconds, buffer_in_minutes)
-        expires_in_seconds_with_buffer = expires_in_seconds - (buffer_in_minutes * 60)
-        Time.now + expires_in_seconds_with_buffer
       end
     end
   end

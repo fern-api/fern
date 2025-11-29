@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc51
+  createdAt: "2025-11-29"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix inferred auth token refresh to properly refresh when within buffer period.
+        The token is now refreshed when the current time is within 2 minutes of expiration,
+        rather than only after the token has fully expired.
+  irVersion: 61
+
 - version: 1.0.0-rc50
   createdAt: "2025-11-29"
   changelogEntry:

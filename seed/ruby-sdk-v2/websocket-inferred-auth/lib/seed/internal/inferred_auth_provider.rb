@@ -3,7 +3,7 @@
 module Seed
   module Internal
     class InferredAuthProvider
-      BUFFER_IN_MINUTES = 2
+      BUFFER_IN_SECONDS = 120 # 2 minutes
 
       # @param auth_client [untyped]
       # @param options [Hash[String, untyped]]
@@ -16,12 +16,23 @@ module Seed
       end
 
       # Returns a cached access token, refreshing if necessary.
+      # Refreshes the token if it's nil, or if we're within the buffer period before expiration.
       #
       # @return [String]
       def get_token
-        return @access_token if @access_token
+        return refresh if @access_token.nil?
 
-        refresh
+        @access_token
+      end
+
+      # Returns the authentication headers to be included in requests.
+      #
+      # @return [Hash[String, String]]
+      def get_auth_headers
+        token = get_token
+        {
+          "Authorization" => "Bearer #{token}"
+        }
       end
       # Refreshes the access token by calling the token endpoint.
       #
@@ -41,15 +52,6 @@ module Seed
         @access_token = token_response.access_token
 
         @access_token
-      end
-      # Returns the authentication headers to be included in requests.
-      #
-      # @return [Hash[String, String]]
-      def get_auth_headers
-        token = get_token
-        {
-          "Authorization" => "Bearer #{token}"
-        }
       end
     end
   end
