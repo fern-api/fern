@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc50
+  createdAt: "2025-11-29"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add inferred auth support for Ruby SDKs. The SDK now generates an InferredAuthProvider class
+        that handles automatic token retrieval and caching with expiration handling. Root clients
+        accept the token endpoint request parameters for inferred authentication.
+  irVersion: 61
+
 - version: 1.0.0-rc49
   createdAt: "2025-11-28"
   changelogEntry:
