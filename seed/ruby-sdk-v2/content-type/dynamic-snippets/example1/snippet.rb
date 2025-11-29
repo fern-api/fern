@@ -12,6 +12,6 @@ client.service.patch_complex(
   email: 'email',
   nickname: 'nickname',
   bio: 'bio',
-  profileImageUrl: 'profileImageUrl',
+  profile_image_url: 'profileImageUrl',
   settings: {}
 );

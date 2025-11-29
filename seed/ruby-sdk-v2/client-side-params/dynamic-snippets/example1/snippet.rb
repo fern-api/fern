@@ -6,7 +6,7 @@ client = Seed::Client.new(
 );
 
 client.service.get_resource(
-  resourceId: 'resourceId',
-  includeMetadata: true,
+  resource_id: 'resourceId',
+  include_metadata: true,
   format: 'json'
 );

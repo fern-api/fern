@@ -150,7 +150,7 @@ This endpoint returns a file by its name.
 ```ruby
 client.file.service.get_file(
   filename: 'file.txt',
-  xFileApiVersion: '0.0.2'
+  x_file_api_version: '0.0.2'
 );
 ```
 </dd>
@@ -378,8 +378,7 @@ client.service.create_movie({
 ```ruby
 client.service.get_metadata(
   shallow: false,
-  tag: ,
-  xApiVersion: '0.0.1'
+  x_api_version: '0.0.1'
 );
 ```
 </dd>
@@ -437,7 +436,7 @@ client.service.get_metadata(
 
 ```ruby
 client.service.create_big_entity({
-  extendedMovie: {
+  extended_movie: {
     cast: ['cast', 'cast'],
     id: 'id',
     prequel: 'prequel',
@@ -453,12 +452,12 @@ client.service.create_big_entity({
   entity: {
     name: 'name'
   },
-  commonMetadata: {
+  common_metadata: {
     id: 'id',
     data: {
       data: 'data'
     },
-    jsonString: 'jsonString'
+    json_string: 'jsonString'
   },
   migration: {
     name: 'name'

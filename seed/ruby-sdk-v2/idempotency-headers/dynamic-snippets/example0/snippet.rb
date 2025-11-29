@@ -5,7 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.payment.create(
-  amount: 1,
-  currency: 
-);
+client.payment.create(amount: 1);
