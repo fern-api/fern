@@ -50,6 +50,10 @@ export function convertDiscriminatedOneOf({
     const discriminant = discriminator.propertyName;
     const unionSubTypes = Object.fromEntries(
         Object.entries(discriminator.mapping ?? {}).map(([discriminantValue, schema]) => {
+            // Resolve the referenced schema to get its description
+            const resolvedSchema = context.resolveSchemaReference({ $ref: schema });
+            const referencedSchemaDescription = resolvedSchema.description;
+
             const subtypeReference = convertReferenceObject(
                 {
                     $ref: schema
@@ -62,6 +66,12 @@ export function convertDiscriminatedOneOf({
                 source,
                 namespace
             );
+
+            // If the referenced schema has a description, preserve it in the subtype reference
+            if (referencedSchemaDescription != null && "description" in subtypeReference) {
+                (subtypeReference as any).description = referencedSchemaDescription;
+            }
+
             context.markReferencedByDiscriminatedUnion(
                 {
                     $ref: schema
