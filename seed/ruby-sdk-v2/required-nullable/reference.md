@@ -13,8 +13,8 @@
 
 ```ruby
 client.get_foo(
-  requiredBaz: 'required_baz',
-  requiredNullableBaz: 'required_nullable_baz'
+  required_baz: 'required_baz',
+  required_nullable_baz: 'required_nullable_baz'
 );
 ```
 </dd>
@@ -81,10 +81,10 @@ client.get_foo(
 ```ruby
 client.update_foo(
   id: 'id',
-  xIdempotencyKey: 'X-Idempotency-Key',
-  nullableText: 'nullable_text',
-  nullableNumber: 1.1,
-  nonNullableText: 'non_nullable_text'
+  x_idempotency_key: 'X-Idempotency-Key',
+  nullable_text: 'nullable_text',
+  nullable_number: 1.1,
+  non_nullable_text: 'non_nullable_text'
 );
 ```
 </dd>

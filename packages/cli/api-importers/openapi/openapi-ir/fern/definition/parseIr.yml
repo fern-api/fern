@@ -23,7 +23,13 @@ types:
       - commons.WithNamespace
     properties:
       authed: boolean
-      security: finalIr.EndpointSecurity
+      security:
+        docs: |
+          Security requirements for this endpoint.
+          This is populated from the OpenAPI `security` field.
+          When absent, it inherits from the global security requirements.
+          When an empty list is provided, it means no security is required.
+        type: optional<finalIr.EndpointSecurity>
       internal: optional<boolean>
       idempotent: optional<boolean>
       method: finalIr.HttpMethod

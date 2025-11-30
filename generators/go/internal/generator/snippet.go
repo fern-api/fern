@@ -125,7 +125,7 @@ func (s *SnippetWriter) getSnippetForExampleObjectType(
 		fields = append(
 			fields,
 			&ast.Field{
-				Key:   property.Name.Name.PascalCase.UnsafeName,
+				Key:   goExportedFieldName(property.Name.Name.PascalCase.UnsafeName),
 				Value: s.GetSnippetForExampleTypeReference(property.Value),
 			},
 		)
@@ -162,7 +162,7 @@ func (s *SnippetWriter) getSnippetForExampleUnionType(
 			Name: importedReference,
 			Fields: []*ast.Field{
 				{
-					Key: exampleUnionType.Discriminant.Name.PascalCase.UnsafeName,
+					Key: goExportedFieldName(exampleUnionType.Discriminant.Name.PascalCase.UnsafeName),
 					Value: &ast.BasicLit{
 						Value: fmt.Sprintf("%q", exampleUnionType.SingleUnionType.WireDiscriminantValue.Name.OriginalName),
 					},
@@ -176,7 +176,7 @@ func (s *SnippetWriter) getSnippetForExampleUnionType(
 			Name: importedReference,
 			Fields: []*ast.Field{
 				{
-					Key:   exampleUnionType.SingleUnionType.WireDiscriminantValue.Name.PascalCase.UnsafeName,
+					Key:   goExportedFieldName(exampleUnionType.SingleUnionType.WireDiscriminantValue.Name.PascalCase.UnsafeName),
 					Value: parameter,
 				},
 			},

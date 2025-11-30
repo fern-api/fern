@@ -333,4 +333,432 @@ describe("replaceReferencedCode", () => {
 
         `);
     });
+
+    it("should handle formatted on multiple lines", async () => {
+        const markdown = `
+            <Code
+                src="./example.js"
+                title={"Hello"}
+            />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/example.js")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`js title={"Hello"}
+            test content
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle weird formatting", async () => {
+        const markdown = `
+            <Code title={"Hello 1"}
+                src="./example.js"
+            />
+
+            <Code title={"Hello 2"} src="./example.js"
+            />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/example.js")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`js title={"Hello 1"}
+            test content
+            \`\`\`
+
+
+            \`\`\`js title={"Hello 2"}
+            test content
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle more weird formatting", async () => {
+        const markdown = `
+            <Code title={"Hello 1"} maxLines={20}
+                src="./example.js"
+                highlight={40}
+            />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/example.js")) {
+                    return "test content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`js title={"Hello 1"} maxLines={20} highlight={40}
+            test content
+            \`\`\`
+
+        `);
+    });
+
+    it("should not replace CodeBlock components", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" />
+            <CodeBlock src="../snippets/should-not-replace.js" />
+            <CodeGroup>
+                <Code src="../snippets/test.ts" />
+                <CodeBlock language="javascript">
+                    console.log("inline code");
+                </CodeBlock>
+            </CodeGroup>
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "python content";
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.ts")) {
+                    return "typescript content";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            python content
+            \`\`\`
+
+            <CodeBlock src="../snippets/should-not-replace.js" />
+            <CodeGroup>
+                \`\`\`ts title={"test.ts"}
+                typescript content
+                \`\`\`
+
+                <CodeBlock language="javascript">
+                    console.log("inline code");
+                </CodeBlock>
+            </CodeGroup>
+        `);
+    });
+
+    it("should extract specific lines using lines parameter with range format", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" lines="2-4" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "line 1\nline 2\nline 3\nline 4\nline 5";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            line 2
+            line 3
+            line 4
+            \`\`\`
+
+        `);
+    });
+
+    it("should extract specific lines using lines parameter with curly brace syntax", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" lines={2-4} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "line 1\nline 2\nline 3\nline 4\nline 5";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            line 2
+            line 3
+            line 4
+            \`\`\`
+
+        `);
+    });
+
+    it("should extract a single line using lines parameter", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" lines="3" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "line 1\nline 2\nline 3\nline 4\nline 5";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            line 3
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle lines parameter with other properties", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" lines="1-3" title="First Three Lines" maxLines={10} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "line 1\nline 2\nline 3\nline 4\nline 5";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"First Three Lines"} maxLines={10}
+            line 1
+            line 2
+            line 3
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle lines parameter appearing before src", async () => {
+        const markdown = `
+            <Code lines="2-3" src="../snippets/test.py" />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "line 1\nline 2\nline 3\nline 4\nline 5";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            line 2
+            line 3
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle lines parameter with URL source", async () => {
+        const markdown = `
+            <Code src="https://example.com/snippets/test.py" lines="1-2" />
+        `;
+
+        const originalFetch = globalThis.fetch;
+        globalThis.fetch = vi.fn((url: string) => {
+            if (url === "https://example.com/snippets/test.py") {
+                return Promise.resolve({
+                    ok: true,
+                    text: async () => "line 1\nline 2\nline 3\nline 4\nline 5"
+                } as Response);
+            }
+            return Promise.reject(new Error(`Unexpected URL: ${url}`));
+        }) as typeof fetch;
+
+        try {
+            const result = await replaceReferencedCode({
+                markdown,
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile,
+                context
+            });
+
+            expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            line 1
+            line 2
+            \`\`\`
+
+        `);
+        } finally {
+            globalThis.fetch = originalFetch;
+        }
+    });
+
+    it("should extract array of lines", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" lines={[1,3,5]} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "line 1\nline 2\nline 3\nline 4\nline 5";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            line 1
+            line 3
+            line 5
+            \`\`\`
+
+        `);
+    });
+
+    it("should extract array with mixed ranges and single lines", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" lines={[1-2,4,6-7]} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "line 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            line 1
+            line 2
+            line 4
+            line 6
+            line 7
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle overlapping ranges by deduplicating lines", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" lines={[1-3,2-4]} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "line 1\nline 2\nline 3\nline 4\nline 5";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            line 1
+            line 2
+            line 3
+            line 4
+            \`\`\`
+
+        `);
+    });
+
+    it("should handle out-of-order line specifications by sorting them", async () => {
+        const markdown = `
+            <Code src="../snippets/test.py" lines={[5,1,3]} />
+        `;
+
+        const result = await replaceReferencedCode({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context,
+            fileLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/snippets/test.py")) {
+                    return "line 1\nline 2\nline 3\nline 4\nline 5";
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(result).toBe(`
+            \`\`\`py title={"test.py"}
+            line 1
+            line 3
+            line 5
+            \`\`\`
+
+        `);
+    });
 });

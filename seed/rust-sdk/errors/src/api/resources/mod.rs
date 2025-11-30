@@ -1,3 +1,10 @@
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **Commons**
+//! - **Simple**
+
 use crate::{ApiError, ClientConfig};
 
 pub mod commons;

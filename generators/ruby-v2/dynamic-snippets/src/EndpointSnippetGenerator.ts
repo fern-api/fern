@@ -1,4 +1,4 @@
-import { AbstractFormatter, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractFormatter, Options, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ruby } from "@fern-api/ruby-ast";
@@ -42,6 +42,18 @@ export class EndpointSnippetGenerator {
             customConfig: this.context.customConfig ?? {},
             formatter: this.formatter
         });
+    }
+
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<ruby.AstNode> {
+        return this.buildCodeBlock({ endpoint, snippet: request });
     }
 
     private buildCodeBlock({
@@ -157,7 +169,9 @@ export class EndpointSnippetGenerator {
             case "oauth":
                 return values.type === "oauth" ? this.getRootClientOAuthArgs({ auth, values }) : [];
             case "inferred":
-                this.addWarning("Ruby SDK does not support inferred auth yet");
+                // Inferred auth parameters are handled by the root client constructor
+                // (e.g., client_id, client_secret from the token endpoint request)
+                // No additional auth arguments needed here
                 return [];
             default:
                 assertNever(auth);
@@ -407,10 +421,15 @@ export class EndpointSnippetGenerator {
                 ignoreMissingParameters: true
             });
             for (const parameter of associated) {
+                const value = this.context.dynamicTypeLiteralMapper.convert(parameter);
+                // Skip nop values (undefined/null) to avoid generating empty arguments like "channel: ,"
+                if (ruby.TypeLiteral.isNop(value)) {
+                    continue;
+                }
                 args.push(
                     ruby.keywordArgument({
                         name: this.context.getPropertyName(parameter.name.name),
-                        value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                        value
                     })
                 );
             }
@@ -433,10 +452,15 @@ export class EndpointSnippetGenerator {
             values: this.context.getRecord(snippet.requestBody) ?? {}
         });
         for (const parameter of bodyProperties) {
+            const value = this.context.dynamicTypeLiteralMapper.convert(parameter);
+            // Skip nop values (undefined/null) to avoid generating empty arguments like "channel: ,"
+            if (ruby.TypeLiteral.isNop(value)) {
+                continue;
+            }
             args.push(
                 ruby.keywordArgument({
                     name: this.context.getPropertyName(parameter.name.name),
-                    value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                    value
                 })
             );
         }
@@ -450,30 +474,52 @@ export class EndpointSnippetGenerator {
         request: FernIr.dynamic.BodyRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
     }): ruby.AstNode[] {
-        if (request.body == null) {
-            return [];
+        const args: ruby.AstNode[] = [];
+
+        // Add path parameters as positional arguments
+        this.context.errors.scope("PathParameters");
+        if (request.pathParameters != null) {
+            const associated = this.context.associateByWireValue({
+                parameters: request.pathParameters,
+                values: snippet.pathParameters ?? {},
+                ignoreMissingParameters: true
+            });
+            for (const parameter of associated) {
+                args.push(
+                    ruby.positionalArgument({
+                        value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                    })
+                );
+            }
+        }
+        this.context.errors.unscope();
+
+        // Add body as a positional argument
+        if (request.body != null) {
+            switch (request.body.type) {
+                case "bytes":
+                    // Not supported in Ruby snippets yet
+                    this.context.errors.add({
+                        severity: "CRITICAL",
+                        message: "Bytes request body is not supported in Ruby snippets yet"
+                    });
+                    break;
+                case "typeReference":
+                    args.push(
+                        ruby.positionalArgument({
+                            value: this.context.dynamicTypeLiteralMapper.convert({
+                                typeReference: request.body.value,
+                                value: this.context.getRecord(snippet.requestBody)
+                            })
+                        })
+                    );
+                    break;
+                default:
+                    assertNever(request.body);
+            }
         }
 
-        switch (request.body.type) {
-            case "bytes":
-                // Not supported in Ruby snippets yet
-                this.context.errors.add({
-                    severity: "CRITICAL",
-                    message: "Multi-environment values are not supported in Ruby snippets yet"
-                });
-                return [];
-            case "typeReference":
-                return [
-                    ruby.positionalArgument({
-                        value: this.context.dynamicTypeLiteralMapper.convert({
-                            typeReference: request.body.value,
-                            value: this.context.getRecord(snippet.requestBody)
-                        })
-                    })
-                ];
-            default:
-                assertNever(request.body);
-        }
+        return args;
     }
 
     private getMethod({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {

@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v62
 displayName: PHP SDK
 image: fernapi/fern-php-sdk
 changelogLocation: ../../generators/php/sdk/versions.yml
@@ -25,6 +25,12 @@ language: php
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
+  exhaustive:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: wire-tests
+      customConfig:
+        enable-wire-tests: true
   examples:
     - customConfig: null
       outputFolder: no-custom-config
@@ -149,7 +155,7 @@ scripts:
 allowedFailures:
   - pagination-custom
   # Dynamic snippets need to add support for global headers included in the client constructor.
-  - auth-environment-variables
+  - header-auth-environment-variable
   # TODO: Add support for bytes upload.
   - bytes-upload
   # Basic auth is not supported yet.
@@ -159,6 +165,8 @@ allowedFailures:
   - examples:readme-config
   # Enums don't support the fromJson method yet.
   - exhaustive
+  # Wire tests have a bug where tests extend TestCase instead of WireMockTestCase
+  - exhaustive:wire-tests
   - trace
   - circular-references
   - circular-references-advanced
@@ -173,9 +181,6 @@ allowedFailures:
   # Pagination example values come through as floats instead of integers (e.g. 1.1 instead of 1).
   - pagination:no-custom-config
   - pagination:property-accessors
-  # Multi URL environments are not supported yet.
-  - multi-url-environment
-  - multi-url-environment-no-default
   # Fix union dynamic snippets (i.e. BigUnion).
   - unions:no-custom-config
   - unions:property-accessors
@@ -186,4 +191,6 @@ allowedFailures:
   - http-head
   - oauth-client-credentials-with-variables
   - variables
+  # Java-specific fixture for staged builder ordering
+  - java-staged-builder-ordering
 

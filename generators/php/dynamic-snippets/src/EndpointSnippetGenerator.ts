@@ -1,4 +1,4 @@
-import { NamedArgument, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, NamedArgument, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { php } from "@fern-api/php-codegen";
@@ -53,7 +53,22 @@ export class EndpointSnippetGenerator {
         );
     }
 
-    private buildCodeBlock({
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<AbstractAstNode> {
+        if (options?.skipClientInstantiation) {
+            return this.buildCodeBlockWithoutClient({ endpoint, snippet: request });
+        }
+        return this.buildCodeBlock({ endpoint, snippet: request });
+    }
+
+    public buildCodeBlock({
         endpoint,
         snippet
     }: {
@@ -63,6 +78,19 @@ export class EndpointSnippetGenerator {
         return php.codeblock((writer) => {
             writer.writeNodeStatement(this.constructClient({ endpoint, snippet }));
             writer.writeNodeStatement(this.callMethod({ endpoint, snippet }));
+        });
+    }
+
+    public buildCodeBlockWithoutClient({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): php.AstNode {
+        return php.codeblock((writer) => {
+            // Skip client instantiation - assume client is already available as $this->client
+            writer.writeNodeStatement(this.callMethodOnExistingClient({ endpoint, snippet }));
         });
     }
 
@@ -94,6 +122,83 @@ export class EndpointSnippetGenerator {
         });
     }
 
+    private callMethodOnExistingClient({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): php.MethodInvocation {
+        const args = this.getMethodArgs({ endpoint, snippet });
+        const requestOptions = this.getRequestOptions({ endpoint, snippet });
+        if (!php.TypeLiteral.isNop(requestOptions)) {
+            args.push(requestOptions);
+        }
+        return php.invokeMethod({
+            on: php.codeblock("$this->client"),
+            method: this.getMethod({ endpoint }),
+            arguments_: args,
+            multiline: true
+        });
+    }
+
+    /**
+     * Builds request options from snippet headers for per-request options.
+     * This is used when generating snippets for existing clients (e.g., wire tests)
+     * where headers should be passed as method call options rather than client constructor options.
+     * Only includes headers that are NOT already mapped to the request directly (i.e., not defined in the IR).
+     */
+    private getRequestOptions({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): php.TypeLiteral {
+        const headers = snippet.headers ?? {};
+        const entries = Object.entries(headers);
+        if (entries.length === 0) {
+            return php.TypeLiteral.nop();
+        }
+
+        // Build a set of header names that are already mapped to the request directly
+        const mappedHeaderNames = new Set<string>();
+
+        // Add global headers from IR
+        if (this.context.ir.headers != null) {
+            for (const header of this.context.ir.headers) {
+                mappedHeaderNames.add(header.name.wireValue.toLowerCase());
+            }
+        }
+
+        // Add endpoint-level headers from inlined request
+        if (endpoint.request.type === "inlined" && endpoint.request.headers != null) {
+            for (const header of endpoint.request.headers) {
+                mappedHeaderNames.add(header.name.wireValue.toLowerCase());
+            }
+        }
+
+        // Filter out headers that are already mapped to the request
+        const unmappedEntries = entries.filter(([name]) => !mappedHeaderNames.has(name.toLowerCase()));
+        if (unmappedEntries.length === 0) {
+            return php.TypeLiteral.nop();
+        }
+
+        return php.TypeLiteral.map({
+            entries: [
+                {
+                    key: php.TypeLiteral.string("headers"),
+                    value: php.TypeLiteral.map({
+                        entries: unmappedEntries.map(([name, value]) => ({
+                            key: php.TypeLiteral.string(name),
+                            value: php.TypeLiteral.string(String(value))
+                        }))
+                    })
+                }
+            ]
+        });
+    }
+
     private getConstructorArgs({
         endpoint,
         snippet
@@ -106,20 +211,45 @@ export class EndpointSnippetGenerator {
             if (snippet.auth != null) {
                 authArgs.push(...this.getConstructorAuthArgs({ auth: endpoint.auth, values: snippet.auth }));
             } else {
-                this.context.errors.add({
-                    severity: Severity.Warning,
-                    message: `Auth with ${endpoint.auth.type} configuration is required for this endpoint`
-                });
+                // Provide default auth values for endpoints that require authentication
+                if (endpoint.auth.type === "inferred") {
+                    // For inferred auth, provide default test values
+                    const defaultInferredAuthValues: FernIr.dynamic.InferredAuthValues = {
+                        type: "inferred"
+                    };
+                    authArgs.push(
+                        ...this.getConstructorInferredAuthArgs({
+                            auth: endpoint.auth,
+                            values: defaultInferredAuthValues
+                        })
+                    );
+                } else {
+                    this.context.errors.add({
+                        severity: Severity.Warning,
+                        message: `Auth with ${endpoint.auth.type} configuration is required for this endpoint`
+                    });
+                }
             }
         }
-        const optionArgs: php.ConstructorField[] = [];
-        const baseUrlArgs = this.getConstructorBaseUrlArgs({
-            baseUrl: snippet.baseURL,
-            environment: snippet.environment
+
+        const hasMultiUrlEnvironments = this.context.ir.environments?.environments.type === "multipleBaseUrls";
+        const environmentArg = this.getConstructorEnvironmentArg({
+            environment: snippet.environment,
+            hasMultiUrlEnvironments
         });
-        if (baseUrlArgs.length > 0) {
-            optionArgs.push(...baseUrlArgs);
+
+        const optionArgs: php.ConstructorField[] = [];
+
+        if (!hasMultiUrlEnvironments) {
+            const baseUrlArgs = this.getConstructorBaseUrlArgs({
+                baseUrl: snippet.baseURL,
+                environment: snippet.environment
+            });
+            if (baseUrlArgs.length > 0) {
+                optionArgs.push(...baseUrlArgs);
+            }
         }
+
         this.context.errors.scope(Scope.Headers);
         if (this.context.ir.headers != null && snippet.headers != null) {
             optionArgs.push(
@@ -128,12 +258,14 @@ export class EndpointSnippetGenerator {
         }
         this.context.errors.unscope();
 
-        if (optionArgs.length === 0) {
-            return authArgs;
+        const args: NamedArgument[] = [...authArgs];
+
+        if (environmentArg != null) {
+            args.push(environmentArg);
         }
-        return [
-            ...authArgs,
-            {
+
+        if (optionArgs.length > 0) {
+            args.push({
                 name: "options",
                 assignment: php.TypeLiteral.map({
                     entries: optionArgs.map((arg) => ({
@@ -141,8 +273,10 @@ export class EndpointSnippetGenerator {
                         value: arg.value
                     }))
                 })
-            }
-        ];
+            });
+        }
+
+        return args;
     }
 
     private getConstructorAuthArgs({
@@ -164,11 +298,9 @@ export class EndpointSnippetGenerator {
             case "header":
                 return values.type === "header" ? this.getConstructorHeaderAuthArgs({ auth, values }) : [];
             case "oauth":
-                this.addWarning("The PHP SDK doesn't support OAuth client credentials yet");
-                return [];
+                return values.type === "oauth" ? this.getConstructorOAuthArgs({ auth, values }) : [];
             case "inferred":
-                this.addWarning("The PHP SDK Generator does not support Inferred auth scheme yet");
-                return [];
+                return values.type === "inferred" ? this.getConstructorInferredAuthArgs({ auth, values }) : [];
             default:
                 assertNever(auth);
         }
@@ -199,6 +331,204 @@ export class EndpointSnippetGenerator {
                 assignment: php.TypeLiteral.string(values.password)
             }
         ];
+    }
+
+    private getConstructorEnvironmentArg({
+        environment,
+        hasMultiUrlEnvironments
+    }: {
+        environment: FernIr.dynamic.EnvironmentValues | undefined;
+        hasMultiUrlEnvironments: boolean;
+    }): NamedArgument | undefined {
+        if (!hasMultiUrlEnvironments) {
+            return undefined;
+        }
+
+        const environmentClassRef = this.context.getEnvironmentsClassReference();
+
+        if (environment != null) {
+            if (this.context.isSingleEnvironmentID(environment)) {
+                const environmentName = this.context.resolveEnvironmentName(environment);
+                if (environmentName == null) {
+                    this.addWarning(`Environment "${environment}" was not found`);
+                    return undefined;
+                }
+                const className = this.context.getClassName(environmentName);
+                return {
+                    name: "environment",
+                    assignment: php.TypeLiteral.reference(
+                        php.codeblock((writer) => {
+                            writer.writeNode(environmentClassRef);
+                            writer.write(`::`);
+                            writer.write(className);
+                            writer.write(`()`);
+                        })
+                    )
+                };
+            }
+
+            if (this.context.isMultiEnvironmentValues(environment)) {
+                const result = this.resolveMultiEnvironmentName(environment);
+                if (result == null) {
+                    this.addWarning("Invalid multi url environment");
+                    return undefined;
+                }
+                if (result.type === "named") {
+                    return {
+                        name: "environment",
+                        assignment: php.TypeLiteral.reference(
+                            php.codeblock((writer) => {
+                                writer.writeNode(environmentClassRef);
+                                writer.write(`::`);
+                                writer.write(result.name);
+                                writer.write(`()`);
+                            })
+                        )
+                    };
+                } else {
+                    return {
+                        name: "environment",
+                        assignment: php.TypeLiteral.reference(
+                            php.codeblock((writer) => {
+                                writer.writeNode(environmentClassRef);
+                                writer.write(`::custom(`);
+                                const entries = Object.entries(result.urls);
+                                entries.forEach(([paramName, url], index) => {
+                                    writer.write(`${paramName}: '${url}'`);
+                                    if (index < entries.length - 1) {
+                                        writer.write(`, `);
+                                    }
+                                });
+                                writer.write(`)`);
+                            })
+                        )
+                    };
+                }
+            }
+        }
+
+        const defaultName = this.getDefaultEnvironmentName();
+        if (defaultName == null) {
+            return undefined;
+        }
+
+        return {
+            name: "environment",
+            assignment: php.TypeLiteral.reference(
+                php.codeblock((writer) => {
+                    writer.writeNode(environmentClassRef);
+                    writer.write(`::`);
+                    writer.write(defaultName);
+                    writer.write(`()`);
+                })
+            )
+        };
+    }
+
+    private getDefaultEnvironmentName(): string | undefined {
+        if (this.context.ir.environments?.environments.type !== "multipleBaseUrls") {
+            return undefined;
+        }
+
+        const environmentsConfig = this.context.ir.environments.environments;
+        if (environmentsConfig.type !== "multipleBaseUrls") {
+            return undefined;
+        }
+
+        const environments = environmentsConfig.environments;
+        if (environments.length === 0) {
+            return undefined;
+        }
+
+        for (const env of environments) {
+            const className = this.context.getClassName(env.name);
+            if (className === "Production") {
+                return className;
+            }
+        }
+
+        const firstEnv = environments[0];
+        if (firstEnv == null) {
+            return undefined;
+        }
+        return this.context.getClassName(firstEnv.name);
+    }
+
+    private resolveMultiEnvironmentName(
+        environment: FernIr.dynamic.MultipleEnvironmentUrlValues
+    ): { type: "named"; name: string } | { type: "custom"; urls: Record<string, string> } | undefined {
+        const baseUrlIds = Object.keys(environment);
+        if (baseUrlIds.length === 0) {
+            return undefined;
+        }
+
+        // Validate that all required base URLs are provided
+        if (!this.context.validateMultiEnvironmentUrlValues(environment)) {
+            return undefined;
+        }
+
+        const firstBaseUrlId = baseUrlIds[0];
+        if (firstBaseUrlId == null) {
+            return undefined;
+        }
+
+        const firstBaseUrlValue = environment[firstBaseUrlId];
+        if (firstBaseUrlValue == null) {
+            return undefined;
+        }
+
+        // Check if the first value is a valid environment ID (not just any string)
+        const firstEnvironmentName = this.context.resolveEnvironmentName(firstBaseUrlValue);
+        if (firstEnvironmentName != null) {
+            // Check if all values point to the same environment
+            const allSameEnvironment = baseUrlIds.every((baseUrlId) => {
+                const value = environment[baseUrlId];
+                if (value == null) {
+                    return false;
+                }
+                const envName = this.context.resolveEnvironmentName(value);
+                return envName != null && value === firstBaseUrlValue;
+            });
+
+            if (allSameEnvironment) {
+                return { type: "named", name: this.context.getClassName(firstEnvironmentName) };
+            }
+        }
+
+        // Treat all values as custom URLs
+        const urls: Record<string, string> = {};
+        for (const baseUrlId of baseUrlIds) {
+            const value = environment[baseUrlId];
+            if (value == null) {
+                continue;
+            }
+            const paramName = this.getBaseUrlPropertyName(baseUrlId);
+            urls[paramName] = value;
+        }
+
+        if (Object.keys(urls).length > 0) {
+            return { type: "custom", urls };
+        }
+
+        return undefined;
+    }
+
+    private getBaseUrlPropertyName(baseUrlId: string): string {
+        if (this.context.ir.environments?.environments.type !== "multipleBaseUrls") {
+            return baseUrlId;
+        }
+
+        const environmentsConfig = this.context.ir.environments.environments;
+        if (environmentsConfig.type !== "multipleBaseUrls") {
+            return baseUrlId;
+        }
+
+        const baseUrl = environmentsConfig.baseUrls.find((url) => url.id === baseUrlId);
+        if (baseUrl == null) {
+            return baseUrlId;
+        }
+
+        return baseUrl.name.camelCase.safeName;
     }
 
     private getConstructorBaseUrlArgs({
@@ -254,12 +584,8 @@ export class EndpointSnippetGenerator {
                     })
                 );
             }
-            if (this.context.isMultiEnvironmentValues(environment)) {
-                this.context.errors.add({
-                    severity: Severity.Warning,
-                    message:
-                        "The PHP SDK doesn't support a multi-environment client option yet; use the baseUrl option instead"
-                });
+            if (this.context.ir.environments?.environments.type === "multipleBaseUrls") {
+                return php.TypeLiteral.nop();
             }
         }
         return php.TypeLiteral.nop();
@@ -296,6 +622,38 @@ export class EndpointSnippetGenerator {
                 })
             }
         ];
+    }
+
+    private getConstructorOAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.OAuth;
+        values: FernIr.dynamic.OAuthValues;
+    }): NamedArgument[] {
+        return [
+            {
+                name: this.context.getPropertyName(auth.clientId),
+                assignment: php.TypeLiteral.string(values.clientId)
+            },
+            {
+                name: this.context.getPropertyName(auth.clientSecret),
+                assignment: php.TypeLiteral.string(values.clientSecret)
+            }
+        ];
+    }
+
+    private getConstructorInferredAuthArgs({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.InferredAuth;
+        values: FernIr.dynamic.InferredAuthValues;
+    }): NamedArgument[] {
+        // For now, return empty array to avoid the RangeError issue
+        // The inferred auth parameters should be extracted from the normal IR,
+        // not the dynamic IR which doesn't contain the detailed endpoint information
+        return [];
     }
 
     private getConstructorHeaderArgs({

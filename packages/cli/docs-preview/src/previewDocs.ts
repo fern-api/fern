@@ -28,6 +28,8 @@ import {
 } from "../../docs-markdown-utils/src";
 
 const frontmatterPositionCache = new Map<string, number | undefined>();
+const frontmatterSidebarTitleCache = new Map<string, string | undefined>();
+const frontmatterSlugCache = new Map<string, string | undefined>();
 
 /**
  * Extracts and normalizes the position field from markdown frontmatter.
@@ -46,6 +48,54 @@ function extractFrontmatterPosition(markdown: string): number | undefined {
 
         if (typeof position === "number" && Number.isFinite(position)) {
             return position;
+        }
+
+        return undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * Extracts the sidebar-title field from markdown frontmatter.
+ * Returns the string value if present, undefined otherwise.
+ */
+function extractFrontmatterSidebarTitle(markdown: string): string | undefined {
+    try {
+        const { data } = grayMatter(markdown);
+
+        if (data["sidebar-title"] == null) {
+            return undefined;
+        }
+
+        const sidebarTitle = data["sidebar-title"];
+
+        if (typeof sidebarTitle === "string") {
+            return sidebarTitle;
+        }
+
+        return undefined;
+    } catch {
+        return undefined;
+    }
+}
+
+/**
+ * Extracts the slug field from markdown frontmatter.
+ * Returns the string value if present, undefined otherwise.
+ */
+function extractFrontmatterSlug(markdown: string): string | undefined {
+    try {
+        const { data } = grayMatter(markdown);
+
+        if (data.slug == null) {
+            return undefined;
+        }
+
+        const slug = data.slug;
+
+        if (typeof slug === "string" && slug.trim().length > 0) {
+            return slug.trim();
         }
 
         return undefined;
@@ -102,7 +152,21 @@ export async function getPreviewDocsDefinition({
                 navAffectingChange = true;
             }
 
+            const currentSidebarTitle = extractFrontmatterSidebarTitle(markdown);
+            const cachedSidebarTitle = frontmatterSidebarTitleCache.get(absoluteFilePath);
+            if (cachedSidebarTitle !== currentSidebarTitle) {
+                navAffectingChange = true;
+            }
+
+            const currentSlug = extractFrontmatterSlug(markdown);
+            const cachedSlug = frontmatterSlugCache.get(absoluteFilePath);
+            if (cachedSlug !== currentSlug) {
+                navAffectingChange = true;
+            }
+
             frontmatterPositionCache.set(absoluteFilePath, currentPosition);
+            frontmatterSidebarTitleCache.set(absoluteFilePath, currentSidebarTitle);
+            frontmatterSlugCache.set(absoluteFilePath, currentSlug);
 
             if (isNewFile) {
                 continue;
@@ -214,11 +278,17 @@ export async function getPreviewDocsDefinition({
     });
 
     frontmatterPositionCache.clear();
+    frontmatterSidebarTitleCache.clear();
+    frontmatterSlugCache.clear();
     for (const [pageId, page] of Object.entries(dbDocsDefinition.pages)) {
         if (page.rawMarkdown != null) {
             const absolutePath = AbsoluteFilePath.of(`${docsWorkspace.absoluteFilePath}/${pageId.replace("api/", "")}`);
             const position = extractFrontmatterPosition(page.rawMarkdown);
+            const sidebarTitle = extractFrontmatterSidebarTitle(page.rawMarkdown);
+            const slug = extractFrontmatterSlug(page.rawMarkdown);
             frontmatterPositionCache.set(absolutePath, position);
+            frontmatterSidebarTitleCache.set(absolutePath, sidebarTitle);
+            frontmatterSlugCache.set(absolutePath, slug);
         }
     }
 

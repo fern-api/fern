@@ -15,8 +15,7 @@
 client.create(
   decimal: 2.2,
   even: 100,
-  name: 'fern',
-  shape: 
+  name: 'fern'
 );
 ```
 </dd>

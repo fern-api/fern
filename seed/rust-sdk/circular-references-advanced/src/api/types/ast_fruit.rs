@@ -5,7 +5,7 @@ pub use crate::prelude::*;
 pub enum Fruit {
     Acai(Acai),
 
-    Fig(Fig),
+    Fig(Box<Fig>),
 }
 
 impl Fruit {
@@ -31,7 +31,7 @@ impl Fruit {
         }
     }
 
-    pub fn as_fig(&self) -> Option<&Fig> {
+    pub fn as_fig(&self) -> Option<&Box<Fig>> {
         match self {
             Self::Fig(value) => Some(value),
             _ => None,
@@ -40,7 +40,7 @@ impl Fruit {
 
     pub fn into_fig(self) -> Option<Fig> {
         match self {
-            Self::Fig(value) => Some(value),
+            Self::Fig(value) => Some(*value),
             _ => None,
         }
     }

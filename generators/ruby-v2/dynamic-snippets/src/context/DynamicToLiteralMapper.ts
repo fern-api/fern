@@ -272,8 +272,10 @@ export class DynamicTypeLiteralMapper {
                 this.context.errors.scope(key);
                 const property = object.properties.find((p) => p.name.wireValue === key);
                 const typeReference = property?.typeReference ?? { type: "unknown" };
+                // Use snake_case property name for Ruby, falling back to wire value if not found
+                const propertyName = property?.name.name.snakeCase.safeName ?? key;
                 const astNode = {
-                    key: ruby.TypeLiteral.string(key),
+                    key: ruby.TypeLiteral.string(propertyName),
                     value: this.convert({ typeReference, value: val })
                 };
                 this.context.errors.unscope();

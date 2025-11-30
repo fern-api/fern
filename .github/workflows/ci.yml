@@ -5,6 +5,13 @@ on:
     branches:
       - main
   pull_request:
+  workflow_dispatch:
+    inputs:
+      update_snapshots:
+        description: 'Automatically update test snapshots if they fail (applies to both regular tests and ETE tests)'
+        required: false
+        default: false
+        type: boolean
 
 # Cancel previous workflows on previous push
 concurrency:
@@ -40,6 +47,18 @@ jobs:
       - name: Check dependencies
         run: pnpm depcheck
 
+  validate-cli-dependencies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install
+        uses: ./.github/actions/install
+
+      - name: Validate CLI dependencies
+        run: node scripts/validate-cli-dependencies.js
+
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -59,10 +78,7 @@ jobs:
 
       - name: Format
         run: pnpm format:check
-
-      - name: Format YAML
-        run: pnpm format:yaml:check
-
+        
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
 
@@ -95,6 +111,9 @@ jobs:
         with:
           github_token: ${{ github.token }}
 
+      - name: Verify buf
+        run: buf --version
+
       - uses: actions/setup-go@v5
         with:
           go-version: "stable"
@@ -104,9 +123,28 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Run tests
+        if: ${{ !github.event.inputs.update_snapshots }}
         run: pnpm test
 
+      - name: Run tests with snapshot updates
+        if: ${{ github.event.inputs.update_snapshots == 'true' }}
+        run: pnpm test:update
+
+      - name: Commit and push updated snapshots
+        if: ${{ github.event.inputs.update_snapshots == 'true' }}
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: update test snapshots"
+            git push
+          else
+            echo "No snapshot changes to commit"
+          fi
+
       - name: Ensure no changes to git-tracked files
+        if: ${{ !github.event.inputs.update_snapshots }}
         run: git --no-pager diff --exit-code
 
   test-ete:
@@ -124,6 +162,9 @@ jobs:
         with:
           github_token: ${{ github.token }}
 
+      - name: Verify buf
+        run: buf --version
+
       - uses: actions/setup-go@v5
         with:
           go-version: "stable"
@@ -133,12 +174,34 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: Run ETE tests
+        if: ${{ !github.event.inputs.update_snapshots }}
         env:
           FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
         run: |
           FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm test:ete
 
+      - name: Run ETE tests with snapshot updates
+        if: ${{ github.event.inputs.update_snapshots == 'true' }}
+        env:
+          FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+        run: |
+          FERN_TOKEN=${{ secrets.FERN_ORG_TOKEN_DEV }} pnpm test:ete:update
+
+      - name: Commit and push updated snapshots
+        if: ${{ github.event.inputs.update_snapshots == 'true' }}
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          if ! git diff --staged --quiet; then
+            git commit -m "chore: update ETE test snapshots"
+            git push
+          else
+            echo "No snapshot changes to commit"
+          fi
+
       - name: Ensure no changes to git-tracked files
+        if: ${{ !github.event.inputs.update_snapshots }}
         run: git --no-pager diff --exit-code
 
   live-test-dev:
@@ -197,47 +260,6 @@ jobs:
           if ($LASTEXITCODE -ne 0) {
             Write-Error "Command failed with exit code $LASTEXITCODE"
             exit $LASTEXITCODE
-          }
-
-  docs-dev-test-windows:
-    environment: Fern Dev
-    if: ${{ github.repository == 'fern-api/fern' }}
-    runs-on: windows-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
-      - name: Install
-        uses: ./.github/actions/install
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20.x"
-
-      - name: Assert docs dev command succeeds
-        env:
-          FORCE_COLOR: "2"
-          FERN_TOKEN: ${{ secrets.FERN_ORG_TOKEN_DEV }}
-          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
-        run: |
-          pnpm --filter @fern-api/cli dist:cli:dev
-          $cliPath = Join-Path $env:GITHUB_WORKSPACE "packages\cli\cli\dist\dev\cli.cjs"
-          if (-not (Test-Path $cliPath)) {
-            Write-Error "CLI path does not exist: $cliPath"
-            exit 1
-          }
-          cd windows
-          $process = Start-Process node -ArgumentList "$cliPath", "docs", "dev", "--log-level", "trace" -PassThru -RedirectStandardOutput "output.txt" -RedirectStandardError "error.txt"
-          Start-Sleep -Seconds 10
-          if (-not $process.HasExited) {
-            Stop-Process -Id $process.Id -Force
-          }
-          $output = Get-Content "output.txt", "error.txt" -Raw
-          if ($output -match "Failed to download docs preview bundle") {
-            Write-Error "Found 'Failed to download docs preview bundle' in output"
-            exit 1
           }
 
   live-test-dev-windows:

@@ -265,10 +265,10 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: oauth-client-credentials
-  custom-auth:
+  header-auth:
     - customConfig:
         enable-wire-tests: true
-      outputFolder: custom-auth
+      outputFolder: header-auth
   nullable-optional:
     - customConfig:
         use-nullable-annotation: true
@@ -311,7 +311,11 @@ allowedFailures:
   - literal
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
+  - oauth-client-credentials
   - oauth-client-credentials-custom
+  - oauth-client-credentials-default
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
   - oauth-client-credentials-with-variables
   - query-parameters-openapi
   - query-parameters-openapi-as-objects
@@ -328,10 +332,6 @@ allowedFailures:
   - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
   - nullable:no-custom-config
-  - oauth-client-credentials
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-nested-root
   - pagination-custom
   - query-parameters
 

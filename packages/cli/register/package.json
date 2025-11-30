@@ -38,7 +38,7 @@
     "@fern-api/configuration": "workspace:*",
     "@fern-api/core": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "0.140.3-473ba2d2c",
+    "@fern-api/fdr-sdk": "0.142.0-aae6ba0ae",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/ir-sdk": "workspace:*",
@@ -48,6 +48,8 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
     "@types/js-yaml": "^4.0.8",
+    "boxen": "^7.1.1",
+    "chalk": "^5.3.0",
     "js-yaml": "^4.1.1",
     "lodash-es": "^4.17.21",
     "openapi-types": "^12.1.3"

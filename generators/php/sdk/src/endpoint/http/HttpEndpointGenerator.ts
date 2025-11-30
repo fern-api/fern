@@ -279,7 +279,7 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         });
                         break;
                     case "custom":
-                        throw new Error("Custom pagination is not supported yet");
+                        throw new Error("Internal error: custom pagination should be filtered out by hasPagination()");
                     default:
                         assertNever(endpoint.pagination);
                 }
@@ -562,6 +562,9 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         if (!this.context.config.generatePaginatedClients) {
             return false;
         }
+        if (endpoint.pagination?.type === "custom") {
+            return false;
+        }
         return endpoint.pagination !== undefined;
     }
 
@@ -584,16 +587,24 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     private getBaseURLForEndpoint({ endpoint }: { endpoint: HttpEndpoint }): php.CodeBlock {
         return php.codeblock((writer) => {
-            const rawClientFieldName = this.context.rawClient.getFieldName();
-            const clientOptionsName = this.context.getClientOptionsName();
-            const requestOptionName = this.context.getRequestOptionsName();
-            const baseUrlOptionName = this.context.getBaseUrlOptionName();
-            const defaultBaseUrl = this.context.getDefaultBaseUrlForEndpoint(endpoint);
+            const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
+            const hasEndpointBaseUrl = endpoint.baseUrl != null;
 
-            writer.write(
-                `$${requestOptionName}['${baseUrlOptionName}'] ?? $this->${rawClientFieldName}->${clientOptionsName}['${baseUrlOptionName}'] ?? `
-            );
-            writer.writeNode(defaultBaseUrl);
+            if (isMultiUrl && hasEndpointBaseUrl && endpoint.baseUrl != null) {
+                const baseUrlPropertyName = this.context.getBaseUrlPropertyName(endpoint.baseUrl);
+                writer.write(`$this->environment->${baseUrlPropertyName}`);
+            } else {
+                const rawClientFieldName = this.context.rawClient.getFieldName();
+                const clientOptionsName = this.context.getClientOptionsName();
+                const requestOptionName = this.context.getRequestOptionsName();
+                const baseUrlOptionName = this.context.getBaseUrlOptionName();
+                const defaultBaseUrl = this.context.getDefaultBaseUrlForEndpoint(endpoint);
+
+                writer.write(
+                    `$${requestOptionName}['${baseUrlOptionName}'] ?? $this->${rawClientFieldName}->${clientOptionsName}['${baseUrlOptionName}'] ?? `
+                );
+                writer.writeNode(defaultBaseUrl);
+            }
         });
     }
 
@@ -706,9 +717,8 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     methodSuffix: upperFirst(internalType.type)
                 });
             case "enumString":
-                return this.decodeJsonResponseForPrimitive({
-                    arguments_,
-                    methodSuffix: "String"
+                return this.decodeJsonResponseForEnumString({
+                    arguments_
                 });
             case "union":
                 return this.decodeJsonResponseForUnion({
@@ -785,6 +795,20 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     static_: true
                 })
             );
+        });
+    }
+
+    private decodeJsonResponseForEnumString({ arguments_ }: { arguments_: Arguments }): php.CodeBlock {
+        return php.codeblock((writer) => {
+            writer.writeNode(
+                php.invokeMethod({
+                    on: this.context.getJsonDecoderClassReference(),
+                    method: "decodeString",
+                    arguments_,
+                    static_: true
+                })
+            );
+            writer.writeLine("; // @phpstan-ignore-line");
         });
     }
 

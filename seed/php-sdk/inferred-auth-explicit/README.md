@@ -39,7 +39,9 @@ namespace Example;
 use Seed\SeedClient;
 use Seed\Auth\Requests\GetTokenRequest;
 
-$client = new SeedClient();
+$client = new SeedClient(
+    apiKey: 'test-api-key',
+);
 $client->auth->getTokenWithClientCredentials(
     new GetTokenRequest([
         'xApiKey' => 'X-Api-Key',

@@ -12,6 +12,7 @@ import { FernOpenAPIExtension } from "@fern-api/openapi-ir-parser";
 import { AbstractConverter, Extensions, ServersConverter } from "@fern-api/v3-importer-commons";
 import { camelCase } from "lodash-es";
 import { OpenAPIV3_1 } from "openapi-types";
+import { RedoclyCodeSamplesExtension } from "../../../extensions/x-code-samples";
 import { FernExamplesExtension } from "../../../extensions/x-fern-examples";
 import { FernExplorerExtension } from "../../../extensions/x-fern-explorer";
 import { FernStreamingExtension } from "../../../extensions/x-fern-streaming";
@@ -148,6 +149,7 @@ export class OperationConverter extends AbstractOperationConverter {
                 },
                 type: responseErrorType,
                 statusCode: convertedError.statusCode,
+                isWildcardStatusCode: convertedError.isWildcardStatusCode,
                 docs: responseError.docs,
                 examples: [],
                 // TODO: Add v2 examples
@@ -259,6 +261,7 @@ export class OperationConverter extends AbstractOperationConverter {
                               responses: [
                                   {
                                       statusCode: 200,
+                                      isWildcardStatusCode: undefined,
                                       body: streamResponse.body
                                   }
                               ]
@@ -290,10 +293,22 @@ export class OperationConverter extends AbstractOperationConverter {
         // We'll need to update it to parse all successful responses.
         let hasSuccessfulResponse = false;
         for (const [statusCode, response] of Object.entries(this.operation.responses)) {
-            const statusCodeNum = parseInt(statusCode);
-            if (isNaN(statusCodeNum) || statusCodeNum < 200 || (statusCodeNum >= 300 && statusCodeNum < 400)) {
-                continue;
+            const isWildcardStatusCode = /^[45]XX$/i.test(statusCode);
+            let statusCodeNum: number;
+            let isErrorResponse = false;
+
+            if (isWildcardStatusCode) {
+                const firstDigit = parseInt(statusCode.charAt(0));
+                statusCodeNum = firstDigit * 100;
+                isErrorResponse = true;
+            } else {
+                statusCodeNum = parseInt(statusCode);
+                if (isNaN(statusCodeNum) || statusCodeNum < 200 || (statusCodeNum >= 300 && statusCodeNum < 400)) {
+                    continue;
+                }
+                isErrorResponse = statusCodeNum >= 400 && statusCodeNum < 600;
             }
+
             if (convertedResponseBody == null) {
                 convertedResponseBody = {
                     response: undefined,
@@ -335,11 +350,13 @@ export class OperationConverter extends AbstractOperationConverter {
 
                         convertedResponseBody.response = {
                             statusCode: statusCodeNum,
+                            isWildcardStatusCode: isWildcardStatusCode ? true : undefined,
                             body: converted.responseBody
                         };
 
                         convertedResponseBody.streamResponse = {
                             statusCode: statusCodeNum,
+                            isWildcardStatusCode: isWildcardStatusCode ? true : undefined,
                             body: converted.streamResponseBody
                         };
                     }
@@ -348,13 +365,14 @@ export class OperationConverter extends AbstractOperationConverter {
                         ...(convertedResponseBody.v2Responses ?? []),
                         {
                             statusCode: statusCodeNum,
+                            isWildcardStatusCode: isWildcardStatusCode ? true : undefined,
                             body: converted.responseBody
                         }
                     ];
                 }
             }
-            // Convert Error Responses (4xx and 5xx)
-            if (statusCodeNum >= 400 && statusCodeNum < 600) {
+
+            if (isErrorResponse) {
                 const resolvedResponse = this.context.resolveMaybeReference<OpenAPIV3_1.ResponseObject>({
                     schemaOrReference: response,
                     breadcrumbs: [...breadcrumbs, statusCode]
@@ -371,7 +389,8 @@ export class OperationConverter extends AbstractOperationConverter {
                     group: group ?? [],
                     method,
                     methodName: this.evaluateMethodNameFromOperation(),
-                    statusCode: statusCodeNum
+                    statusCode: statusCodeNum,
+                    isWildcardStatusCode: isWildcardStatusCode ? true : undefined
                 });
                 const converted = responseErrorConverter.convert();
                 if (converted != null) {
@@ -411,15 +430,18 @@ export class OperationConverter extends AbstractOperationConverter {
                 };
                 convertedResponseBody.response = {
                     statusCode: 200,
+                    isWildcardStatusCode: undefined,
                     body: converted.responseBody
                 };
                 convertedResponseBody.streamResponse = {
                     statusCode: 200,
+                    isWildcardStatusCode: undefined,
                     body: converted.streamResponseBody
                 };
                 convertedResponseBody.v2Responses = [
                     {
                         statusCode: 200,
+                        isWildcardStatusCode: undefined,
                         body: converted.responseBody
                     }
                 ];
@@ -499,15 +521,29 @@ export class OperationConverter extends AbstractOperationConverter {
             operation: this.operation as object,
             baseDir: this.context.documentBaseDir
         });
-        const fernExamples = fernExamplesExtension.convert();
-        if (fernExamples == null) {
+        const fernExamples = fernExamplesExtension.convert() ?? [];
+
+        const redoclyCodeSamplesExtension = new RedoclyCodeSamplesExtension({
+            context: this.context,
+            breadcrumbs: this.breadcrumbs,
+            operation: this.operation as object,
+            baseDir: this.context.documentBaseDir
+        });
+        const redoclyCodeSamples = redoclyCodeSamplesExtension.convert() ?? [];
+
+        const hasFernCodeSamples = fernExamples.some(
+            (example) => Array.isArray(example["code-samples"]) && example["code-samples"].length > 0
+        );
+        const allExamples = hasFernCodeSamples ? fernExamples : [...fernExamples, ...redoclyCodeSamples];
+
+        if (allExamples.length === 0) {
             return { examples: {}, streamExamples: {} };
         }
         if (this.streamingExtension?.type === "streamCondition") {
-            return this.convertStreamConditionExamples({ httpPath, httpMethod, baseUrl, fernExamples });
+            return this.convertStreamConditionExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples });
         }
         return {
-            examples: this.convertEndpointExamples({ httpPath, httpMethod, baseUrl, fernExamples }),
+            examples: this.convertEndpointExamples({ httpPath, httpMethod, baseUrl, fernExamples: allExamples }),
             streamExamples: {}
         };
     }

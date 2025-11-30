@@ -220,12 +220,20 @@ export class DocsDefinitionResolver {
     private markdownFilesToTags: Map<AbsoluteFilePath, string[]> = new Map();
     private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
+        const resolveStartTime = performance.now();
+        const startMemory = process.memoryUsage();
+
+        this.taskContext.logger.debug("Parsing docs configuration...");
+        const parseStart = performance.now();
         this._parsedDocsConfig = await parseDocsConfiguration({
             rawDocsConfiguration: this.docsWorkspace.config,
             context: this.taskContext,
             absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
             absoluteFilepathToDocsConfig: this.docsWorkspace.absoluteFilepathToDocsConfig
         });
+        const parseTime = performance.now() - parseStart;
+        const pageCount = Object.keys(this.parsedDocsConfig.pages).length;
+        this.taskContext.logger.debug(`Parsed docs configuration in ${parseTime.toFixed(0)}ms: ${pageCount} pages`);
 
         // Apply audience-based filtering to the navigation if target audiences are specified
         if (this.targetAudiences && this.targetAudiences.length > 0) {
@@ -233,6 +241,7 @@ export class DocsDefinitionResolver {
         }
 
         // Store raw markdown content before any processing
+        this.taskContext.logger.debug("Storing raw markdown content...");
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.rawMarkdownFiles[RelativeFilePath.of(relativePath)] = markdown;
         }
@@ -241,6 +250,8 @@ export class DocsDefinitionResolver {
         const openapiParserV3 = this.parsedDocsConfig.experimental?.openapiParserV3;
         const useV1Parser = openapiParserV3 != null && !openapiParserV3;
         if (this.docsWorkspace.config.navigation != null && useV1Parser) {
+            this.taskContext.logger.debug("Visiting navigation AST for changelog files...");
+            const navStart = performance.now();
             await visitNavigationAst({
                 navigation: this.docsWorkspace.config.navigation,
                 visitor: {
@@ -267,10 +278,14 @@ export class DocsDefinitionResolver {
                 apiWorkspaces: this.apiWorkspaces,
                 context: this.taskContext
             });
+            const navTime = performance.now() - navStart;
+            this.taskContext.logger.debug(`Visited navigation AST in ${navTime.toFixed(0)}ms`);
         }
 
         // create a map of markdown files to their URL pathnames
         // this will be used to resolve relative markdown links to their final URLs
+        this.taskContext.logger.debug("Building markdown file maps...");
+        const mapStart = performance.now();
         this.markdownFilesToFullSlugs = await this.getMarkdownFilesToFullSlugs(this.parsedDocsConfig.pages);
 
         // create a map of markdown files to their sidebar titles
@@ -281,9 +296,13 @@ export class DocsDefinitionResolver {
 
         // create a map of markdown files to their tags
         this.markdownFilesToTags = await this.getMarkdownFilesToTags(this.parsedDocsConfig.pages);
+        const mapTime = performance.now() - mapStart;
+        this.taskContext.logger.debug(`Built markdown file maps in ${mapTime.toFixed(0)}ms`);
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
+        this.taskContext.logger.debug("Replacing referenced markdown files...");
+        const refMdStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
                 markdown,
@@ -292,8 +311,12 @@ export class DocsDefinitionResolver {
                 context: this.taskContext
             });
         }
+        const refMdTime = performance.now() - refMdStart;
+        this.taskContext.logger.debug(`Replaced referenced markdown in ${refMdTime.toFixed(0)}ms`);
 
         // replaces all instances of <Code src="path/to/file.js" /> with the content of the referenced code file
+        this.taskContext.logger.debug("Replacing referenced code files...");
+        const refCodeStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedCode({
                 markdown,
@@ -302,18 +325,30 @@ export class DocsDefinitionResolver {
                 context: this.taskContext
             });
         }
+        const refCodeTime = performance.now() - refCodeStart;
+        this.taskContext.logger.debug(`Replaced referenced code in ${refCodeTime.toFixed(0)}ms`);
 
+        this.taskContext.logger.debug("Collecting files from docs config...");
+        const collectStart = performance.now();
         const filesToUploadSet = await collectFilesFromDocsConfig({
             parsedDocsConfig: this.parsedDocsConfig
         });
+        const collectTime = performance.now() - collectStart;
+        this.taskContext.logger.debug(`Collected ${filesToUploadSet.size} files in ${collectTime.toFixed(0)}ms`);
 
         // preprocess markdown files to extract image paths
+        this.taskContext.logger.debug("Parsing image paths from markdown files...");
+        const imageParseStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             try {
-                const { filepaths, markdown: newMarkdown } = parseImagePaths(markdown, {
-                    absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
-                    absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
-                });
+                const { filepaths, markdown: newMarkdown } = parseImagePaths(
+                    markdown,
+                    {
+                        absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
+                        absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath
+                    },
+                    this.taskContext
+                );
 
                 // store the updated markdown in pages
                 this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = newMarkdown;
@@ -329,6 +364,8 @@ export class DocsDefinitionResolver {
                 throw error;
             }
         }
+        const imageParseTime = performance.now() - imageParseStart;
+        this.taskContext.logger.debug(`Parsed image paths in ${imageParseTime.toFixed(0)}ms`);
 
         const filesToUpload: FilePathPair[] = Array.from(filesToUploadSet).map(
             (absoluteFilePath): FilePathPair => ({
@@ -337,21 +374,35 @@ export class DocsDefinitionResolver {
             })
         );
 
+        this.taskContext.logger.info(`Uploading ${filesToUpload.length} files...`);
+        const uploadStart = performance.now();
         const uploadedFiles = await this.uploadFiles(filesToUpload);
+        const uploadTime = performance.now() - uploadStart;
+        this.taskContext.logger.info(`Uploaded ${uploadedFiles.length} files in ${uploadTime.toFixed(0)}ms`);
 
         uploadedFiles.forEach((uploadedFile) => {
             this.collectedFileIds.set(uploadedFile.absoluteFilePath, uploadedFile.fileId);
         });
 
         // store root here so we only process once
+        this.taskContext.logger.debug("Building navigation tree...");
+        const rootStart = performance.now();
         const root = await this.toRootNode();
+        const rootTime = performance.now() - rootStart;
+        this.taskContext.logger.debug(`Built navigation tree in ${rootTime.toFixed(0)}ms`);
 
         // postprocess markdown files after uploading all images to replace the image paths in the markdown files with the fileIDs
 
         // TODO: include more (canonical) slugs from the navigation tree
+        this.taskContext.logger.debug("Getting fully qualified path names...");
+        const pathNameStart = performance.now();
         const markdownFilesToPathName: Record<AbsoluteFilePath, string> =
             await this.getMarkdownFilesToFullyQualifiedPathNames(root);
+        const pathNameTime = performance.now() - pathNameStart;
+        this.taskContext.logger.debug(`Got path names in ${pathNameTime.toFixed(0)}ms`);
 
+        this.taskContext.logger.debug("Replacing image paths and URLs in markdown...");
+        const replaceStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
             this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = replaceImagePathsAndUrls(
                 markdown,
@@ -365,7 +416,10 @@ export class DocsDefinitionResolver {
                 this.taskContext
             );
         }
+        const replaceTime = performance.now() - replaceStart;
+        this.taskContext.logger.debug(`Replaced image paths in ${replaceTime.toFixed(0)}ms`);
 
+        this.taskContext.logger.debug("Building page content...");
         const pages: Record<DocsV1Write.PageId, DocsV1Write.PageContent> = {};
 
         Object.entries(this.parsedDocsConfig.pages).forEach(([relativePageFilepath, markdown]) => {
@@ -378,11 +432,17 @@ export class DocsDefinitionResolver {
             };
         });
 
+        this.taskContext.logger.debug("Converting docs configuration...");
+        const configStart = performance.now();
         const config = await this.convertDocsConfiguration(root);
+        const configTime = performance.now() - configStart;
+        this.taskContext.logger.debug(`Converted docs configuration in ${configTime.toFixed(0)}ms`);
 
         // detect experimental js files to include in the docs
         let jsFiles: Record<string, string> = {};
         if (this._parsedDocsConfig.experimental?.mdxComponents != null) {
+            this.taskContext.logger.debug("Processing MDX components...");
+            const mdxStart = performance.now();
             const jsFilePaths = new Set<AbsoluteFilePath>();
             await Promise.all(
                 this._parsedDocsConfig.experimental.mdxComponents.map(async (filepath) => {
@@ -412,7 +472,17 @@ export class DocsDefinitionResolver {
                     })
                 )
             );
+            const mdxTime = performance.now() - mdxStart;
+            this.taskContext.logger.debug(
+                `Processed ${jsFilePaths.size} MDX component files in ${mdxTime.toFixed(0)}ms`
+            );
         }
+
+        const totalResolveTime = performance.now() - resolveStartTime;
+        const endMemory = process.memoryUsage();
+        this.taskContext.logger.debug(
+            `Total resolve time: ${totalResolveTime.toFixed(0)}ms, Memory delta: RSS=${((endMemory.rss - startMemory.rss) / 1024 / 1024).toFixed(2)}MB`
+        );
 
         return { config, pages, jsFiles };
     }
@@ -908,7 +978,8 @@ export class DocsDefinitionResolver {
                 pointsTo: undefined,
                 viewers: product.viewers,
                 orphaned: product.orphaned,
-                featureFlags: product.featureFlags
+                featureFlags: product.featureFlags,
+                announcement: product.announcement != null ? { text: product.announcement.message } : undefined
             };
         } else {
             return {
@@ -958,7 +1029,8 @@ export class DocsDefinitionResolver {
             orphaned: version.orphaned,
             icon: undefined,
             pointsTo: undefined,
-            featureFlags: version.featureFlags
+            featureFlags: version.featureFlags,
+            announcement: version.announcement != null ? { text: version.announcement.message } : undefined
         };
     }
 
@@ -1136,6 +1208,24 @@ export class DocsDefinitionResolver {
                 // noop
             }
         }
+
+        // Extract OpenAPI IR tags when tag description pages are enabled
+        let openApiTags: Record<string, { id: string; description: string | undefined }> | undefined;
+        if (item.tagDescriptionPages && useV3Parser) {
+            try {
+                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                const openApiIr = await openapiWorkspace.getOpenAPIIr({ context: this.taskContext });
+                if (openApiIr.tags.tagsById) {
+                    openApiTags = Object.fromEntries(
+                        Object.entries(openApiIr.tags.tagsById)
+                            .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
+                            .map(([tagId, tag]) => [tagId, { id: String(tag.id), description: tag.description }])
+                    );
+                }
+            } catch (error) {
+                this.taskContext.logger.warn("Failed to extract OpenAPI tags for tag description pages", String(error));
+            }
+        }
         // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
         if (ir == null) {
             ir = generateIntermediateRepresentation({
@@ -1184,8 +1274,22 @@ export class DocsDefinitionResolver {
             this.collectedFileIds,
             workspace,
             hideChildren,
-            parentAvailability ?? item.availability
+            parentAvailability ?? item.availability,
+            openApiTags
         );
+
+        // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
+        const tagDescriptionContent = node.getTagDescriptionContent();
+        for (const [absolutePath, content] of tagDescriptionContent.entries()) {
+            // Extract just the filename from the absolute path (e.g., "/tag-users.md" -> "tag-users.md")
+            const filename = absolutePath.split("/").pop() || absolutePath;
+            const relativePath = RelativeFilePath.of(filename);
+
+            // Add to both collections so the file appears in the final pages output
+            this.rawMarkdownFiles[relativePath] = content;
+            this.parsedDocsConfig.pages[relativePath] = content;
+        }
+
         return node.get();
     }
 

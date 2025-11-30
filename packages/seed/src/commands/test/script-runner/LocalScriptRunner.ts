@@ -1,4 +1,5 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
@@ -11,8 +12,8 @@ import { ScriptRunner } from "./ScriptRunner";
  * Runs scripts on the generated code to verify the output locally (without Docker).
  */
 export class LocalScriptRunner extends ScriptRunner {
-    constructor(workspace: GeneratorWorkspace, skipScripts: boolean, context: TaskContext) {
-        super(workspace, skipScripts, context);
+    constructor(workspace: GeneratorWorkspace, skipScripts: boolean, context: TaskContext, logLevel: LogLevel) {
+        super(workspace, skipScripts, context, logLevel);
     }
 
     public async run({
@@ -66,14 +67,15 @@ export class LocalScriptRunner extends ScriptRunner {
         taskContext: TaskContext;
         script: { commands: string[] };
     }): Promise<ScriptRunner.RunResponse> {
-        taskContext.logger.info(`Running local script ${script.commands[0] ?? ""} on ${id}`);
-
         const scriptFile = await tmp.file();
-        await writeFile(scriptFile.path, ["set -e", `cd ${outputDir}`, ...script.commands].join("\n"));
+        const scriptContents = ["set -e", `cd ${outputDir}`, ...script.commands].join("\n");
+        await writeFile(scriptFile.path, scriptContents);
+
+        taskContext.logger.debug(`Running local script on ${id}:\n${scriptContents}`);
 
         // Make script executable and run it
         const chmodCommand = await loggingExeca(undefined, "chmod", ["+x", scriptFile.path], {
-            doNotPipeOutput: false,
+            doNotPipeOutput: true,
             reject: false
         });
 
@@ -86,7 +88,7 @@ export class LocalScriptRunner extends ScriptRunner {
 
         const command = await loggingExeca(taskContext.logger, "/bin/sh", [scriptFile.path], {
             cwd: outputDir,
-            doNotPipeOutput: false,
+            doNotPipeOutput: true,
             reject: false
         });
 

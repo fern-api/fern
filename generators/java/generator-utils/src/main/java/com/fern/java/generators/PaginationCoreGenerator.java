@@ -16,9 +16,8 @@
 
 package com.fern.java.generators;
 
-import com.fern.generator.exec.model.logging.GeneratorUpdate;
-import com.fern.generator.exec.model.logging.LogLevel;
-import com.fern.generator.exec.model.logging.LogUpdate;
+import static com.fern.java.GeneratorLogging.logError;
+
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.DefaultGeneratorExecClient;
 import com.fern.java.output.GeneratedFile;
@@ -50,11 +49,10 @@ public final class PaginationCoreGenerator extends AbstractFilesGenerator {
                 .getGeneratePaginatedClients()
                 .orElse(false);
         if (!generatePaginatedClients) {
-            generatorExecClient.sendUpdate(GeneratorUpdate.log(LogUpdate.builder()
-                    .level(LogLevel.ERROR)
-                    .message("Pagination is not supported in your current Java SDK plan; falling back to returning full"
-                            + " response types. Please reach out to the Fern team!")
-                    .build()));
+            logError(
+                    generatorExecClient,
+                    "Pagination is not supported in your current Java SDK plan; falling back to returning full"
+                            + " response types. Please reach out to the Fern team!");
             return List.of();
         }
 

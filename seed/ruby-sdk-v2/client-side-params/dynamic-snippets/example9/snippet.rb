@@ -6,6 +6,6 @@ client = Seed::Client.new(
 );
 
 client.service.get_connection(
-  connectionId: 'connectionId',
+  connection_id: 'connectionId',
   fields: 'fields'
 );

@@ -1,5 +1,149 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.23.7
+  changelogEntry:
+    - summary: |
+        Fix DateTime formatting for optional and nullable query parameters. Previously, optional and nullable DateTime query parameters were passed as raw DateTime objects to Guzzle HTTP client, causing request failures. The fix ensures that `Optional<DateTime>` and `Nullable<DateTime>` types are correctly identified and formatted using `.format()` method with proper date/datetime constants.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 62
+
+- version: 1.23.6
+  changelogEntry:
+    - summary: |
+        Fix wire tests to pass X-Test-Id header via method call options. Dynamic snippets now pass arbitrary headers from the snippet request as per-request options when generating calls on existing clients (skipClientInstantiation mode). This enables wire tests to properly correlate requests with WireMock verification.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 62
+
+- version: 1.23.5
+  changelogEntry:
+    - summary: |
+        Fix wire test environment parameter generation and inferred auth parameter handling. Wire tests now properly indent environment parameters and use Environments::custom() instead of raw arrays for type safety. Additionally, required inferred auth parameters no longer use unnecessary null coalescing operators (??), resolving PHPStan static analysis warnings.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 62
+
+- version: 1.23.4
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for inferred auth by using getInferredAuth() explicitly. The previous fix relied on the visitor pattern which may not correctly identify inferred auth schemes in all cases.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 62
+
+- version: 1.23.3
+  changelogEntry:
+    - summary: |
+        Fix wire test generation for inferred auth. Wire tests now correctly pass the required auth parameters (e.g., apiKey) extracted from the token endpoint's request body and headers, matching the root client constructor signature.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 62
+
+- version: 1.23.2
+  changelogEntry:
+    - summary: |
+        Fix constructor signature mismatches in multi-URL environments. Subpackage clients now consistently use `isMultiUrl` to determine whether to accept `Environments` or `options` as the second constructor parameter, matching the root client's behavior. Also fixes OAuth and inferred auth client instantiation to pass the environment parameter when in multi-URL mode, and updates wire tests to extend `WireMockTestCase` and include auth parameters.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 62
+
+- version: 1.23.1
+  changelogEntry:
+    - summary: |
+        Remove error on null config in README generation.
+      type: fix
+  createdAt: "2025-11-26"
+  irVersion: 62
+
+- version: 1.23.0
+  changelogEntry:
+    - summary: |
+        Add inferred auth support for PHP SDKs. The SDK now generates an InferredAuthProvider class that handles automatic token retrieval and caching with expiration handling. Root clients accept the token endpoint request parameters for inferred authentication.
+      type: feat
+  createdAt: "2025-11-26"
+  irVersion: 62
+
+- version: 1.22.3
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to properly handle custom URLs in multi-URL environments. Custom URLs now correctly generate `Environments::custom(...)` calls instead of failing with "Invalid multi url environment" error.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 62
+
+- version: 1.22.2
+  changelogEntry:
+    - summary: |
+        Add missing `<?php` opening tag to generated wire test files for proper syntax highlighting.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 62
+
+- version: 1.22.1
+  changelogEntry:
+    - summary: |
+        Fix PHPStan error for enum string return types by adding @phpstan-ignore-line suppression.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 62
+
+- version: 1.22.0
+  changelogEntry:
+    - summary: |
+        Upgrade to IR version 62.
+      type: chore
+  createdAt: "2025-11-25"
+  irVersion: 62
+
+- version: 1.21.0
+  changelogEntry:
+    - summary: |
+        Add OAuth client credentials support for PHP SDKs. The SDK now generates an OAuthTokenProvider class that handles automatic token refresh with expiration handling. Root clients accept clientId and clientSecret parameters for OAuth authentication, and dynamic snippets show proper OAuth instantiation examples.
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 1.20.0
+  changelogEntry:
+    - summary: |
+        Add reference.md generation for PHP SDKs. The reference documentation includes dynamic snippets with example data for all API endpoints, organized by service.
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 1.19.2
+  changelogEntry:
+    - summary: |
+        Fix environment passing in PHP SDK sub-clients for multi-URL environments. Sub-clients now properly receive the environment instance instead of options, ensuring correct URL resolution when APIs have different base URLs per service.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 1.19.1
+  changelogEntry:
+    - summary: |
+        Add support for multi-URL environments. Generated SDKs now use a class-based Environments with readonly properties for each service URL, enabling APIs with different base URLs per service (e.g., EC2 and S3). Sub-clients receive the full Environments instance and access their specific URL via property access.
+      type: feat
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 1.18.3
+  changelogEntry:
+    - summary: |
+        Fix duplicate logging in PHP SDK generator by including class names in log messages. Previously, multiple types in the same directory would log identical "Generating {directory}" messages, causing log spam. Now each type logs a unique "Generating {directory}/{className}" message.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
+- version: 1.18.2
+  changelogEntry:
+    - summary: |
+        Fallback to unpaged method for custom pagination instead of hard failing. Endpoints with custom pagination will now generate normal request/response methods instead of throwing an error.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 1.18.1
   changelogEntry:
     - summary: |

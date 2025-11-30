@@ -27,4 +27,12 @@ export interface BaseRequestOptions {
     /** Additional headers to include in the request. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
 }
-export declare function normalizeClientOptions<T extends BaseClientOptions>(options: T): T;
+export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
+    logging: core.logging.Logger;
+    authProvider?: core.AuthProvider;
+};
+export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
+    authProvider: core.AuthProvider;
+};
+export declare function normalizeClientOptions<T extends BaseClientOptions>(options: T): NormalizedClientOptions<T>;
+export declare function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(options: T): NormalizedClientOptionsWithAuth<T>;

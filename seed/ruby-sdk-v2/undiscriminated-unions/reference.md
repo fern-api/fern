@@ -238,7 +238,7 @@ client.union.nested_unions();
 <dd>
 
 ```ruby
-client.union.test_camel_case_properties(paymentMethod: );
+client.union.test_camel_case_properties();
 ```
 </dd>
 </dl>

@@ -2508,6 +2508,19 @@
             }
           ]
         },
+        "auth-schemes": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fernDefinition.auth.AuthSchemeDeclarationSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "specs": {
           "$ref": "#/definitions/generators.APIConfigurationV2SpecsSchema"
         },
@@ -3205,6 +3218,13 @@
         }
       ]
     },
+    "group.GithubSelfhostedMode": {
+      "type": "string",
+      "enum": [
+        "pull-request",
+        "push"
+      ]
+    },
     "license.GithubLicenseType": {
       "type": "string",
       "enum": [
@@ -3246,7 +3266,17 @@
         "mode": {
           "oneOf": [
             {
-              "const": "pull-request"
+              "$ref": "#/definitions/group.GithubSelfhostedMode"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "branch": {
+          "oneOf": [
+            {
+              "type": "string"
             },
             {
               "type": "null"
@@ -3532,10 +3562,33 @@
             }
           ]
         },
+        "auth-schemes": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fernDefinition.auth.AuthSchemeDeclarationSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "settings": {
           "oneOf": [
             {
-              "$ref": "#/definitions/generators.APIDefinitionSettingsSchema"
+              "$ref": "#/definitions/generators.APIConfigurationV2SettingsSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "specs": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/generators.APIConfigurationV2SpecsSchema"
             },
             {
               "type": "null"

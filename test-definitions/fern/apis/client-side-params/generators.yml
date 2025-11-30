@@ -7,3 +7,13 @@ groups:
         config:
           use-default-request-parameter-values: true
           wrapped-aliases: true
+  php-sdk:
+    generators:
+      - name: fernapi/fern-php-sdk
+        version: latest
+        ir-version: v61
+        github:
+          token: ${GITHUB_TOKEN}
+          mode: push
+          uri: fern-api/php-sdk-tests
+          branch: client-side-params

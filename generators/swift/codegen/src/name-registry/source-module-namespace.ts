@@ -7,13 +7,13 @@ export class SourceModuleNamespace {
         this.namespace = new Namespace();
     }
 
-    public addAsIsSymbolName(symbolName: string) {
-        const nameId = this.asIsSymbolNameId(symbolName);
-        this.namespace.registerSymbol(nameId, [symbolName]);
+    public addStaticSymbolName(symbolName: string) {
+        const nameId = this.staticSymbolNameId(symbolName);
+        return this.namespace.registerSymbol(nameId, [symbolName]);
     }
 
-    private asIsSymbolNameId(symbolName: string): string {
-        return `AsIs:${symbolName}`;
+    private staticSymbolNameId(symbolName: string): string {
+        return `Static:${symbolName}`;
     }
 
     public addRootClientSymbolName(symbolNameCandidates: [string, ...string[]]) {
@@ -40,6 +40,19 @@ export class SourceModuleNamespace {
 
     private environmentSymbolNameId(): string {
         return `EnvironmentEnum`;
+    }
+
+    public addErrorEnumSymbolName(symbolNameCandidates: [string, ...string[]]) {
+        const nameId = this.errorEnumSymbolNameId();
+        return this.namespace.registerSymbol(nameId, symbolNameCandidates);
+    }
+
+    public getErrorEnumSymbolNameOrThrow() {
+        return this.namespace.getSymbolNameByIdOrThrow(this.errorEnumSymbolNameId());
+    }
+
+    private errorEnumSymbolNameId(): string {
+        return `ErrorEnum`;
     }
 
     public addRequestsContainerSymbolName(symbolNameCandidates: [string, ...string[]]) {

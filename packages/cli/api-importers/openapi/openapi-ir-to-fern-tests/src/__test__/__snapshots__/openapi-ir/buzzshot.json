@@ -165,7 +165,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v2/accounts/",
       "examples": [
@@ -292,7 +291,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v2/accounts/{id}/",
       "examples": [
@@ -591,7 +589,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v2/games/",
       "examples": [
@@ -914,7 +911,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v2/games/{id}/",
       "examples": [
@@ -1343,7 +1339,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v2/groups/",
       "examples": [
@@ -1692,7 +1687,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v2/groups/{id}/",
       "examples": [
@@ -2197,7 +2191,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v2/players/",
       "examples": [
@@ -2386,7 +2379,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v2/players/{id}/",
       "examples": [
@@ -2688,7 +2680,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v2/rooms/",
       "examples": [
@@ -2815,7 +2806,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v2/rooms/{id}/",
       "examples": [
@@ -3030,7 +3020,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v2/photos/",
       "examples": [
@@ -3174,7 +3163,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v2/photos/{photo_id}/",
       "examples": [

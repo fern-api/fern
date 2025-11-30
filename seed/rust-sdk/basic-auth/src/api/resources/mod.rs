@@ -1,3 +1,10 @@
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **BasicAuth**
+//! - **Errors**
+
 use crate::{ApiError, ClientConfig};
 
 pub mod basic_auth;

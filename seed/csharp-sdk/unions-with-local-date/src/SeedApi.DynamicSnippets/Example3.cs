@@ -11,8 +11,8 @@ public class Example3
             }
         );
 
-        await client.Union.GetAsync(
-            "id"
+        await client.Types.GetAsync(
+            "date-example"
         );
     }
 

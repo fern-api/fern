@@ -1289,7 +1289,7 @@ func (f *fileWriter) WriteClient(
 		f.P()
 
 		// Prepare a response variable.
-		if endpoint.ResponseType != "" && endpoint.PaginationInfo == nil {
+		if endpoint.ResponseType != "" && endpoint.PaginationInfo == nil && !endpoint.HasCustomPagination {
 			f.P(fmt.Sprintf(endpoint.ResponseInitializerFormat, endpoint.ResponseType))
 		}
 
@@ -1448,6 +1448,44 @@ func (f *fileWriter) WriteClient(
 			f.P(")")
 
 			f.P("return pager.GetPage(ctx, ", endpoint.PaginationInfo.PageFirstRequestParameter, ")")
+			f.P("}")
+			f.P()
+		} else if endpoint.HasCustomPagination {
+			f.P("if _, err := ", receiver, ".caller.Call(")
+			f.P("ctx,")
+			f.P("&internal.CallParams{")
+			f.P("URL: endpointURL, ")
+			f.P("Method:", endpoint.Method, ",")
+			f.P("Headers:", headersParameter, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
+			f.P("BodyProperties: options.BodyProperties,")
+			f.P("QueryParameters: options.QueryParameters,")
+			f.P("Client: options.HTTPClient,")
+			if endpoint.RequestValueName != "" {
+				f.P("Request: ", endpoint.RequestValueName, ",")
+			}
+			if endpoint.ResponseParameterName != "" {
+				f.P("Response: ", endpoint.ResponseParameterName, ",")
+			}
+			if endpoint.ResponseIsOptionalParameter {
+				f.P("ResponseIsOptional: true,")
+			}
+			if endpoint.ErrorDecoderParameterName != "" {
+				f.P("ErrorDecoder:", endpoint.ErrorDecoderParameterName, ",")
+			}
+			f.P("},")
+			f.P("); err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
+			f.P("base := core.NewCustomPager(")
+			f.P("response,")
+			f.P("nil,")
+			f.P("nil,")
+			f.P("nil,")
+			f.P("nil,")
+			f.P(")")
+			f.P("pager := &core.", endpoint.CustomPagerName, "[", endpoint.ResponseType, "]{CustomPager: base}")
+			f.P("return pager, nil")
 			f.P("}")
 			f.P()
 		} else {
@@ -1658,6 +1696,8 @@ func (f *fileWriter) getPaginationInfo(
 			ResultsGoType:             typeReferenceToGoType(pagination.Offset.Results.Property.ValueType, f.types, scope, f.baseImportPath, "", false),
 			ResultsSingleGoType:       typeReferenceToGoType(resultsSingleType, f.types, scope, f.baseImportPath, "", false),
 		}, nil
+	case "custom":
+		return nil, nil
 	default:
 		return nil, fmt.Errorf("%s pagination is not supported yet", t)
 	}
@@ -1935,7 +1975,7 @@ func getEndpointParameters(
 			fields = append(
 				fields,
 				&ast.Field{
-					Key:   pathParameter.Name.PascalCase.UnsafeName,
+					Key:   goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName),
 					Value: f.snippetWriter.GetSnippetForExampleTypeReference(pathParameter.Value),
 				},
 			)
@@ -1956,7 +1996,7 @@ func getEndpointParameters(
 		fields = append(
 			fields,
 			&ast.Field{
-				Key:   header.Name.Name.PascalCase.UnsafeName,
+				Key:   goExportedFieldName(header.Name.Name.PascalCase.UnsafeName),
 				Value: f.snippetWriter.GetSnippetForExampleTypeReference(header.Value),
 			},
 		)
@@ -1984,7 +2024,7 @@ func getEndpointParameters(
 		fields = append(
 			fields,
 			&ast.Field{
-				Key:   queryParameter.Name.Name.PascalCase.UnsafeName,
+				Key:   goExportedFieldName(queryParameter.Name.Name.PascalCase.UnsafeName),
 				Value: exampleValue,
 			},
 		)
@@ -2043,7 +2083,7 @@ func exampleRequestBodyToFields(
 			fields = append(
 				fields,
 				&ast.Field{
-					Key:   property.Name.Name.PascalCase.UnsafeName,
+					Key:   goExportedFieldName(property.Name.Name.PascalCase.UnsafeName),
 					Value: f.snippetWriter.GetSnippetForExampleTypeReference(property.Value),
 				},
 			)
@@ -2056,7 +2096,7 @@ func exampleRequestBodyToFields(
 		fields = append(
 			fields,
 			&ast.Field{
-				Key:   endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName,
+				Key:   goExportedFieldName(endpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName),
 				Value: f.snippetWriter.GetSnippetForExampleTypeReference(exampleRequestBody.Reference),
 			},
 		)
@@ -2228,6 +2268,8 @@ type endpoint struct {
 	FileBodyProperties          []*ir.FileUploadBodyProperty
 	StreamingInfo               *streamingInfo
 	PaginationInfo              *paginationInfo
+	HasCustomPagination         bool
+	CustomPagerName             string
 }
 
 type signatureParameter struct {
@@ -2581,6 +2623,19 @@ func (f *fileWriter) endpointFromIR(
 		contentType = contentTypeOverride
 	}
 
+	var hasCustomPagination bool
+	var customPagerName string
+	if irEndpoint.Pagination != nil && irEndpoint.Pagination.Type == "custom" {
+		hasCustomPagination = true
+		customPagerName = f.customPagerName
+		if customPagerName == "" {
+			customPagerName = "CustomPager"
+		}
+		signatureReturnValues = fmt.Sprintf("(*core.%s[%s], error)", customPagerName, responseType)
+		errorReturnValues = "nil, err"
+		responseInitializerFormat = ""
+	}
+
 	return &endpoint{
 		Name:                        irEndpoint.Name,
 		Docs:                        irEndpoint.Docs,
@@ -2617,6 +2672,8 @@ func (f *fileWriter) endpointFromIR(
 		FileBodyProperties:          fileBodyProperties,
 		StreamingInfo:               streamingInfo,
 		PaginationInfo:              paginationInfo,
+		HasCustomPagination:         hasCustomPagination,
+		CustomPagerName:             customPagerName,
 	}, nil
 }
 
@@ -2756,7 +2813,7 @@ func (f *fileWriter) WriteRequestType(
 	// Collect from headers (exclude literals as they don't need setters)
 	for _, header := range append(serviceHeaders, endpoint.Headers...) {
 		if header.ValueType.Container == nil || header.ValueType.Container.Literal == nil {
-			propertyNames = append(propertyNames, header.Name.Name.PascalCase.UnsafeName)
+			propertyNames = append(propertyNames, goExportedFieldName(header.Name.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, header.Name.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			propertyTypes = append(propertyTypes, goType)
@@ -2766,7 +2823,7 @@ func (f *fileWriter) WriteRequestType(
 	// Collect from path parameters (always include these)
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
 		for _, pathParameter := range endpoint.AllPathParameters {
-			propertyNames = append(propertyNames, pathParameter.Name.PascalCase.UnsafeName)
+			propertyNames = append(propertyNames, goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, pathParameter.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			propertyTypes = append(propertyTypes, goType)
@@ -2776,7 +2833,7 @@ func (f *fileWriter) WriteRequestType(
 	// Collect from query parameters (always include these, exclude literals)
 	for _, queryParam := range endpoint.QueryParameters {
 		if queryParam.ValueType.Container == nil || queryParam.ValueType.Container.Literal == nil {
-			propertyNames = append(propertyNames, queryParam.Name.Name.PascalCase.UnsafeName)
+			propertyNames = append(propertyNames, goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName))
 			propertySafeNames = append(propertySafeNames, queryParam.Name.Name.CamelCase.SafeName)
 			goType := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			if queryParam.AllowMultiple {
@@ -2790,7 +2847,7 @@ func (f *fileWriter) WriteRequestType(
 	if endpoint.RequestBody != nil && endpoint.RequestBody.InlinedRequestBody != nil {
 		for _, property := range endpoint.RequestBody.InlinedRequestBody.Properties {
 			if property.ValueType.Container == nil || property.ValueType.Container.Literal == nil {
-				propertyNames = append(propertyNames, property.Name.Name.PascalCase.UnsafeName)
+				propertyNames = append(propertyNames, goExportedFieldName(property.Name.Name.PascalCase.UnsafeName))
 				propertySafeNames = append(propertySafeNames, property.Name.Name.CamelCase.SafeName)
 				goType := typeReferenceToGoType(property.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 				propertyTypes = append(propertyTypes, goType)
@@ -2816,13 +2873,13 @@ func (f *fileWriter) WriteRequestType(
 			continue
 		}
 		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
-		f.P(header.Name.Name.PascalCase.UnsafeName, " ", goType, " `json:\"-\" url:\"-\"`")
+		f.P(goExportedFieldName(header.Name.Name.PascalCase.UnsafeName), " ", goType, " `json:\"-\" url:\"-\"`")
 	}
 	if includePathParametersInWrappedRequest(endpoint, f.inlinePathParameters) {
 		for _, pathParameter := range endpoint.AllPathParameters {
 			value := typeReferenceToGoType(pathParameter.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
 			f.WriteDocs(pathParameter.Docs)
-			f.P(pathParameter.Name.PascalCase.UnsafeName, " ", value, " `json:\"-\" url:\"-\"`")
+			f.P(goExportedFieldName(pathParameter.Name.PascalCase.UnsafeName), " ", value, " `json:\"-\" url:\"-\"`")
 		}
 	}
 	for _, queryParam := range endpoint.QueryParameters {
@@ -2841,7 +2898,7 @@ func (f *fileWriter) WriteRequestType(
 			)
 			continue
 		}
-		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types, f.alwaysSendRequiredProperties))
+		f.P(goExportedFieldName(queryParam.Name.Name.PascalCase.UnsafeName), " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types, f.alwaysSendRequiredProperties))
 	}
 	if endpoint.RequestBody == nil {
 		// If the request doesn't have a body, we don't need any custom [de]serialization logic.

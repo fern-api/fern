@@ -1,7 +1,7 @@
 imports:
   neopetsRoot: __package__.yml
 service:
-  auth: false
+  auth: true
   base-path: ''
   endpoints:
     createPets:

@@ -27,7 +27,7 @@ Post a nullable request body
 <dd>
 
 ```ruby
-client.test_group.test_method_name(pathParam: 'path_param');
+client.test_group.test_method_name(path_param: 'path_param');
 ```
 </dd>
 </dl>
