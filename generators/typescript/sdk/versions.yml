@@ -1,4 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.34.3
+  changelogEntry:
+    - summary: |
+        Improve React Native compatibility in the SDK runtime and fetcher:
+        - Move React Native detection before Node.js detection since React Native may have a process polyfill
+        - Use `ReturnType<typeof setTimeout>` instead of `NodeJS.Timeout` for better cross-platform compatibility
+        - Improve response body handling to work better in React Native environments where `response.body` may not be available
+        - Return structured error objects for empty responses, invalid JSON, and read errors
+      type: fix
+  createdAt: "2025-11-30"
+  irVersion: 61
+
 - version: 3.34.2
   changelogEntry:
     - summary: |

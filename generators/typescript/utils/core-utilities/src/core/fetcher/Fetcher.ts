@@ -285,9 +285,21 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 };
                 logger.debug("HTTP request succeeded", metadata);
             }
+            const body = await getResponseBody(response, args.responseType);
+            // Check if getResponseBody returned an error object
+            if (body && typeof body === "object" && "_error" in body && (body as any)._error === true) {
+                return {
+                    ok: false,
+                    error: {
+                        reason: "unknown",
+                        errorMessage: (body as any).message || "Failed to parse response body"
+                    },
+                    rawResponse: toRawResponse(response)
+                };
+            }
             return {
                 ok: true,
-                body: (await getResponseBody(response, args.responseType)) as R,
+                body: body as R,
                 headers: response.headers,
                 rawResponse: toRawResponse(response)
             };
