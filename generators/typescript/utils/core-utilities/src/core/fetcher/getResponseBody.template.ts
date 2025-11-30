@@ -27,6 +27,10 @@ export async function getResponseBody(response: Response, responseType?: string)
 
     switch (responseType) {
         case "binary-response":
+            // Re-check here so TypeScript can narrow to ResponseWithBody
+            if (!isResponseWithBody(response)) {
+                return undefined;
+            }
             return getBinaryResponse(response);
         case "blob":
             return await response.blob();
