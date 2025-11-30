@@ -32,42 +32,23 @@ export async function getResponseBody(response: Response, responseType?: string)
             return await response.text();
     }
 
-    // if responseType is "json" or not specified, parse as JSON
-    // Use text() first for better React Native compatibility
-    try {
-        const text = await response.text();
-        if (text.length === 0) {
-            // Empty response body - return a structured object instead of undefined
-            return {
-                _error: true,
-                reason: "empty-response",
-                message: "Response body is empty",
-                statusCode: response.status,
-                success: false,
-            };
-        }
+    // if responseType is "json" or not specified, try to parse as JSON
+    // Use text() for better React Native compatibility (response.body may not be available)
+    const text = await response.text();
+    if (text.length > 0) {
         try {
-            const parsed = fromJson(text);
-            return parsed;
+            const responseBody = fromJson(text);
+            return responseBody;
         } catch (err) {
-            // Invalid JSON - return structured error object
             return {
-                _error: true,
-                reason: "invalid-json",
-                message: "Failed to parse JSON response: " + (err instanceof Error ? err.message : String(err)),
-                statusCode: response.status,
-                rawBody: text,
-                success: false,
+                ok: false,
+                error: {
+                    reason: "non-json",
+                    statusCode: response.status,
+                    rawBody: text,
+                },
             };
         }
-    } catch (err) {
-        // response.text() failed - return structured error object
-        return {
-            _error: true,
-            reason: "read-error",
-            message: "Failed to read response body: " + (err instanceof Error ? err.message : String(err)),
-            statusCode: response.status,
-            success: false,
-        };
     }
+    return undefined;
 }
