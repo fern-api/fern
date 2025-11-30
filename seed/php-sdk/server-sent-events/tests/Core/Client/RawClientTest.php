@@ -16,8 +16,7 @@ use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Json\JsonSerializableType;
 use Seed\Core\Json\JsonProperty;
 
-class JsonRequest extends JsonSerializableType
-{
+class JsonRequest extends JsonSerializableType {
     /**
      * @var string
      */

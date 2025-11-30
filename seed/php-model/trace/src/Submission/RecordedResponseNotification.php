@@ -34,17 +34,15 @@ class RecordedResponseNotification extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->submissionId = $values['submissionId'];
-        $this->traceResponsesSize = $values['traceResponsesSize'];
-        $this->testCaseId = $values['testCaseId'] ?? null;
+    )
+    {
+        $this->submissionId = $values['submissionId'];$this->traceResponsesSize = $values['traceResponsesSize'];$this->testCaseId = $values['testCaseId'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

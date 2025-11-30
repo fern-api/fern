@@ -24,8 +24,8 @@ class InlinedChildRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->child = $values['child'];
-        $this->parent = $values['parent'];
+    )
+    {
+        $this->child = $values['child'];$this->parent = $values['parent'];
     }
 }

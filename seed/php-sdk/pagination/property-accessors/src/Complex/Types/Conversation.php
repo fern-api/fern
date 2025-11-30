@@ -20,32 +20,27 @@ class Conversation extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->foo = $values['foo'];
     }
 
     /**
      * @return string
      */
-    public function getFoo(): string
-    {
-        return $this->foo;
-    }
+    public function getFoo(): string {
+        return $this->foo;}
 
     /**
      * @param string $value
      */
-    public function setFoo(string $value): self
-    {
-        $this->foo = $value;
-        return $this;
-    }
+    public function setFoo(string $value): self {
+        $this->foo = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

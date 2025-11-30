@@ -42,18 +42,15 @@ class TestCaseNonHiddenGrade extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->passed = $values['passed'];
-        $this->actualResult = $values['actualResult'] ?? null;
-        $this->exception = $values['exception'] ?? null;
-        $this->stdout = $values['stdout'];
+    )
+    {
+        $this->passed = $values['passed'];$this->actualResult = $values['actualResult'] ?? null;$this->exception = $values['exception'] ?? null;$this->stdout = $values['stdout'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

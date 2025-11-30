@@ -195,39 +195,15 @@ class Type extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->one = $values['one'];
-        $this->two = $values['two'];
-        $this->three = $values['three'];
-        $this->four = $values['four'];
-        $this->five = $values['five'];
-        $this->six = $values['six'];
-        $this->seven = $values['seven'];
-        $this->eight = $values['eight'];
-        $this->nine = $values['nine'];
-        $this->ten = $values['ten'];
-        $this->eleven = $values['eleven'];
-        $this->twelve = $values['twelve'];
-        $this->thirteen = $values['thirteen'] ?? null;
-        $this->fourteen = $values['fourteen'];
-        $this->fifteen = $values['fifteen'];
-        $this->sixteen = $values['sixteen'];
-        $this->seventeen = $values['seventeen'];
-        $this->eighteen = $values['eighteen'];
-        $this->nineteen = $values['nineteen'];
-        $this->twenty = $values['twenty'];
-        $this->twentyone = $values['twentyone'];
-        $this->twentytwo = $values['twentytwo'];
-        $this->twentythree = $values['twentythree'];
-        $this->twentyfour = $values['twentyfour'] ?? null;
-        $this->twentyfive = $values['twentyfive'] ?? null;
+    )
+    {
+        $this->one = $values['one'];$this->two = $values['two'];$this->three = $values['three'];$this->four = $values['four'];$this->five = $values['five'];$this->six = $values['six'];$this->seven = $values['seven'];$this->eight = $values['eight'];$this->nine = $values['nine'];$this->ten = $values['ten'];$this->eleven = $values['eleven'];$this->twelve = $values['twelve'];$this->thirteen = $values['thirteen'] ?? null;$this->fourteen = $values['fourteen'];$this->fifteen = $values['fifteen'];$this->sixteen = $values['sixteen'];$this->seventeen = $values['seventeen'];$this->eighteen = $values['eighteen'];$this->nineteen = $values['nineteen'];$this->twenty = $values['twenty'];$this->twentyone = $values['twentyone'];$this->twentytwo = $values['twentytwo'];$this->twentythree = $values['twentythree'];$this->twentyfour = $values['twentyfour'] ?? null;$this->twentyfive = $values['twentyfive'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

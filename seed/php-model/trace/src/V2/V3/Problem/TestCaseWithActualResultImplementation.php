@@ -27,16 +27,15 @@ class TestCaseWithActualResultImplementation extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->getActualResult = $values['getActualResult'];
-        $this->assertCorrectnessCheck = $values['assertCorrectnessCheck'];
+    )
+    {
+        $this->getActualResult = $values['getActualResult'];$this->assertCorrectnessCheck = $values['assertCorrectnessCheck'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

@@ -56,11 +56,9 @@ class Metadata extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    ) {
-        $this->extra = $values['extra'];
-        $this->tags = $values['tags'];
-        $this->type = $values['type'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->extra = $values['extra'];$this->tags = $values['tags'];$this->type = $values['type'];$this->value = $values['value'];
     }
 
     /**
@@ -69,8 +67,7 @@ class Metadata extends JsonSerializableType
      * @param string $html
      * @return Metadata
      */
-    public static function html(array $extra, array $tags, string $html): Metadata
-    {
+    public static function html(array $extra, array $tags, string $html): Metadata {
         return new Metadata([
             'extra' => $extra,
             'tags' => $tags,
@@ -85,8 +82,7 @@ class Metadata extends JsonSerializableType
      * @param string $markdown
      * @return Metadata
      */
-    public static function markdown(array $extra, array $tags, string $markdown): Metadata
-    {
+    public static function markdown(array $extra, array $tags, string $markdown): Metadata {
         return new Metadata([
             'extra' => $extra,
             'tags' => $tags,
@@ -98,67 +94,61 @@ class Metadata extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isHtml(): bool
-    {
-        return is_string($this->value) && $this->type === 'html';
+    public function isHtml(): bool {
+        return is_string($this->value)&& $this->type === 'html';
     }
 
     /**
      * @return string
      */
-    public function asHtml(): string
-    {
-        if (!(is_string($this->value) && $this->type === 'html')) {
+    public function asHtml(): string {
+        if (!(is_string($this->value)&& $this->type === 'html')){
             throw new Exception(
                 "Expected html; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isMarkdown(): bool
-    {
-        return is_string($this->value) && $this->type === 'markdown';
+    public function isMarkdown(): bool {
+        return is_string($this->value)&& $this->type === 'markdown';
     }
 
     /**
      * @return string
      */
-    public function asMarkdown(): string
-    {
-        if (!(is_string($this->value) && $this->type === 'markdown')) {
+    public function asMarkdown(): string {
+        if (!(is_string($this->value)&& $this->type === 'markdown')){
             throw new Exception(
                 "Expected markdown; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $result = [];
         $result['type'] = $this->type;
-
+        
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-
-        switch ($this->type) {
+        
+        switch ($this->type){
             case 'html':
                 $value = $this->value;
                 $result['html'] = $value;
@@ -169,27 +159,26 @@ class Metadata extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)) {
+                if (is_null($this->value)){
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType) {
+                if ($this->value instanceof JsonSerializableType){
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)) {
+                } elseif (is_array($this->value)){
                     $result = array_merge($this->value, $result);
                 }
         }
-
+        
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static
-    {
+    public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
+        if (!is_array($decodedJson)){
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -198,63 +187,62 @@ class Metadata extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static
-    {
+    public static function jsonDeserialize(array $data): static {
         $args = [];
-        if (!array_key_exists('extra', $data)) {
+        if (!array_key_exists('extra', $data)){
             throw new Exception(
                 "JSON data is missing property 'extra'",
             );
         }
-        if (!(is_array($data['extra']))) {
+        if (!(is_array($data['extra']))){
             throw new Exception(
                 "Expected property 'extra' in JSON data to be map, instead received " . get_debug_type($data['extra']),
             );
         }
         $args['extra'] = $data['extra'];
-
-        if (!array_key_exists('tags', $data)) {
+        
+        if (!array_key_exists('tags', $data)){
             throw new Exception(
                 "JSON data is missing property 'tags'",
             );
         }
-        if (!(is_array($data['tags']))) {
+        if (!(is_array($data['tags']))){
             throw new Exception(
                 "Expected property 'tags' in JSON data to be array, instead received " . get_debug_type($data['tags']),
             );
         }
         $args['tags'] = $data['tags'];
-
-        if (!array_key_exists('type', $data)) {
+        
+        if (!array_key_exists('type', $data)){
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))) {
+        if (!(is_string($type))){
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-
+        
         $args['type'] = $type;
-        switch ($type) {
+        switch ($type){
             case 'html':
-                if (!array_key_exists('html', $data)) {
+                if (!array_key_exists('html', $data)){
                     throw new Exception(
                         "JSON data is missing property 'html'",
                     );
                 }
-
+                
                 $args['value'] = $data['html'];
                 break;
             case 'markdown':
-                if (!array_key_exists('markdown', $data)) {
+                if (!array_key_exists('markdown', $data)){
                     throw new Exception(
                         "JSON data is missing property 'markdown'",
                     );
                 }
-
+                
                 $args['value'] = $data['markdown'];
                 break;
             case '_unknown':
@@ -262,7 +250,7 @@ class Metadata extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-
+        
         // @phpstan-ignore-next-line
         return new static($args);
     }

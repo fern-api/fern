@@ -28,16 +28,15 @@ class Record extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->foo = $values['foo'];
-        $this->_3D = $values['_3D'];
+    )
+    {
+        $this->foo = $values['foo'];$this->_3D = $values['_3D'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

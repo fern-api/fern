@@ -229,6 +229,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         const bindingElements: ts.BindingElement[] = [];
         const usedNames = new Set<string>();
         const pathParameterLocalNames = new Map<string, string>();
+        const queryParameterLocalNames = new Map<string, string>();
 
         const getNonConflictingName = (name: string) => {
             while (usedNames.has(name)) {
@@ -260,11 +261,17 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
         // Add query parameters binding
         for (const queryParameter of this.channel.queryParameters ?? []) {
+            const propertyNames = this.getPropertyNameOfQueryParameter(queryParameter);
+            const localVarName = getNonConflictingName(propertyNames.safeName);
+            queryParameterLocalNames.set(queryParameter.name.wireValue, localVarName);
+
             bindingElements.push(
                 ts.factory.createBindingElement(
                     undefined,
-                    undefined,
-                    ts.factory.createIdentifier(this.getPropertyNameOfQueryParameter(queryParameter).propertyName)
+                    localVarName !== propertyNames.propertyName
+                        ? ts.factory.createStringLiteral(propertyNames.propertyName)
+                        : undefined,
+                    ts.factory.createIdentifier(localVarName)
                 )
             );
         }
@@ -322,8 +329,12 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
         const queryParameters = new GeneratedQueryParams({
             queryParameters: this.channel.queryParameters,
-            referenceToQueryParameterProperty: (key, context) => {
-                return this.getReferenceToQueryParameter(key, context);
+            referenceToQueryParameterProperty: (key, _context) => {
+                const localVarName = queryParameterLocalNames.get(key);
+                if (localVarName == null) {
+                    throw new Error(`Could not find local variable name for query parameter: ${key}`);
+                }
+                return ts.factory.createIdentifier(localVarName);
             }
         });
 

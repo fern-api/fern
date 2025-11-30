@@ -20,7 +20,8 @@ class DeleteUserRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
+    )
+    {
         $this->username = $values['username'] ?? null;
     }
 }

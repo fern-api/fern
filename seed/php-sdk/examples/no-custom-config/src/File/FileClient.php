@@ -7,7 +7,7 @@ use Seed\File\Service\ServiceClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class FileClient
+class FileClient 
 {
     /**
      * @var NotificationClient $notification
@@ -26,7 +26,7 @@ class FileClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -45,10 +45,11 @@ class FileClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->notification = new NotificationClient($this->client, $this->options);

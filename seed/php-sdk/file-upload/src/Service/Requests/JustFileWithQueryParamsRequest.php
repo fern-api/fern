@@ -49,12 +49,8 @@ class JustFileWithQueryParamsRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->maybeString = $values['maybeString'] ?? null;
-        $this->integer = $values['integer'];
-        $this->maybeInteger = $values['maybeInteger'] ?? null;
-        $this->listOfStrings = $values['listOfStrings'];
-        $this->optionalListOfStrings = $values['optionalListOfStrings'] ?? null;
-        $this->file = $values['file'];
+    )
+    {
+        $this->maybeString = $values['maybeString'] ?? null;$this->integer = $values['integer'];$this->maybeInteger = $values['maybeInteger'] ?? null;$this->listOfStrings = $values['listOfStrings'];$this->optionalListOfStrings = $values['optionalListOfStrings'] ?? null;$this->file = $values['file'];
     }
 }

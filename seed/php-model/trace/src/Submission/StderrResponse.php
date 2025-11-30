@@ -27,16 +27,15 @@ class StderrResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->submissionId = $values['submissionId'];
-        $this->stderr = $values['stderr'];
+    )
+    {
+        $this->submissionId = $values['submissionId'];$this->stderr = $values['stderr'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

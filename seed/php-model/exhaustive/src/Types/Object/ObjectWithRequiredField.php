@@ -20,15 +20,15 @@ class ObjectWithRequiredField extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->string = $values['string'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

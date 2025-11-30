@@ -101,26 +101,15 @@ class DeserializationTestRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->requiredString = $values['requiredString'];
-        $this->nullableString = $values['nullableString'] ?? null;
-        $this->optionalString = $values['optionalString'] ?? null;
-        $this->optionalNullableString = $values['optionalNullableString'] ?? null;
-        $this->nullableEnum = $values['nullableEnum'] ?? null;
-        $this->optionalEnum = $values['optionalEnum'] ?? null;
-        $this->nullableUnion = $values['nullableUnion'] ?? null;
-        $this->optionalUnion = $values['optionalUnion'] ?? null;
-        $this->nullableList = $values['nullableList'] ?? null;
-        $this->nullableMap = $values['nullableMap'] ?? null;
-        $this->nullableObject = $values['nullableObject'] ?? null;
-        $this->optionalObject = $values['optionalObject'] ?? null;
+    )
+    {
+        $this->requiredString = $values['requiredString'];$this->nullableString = $values['nullableString'] ?? null;$this->optionalString = $values['optionalString'] ?? null;$this->optionalNullableString = $values['optionalNullableString'] ?? null;$this->nullableEnum = $values['nullableEnum'] ?? null;$this->optionalEnum = $values['optionalEnum'] ?? null;$this->nullableUnion = $values['nullableUnion'] ?? null;$this->optionalUnion = $values['optionalUnion'] ?? null;$this->nullableList = $values['nullableList'] ?? null;$this->nullableMap = $values['nullableMap'] ?? null;$this->nullableObject = $values['nullableObject'] ?? null;$this->optionalObject = $values['optionalObject'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

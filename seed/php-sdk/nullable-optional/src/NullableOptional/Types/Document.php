@@ -49,19 +49,15 @@ class Document extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->title = $values['title'];
-        $this->content = $values['content'];
-        $this->author = $values['author'] ?? null;
-        $this->tags = $values['tags'] ?? null;
+    )
+    {
+        $this->id = $values['id'];$this->title = $values['title'];$this->content = $values['content'];$this->author = $values['author'] ?? null;$this->tags = $values['tags'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

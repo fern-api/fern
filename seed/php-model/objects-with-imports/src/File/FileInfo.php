@@ -2,8 +2,8 @@
 
 namespace Seed\File;
 
-enum FileInfo: string
-{
+enum FileInfo
+ : string {
     case Regular = "REGULAR";
     case Directory = "DIRECTORY";
 }

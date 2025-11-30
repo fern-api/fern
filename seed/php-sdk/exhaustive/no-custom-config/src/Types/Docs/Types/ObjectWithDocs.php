@@ -9,11 +9,11 @@ class ObjectWithDocs extends JsonSerializableType
 {
     /**
      * Characters that could lead to broken generated SDKs:
-     *
+     * 
      * Markdown Escapes:
      * - \_: Escaped underscore (e.g., FOO\_BAR)
      * - \*: Escaped asterisk
-     *
+     * 
      * JSDoc (JavaScript/TypeScript):
      * - @: Used for JSDoc tags
      * - {: }: Used for type definitions
@@ -22,7 +22,7 @@ class ObjectWithDocs extends JsonSerializableType
      * - /**: JSDoc comment start
      * - ** /: JSDoc comment end
      * - &: HTML entities
-     *
+     * 
      * XMLDoc (C#):
      * - <: >: XML tags
      * - &: ': ": <: >: XML special characters
@@ -30,7 +30,7 @@ class ObjectWithDocs extends JsonSerializableType
      * - ///: Comment marker
      * - /**: Block comment start
      * - ** /: Block comment end
-     *
+     * 
      * Javadoc (Java):
      * - @: Used for Javadoc tags
      * - <: >: HTML tags
@@ -38,7 +38,7 @@ class ObjectWithDocs extends JsonSerializableType
      * - *: Can interfere with comment blocks
      * - /**: Javadoc comment start
      * - ** /: Javadoc comment end
-     *
+     * 
      * Doxygen (C++):
      * - \: Used for Doxygen commands
      * - @: Alternative command prefix
@@ -46,7 +46,7 @@ class ObjectWithDocs extends JsonSerializableType
      * - &: HTML entities
      * - /**: C-style comment start
      * - ** /: C-style comment end
-     *
+     * 
      * RDoc (Ruby):
      * - :: Used in symbol notation
      * - =: Section markers
@@ -58,7 +58,7 @@ class ObjectWithDocs extends JsonSerializableType
      * - %: String literal delimiter
      * - #{: String interpolation start
      * - }: String interpolation end
-     *
+     * 
      * PHPDoc (PHP):
      * - @: Used for PHPDoc tags
      * - {: }: Used for type definitions
@@ -80,15 +80,15 @@ class ObjectWithDocs extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->string = $values['string'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

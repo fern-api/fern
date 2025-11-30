@@ -62,21 +62,15 @@ class SendRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->prompt = $values['prompt'];
-        $this->query = $values['query'];
-        $this->stream = $values['stream'];
-        $this->ending = $values['ending'];
-        $this->context = $values['context'];
-        $this->maybeContext = $values['maybeContext'] ?? null;
-        $this->containerObject = $values['containerObject'];
+    )
+    {
+        $this->prompt = $values['prompt'];$this->query = $values['query'];$this->stream = $values['stream'];$this->ending = $values['ending'];$this->context = $values['context'];$this->maybeContext = $values['maybeContext'] ?? null;$this->containerObject = $values['containerObject'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

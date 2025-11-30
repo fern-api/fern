@@ -21,15 +21,15 @@ class MapValue extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->keyValuePairs = $values['keyValuePairs'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

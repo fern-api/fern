@@ -15,7 +15,7 @@ use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Imdb\Types\Movie;
 
-class ImdbClient
+class ImdbClient 
 {
     /**
      * @var array{
@@ -24,7 +24,7 @@ class ImdbClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -43,10 +43,11 @@ class ImdbClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -67,8 +68,7 @@ class ImdbClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createMovie(CreateMovieRequest $request, ?array $options = null): string
-    {
+    public function createMovie(CreateMovieRequest $request, ?array $options = null): string {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -81,15 +81,15 @@ class ImdbClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeString($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -121,8 +121,7 @@ class ImdbClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovie(string $movieId, ?array $options = null): Movie
-    {
+    public function getMovie(string $movieId, ?array $options = null): Movie {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -134,15 +133,15 @@ class ImdbClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return Movie::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

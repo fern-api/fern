@@ -6,7 +6,7 @@ use Seed\User\UserClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class SeedClient
+class SeedClient 
 {
     /**
      * @var UserClient $user
@@ -20,7 +20,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -40,7 +40,8 @@ class SeedClient
      */
     public function __construct(
         ?array $options = null,
-    ) {
+    )
+    {
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
@@ -48,18 +49,18 @@ class SeedClient
             'User-Agent' => 'seed/seed/0.0.1',
             'X-API-Version' => '2.0.0',
         ];
-
+        
         $this->options = $options ?? [];
+        
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
-
+        
         $this->client = new RawClient(
             options: $this->options,
         );
-
+        
         $this->user = new UserClient($this->client, $this->options);
     }
 }

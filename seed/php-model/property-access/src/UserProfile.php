@@ -37,17 +37,15 @@ class UserProfile extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->name = $values['name'];
-        $this->verification = $values['verification'];
-        $this->ssn = $values['ssn'];
+    )
+    {
+        $this->name = $values['name'];$this->verification = $values['verification'];$this->ssn = $values['ssn'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

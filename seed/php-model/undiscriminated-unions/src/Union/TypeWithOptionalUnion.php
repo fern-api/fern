@@ -17,7 +17,7 @@ class TypeWithOptionalUnion extends JsonSerializableType
      *   |array<array<int>>
      * )|null $myUnion
      */
-    #[JsonProperty('myUnion'), Union('string', ['string'], 'integer', ['integer'], [['integer']], 'null')]
+    #[JsonProperty('myUnion'), Union('string',['string'],'integer',['integer'],[['integer']],'null')]
     public string|array|int|null $myUnion;
 
     /**
@@ -33,15 +33,15 @@ class TypeWithOptionalUnion extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
+    )
+    {
         $this->myUnion = $values['myUnion'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

@@ -20,15 +20,15 @@ class InternalError extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->exceptionInfo = $values['exceptionInfo'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

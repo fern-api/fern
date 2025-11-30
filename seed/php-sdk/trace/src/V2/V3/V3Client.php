@@ -6,7 +6,7 @@ use Seed\V2\V3\Problem\ProblemClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class V3Client
+class V3Client 
 {
     /**
      * @var ProblemClient $problem
@@ -20,7 +20,7 @@ class V3Client
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -39,10 +39,11 @@ class V3Client
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->problem = new ProblemClient($this->client, $this->options);

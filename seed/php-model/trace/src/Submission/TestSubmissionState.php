@@ -43,18 +43,15 @@ class TestSubmissionState extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->problemId = $values['problemId'];
-        $this->defaultTestCases = $values['defaultTestCases'];
-        $this->customTestCases = $values['customTestCases'];
-        $this->status = $values['status'];
+    )
+    {
+        $this->problemId = $values['problemId'];$this->defaultTestCases = $values['defaultTestCases'];$this->customTestCases = $values['customTestCases'];$this->status = $values['status'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

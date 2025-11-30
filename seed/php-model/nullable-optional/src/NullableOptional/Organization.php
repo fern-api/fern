@@ -41,18 +41,15 @@ class Organization extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->name = $values['name'];
-        $this->domain = $values['domain'] ?? null;
-        $this->employeeCount = $values['employeeCount'] ?? null;
+    )
+    {
+        $this->id = $values['id'];$this->name = $values['name'];$this->domain = $values['domain'] ?? null;$this->employeeCount = $values['employeeCount'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

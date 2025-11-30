@@ -12,6 +12,7 @@ export declare namespace RealtimeClient {
         session_id: string;
         model?: string | undefined;
         temperature?: number | undefined;
+        "language-code"?: string | undefined;
         /** Arbitrary headers to send with the websocket connect request. */
         headers?: Record<string, string>;
         /** Enable debug mode on the websocket. Defaults to false. */
@@ -29,7 +30,15 @@ export class RealtimeClient {
     }
 
     public async connect(args: RealtimeClient.ConnectArgs): Promise<RealtimeSocket> {
-        const { session_id: sessionId, model, temperature, headers, debug, reconnectAttempts } = args;
+        const {
+            session_id: sessionId,
+            model,
+            temperature,
+            "language-code": languageCode,
+            headers,
+            debug,
+            reconnectAttempts,
+        } = args;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (model != null) {
             _queryParams.model = model;
@@ -37,6 +46,10 @@ export class RealtimeClient {
 
         if (temperature != null) {
             _queryParams.temperature = temperature.toString();
+        }
+
+        if (languageCode != null) {
+            _queryParams["language-code"] = languageCode;
         }
 
         const _headers: Record<string, unknown> = { ...headers };

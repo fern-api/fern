@@ -27,16 +27,15 @@ class DocumentUploadResult extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->fileId = $values['fileId'] ?? null;
-        $this->status = $values['status'] ?? null;
+    )
+    {
+        $this->fileId = $values['fileId'] ?? null;$this->status = $values['status'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

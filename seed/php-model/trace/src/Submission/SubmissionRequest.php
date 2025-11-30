@@ -54,17 +54,16 @@ class SubmissionRequest extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    ) {
-        $this->type = $values['type'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->type = $values['type'];$this->value = $values['value'];
     }
 
     /**
      * @param InitializeProblemRequest $initializeProblemRequest
      * @return SubmissionRequest
      */
-    public static function initializeProblemRequest(InitializeProblemRequest $initializeProblemRequest): SubmissionRequest
-    {
+    public static function initializeProblemRequest(InitializeProblemRequest $initializeProblemRequest): SubmissionRequest {
         return new SubmissionRequest([
             'type' => 'initializeProblemRequest',
             'value' => $initializeProblemRequest,
@@ -74,8 +73,7 @@ class SubmissionRequest extends JsonSerializableType
     /**
      * @return SubmissionRequest
      */
-    public static function initializeWorkspaceRequest(): SubmissionRequest
-    {
+    public static function initializeWorkspaceRequest(): SubmissionRequest {
         return new SubmissionRequest([
             'type' => 'initializeWorkspaceRequest',
             'value' => null,
@@ -86,8 +84,7 @@ class SubmissionRequest extends JsonSerializableType
      * @param SubmitRequestV2 $submitV2
      * @return SubmissionRequest
      */
-    public static function submitV2(SubmitRequestV2 $submitV2): SubmissionRequest
-    {
+    public static function submitV2(SubmitRequestV2 $submitV2): SubmissionRequest {
         return new SubmissionRequest([
             'type' => 'submitV2',
             'value' => $submitV2,
@@ -98,8 +95,7 @@ class SubmissionRequest extends JsonSerializableType
      * @param WorkspaceSubmitRequest $workspaceSubmit
      * @return SubmissionRequest
      */
-    public static function workspaceSubmit(WorkspaceSubmitRequest $workspaceSubmit): SubmissionRequest
-    {
+    public static function workspaceSubmit(WorkspaceSubmitRequest $workspaceSubmit): SubmissionRequest {
         return new SubmissionRequest([
             'type' => 'workspaceSubmit',
             'value' => $workspaceSubmit,
@@ -110,8 +106,7 @@ class SubmissionRequest extends JsonSerializableType
      * @param StopRequest $stop
      * @return SubmissionRequest
      */
-    public static function stop(StopRequest $stop): SubmissionRequest
-    {
+    public static function stop(StopRequest $stop): SubmissionRequest {
         return new SubmissionRequest([
             'type' => 'stop',
             'value' => $stop,
@@ -121,119 +116,108 @@ class SubmissionRequest extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isInitializeProblemRequest(): bool
-    {
-        return $this->value instanceof InitializeProblemRequest && $this->type === 'initializeProblemRequest';
+    public function isInitializeProblemRequest(): bool {
+        return $this->value instanceof InitializeProblemRequest&& $this->type === 'initializeProblemRequest';
     }
 
     /**
      * @return InitializeProblemRequest
      */
-    public function asInitializeProblemRequest(): InitializeProblemRequest
-    {
-        if (!($this->value instanceof InitializeProblemRequest && $this->type === 'initializeProblemRequest')) {
+    public function asInitializeProblemRequest(): InitializeProblemRequest {
+        if (!($this->value instanceof InitializeProblemRequest&& $this->type === 'initializeProblemRequest')){
             throw new Exception(
                 "Expected initializeProblemRequest; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isInitializeWorkspaceRequest(): bool
-    {
-        return is_null($this->value) && $this->type === 'initializeWorkspaceRequest';
+    public function isInitializeWorkspaceRequest(): bool {
+        return is_null($this->value)&& $this->type === 'initializeWorkspaceRequest';
     }
 
     /**
      * @return bool
      */
-    public function isSubmitV2(): bool
-    {
-        return $this->value instanceof SubmitRequestV2 && $this->type === 'submitV2';
+    public function isSubmitV2(): bool {
+        return $this->value instanceof SubmitRequestV2&& $this->type === 'submitV2';
     }
 
     /**
      * @return SubmitRequestV2
      */
-    public function asSubmitV2(): SubmitRequestV2
-    {
-        if (!($this->value instanceof SubmitRequestV2 && $this->type === 'submitV2')) {
+    public function asSubmitV2(): SubmitRequestV2 {
+        if (!($this->value instanceof SubmitRequestV2&& $this->type === 'submitV2')){
             throw new Exception(
                 "Expected submitV2; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isWorkspaceSubmit(): bool
-    {
-        return $this->value instanceof WorkspaceSubmitRequest && $this->type === 'workspaceSubmit';
+    public function isWorkspaceSubmit(): bool {
+        return $this->value instanceof WorkspaceSubmitRequest&& $this->type === 'workspaceSubmit';
     }
 
     /**
      * @return WorkspaceSubmitRequest
      */
-    public function asWorkspaceSubmit(): WorkspaceSubmitRequest
-    {
-        if (!($this->value instanceof WorkspaceSubmitRequest && $this->type === 'workspaceSubmit')) {
+    public function asWorkspaceSubmit(): WorkspaceSubmitRequest {
+        if (!($this->value instanceof WorkspaceSubmitRequest&& $this->type === 'workspaceSubmit')){
             throw new Exception(
                 "Expected workspaceSubmit; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isStop(): bool
-    {
-        return $this->value instanceof StopRequest && $this->type === 'stop';
+    public function isStop(): bool {
+        return $this->value instanceof StopRequest&& $this->type === 'stop';
     }
 
     /**
      * @return StopRequest
      */
-    public function asStop(): StopRequest
-    {
-        if (!($this->value instanceof StopRequest && $this->type === 'stop')) {
+    public function asStop(): StopRequest {
+        if (!($this->value instanceof StopRequest&& $this->type === 'stop')){
             throw new Exception(
                 "Expected stop; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $result = [];
         $result['type'] = $this->type;
-
+        
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-
-        switch ($this->type) {
+        
+        switch ($this->type){
             case 'initializeProblemRequest':
                 $value = $this->asInitializeProblemRequest()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -255,27 +239,26 @@ class SubmissionRequest extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)) {
+                if (is_null($this->value)){
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType) {
+                if ($this->value instanceof JsonSerializableType){
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)) {
+                } elseif (is_array($this->value)){
                     $result = array_merge($this->value, $result);
                 }
         }
-
+        
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static
-    {
+    public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
+        if (!is_array($decodedJson)){
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -284,23 +267,22 @@ class SubmissionRequest extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static
-    {
+    public static function jsonDeserialize(array $data): static {
         $args = [];
-        if (!array_key_exists('type', $data)) {
+        if (!array_key_exists('type', $data)){
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))) {
+        if (!(is_string($type))){
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-
+        
         $args['type'] = $type;
-        switch ($type) {
+        switch ($type){
             case 'initializeProblemRequest':
                 $args['value'] = InitializeProblemRequest::jsonDeserialize($data);
                 break;
@@ -321,7 +303,7 @@ class SubmissionRequest extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-
+        
         // @phpstan-ignore-next-line
         return new static($args);
     }

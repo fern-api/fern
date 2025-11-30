@@ -34,17 +34,15 @@ class File extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->name = $values['name'];
-        $this->contents = $values['contents'];
-        $this->info = $values['info'];
+    )
+    {
+        $this->name = $values['name'];$this->contents = $values['contents'];$this->info = $values['info'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

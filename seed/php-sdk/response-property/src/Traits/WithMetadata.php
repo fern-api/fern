@@ -8,7 +8,7 @@ use Seed\Core\Types\ArrayType;
 /**
  * @property array<string, string> $metadata
  */
-trait WithMetadata
+trait WithMetadata 
 {
     /**
      * @var array<string, string> $metadata

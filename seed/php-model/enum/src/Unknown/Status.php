@@ -2,8 +2,8 @@
 
 namespace Seed\Unknown;
 
-enum Status: string
-{
+enum Status
+ : string {
     case Known = "Known";
     case Unknown = "Unknown";
 }

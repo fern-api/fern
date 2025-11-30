@@ -29,16 +29,15 @@ class WorkspaceSubmissionUpdate extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->updateTime = $values['updateTime'];
-        $this->updateInfo = $values['updateInfo'];
+    )
+    {
+        $this->updateTime = $values['updateTime'];$this->updateInfo = $values['updateInfo'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

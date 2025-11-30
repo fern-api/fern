@@ -16,7 +16,7 @@ class PaymentRequest extends JsonSerializableType
      *   |ConvertToken
      * ) $paymentMethod
      */
-    #[JsonProperty('paymentMethod'), Union(TokenizeCard::class, ConvertToken::class)]
+    #[JsonProperty('paymentMethod'), Union(TokenizeCard::class,ConvertToken::class)]
     public TokenizeCard|ConvertToken $paymentMethod;
 
     /**
@@ -29,7 +29,8 @@ class PaymentRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->paymentMethod = $values['paymentMethod'];
     }
 }

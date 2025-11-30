@@ -38,19 +38,15 @@ class Practitioner extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->relatedResources = $values['relatedResources'];
-        $this->memo = $values['memo'];
-        $this->resourceType = $values['resourceType'];
-        $this->name = $values['name'];
+    )
+    {
+        $this->id = $values['id'];$this->relatedResources = $values['relatedResources'];$this->memo = $values['memo'];$this->resourceType = $values['resourceType'];$this->name = $values['name'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

@@ -227,44 +227,15 @@ class Client extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->clientId = $values['clientId'];
-        $this->tenant = $values['tenant'] ?? null;
-        $this->name = $values['name'];
-        $this->description = $values['description'] ?? null;
-        $this->global = $values['global'] ?? null;
-        $this->clientSecret = $values['clientSecret'] ?? null;
-        $this->appType = $values['appType'] ?? null;
-        $this->logoUri = $values['logoUri'] ?? null;
-        $this->isFirstParty = $values['isFirstParty'] ?? null;
-        $this->oidcConformant = $values['oidcConformant'] ?? null;
-        $this->callbacks = $values['callbacks'] ?? null;
-        $this->allowedOrigins = $values['allowedOrigins'] ?? null;
-        $this->webOrigins = $values['webOrigins'] ?? null;
-        $this->grantTypes = $values['grantTypes'] ?? null;
-        $this->jwtConfiguration = $values['jwtConfiguration'] ?? null;
-        $this->signingKeys = $values['signingKeys'] ?? null;
-        $this->encryptionKey = $values['encryptionKey'] ?? null;
-        $this->sso = $values['sso'] ?? null;
-        $this->ssoDisabled = $values['ssoDisabled'] ?? null;
-        $this->crossOriginAuth = $values['crossOriginAuth'] ?? null;
-        $this->crossOriginLoc = $values['crossOriginLoc'] ?? null;
-        $this->customLoginPageOn = $values['customLoginPageOn'] ?? null;
-        $this->customLoginPage = $values['customLoginPage'] ?? null;
-        $this->customLoginPagePreview = $values['customLoginPagePreview'] ?? null;
-        $this->formTemplate = $values['formTemplate'] ?? null;
-        $this->isHerokuApp = $values['isHerokuApp'] ?? null;
-        $this->addons = $values['addons'] ?? null;
-        $this->tokenEndpointAuthMethod = $values['tokenEndpointAuthMethod'] ?? null;
-        $this->clientMetadata = $values['clientMetadata'] ?? null;
-        $this->mobile = $values['mobile'] ?? null;
+    )
+    {
+        $this->clientId = $values['clientId'];$this->tenant = $values['tenant'] ?? null;$this->name = $values['name'];$this->description = $values['description'] ?? null;$this->global = $values['global'] ?? null;$this->clientSecret = $values['clientSecret'] ?? null;$this->appType = $values['appType'] ?? null;$this->logoUri = $values['logoUri'] ?? null;$this->isFirstParty = $values['isFirstParty'] ?? null;$this->oidcConformant = $values['oidcConformant'] ?? null;$this->callbacks = $values['callbacks'] ?? null;$this->allowedOrigins = $values['allowedOrigins'] ?? null;$this->webOrigins = $values['webOrigins'] ?? null;$this->grantTypes = $values['grantTypes'] ?? null;$this->jwtConfiguration = $values['jwtConfiguration'] ?? null;$this->signingKeys = $values['signingKeys'] ?? null;$this->encryptionKey = $values['encryptionKey'] ?? null;$this->sso = $values['sso'] ?? null;$this->ssoDisabled = $values['ssoDisabled'] ?? null;$this->crossOriginAuth = $values['crossOriginAuth'] ?? null;$this->crossOriginLoc = $values['crossOriginLoc'] ?? null;$this->customLoginPageOn = $values['customLoginPageOn'] ?? null;$this->customLoginPage = $values['customLoginPage'] ?? null;$this->customLoginPagePreview = $values['customLoginPagePreview'] ?? null;$this->formTemplate = $values['formTemplate'] ?? null;$this->isHerokuApp = $values['isHerokuApp'] ?? null;$this->addons = $values['addons'] ?? null;$this->tokenEndpointAuthMethod = $values['tokenEndpointAuthMethod'] ?? null;$this->clientMetadata = $values['clientMetadata'] ?? null;$this->mobile = $values['mobile'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

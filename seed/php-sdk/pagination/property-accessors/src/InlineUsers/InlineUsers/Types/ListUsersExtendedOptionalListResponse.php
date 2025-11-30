@@ -25,34 +25,27 @@ class ListUsersExtendedOptionalListResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->data = $values['data'];
-        $this->next = $values['next'] ?? null;
-        $this->totalCount = $values['totalCount'];
+    )
+    {
+        $this->data = $values['data'];$this->next = $values['next'] ?? null;$this->totalCount = $values['totalCount'];
     }
 
     /**
      * @return int
      */
-    public function getTotalCount(): int
-    {
-        return $this->totalCount;
-    }
+    public function getTotalCount(): int {
+        return $this->totalCount;}
 
     /**
      * @param int $value
      */
-    public function setTotalCount(int $value): self
-    {
-        $this->totalCount = $value;
-        return $this;
-    }
+    public function setTotalCount(int $value): self {
+        $this->totalCount = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

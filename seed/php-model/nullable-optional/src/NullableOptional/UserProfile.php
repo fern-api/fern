@@ -145,32 +145,15 @@ class UserProfile extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->username = $values['username'];
-        $this->nullableString = $values['nullableString'] ?? null;
-        $this->nullableInteger = $values['nullableInteger'] ?? null;
-        $this->nullableBoolean = $values['nullableBoolean'] ?? null;
-        $this->nullableDate = $values['nullableDate'] ?? null;
-        $this->nullableObject = $values['nullableObject'] ?? null;
-        $this->nullableList = $values['nullableList'] ?? null;
-        $this->nullableMap = $values['nullableMap'] ?? null;
-        $this->optionalString = $values['optionalString'] ?? null;
-        $this->optionalInteger = $values['optionalInteger'] ?? null;
-        $this->optionalBoolean = $values['optionalBoolean'] ?? null;
-        $this->optionalDate = $values['optionalDate'] ?? null;
-        $this->optionalObject = $values['optionalObject'] ?? null;
-        $this->optionalList = $values['optionalList'] ?? null;
-        $this->optionalMap = $values['optionalMap'] ?? null;
-        $this->optionalNullableString = $values['optionalNullableString'] ?? null;
-        $this->optionalNullableObject = $values['optionalNullableObject'] ?? null;
+    )
+    {
+        $this->id = $values['id'];$this->username = $values['username'];$this->nullableString = $values['nullableString'] ?? null;$this->nullableInteger = $values['nullableInteger'] ?? null;$this->nullableBoolean = $values['nullableBoolean'] ?? null;$this->nullableDate = $values['nullableDate'] ?? null;$this->nullableObject = $values['nullableObject'] ?? null;$this->nullableList = $values['nullableList'] ?? null;$this->nullableMap = $values['nullableMap'] ?? null;$this->optionalString = $values['optionalString'] ?? null;$this->optionalInteger = $values['optionalInteger'] ?? null;$this->optionalBoolean = $values['optionalBoolean'] ?? null;$this->optionalDate = $values['optionalDate'] ?? null;$this->optionalObject = $values['optionalObject'] ?? null;$this->optionalList = $values['optionalList'] ?? null;$this->optionalMap = $values['optionalMap'] ?? null;$this->optionalNullableString = $values['optionalNullableString'] ?? null;$this->optionalNullableObject = $values['optionalNullableObject'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

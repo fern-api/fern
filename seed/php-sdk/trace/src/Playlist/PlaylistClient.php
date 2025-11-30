@@ -19,7 +19,7 @@ use Seed\Playlist\Requests\GetPlaylistsRequest;
 use Seed\Core\Json\JsonDecoder;
 use Seed\Playlist\Types\UpdatePlaylistRequest;
 
-class PlaylistClient
+class PlaylistClient 
 {
     /**
      * @var array{
@@ -28,7 +28,7 @@ class PlaylistClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -47,10 +47,11 @@ class PlaylistClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -72,13 +73,12 @@ class PlaylistClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): Playlist
-    {
+    public function createPlaylist(int $serviceParam, CreatePlaylistRequest $request, ?array $options = null): Playlist {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['datetime'] = $request->datetime->format(Constant::DateTimeFormat);
-        if ($request->optionalDatetime != null) {
-            $query['optionalDatetime'] = $request->optionalDatetime;
+        if ($request->optionalDatetime != null){
+            $query['optionalDatetime'] = $request->optionalDatetime->format(Constant::DateTimeFormat);
         }
         try {
             $response = $this->client->sendRequest(
@@ -92,15 +92,15 @@ class PlaylistClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return Playlist::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -135,17 +135,16 @@ class PlaylistClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): array
-    {
+    public function getPlaylists(int $serviceParam, GetPlaylistsRequest $request, ?array $options = null): array {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['otherField'] = $request->otherField;
         $query['multiLineDocs'] = $request->multiLineDocs;
         $query['multipleField'] = $request->multipleField;
-        if ($request->limit != null) {
+        if ($request->limit != null){
             $query['limit'] = $request->limit;
         }
-        if ($request->optionalMultipleField != null) {
+        if ($request->optionalMultipleField != null){
             $query['optionalMultipleField'] = $request->optionalMultipleField;
         }
         try {
@@ -159,15 +158,15 @@ class PlaylistClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeArray($json, [Playlist::class]); // @phpstan-ignore-line
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -202,8 +201,7 @@ class PlaylistClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getPlaylist(int $serviceParam, string $playlistId, ?array $options = null): Playlist
-    {
+    public function getPlaylist(int $serviceParam, string $playlistId, ?array $options = null): Playlist {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -215,15 +213,15 @@ class PlaylistClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return Playlist::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -259,8 +257,7 @@ class PlaylistClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request = null, ?array $options = null): ?Playlist
-    {
+    public function updatePlaylist(int $serviceParam, string $playlistId, ?UpdatePlaylistRequest $request = null, ?array $options = null): ?Playlist {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -273,18 +270,18 @@ class PlaylistClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
-                if (empty($json)) {
+                if (empty($json)){
                     return null;
                 }
                 return Playlist::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -318,8 +315,7 @@ class PlaylistClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function deletePlaylist(int $serviceParam, string $playlistId, ?array $options = null): void
-    {
+    public function deletePlaylist(int $serviceParam, string $playlistId, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -331,12 +327,12 @@ class PlaylistClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

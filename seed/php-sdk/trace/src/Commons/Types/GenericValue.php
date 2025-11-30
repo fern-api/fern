@@ -27,16 +27,15 @@ class GenericValue extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->stringifiedType = $values['stringifiedType'] ?? null;
-        $this->stringifiedValue = $values['stringifiedValue'];
+    )
+    {
+        $this->stringifiedType = $values['stringifiedType'] ?? null;$this->stringifiedValue = $values['stringifiedValue'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

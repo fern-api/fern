@@ -24,42 +24,32 @@ class GetUsersRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->tenantId = $values['tenantId'];
-        $this->userId = $values['userId'];
+    )
+    {
+        $this->tenantId = $values['tenantId'];$this->userId = $values['userId'];
     }
 
     /**
      * @return string
      */
-    public function getTenantId(): string
-    {
-        return $this->tenantId;
-    }
+    public function getTenantId(): string {
+        return $this->tenantId;}
 
     /**
      * @param string $value
      */
-    public function setTenantId(string $value): self
-    {
-        $this->tenantId = $value;
-        return $this;
-    }
+    public function setTenantId(string $value): self {
+        $this->tenantId = $value;return $this;}
 
     /**
      * @return string
      */
-    public function getUserId(): string
-    {
-        return $this->userId;
-    }
+    public function getUserId(): string {
+        return $this->userId;}
 
     /**
      * @param string $value
      */
-    public function setUserId(string $value): self
-    {
-        $this->userId = $value;
-        return $this;
-    }
+    public function setUserId(string $value): self {
+        $this->userId = $value;return $this;}
 }

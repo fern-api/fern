@@ -42,11 +42,8 @@ class GetUsersRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->usernames = $values['usernames'] ?? null;
-        $this->avatar = $values['avatar'] ?? null;
-        $this->activated = $values['activated'] ?? null;
-        $this->tags = $values['tags'] ?? null;
-        $this->extra = $values['extra'] ?? null;
+    )
+    {
+        $this->usernames = $values['usernames'] ?? null;$this->avatar = $values['avatar'] ?? null;$this->activated = $values['activated'] ?? null;$this->tags = $values['tags'] ?? null;$this->extra = $values['extra'] ?? null;
     }
 }

@@ -14,7 +14,7 @@ use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class QueryClient
+class QueryClient 
 {
     /**
      * @var array{
@@ -23,7 +23,7 @@ class QueryClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -42,10 +42,11 @@ class QueryClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -64,8 +65,7 @@ class QueryClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function send(SendLiteralsInQueryRequest $request, ?array $options = null): SendResponse
-    {
+    public function send(SendLiteralsInQueryRequest $request, ?array $options = null): SendResponse {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['prompt'] = 'You are a helpful assistant';
@@ -73,16 +73,16 @@ class QueryClient
         $query['query'] = $request->query;
         $query['stream'] = 'false';
         $query['alias_stream'] = $request->aliasStream;
-        if ($request->optionalPrompt != null) {
+        if ($request->optionalPrompt != null){
             $query['optional_prompt'] = $request->optionalPrompt;
         }
-        if ($request->aliasOptionalPrompt != null) {
+        if ($request->aliasOptionalPrompt != null){
             $query['alias_optional_prompt'] = $request->aliasOptionalPrompt;
         }
-        if ($request->optionalStream != null) {
+        if ($request->optionalStream != null){
             $query['optional_stream'] = $request->optionalStream;
         }
-        if ($request->aliasOptionalStream != null) {
+        if ($request->aliasOptionalStream != null){
             $query['alias_optional_stream'] = $request->aliasOptionalStream;
         }
         try {
@@ -96,15 +96,15 @@ class QueryClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return SendResponse::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

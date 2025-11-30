@@ -78,17 +78,16 @@ class CodeExecutionUpdate extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    ) {
-        $this->type = $values['type'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->type = $values['type'];$this->value = $values['value'];
     }
 
     /**
      * @param BuildingExecutorResponse $buildingExecutor
      * @return CodeExecutionUpdate
      */
-    public static function buildingExecutor(BuildingExecutorResponse $buildingExecutor): CodeExecutionUpdate
-    {
+    public static function buildingExecutor(BuildingExecutorResponse $buildingExecutor): CodeExecutionUpdate {
         return new CodeExecutionUpdate([
             'type' => 'buildingExecutor',
             'value' => $buildingExecutor,
@@ -99,8 +98,7 @@ class CodeExecutionUpdate extends JsonSerializableType
      * @param RunningResponse $running
      * @return CodeExecutionUpdate
      */
-    public static function running(RunningResponse $running): CodeExecutionUpdate
-    {
+    public static function running(RunningResponse $running): CodeExecutionUpdate {
         return new CodeExecutionUpdate([
             'type' => 'running',
             'value' => $running,
@@ -111,8 +109,7 @@ class CodeExecutionUpdate extends JsonSerializableType
      * @param ErroredResponse $errored
      * @return CodeExecutionUpdate
      */
-    public static function errored(ErroredResponse $errored): CodeExecutionUpdate
-    {
+    public static function errored(ErroredResponse $errored): CodeExecutionUpdate {
         return new CodeExecutionUpdate([
             'type' => 'errored',
             'value' => $errored,
@@ -123,8 +120,7 @@ class CodeExecutionUpdate extends JsonSerializableType
      * @param StoppedResponse $stopped
      * @return CodeExecutionUpdate
      */
-    public static function stopped(StoppedResponse $stopped): CodeExecutionUpdate
-    {
+    public static function stopped(StoppedResponse $stopped): CodeExecutionUpdate {
         return new CodeExecutionUpdate([
             'type' => 'stopped',
             'value' => $stopped,
@@ -135,8 +131,7 @@ class CodeExecutionUpdate extends JsonSerializableType
      * @param GradedResponse $graded
      * @return CodeExecutionUpdate
      */
-    public static function graded(GradedResponse $graded): CodeExecutionUpdate
-    {
+    public static function graded(GradedResponse $graded): CodeExecutionUpdate {
         return new CodeExecutionUpdate([
             'type' => 'graded',
             'value' => $graded,
@@ -147,8 +142,7 @@ class CodeExecutionUpdate extends JsonSerializableType
      * @param GradedResponseV2 $gradedV2
      * @return CodeExecutionUpdate
      */
-    public static function gradedV2(GradedResponseV2 $gradedV2): CodeExecutionUpdate
-    {
+    public static function gradedV2(GradedResponseV2 $gradedV2): CodeExecutionUpdate {
         return new CodeExecutionUpdate([
             'type' => 'gradedV2',
             'value' => $gradedV2,
@@ -159,8 +153,7 @@ class CodeExecutionUpdate extends JsonSerializableType
      * @param WorkspaceRanResponse $workspaceRan
      * @return CodeExecutionUpdate
      */
-    public static function workspaceRan(WorkspaceRanResponse $workspaceRan): CodeExecutionUpdate
-    {
+    public static function workspaceRan(WorkspaceRanResponse $workspaceRan): CodeExecutionUpdate {
         return new CodeExecutionUpdate([
             'type' => 'workspaceRan',
             'value' => $workspaceRan,
@@ -171,8 +164,7 @@ class CodeExecutionUpdate extends JsonSerializableType
      * @param RecordingResponseNotification $recording
      * @return CodeExecutionUpdate
      */
-    public static function recording(RecordingResponseNotification $recording): CodeExecutionUpdate
-    {
+    public static function recording(RecordingResponseNotification $recording): CodeExecutionUpdate {
         return new CodeExecutionUpdate([
             'type' => 'recording',
             'value' => $recording,
@@ -183,8 +175,7 @@ class CodeExecutionUpdate extends JsonSerializableType
      * @param RecordedResponseNotification $recorded
      * @return CodeExecutionUpdate
      */
-    public static function recorded(RecordedResponseNotification $recorded): CodeExecutionUpdate
-    {
+    public static function recorded(RecordedResponseNotification $recorded): CodeExecutionUpdate {
         return new CodeExecutionUpdate([
             'type' => 'recorded',
             'value' => $recorded,
@@ -195,8 +186,7 @@ class CodeExecutionUpdate extends JsonSerializableType
      * @param InvalidRequestResponse $invalidRequest
      * @return CodeExecutionUpdate
      */
-    public static function invalidRequest(InvalidRequestResponse $invalidRequest): CodeExecutionUpdate
-    {
+    public static function invalidRequest(InvalidRequestResponse $invalidRequest): CodeExecutionUpdate {
         return new CodeExecutionUpdate([
             'type' => 'invalidRequest',
             'value' => $invalidRequest,
@@ -207,8 +197,7 @@ class CodeExecutionUpdate extends JsonSerializableType
      * @param FinishedResponse $finished
      * @return CodeExecutionUpdate
      */
-    public static function finished(FinishedResponse $finished): CodeExecutionUpdate
-    {
+    public static function finished(FinishedResponse $finished): CodeExecutionUpdate {
         return new CodeExecutionUpdate([
             'type' => 'finished',
             'value' => $finished,
@@ -218,265 +207,241 @@ class CodeExecutionUpdate extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isBuildingExecutor(): bool
-    {
-        return $this->value instanceof BuildingExecutorResponse && $this->type === 'buildingExecutor';
+    public function isBuildingExecutor(): bool {
+        return $this->value instanceof BuildingExecutorResponse&& $this->type === 'buildingExecutor';
     }
 
     /**
      * @return BuildingExecutorResponse
      */
-    public function asBuildingExecutor(): BuildingExecutorResponse
-    {
-        if (!($this->value instanceof BuildingExecutorResponse && $this->type === 'buildingExecutor')) {
+    public function asBuildingExecutor(): BuildingExecutorResponse {
+        if (!($this->value instanceof BuildingExecutorResponse&& $this->type === 'buildingExecutor')){
             throw new Exception(
                 "Expected buildingExecutor; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isRunning(): bool
-    {
-        return $this->value instanceof RunningResponse && $this->type === 'running';
+    public function isRunning(): bool {
+        return $this->value instanceof RunningResponse&& $this->type === 'running';
     }
 
     /**
      * @return RunningResponse
      */
-    public function asRunning(): RunningResponse
-    {
-        if (!($this->value instanceof RunningResponse && $this->type === 'running')) {
+    public function asRunning(): RunningResponse {
+        if (!($this->value instanceof RunningResponse&& $this->type === 'running')){
             throw new Exception(
                 "Expected running; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isErrored(): bool
-    {
-        return $this->value instanceof ErroredResponse && $this->type === 'errored';
+    public function isErrored(): bool {
+        return $this->value instanceof ErroredResponse&& $this->type === 'errored';
     }
 
     /**
      * @return ErroredResponse
      */
-    public function asErrored(): ErroredResponse
-    {
-        if (!($this->value instanceof ErroredResponse && $this->type === 'errored')) {
+    public function asErrored(): ErroredResponse {
+        if (!($this->value instanceof ErroredResponse&& $this->type === 'errored')){
             throw new Exception(
                 "Expected errored; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isStopped(): bool
-    {
-        return $this->value instanceof StoppedResponse && $this->type === 'stopped';
+    public function isStopped(): bool {
+        return $this->value instanceof StoppedResponse&& $this->type === 'stopped';
     }
 
     /**
      * @return StoppedResponse
      */
-    public function asStopped(): StoppedResponse
-    {
-        if (!($this->value instanceof StoppedResponse && $this->type === 'stopped')) {
+    public function asStopped(): StoppedResponse {
+        if (!($this->value instanceof StoppedResponse&& $this->type === 'stopped')){
             throw new Exception(
                 "Expected stopped; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isGraded(): bool
-    {
-        return $this->value instanceof GradedResponse && $this->type === 'graded';
+    public function isGraded(): bool {
+        return $this->value instanceof GradedResponse&& $this->type === 'graded';
     }
 
     /**
      * @return GradedResponse
      */
-    public function asGraded(): GradedResponse
-    {
-        if (!($this->value instanceof GradedResponse && $this->type === 'graded')) {
+    public function asGraded(): GradedResponse {
+        if (!($this->value instanceof GradedResponse&& $this->type === 'graded')){
             throw new Exception(
                 "Expected graded; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isGradedV2(): bool
-    {
-        return $this->value instanceof GradedResponseV2 && $this->type === 'gradedV2';
+    public function isGradedV2(): bool {
+        return $this->value instanceof GradedResponseV2&& $this->type === 'gradedV2';
     }
 
     /**
      * @return GradedResponseV2
      */
-    public function asGradedV2(): GradedResponseV2
-    {
-        if (!($this->value instanceof GradedResponseV2 && $this->type === 'gradedV2')) {
+    public function asGradedV2(): GradedResponseV2 {
+        if (!($this->value instanceof GradedResponseV2&& $this->type === 'gradedV2')){
             throw new Exception(
                 "Expected gradedV2; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isWorkspaceRan(): bool
-    {
-        return $this->value instanceof WorkspaceRanResponse && $this->type === 'workspaceRan';
+    public function isWorkspaceRan(): bool {
+        return $this->value instanceof WorkspaceRanResponse&& $this->type === 'workspaceRan';
     }
 
     /**
      * @return WorkspaceRanResponse
      */
-    public function asWorkspaceRan(): WorkspaceRanResponse
-    {
-        if (!($this->value instanceof WorkspaceRanResponse && $this->type === 'workspaceRan')) {
+    public function asWorkspaceRan(): WorkspaceRanResponse {
+        if (!($this->value instanceof WorkspaceRanResponse&& $this->type === 'workspaceRan')){
             throw new Exception(
                 "Expected workspaceRan; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isRecording(): bool
-    {
-        return $this->value instanceof RecordingResponseNotification && $this->type === 'recording';
+    public function isRecording(): bool {
+        return $this->value instanceof RecordingResponseNotification&& $this->type === 'recording';
     }
 
     /**
      * @return RecordingResponseNotification
      */
-    public function asRecording(): RecordingResponseNotification
-    {
-        if (!($this->value instanceof RecordingResponseNotification && $this->type === 'recording')) {
+    public function asRecording(): RecordingResponseNotification {
+        if (!($this->value instanceof RecordingResponseNotification&& $this->type === 'recording')){
             throw new Exception(
                 "Expected recording; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isRecorded(): bool
-    {
-        return $this->value instanceof RecordedResponseNotification && $this->type === 'recorded';
+    public function isRecorded(): bool {
+        return $this->value instanceof RecordedResponseNotification&& $this->type === 'recorded';
     }
 
     /**
      * @return RecordedResponseNotification
      */
-    public function asRecorded(): RecordedResponseNotification
-    {
-        if (!($this->value instanceof RecordedResponseNotification && $this->type === 'recorded')) {
+    public function asRecorded(): RecordedResponseNotification {
+        if (!($this->value instanceof RecordedResponseNotification&& $this->type === 'recorded')){
             throw new Exception(
                 "Expected recorded; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isInvalidRequest(): bool
-    {
-        return $this->value instanceof InvalidRequestResponse && $this->type === 'invalidRequest';
+    public function isInvalidRequest(): bool {
+        return $this->value instanceof InvalidRequestResponse&& $this->type === 'invalidRequest';
     }
 
     /**
      * @return InvalidRequestResponse
      */
-    public function asInvalidRequest(): InvalidRequestResponse
-    {
-        if (!($this->value instanceof InvalidRequestResponse && $this->type === 'invalidRequest')) {
+    public function asInvalidRequest(): InvalidRequestResponse {
+        if (!($this->value instanceof InvalidRequestResponse&& $this->type === 'invalidRequest')){
             throw new Exception(
                 "Expected invalidRequest; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isFinished(): bool
-    {
-        return $this->value instanceof FinishedResponse && $this->type === 'finished';
+    public function isFinished(): bool {
+        return $this->value instanceof FinishedResponse&& $this->type === 'finished';
     }
 
     /**
      * @return FinishedResponse
      */
-    public function asFinished(): FinishedResponse
-    {
-        if (!($this->value instanceof FinishedResponse && $this->type === 'finished')) {
+    public function asFinished(): FinishedResponse {
+        if (!($this->value instanceof FinishedResponse&& $this->type === 'finished')){
             throw new Exception(
                 "Expected finished; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $result = [];
         $result['type'] = $this->type;
-
+        
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-
-        switch ($this->type) {
+        
+        switch ($this->type){
             case 'buildingExecutor':
                 $value = $this->asBuildingExecutor()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -523,27 +488,26 @@ class CodeExecutionUpdate extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)) {
+                if (is_null($this->value)){
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType) {
+                if ($this->value instanceof JsonSerializableType){
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)) {
+                } elseif (is_array($this->value)){
                     $result = array_merge($this->value, $result);
                 }
         }
-
+        
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static
-    {
+    public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
+        if (!is_array($decodedJson)){
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -552,23 +516,22 @@ class CodeExecutionUpdate extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static
-    {
+    public static function jsonDeserialize(array $data): static {
         $args = [];
-        if (!array_key_exists('type', $data)) {
+        if (!array_key_exists('type', $data)){
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))) {
+        if (!(is_string($type))){
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-
+        
         $args['type'] = $type;
-        switch ($type) {
+        switch ($type){
             case 'buildingExecutor':
                 $args['value'] = BuildingExecutorResponse::jsonDeserialize($data);
                 break;
@@ -607,7 +570,7 @@ class CodeExecutionUpdate extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-
+        
         // @phpstan-ignore-next-line
         return new static($args);
     }

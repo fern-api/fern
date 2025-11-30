@@ -56,20 +56,15 @@ class ExecutionSessionState extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->lastTimeContacted = $values['lastTimeContacted'] ?? null;
-        $this->sessionId = $values['sessionId'];
-        $this->isWarmInstance = $values['isWarmInstance'];
-        $this->awsTaskId = $values['awsTaskId'] ?? null;
-        $this->language = $values['language'];
-        $this->status = $values['status'];
+    )
+    {
+        $this->lastTimeContacted = $values['lastTimeContacted'] ?? null;$this->sessionId = $values['sessionId'];$this->isWarmInstance = $values['isWarmInstance'];$this->awsTaskId = $values['awsTaskId'] ?? null;$this->language = $values['language'];$this->status = $values['status'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

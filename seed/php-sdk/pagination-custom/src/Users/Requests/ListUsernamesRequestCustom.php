@@ -21,7 +21,8 @@ class ListUsernamesRequestCustom extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
+    )
+    {
         $this->startingAfter = $values['startingAfter'] ?? null;
     }
 }

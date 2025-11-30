@@ -20,7 +20,7 @@ use Seed\Submission\Types\TraceResponseV2;
 use Seed\Core\Json\JsonSerializer;
 use Seed\Admin\Requests\StoreTracedWorkspaceRequest;
 
-class AdminClient
+class AdminClient 
 {
     /**
      * @var array{
@@ -29,7 +29,7 @@ class AdminClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -48,10 +48,11 @@ class AdminClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -70,8 +71,7 @@ class AdminClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateTestSubmissionStatus(string $submissionId, TestSubmissionStatus $request, ?array $options = null): void
-    {
+    public function updateTestSubmissionStatus(string $submissionId, TestSubmissionStatus $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -84,12 +84,12 @@ class AdminClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -121,8 +121,7 @@ class AdminClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function sendTestSubmissionUpdate(string $submissionId, TestSubmissionUpdate $request, ?array $options = null): void
-    {
+    public function sendTestSubmissionUpdate(string $submissionId, TestSubmissionUpdate $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -135,12 +134,12 @@ class AdminClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -172,8 +171,7 @@ class AdminClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateWorkspaceSubmissionStatus(string $submissionId, WorkspaceSubmissionStatus $request, ?array $options = null): void
-    {
+    public function updateWorkspaceSubmissionStatus(string $submissionId, WorkspaceSubmissionStatus $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -186,12 +184,12 @@ class AdminClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -223,8 +221,7 @@ class AdminClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function sendWorkspaceSubmissionUpdate(string $submissionId, WorkspaceSubmissionUpdate $request, ?array $options = null): void
-    {
+    public function sendWorkspaceSubmissionUpdate(string $submissionId, WorkspaceSubmissionUpdate $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -237,12 +234,12 @@ class AdminClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -275,8 +272,7 @@ class AdminClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function storeTracedTestCase(string $submissionId, string $testCaseId, StoreTracedTestCaseRequest $request, ?array $options = null): void
-    {
+    public function storeTracedTestCase(string $submissionId, string $testCaseId, StoreTracedTestCaseRequest $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -289,12 +285,12 @@ class AdminClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -327,8 +323,7 @@ class AdminClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function storeTracedTestCaseV2(string $submissionId, string $testCaseId, array $request, ?array $options = null): void
-    {
+    public function storeTracedTestCaseV2(string $submissionId, string $testCaseId, array $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -341,12 +336,12 @@ class AdminClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -378,8 +373,7 @@ class AdminClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function storeTracedWorkspace(string $submissionId, StoreTracedWorkspaceRequest $request, ?array $options = null): void
-    {
+    public function storeTracedWorkspace(string $submissionId, StoreTracedWorkspaceRequest $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -392,12 +386,12 @@ class AdminClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -429,8 +423,7 @@ class AdminClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function storeTracedWorkspaceV2(string $submissionId, array $request, ?array $options = null): void
-    {
+    public function storeTracedWorkspaceV2(string $submissionId, array $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -443,12 +436,12 @@ class AdminClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

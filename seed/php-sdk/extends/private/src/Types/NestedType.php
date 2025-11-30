@@ -25,34 +25,27 @@ class NestedType extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->raw = $values['raw'];
-        $this->docs = $values['docs'];
-        $this->name = $values['name'];
+    )
+    {
+        $this->raw = $values['raw'];$this->docs = $values['docs'];$this->name = $values['name'];
     }
 
     /**
      * @return string
      */
-    public function getName(): string
-    {
-        return $this->name;
-    }
+    public function getName(): string {
+        return $this->name;}
 
     /**
      * @param string $value
      */
-    public function setName(string $value): self
-    {
-        $this->name = $value;
-        return $this;
-    }
+    public function setName(string $value): self {
+        $this->name = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

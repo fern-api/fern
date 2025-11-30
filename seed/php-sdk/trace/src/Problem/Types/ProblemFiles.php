@@ -29,16 +29,15 @@ class ProblemFiles extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->solutionFile = $values['solutionFile'];
-        $this->readOnlyFiles = $values['readOnlyFiles'];
+    )
+    {
+        $this->solutionFile = $values['solutionFile'];$this->readOnlyFiles = $values['readOnlyFiles'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

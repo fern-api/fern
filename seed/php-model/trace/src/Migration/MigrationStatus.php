@@ -2,8 +2,8 @@
 
 namespace Seed\Migration;
 
-enum MigrationStatus: string
-{
+enum MigrationStatus
+ : string {
     case Running = "RUNNING";
     case Failed = "FAILED";
     case Finished = "FINISHED";

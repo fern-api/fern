@@ -20,15 +20,15 @@ class WithPage extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
+    )
+    {
         $this->page = $values['page'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

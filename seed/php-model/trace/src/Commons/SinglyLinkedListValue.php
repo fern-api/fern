@@ -28,16 +28,15 @@ class SinglyLinkedListValue extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->head = $values['head'] ?? null;
-        $this->nodes = $values['nodes'];
+    )
+    {
+        $this->head = $values['head'] ?? null;$this->nodes = $values['nodes'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

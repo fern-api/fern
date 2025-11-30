@@ -41,18 +41,15 @@ class CreateUserRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->username = $values['username'];
-        $this->email = $values['email'] ?? null;
-        $this->phone = $values['phone'] ?? null;
-        $this->address = $values['address'] ?? null;
+    )
+    {
+        $this->username = $values['username'];$this->email = $values['email'] ?? null;$this->phone = $values['phone'] ?? null;$this->address = $values['address'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

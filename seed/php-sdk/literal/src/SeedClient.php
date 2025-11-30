@@ -10,7 +10,7 @@ use Seed\Reference\ReferenceClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class SeedClient
+class SeedClient 
 {
     /**
      * @var HeadersClient $headers
@@ -44,7 +44,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -68,7 +68,8 @@ class SeedClient
         ?string $version = null,
         ?bool $auditLogging = null,
         ?array $options = null,
-    ) {
+    )
+    {
         $defaultHeaders = [
             'X-API-Version' => '02-02-2024',
             'X-API-Enable-Audit-Logging' => 'true',
@@ -77,24 +78,24 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($version != null) {
+        if ($version != null){
             $defaultHeaders['X-API-Version'] = $version;
         }
-        if ($auditLogging != null) {
+        if ($auditLogging != null){
             $defaultHeaders['X-API-Enable-Audit-Logging'] = $auditLogging;
         }
-
+        
         $this->options = $options ?? [];
+        
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
-
+        
         $this->client = new RawClient(
             options: $this->options,
         );
-
+        
         $this->headers = new HeadersClient($this->client, $this->options);
         $this->inlined = new InlinedClient($this->client, $this->options);
         $this->path = new PathClient($this->client, $this->options);

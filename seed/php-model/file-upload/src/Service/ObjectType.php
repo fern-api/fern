@@ -2,8 +2,8 @@
 
 namespace Seed\Service;
 
-enum ObjectType: string
-{
+enum ObjectType
+ : string {
     case Foo = "FOO";
     case Bar = "BAR";
 }

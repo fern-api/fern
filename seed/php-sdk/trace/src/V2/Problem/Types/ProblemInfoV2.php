@@ -86,24 +86,15 @@ class ProblemInfoV2 extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->problemId = $values['problemId'];
-        $this->problemDescription = $values['problemDescription'];
-        $this->problemName = $values['problemName'];
-        $this->problemVersion = $values['problemVersion'];
-        $this->supportedLanguages = $values['supportedLanguages'];
-        $this->customFiles = $values['customFiles'];
-        $this->generatedFiles = $values['generatedFiles'];
-        $this->customTestCaseTemplates = $values['customTestCaseTemplates'];
-        $this->testcases = $values['testcases'];
-        $this->isPublic = $values['isPublic'];
+    )
+    {
+        $this->problemId = $values['problemId'];$this->problemDescription = $values['problemDescription'];$this->problemName = $values['problemName'];$this->problemVersion = $values['problemVersion'];$this->supportedLanguages = $values['supportedLanguages'];$this->customFiles = $values['customFiles'];$this->generatedFiles = $values['generatedFiles'];$this->customTestCaseTemplates = $values['customTestCaseTemplates'];$this->testcases = $values['testcases'];$this->isPublic = $values['isPublic'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

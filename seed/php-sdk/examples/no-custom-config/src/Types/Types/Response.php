@@ -29,16 +29,15 @@ class Response extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->response = $values['response'];
-        $this->identifiers = $values['identifiers'];
+    )
+    {
+        $this->response = $values['response'];$this->identifiers = $values['identifiers'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

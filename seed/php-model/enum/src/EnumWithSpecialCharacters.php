@@ -2,8 +2,8 @@
 
 namespace Seed;
 
-enum EnumWithSpecialCharacters: string
-{
+enum EnumWithSpecialCharacters
+ : string {
     case Bla = "\\\$bla";
     case Yo = "\\\$yo";
 }

@@ -14,7 +14,7 @@ class T extends JsonSerializableType
      *   |U
      * ) $child
      */
-    #[JsonProperty('child'), Union(T::class, U::class)]
+    #[JsonProperty('child'), Union(T::class,U::class)]
     public T|U $child;
 
     /**
@@ -27,15 +27,15 @@ class T extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->child = $values['child'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }
