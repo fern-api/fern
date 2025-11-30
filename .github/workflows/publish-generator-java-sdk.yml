@@ -14,10 +14,14 @@ on:
         required: true
         type: string
 
+permissions:
+  contents: write
+
 jobs:
   publish:
     permissions:
       id-token: write
+      contents: write
     runs-on: ubuntu-latest
     env:
       BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
@@ -35,6 +39,7 @@ jobs:
           version-file: "generators/java/sdk/versions.yml"
           fern-token: ${{ secrets.FERN_TOKEN }}
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: manual publish
         if: ${{ github.event_name == 'workflow_dispatch' }}
         uses: ./.github/actions/publish-generator
@@ -44,6 +49,7 @@ jobs:
           manual-trigger: "true"
           fern-token: ${{ secrets.FERN_TOKEN }}
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Configure AWS Credentials
         if: ${{ github.event_name == 'workflow_dispatch' }}
         uses: aws-actions/configure-aws-credentials@v4

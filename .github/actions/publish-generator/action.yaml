@@ -22,6 +22,9 @@ inputs:
   docker-pwd:
     description: PW for fernapi dockerhub user
     required: true
+  github-token:
+    description: GitHub token for creating releases
+    required: false
 
 runs:
   using: "composite"
@@ -48,6 +51,7 @@ runs:
         pnpm turbo run dist:cli --filter=@fern-api/seed-cli
 
     - name: Run publish (auto)
+      id: publish_auto
       if: inputs.manual-trigger == 'false'
       shell: bash
       env:
@@ -75,13 +79,43 @@ runs:
 
         if [ $GIT_SHOW_STATUS -eq 0 ]; then
           node --enable-source-maps packages/seed/dist/cli.cjs publish generator ${{ inputs.generator-name }} --changelog $VERSIONS_FILE --previous-changelog tmp_previous_versions.yml --log-level debug
+          
+          # Get the new version that was published
+          NEW_VERSION=$(node --enable-source-maps packages/seed/dist/cli.cjs latest versions-yml --path $VERSIONS_FILE --previous-path tmp_previous_versions.yml 2>/dev/null || echo "")
+          if [ -n "$NEW_VERSION" ]; then
+            echo "NEW_VERSION=$NEW_VERSION" >> $GITHUB_OUTPUT
+            echo "HAS_NEW_VERSION=true" >> $GITHUB_OUTPUT
+          else
+            echo "HAS_NEW_VERSION=false" >> $GITHUB_OUTPUT
+          fi
         else
           echo "No previous versions found, skipping publish."
+          echo "HAS_NEW_VERSION=false" >> $GITHUB_OUTPUT
         fi
 
         node --enable-source-maps packages/seed/dist/cli.cjs register generator --generators ${{ inputs.generator-name }}
 
+    - name: Generate release notes (auto)
+      id: release_notes_auto
+      if: inputs.manual-trigger == 'false' && steps.publish_auto.outputs.HAS_NEW_VERSION == 'true'
+      shell: bash
+      run: |
+        node --enable-source-maps packages/seed/dist/cli.cjs generate release-notes ${{ inputs.generator-name }} ${{ steps.publish_auto.outputs.NEW_VERSION }} -o release_notes.md
+        echo "Generated release notes for ${{ inputs.generator-name }}@${{ steps.publish_auto.outputs.NEW_VERSION }}"
+
+    - name: Create GitHub Release (auto)
+      if: inputs.manual-trigger == 'false' && steps.publish_auto.outputs.HAS_NEW_VERSION == 'true' && inputs.github-token != ''
+      uses: softprops/action-gh-release@v2
+      with:
+        token: ${{ inputs.github-token }}
+        tag_name: ${{ inputs.generator-name }}@${{ steps.publish_auto.outputs.NEW_VERSION }}
+        name: ${{ inputs.generator-name }}@${{ steps.publish_auto.outputs.NEW_VERSION }}
+        body_path: release_notes.md
+        draft: false
+        prerelease: false
+
     - name: Run publish (manual)
+      id: publish_manual
       if: inputs.manual-trigger == 'true'
       shell: bash
       env:
@@ -92,3 +126,22 @@ runs:
       run: |
         node --enable-source-maps packages/seed/dist/cli.cjs publish generator ${{ inputs.generator-name }} --ver ${{ inputs.version }} --log-level debug
         node --enable-source-maps packages/seed/dist/cli.cjs register generator --generators ${{ inputs.generator-name }}
+
+    - name: Generate release notes (manual)
+      id: release_notes_manual
+      if: inputs.manual-trigger == 'true'
+      shell: bash
+      run: |
+        node --enable-source-maps packages/seed/dist/cli.cjs generate release-notes ${{ inputs.generator-name }} ${{ inputs.version }} -o release_notes.md
+        echo "Generated release notes for ${{ inputs.generator-name }}@${{ inputs.version }}"
+
+    - name: Create GitHub Release (manual)
+      if: inputs.manual-trigger == 'true' && inputs.github-token != ''
+      uses: softprops/action-gh-release@v2
+      with:
+        token: ${{ inputs.github-token }}
+        tag_name: ${{ inputs.generator-name }}@${{ inputs.version }}
+        name: ${{ inputs.generator-name }}@${{ inputs.version }}
+        body_path: release_notes.md
+        draft: false
+        prerelease: false
