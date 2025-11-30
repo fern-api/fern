@@ -285,9 +285,10 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 };
                 logger.debug("HTTP request succeeded", metadata);
             }
+            const body = await getResponseBody(response, args.responseType);
             return {
                 ok: true,
-                body: (await getResponseBody(response, args.responseType)) as R,
+                body: body as R,
                 headers: response.headers,
                 rawResponse: toRawResponse(response)
             };
