@@ -361,6 +361,15 @@ class CoreUtilities:
             ),
         )
 
+    def get_async_oauth_token_provider(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "oauth_token_provider"),
+                named_import="AsyncOAuthTokenProvider",
+            ),
+        )
+
     def instantiate_api_error(
         self,
         *,
@@ -553,6 +562,7 @@ class CoreUtilities:
         base_headers: AST.Expression,
         base_timeout: AST.Expression,
         is_async: bool,
+        async_base_headers: Optional[AST.Expression] = None,
     ) -> AST.Expression:
         func_args = [
             ("httpx_client", base_client),
@@ -561,6 +571,8 @@ class CoreUtilities:
         ]
         if base_url is not None:
             func_args.append(("base_url", base_url))
+        if is_async and async_base_headers is not None:
+            func_args.append(("async_base_headers", async_base_headers))
         return AST.Expression(
             AST.FunctionInvocation(
                 function_definition=AST.Reference(

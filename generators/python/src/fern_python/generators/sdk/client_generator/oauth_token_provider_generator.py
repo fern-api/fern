@@ -10,6 +10,7 @@ import fern.ir.resources as ir_types
 
 class OAuthTokenProviderGenerator:
     CLIENT_CLASS_NAME = "OAuthTokenProvider"
+    ASYNC_CLIENT_CLASS_NAME = "AsyncOAuthTokenProvider"
 
     def __init__(
         self,
@@ -19,22 +20,34 @@ class OAuthTokenProviderGenerator:
     ):
         self._context = context
         self._class_name = self.CLIENT_CLASS_NAME
+        self._async_class_name = self.ASYNC_CLIENT_CLASS_NAME
         self._oauth_scheme: ir_types.OAuthScheme = oauth_scheme
         self._refresh_client_member_name: Optional[str] = None
 
     def generate(self, source_file: SourceFile) -> None:
         oauth_configuration: ir_types.OAuthConfiguration = self._oauth_scheme.configuration
         oauth_configuration.visit(
-            client_credentials=lambda client_credentials: source_file.add_class_declaration(
-                declaration=self._create_client_credentials_class_declaration(client_credentials),
-                should_export=False,
+            client_credentials=lambda client_credentials: self._generate_client_credentials_classes(
+                source_file=source_file, client_credentials=client_credentials
             )
         )
 
+    def _generate_client_credentials_classes(
+        self, source_file: SourceFile, client_credentials: ir_types.OAuthClientCredentials
+    ) -> None:
+        source_file.add_class_declaration(
+            declaration=self._create_client_credentials_class_declaration(client_credentials, is_async=False),
+            should_export=False,
+        )
+        source_file.add_class_declaration(
+            declaration=self._create_client_credentials_class_declaration(client_credentials, is_async=True),
+            should_export=False,
+        )
+
     def _create_client_credentials_class_declaration(
-        self, client_credentials: ir_types.OAuthClientCredentials
+        self, client_credentials: ir_types.OAuthClientCredentials, *, is_async: bool
     ) -> AST.ClassDeclaration:
-        constructor_parameters = self._get_constructor_parameters()
+        constructor_parameters = self._get_constructor_parameters(is_async=is_async)
 
         named_parameters = [
             AST.NamedFunctionParameter(
@@ -45,8 +58,9 @@ class OAuthTokenProviderGenerator:
             for param in constructor_parameters
         ]
 
+        class_name = self._async_class_name if is_async else self._class_name
         class_declaration = AST.ClassDeclaration(
-            name=self._class_name,
+            name=class_name,
             constructor=AST.ClassConstructor(
                 signature=AST.FunctionSignature(
                     named_parameters=named_parameters,
@@ -55,8 +69,9 @@ class OAuthTokenProviderGenerator:
                     self._get_write_constructor_body(
                         constructor_parameters=constructor_parameters,
                         private_member_initialization_exprs=self._get_private_member_initialization_exprs(
-                            client_credentials=client_credentials
+                            client_credentials=client_credentials, is_async=is_async
                         ),
+                        is_async=is_async,
                     )
                 ),
             ),
@@ -69,14 +84,18 @@ class OAuthTokenProviderGenerator:
                 initializer=AST.Expression("2"),
             ),
         )
-        class_declaration.add_method(self._get_token_function_declaration(client_credentials=client_credentials))
-        class_declaration.add_method(self._get_refresh_function_declaration(client_credentials=client_credentials))
+        class_declaration.add_method(
+            self._get_token_function_declaration(client_credentials=client_credentials, is_async=is_async)
+        )
+        class_declaration.add_method(
+            self._get_refresh_function_declaration(client_credentials=client_credentials, is_async=is_async)
+        )
         if self._has_expires_in_property(client_credentials):
             class_declaration.add_method(self._get_expires_at_function_declaration())
 
         return class_declaration
 
-    def _get_constructor_parameters(self) -> List[ConstructorParameter]:
+    def _get_constructor_parameters(self, *, is_async: bool) -> List[ConstructorParameter]:
         parameters: List[ConstructorParameter] = []
 
         parameters.append(
@@ -99,7 +118,7 @@ class OAuthTokenProviderGenerator:
             ConstructorParameter(
                 constructor_parameter_name=self._get_client_wrapper_constructor_parameter_name(),
                 private_member_name=self._get_client_wrapper_member_name(),
-                type_hint=AST.TypeHint(self._context.core_utilities.get_reference_to_client_wrapper(is_async=False)),
+                type_hint=AST.TypeHint(self._context.core_utilities.get_reference_to_client_wrapper(is_async=is_async)),
             )
         )
 
@@ -109,6 +128,8 @@ class OAuthTokenProviderGenerator:
         self,
         constructor_parameters: List[ConstructorParameter],
         private_member_initialization_exprs: List[AST.Expression],
+        *,
+        is_async: bool,
     ) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
             for param in constructor_parameters:
@@ -120,10 +141,63 @@ class OAuthTokenProviderGenerator:
             for expr in private_member_initialization_exprs:
                 writer.write_node(expr)
 
+            if is_async:
+                writer.write_node(
+                    AST.Expression(
+                        AST.CodeWriter(
+                            self._get_write_member_initialization(
+                                member_name=self._get_lock_member_name(),
+                                type_hint=AST.TypeHint(
+                                    AST.ClassReference(
+                                        qualified_name_excluding_import=(),
+                                        import_=AST.ReferenceImport(
+                                            module=AST.Module.built_in(("asyncio",)), named_import="Lock"
+                                        ),
+                                    )
+                                ),
+                                initialization=AST.Expression(
+                                    AST.FunctionInvocation(
+                                        function_definition=AST.Reference(
+                                            import_=AST.ReferenceImport(module=AST.Module.built_in(("asyncio",))),
+                                            qualified_name_excluding_import=("Lock",),
+                                        )
+                                    )
+                                ),
+                            ),
+                        ),
+                    ),
+                )
+            else:
+                writer.write_node(
+                    AST.Expression(
+                        AST.CodeWriter(
+                            self._get_write_member_initialization(
+                                member_name=self._get_lock_member_name(),
+                                type_hint=AST.TypeHint(
+                                    AST.ClassReference(
+                                        qualified_name_excluding_import=(),
+                                        import_=AST.ReferenceImport(
+                                            module=AST.Module.built_in(("threading",)), named_import="Lock"
+                                        ),
+                                    )
+                                ),
+                                initialization=AST.Expression(
+                                    AST.FunctionInvocation(
+                                        function_definition=AST.Reference(
+                                            import_=AST.ReferenceImport(module=AST.Module.built_in(("threading",))),
+                                            qualified_name_excluding_import=("Lock",),
+                                        )
+                                    )
+                                ),
+                            ),
+                        ),
+                    ),
+                )
+
         return _write_constructor_body
 
     def _get_private_member_initialization_exprs(
-        self, client_credentials: ir_types.OAuthClientCredentials
+        self, client_credentials: ir_types.OAuthClientCredentials, *, is_async: bool
     ) -> List[AST.Expression]:
         """
         Generates the initialization of the private member variables, including the clients for the token and refresh endpoints.
@@ -191,6 +265,7 @@ class OAuthTokenProviderGenerator:
                     self._get_write_auth_client_initialization(
                         subpackage_id=token_subpackage_id,
                         auth_client_member_name=self._get_auth_client_member_name(),
+                        is_async=is_async,
                     ),
                 ),
             ),
@@ -212,6 +287,7 @@ class OAuthTokenProviderGenerator:
                         self._get_write_auth_client_initialization(
                             subpackage_id=refresh_subpackage_id,
                             auth_client_member_name=self._get_refresh_client_member_name(),
+                            is_async=is_async,
                         ),
                     ),
                 ),
@@ -244,12 +320,19 @@ class OAuthTokenProviderGenerator:
         self,
         subpackage_id: ir_types.SubpackageId,
         auth_client_member_name: str,
+        *,
+        is_async: bool,
     ) -> AST.CodeWriterFunction:
         def _write_auth_client_initialization(writer: AST.NodeWriter) -> None:
             writer.write_node(AST.Expression(f"self.{auth_client_member_name} = "))
+            class_reference = (
+                self._context.get_reference_to_async_subpackage_service(subpackage_id)
+                if is_async
+                else self._context.get_reference_to_subpackage_service(subpackage_id)
+            )
             writer.write_node(
                 AST.ClassInstantiation(
-                    class_=self._context.get_reference_to_subpackage_service(subpackage_id),
+                    class_=class_reference,
                     kwargs=[
                         (
                             "client_wrapper",
@@ -263,7 +346,7 @@ class OAuthTokenProviderGenerator:
         return _write_auth_client_initialization
 
     def _get_token_function_declaration(
-        self, client_credentials: ir_types.OAuthClientCredentials
+        self, client_credentials: ir_types.OAuthClientCredentials, *, is_async: bool
     ) -> AST.FunctionDeclaration:
         def _write_get_token_body(writer: AST.NodeWriter) -> None:
             if self._has_expires_in_property(client_credentials):
@@ -276,11 +359,30 @@ class OAuthTokenProviderGenerator:
             writer.write_line(":")
             with writer.indent():
                 writer.write_line(f"return self.{self._get_access_token_member_name()}")
-            writer.write_line(f"return self.{self._get_refresh_token_method_name()}()")
+            writer.write_newline_if_last_line_not()
+            if is_async:
+                writer.write_line(f"async with self.{self._get_lock_member_name()}:")
+            else:
+                writer.write_line(f"with self.{self._get_lock_member_name()}:")
+            with writer.indent():
+                if self._has_expires_in_property(client_credentials):
+                    writer.write(
+                        f"if self.{self._get_access_token_member_name()} and self.{self._get_expires_at_member_name()} > "
+                    )
+                    writer.write_node(AST.Expression(self._get_datetime_now_invocation()))
+                else:
+                    writer.write(f"if self.{self._get_access_token_member_name()}")
+                writer.write_line(":")
+                with writer.indent():
+                    writer.write_line(f"return self.{self._get_access_token_member_name()}")
+                if is_async:
+                    writer.write_line(f"return await self.{self._get_refresh_token_method_name()}()")
+                else:
+                    writer.write_line(f"return self.{self._get_refresh_token_method_name()}()")
 
         return AST.FunctionDeclaration(
             name=self._get_token_method_name(),
-            is_async=False,
+            is_async=is_async,
             docstring=None,
             signature=AST.FunctionSignature(
                 return_type=AST.TypeHint.str_(),
@@ -289,11 +391,14 @@ class OAuthTokenProviderGenerator:
         )
 
     def _get_refresh_function_declaration(
-        self, client_credentials: ir_types.OAuthClientCredentials
+        self, client_credentials: ir_types.OAuthClientCredentials, *, is_async: bool
     ) -> AST.FunctionDeclaration:
         def _write_refresh_body(writer: AST.NodeWriter) -> None:
             # TODO: Add better support for the refresh token endpoint.
-            writer.write("token_response = ")
+            if is_async:
+                writer.write("token_response = await ")
+            else:
+                writer.write("token_response = ")
             writer.write_node(self._get_refresh_function_invocation(client_credentials))
             writer.write_newline_if_last_line_not()
 
@@ -338,7 +443,7 @@ class OAuthTokenProviderGenerator:
 
         return AST.FunctionDeclaration(
             name=self._get_refresh_token_method_name(),
-            is_async=False,
+            is_async=is_async,
             docstring=None,
             signature=AST.FunctionSignature(
                 return_type=AST.TypeHint.str_(),
@@ -574,6 +679,9 @@ class OAuthTokenProviderGenerator:
 
     def _get_auth_client_member_name(self) -> str:
         return "_auth_client"
+
+    def _get_lock_member_name(self) -> str:
+        return "_lock"
 
     def _get_buffer_in_minutes_member_name(self) -> str:
         return "BUFFER_IN_MINUTES"

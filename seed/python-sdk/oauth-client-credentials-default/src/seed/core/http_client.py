@@ -14,7 +14,7 @@ from .file import File, convert_file_dict_to_httpx_tuples
 from .force_multipart import FORCE_MULTIPART
 from .jsonable_encoder import jsonable_encoder
 from .query_encoder import encode_query
-from .remove_none_from_dict import remove_none_from_dict
+from .remove_none_from_dict import remove_none_from_dict as remove_none_from_dict
 from .request_options import RequestOptions
 from httpx._types import RequestFiles
 
@@ -121,6 +121,21 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
 def _should_retry(response: httpx.Response) -> bool:
     retryable_400s = [429, 408, 409]
     return response.status_code >= 500 or response.status_code in retryable_400s
+
+
+def _maybe_filter_none_from_multipart_data(
+    data: typing.Optional[typing.Any],
+    request_files: typing.Optional[RequestFiles],
+    force_multipart: typing.Optional[bool],
+) -> typing.Optional[typing.Any]:
+    """
+    Filter None values from data body for multipart/form requests.
+    This prevents httpx from converting None to empty strings in multipart encoding.
+    Only applies when files are present or force_multipart is True.
+    """
+    if data is not None and isinstance(data, typing.Mapping) and (request_files or force_multipart):
+        return remove_none_from_dict(data)
+    return data
 
 
 def remove_omit_from_dict(
@@ -244,6 +259,8 @@ class HttpClient:
         if (request_files is None or len(request_files) == 0) and force_multipart:
             request_files = FORCE_MULTIPART
 
+        data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
         response = self.httpx_client.request(
             method=method,
             url=urllib.parse.urljoin(f"{base_url}/", path),
@@ -341,6 +358,8 @@ class HttpClient:
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
 
+        data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
         with self.httpx_client.stream(
             method=method,
             url=urllib.parse.urljoin(f"{base_url}/", path),
@@ -387,11 +406,18 @@ class AsyncHttpClient:
         base_timeout: typing.Callable[[], typing.Optional[float]],
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
+        async_base_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
+        self.async_base_headers = async_base_headers
         self.httpx_client = httpx_client
+
+    async def _get_headers(self) -> typing.Dict[str, str]:
+        if self.async_base_headers is not None:
+            return await self.async_base_headers()
+        return self.base_headers()
 
     def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
         base_url = maybe_base_url
@@ -442,6 +468,11 @@ class AsyncHttpClient:
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
 
+        data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
+        # Get headers (supports async token providers)
+        _headers = await self._get_headers()
+
         # Add the input to each of these and do None-safety checks
         response = await self.httpx_client.request(
             method=method,
@@ -449,7 +480,7 @@ class AsyncHttpClient:
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        **self.base_headers(),
+                        **_headers,
                         **(headers if headers is not None else {}),
                         **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
                     }
@@ -539,13 +570,18 @@ class AsyncHttpClient:
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
 
+        data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
+        # Get headers (supports async token providers)
+        _headers = await self._get_headers()
+
         async with self.httpx_client.stream(
             method=method,
             url=urllib.parse.urljoin(f"{base_url}/", path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        **self.base_headers(),
+                        **_headers,
                         **(headers if headers is not None else {}),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
