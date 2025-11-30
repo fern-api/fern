@@ -180,33 +180,31 @@ client.user.get_username(
     name: 'name',
     tags: ['tags', 'tags']
   },
-  userList: [{
+  user_list: [{
     name: 'name',
     tags: ['tags', 'tags']
   }, {
     name: 'name',
     tags: ['tags', 'tags']
   }],
-  optionalDeadline: '2024-01-15T09:30:00Z',
-  keyValue: {
+  optional_deadline: '2024-01-15T09:30:00Z',
+  key_value: {
     keyValue: 'keyValue'
   },
-  optionalString: 'optionalString',
-  nestedUser: {
+  optional_string: 'optionalString',
+  nested_user: {
     name: 'name',
     user: {
       name: 'name',
       tags: ['tags', 'tags']
     }
   },
-  optionalUser: {
+  optional_user: {
     name: 'name',
     tags: ['tags', 'tags']
   },
-  excludeUser: ,
-  filter: ,
-  longParam: 1000000,
-  bigIntParam: '1000000'
+  long_param: 1000000,
+  big_int_param: '1000000'
 );
 ```
 </dd>

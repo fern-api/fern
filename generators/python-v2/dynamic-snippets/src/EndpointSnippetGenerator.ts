@@ -1,4 +1,4 @@
-import { Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { python } from "@fern-api/python-ast";
@@ -41,6 +41,31 @@ export class EndpointSnippetGenerator {
     }): string {
         const file = this.buildPythonFile({ endpoint, snippet: request });
         return file.toString();
+    }
+
+    public async generateSnippetAst({
+        endpoint,
+        request
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+    }): Promise<AbstractAstNode> {
+        return this.buildPythonFile({ endpoint, snippet: request });
+    }
+
+    /**
+     * Generates just the method call AST without the client instantiation.
+     * This is useful for wire tests where the client is created separately
+     * with test-specific configuration.
+     */
+    public generateMethodCallSnippetAst({
+        endpoint,
+        request
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+    }): python.AstNode {
+        return this.callMethod({ endpoint, snippet: request });
     }
 
     private buildPythonFile({

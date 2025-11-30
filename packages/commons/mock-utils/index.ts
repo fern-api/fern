@@ -123,6 +123,8 @@ export class WireMock {
         // Determine response status and body
         let status = 200;
         let bodyObj: string | number | boolean | object = "";
+        let contentType = "application/json";
+        let isSseResponse = false;
 
         if (example?.response) {
             if (example.response.type === "ok") {
@@ -131,6 +133,11 @@ export class WireMock {
                 if (example.response.value?.type === "body" && example.response.value.value) {
                     // For response bodies, use jsonExample directly to support both primitives and objects
                     bodyObj = example.response.value.value.jsonExample ?? "";
+                } else if (example.response.value?.type === "sse") {
+                    // Handle SSE responses
+                    isSseResponse = true;
+                    contentType = "text/event-stream";
+                    bodyObj = example.response.value.value || [];
                 }
             } else if (example.response.type === "error") {
                 // Extract status code from error
@@ -147,7 +154,20 @@ export class WireMock {
         // Format response body with validation and fallback
         let body = "";
         if (bodyObj !== null && bodyObj !== undefined) {
-            if (typeof bodyObj === "object") {
+            if (isSseResponse && Array.isArray(bodyObj)) {
+                // Format SSE response according to the SSE protocol
+                // Each event should be formatted as: event: <event_name>\ndata: <json_data>\n\n
+                const sseEvents = bodyObj as Array<{ event: string; data: { jsonExample?: unknown } }>;
+                body = sseEvents
+                    .map((sseEvent) => {
+                        const eventName = sseEvent.event || "message";
+                        // Access jsonExample from the data field
+                        const eventData = sseEvent.data?.jsonExample ?? {};
+                        const dataJson = JSON.stringify(eventData);
+                        return `event: ${eventName}\ndata: ${dataJson}\n`;
+                    })
+                    .join("\n");
+            } else if (typeof bodyObj === "object") {
                 try {
                     body = JSON.stringify(bodyObj, null, 2);
                     if (!body || body.trim() === "") {
@@ -183,7 +203,7 @@ export class WireMock {
                 status,
                 body,
                 headers: {
-                    "Content-Type": "application/json"
+                    "Content-Type": contentType
                 }
             },
             uuid,

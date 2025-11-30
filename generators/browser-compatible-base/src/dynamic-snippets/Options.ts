@@ -20,4 +20,8 @@ export interface Options {
 
     // Style of the generated snippets. By default, the executable style is used.
     style?: Style;
+
+    // Skip client instantiation in the generated snippet. Useful for wire tests
+    // where the client is already instantiated in the test setup.
+    skipClientInstantiation?: boolean;
 }

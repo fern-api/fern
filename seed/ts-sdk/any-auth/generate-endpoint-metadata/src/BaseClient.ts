@@ -73,18 +73,28 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
     options: T,
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
+    const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
     normalized.authProvider ??= (() => {
         const authProviders: core.AuthProvider[] = [];
-        if (BearerAuthProvider.canCreate(options)) {
-            authProviders.push(new BearerAuthProvider(options));
+        if (BearerAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
+            authProviders.push(new BearerAuthProvider(normalizedWithNoOpAuthProvider));
         }
-        if (HeaderAuthProvider.canCreate(options)) {
-            authProviders.push(new HeaderAuthProvider(options));
+        if (HeaderAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
+            authProviders.push(new HeaderAuthProvider(normalizedWithNoOpAuthProvider));
         }
-        if (OAuthAuthProvider.canCreate(options)) {
-            authProviders.push(new OAuthAuthProvider(options));
+        if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) {
+            authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider));
         }
         return new AnyAuthProvider(authProviders);
     })();
     return normalized;
+}
+
+function withNoOpAuthProvider<T extends BaseClientOptions>(
+    options: NormalizedClientOptions<T>,
+): NormalizedClientOptionsWithAuth<T> {
+    return {
+        ...options,
+        authProvider: new core.NoOpAuthProvider(),
+    };
 }

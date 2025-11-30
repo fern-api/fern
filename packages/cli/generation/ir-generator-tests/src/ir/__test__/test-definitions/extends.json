@@ -2162,36 +2162,6 @@
                     {
                         "name": {
                             "name": {
-                                "originalName": "docs",
-                                "camelCase": {
-                                    "unsafeName": "docs",
-                                    "safeName": "docs"
-                                },
-                                "snakeCase": {
-                                    "unsafeName": "docs",
-                                    "safeName": "docs"
-                                },
-                                "screamingSnakeCase": {
-                                    "unsafeName": "DOCS",
-                                    "safeName": "DOCS"
-                                },
-                                "pascalCase": {
-                                    "unsafeName": "Docs",
-                                    "safeName": "Docs"
-                                }
-                            },
-                            "wireValue": "docs"
-                        },
-                        "typeReference": {
-                            "type": "primitive",
-                            "value": "STRING"
-                        },
-                        "propertyAccess": null,
-                        "variable": null
-                    },
-                    {
-                        "name": {
-                            "name": {
                                 "originalName": "raw",
                                 "camelCase": {
                                     "unsafeName": "raw",
@@ -2211,6 +2181,36 @@
                                 }
                             },
                             "wireValue": "raw"
+                        },
+                        "typeReference": {
+                            "type": "primitive",
+                            "value": "STRING"
+                        },
+                        "propertyAccess": null,
+                        "variable": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "docs",
+                                "camelCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "docs",
+                                    "safeName": "docs"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "DOCS",
+                                    "safeName": "DOCS"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Docs",
+                                    "safeName": "Docs"
+                                }
+                            },
+                            "wireValue": "docs"
                         },
                         "typeReference": {
                             "type": "primitive",

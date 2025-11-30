@@ -15,7 +15,7 @@
 ```ruby
 client.dummy.generate(
   stream: false,
-  numEvents: 5
+  num_events: 5
 );
 ```
 </dd>

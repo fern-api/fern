@@ -6,27 +6,27 @@ client = Seed::Client.new(
 );
 
 client.admin.store_traced_workspace(
-  submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  workspaceRunDetails: {
+  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  workspace_run_details: {
     exception: {
-      exceptionType: 'exceptionType',
-      exceptionMessage: 'exceptionMessage',
-      exceptionStacktrace: 'exceptionStacktrace'
+      exception_type: 'exceptionType',
+      exception_message: 'exceptionMessage',
+      exception_stacktrace: 'exceptionStacktrace'
     },
     stdout: 'stdout'
   },
-  traceResponses: [{
-    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber: 1,
-    expressionLocation: {
+  trace_responses: [{
+    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    line_number: 1,
+    expression_location: {
       start: 1,
       offset: 1
     },
     stack: {
-      numStackFrames: 1,
-      topStackFrame: {
-        methodName: 'methodName',
-        lineNumber: 1,
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: 'methodName',
+        line_number: 1,
         scopes: [{
           variables: {}
         }, {
@@ -36,17 +36,17 @@ client.admin.store_traced_workspace(
     },
     stdout: 'stdout'
   }, {
-    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber: 1,
-    expressionLocation: {
+    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    line_number: 1,
+    expression_location: {
       start: 1,
       offset: 1
     },
     stack: {
-      numStackFrames: 1,
-      topStackFrame: {
-        methodName: 'methodName',
-        lineNumber: 1,
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: 'methodName',
+        line_number: 1,
         scopes: [{
           variables: {}
         }, {
