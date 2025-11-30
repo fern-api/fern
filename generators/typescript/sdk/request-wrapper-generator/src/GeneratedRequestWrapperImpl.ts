@@ -187,9 +187,6 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         requestInterface.extends = interfaceExtends;
 
         context.sourceFile.addInterface(requestInterface);
-        if (requestBody == null) {
-            return;
-        }
         const iModule = this.generateModule({ requestBody, context });
         if (iModule) {
             context.sourceFile.addModule(iModule);
@@ -379,19 +376,25 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         requestBody,
         context
     }: {
-        requestBody: HttpRequestBody;
+        requestBody: HttpRequestBody | undefined;
         context: SdkContext;
     }): ModuleDeclarationStructure | undefined {
-        if (!this.enableInlineTypes) {
-            return undefined;
+        const statements: (string | WriterFunction | StatementStructures)[] = [];
+
+        if (this.enableInlineTypes && requestBody != null) {
+            const inlineTypeStatements = this.generateInlineTypes({
+                requestBody,
+                context
+            });
+            statements.push(...inlineTypeStatements);
         }
 
-        const inlineTypeStatements = this.generateInlineTypes({
-            requestBody,
-            context
-        });
+        const helperNamespace = this.generateHelperNamespace(context);
+        if (helperNamespace != null) {
+            statements.push(helperNamespace);
+        }
 
-        if (inlineTypeStatements.length === 0) {
+        if (statements.length === 0) {
             return undefined;
         }
 
@@ -401,9 +404,160 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
             isExported: true,
             hasDeclareKeyword: false,
             declarationKind: ModuleDeclarationKind.Namespace,
-            statements: [...inlineTypeStatements]
+            statements
         };
         return module;
+    }
+
+    private generateHelperNamespace(context: SdkContext): ModuleDeclarationStructure | undefined {
+        const allHeaders = [...this.service.headers, ...this.endpoint.headers];
+        const allQueryParameters = this.getAllQueryParameters();
+        const requestBody = this.endpoint.requestBody;
+
+        const hasHeaders = allHeaders.length > 0;
+        const hasQueryParams = allQueryParameters.length > 0;
+        const hasBody =
+            requestBody != null && (requestBody.type === "inlinedRequestBody" || requestBody.type === "reference");
+
+        if (!hasHeaders && !hasQueryParams && !hasBody) {
+            return undefined;
+        }
+
+        const helperFunctions: string[] = [];
+
+        if (hasHeaders) {
+            helperFunctions.push(this.generateHeadersFunction(allHeaders, context));
+        }
+
+        if (hasQueryParams) {
+            helperFunctions.push(this.generateQsFunction(allQueryParameters, context));
+        }
+
+        if (hasBody) {
+            helperFunctions.push(this.generateBodyFunction(requestBody, context));
+        }
+
+        return {
+            kind: StructureKind.Module,
+            name: "_",
+            isExported: true,
+            hasDeclareKeyword: false,
+            declarationKind: ModuleDeclarationKind.Namespace,
+            statements: helperFunctions
+        };
+    }
+
+    private generateHeadersFunction(headers: HttpHeader[], context: SdkContext): string {
+        const properties: string[] = [];
+
+        for (const header of headers) {
+            const literalValue = this.getLiteralValueFromType(header.valueType, context);
+
+            if (literalValue != null) {
+                properties.push(`            "${header.name.wireValue}": ${literalValue}`);
+            } else {
+                const propertyName = this.getPropertyNameOfNonLiteralHeader(header);
+                properties.push(
+                    `            "${header.name.wireValue}": request[${getPropertyKey(propertyName.propertyName)}]`
+                );
+            }
+        }
+
+        return `export function headers(request: ${this.wrapperName}): Record<string, string> {
+        return {
+${properties.join(",\n")}
+        };
+    }`;
+    }
+
+    private generateQsFunction(queryParameters: QueryParameter[], context: SdkContext): string {
+        const properties: string[] = [];
+
+        for (const queryParameter of queryParameters) {
+            const literalValue = this.getLiteralValueFromType(queryParameter.valueType, context);
+
+            if (literalValue != null) {
+                properties.push(`            "${queryParameter.name.wireValue}": ${literalValue}`);
+            } else {
+                const propertyName = this.getPropertyNameOfQueryParameter(queryParameter);
+                properties.push(
+                    `            "${queryParameter.name.wireValue}": request[${getPropertyKey(propertyName.propertyName)}]`
+                );
+            }
+        }
+
+        return `export function qs(request: ${this.wrapperName}): Record<string, unknown> {
+        return {
+${properties.join(",\n")}
+        };
+    }`;
+    }
+
+    private generateBodyFunction(requestBody: HttpRequestBody | undefined, context: SdkContext): string {
+        if (requestBody == null) {
+            return `export function body(request: ${this.wrapperName}): unknown {
+        return {};
+    }`;
+        }
+
+        return HttpRequestBody._visit(requestBody, {
+            inlinedRequestBody: (inlinedRequestBody) => {
+                const properties: string[] = [];
+
+                for (const property of inlinedRequestBody.properties) {
+                    const literalValue = this.getLiteralValueFromType(property.valueType, context);
+
+                    if (literalValue != null) {
+                        properties.push(`            "${property.name.wireValue}": ${literalValue}`);
+                    } else {
+                        const propertyName = this.getInlinedRequestBodyPropertyKey(property);
+                        properties.push(
+                            `            "${property.name.wireValue}": request[${getPropertyKey(propertyName.propertyName)}]`
+                        );
+                    }
+                }
+
+                return `export function body(request: ${this.wrapperName}): unknown {
+        return {
+${properties.join(",\n")}
+        };
+    }`;
+            },
+            reference: (referenceToRequestBody) => {
+                const bodyPropertyName = this.getReferencedBodyPropertyName();
+                return `export function body(request: ${this.wrapperName}): unknown {
+        return request[${getPropertyKey(bodyPropertyName)}];
+    }`;
+            },
+            fileUpload: () => {
+                return `export function body(request: ${this.wrapperName}): unknown {
+        return {};
+    }`;
+            },
+            bytes: () => {
+                return `export function body(request: ${this.wrapperName}): unknown {
+        return {};
+    }`;
+            },
+            _other: () => {
+                return `export function body(request: ${this.wrapperName}): unknown {
+        return {};
+    }`;
+            }
+        });
+    }
+
+    private getLiteralValueFromType(typeReference: TypeReference, context: SdkContext): string | undefined {
+        const resolvedType = context.type.resolveTypeReference(typeReference);
+        if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            const literal = resolvedType.container.literal;
+            if (literal.type === "string") {
+                return `"${literal.string}"`;
+            } else if (literal.type === "boolean") {
+                return String(literal.boolean);
+            }
+        }
+        return undefined;
     }
 
     private generateInlineTypes({

@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.35.0
+  changelogEntry:
+    - summary: |
+        Add `_` namespace to request wrapper types containing helper functions for extracting headers, query parameters, and body from request objects.
+        This enables easier access to request components with proper literal type handling.
+      type: feat
+  createdAt: "2025-11-30"
+  irVersion: 61
+
 - version: 3.34.2
   changelogEntry:
     - summary: |
