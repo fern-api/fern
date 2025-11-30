@@ -70,16 +70,60 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     }
 
     private convertSecuritySchemes(): void {
-        if (this.context.authOverrides) {
-            this.addAuthToIR(
-                convertApiAuth({
-                    rawApiFileSchema: this.context.authOverrides,
-                    casingsGenerator: this.context.casingsGenerator
-                })
-            );
+        const hasGlobalSecurity = this.context.spec.security != null && this.context.spec.security.length > 0;
+
+        // Convert all OpenAPI security schemes (reused across all branches)
+        const openApiSchemes = this.convertOpenApiSecuritySchemes();
+
+        // If we have auth overrides and no global security in OpenAPI, use overrides as primary auth
+        if (this.context.authOverrides && !hasGlobalSecurity) {
+            // Convert auth overrides to primary auth (this includes both schemes and global auth)
+            const overrideAuth = convertApiAuth({
+                rawApiFileSchema: this.context.authOverrides,
+                casingsGenerator: this.context.casingsGenerator
+            });
+
+            // Use override auth as primary with additional OpenAPI schemes for references
+            this.addAuthToIR({
+                requirement: overrideAuth.requirement,
+                schemes: [...overrideAuth.schemes, ...openApiSchemes],
+                docs: overrideAuth.docs
+            });
             return;
         }
 
+        // If we have auth overrides but there IS global security in OpenAPI, merge them
+        if (this.context.authOverrides && hasGlobalSecurity) {
+            // First, add auth overrides from generators.yml
+            const overrideAuth = convertApiAuth({
+                rawApiFileSchema: this.context.authOverrides,
+                casingsGenerator: this.context.casingsGenerator
+            });
+
+            const allAuthSchemes = [...overrideAuth.schemes, ...openApiSchemes];
+
+            this.addAuthToIR({
+                requirement: allAuthSchemes.length === 1 ? "ALL" : "ANY",
+                schemes: allAuthSchemes,
+                docs: undefined
+            });
+            return;
+        }
+
+        // Original logic: No auth overrides, just convert OpenAPI security schemes
+        if (openApiSchemes.length > 0) {
+            // TODO(kenny): we're not using `requirement` here, and should remove.
+            //              this field is oversimplified, since it implies either all,
+            //              or any, but endpoints can have a subset.
+            this.addAuthToIR({
+                requirement: openApiSchemes.length === 1 ? "ALL" : "ANY",
+                schemes: openApiSchemes,
+                docs: undefined
+            });
+        }
+    }
+
+    private convertOpenApiSecuritySchemes(): AuthScheme[] {
         const securitySchemes: AuthScheme[] = [];
 
         for (const [id, securityScheme] of Object.entries(this.context.spec.components?.securitySchemes ?? {})) {
@@ -98,23 +142,12 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
                 schemeId: id
             });
             const convertedScheme = securitySchemeConverter.convert();
-            if (convertedScheme == null) {
-                continue;
+            if (convertedScheme != null) {
+                securitySchemes.push(convertedScheme);
             }
-
-            securitySchemes.push(convertedScheme);
         }
 
-        if (securitySchemes.length > 0) {
-            // TODO(kenny): we're not using `requirement` here, and should remove.
-            //              this field is oversimplified, since it implies either all,
-            //              or any, but endpoints can have a subset.
-            this.addAuthToIR({
-                requirement: securitySchemes.length === 1 ? "ALL" : "ANY",
-                schemes: securitySchemes,
-                docs: undefined
-            });
-        }
+        return securitySchemes;
     }
 
     private convertServers({ endpointLevelServers }: { endpointLevelServers?: OpenAPIV3_1.ServerObject[] }): {

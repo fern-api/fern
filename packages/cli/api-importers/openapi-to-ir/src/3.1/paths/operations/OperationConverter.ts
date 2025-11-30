@@ -195,8 +195,12 @@ export class OperationConverter extends AbstractOperationConverter {
             ),
             sdkRequest: undefined,
             errors,
-            auth: this.operation.security != null || this.context.spec.security != null,
-            security: this.operation.security ?? this.context.spec.security,
+            auth:
+                this.operation.security != null ||
+                this.context.spec.security != null ||
+                this.shouldApplyDefaultAuthOverrides(),
+            security:
+                this.operation.security ?? this.context.spec.security ?? this.getDefaultSecurityFromAuthOverrides(),
             availability: this.context.getAvailability({
                 node: this.operation,
                 breadcrumbs: this.breadcrumbs
@@ -456,6 +460,38 @@ export class OperationConverter extends AbstractOperationConverter {
      * @param securitySchemeIds - List of security scheme IDs
      * @returns Array of HTTP headers derived from the security schemes
      */
+    private shouldApplyDefaultAuthOverrides(): boolean {
+        if (!this.context.authOverrides?.auth) {
+            return false;
+        }
+
+        const hasGlobalSecurity = this.context.spec.security != null && this.context.spec.security.length > 0;
+        const hasEndpointSecurity = this.operation.security != null;
+
+        // If there's already security defined (global or endpoint), don't apply defaults
+        return !(hasGlobalSecurity || hasEndpointSecurity);
+    }
+
+    private getDefaultSecurityFromAuthOverrides(): OpenAPIV3_1.SecurityRequirementObject[] | undefined {
+        // If we have auth overrides but no OpenAPI security, create a default security requirement
+        // that references the global auth scheme from generators.yml
+        if (!this.context.authOverrides?.auth) {
+            return undefined;
+        }
+
+        // The auth field from generators.yml contains the scheme name (e.g., "bearerAuth")
+        // Convert this to OpenAPI security requirement format
+        const authSchemeName = this.context.authOverrides.auth;
+        if (typeof authSchemeName !== "string") {
+            return undefined;
+        }
+
+        // Return OpenAPI security requirement format: [{ "schemeName": [] }]
+        const securityRequirement: OpenAPIV3_1.SecurityRequirementObject = {};
+        securityRequirement[authSchemeName] = [];
+        return [securityRequirement];
+    }
+
     private authSchemeToHeaders(securitySchemeIds: string[]): FernIr.HttpHeader[] {
         const headers: FernIr.HttpHeader[] = [];
 
