@@ -1,0 +1,32 @@
+{
+  "anyOf": [
+    {
+      "type": "string"
+    },
+    {
+      "type": "integer"
+    },
+    {
+      "type": "boolean"
+    },
+    {
+      "type": "number"
+    },
+    {
+      "type": "integer"
+    },
+    {
+      "type": "string",
+      "format": "uuid"
+    },
+    {
+      "type": "string",
+      "format": "date"
+    },
+    {
+      "type": "string",
+      "format": "date-time"
+    }
+  ],
+  "definitions": {}
+}
