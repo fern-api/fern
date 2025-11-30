@@ -495,8 +495,8 @@ ${properties.join(",\n")}
 
     private generateBodyFunction(requestBody: HttpRequestBody | undefined, context: SdkContext): string {
         if (requestBody == null) {
-            return `export function body(request: ${this.wrapperName}): unknown {
-        return {};
+            return `export function body(_request: ${this.wrapperName}): unknown {
+        return undefined;
     }`;
         }
 
@@ -530,18 +530,18 @@ ${properties.join(",\n")}
     }`;
             },
             fileUpload: () => {
-                return `export function body(request: ${this.wrapperName}): unknown {
-        return {};
+                return `export function body(_request: ${this.wrapperName}): unknown {
+        return undefined;
     }`;
             },
             bytes: () => {
-                return `export function body(request: ${this.wrapperName}): unknown {
-        return {};
+                return `export function body(_request: ${this.wrapperName}): unknown {
+        return undefined;
     }`;
             },
             _other: () => {
-                return `export function body(request: ${this.wrapperName}): unknown {
-        return {};
+                return `export function body(_request: ${this.wrapperName}): unknown {
+        return undefined;
     }`;
             }
         });
