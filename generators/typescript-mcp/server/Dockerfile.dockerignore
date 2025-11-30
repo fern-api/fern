@@ -5,3 +5,4 @@
 !generators/typescript/sdk/cli/node-docker/dist/
 
 !generators/typescript-mcp/server/dist
+**/.DS_Store
