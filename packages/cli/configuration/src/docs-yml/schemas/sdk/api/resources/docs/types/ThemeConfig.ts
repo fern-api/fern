@@ -10,4 +10,5 @@ export interface ThemeConfig {
     tabs?: FernDocsConfig.TabsThemeConfig;
     pageActions?: FernDocsConfig.PageActionsThemeConfig;
     footerNav?: FernDocsConfig.FooterNavThemeConfig;
+    languageSwitcher?: FernDocsConfig.LanguageSwitcherThemeConfig;
 }

@@ -63,6 +63,12 @@ export interface LayoutConfig {
      */
     tabsPlacement?: FernDocsConfig.TabsPlacement;
     /**
+     * Set the placement of the language selector
+     *
+     * @default: `switcher`
+     */
+    languagePlacement?: FernDocsConfig.LanguagePlacement;
+    /**
      * Set the alignment of the mardown content.
      *
      * @default: `center`
