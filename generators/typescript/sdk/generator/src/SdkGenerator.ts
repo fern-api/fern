@@ -1883,5 +1883,6 @@ export class SdkGenerator {
 
         this.dependencyManager.addDependency("@tanstack/react-query", "^5.0.0", { type: DependencyType.PEER });
         this.dependencyManager.addDependency("react", "^18.0.0", { type: DependencyType.PEER });
+        this.dependencyManager.addDependency("@types/react", "^18.0.0", { type: DependencyType.DEV });
     }
 }

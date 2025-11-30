@@ -129,6 +129,9 @@ fixtures:
     - outputFolder: multiple-exports
       customConfig:
         generateSubpackageExports: true
+    - outputFolder: react-query
+      customConfig:
+        generateReactQueryHooks: true
   error-property:
     - outputFolder: no-custom-config
       customConfig: null

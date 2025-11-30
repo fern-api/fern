@@ -1,4 +1,22 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.34.0
+  changelogEntry:
+    - summary: |
+        Add React Query hooks support to TypeScript SDK generator. When enabled via `generateReactQueryHooks: true`, the generator creates React Query hooks for all endpoints, including query hooks, mutation hooks, suspense query hooks, infinite query hooks, cache invalidation utilities, prefetch utilities, and provider components.
+        
+        To enable this feature, add the following configuration to your _generators.yml_ file:
+        ```yaml
+        # In generators.yml
+        groups:
+          generators:
+            - name: fernapi/fern-typescript-sdk
+              config:
+                generateReactQueryHooks: true
+        ```
+      type: feat
+  createdAt: "2025-11-30"
+  irVersion: 61
+
 - version: 3.33.0
   changelogEntry:
     - summary: |

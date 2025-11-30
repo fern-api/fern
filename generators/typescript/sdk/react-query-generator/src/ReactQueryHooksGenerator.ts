@@ -201,10 +201,14 @@ export class ReactQueryHooksGenerator {
             namedImports: ["useContext"]
         });
 
+        importsManager.addImport("./index", {
+            namedImports: ["SdkClientContext"]
+        });
+
         const hookCode = `
 export function ${hookName}(
-    options?: UseQueryOptions
-): UseQueryResult {
+    options?: UseQueryOptions<unknown, Error, unknown, string[]>
+): UseQueryResult<unknown, Error> {
     const client = useContext(SdkClientContext);
     if (!client) {
         throw new Error("${hookName} must be used within a provider");
@@ -248,10 +252,14 @@ export function ${hookName}(
             namedImports: ["useContext"]
         });
 
+        importsManager.addImport("./index", {
+            namedImports: ["SdkClientContext"]
+        });
+
         const hookCode = `
 export function ${suspenseHookName}(
-    options?: UseSuspenseQueryOptions
-): UseSuspenseQueryResult {
+    options?: UseSuspenseQueryOptions<unknown, Error, unknown, string[]>
+): UseSuspenseQueryResult<unknown, Error> {
     const client = useContext(SdkClientContext);
     if (!client) {
         throw new Error("${suspenseHookName} must be used within a provider");
@@ -295,10 +303,14 @@ export function ${suspenseHookName}(
             namedImports: ["useContext"]
         });
 
+        importsManager.addImport("./index", {
+            namedImports: ["SdkClientContext"]
+        });
+
         const hookCode = `
 export function ${infiniteHookName}(
-    options?: UseInfiniteQueryOptions
-): UseInfiniteQueryResult {
+    options?: UseInfiniteQueryOptions<unknown, Error, unknown, unknown, string[]>
+): UseInfiniteQueryResult<unknown, Error> {
     const client = useContext(SdkClientContext);
     if (!client) {
         throw new Error("${infiniteHookName} must be used within a provider");
@@ -343,10 +355,14 @@ export function ${infiniteHookName}(
             namedImports: ["useContext"]
         });
 
+        importsManager.addImport("./index", {
+            namedImports: ["SdkClientContext"]
+        });
+
         const hookCode = `
 export function ${hookName}(
-    options?: UseMutationOptions
-): UseMutationResult {
+    options?: UseMutationOptions<unknown, Error, any, unknown>
+): UseMutationResult<unknown, Error, any, unknown> {
     const client = useContext(SdkClientContext);
     if (!client) {
         throw new Error("${hookName} must be used within a provider");

@@ -23,14 +23,14 @@ export class ReactQueryProviderGenerator {
 
     public generateProvider({ file, importsManager }: { file: SourceFile; importsManager: ImportsManager }): void {
         importsManager.addImport("react", {
-            namedImports: ["createContext", "ReactNode"]
+            namedImports: ["createContext", "createElement", "ReactNode"]
         });
 
         const providerName = `${this.namespaceExport}Provider`;
         const contextName = "SdkClientContext";
 
         const contextCode = `
-export const ${contextName} = createContext<any | null>(null);
+export const ${contextName}: React.Context<any | null> = createContext<any | null>(null);
 `;
 
         const providerCode = `
@@ -39,12 +39,8 @@ export interface ${providerName}Props {
     children: ReactNode;
 }
 
-export function ${providerName}({ client, children }: ${providerName}Props) {
-    return (
-        <${contextName}.Provider value={client}>
-            {children}
-        </${contextName}.Provider>
-    );
+export function ${providerName}({ client, children }: ${providerName}Props): React.ReactElement {
+    return createElement(${contextName}.Provider, { value: client }, children);
 }
 `;
 
