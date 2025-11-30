@@ -54,7 +54,7 @@ export async function getResponseBody(response: Response, responseType?: string)
             return {
                 _error: true,
                 reason: "invalid-json",
-                message: `Failed to parse JSON response: ${err instanceof Error ? err.message : String(err)}`,
+                message: "Failed to parse JSON response: " + (err instanceof Error ? err.message : String(err)),
                 statusCode: response.status,
                 rawBody: text,
                 success: false,
@@ -65,7 +65,7 @@ export async function getResponseBody(response: Response, responseType?: string)
         return {
             _error: true,
             reason: "read-error",
-            message: `Failed to read response body: ${err instanceof Error ? err.message : String(err)}`,
+            message: "Failed to read response body: " + (err instanceof Error ? err.message : String(err)),
             statusCode: response.status,
             success: false,
         };
