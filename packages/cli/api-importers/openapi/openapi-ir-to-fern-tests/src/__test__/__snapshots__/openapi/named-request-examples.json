@@ -1,0 +1,243 @@
+{
+  "absoluteFilePath": "/DUMMY_PATH",
+  "importedDefinitions": {},
+  "namedDefinitionFiles": {
+    "__package__.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "types": {
+          "Workspace": {
+            "docs": undefined,
+            "inline": undefined,
+            "properties": {
+              "currency_code": {
+                "docs": "The currency code for the workspace",
+                "type": "optional<string>",
+              },
+              "id": {
+                "docs": "The unique identifier for the workspace",
+                "type": "optional<string>",
+              },
+              "title": {
+                "docs": "The title of the workspace",
+                "type": "optional<string>",
+              },
+            },
+            "source": {
+              "openapi": "../openapi.yml",
+            },
+          },
+        },
+      },
+      "rawContents": "types:
+  Workspace:
+    properties:
+      id:
+        type: optional<string>
+        docs: The unique identifier for the workspace
+      title:
+        type: optional<string>
+        docs: The title of the workspace
+      currency_code:
+        type: optional<string>
+        docs: The currency code for the workspace
+    source:
+      openapi: ../openapi.yml
+",
+    },
+    "workspaces.yml": {
+      "absoluteFilepath": "/DUMMY_PATH",
+      "contents": {
+        "imports": {
+          "root": "__package__.yml",
+        },
+        "service": {
+          "auth": false,
+          "base-path": "",
+          "endpoints": {
+            "createAWorkspace": {
+              "auth": undefined,
+              "display-name": "Create a workspace",
+              "docs": "Creates a new workspace and adds the user as a Workspace Admin.",
+              "examples": [
+                {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
+                  "name": "simple_workspace",
+                  "request": {
+                    "title": "My new workspace",
+                  },
+                  "response": {
+                    "body": {
+                      "currency_code": "currency_code",
+                      "id": "id",
+                      "title": "title",
+                    },
+                  },
+                },
+                {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
+                  "name": "great_british_pounds_workspace",
+                  "request": {
+                    "currency_code": "GBP",
+                    "title": "My workspace using British Pounds",
+                  },
+                  "response": {
+                    "body": {
+                      "currency_code": "currency_code",
+                      "id": "id",
+                      "title": "title",
+                    },
+                  },
+                },
+                {
+                  "headers": {
+                    "Authorization": "Authorization",
+                  },
+                  "name": "united_states_dollars_workspace",
+                  "request": {
+                    "currency_code": "USD",
+                    "title": "My workspace using US Dollars",
+                  },
+                  "response": {
+                    "body": {
+                      "currency_code": "currency_code",
+                      "id": "id",
+                      "title": "title",
+                    },
+                  },
+                },
+              ],
+              "method": "POST",
+              "pagination": undefined,
+              "path": "/workspaces",
+              "request": {
+                "body": {
+                  "properties": {
+                    "currency_code": {
+                      "docs": "The currency code for the workspace (e.g., USD, GBP, EUR)",
+                      "type": "optional<string>",
+                    },
+                    "title": {
+                      "docs": "The title of the workspace",
+                      "type": "string",
+                    },
+                  },
+                },
+                "content-type": "application/json",
+                "headers": undefined,
+                "name": "CreateWorkspace",
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+              },
+              "response": {
+                "docs": "Workspace created successfully",
+                "status-code": 200,
+                "type": "root.Workspace",
+              },
+              "source": {
+                "openapi": "../openapi.yml",
+              },
+            },
+          },
+          "source": {
+            "openapi": "../openapi.yml",
+          },
+        },
+      },
+      "rawContents": "imports:
+  root: __package__.yml
+service:
+  auth: false
+  base-path: ''
+  endpoints:
+    createAWorkspace:
+      path: /workspaces
+      method: POST
+      docs: Creates a new workspace and adds the user as a Workspace Admin.
+      source:
+        openapi: ../openapi.yml
+      display-name: Create a workspace
+      request:
+        name: CreateWorkspace
+        body:
+          properties:
+            title:
+              type: string
+              docs: The title of the workspace
+            currency_code:
+              type: optional<string>
+              docs: The currency code for the workspace (e.g., USD, GBP, EUR)
+        content-type: application/json
+      response:
+        docs: Workspace created successfully
+        type: root.Workspace
+        status-code: 200
+      examples:
+        - name: simple_workspace
+          headers:
+            Authorization: Authorization
+          request:
+            title: My new workspace
+          response:
+            body:
+              id: id
+              title: title
+              currency_code: currency_code
+        - name: great_british_pounds_workspace
+          headers:
+            Authorization: Authorization
+          request:
+            title: My workspace using British Pounds
+            currency_code: GBP
+          response:
+            body:
+              id: id
+              title: title
+              currency_code: currency_code
+        - name: united_states_dollars_workspace
+          headers:
+            Authorization: Authorization
+          request:
+            title: My workspace using US Dollars
+            currency_code: USD
+          response:
+            body:
+              id: id
+              title: title
+              currency_code: currency_code
+  source:
+    openapi: ../openapi.yml
+",
+    },
+  },
+  "packageMarkers": {},
+  "rootApiFile": {
+    "contents": {
+      "display-name": "Named Request Examples API",
+      "error-discrimination": {
+        "strategy": "status-code",
+      },
+      "headers": {
+        "Authorization": {
+          "name": "authorization",
+          "type": "string",
+        },
+      },
+      "name": "api",
+    },
+    "defaultUrl": undefined,
+    "rawContents": "name: api
+error-discrimination:
+  strategy: status-code
+display-name: Named Request Examples API
+headers:
+  Authorization:
+    type: string
+    name: authorization
+",
+  },
+}

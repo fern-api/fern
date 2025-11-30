@@ -130,9 +130,18 @@ export function getExamples(
     context: AbstractOpenAPIV3ParserContext
 ): NamedFullExample[] {
     const fullExamples: NamedFullExample[] = [];
-    if (mediaObject.example != null) {
+
+    // Check if there are named examples (either in standard examples field or x-examples extension)
+    const hasNamedExamples =
+        (mediaObject.examples != null && Object.keys(mediaObject.examples).length > 0) ||
+        getExtension<Record<string, OpenAPIV3.ExampleObject>>(mediaObject, OpenAPIExtension.EXAMPLES) != null;
+
+    // Only add the singular example if there are no named examples
+    // This prevents an unnamed example from being added before named examples
+    if (mediaObject.example != null && !hasNamedExamples) {
         fullExamples.push({ name: undefined, value: mediaObject.example, description: undefined });
     }
+
     const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(mediaObject, OpenAPIExtension.EXAMPLES);
     if (examples != null && Object.keys(examples).length > 0) {
         fullExamples.push(
