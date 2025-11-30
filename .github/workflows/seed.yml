@@ -4,11 +4,6 @@ on:
   push:
     branches:
       - main
-  # Note: pull request trigger will be removed once repository_dispatch trigger is verified
-  pull_request:
-    types: [opened, synchronize, reopened, ready_for_review]
-    branches:
-      - main
   repository_dispatch:
     types: [seed-test-metrics]
   workflow_call:
