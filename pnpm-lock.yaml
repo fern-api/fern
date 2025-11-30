@@ -3432,6 +3432,9 @@ importers:
       '@fern-typescript/generic-sdk-error-generators':
         specifier: workspace:*
         version: link:../generic-sdk-error-generators
+      '@fern-typescript/react-query-generator':
+        specifier: workspace:*
+        version: link:../react-query-generator
       '@fern-typescript/request-wrapper-generator':
         specifier: workspace:*
         version: link:../request-wrapper-generator
@@ -3508,6 +3511,40 @@ importers:
       '@fern-typescript/contexts':
         specifier: workspace:*
         version: link:../../utils/contexts
+      ts-morph:
+        specifier: ^15.1.0
+        version: 15.1.0
+    devDependencies:
+      '@fern-api/configs':
+        specifier: workspace:*
+        version: link:../../../../packages/configs
+      '@types/node':
+        specifier: 18.15.3
+        version: 18.15.3
+      depcheck:
+        specifier: ^1.4.7
+        version: 1.4.7
+      typescript:
+        specifier: 5.9.3
+        version: 5.9.3
+      vitest:
+        specifier: ^4.0.8
+        version: 4.0.8(@types/debug@4.1.12)(@types/node@18.15.3)(jsdom@27.1.0)(msw@2.12.1(@types/node@18.15.3)(typescript@5.9.3))(sass@1.94.0)(terser@5.44.1)(tsx@4.20.6)(yaml@2.3.3)
+
+  generators/typescript/sdk/react-query-generator:
+    dependencies:
+      '@fern-fern/ir-sdk':
+        specifier: ^61.7.0
+        version: 61.7.0
+      '@fern-typescript/commons':
+        specifier: workspace:*
+        version: link:../../utils/commons
+      '@fern-typescript/contexts':
+        specifier: workspace:*
+        version: link:../../utils/contexts
+      '@fern-typescript/resolvers':
+        specifier: workspace:*
+        version: link:../../utils/resolvers
       ts-morph:
         specifier: ^15.1.0
         version: 15.1.0
