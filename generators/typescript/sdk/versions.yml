@@ -5,8 +5,8 @@
         Improve React Native compatibility in the SDK runtime and fetcher:
         - Move React Native detection before Node.js detection since React Native may have a process polyfill
         - Use `ReturnType<typeof setTimeout>` instead of `NodeJS.Timeout` for better cross-platform compatibility
-        - Improve response body handling to work better in React Native environments where `response.body` may not be available
-        - Return structured error objects for empty responses, invalid JSON, and read errors
+        - Skip `isResponseWithBody` check in React Native environments where `response.body` may not be available
+        - Add blob fallback for binary-response in React Native when body stream is unavailable
       type: fix
   createdAt: "2025-11-30"
   irVersion: 61

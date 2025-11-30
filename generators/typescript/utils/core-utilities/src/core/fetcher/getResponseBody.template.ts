@@ -1,32 +1,38 @@
 import { getBinaryResponse } from "./BinaryResponse";
 import { isResponseWithBody } from "./ResponseWithBody";
 import { fromJson } from "../json";
+import { RUNTIME } from "../runtime/index";
 <% if (streamType === "wrapper") { %>
 import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper";
 <% } %>
 
 export async function getResponseBody(response: Response, responseType?: string): Promise<unknown> {
-    // In React Native, response.body might not be available even for responses with bodies
-    // So we try to read the body regardless of the isResponseWithBody check
-    // Only skip if we explicitly need the body stream (sse/streaming/binary-response) and it's not available
+    // In React Native (RUNTIME.type === "react-native"), response.body might not be available
+    // even for responses with bodies. We only skip the isResponseWithBody check in React Native.
+    const isReactNative = RUNTIME.type === "react-native";
+
+    if (!isReactNative && !isResponseWithBody(response)) {
+        return undefined;
+    }
+
     switch (responseType) {
         case "binary-response":
             if (isResponseWithBody(response)) {
                 return getBinaryResponse(response);
             }
-            // Fallback: try to get as blob if body stream is not available
+            // Fallback for React Native: try to get as blob if body stream is not available
             return await response.blob();
         case "blob":
             return await response.blob();
         case "arrayBuffer":
             return await response.arrayBuffer();
         case "sse":
-            return response.body ?? null;
+            return response.body;
         case "streaming":
             <% if (streamType === "wrapper") { %>
             return chooseStreamWrapper(response.body);
             <% } else { %>
-            return response.body ?? null;
+            return response.body;
             <% } %>
         case "text":
             return await response.text();
