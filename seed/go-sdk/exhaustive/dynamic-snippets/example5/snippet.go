@@ -18,7 +18,7 @@ func do() {
     )
     request := map[string]*types.ObjectWithRequiredField{
         "string": &types.ObjectWithRequiredField{
-            String: "string",
+            FieldString: "string",
         },
     }
     client.Endpoints.Container.GetAndReturnMapOfPrimToObject(

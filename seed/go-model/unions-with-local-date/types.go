@@ -24,9 +24,9 @@ type UnionWithDiscriminant struct {
 }
 
 type UnionWithPrimitive struct {
-	Type    string
-	Integer int
-	String  string
+	Type        string
+	Integer     int
+	FieldString string
 }
 
 type UnionWithDuplicatePrimitive struct {
@@ -63,11 +63,11 @@ type UnionWithLiteral struct {
 }
 
 type UnionWithBaseProperties struct {
-	Type    string
-	Id      string
-	Integer int
-	String  string
-	Foo     Foo
+	Type        string
+	Id          string
+	Integer     int
+	FieldString string
+	Foo         Foo
 }
 
 type UnionWithTime struct {

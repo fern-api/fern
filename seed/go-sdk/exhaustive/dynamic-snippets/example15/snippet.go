@@ -19,7 +19,7 @@ func do() {
         ),
     )
     request := &types.ObjectWithOptionalField{
-        String: fern.String(
+        FieldString: fern.String(
             "string",
         ),
         Integer: fern.Int(
