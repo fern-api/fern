@@ -121,7 +121,7 @@ export async function generateWorkspace({
     }
 }
 
-function applyLfsOverride(
+export function applyLfsOverride(
     group: generatorsYml.GeneratorGroup,
     lfsOverridePath: string,
     context: TaskContext
