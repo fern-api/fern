@@ -19,11 +19,20 @@ class RawHeadersClient:
         self._client_wrapper = client_wrapper
 
     def send(
-        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        endpoint_version: typing.Literal["02-12-2024"],
+        async_: typing.Literal[True],
+        query: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> HttpResponse[SendResponse]:
         """
         Parameters
         ----------
+        endpoint_version : typing.Literal["02-12-2024"]
+
+        async_ : typing.Literal[True]
+
         query : str
 
         request_options : typing.Optional[RequestOptions]
@@ -67,11 +76,20 @@ class AsyncRawHeadersClient:
         self._client_wrapper = client_wrapper
 
     async def send(
-        self, *, query: str, request_options: typing.Optional[RequestOptions] = None
+        self,
+        *,
+        endpoint_version: typing.Literal["02-12-2024"],
+        async_: typing.Literal[True],
+        query: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> AsyncHttpResponse[SendResponse]:
         """
         Parameters
         ----------
+        endpoint_version : typing.Literal["02-12-2024"]
+
+        async_ : typing.Literal[True]
+
         query : str
 
         request_options : typing.Optional[RequestOptions]

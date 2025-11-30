@@ -24,7 +24,10 @@ class RawInlinedClient:
     def send(
         self,
         *,
+        prompt: typing.Literal["You are a helpful assistant"] = "You are a helpful assistant",
         query: str,
+        stream: typing.Literal[False] = False,
+        aliased_context: SomeAliasedLiteral = "You're super wise",
         object_with_literal: ATopLevelLiteralParams,
         context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
         temperature: typing.Optional[float] = OMIT,
@@ -34,7 +37,13 @@ class RawInlinedClient:
         """
         Parameters
         ----------
+        prompt : typing.Literal["You are a helpful assistant"]
+
         query : str
+
+        stream : typing.Literal[False]
+
+        aliased_context : SomeAliasedLiteral
 
         object_with_literal : ATopLevelLiteralParams
 
@@ -55,16 +64,16 @@ class RawInlinedClient:
             "inlined",
             method="POST",
             json={
+                "prompt": "You are a helpful assistant",
                 "context": context,
                 "query": query,
                 "temperature": temperature,
+                "stream": False,
+                "aliasedContext": "You're super wise",
                 "maybeContext": maybe_context,
                 "objectWithLiteral": convert_and_respect_annotation_metadata(
                     object_=object_with_literal, annotation=ATopLevelLiteralParams, direction="write"
                 ),
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "aliasedContext": "You're super wise",
             },
             request_options=request_options,
             omit=OMIT,
@@ -92,7 +101,10 @@ class AsyncRawInlinedClient:
     async def send(
         self,
         *,
+        prompt: typing.Literal["You are a helpful assistant"] = "You are a helpful assistant",
         query: str,
+        stream: typing.Literal[False] = False,
+        aliased_context: SomeAliasedLiteral = "You're super wise",
         object_with_literal: ATopLevelLiteralParams,
         context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
         temperature: typing.Optional[float] = OMIT,
@@ -102,7 +114,13 @@ class AsyncRawInlinedClient:
         """
         Parameters
         ----------
+        prompt : typing.Literal["You are a helpful assistant"]
+
         query : str
+
+        stream : typing.Literal[False]
+
+        aliased_context : SomeAliasedLiteral
 
         object_with_literal : ATopLevelLiteralParams
 
@@ -123,16 +141,16 @@ class AsyncRawInlinedClient:
             "inlined",
             method="POST",
             json={
+                "prompt": "You are a helpful assistant",
                 "context": context,
                 "query": query,
                 "temperature": temperature,
+                "stream": False,
+                "aliasedContext": "You're super wise",
                 "maybeContext": maybe_context,
                 "objectWithLiteral": convert_and_respect_annotation_metadata(
                     object_=object_with_literal, annotation=ATopLevelLiteralParams, direction="write"
                 ),
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "aliasedContext": "You're super wise",
             },
             request_options=request_options,
             omit=OMIT,

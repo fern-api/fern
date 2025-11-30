@@ -24,7 +24,11 @@ class RawReferenceClient:
     def send(
         self,
         *,
+        prompt: typing.Literal["You are a helpful assistant"],
         query: str,
+        stream: typing.Literal[False],
+        ending: typing.Literal["$ending"],
+        context: SomeLiteral,
         container_object: ContainerObject,
         maybe_context: typing.Optional[SomeLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -32,7 +36,15 @@ class RawReferenceClient:
         """
         Parameters
         ----------
+        prompt : typing.Literal["You are a helpful assistant"]
+
         query : str
+
+        stream : typing.Literal[False]
+
+        ending : typing.Literal["$ending"]
+
+        context : SomeLiteral
 
         container_object : ContainerObject
 
@@ -49,15 +61,15 @@ class RawReferenceClient:
             "reference",
             method="POST",
             json={
+                "prompt": "You are a helpful assistant",
                 "query": query,
+                "stream": False,
+                "ending": "$ending",
+                "context": "You're super wise",
                 "maybeContext": maybe_context,
                 "containerObject": convert_and_respect_annotation_metadata(
                     object_=container_object, annotation=ContainerObject, direction="write"
                 ),
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "ending": "$ending",
-                "context": "You're super wise",
             },
             request_options=request_options,
             omit=OMIT,
@@ -85,7 +97,11 @@ class AsyncRawReferenceClient:
     async def send(
         self,
         *,
+        prompt: typing.Literal["You are a helpful assistant"],
         query: str,
+        stream: typing.Literal[False],
+        ending: typing.Literal["$ending"],
+        context: SomeLiteral,
         container_object: ContainerObject,
         maybe_context: typing.Optional[SomeLiteral] = OMIT,
         request_options: typing.Optional[RequestOptions] = None,
@@ -93,7 +109,15 @@ class AsyncRawReferenceClient:
         """
         Parameters
         ----------
+        prompt : typing.Literal["You are a helpful assistant"]
+
         query : str
+
+        stream : typing.Literal[False]
+
+        ending : typing.Literal["$ending"]
+
+        context : SomeLiteral
 
         container_object : ContainerObject
 
@@ -110,15 +134,15 @@ class AsyncRawReferenceClient:
             "reference",
             method="POST",
             json={
+                "prompt": "You are a helpful assistant",
                 "query": query,
+                "stream": False,
+                "ending": "$ending",
+                "context": "You're super wise",
                 "maybeContext": maybe_context,
                 "containerObject": convert_and_respect_annotation_metadata(
                     object_=container_object, annotation=ContainerObject, direction="write"
                 ),
-                "prompt": "You are a helpful assistant",
-                "stream": False,
-                "ending": "$ending",
-                "context": "You're super wise",
             },
             request_options=request_options,
             omit=OMIT,

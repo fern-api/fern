@@ -28,7 +28,11 @@ class QueryClient:
     def send(
         self,
         *,
+        prompt: typing.Literal["You are a helpful assistant"] = "You are a helpful assistant",
+        alias_prompt: AliasToPrompt = "You are a helpful assistant",
         query: str,
+        stream: typing.Literal[False] = False,
+        alias_stream: AliasToStream = False,
         optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
         alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
         optional_stream: typing.Optional[typing.Literal[False]] = None,
@@ -38,7 +42,15 @@ class QueryClient:
         """
         Parameters
         ----------
+        prompt : typing.Literal["You are a helpful assistant"]
+
+        alias_prompt : AliasToPrompt
+
         query : str
+
+        stream : typing.Literal[False]
+
+        alias_stream : AliasToStream
 
         optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
 
@@ -67,7 +79,11 @@ class QueryClient:
         )
         """
         _response = self._raw_client.send(
+            prompt=prompt,
+            alias_prompt=alias_prompt,
             query=query,
+            stream=stream,
+            alias_stream=alias_stream,
             optional_prompt=optional_prompt,
             alias_optional_prompt=alias_optional_prompt,
             optional_stream=optional_stream,
@@ -95,7 +111,11 @@ class AsyncQueryClient:
     async def send(
         self,
         *,
+        prompt: typing.Literal["You are a helpful assistant"] = "You are a helpful assistant",
+        alias_prompt: AliasToPrompt = "You are a helpful assistant",
         query: str,
+        stream: typing.Literal[False] = False,
+        alias_stream: AliasToStream = False,
         optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
         alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
         optional_stream: typing.Optional[typing.Literal[False]] = None,
@@ -105,7 +125,15 @@ class AsyncQueryClient:
         """
         Parameters
         ----------
+        prompt : typing.Literal["You are a helpful assistant"]
+
+        alias_prompt : AliasToPrompt
+
         query : str
+
+        stream : typing.Literal[False]
+
+        alias_stream : AliasToStream
 
         optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
 
@@ -142,7 +170,11 @@ class AsyncQueryClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.send(
+            prompt=prompt,
+            alias_prompt=alias_prompt,
             query=query,
+            stream=stream,
+            alias_stream=alias_stream,
             optional_prompt=optional_prompt,
             alias_optional_prompt=alias_optional_prompt,
             optional_stream=optional_stream,
