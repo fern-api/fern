@@ -9,6 +9,7 @@ use Fern\Core\Types\Union;
 
 class UnionProperty extends JsonSerializableType
 {
+
     #[Union(new Union('string', 'integer'), 'null', ['integer' => 'integer'], UnionProperty::class)]
     #[JsonProperty('complexUnion')]
     public mixed $complexUnion;
@@ -20,7 +21,8 @@ class UnionProperty extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->complexUnion = $values['complexUnion'];
     }
 }
@@ -61,7 +63,7 @@ class UnionPropertyTest extends TestCase
         $this->assertInstanceOf(UnionProperty::class, $object->complexUnion, 'complexUnion should be an instance of UnionPropertyType.');
         $this->assertEquals('Nested String', $object->complexUnion->complexUnion, 'Nested complexUnion should match the original value.');
 
-        $actualJson = $object->toJson();
+        $actualJson= $object->toJson();
         $this->assertJsonStringEqualsJsonString($expectedJson, $actualJson, 'Serialized JSON does not match the original JSON.');
     }
 

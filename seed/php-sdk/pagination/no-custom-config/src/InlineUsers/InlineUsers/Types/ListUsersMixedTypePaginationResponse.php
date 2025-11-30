@@ -27,16 +27,15 @@ class ListUsersMixedTypePaginationResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->next = $values['next'];
-        $this->data = $values['data'];
+    )
+    {
+        $this->next = $values['next'];$this->data = $values['data'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

@@ -24,8 +24,8 @@ class GetWithMultipleQuery extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->query = $values['query'];
-        $this->number = $values['number'];
+    )
+    {
+        $this->query = $values['query'];$this->number = $values['number'];
     }
 }

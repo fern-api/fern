@@ -24,8 +24,8 @@ class GetResourceRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->includeMetadata = $values['includeMetadata'];
-        $this->format = $values['format'];
+    )
+    {
+        $this->includeMetadata = $values['includeMetadata'];$this->format = $values['format'];
     }
 }

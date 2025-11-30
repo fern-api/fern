@@ -18,7 +18,7 @@ use Seed\Endpoints\Params\Requests\GetWithPathAndQuery;
 use Seed\Endpoints\Params\Requests\GetWithInlinePathAndQuery;
 use Seed\Endpoints\Params\Requests\ModifyResourceAtInlinedPath;
 
-class ParamsClient
+class ParamsClient 
 {
     /**
      * @var array{
@@ -46,10 +46,11 @@ class ParamsClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -70,8 +71,7 @@ class ParamsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithPath(string $param, ?array $options = null): string
-    {
+    public function getWithPath(string $param, ?array $options = null): string {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -83,15 +83,15 @@ class ParamsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeString($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -125,8 +125,7 @@ class ParamsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithInlinePath(string $param, ?array $options = null): string
-    {
+    public function getWithInlinePath(string $param, ?array $options = null): string {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -138,15 +137,15 @@ class ParamsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeString($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -179,8 +178,7 @@ class ParamsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithQuery(GetWithQuery $request, ?array $options = null): void
-    {
+    public function getWithQuery(GetWithQuery $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['query'] = $request->query;
@@ -196,12 +194,12 @@ class ParamsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -234,8 +232,7 @@ class ParamsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithAllowMultipleQuery(GetWithMultipleQuery $request, ?array $options = null): void
-    {
+    public function getWithAllowMultipleQuery(GetWithMultipleQuery $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['query'] = $request->query;
@@ -251,12 +248,12 @@ class ParamsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -290,8 +287,7 @@ class ParamsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithPathAndQuery(string $param, GetWithPathAndQuery $request, ?array $options = null): void
-    {
+    public function getWithPathAndQuery(string $param, GetWithPathAndQuery $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['query'] = $request->query;
@@ -306,12 +302,12 @@ class ParamsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -345,8 +341,7 @@ class ParamsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getWithInlinePathAndQuery(string $param, GetWithInlinePathAndQuery $request, ?array $options = null): void
-    {
+    public function getWithInlinePathAndQuery(string $param, GetWithInlinePathAndQuery $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['query'] = $request->query;
@@ -361,12 +356,12 @@ class ParamsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -401,8 +396,7 @@ class ParamsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function modifyWithPath(string $param, string $request, ?array $options = null): string
-    {
+    public function modifyWithPath(string $param, string $request, ?array $options = null): string {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -415,15 +409,15 @@ class ParamsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeString($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -458,8 +452,7 @@ class ParamsClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function modifyWithInlinePath(string $param, ModifyResourceAtInlinedPath $request, ?array $options = null): string
-    {
+    public function modifyWithInlinePath(string $param, ModifyResourceAtInlinedPath $request, ?array $options = null): string {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -472,15 +465,15 @@ class ParamsClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeString($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

@@ -53,11 +53,8 @@ class UpdateComplexProfileRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->nullableRole = $values['nullableRole'] ?? null;
-        $this->nullableStatus = $values['nullableStatus'] ?? null;
-        $this->nullableNotification = $values['nullableNotification'] ?? null;
-        $this->nullableSearchResult = $values['nullableSearchResult'] ?? null;
-        $this->nullableArray = $values['nullableArray'] ?? null;
+    )
+    {
+        $this->nullableRole = $values['nullableRole'] ?? null;$this->nullableStatus = $values['nullableStatus'] ?? null;$this->nullableNotification = $values['nullableNotification'] ?? null;$this->nullableSearchResult = $values['nullableSearchResult'] ?? null;$this->nullableArray = $values['nullableArray'] ?? null;
     }
 }

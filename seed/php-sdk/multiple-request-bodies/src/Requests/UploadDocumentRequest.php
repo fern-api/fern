@@ -35,9 +35,8 @@ class UploadDocumentRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->author = $values['author'] ?? null;
-        $this->tags = $values['tags'] ?? null;
-        $this->title = $values['title'] ?? null;
+    )
+    {
+        $this->author = $values['author'] ?? null;$this->tags = $values['tags'] ?? null;$this->title = $values['title'] ?? null;
     }
 }

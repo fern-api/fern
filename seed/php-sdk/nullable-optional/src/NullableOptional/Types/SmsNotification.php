@@ -34,17 +34,15 @@ class SmsNotification extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->phoneNumber = $values['phoneNumber'];
-        $this->message = $values['message'];
-        $this->shortCode = $values['shortCode'] ?? null;
+    )
+    {
+        $this->phoneNumber = $values['phoneNumber'];$this->message = $values['message'];$this->shortCode = $values['shortCode'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

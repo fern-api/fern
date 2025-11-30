@@ -36,9 +36,8 @@ class SearchRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->query = $values['query'];
-        $this->filters = $values['filters'] ?? null;
-        $this->includeTypes = $values['includeTypes'] ?? null;
+    )
+    {
+        $this->query = $values['query'];$this->filters = $values['filters'] ?? null;$this->includeTypes = $values['includeTypes'] ?? null;
     }
 }

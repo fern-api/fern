@@ -34,9 +34,8 @@ class NamedMixedPatchRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->appId = $values['appId'] ?? null;
-        $this->instructions = $values['instructions'] ?? null;
-        $this->active = $values['active'] ?? null;
+    )
+    {
+        $this->appId = $values['appId'] ?? null;$this->instructions = $values['instructions'] ?? null;$this->active = $values['active'] ?? null;
     }
 }

@@ -44,9 +44,9 @@ class UnionWithSameNumberTypes extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    ) {
-        $this->type = $values['type'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->type = $values['type'];$this->value = $values['value'];
     }
 
     /**
@@ -57,10 +57,8 @@ class UnionWithSameNumberTypes extends JsonSerializableType
      *   |'_unknown'
      * )
      */
-    public function getType(): string
-    {
-        return $this->type;
-    }
+    public function getType(): string {
+        return $this->type;}
 
     /**
      * @return (
@@ -69,17 +67,14 @@ class UnionWithSameNumberTypes extends JsonSerializableType
      *   |mixed
      * )
      */
-    public function getValue(): mixed
-    {
-        return $this->value;
-    }
+    public function getValue(): mixed {
+        return $this->value;}
 
     /**
      * @param int $positiveInt
      * @return UnionWithSameNumberTypes
      */
-    public static function positiveInt(int $positiveInt): UnionWithSameNumberTypes
-    {
+    public static function positiveInt(int $positiveInt): UnionWithSameNumberTypes {
         return new UnionWithSameNumberTypes([
             'type' => 'positiveInt',
             'value' => $positiveInt,
@@ -90,8 +85,7 @@ class UnionWithSameNumberTypes extends JsonSerializableType
      * @param int $negativeInt
      * @return UnionWithSameNumberTypes
      */
-    public static function negativeInt(int $negativeInt): UnionWithSameNumberTypes
-    {
+    public static function negativeInt(int $negativeInt): UnionWithSameNumberTypes {
         return new UnionWithSameNumberTypes([
             'type' => 'negativeInt',
             'value' => $negativeInt,
@@ -102,8 +96,7 @@ class UnionWithSameNumberTypes extends JsonSerializableType
      * @param float $anyNumber
      * @return UnionWithSameNumberTypes
      */
-    public static function anyNumber(float $anyNumber): UnionWithSameNumberTypes
-    {
+    public static function anyNumber(float $anyNumber): UnionWithSameNumberTypes {
         return new UnionWithSameNumberTypes([
             'type' => 'anyNumber',
             'value' => $anyNumber,
@@ -113,89 +106,81 @@ class UnionWithSameNumberTypes extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isPositiveInt(): bool
-    {
-        return is_int($this->value) && $this->type === 'positiveInt';
+    public function isPositiveInt(): bool {
+        return is_int($this->value)&& $this->type === 'positiveInt';
     }
 
     /**
      * @return int
      */
-    public function asPositiveInt(): int
-    {
-        if (!(is_int($this->value) && $this->type === 'positiveInt')) {
+    public function asPositiveInt(): int {
+        if (!(is_int($this->value)&& $this->type === 'positiveInt')){
             throw new Exception(
                 "Expected positiveInt; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isNegativeInt(): bool
-    {
-        return is_int($this->value) && $this->type === 'negativeInt';
+    public function isNegativeInt(): bool {
+        return is_int($this->value)&& $this->type === 'negativeInt';
     }
 
     /**
      * @return int
      */
-    public function asNegativeInt(): int
-    {
-        if (!(is_int($this->value) && $this->type === 'negativeInt')) {
+    public function asNegativeInt(): int {
+        if (!(is_int($this->value)&& $this->type === 'negativeInt')){
             throw new Exception(
                 "Expected negativeInt; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isAnyNumber(): bool
-    {
-        return is_float($this->value) && $this->type === 'anyNumber';
+    public function isAnyNumber(): bool {
+        return is_float($this->value)&& $this->type === 'anyNumber';
     }
 
     /**
      * @return float
      */
-    public function asAnyNumber(): float
-    {
-        if (!(is_float($this->value) && $this->type === 'anyNumber')) {
+    public function asAnyNumber(): float {
+        if (!(is_float($this->value)&& $this->type === 'anyNumber')){
             throw new Exception(
                 "Expected anyNumber; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $result = [];
         $result['type'] = $this->type;
-
+        
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-
-        switch ($this->type) {
+        
+        switch ($this->type){
             case 'positiveInt':
                 $value = $this->value;
                 $result['positiveInt'] = $value;
@@ -210,27 +195,26 @@ class UnionWithSameNumberTypes extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)) {
+                if (is_null($this->value)){
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType) {
+                if ($this->value instanceof JsonSerializableType){
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)) {
+                } elseif (is_array($this->value)){
                     $result = array_merge($this->value, $result);
                 }
         }
-
+        
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static
-    {
+    public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
+        if (!is_array($decodedJson)){
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -239,48 +223,47 @@ class UnionWithSameNumberTypes extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static
-    {
+    public static function jsonDeserialize(array $data): static {
         $args = [];
-        if (!array_key_exists('type', $data)) {
+        if (!array_key_exists('type', $data)){
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))) {
+        if (!(is_string($type))){
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-
+        
         $args['type'] = $type;
-        switch ($type) {
+        switch ($type){
             case 'positiveInt':
-                if (!array_key_exists('positiveInt', $data)) {
+                if (!array_key_exists('positiveInt', $data)){
                     throw new Exception(
                         "JSON data is missing property 'positiveInt'",
                     );
                 }
-
+                
                 $args['value'] = $data['positiveInt'];
                 break;
             case 'negativeInt':
-                if (!array_key_exists('negativeInt', $data)) {
+                if (!array_key_exists('negativeInt', $data)){
                     throw new Exception(
                         "JSON data is missing property 'negativeInt'",
                     );
                 }
-
+                
                 $args['value'] = $data['negativeInt'];
                 break;
             case 'anyNumber':
-                if (!array_key_exists('anyNumber', $data)) {
+                if (!array_key_exists('anyNumber', $data)){
                     throw new Exception(
                         "JSON data is missing property 'anyNumber'",
                     );
                 }
-
+                
                 $args['value'] = $data['anyNumber'];
                 break;
             case '_unknown':
@@ -288,7 +271,7 @@ class UnionWithSameNumberTypes extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-
+        
         // @phpstan-ignore-next-line
         return new static($args);
     }

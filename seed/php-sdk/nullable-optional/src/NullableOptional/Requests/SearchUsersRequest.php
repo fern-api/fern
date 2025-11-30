@@ -36,10 +36,8 @@ class SearchUsersRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->query = $values['query'];
-        $this->department = $values['department'] ?? null;
-        $this->role = $values['role'] ?? null;
-        $this->isActive = $values['isActive'] ?? null;
+    )
+    {
+        $this->query = $values['query'];$this->department = $values['department'] ?? null;$this->role = $values['role'] ?? null;$this->isActive = $values['isActive'] ?? null;
     }
 }

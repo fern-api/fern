@@ -2,8 +2,8 @@
 
 namespace Seed\Endpoints\Put\Types;
 
-enum ErrorCode: string
-{
+enum ErrorCode
+ : string {
     case InternalServerError = "INTERNAL_SERVER_ERROR";
     case Unauthorized = "UNAUTHORIZED";
     case Forbidden = "FORBIDDEN";

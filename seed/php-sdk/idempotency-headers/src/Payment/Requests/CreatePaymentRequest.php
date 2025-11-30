@@ -28,8 +28,8 @@ class CreatePaymentRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->amount = $values['amount'];
-        $this->currency = $values['currency'];
+    )
+    {
+        $this->amount = $values['amount'];$this->currency = $values['currency'];
     }
 }

@@ -16,8 +16,7 @@ use Fern\Core\Json\JsonApiRequest;
 use Fern\Core\Json\JsonSerializableType;
 use Fern\Core\Json\JsonProperty;
 
-class JsonRequest extends JsonSerializableType
-{
+class JsonRequest extends JsonSerializableType {
     /**
      * @var string
      */

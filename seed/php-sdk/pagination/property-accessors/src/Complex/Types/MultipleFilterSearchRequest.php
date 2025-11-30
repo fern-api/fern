@@ -20,7 +20,7 @@ class MultipleFilterSearchRequest extends JsonSerializableType
      *   |array<SingleFilterSearchRequest>
      * )|null $value
      */
-    #[JsonProperty('value'), Union([MultipleFilterSearchRequest::class], [SingleFilterSearchRequest::class], 'null')]
+    #[JsonProperty('value'), Union([MultipleFilterSearchRequest::class],[SingleFilterSearchRequest::class],'null')]
     private array|null $value;
 
     /**
@@ -34,27 +34,22 @@ class MultipleFilterSearchRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->operator = $values['operator'] ?? null;
-        $this->value = $values['value'] ?? null;
+    )
+    {
+        $this->operator = $values['operator'] ?? null;$this->value = $values['value'] ?? null;
     }
 
     /**
      * @return ?value-of<MultipleFilterSearchRequestOperator>
      */
-    public function getOperator(): ?string
-    {
-        return $this->operator;
-    }
+    public function getOperator(): ?string {
+        return $this->operator;}
 
     /**
      * @param ?value-of<MultipleFilterSearchRequestOperator> $value
      */
-    public function setOperator(?string $value = null): self
-    {
-        $this->operator = $value;
-        return $this;
-    }
+    public function setOperator(?string $value = null): self {
+        $this->operator = $value;return $this;}
 
     /**
      * @return (
@@ -62,10 +57,8 @@ class MultipleFilterSearchRequest extends JsonSerializableType
      *   |array<SingleFilterSearchRequest>
      * )|null
      */
-    public function getValue(): array|null
-    {
-        return $this->value;
-    }
+    public function getValue(): array|null {
+        return $this->value;}
 
     /**
      * @param (
@@ -73,17 +66,13 @@ class MultipleFilterSearchRequest extends JsonSerializableType
      *   |array<SingleFilterSearchRequest>
      * )|null $value
      */
-    public function setValue(array|null $value = null): self
-    {
-        $this->value = $value;
-        return $this;
-    }
+    public function setValue(array|null $value = null): self {
+        $this->value = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

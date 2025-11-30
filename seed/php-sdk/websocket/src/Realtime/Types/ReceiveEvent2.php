@@ -34,17 +34,15 @@ class ReceiveEvent2 extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->gamma = $values['gamma'];
-        $this->delta = $values['delta'];
-        $this->epsilon = $values['epsilon'];
+    )
+    {
+        $this->gamma = $values['gamma'];$this->delta = $values['delta'];$this->epsilon = $values['epsilon'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }
