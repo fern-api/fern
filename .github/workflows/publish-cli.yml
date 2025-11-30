@@ -98,7 +98,7 @@ jobs:
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
           POSTHOG_API_KEY: ${{ secrets.POSTHOG_PROJECT_API_KEY }}
         run: |
-          pnpm --filter @fern-api/cli dist:cli:prod
+          pnpm turbo run dist:cli:prod --filter @fern-api/cli
           cli_path="$(pwd)/packages/cli/cli/dist/prod/cli.cjs"
           ./scripts/live-test.sh "$cli_path" "$FERN_TOKEN" "true"
 

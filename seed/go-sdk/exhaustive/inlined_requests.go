@@ -8,13 +8,13 @@ import (
 )
 
 var (
-	postWithObjectBodyFieldString       = big.NewInt(1 << 0)
+	postWithObjectBodyFieldFieldString  = big.NewInt(1 << 0)
 	postWithObjectBodyFieldInteger      = big.NewInt(1 << 1)
 	postWithObjectBodyFieldNestedObject = big.NewInt(1 << 2)
 )
 
 type PostWithObjectBody struct {
-	String       string                         `json:"string" url:"-"`
+	FieldString  string                         `json:"string" url:"-"`
 	Integer      int                            `json:"integer" url:"-"`
 	NestedObject *types.ObjectWithOptionalField `json:"NestedObject,omitempty" url:"-"`
 
@@ -29,11 +29,11 @@ func (p *PostWithObjectBody) require(field *big.Int) {
 	p.explicitFields.Or(p.explicitFields, field)
 }
 
-// SetString sets the String field and marks it as non-optional;
+// SetFieldString sets the FieldString field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PostWithObjectBody) SetString(string_ string) {
-	p.String = string_
-	p.require(postWithObjectBodyFieldString)
+func (p *PostWithObjectBody) SetFieldString(string_ string) {
+	p.FieldString = string_
+	p.require(postWithObjectBodyFieldFieldString)
 }
 
 // SetInteger sets the Integer field and marks it as non-optional;

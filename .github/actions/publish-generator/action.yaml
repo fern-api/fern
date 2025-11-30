@@ -45,7 +45,7 @@ runs:
       shell: bash
       run: |
         echo "Building seed CLI once with Turbo caching..."
-        pnpm turbo run dist:cli --filter=@fern-api/seed-cli
+        pnpm seed:build
 
     - name: Run publish (auto)
       if: inputs.manual-trigger == 'false'

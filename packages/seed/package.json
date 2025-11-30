@@ -27,7 +27,7 @@
     "compile": "tsc --build",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
-    "dist:cli": "pnpm compile && node build.cjs",
+    "dist:cli": "node build.mjs",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
     "generate": "fern generate --local",
     "test": "vitest --run",

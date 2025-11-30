@@ -17,14 +17,14 @@ buildScripts:
 test:
   docker:
     image: fernapi/fern-ruby-sdk-v2:latest
-    command: pnpm --filter @fern-api/ruby-sdk dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/ruby-sdk
   podman:
     image: fernapi/fern-ruby-sdk-v2:latest
-    command: pnpm --filter @fern-api/ruby-sdk podmanTagLatest
+    command: pnpm turbo run podmanTagLatest --filter @fern-api/ruby-sdk
 
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/ruby-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/ruby-sdk
   docker:
     file: ./generators/ruby-v2/sdk/Dockerfile
     image: fernapi/fern-ruby-sdk-v2

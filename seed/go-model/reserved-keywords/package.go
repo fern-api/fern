@@ -3,120 +3,117 @@
 package nurseryapi
 
 import (
-    json "encoding/json"
-    internal "github.com/reserved-keywords/fern/internal"
-    fmt "fmt"
+	json "encoding/json"
+	fmt "fmt"
+	internal "github.com/reserved-keywords/fern/internal"
 )
 
-
 type Package struct {
-    Name string `json:"name" url:"name"`
+	Name string `json:"name" url:"name"`
 
-    extraProperties map[string]any
-    rawJSON json.RawMessage
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
-func (p *Package) GetName() string{
-    if p == nil {
-        return ""
-    }
-    return p.Name
+func (p *Package) GetName() string {
+	if p == nil {
+		return ""
+	}
+	return p.Name
 }
 
-func (p *Package) GetExtraProperties() map[string]any{
-    if p == nil {
-        return nil
-    }
-    return p.extraProperties
+func (p *Package) GetExtraProperties() map[string]any {
+	if p == nil {
+		return nil
+	}
+	return p.extraProperties
 }
 
 func (p *Package) UnmarshalJSON(
-    data []byte,
-) error{
-    type unmarshaler Package
-    var value unmarshaler
-    if err := json.Unmarshal(data, &value); err != nil {
-        return err
-    }
-    *p = Package(value)
-    extraProperties, err := internal.ExtractExtraProperties(data, *p)
-    if err != nil {
-        return err
-    }
-    p.extraProperties = extraProperties
-    p.rawJSON = json.RawMessage(data)
-    return nil
+	data []byte,
+) error {
+	type unmarshaler Package
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*p = Package(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *p)
+	if err != nil {
+		return err
+	}
+	p.extraProperties = extraProperties
+	p.rawJSON = json.RawMessage(data)
+	return nil
 }
 
-func (p *Package) String() string{
-    if len(p.rawJSON) > 0 {
-        if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
-            return value
-        }
-    }
-    if value, err := internal.StringifyJSON(p); err == nil {
-        return value
-    }
-    return fmt.Sprintf("%#v", p)
+func (p *Package) String() string {
+	if len(p.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(p.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(p); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", p)
 }
-
 
 type Record struct {
-    Foo map[string]string `json:"foo" url:"foo"`
-    3D int `json:"3d" url:"3d"`
+	Foo     map[string]string `json:"foo" url:"foo"`
+	Field3D int               `json:"3d" url:"3d"`
 
-    extraProperties map[string]any
-    rawJSON json.RawMessage
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
 }
 
-func (r *Record) GetFoo() map[string]string{
-    if r == nil {
-        return nil
-    }
-    return r.Foo
+func (r *Record) GetFoo() map[string]string {
+	if r == nil {
+		return nil
+	}
+	return r.Foo
 }
 
-func (r *Record) Get3D() int{
-    if r == nil {
-        return 0
-    }
-    return r.3D
+func (r *Record) GetField3D() int {
+	if r == nil {
+		return 0
+	}
+	return r.Field3D
 }
 
-func (r *Record) GetExtraProperties() map[string]any{
-    if r == nil {
-        return nil
-    }
-    return r.extraProperties
+func (r *Record) GetExtraProperties() map[string]any {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
 }
 
 func (r *Record) UnmarshalJSON(
-    data []byte,
-) error{
-    type unmarshaler Record
-    var value unmarshaler
-    if err := json.Unmarshal(data, &value); err != nil {
-        return err
-    }
-    *r = Record(value)
-    extraProperties, err := internal.ExtractExtraProperties(data, *r)
-    if err != nil {
-        return err
-    }
-    r.extraProperties = extraProperties
-    r.rawJSON = json.RawMessage(data)
-    return nil
+	data []byte,
+) error {
+	type unmarshaler Record
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = Record(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
 }
 
-func (r *Record) String() string{
-    if len(r.rawJSON) > 0 {
-        if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
-            return value
-        }
-    }
-    if value, err := internal.StringifyJSON(r); err == nil {
-        return value
-    }
-    return fmt.Sprintf("%#v", r)
+func (r *Record) String() string {
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
 }
-

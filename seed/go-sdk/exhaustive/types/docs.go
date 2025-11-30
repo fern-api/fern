@@ -10,7 +10,7 @@ import (
 )
 
 var (
-	objectWithDocsFieldString = big.NewInt(1 << 0)
+	objectWithDocsFieldFieldString = big.NewInt(1 << 0)
 )
 
 type ObjectWithDocs struct {
@@ -73,7 +73,7 @@ type ObjectWithDocs struct {
 	// - ** /: PHPDoc comment end
 	// - *: Can interfere with comment blocks
 	// - &: HTML entities
-	String string `json:"string" url:"string"`
+	FieldString string `json:"string" url:"string"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -82,11 +82,11 @@ type ObjectWithDocs struct {
 	rawJSON         json.RawMessage
 }
 
-func (o *ObjectWithDocs) GetString() string {
+func (o *ObjectWithDocs) GetFieldString() string {
 	if o == nil {
 		return ""
 	}
-	return o.String
+	return o.FieldString
 }
 
 func (o *ObjectWithDocs) GetExtraProperties() map[string]interface{} {
@@ -100,11 +100,11 @@ func (o *ObjectWithDocs) require(field *big.Int) {
 	o.explicitFields.Or(o.explicitFields, field)
 }
 
-// SetString sets the String field and marks it as non-optional;
+// SetFieldString sets the FieldString field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (o *ObjectWithDocs) SetString(string_ string) {
-	o.String = string_
-	o.require(objectWithDocsFieldString)
+func (o *ObjectWithDocs) SetFieldString(string_ string) {
+	o.FieldString = string_
+	o.require(objectWithDocsFieldFieldString)
 }
 
 func (o *ObjectWithDocs) UnmarshalJSON(data []byte) error {

@@ -19,7 +19,7 @@ publish:
   workingDirectory: generators/go
   preBuildCommands:
     - go build ./...
-    - pnpm --filter @fern-api/go-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/go-sdk
   docker:
     file: ./generators/go/sdk/Dockerfile
     image: fernapi/fern-go-sdk
@@ -27,10 +27,10 @@ publish:
 test:
   docker:
     image: fernapi/fern-go-sdk:latest
-    command: pnpm --filter @fern-api/go-sdk dist:cli && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && docker build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
   podman:
     image: fernapi/fern-go-sdk:latest
-    command: pnpm --filter @fern-api/go-sdk dist:cli && podman build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/go-sdk && podman build -f ./generators/go/sdk/Dockerfile -t fernapi/fern-go-sdk:latest .
 language: go
 generatorType: SDK
 defaultOutputMode: github

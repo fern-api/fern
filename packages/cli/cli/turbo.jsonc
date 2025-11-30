@@ -1,0 +1,21 @@
+{
+    "extends": ["//"],
+    "tasks": {
+        "dist:cli:prod:unminified": {
+            "outputs": ["dist/**"],
+            "dependsOn": ["^compile"],
+            "inputs": [
+                "src/**",
+                "tests/**",
+                "package.json",
+                "tsconfig.json",
+                "build-utils.mjs",
+                "build.prod.mjs",
+                "$TURBO_ROOT$/shared/.prettierignore",
+                "$TURBO_ROOT$/shared/stylelintrc.shared.json",
+                "$TURBO_ROOT$/tsconfig.eslint.json",
+                "$TURBO_ROOT$/packages/configs/**"
+            ]
+        }
+    }
+}

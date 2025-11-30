@@ -14,7 +14,7 @@ buildScripts:
 publish:
   workingDirectory: generators/rust
   preBuildCommands:
-    - pnpm --filter @fern-api/rust-sdk dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/rust-sdk
   docker:
     file: ./generators/rust/sdk/Dockerfile
     image: fernapi/fern-rust-sdk
@@ -23,11 +23,11 @@ publish:
 test:
   docker:
     image: fernapi/fern-rust-sdk:latest
-    command: pnpm --filter @fern-api/rust-sdk dist:cli && docker build -f ./generators/rust/sdk/Dockerfile -t fernapi/fern-rust-sdk:latest .
+    command: pnpm turbo run dist:cli --filter @fern-api/rust-sdk && docker build -f ./generators/rust/sdk/Dockerfile -t fernapi/fern-rust-sdk:latest .
   local:
     workingDirectory: generators/rust
     buildCommand:
-      - pnpm --filter @fern-api/rust-sdk dist:cli
+      - pnpm turbo run dist:cli --filter @fern-api/rust-sdk
     runCommand: node --enable-source-maps ./sdk/dist/cli.cjs {CONFIG_PATH}
 
 language: rust

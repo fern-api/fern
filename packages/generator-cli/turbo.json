@@ -2,11 +2,11 @@
   "$schema": "https://turbo.build/schema.json",
   "extends": ["//"],
   "tasks": {
-    "compile": {
-      "outputs": ["dist/**", "lib/**"]
-    },
     "test": {
-      "dependsOn": ["compile", "^compile"]
+      "dependsOn": ["dist:cli"]
+    },
+    "test:update": {
+      "dependsOn": ["dist:cli"]
     }
   }
 }

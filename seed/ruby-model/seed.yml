@@ -5,7 +5,7 @@ changelogLocation: ../../generators/ruby/model/versions.yml
 
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-api/fern-ruby-model dist:cli
+    - pnpm turbo run dist:cli --filter @fern-api/fern-ruby-model
   docker:
     file: ./generators/ruby/model/Dockerfile
     image: fernapi/fern-ruby-model
@@ -13,7 +13,7 @@ publish:
 test:
   docker:
     image: fernapi/fern-ruby-model:latest
-    command: pnpm --filter @fern-api/fern-ruby-model dockerTagLatest
+    command: pnpm turbo run dockerTagLatest --filter @fern-api/fern-ruby-model
 language: ruby
 generatorType: Model
 defaultOutputMode: local_files

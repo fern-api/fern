@@ -222,7 +222,7 @@ jobs:
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
         run: |
-          pnpm --filter @fern-api/cli dist:cli:dev
+          pnpm turbo run dist:cli:dev --filter @fern-api/cli
           cli_path="$(pwd)/packages/cli/cli/dist/dev/cli.cjs" 
           ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
 
@@ -249,7 +249,7 @@ jobs:
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
         run: |
-          pnpm --filter @fern-api/cli dist:cli:dev
+          pnpm turbo run dist:cli:dev --filter @fern-api/cli
           $cliPath = Join-Path $env:GITHUB_WORKSPACE "packages\cli\cli\dist\dev\cli.cjs"
           if (-not (Test-Path $cliPath)) {
             Write-Error "CLI path does not exist: $cliPath"
@@ -285,7 +285,7 @@ jobs:
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
           AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
         run: |
-          pnpm --filter @fern-api/cli dist:cli:dev
+          pnpm turbo run dist:cli:dev --filter @fern-api/cli
           $cliPath = Join-Path $env:GITHUB_WORKSPACE "packages\cli\cli\dist\dev\cli.cjs"
           if (-not (Test-Path $cliPath)) {
             Write-Error "CLI path does not exist: $cliPath"

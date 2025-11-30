@@ -64,17 +64,17 @@ jobs:
         run: go install github.com/fern-api/protoc-gen-openapi/cmd/protoc-gen-openapi@latest
 
       - name: 🧪 Build
-        run: pnpm --filter=${{ env.PACKAGE_NAME }} compile
+        run: pnpm turbo run compile --filter=${{ env.PACKAGE_NAME }}
 
       - name: 🧪 Test
-        run: pnpm --filter=${{ env.PACKAGE_NAME }} test
+        run: pnpm turbo run test --filter=${{ env.PACKAGE_NAME }}
 
       - name: Publish @fern-api/python-dynamic-snippets
         run: |
           cd generators/python-v2/dynamic-snippets
-          pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ steps.ver.outputs.version }}
+          pnpm turbo run dist --filter=${{ env.PACKAGE_NAME }} -- ${{ steps.ver.outputs.version }}
           cd dist
-          npm publish --access public -tag latest
+          npm publish --access public --tag latest
 
       - name: Update fern-platform dependency
         uses: ./.github/actions/update-fern-platform-dependency

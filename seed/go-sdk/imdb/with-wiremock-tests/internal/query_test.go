@@ -371,4 +371,25 @@ func TestQueryValuesWithDefaults(t *testing.T) {
 		require.NoError(t, err)
 		assert.Equal(t, "age=0&enabled=false&name=", values.Encode())
 	})
+
+	t.Run("nil input returns empty values", func(t *testing.T) {
+		defaults := map[string]any{
+			"name": "default-name",
+			"age":  25,
+		}
+
+		// Test with nil
+		values, err := QueryValuesWithDefaults(nil, defaults)
+		require.NoError(t, err)
+		assert.Empty(t, values)
+
+		// Test with nil pointer
+		type example struct {
+			Name string `json:"name" url:"name"`
+		}
+		var nilPtr *example
+		values, err = QueryValuesWithDefaults(nilPtr, defaults)
+		require.NoError(t, err)
+		assert.Empty(t, values)
+	})
 }
