@@ -451,7 +451,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
         const properties: string[] = [];
 
         for (const header of headers) {
-            const literalValue = this.getLiteralValueFromType(header.valueType, context);
+            const literalValue = this.getLiteralValueForHeader(header.valueType, context);
 
             if (literalValue != null) {
                 properties.push(`            "${header.name.wireValue}": ${literalValue}`);
@@ -466,6 +466,20 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
 ${properties.join(",\n")}
         };
     }`;
+    }
+
+    private getLiteralValueForHeader(typeReference: TypeReference, context: SdkContext): string | undefined {
+        const resolvedType = context.type.resolveTypeReference(typeReference);
+        if (resolvedType.type === "container" && resolvedType.container.type === "literal") {
+            const literal = resolvedType.container.literal;
+            if (literal.type === "string") {
+                return `"${literal.string}"`;
+            } else if (literal.type === "boolean") {
+                // Headers must be strings, so stringify boolean literals
+                return `"${String(literal.boolean)}"`;
+            }
+        }
+        return undefined;
     }
 
     private generateQsFunction(queryParameters: QueryParameter[], context: SdkContext): string {
@@ -521,7 +535,26 @@ ${properties.join(",\n")}
         };
     }`;
             },
-            reference: () => {
+            reference: (referenceToRequestBody) => {
+                // When flattenRequestParameters is enabled, body properties are flattened into the request wrapper
+                // so we need to reconstruct the body from those flattened properties
+                if (this.flattenRequestParameters && referenceToRequestBody.requestBodyType.type === "named") {
+                    const typeDeclaration = this.getTypeDeclaration(referenceToRequestBody.requestBodyType, context);
+                    if (typeDeclaration?.shape.type === "object") {
+                        const properties: string[] = [];
+                        for (const property of typeDeclaration.shape.properties) {
+                            const propertyName = this.getPropertyNameOfTypeDeclarationProperty(property);
+                            properties.push(
+                                `            "${property.name.wireValue}": request["${propertyName.propertyName}"]`
+                            );
+                        }
+                        return `export function body(request: ${this.wrapperName}): unknown {
+        return {
+${properties.join(",\n")}
+        };
+    }`;
+                    }
+                }
                 const bodyPropertyName = this.getReferencedBodyPropertyName();
                 return `export function body(request: ${this.wrapperName}): unknown {
         return request["${bodyPropertyName}"];
