@@ -457,9 +457,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 properties.push(`            "${header.name.wireValue}": ${literalValue}`);
             } else {
                 const propertyName = this.getPropertyNameOfNonLiteralHeader(header);
-                properties.push(
-                    `            "${header.name.wireValue}": request[${getPropertyKey(propertyName.propertyName)}]`
-                );
+                properties.push(`            "${header.name.wireValue}": request["${propertyName.propertyName}"]`);
             }
         }
 
@@ -481,7 +479,7 @@ ${properties.join(",\n")}
             } else {
                 const propertyName = this.getPropertyNameOfQueryParameter(queryParameter);
                 properties.push(
-                    `            "${queryParameter.name.wireValue}": request[${getPropertyKey(propertyName.propertyName)}]`
+                    `            "${queryParameter.name.wireValue}": request["${propertyName.propertyName}"]`
                 );
             }
         }
@@ -512,7 +510,7 @@ ${properties.join(",\n")}
                     } else {
                         const propertyName = this.getInlinedRequestBodyPropertyKey(property);
                         properties.push(
-                            `            "${property.name.wireValue}": request[${getPropertyKey(propertyName.propertyName)}]`
+                            `            "${property.name.wireValue}": request["${propertyName.propertyName}"]`
                         );
                     }
                 }
@@ -523,10 +521,10 @@ ${properties.join(",\n")}
         };
     }`;
             },
-            reference: (referenceToRequestBody) => {
+            reference: () => {
                 const bodyPropertyName = this.getReferencedBodyPropertyName();
                 return `export function body(request: ${this.wrapperName}): unknown {
-        return request[${getPropertyKey(bodyPropertyName)}];
+        return request["${bodyPropertyName}"];
     }`;
             },
             fileUpload: () => {
