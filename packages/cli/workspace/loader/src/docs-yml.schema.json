@@ -4424,6 +4424,14 @@
         "sidebar"
       ]
     },
+    "docs.ThemeSwitcherPlacement": {
+      "type": "string",
+      "enum": [
+        "header",
+        "sidebar",
+        "hidden"
+      ]
+    },
     "docs.ContentAlignment": {
       "type": "string",
       "enum": [
@@ -4495,6 +4503,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.TabsPlacement"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "theme-switcher-placement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.ThemeSwitcherPlacement"
             },
             {
               "type": "null"
