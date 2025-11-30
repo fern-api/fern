@@ -328,7 +328,7 @@ function convertTypeReference(typeReference: IrVersions.V50.types.TypeReference)
 
 function convertContainerType(container: IrVersions.V50.types.ContainerType): IrVersions.V49.types.ContainerType {
     return IrVersions.V50.types.ContainerType._visit<IrVersions.V49.types.ContainerType>(container, {
-        list: (itemType) => IrVersions.V49.types.ContainerType.list(convertTypeReference(itemType)),
+        list: (listType) => IrVersions.V49.types.ContainerType.list(convertTypeReference(listType.itemType)),
         optional: (itemType) => IrVersions.V49.types.ContainerType.optional(convertTypeReference(itemType)),
         set: (itemType) => IrVersions.V49.types.ContainerType.set(convertTypeReference(itemType)),
         map: ({ keyType, valueType }) =>

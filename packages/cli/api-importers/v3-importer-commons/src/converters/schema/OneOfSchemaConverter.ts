@@ -404,7 +404,7 @@ export class OneOfSchemaConverter extends AbstractConverter<
     private containerTypeIsWrappedPrimitive(type: ContainerType): boolean {
         switch (type.type) {
             case "list":
-                return this.typeReferenceIsWrappedPrimitive(type.list);
+                return this.typeReferenceIsWrappedPrimitive(type.itemType);
             case "map":
                 return (
                     this.typeReferenceIsWrappedPrimitive(type.keyType) &&
