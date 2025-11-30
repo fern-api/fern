@@ -13,6 +13,14 @@ export class TestClassBuilder {
     constructor(private readonly context: SdkGeneratorContext) {}
 
     /**
+     * Checks if the API uses OAuth authentication.
+     * Exposed as public so TestMethodBuilder can use it.
+     */
+    public isOAuthApi(): boolean {
+        return this.context.ir.auth?.schemes?.some((scheme) => scheme.type === "oauth") ?? false;
+    }
+
+    /**
      * Creates the test class boilerplate with JUnit 5 setup.
      */
     public createTestClassBoilerplate(
@@ -33,6 +41,11 @@ export class TestClassBuilder {
             writer.addImport("org.junit.jupiter.api.Test");
             writer.addImport(`${this.context.getRootPackageName()}.core.ObjectMappers`);
 
+            // Add Environment import for multi-URL environments
+            if (this.isMultiUrlEnvironment(this.context.ir.environments)) {
+                writer.addImport(`${this.context.getRootPackageName()}.core.Environment`);
+            }
+
             // Add any additional imports collected from snippets and type resolution
             if (additionalImports) {
                 additionalImports.forEach((importStatement) => {
@@ -52,6 +65,10 @@ export class TestClassBuilder {
             writer.indent();
             writer.writeLine("server = new MockWebServer();");
             writer.writeLine("server.start();");
+
+            // Note: For OAuth APIs, each test method enqueues its own OAuth token response
+            // because the token is fetched lazily on first API call
+
             writer.writeLine(`client = ${clientClassName}.builder()`);
             writer.indent();
 
@@ -91,33 +108,40 @@ export class TestClassBuilder {
     private generateJsonEqualsHelper(writer: Writer): void {
         writer.writeLine("");
         writer.writeLine("/**");
-        writer.writeLine(" * Compares two JsonNodes with numeric equivalence.");
-        writer.writeLine(" */");
-        writer.writeLine("private boolean jsonEquals(JsonNode a, JsonNode b) {");
-        writer.indent();
-        writer.writeLine("if (a.equals(b)) return true;");
+        writer.writeLine(" * Compares two JsonNodes with numeric equivalence and null safety.");
         writer.writeLine(
-            "if (a.isNumber() && b.isNumber()) return Math.abs(a.doubleValue() - b.doubleValue()) < 1e-10;"
+            " * For objects, checks that all fields in 'expected' exist in 'actual' with matching values."
         );
-        writer.writeLine("if (a.isObject() && b.isObject()) {");
+        writer.writeLine(" * Allows 'actual' to have extra fields (e.g., default values added during serialization).");
+        writer.writeLine(" */");
+        writer.writeLine("private boolean jsonEquals(JsonNode expected, JsonNode actual) {");
         writer.indent();
-        writer.writeLine("if (a.size() != b.size()) return false;");
-        writer.writeLine("java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = a.fields();");
+        writer.writeLine("if (expected == null && actual == null) return true;");
+        writer.writeLine("if (expected == null || actual == null) return false;");
+        writer.writeLine("if (expected.equals(actual)) return true;");
+        writer.writeLine(
+            "if (expected.isNumber() && actual.isNumber()) return Math.abs(expected.doubleValue() - actual.doubleValue()) < 1e-10;"
+        );
+        writer.writeLine("if (expected.isObject() && actual.isObject()) {");
+        writer.indent();
+        // Don't check size equality - actual may have extra fields with default values
+        writer.writeLine("java.util.Iterator<java.util.Map.Entry<String, JsonNode>> iter = expected.fields();");
         writer.writeLine("while (iter.hasNext()) {");
         writer.indent();
         writer.writeLine("java.util.Map.Entry<String, JsonNode> entry = iter.next();");
-        writer.writeLine("if (!jsonEquals(entry.getValue(), b.get(entry.getKey()))) return false;");
+        writer.writeLine("JsonNode actualValue = actual.get(entry.getKey());");
+        writer.writeLine("if (actualValue == null || !jsonEquals(entry.getValue(), actualValue)) return false;");
         writer.dedent();
         writer.writeLine("}");
         writer.writeLine("return true;");
         writer.dedent();
         writer.writeLine("}");
-        writer.writeLine("if (a.isArray() && b.isArray()) {");
+        writer.writeLine("if (expected.isArray() && actual.isArray()) {");
         writer.indent();
-        writer.writeLine("if (a.size() != b.size()) return false;");
-        writer.writeLine("for (int i = 0; i < a.size(); i++) {");
+        writer.writeLine("if (expected.size() != actual.size()) return false;");
+        writer.writeLine("for (int i = 0; i < expected.size(); i++) {");
         writer.indent();
-        writer.writeLine("if (!jsonEquals(a.get(i), b.get(i))) return false;");
+        writer.writeLine("if (!jsonEquals(expected.get(i), actual.get(i))) return false;");
         writer.dedent();
         writer.writeLine("}");
         writer.writeLine("return true;");
@@ -153,32 +177,27 @@ export class TestClassBuilder {
      * Determines if the environment configuration uses multiple URLs
      */
     private isMultiUrlEnvironment(environments: EnvironmentsConfig | undefined): boolean {
-        if (!environments) {
+        if (!environments?.environments) {
             return false;
         }
 
-        for (const envValue of Object.values(environments)) {
-            if (envValue && typeof envValue === "object" && "urls" in envValue) {
-                return true;
-            }
-        }
-
-        return false;
+        return environments.environments.type === "multipleBaseUrls";
     }
 
     /**
-     * Generates client environment configuration for APIs with multiple base URLs
+     * Generates client environment configuration for APIs with multiple base URLs.
+     * Uses Environment.custom() builder which sets all URLs to the mock server.
      */
     private generateMultiUrlEnvironmentConfiguration(writer: Writer, environments: EnvironmentsConfig): void {
-        let environmentWithUrls: MultiUrlEnvironment | null = null;
-        for (const envValue of Object.values(environments)) {
-            if (envValue && typeof envValue === "object" && "urls" in envValue) {
-                environmentWithUrls = envValue as MultiUrlEnvironment;
-                break;
-            }
+        if (environments.environments.type !== "multipleBaseUrls") {
+            writer.writeLine('.url(server.url("/").toString())');
+            return;
         }
 
-        if (!environmentWithUrls || !environmentWithUrls.urls) {
+        const multiUrlEnv = environments.environments;
+        const baseUrls = multiUrlEnv.baseUrls;
+
+        if (!baseUrls || baseUrls.length === 0) {
             writer.writeLine('.url(server.url("/").toString())');
             return;
         }
@@ -186,8 +205,8 @@ export class TestClassBuilder {
         writer.writeLine(".environment(Environment.custom()");
         writer.indent();
 
-        for (const [urlKey, _urlValue] of Object.entries(environmentWithUrls.urls)) {
-            const methodName = `${urlKey}Url`;
+        for (const baseUrl of baseUrls) {
+            const methodName = baseUrl.name.camelCase.safeName;
             writer.writeLine(`.${methodName}(server.url("/").toString())`);
         }
 
@@ -199,6 +218,7 @@ export class TestClassBuilder {
      * Generates authentication client builder calls based on test example data.
      * Extracts realistic auth values from the example HTTP requests.
      * Supports multiple authentication schemes including Bearer, Basic, Header, and OAuth.
+     * Handles APIs with multiple auth schemes (e.g., OAuth + API key header).
      */
     private getAuthClientBuilderCalls(): string | undefined {
         const auth = this.context.ir.auth;
@@ -206,12 +226,20 @@ export class TestClassBuilder {
             return undefined;
         }
 
-        const scheme = auth.schemes[0];
-        if (!scheme) {
+        // Handle ALL auth schemes, not just the first one
+        const authCalls: string[] = [];
+        for (const scheme of auth.schemes) {
+            const authCall = this.getAuthCallForScheme(scheme);
+            if (authCall) {
+                authCalls.push(authCall);
+            }
+        }
+
+        if (authCalls.length === 0) {
             return undefined;
         }
 
-        return this.getAuthCallForScheme(scheme);
+        return authCalls.join("\n            ");
     }
 
     /**
@@ -231,8 +259,34 @@ export class TestClassBuilder {
                 }
                 return '.apiKey("test-api-key")';
             }
-            case "oauth":
-                return '.token("oauth-test-token")';
+            case "oauth": {
+                // OAuth clients use clientId/clientSecret, not token
+                // The OAuthTokenSupplier will automatically fetch a token from the mocked endpoint
+                const oauthCalls: string[] = ['.clientId("test-client-id")', '.clientSecret("test-client-secret")'];
+
+                // Check if OAuth token endpoint has custom headers that become client-level params
+                // For example, some APIs require an apiKey header for the token endpoint
+                const tokenEndpoint = scheme.configuration?.tokenEndpoint;
+                if (tokenEndpoint?.endpointReference?.endpointId) {
+                    // Look up the endpoint to check for extra required headers
+                    const endpointId = tokenEndpoint.endpointReference.endpointId;
+                    for (const service of Object.values(this.context.ir.services)) {
+                        for (const endpoint of service.endpoints) {
+                            if (endpoint.id === endpointId) {
+                                // Check for header parameters that aren't part of standard OAuth
+                                for (const header of endpoint.headers) {
+                                    const headerName = header.name.name.camelCase.safeName;
+                                    if (headerName !== "authorization" && headerName !== "contentType") {
+                                        oauthCalls.push(`.${headerName}("test-${headerName}")`);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return oauthCalls.join("\n            ");
+            }
             default:
                 return undefined;
         }

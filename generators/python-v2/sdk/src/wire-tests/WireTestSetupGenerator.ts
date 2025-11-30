@@ -11,10 +11,19 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly ir: IntermediateRepresentation;
+    private readonly packagePathPrefix: string;
 
-    constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
+    constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation, packagePathPrefix: string = "") {
         this.context = context;
         this.ir = ir;
+        this.packagePathPrefix = packagePathPrefix;
+    }
+
+    /**
+     * Builds a path with the package path prefix if set.
+     */
+    private withPackagePrefix(relativePath: string): string {
+        return this.packagePathPrefix ? `${this.packagePathPrefix}/${relativePath}` : relativePath;
     }
 
     /**
@@ -36,7 +45,7 @@ export class WireTestSetupGenerator {
         const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
-            RelativeFilePath.of("wiremock"),
+            RelativeFilePath.of(this.withPackagePrefix("wiremock")),
             JSON.stringify(wireMockConfigContent)
         );
         this.context.project.addRawFiles(wireMockConfigFile);
@@ -51,7 +60,7 @@ export class WireTestSetupGenerator {
         const dockerComposeContent = this.buildDockerComposeContent();
         const dockerComposeFile = new File(
             "docker-compose.test.yml",
-            RelativeFilePath.of("./wiremock"),
+            RelativeFilePath.of(this.withPackagePrefix("wiremock")),
             dockerComposeContent
         );
 
@@ -85,7 +94,11 @@ export class WireTestSetupGenerator {
      */
     private generateConftestFile(): void {
         const conftestContent = this.buildConftestContent();
-        const conftestFile = new File("conftest.py", RelativeFilePath.of("./tests/wire"), conftestContent);
+        const conftestFile = new File(
+            "conftest.py",
+            RelativeFilePath.of(this.withPackagePrefix("tests/wire")),
+            conftestContent
+        );
 
         this.context.project.addRawFiles(conftestFile);
         this.context.logger.debug("Generated conftest.py for WireMock container lifecycle management");
@@ -95,7 +108,7 @@ export class WireTestSetupGenerator {
      * Generates an __init__.py file to make tests/wire a proper Python package
      */
     private generateInitFile(): void {
-        const initFile = new File("__init__.py", RelativeFilePath.of("./tests/wire"), "");
+        const initFile = new File("__init__.py", RelativeFilePath.of(this.withPackagePrefix("tests/wire")), "");
         this.context.project.addRawFiles(initFile);
         this.context.logger.debug("Generated __init__.py for tests/wire package");
     }

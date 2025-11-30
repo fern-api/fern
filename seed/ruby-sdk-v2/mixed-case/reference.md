@@ -54,8 +54,8 @@ client.service.get_resource('rsc-xyz');
 
 ```ruby
 client.service.list_resources(
-  pageLimit: 10,
-  beforeDate: '2023-01-01'
+  page_limit: 10,
+  before_date: '2023-01-01'
 );
 ```
 </dd>

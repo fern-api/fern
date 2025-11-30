@@ -46,7 +46,6 @@
       "servers": [],
       "description": "This endpoint should be in `auth/user.yml`",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/auth/user",
       "examples": [

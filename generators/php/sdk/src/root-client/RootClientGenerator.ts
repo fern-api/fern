@@ -82,7 +82,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             php.field({
                 name: `$${this.context.getClientOptionsName()}`,
                 access: "private",
-                type: this.context.getClientOptionsType()
+                type: this.context.getClientOptionsType(),
+                docs: "@phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator"
             })
         );
         class_.addField(this.context.rawClient.getField());
@@ -287,16 +288,6 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     }
                 }
 
-                const oauth = this.context.getOauth();
-                if (oauth != null && oauth.configuration.type === "clientCredentials") {
-                    this.writeOAuthTokenRetrieval(writer, oauth);
-                }
-
-                const inferredAuth = this.context.getInferredAuth();
-                if (inferredAuth != null) {
-                    this.writeInferredAuthTokenRetrieval(writer, inferredAuth);
-                }
-
                 writer.write("$defaultHeaders = ");
                 writer.writeNodeStatement(headers);
                 for (const param of constructorParameters.optional) {
@@ -320,16 +311,6 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     }
                 }
 
-                const oauthScheme = this.context.getOauth();
-                if (oauthScheme != null && oauthScheme.configuration.type === "clientCredentials") {
-                    writer.writeLine("$defaultHeaders['Authorization'] = \"Bearer $token\";");
-                }
-
-                const inferredAuthScheme = this.context.getInferredAuth();
-                if (inferredAuthScheme != null) {
-                    writer.writeLine("$defaultHeaders = array_merge($defaultHeaders, $authHeaders);");
-                }
-
                 writer.writeLine();
 
                 writer.writeNodeStatement(
@@ -339,22 +320,6 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         writer.write(" ?? []");
                     })
                 );
-                writer.write(
-                    `$this->${this.context.getClientOptionsName()}['${this.context.getHeadersOptionName()}'] = `
-                );
-                writer.writeNodeStatement(
-                    php.invokeMethod({
-                        method: "array_merge",
-                        arguments_: [
-                            php.codeblock("$defaultHeaders"),
-                            php.codeblock(
-                                `$this->${this.context.getClientOptionsName()}['${this.context.getHeadersOptionName()}'] ?? []`
-                            )
-                        ],
-                        multiline: true
-                    })
-                );
-                writer.writeLine();
 
                 if (isMultiUrl && hasDefaultEnvironment) {
                     const defaultEnvironmentId = this.context.ir.environments?.defaultEnvironment;
@@ -381,6 +346,46 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 if (isMultiUrl) {
                     writer.writeTextStatement("$this->environment = $environment");
                 }
+                writer.writeLine();
+
+                // OAuth and inferred auth token retrieval - moved after environment setup
+                const oauth = this.context.getOauth();
+                if (oauth != null && oauth.configuration.type === "clientCredentials") {
+                    this.writeOAuthTokenRetrieval(writer, oauth, isMultiUrl);
+                }
+
+                const inferredAuth = this.context.getInferredAuth();
+                if (inferredAuth != null) {
+                    this.writeInferredAuthTokenRetrieval(writer, inferredAuth, isMultiUrl, constructorParameters);
+                }
+
+                // Update headers with auth tokens - moved after token retrieval
+                const oauthScheme = this.context.getOauth();
+                if (oauthScheme != null && oauthScheme.configuration.type === "clientCredentials") {
+                    writer.writeLine("$defaultHeaders['Authorization'] = \"Bearer $token\";");
+                }
+
+                const inferredAuthScheme = this.context.getInferredAuth();
+                if (inferredAuthScheme != null) {
+                    writer.writeLine("$defaultHeaders = array_merge($defaultHeaders, $authHeaders);");
+                }
+
+                // Update client options with the updated headers
+                writer.write(
+                    `$this->${this.context.getClientOptionsName()}['${this.context.getHeadersOptionName()}'] = `
+                );
+                writer.writeNodeStatement(
+                    php.invokeMethod({
+                        method: "array_merge",
+                        arguments_: [
+                            php.codeblock("$defaultHeaders"),
+                            php.codeblock(
+                                `$this->${this.context.getClientOptionsName()}['${this.context.getHeadersOptionName()}'] ?? []`
+                            )
+                        ],
+                        multiline: true
+                    })
+                );
                 writer.writeLine();
 
                 writer.write("$this->client = ");
@@ -672,7 +677,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             .filter((subpackage) => this.context.shouldGenerateSubpackageClient(subpackage));
     }
 
-    private writeOAuthTokenRetrieval(writer: php.Writer, oauth: OAuthScheme): void {
+    private writeOAuthTokenRetrieval(writer: php.Writer, oauth: OAuthScheme, isMultiUrl: boolean): void {
         const tokenEndpointReference = oauth.configuration.tokenEndpoint.endpointReference;
         const subpackageId = tokenEndpointReference.subpackageId;
 
@@ -698,7 +703,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$authClient = new ");
         writer.writeNode(authClientClassReference);
-        writer.writeLine("($authRawClient);");
+        if (isMultiUrl) {
+            writer.writeLine("($authRawClient, $environment);");
+        } else {
+            writer.writeLine("($authRawClient);");
+        }
 
         writer.write("$oauthTokenProvider = new ");
         writer.writeNode(oauthTokenProviderClassReference);
@@ -776,7 +785,12 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         return parameters;
     }
 
-    private writeInferredAuthTokenRetrieval(writer: php.Writer, inferredAuth: InferredAuthScheme): void {
+    private writeInferredAuthTokenRetrieval(
+        writer: php.Writer,
+        inferredAuth: InferredAuthScheme,
+        isMultiUrl: boolean,
+        constructorParameters: ConstructorParameters
+    ): void {
         const tokenEndpointReference = inferredAuth.tokenEndpoint.endpoint;
         const subpackageId = tokenEndpointReference.subpackageId;
 
@@ -802,7 +816,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         writer.write("$authClient = new ");
         writer.writeNode(authClientClassReference);
-        writer.writeLine("($authRawClient);");
+        if (isMultiUrl) {
+            writer.writeLine("($authRawClient, $environment);");
+        } else {
+            writer.writeLine("($authRawClient);");
+        }
 
         // Build the options array for the InferredAuthProvider
         writer.writeLine("$inferredAuthOptions = [");
@@ -823,7 +841,15 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                             if (literal != null) {
                                 writer.writeLine(`'${paramName}' => ${this.context.getLiteralAsString(literal)},`);
                             } else {
-                                writer.writeLine(`'${paramName}' => $${paramName} ?? '',`);
+                                // Check if this parameter is required (not optional and not env variable)
+                                const isOptionalParam = constructorParameters.optional.some(
+                                    (p: ConstructorParameter) => p.name === paramName
+                                );
+                                if (isOptionalParam) {
+                                    writer.writeLine(`'${paramName}' => $${paramName} ?? '',`);
+                                } else {
+                                    writer.writeLine(`'${paramName}' => $${paramName},`);
+                                }
                             }
                         }
                     }
@@ -835,7 +861,15 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                         if (literal != null) {
                             writer.writeLine(`'${paramName}' => ${this.context.getLiteralAsString(literal)},`);
                         } else {
-                            writer.writeLine(`'${paramName}' => $${paramName} ?? '',`);
+                            // Check if this parameter is required (not optional and not env variable)
+                            const isOptionalParam = constructorParameters.optional.some(
+                                (p: ConstructorParameter) => p.name === paramName
+                            );
+                            if (isOptionalParam) {
+                                writer.writeLine(`'${paramName}' => $${paramName} ?? '',`);
+                            } else {
+                                writer.writeLine(`'${paramName}' => $${paramName},`);
+                            }
                         }
                     }
                 }

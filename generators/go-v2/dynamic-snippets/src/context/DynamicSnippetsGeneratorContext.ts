@@ -4,7 +4,7 @@ import {
 } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { BaseGoCustomConfigSchema, go, resolveRootImportPath } from "@fern-api/go-ast";
+import { BaseGoCustomConfigSchema, go, goExportedFieldName, resolveRootImportPath } from "@fern-api/go-ast";
 
 import { DynamicTypeInstantiationMapper } from "./DynamicTypeInstantiationMapper";
 import { DynamicTypeMapper } from "./DynamicTypeMapper";
@@ -73,6 +73,10 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
 
     public getTypeName(name: FernIr.Name): string {
         return name.pascalCase.unsafeName;
+    }
+
+    public getFieldName(name: FernIr.Name): string {
+        return goExportedFieldName(name.pascalCase.unsafeName);
     }
 
     public getImportPath(fernFilepath: FernIr.dynamic.FernFilepath): string {

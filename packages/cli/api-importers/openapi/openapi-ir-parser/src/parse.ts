@@ -1,6 +1,7 @@
 import { assertNever } from "@fern-api/core-utils";
 import {
     Endpoint,
+    GlobalSecurity,
     OpenApiIntermediateRepresentation,
     Source as OpenApiIrSource,
     Schemas,
@@ -65,6 +66,7 @@ export function parse({
         variables: {},
         nonRequestReferencedSchemas: new Set(),
         securitySchemes: {},
+        security: undefined,
         globalHeaders: [],
         idempotencyHeaders: [],
         groups: {}
@@ -239,6 +241,40 @@ function extractApiNameFromUrl(url: string): string {
     }
 }
 
+/**
+ * Merges two security arrays and removes duplicates.
+ * Security items are considered equal if they have the same keys and values.
+ */
+function mergeDistinctSecurity(
+    security1: GlobalSecurity | undefined,
+    security2: GlobalSecurity | undefined
+): GlobalSecurity | undefined {
+    const arr1 = security1 ?? [];
+    const arr2 = security2 ?? [];
+
+    if (arr1.length === 0 && arr2.length === 0) {
+        return undefined;
+    }
+
+    // Use a Map with JSON stringified keys for deduplication
+    const seen = new Map<string, GlobalSecurity[number]>();
+
+    for (const item of [...arr1, ...arr2]) {
+        // Sort keys for consistent comparison
+        const sortedKeys = Object.keys(item).sort();
+        const normalized: Record<string, string[]> = {};
+        for (const key of sortedKeys) {
+            normalized[key] = item[key] ?? [];
+        }
+        const key = JSON.stringify(normalized);
+        if (!seen.has(key)) {
+            seen.set(key, item);
+        }
+    }
+
+    return Array.from(seen.values());
+}
+
 function detectMultipleBaseUrls(servers1: ServerInput[], servers2: ServerInput[]): boolean {
     // Check if we have the same environment names but different URLs
     if (servers1.length === 0 || servers2.length === 0) {
@@ -327,6 +363,7 @@ function merge(
                 ...ir1.securitySchemes,
                 ...ir2.securitySchemes
             },
+            security: mergeDistinctSecurity(ir1.security, ir2.security),
             globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
             idempotencyHeaders:
                 ir1.idempotencyHeaders != null
@@ -460,6 +497,7 @@ function merge(
                 ...ir1.securitySchemes,
                 ...ir2.securitySchemes
             },
+            security: mergeDistinctSecurity(ir1.security, ir2.security),
             globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
             idempotencyHeaders:
                 ir1.idempotencyHeaders != null
@@ -507,6 +545,7 @@ function merge(
             ...ir1.securitySchemes,
             ...ir2.securitySchemes
         },
+        security: mergeDistinctSecurity(ir1.security, ir2.security),
         globalHeaders: ir1.globalHeaders != null ? [...ir1.globalHeaders, ...(ir2.globalHeaders ?? [])] : undefined,
         idempotencyHeaders:
             ir1.idempotencyHeaders != null ? [...ir1.idempotencyHeaders, ...(ir2.idempotencyHeaders ?? [])] : undefined,

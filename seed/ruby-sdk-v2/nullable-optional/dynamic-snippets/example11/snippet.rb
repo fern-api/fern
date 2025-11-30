@@ -3,7 +3,7 @@ require "seed"
 client = Seed::Client.new(base_url: 'https://api.fern.com');
 
 client.nullable_optional.update_tags(
-  userId: 'userId',
+  user_id: 'userId',
   tags: ['tags', 'tags'],
   categories: ['categories', 'categories'],
   labels: ['labels', 'labels']

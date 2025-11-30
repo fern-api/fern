@@ -120,6 +120,8 @@ export function buildFernDefinition(context: OpenApiIrConverterContext): FernDef
         }
     }
 
+    context.builder.optimizeServiceAuth();
+
     return context.builder.build();
 }
 

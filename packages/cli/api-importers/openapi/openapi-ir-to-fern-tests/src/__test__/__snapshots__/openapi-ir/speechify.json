@@ -3689,6 +3689,14 @@
       "type": "header"
     }
   },
+  "security": [
+    {
+      "bearerAuth": []
+    },
+    {
+      "userAuth": []
+    }
+  ],
   "globalHeaders": [],
   "idempotencyHeaders": [],
   "groups": {}

@@ -54,7 +54,11 @@ export async function runRemoteGenerationForAPIWorkspace({
             context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
                 const settings = getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation);
 
-                const fernWorkspace = await workspace.toFernWorkspace({ context }, settings);
+                const fernWorkspace = await workspace.toFernWorkspace(
+                    { context },
+                    settings,
+                    generatorInvocation.apiOverride?.specs
+                );
 
                 const remoteTaskHandlerResponse = await runRemoteGenerationForGenerator({
                     projectConfig,

@@ -16,6 +16,7 @@ import { PrimitiveSchema } from "./PrimitiveSchema";
 import { SchemaId } from "../../commons/types/SchemaId";
 import { SecuritySchemeId } from "../../commons/types/SecuritySchemeId";
 import { SecurityScheme } from "../../commons/types/SecurityScheme";
+import { GlobalSecurity } from "./GlobalSecurity";
 import { GlobalHeader } from "./GlobalHeader";
 import { IdempotencyHeader } from "./IdempotencyHeader";
 
@@ -39,6 +40,7 @@ export const OpenApiIntermediateRepresentation: core.serialization.ObjectSchema<
     variables: core.serialization.record(core.serialization.string(), PrimitiveSchema),
     nonRequestReferencedSchemas: core.serialization.set(SchemaId),
     securitySchemes: core.serialization.record(SecuritySchemeId, SecurityScheme),
+    security: GlobalSecurity.optional(),
     globalHeaders: core.serialization.list(GlobalHeader).optional(),
     idempotencyHeaders: core.serialization.list(IdempotencyHeader).optional(),
 });
@@ -61,6 +63,7 @@ export declare namespace OpenApiIntermediateRepresentation {
         variables: Record<string, PrimitiveSchema.Raw>;
         nonRequestReferencedSchemas: SchemaId.Raw[];
         securitySchemes: Record<SecuritySchemeId.Raw, SecurityScheme.Raw>;
+        security?: GlobalSecurity.Raw | null;
         globalHeaders?: GlobalHeader.Raw[] | null;
         idempotencyHeaders?: IdempotencyHeader.Raw[] | null;
     }
