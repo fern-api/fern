@@ -14,7 +14,7 @@ const SUCCESS_PAGE = `
 
   <body style="height: 100vh; width: 100vw; margin: 0; display: flex;">
     <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; margin-bottom: 20px;">
-      <img src="https://i.pinimg.com/originals/e8/88/d4/e888d4feff8fd5ff63a965471a94b874.gif" height="250px" />
+      <img src="https://cdn.brandfetch.io/idPXovIzxA/idAQ1VBj_9.svg" height="250px" />
       <div style="font-family: sans-serif; font-size: 36px; font-weight: 600;">
         You're signed in!
       </div>
