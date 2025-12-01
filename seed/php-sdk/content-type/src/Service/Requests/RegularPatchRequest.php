@@ -27,8 +27,8 @@ class RegularPatchRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->field1 = $values['field1'] ?? null;
-        $this->field2 = $values['field2'] ?? null;
+    )
+    {
+        $this->field1 = $values['field1'] ?? null;$this->field2 = $values['field2'] ?? null;
     }
 }

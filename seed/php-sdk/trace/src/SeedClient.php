@@ -13,7 +13,7 @@ use Seed\Sysprop\SyspropClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class SeedClient
+class SeedClient 
 {
     /**
      * @var V2Client $v2
@@ -62,7 +62,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -86,31 +86,32 @@ class SeedClient
         ?string $token = null,
         ?string $xRandomHeader = null,
         ?array $options = null,
-    ) {
+    )
+    {
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($token != null) {
+        if ($token != null){
             $defaultHeaders['Authorization'] = "Bearer $token";
         }
-        if ($xRandomHeader != null) {
+        if ($xRandomHeader != null){
             $defaultHeaders['X-Random-Header'] = $xRandomHeader;
         }
-
+        
         $this->options = $options ?? [];
+        
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
-
+        
         $this->client = new RawClient(
             options: $this->options,
         );
-
+        
         $this->v2 = new V2Client($this->client, $this->options);
         $this->admin = new AdminClient($this->client, $this->options);
         $this->homepage = new HomepageClient($this->client, $this->options);

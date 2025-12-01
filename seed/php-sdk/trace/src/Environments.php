@@ -2,7 +2,7 @@
 
 namespace Seed;
 
-enum Environments: string
-{
+enum Environments
+ : string {
     case Prod = "https://api.trace.come";
 }

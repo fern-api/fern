@@ -44,18 +44,15 @@ class User extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->email = $values['email'];
-        $this->password = $values['password'];
-        $this->profile = $values['profile'];
+    )
+    {
+        $this->id = $values['id'];$this->email = $values['email'];$this->password = $values['password'];$this->profile = $values['profile'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

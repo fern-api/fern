@@ -27,16 +27,15 @@ class TypeWithSingleCharPropertyEqualToTypeStartingLetter extends JsonSerializab
      */
     public function __construct(
         array $values,
-    ) {
-        $this->t = $values['t'];
-        $this->ty = $values['ty'];
+    )
+    {
+        $this->t = $values['t'];$this->ty = $values['ty'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

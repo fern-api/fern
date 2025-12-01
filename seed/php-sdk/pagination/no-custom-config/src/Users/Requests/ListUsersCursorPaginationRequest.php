@@ -40,10 +40,8 @@ class ListUsersCursorPaginationRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->page = $values['page'] ?? null;
-        $this->perPage = $values['perPage'] ?? null;
-        $this->order = $values['order'] ?? null;
-        $this->startingAfter = $values['startingAfter'] ?? null;
+    )
+    {
+        $this->page = $values['page'] ?? null;$this->perPage = $values['perPage'] ?? null;$this->order = $values['order'] ?? null;$this->startingAfter = $values['startingAfter'] ?? null;
     }
 }

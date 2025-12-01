@@ -34,17 +34,15 @@ class NestedObjectWithLiterals extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->literal1 = $values['literal1'];
-        $this->literal2 = $values['literal2'];
-        $this->strProp = $values['strProp'];
+    )
+    {
+        $this->literal1 = $values['literal1'];$this->literal2 = $values['literal2'];$this->strProp = $values['strProp'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

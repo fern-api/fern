@@ -7,7 +7,7 @@ use Seed\Core\Json\JsonProperty;
 /**
  * @property string $parent
  */
-trait AliasType
+trait AliasType 
 {
     /**
      * @var string $parent

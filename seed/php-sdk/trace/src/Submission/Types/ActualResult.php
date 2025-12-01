@@ -47,17 +47,16 @@ class ActualResult extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    ) {
-        $this->type = $values['type'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->type = $values['type'];$this->value = $values['value'];
     }
 
     /**
      * @param VariableValue $value
      * @return ActualResult
      */
-    public static function value(VariableValue $value): ActualResult
-    {
+    public static function value(VariableValue $value): ActualResult {
         return new ActualResult([
             'type' => 'value',
             'value' => $value,
@@ -68,8 +67,7 @@ class ActualResult extends JsonSerializableType
      * @param ExceptionInfo $exception
      * @return ActualResult
      */
-    public static function exception(ExceptionInfo $exception): ActualResult
-    {
+    public static function exception(ExceptionInfo $exception): ActualResult {
         return new ActualResult([
             'type' => 'exception',
             'value' => $exception,
@@ -80,8 +78,7 @@ class ActualResult extends JsonSerializableType
      * @param ExceptionV2 $exceptionV2
      * @return ActualResult
      */
-    public static function exceptionV2(ExceptionV2 $exceptionV2): ActualResult
-    {
+    public static function exceptionV2(ExceptionV2 $exceptionV2): ActualResult {
         return new ActualResult([
             'type' => 'exceptionV2',
             'value' => $exceptionV2,
@@ -91,89 +88,81 @@ class ActualResult extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isValue(): bool
-    {
-        return $this->value instanceof VariableValue && $this->type === 'value';
+    public function isValue(): bool {
+        return $this->value instanceof VariableValue&& $this->type === 'value';
     }
 
     /**
      * @return VariableValue
      */
-    public function asValue(): VariableValue
-    {
-        if (!($this->value instanceof VariableValue && $this->type === 'value')) {
+    public function asValue(): VariableValue {
+        if (!($this->value instanceof VariableValue&& $this->type === 'value')){
             throw new Exception(
                 "Expected value; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isException(): bool
-    {
-        return $this->value instanceof ExceptionInfo && $this->type === 'exception';
+    public function isException(): bool {
+        return $this->value instanceof ExceptionInfo&& $this->type === 'exception';
     }
 
     /**
      * @return ExceptionInfo
      */
-    public function asException(): ExceptionInfo
-    {
-        if (!($this->value instanceof ExceptionInfo && $this->type === 'exception')) {
+    public function asException(): ExceptionInfo {
+        if (!($this->value instanceof ExceptionInfo&& $this->type === 'exception')){
             throw new Exception(
                 "Expected exception; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isExceptionV2(): bool
-    {
-        return $this->value instanceof ExceptionV2 && $this->type === 'exceptionV2';
+    public function isExceptionV2(): bool {
+        return $this->value instanceof ExceptionV2&& $this->type === 'exceptionV2';
     }
 
     /**
      * @return ExceptionV2
      */
-    public function asExceptionV2(): ExceptionV2
-    {
-        if (!($this->value instanceof ExceptionV2 && $this->type === 'exceptionV2')) {
+    public function asExceptionV2(): ExceptionV2 {
+        if (!($this->value instanceof ExceptionV2&& $this->type === 'exceptionV2')){
             throw new Exception(
                 "Expected exceptionV2; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $result = [];
         $result['type'] = $this->type;
-
+        
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-
-        switch ($this->type) {
+        
+        switch ($this->type){
             case 'value':
                 $value = $this->asValue()->jsonSerialize();
                 $result['value'] = $value;
@@ -188,27 +177,26 @@ class ActualResult extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)) {
+                if (is_null($this->value)){
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType) {
+                if ($this->value instanceof JsonSerializableType){
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)) {
+                } elseif (is_array($this->value)){
                     $result = array_merge($this->value, $result);
                 }
         }
-
+        
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static
-    {
+    public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
+        if (!is_array($decodedJson)){
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -217,31 +205,30 @@ class ActualResult extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static
-    {
+    public static function jsonDeserialize(array $data): static {
         $args = [];
-        if (!array_key_exists('type', $data)) {
+        if (!array_key_exists('type', $data)){
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))) {
+        if (!(is_string($type))){
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-
+        
         $args['type'] = $type;
-        switch ($type) {
+        switch ($type){
             case 'value':
-                if (!array_key_exists('value', $data)) {
+                if (!array_key_exists('value', $data)){
                     throw new Exception(
                         "JSON data is missing property 'value'",
                     );
                 }
-
-                if (!(is_array($data['value']))) {
+                
+                if (!(is_array($data['value']))){
                     throw new Exception(
                         "Expected property 'value' in JSON data to be array, instead received " . get_debug_type($data['value']),
                     );
@@ -252,13 +239,13 @@ class ActualResult extends JsonSerializableType
                 $args['value'] = ExceptionInfo::jsonDeserialize($data);
                 break;
             case 'exceptionV2':
-                if (!array_key_exists('exceptionV2', $data)) {
+                if (!array_key_exists('exceptionV2', $data)){
                     throw new Exception(
                         "JSON data is missing property 'exceptionV2'",
                     );
                 }
-
-                if (!(is_array($data['exceptionV2']))) {
+                
+                if (!(is_array($data['exceptionV2']))){
                     throw new Exception(
                         "Expected property 'exceptionV2' in JSON data to be array, instead received " . get_debug_type($data['exceptionV2']),
                     );
@@ -270,7 +257,7 @@ class ActualResult extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-
+        
         // @phpstan-ignore-next-line
         return new static($args);
     }

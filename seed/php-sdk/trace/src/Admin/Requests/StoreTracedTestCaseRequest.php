@@ -30,8 +30,8 @@ class StoreTracedTestCaseRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->result = $values['result'];
-        $this->traceResponses = $values['traceResponses'];
+    )
+    {
+        $this->result = $values['result'];$this->traceResponses = $values['traceResponses'];
     }
 }

@@ -27,16 +27,15 @@ class PostSubmitResponse extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->status = $values['status'] ?? null;
-        $this->message = $values['message'] ?? null;
+    )
+    {
+        $this->status = $values['status'] ?? null;$this->message = $values['message'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

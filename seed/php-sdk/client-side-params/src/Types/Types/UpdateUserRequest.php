@@ -77,23 +77,15 @@ class UpdateUserRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->email = $values['email'] ?? null;
-        $this->emailVerified = $values['emailVerified'] ?? null;
-        $this->username = $values['username'] ?? null;
-        $this->phoneNumber = $values['phoneNumber'] ?? null;
-        $this->phoneVerified = $values['phoneVerified'] ?? null;
-        $this->userMetadata = $values['userMetadata'] ?? null;
-        $this->appMetadata = $values['appMetadata'] ?? null;
-        $this->password = $values['password'] ?? null;
-        $this->blocked = $values['blocked'] ?? null;
+    )
+    {
+        $this->email = $values['email'] ?? null;$this->emailVerified = $values['emailVerified'] ?? null;$this->username = $values['username'] ?? null;$this->phoneNumber = $values['phoneNumber'] ?? null;$this->phoneVerified = $values['phoneVerified'] ?? null;$this->userMetadata = $values['userMetadata'] ?? null;$this->appMetadata = $values['appMetadata'] ?? null;$this->password = $values['password'] ?? null;$this->blocked = $values['blocked'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

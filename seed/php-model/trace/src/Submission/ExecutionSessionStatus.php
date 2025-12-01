@@ -2,8 +2,8 @@
 
 namespace Seed\Submission;
 
-enum ExecutionSessionStatus: string
-{
+enum ExecutionSessionStatus
+ : string {
     case CreatingContainer = "CREATING_CONTAINER";
     case ProvisioningContainer = "PROVISIONING_CONTAINER";
     case PendingContainer = "PENDING_CONTAINER";

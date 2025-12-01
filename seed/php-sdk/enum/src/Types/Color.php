@@ -2,8 +2,8 @@
 
 namespace Seed\Types;
 
-enum Color: string
-{
+enum Color
+ : string {
     case Red = "red";
     case Blue = "blue";
 }

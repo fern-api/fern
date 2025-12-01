@@ -27,50 +27,39 @@ class NextPage extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->page = $values['page'];
-        $this->startingAfter = $values['startingAfter'];
+    )
+    {
+        $this->page = $values['page'];$this->startingAfter = $values['startingAfter'];
     }
 
     /**
      * @return int
      */
-    public function getPage(): int
-    {
-        return $this->page;
-    }
+    public function getPage(): int {
+        return $this->page;}
 
     /**
      * @param int $value
      */
-    public function setPage(int $value): self
-    {
-        $this->page = $value;
-        return $this;
-    }
+    public function setPage(int $value): self {
+        $this->page = $value;return $this;}
 
     /**
      * @return string
      */
-    public function getStartingAfter(): string
-    {
-        return $this->startingAfter;
-    }
+    public function getStartingAfter(): string {
+        return $this->startingAfter;}
 
     /**
      * @param string $value
      */
-    public function setStartingAfter(string $value): self
-    {
-        $this->startingAfter = $value;
-        return $this;
-    }
+    public function setStartingAfter(string $value): self {
+        $this->startingAfter = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

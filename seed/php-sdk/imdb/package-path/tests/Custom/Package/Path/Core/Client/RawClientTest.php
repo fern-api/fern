@@ -16,8 +16,7 @@ use Custom\Package\Path\Core\Json\JsonApiRequest;
 use Custom\Package\Path\Core\Json\JsonSerializableType;
 use Custom\Package\Path\Core\Json\JsonProperty;
 
-class JsonRequest extends JsonSerializableType
-{
+class JsonRequest extends JsonSerializableType {
     /**
      * @var string
      */

@@ -42,10 +42,8 @@ class WithContentTypeRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->file = $values['file'];
-        $this->foo = $values['foo'];
-        $this->bar = $values['bar'];
-        $this->fooBar = $values['fooBar'] ?? null;
+    )
+    {
+        $this->file = $values['file'];$this->foo = $values['foo'];$this->bar = $values['bar'];$this->fooBar = $values['fooBar'] ?? null;
     }
 }

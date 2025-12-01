@@ -41,18 +41,15 @@ class BasicTestCaseTemplate extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->templateId = $values['templateId'];
-        $this->name = $values['name'];
-        $this->description = $values['description'];
-        $this->expectedValueParameterId = $values['expectedValueParameterId'];
+    )
+    {
+        $this->templateId = $values['templateId'];$this->name = $values['name'];$this->description = $values['description'];$this->expectedValueParameterId = $values['expectedValueParameterId'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

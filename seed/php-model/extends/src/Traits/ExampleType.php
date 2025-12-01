@@ -7,7 +7,7 @@ use Seed\Core\Json\JsonProperty;
 /**
  * @property string $name
  */
-trait ExampleType
+trait ExampleType 
 {
     use Docs;
 

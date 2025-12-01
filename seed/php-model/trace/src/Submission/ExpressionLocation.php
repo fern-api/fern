@@ -27,16 +27,15 @@ class ExpressionLocation extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->start = $values['start'];
-        $this->offset = $values['offset'];
+    )
+    {
+        $this->start = $values['start'];$this->offset = $values['offset'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

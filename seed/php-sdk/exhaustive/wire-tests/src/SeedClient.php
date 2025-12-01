@@ -10,7 +10,7 @@ use Seed\ReqWithHeaders\ReqWithHeadersClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class SeedClient
+class SeedClient 
 {
     /**
      * @var EndpointsClient $endpoints
@@ -66,28 +66,29 @@ class SeedClient
     public function __construct(
         ?string $token = null,
         ?array $options = null,
-    ) {
+    )
+    {
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($token != null) {
+        if ($token != null){
             $defaultHeaders['Authorization'] = "Bearer $token";
         }
-
+        
         $this->options = $options ?? [];
-
+        
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
+        
         $this->client = new RawClient(
             options: $this->options,
         );
-
+        
         $this->endpoints = new EndpointsClient($this->client, $this->options);
         $this->inlinedRequests = new InlinedRequestsClient($this->client, $this->options);
         $this->noAuth = new NoAuthClient($this->client, $this->options);

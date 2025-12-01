@@ -21,32 +21,27 @@ class Users extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->users = $values['users'];
     }
 
     /**
      * @return array<User>
      */
-    public function getUsers(): array
-    {
-        return $this->users;
-    }
+    public function getUsers(): array {
+        return $this->users;}
 
     /**
      * @param array<User> $value
      */
-    public function setUsers(array $value): self
-    {
-        $this->users = $value;
-        return $this;
-    }
+    public function setUsers(array $value): self {
+        $this->users = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

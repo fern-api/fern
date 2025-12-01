@@ -6,7 +6,7 @@ use Seed\Imdb\ImdbClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class SeedClient
+class SeedClient 
 {
     /**
      * @var ImdbClient $imdb
@@ -20,7 +20,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -42,28 +42,29 @@ class SeedClient
     public function __construct(
         ?string $token = null,
         ?array $options = null,
-    ) {
+    )
+    {
         $defaultHeaders = [
             'X-Fern-Language' => 'PHP',
             'X-Fern-SDK-Name' => 'Seed',
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'fern-api/imdb-php/0.0.1',
         ];
-        if ($token != null) {
+        if ($token != null){
             $defaultHeaders['Authorization'] = "Bearer $token";
         }
-
+        
         $this->options = $options ?? [];
+        
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
-
+        
         $this->client = new RawClient(
             options: $this->options,
         );
-
+        
         $this->imdb = new ImdbClient($this->client, $this->options);
     }
 }

@@ -28,16 +28,15 @@ class Organization extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->name = $values['name'];
-        $this->tags = $values['tags'];
+    )
+    {
+        $this->name = $values['name'];$this->tags = $values['tags'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }
