@@ -35,7 +35,7 @@
     "@fern-api/ir-sdk": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@types/lodash-es": "^4.17.12",
-    "express": "^4.21.2",
+    "express": "^4.22.0",
     "get-port": "^7.1.0",
     "lodash-es": "^4.17.21",
     "url-join": "^5.0.0"
