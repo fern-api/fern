@@ -72,7 +72,7 @@ jobs:
         }
 
       - name: Install dependencies
-        run: ${packageManager} install
+        run: ${packageManager} install --frozen-lockfile
 
       - name: Compile
         run: ${packageManager} build
@@ -95,7 +95,7 @@ jobs:
         }
 
       - name: Install dependencies
-        run: ${packageManager} install
+        run: ${packageManager} install --frozen-lockfile
 
       - name: Test
         run: ${packageManager} test
@@ -137,7 +137,7 @@ jobs:
         }
 
       - name: Install dependencies
-        run: ${packageManager} install
+        run: ${packageManager} install --frozen-lockfile
 
       - name: Build
         run: ${packageManager} build
@@ -192,7 +192,7 @@ jobs:
         }
       
       - name: Install dependencies
-        run: ${packageManager} install
+        run: ${packageManager} install --frozen-lockfile
       
       - name: Build
         run: ${packageManager} build
