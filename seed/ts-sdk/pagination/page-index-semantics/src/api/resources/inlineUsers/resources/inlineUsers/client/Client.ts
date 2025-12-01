@@ -98,6 +98,11 @@ export class InlineUsersClient {
                             body: _response.error.rawBody,
                             rawResponse: _response.rawResponse,
                         });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            rawResponse: _response.rawResponse,
+                        });
                     case "timeout":
                         throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
                     case "unknown":
@@ -194,6 +199,11 @@ export class InlineUsersClient {
                             body: _response.error.rawBody,
                             rawResponse: _response.rawResponse,
                         });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            rawResponse: _response.rawResponse,
+                        });
                     case "timeout":
                         throw new errors.SeedPaginationTimeoutError(
                             "Timeout exceeded when calling POST /inline-users.",
@@ -286,6 +296,11 @@ export class InlineUsersClient {
                         throw new errors.SeedPaginationError({
                             statusCode: _response.error.statusCode,
                             body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
                             rawResponse: _response.rawResponse,
                         });
                     case "timeout":
@@ -398,6 +413,11 @@ export class InlineUsersClient {
                             body: _response.error.rawBody,
                             rawResponse: _response.rawResponse,
                         });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            rawResponse: _response.rawResponse,
+                        });
                     case "timeout":
                         throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
                     case "unknown":
@@ -503,6 +523,11 @@ export class InlineUsersClient {
                             body: _response.error.rawBody,
                             rawResponse: _response.rawResponse,
                         });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            rawResponse: _response.rawResponse,
+                        });
                     case "timeout":
                         throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
                     case "unknown":
@@ -594,6 +619,11 @@ export class InlineUsersClient {
                         throw new errors.SeedPaginationError({
                             statusCode: _response.error.statusCode,
                             body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
                             rawResponse: _response.rawResponse,
                         });
                     case "timeout":
@@ -699,6 +729,11 @@ export class InlineUsersClient {
                             body: _response.error.rawBody,
                             rawResponse: _response.rawResponse,
                         });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            rawResponse: _response.rawResponse,
+                        });
                     case "timeout":
                         throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
                     case "unknown":
@@ -800,6 +835,11 @@ export class InlineUsersClient {
                             body: _response.error.rawBody,
                             rawResponse: _response.rawResponse,
                         });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            rawResponse: _response.rawResponse,
+                        });
                     case "timeout":
                         throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
                     case "unknown":
@@ -894,6 +934,11 @@ export class InlineUsersClient {
                             body: _response.error.rawBody,
                             rawResponse: _response.rawResponse,
                         });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            rawResponse: _response.rawResponse,
+                        });
                     case "timeout":
                         throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
                     case "unknown":
@@ -986,6 +1031,11 @@ export class InlineUsersClient {
                             body: _response.error.rawBody,
                             rawResponse: _response.rawResponse,
                         });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            rawResponse: _response.rawResponse,
+                        });
                     case "timeout":
                         throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
                     case "unknown":
@@ -1073,6 +1123,11 @@ export class InlineUsersClient {
                             body: _response.error.rawBody,
                             rawResponse: _response.rawResponse,
                         });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            rawResponse: _response.rawResponse,
+                        });
                     case "timeout":
                         throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /inline-users.");
                     case "unknown":
@@ -1156,6 +1211,11 @@ export class InlineUsersClient {
                         throw new errors.SeedPaginationError({
                             statusCode: _response.error.statusCode,
                             body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
                             rawResponse: _response.rawResponse,
                         });
                     case "timeout":

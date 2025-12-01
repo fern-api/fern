@@ -80,6 +80,11 @@ export class OrganizationClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedMixedFileDirectoryError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedMixedFileDirectoryTimeoutError(
                     "Timeout exceeded when calling POST /organizations/.",

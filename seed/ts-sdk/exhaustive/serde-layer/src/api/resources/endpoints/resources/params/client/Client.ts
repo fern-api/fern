@@ -87,6 +87,11 @@ export class ParamsClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params/path/{param}.");
             case "unknown":
@@ -169,6 +174,11 @@ export class ParamsClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params/path/{param}.");
             case "unknown":
@@ -244,6 +254,11 @@ export class ParamsClient {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -333,6 +348,11 @@ export class ParamsClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params.");
             case "unknown":
@@ -411,6 +431,11 @@ export class ParamsClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
                     "Timeout exceeded when calling GET /params/path-query/{param}.",
@@ -487,6 +512,11 @@ export class ParamsClient {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -579,6 +609,11 @@ export class ParamsClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PUT /params/path/{param}.");
             case "unknown":
@@ -666,6 +701,11 @@ export class ParamsClient {
                 throw new errors.SeedExhaustiveError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

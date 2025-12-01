@@ -80,6 +80,11 @@ export class UserClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedExtraPropertiesError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedExtraPropertiesTimeoutError("Timeout exceeded when calling POST /user.");
             case "unknown":

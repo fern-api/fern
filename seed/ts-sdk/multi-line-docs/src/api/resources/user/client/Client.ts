@@ -74,6 +74,11 @@ export class UserClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedMultiLineDocsError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedMultiLineDocsTimeoutError("Timeout exceeded when calling GET /users/{userId}.");
             case "unknown":
@@ -144,6 +149,11 @@ export class UserClient {
                 throw new errors.SeedMultiLineDocsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedMultiLineDocsError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

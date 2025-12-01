@@ -72,6 +72,17 @@ function evaluateRuntime() {
         };
     }
     /**
+     * A constant that indicates whether the environment the code is running is in React-Native.
+     * This check should come before Node.js detection since React Native may have a process polyfill.
+     * https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Core/setUpNavigator.js
+     */
+    const isReactNative = typeof navigator !== "undefined" && (navigator === null || navigator === void 0 ? void 0 : navigator.product) === "ReactNative";
+    if (isReactNative) {
+        return {
+            type: "react-native",
+        };
+    }
+    /**
      * A constant that indicates whether the environment the code is running is Node.JS.
      */
     const isNode = typeof process !== "undefined" &&
@@ -84,16 +95,6 @@ function evaluateRuntime() {
             type: "node",
             version: process.versions.node,
             parsedVersion: Number(process.versions.node.split(".")[0]),
-        };
-    }
-    /**
-     * A constant that indicates whether the environment the code is running is in React-Native.
-     * https://github.com/facebook/react-native/blob/main/packages/react-native/Libraries/Core/setUpNavigator.js
-     */
-    const isReactNative = typeof navigator !== "undefined" && (navigator === null || navigator === void 0 ? void 0 : navigator.product) === "ReactNative";
-    if (isReactNative) {
-        return {
-            type: "react-native",
         };
     }
     return {

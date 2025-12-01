@@ -1,0 +1,75 @@
+name: Bulk Update Generator
+description: Triggers bulk generator updates on Autopilot after successful generator publication
+
+inputs:
+  generator-name:
+    description: "Generator name (e.g., python-sdk, ts-sdk, java-sdk)"
+    required: true
+    type: string
+  version-file:
+    description: "Path to the generator's versions.yml file"
+    required: true
+    type: string
+  manual-version:
+    description: "Manual version override (for workflow_dispatch)"
+    required: false
+    type: string
+  fern-token:
+    description: "Bearer token for Autopilot API authorization"
+    required: true
+  autopilot-host:
+    description: "Autopilot host URL (defaults to https://autopilot.buildwithfern.com)"
+    required: false
+    default: "https://autopilot.buildwithfern.com"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get generator version
+      id: get_version
+      shell: bash
+      run: |
+        if [ -n "${{ inputs.manual-version }}" ]; then
+          echo "GENERATOR_VERSION=${{ inputs.manual-version }}" >> $GITHUB_OUTPUT
+          echo "Using manual version: ${{ inputs.manual-version }}"
+        else
+          version=$(head -n 30 "${{ inputs.version-file }}" | grep -m 1 '^[[:space:]]*version:' | awk '{print $2}')
+          echo "GENERATOR_VERSION=${version}" >> $GITHUB_OUTPUT
+          echo "Extracted version from ${{ inputs.version-file }}: ${version}"
+        fi
+
+    - name: Trigger bulk update
+      shell: bash
+      env:
+        FERN_TOKEN: ${{ inputs.fern-token }}
+        AUTOPILOT_HOST: ${{ inputs.autopilot-host }}
+      run: |
+        version="${{ steps.get_version.outputs.GENERATOR_VERSION }}"
+        generator_name="${{ inputs.generator-name }}"
+        host="${AUTOPILOT_HOST%/}"
+
+        echo "Using autopilot host: ${host}"
+        echo "Triggering bulk update for generator: fernapi/fern-${generator_name}"
+        echo "New version: ${version}"
+
+        payload="{\"generatorName\":\"fernapi/fern-${generator_name}\",\"newVersion\":\"${version}\",\"changeMode\":\"pull-request\",\"autoMerge\":true}"
+
+        response=$(curl -s -w "\n%{http_code}" -X POST \
+          "${host}/api/bulk-update-generator" \
+          -H "Content-Type: application/json" \
+          -H "Authorization: Bearer ${FERN_TOKEN}" \
+          -d "$payload")
+
+        http_code=$(echo "$response" | tail -n 1)
+        body=$(echo "$response" | sed '$d')
+
+        echo "Response status: ${http_code}"
+        echo "Response body: ${body}"
+
+        if [ "$http_code" -ge 200 ] && [ "$http_code" -lt 300 ]; then
+          echo "✓ Bulk update triggered successfully"
+          exit 0
+        else
+          echo "✗ Bulk update failed with status ${http_code}"
+          exit 1
+        fi

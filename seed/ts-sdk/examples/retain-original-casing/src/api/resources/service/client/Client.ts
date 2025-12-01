@@ -73,6 +73,11 @@ export class ServiceClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedExamplesError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling GET /movie/{movieId}.");
             case "unknown":
@@ -160,6 +165,11 @@ export class ServiceClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedExamplesError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /movie.");
             case "unknown":
@@ -243,6 +253,11 @@ export class ServiceClient {
                 throw new errors.SeedExamplesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedExamplesError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -487,6 +502,11 @@ export class ServiceClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedExamplesError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedExamplesTimeoutError("Timeout exceeded when calling POST /big-entity.");
             case "unknown":
@@ -556,6 +576,11 @@ export class ServiceClient {
                 throw new errors.SeedExamplesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedExamplesError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

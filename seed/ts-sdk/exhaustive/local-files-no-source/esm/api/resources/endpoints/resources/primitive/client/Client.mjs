@@ -62,6 +62,11 @@ export class PrimitiveClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/string.");
                 case "unknown":
@@ -116,6 +121,11 @@ export class PrimitiveClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":
@@ -174,6 +184,11 @@ export class PrimitiveClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/long.");
                 case "unknown":
@@ -228,6 +243,11 @@ export class PrimitiveClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":
@@ -286,6 +306,11 @@ export class PrimitiveClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/boolean.");
                 case "unknown":
@@ -340,6 +365,11 @@ export class PrimitiveClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":
@@ -398,6 +428,11 @@ export class PrimitiveClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/date.");
                 case "unknown":
@@ -454,6 +489,11 @@ export class PrimitiveClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /primitive/uuid.");
                 case "unknown":
@@ -508,6 +548,11 @@ export class PrimitiveClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":

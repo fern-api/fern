@@ -81,6 +81,11 @@ export class ObjectClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-with-optional-field.");
                 case "unknown":
@@ -140,6 +145,11 @@ export class ObjectClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":
@@ -205,6 +215,11 @@ export class ObjectClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":
@@ -285,6 +300,11 @@ export class ObjectClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /object/get-and-return-nested-with-optional-field.");
                 case "unknown":
@@ -362,6 +382,11 @@ export class ObjectClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":
@@ -459,6 +484,11 @@ export class ObjectClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":

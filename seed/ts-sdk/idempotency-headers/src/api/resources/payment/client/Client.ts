@@ -90,6 +90,11 @@ export class PaymentClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedIdempotencyHeadersError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedIdempotencyHeadersTimeoutError("Timeout exceeded when calling POST /payment.");
             case "unknown":
@@ -153,6 +158,11 @@ export class PaymentClient {
                 throw new errors.SeedIdempotencyHeadersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedIdempotencyHeadersError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

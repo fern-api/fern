@@ -87,6 +87,11 @@ export class S3Client {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedMultiUrlEnvironmentError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedMultiUrlEnvironmentTimeoutError(
                     "Timeout exceeded when calling POST /s3/presigned-url.",

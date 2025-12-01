@@ -91,6 +91,11 @@ export class ComplexClient {
                             body: _response.error.rawBody,
                             rawResponse: _response.rawResponse,
                         });
+                    case "body-is-null":
+                        throw new errors.SeedPaginationError({
+                            statusCode: _response.error.statusCode,
+                            rawResponse: _response.rawResponse,
+                        });
                     case "timeout":
                         throw new errors.SeedPaginationTimeoutError(
                             "Timeout exceeded when calling POST /{index}/conversations/search.",

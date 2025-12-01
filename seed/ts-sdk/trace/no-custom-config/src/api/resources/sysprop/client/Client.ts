@@ -86,6 +86,11 @@ export class SyspropClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedTraceTimeoutError(
                     "Timeout exceeded when calling PUT /sysprop/num-warm-instances/{language}/{numWarmInstances}.",
@@ -156,6 +161,11 @@ export class SyspropClient {
                 throw new errors.SeedTraceError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedTraceError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

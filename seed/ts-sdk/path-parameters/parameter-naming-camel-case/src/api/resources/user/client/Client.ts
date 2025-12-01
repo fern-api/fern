@@ -76,6 +76,11 @@ export class UserClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
                     "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}.",
@@ -145,6 +150,11 @@ export class UserClient {
                 throw new errors.SeedPathParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -222,6 +232,11 @@ export class UserClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
                     "Timeout exceeded when calling PATCH /{tenant_id}/user/{user_id}.",
@@ -296,6 +311,11 @@ export class UserClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedPathParametersTimeoutError(
                     "Timeout exceeded when calling GET /{tenant_id}/user/{user_id}/search.",
@@ -365,6 +385,11 @@ export class UserClient {
                 throw new errors.SeedPathParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -437,6 +462,11 @@ export class UserClient {
                 throw new errors.SeedPathParametersError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedPathParametersError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

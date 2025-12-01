@@ -70,6 +70,11 @@ export class ServiceClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedOauthClientCredentialsWithVariablesError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedOauthClientCredentialsWithVariablesTimeoutError(
                     "Timeout exceeded when calling POST /service/{endpointParam}.",

@@ -70,6 +70,11 @@ export class DummyClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedSingleUrlEnvironmentNoDefaultError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedSingleUrlEnvironmentNoDefaultTimeoutError(
                     "Timeout exceeded when calling GET /dummy.",
