@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.35.1
+  changelogEntry:
+    - summary: |
+        Fix errors module import in BaseClient.ts for handleNonStatusCodeError function.
+      type: fix
+  createdAt: "2025-12-01"
+  irVersion: 61
+
 - version: 3.35.0
   changelogEntry:
     - summary: |
