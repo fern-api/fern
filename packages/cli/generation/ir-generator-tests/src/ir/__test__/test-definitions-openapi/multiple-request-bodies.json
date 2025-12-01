@@ -610,8 +610,12 @@
                         }
                     },
                     "displayName": "Upload document metadata (JSON) or document file",
-                    "auth": false,
-                    "security": null,
+                    "auth": true,
+                    "security": [
+                        {
+                            "bearerAuth": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -915,7 +919,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200
+                        "status-code": 200,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -2079,8 +2084,12 @@
                         }
                     },
                     "displayName": "Upload document metadata (JSON) or document file",
-                    "auth": false,
-                    "security": null,
+                    "auth": true,
+                    "security": [
+                        {
+                            "bearerAuth": []
+                        }
+                    ],
                     "idempotent": false,
                     "baseUrl": null,
                     "v2BaseUrls": null,
@@ -2178,7 +2187,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": 200
+                        "status-code": 200,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [],
@@ -2912,7 +2922,7 @@
         "docs": null
     },
     "sdkConfig": {
-        "isAuthMandatory": false,
+        "isAuthMandatory": true,
         "hasStreamingEndpoints": false,
         "hasPaginatedEndpoints": false,
         "hasFileDownloadEndpoints": false,

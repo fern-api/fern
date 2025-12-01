@@ -5,7 +5,6 @@ package com.seed.nullableOptional.resources.nullableoptional.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -86,7 +85,8 @@ public final class DeserializationTestRequest {
         return requiredString;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableString")
     public OptionalNullable<String> getNullableString() {
         if (nullableString == null) {
             return OptionalNullable.absent();
@@ -99,7 +99,8 @@ public final class DeserializationTestRequest {
         return optionalString;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("optionalNullableString")
     public OptionalNullable<String> getOptionalNullableString() {
         if (optionalNullableString == null) {
             return OptionalNullable.absent();
@@ -107,7 +108,8 @@ public final class DeserializationTestRequest {
         return optionalNullableString;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableEnum")
     public OptionalNullable<UserRole> getNullableEnum() {
         if (nullableEnum == null) {
             return OptionalNullable.absent();
@@ -120,7 +122,8 @@ public final class DeserializationTestRequest {
         return optionalEnum;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableUnion")
     public OptionalNullable<NotificationMethod> getNullableUnion() {
         if (nullableUnion == null) {
             return OptionalNullable.absent();
@@ -133,7 +136,8 @@ public final class DeserializationTestRequest {
         return optionalUnion;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableList")
     public OptionalNullable<List<String>> getNullableList() {
         if (nullableList == null) {
             return OptionalNullable.absent();
@@ -141,7 +145,8 @@ public final class DeserializationTestRequest {
         return nullableList;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableMap")
     public OptionalNullable<Map<String, Integer>> getNullableMap() {
         if (nullableMap == null) {
             return OptionalNullable.absent();
@@ -149,7 +154,8 @@ public final class DeserializationTestRequest {
         return nullableMap;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableObject")
     public OptionalNullable<Address> getNullableObject() {
         if (nullableObject == null) {
             return OptionalNullable.absent();

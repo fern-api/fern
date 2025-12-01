@@ -62,6 +62,8 @@ export class DynamicSnippetsConverter {
     private readonly auth: DynamicSnippets.Auth | undefined;
     private readonly authValues: DynamicSnippets.AuthValues | undefined;
     private readonly generatorConfig: dynamic.GeneratorConfig | undefined;
+    // Types that are extended by other types (have self-interfaces in Java)
+    private readonly extendedTypeIds: Set<TypeId>;
 
     constructor(args: DynamicSnippetsConverter.Args) {
         this.ir = args.ir;
@@ -73,6 +75,24 @@ export class DynamicSnippetsConverter {
         });
         this.auth = this.convertAuth(this.ir.auth);
         this.authValues = this.getAuthValues(this.ir.auth);
+        this.extendedTypeIds = this.computeExtendedTypeIds();
+    }
+
+    /**
+     * Computes the set of type IDs that are extended by other types.
+     * In Java, these types get self-interfaces generated for them, which affects
+     * the field ordering in staged builders.
+     */
+    private computeExtendedTypeIds(): Set<TypeId> {
+        const extendedTypeIds = new Set<TypeId>();
+        for (const typeDeclaration of Object.values(this.ir.types)) {
+            if (typeDeclaration.shape.type === "object") {
+                for (const extended of typeDeclaration.shape.extends) {
+                    extendedTypeIds.add(extended.typeId);
+                }
+            }
+        }
+        return extendedTypeIds;
     }
 
     public convert({
@@ -442,7 +462,11 @@ export class DynamicSnippetsConverter {
             case "enum":
                 return this.convertEnum({ declaration, enum_: typeDeclaration.shape });
             case "object":
-                return this.convertObject({ declaration, object: typeDeclaration.shape });
+                return this.convertObject({
+                    declaration,
+                    object: typeDeclaration.shape,
+                    typeId: typeDeclaration.name.typeId
+                });
             case "union":
                 return this.convertDiscriminatedUnion({ declaration, union: typeDeclaration.shape });
             case "undiscriminatedUnion":
@@ -480,12 +504,20 @@ export class DynamicSnippetsConverter {
 
     private convertObject({
         declaration,
-        object
+        object,
+        typeId
     }: {
         declaration: DynamicSnippets.Declaration;
         object: ObjectTypeDeclaration;
+        typeId: TypeId;
     }): DynamicSnippets.NamedType {
-        const properties = [...(object.extendedProperties ?? []), ...object.properties];
+        // If this type is extended by other types, its own properties should come first,
+        // followed by inherited properties. This ordering is required for languages with
+        // staged builders (like Java) where method call order is enforced at compile time.
+        const hasSelfInterface = this.extendedTypeIds.has(typeId);
+        const properties = hasSelfInterface
+            ? [...object.properties, ...(object.extendedProperties ?? [])]
+            : [...(object.extendedProperties ?? []), ...object.properties];
         return this.convertObjectProperties({
             declaration,
             properties,

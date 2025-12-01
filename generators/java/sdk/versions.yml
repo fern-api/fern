@@ -1,3 +1,112 @@
+- version: 3.20.1
+  changelogEntry:
+    - summary: |
+        Fix StreamTest generator to use Java 8 compatible constructs. Replaced List.of() and Map.of() (Java 9+) with Arrays.asList() and a createMap() helper method using HashMap.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 61
+
+- version: 3.20.0
+  changelogEntry:
+    - summary: |
+        Update vulnerable dependencies.
+      type: fix
+  createdAt: "2025-11-26"
+  irVersion: 61
+
+- version: 3.19.0
+  changelogEntry:
+    - summary: |
+        Add wire test support for OAuth APIs and multi-URL environments. Wire tests now:
+        - Properly mock OAuth token endpoints with per-test token enqueuing
+        - Use `.clientId()/.clientSecret()` for OAuth-authenticated APIs
+        - Support custom OAuth headers (e.g., `apiKey`) required by token endpoints
+        - Configure `Environment.custom()` builder for multi-URL environment APIs
+        - Handle flexible JSON comparison allowing extra default fields in responses
+      type: feat
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.13
+  changelogEntry:
+    - summary: |
+        Skip wire test generation for OAuth and multi-URL environment APIs temporarily.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.12
+  changelogEntry:
+    - summary: |
+        Fix Java dynamic snippets for query parameters with `allow-multiple: true` and optional types. Snippets now generate `List<T>` instead of `List<Optional<T>>`, which matches the SDK builder's convenience overload.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.11
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to preserve schema parameter order for staged builders.
+      type: fix
+  createdAt: "2025-11-25"
+  irVersion: 61
+
+- version: 3.18.10
+  changelogEntry:
+    - summary: |
+        Fix Java dynamic snippets when use-local-date-for-dates is enabled. Snippets for date fields now generate LocalDate.parse(...) instead of string literals, matching SDKs configured to use LocalDate for dates. This fixes compilation errors in generated dynamic snippets for Java v2 when the use-local-date-for-dates flag is true.
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 61
+
+- version: 3.18.9
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to use OptionalNullable when collapse-optional-nullable is enabled. Wire tests now correctly generate OptionalNullable.absent() and OptionalNullable.of() instead of Optional.empty() and Optional.of() for optional request bodies and method arguments when collapse-optional-nullable: true is configured. This includes support for nested optional/nullable types which collapse into a single `OptionalNullable<T>`.
+      type: fix
+  createdAt: "2025-11-24"
+  irVersion: 61
+
+- version: 3.18.8
+  changelogEntry:
+    - summary: |
+        Skip InputStream overload generation for file upload endpoints with inline path parameters. This prevents compilation errors where InputStream methods would reference non-existent request parameters when path parameters are inlined.
+      type: fix
+  createdAt: "2025-11-23"
+  irVersion: 61
+
+- version: 3.18.7
+  changelogEntry:
+    - summary: |
+        Skip InputStream overload generation for file upload endpoints with query parameters. This prevents compilation errors where InputStream methods would reference non-existent request parameters when accessing query parameters.
+      type: fix
+  createdAt: "2025-11-22"
+  irVersion: 61
+
+- version: 3.18.6
+  changelogEntry:
+    - summary: |
+        Fix compilation errors in raw clients when inlinePathParameters is enabled. Raw client methods now correctly use path parameters directly instead of attempting to access non-existent request objects.
+      type: fix
+  createdAt: "2025-11-22"
+  irVersion: 61
+
+- version: 3.18.5
+  changelogEntry:
+    - summary: |
+        Remove using generator-cli to push to GitHub for self-hosted SDKs; this is now handled in the local workspace runner.
+      type: fix
+  createdAt: "2025-11-21"
+  irVersion: 61
+
+- version: 3.18.4
+  changelogEntry:
+    - summary: |
+        Fix missing @JsonInclude header on certain instances of `OptionalNullable<>`.
+      type: fix
+  createdAt: "2025-11-20"
+  irVersion: 61
+
 - version: 3.18.3
   changelogEntry:
     - summary: |

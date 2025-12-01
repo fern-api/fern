@@ -5,7 +5,6 @@ package com.seed.nullableOptional.resources.nullableoptional.types;
 
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -114,7 +113,8 @@ public final class ComplexProfile {
         return id;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableRole")
     public OptionalNullable<UserRole> getNullableRole() {
         if (nullableRole == null) {
             return OptionalNullable.absent();
@@ -127,7 +127,8 @@ public final class ComplexProfile {
         return optionalRole;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("optionalNullableRole")
     public OptionalNullable<UserRole> getOptionalNullableRole() {
         if (optionalNullableRole == null) {
             return OptionalNullable.absent();
@@ -135,7 +136,8 @@ public final class ComplexProfile {
         return optionalNullableRole;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableStatus")
     public OptionalNullable<UserStatus> getNullableStatus() {
         if (nullableStatus == null) {
             return OptionalNullable.absent();
@@ -148,7 +150,8 @@ public final class ComplexProfile {
         return optionalStatus;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("optionalNullableStatus")
     public OptionalNullable<UserStatus> getOptionalNullableStatus() {
         if (optionalNullableStatus == null) {
             return OptionalNullable.absent();
@@ -156,7 +159,8 @@ public final class ComplexProfile {
         return optionalNullableStatus;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableNotification")
     public OptionalNullable<NotificationMethod> getNullableNotification() {
         if (nullableNotification == null) {
             return OptionalNullable.absent();
@@ -169,7 +173,8 @@ public final class ComplexProfile {
         return optionalNotification;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("optionalNullableNotification")
     public OptionalNullable<NotificationMethod> getOptionalNullableNotification() {
         if (optionalNullableNotification == null) {
             return OptionalNullable.absent();
@@ -177,7 +182,8 @@ public final class ComplexProfile {
         return optionalNullableNotification;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableSearchResult")
     public OptionalNullable<SearchResult> getNullableSearchResult() {
         if (nullableSearchResult == null) {
             return OptionalNullable.absent();
@@ -190,7 +196,8 @@ public final class ComplexProfile {
         return optionalSearchResult;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableArray")
     public OptionalNullable<List<String>> getNullableArray() {
         if (nullableArray == null) {
             return OptionalNullable.absent();
@@ -203,7 +210,8 @@ public final class ComplexProfile {
         return optionalArray;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("optionalNullableArray")
     public OptionalNullable<List<String>> getOptionalNullableArray() {
         if (optionalNullableArray == null) {
             return OptionalNullable.absent();
@@ -211,7 +219,8 @@ public final class ComplexProfile {
         return optionalNullableArray;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableListOfNullables")
     public OptionalNullable<List<OptionalNullable<String>>> getNullableListOfNullables() {
         if (nullableListOfNullables == null) {
             return OptionalNullable.absent();
@@ -219,7 +228,8 @@ public final class ComplexProfile {
         return nullableListOfNullables;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableMapOfNullables")
     public OptionalNullable<Map<String, OptionalNullable<Address>>> getNullableMapOfNullables() {
         if (nullableMapOfNullables == null) {
             return OptionalNullable.absent();
@@ -227,7 +237,8 @@ public final class ComplexProfile {
         return nullableMapOfNullables;
     }
 
-    @JsonIgnore
+    @JsonInclude(value = JsonInclude.Include.CUSTOM, valueFilter = NullableNonemptyFilter.class)
+    @JsonProperty("nullableListOfUnions")
     public OptionalNullable<List<NotificationMethod>> getNullableListOfUnions() {
         if (nullableListOfUnions == null) {
             return OptionalNullable.absent();

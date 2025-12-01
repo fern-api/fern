@@ -2,7 +2,7 @@
 
 import type * as SeedUndiscriminatedUnionWithResponseProperty from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
@@ -14,7 +14,7 @@ export declare namespace SeedUndiscriminatedUnionWithResponsePropertyClient {
 }
 
 export class SeedUndiscriminatedUnionWithResponsePropertyClient {
-    protected readonly _options: SeedUndiscriminatedUnionWithResponsePropertyClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedUndiscriminatedUnionWithResponsePropertyClient.Options>;
 
     constructor(options: SeedUndiscriminatedUnionWithResponsePropertyClient.Options) {
         this._options = normalizeClientOptions(options);
@@ -71,6 +71,11 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
                 throw new errors.SeedUndiscriminatedUnionWithResponsePropertyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedUndiscriminatedUnionWithResponsePropertyError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -136,6 +141,11 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
                 throw new errors.SeedUndiscriminatedUnionWithResponsePropertyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedUndiscriminatedUnionWithResponsePropertyError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

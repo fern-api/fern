@@ -16,7 +16,11 @@ on:
 
 jobs:
   publish:
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
+    env:
+      BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
     steps:
       - name: Checkout repo at current ref
         uses: actions/checkout@v4
@@ -40,3 +44,35 @@ jobs:
           manual-trigger: "true"
           fern-token: ${{ secrets.FERN_TOKEN }}
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+      - name: Configure AWS Credentials
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: "arn:aws:iam::985111089818:role/github-ci"
+          aws-region: "us-east-1"
+      - name: Upload to ECR for scanning
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |-
+          aws sts get-caller-identity
+          docker pull fernapi/fern-java-sdk:${{ inputs.version }}
+          SANITIZED_BRANCH="${BRANCH_NAME//\//-}"
+          docker tag fernapi/fern-java-sdk:${{ inputs.version }} 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:${{ inputs.version }}-$SANITIZED_BRANCH-${{ github.sha }}
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 985111089818.dkr.ecr.us-east-1.amazonaws.com
+          docker push 985111089818.dkr.ecr.us-east-1.amazonaws.com/dev/java-sdk-generator:${{ inputs.version }}-$SANITIZED_BRANCH-${{ github.sha }}
+  
+  bulk-update-generator:
+    needs: publish
+    if: ${{ always() && needs.publish.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Trigger bulk update
+        uses: ./.github/actions/bulk-update-generator
+        with:
+          generator-name: "java-sdk"
+          version-file: "generators/java/sdk/versions.yml"
+          manual-version: ${{ inputs.version }}
+          fern-token: ${{ secrets.FERN_TOKEN }}
+          autopilot-host: ${{ vars.AUTOPILOT_HOST != '' && vars.AUTOPILOT_HOST || 'https://autopilot.buildwithfern.com' }}

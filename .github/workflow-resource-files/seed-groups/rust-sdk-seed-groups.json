@@ -60,7 +60,7 @@
     {
       "fixtures": [
         "url-form-encoded",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "response-property",
         "unions",
         "multiple-request-bodies",
@@ -136,7 +136,7 @@
       "fixtures": [
         "bearer-token-environment-variable",
         "extends",
-        "custom-auth",
+        "header-auth",
         "package-yml",
         "imdb:imdb",
         "mixed-file-directory",

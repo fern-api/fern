@@ -138,7 +138,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/test",
       "examples": [

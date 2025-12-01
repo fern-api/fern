@@ -929,6 +929,16 @@
               "type": "null"
             }
           ]
+        },
+        "announcement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.AnnouncementConfig"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "required": [
@@ -1033,6 +1043,16 @@
           "oneOf": [
             {
               "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "announcement": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/docs.AnnouncementConfig"
             },
             {
               "type": "null"
@@ -2090,6 +2110,16 @@
           ]
         },
         "display-errors": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tag-description-pages": {
           "oneOf": [
             {
               "type": "boolean"

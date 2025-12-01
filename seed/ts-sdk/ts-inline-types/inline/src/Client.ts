@@ -2,7 +2,7 @@
 
 import type * as SeedObject from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
@@ -14,7 +14,7 @@ export declare namespace SeedObjectClient {
 }
 
 export class SeedObjectClient {
-    protected readonly _options: SeedObjectClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedObjectClient.Options>;
 
     constructor(options: SeedObjectClient.Options) {
         this._options = normalizeClientOptions(options);
@@ -79,6 +79,11 @@ export class SeedObjectClient {
                 throw new errors.SeedObjectError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedObjectError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -162,6 +167,11 @@ export class SeedObjectClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedObjectError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedObjectTimeoutError(
                     "Timeout exceeded when calling POST /root/discriminated-union.",
@@ -242,6 +252,11 @@ export class SeedObjectClient {
                 throw new errors.SeedObjectError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedObjectError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

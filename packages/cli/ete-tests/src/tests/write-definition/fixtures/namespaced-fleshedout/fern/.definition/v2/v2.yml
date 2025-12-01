@@ -28,7 +28,7 @@ types:
     source:
       openapi: openapi/cohere-v2.yaml
 service:
-  auth: false
+  auth: true
   base-path: ''
   endpoints:
     chat:

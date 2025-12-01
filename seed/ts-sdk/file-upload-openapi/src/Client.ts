@@ -2,7 +2,7 @@
 
 import { FileUploadExampleClient } from "./api/resources/fileUploadExample/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedApiClient {
     export interface Options extends BaseClientOptions {}
@@ -11,7 +11,7 @@ export declare namespace SeedApiClient {
 }
 
 export class SeedApiClient {
-    protected readonly _options: SeedApiClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedApiClient.Options>;
     protected _fileUploadExample: FileUploadExampleClient | undefined;
 
     constructor(options: SeedApiClient.Options) {

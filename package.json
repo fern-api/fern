@@ -20,6 +20,7 @@
     "test": "turbo test --filter=!@fern-api/ete-tests",
     "test:debug": "turbo test:debug --filter=!@fern-api/ete-tests",
     "test:update": "turbo test:update --filter=!@fern-api/ete-tests",
+    "test:update:dockerless": "turbo test:update --filter=!@fern-api/ete-tests --filter=!@fern-api/docker-utils",
     "test:ete": "pnpm --filter @fern-api/cli dist:cli:dev && pnpm --filter @fern-api/seed-cli dist:cli && pnpm --filter @fern-api/ete-tests test",
     "test:ete:update": "pnpm --filter @fern-api/cli dist:cli:dev && pnpm --filter @fern-api/seed-cli dist:cli && pnpm --filter @fern-api/ete-tests test -- -u",
     "lint:biome": "biome lint --error-on-warnings",
@@ -41,12 +42,12 @@
     "fern": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/prod/cli.cjs",
     "fern:local": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/prod/cli.cjs",
     "fern-dev:local": "FERN_NO_VERSION_REDIRECTION=true node --enable-source-maps ./packages/cli/cli/dist/dev/cli.cjs",
-    "fern:build": "cross-env POSTHOG_API_KEY=\"\" pnpm --filter @fern-api/cli dist:cli:prod && echo 'Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs'",
+    "fern:build": "cross-env POSTHOG_API_KEY=\"\" turbo run dist:cli:prod --filter=@fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs'",
     "fern:build:unminified": "cross-env POSTHOG_API_KEY=\"\" pnpm --filter @fern-api/cli dist:cli:prod:unminified && echo 'Run node --enable-source-maps packages/cli/cli/dist/prod/cli.cjs'",
-    "fern-dev:build": "pnpm --filter @fern-api/cli dist:cli:dev && echo 'Run node --enable-source-maps packages/cli/cli/dist/dev/cli.cjs'",
+    "fern-dev:build": "turbo run dist:cli:dev --filter=@fern-api/cli && echo 'Run node --enable-source-maps packages/cli/cli/dist/dev/cli.cjs'",
     "fern-local:build": "pnpm --filter @fern-api/cli dist:cli:local && echo 'Run node --enable-source-maps packages/cli/cli/dist/local/cli.cjs'",
     "generator-cli:generate": "pnpm fern generate --api generator-cli --local && pnpm turbo --filter=@fern-api/generator-cli compile",
-    "seed:build": "pnpm --filter @fern-api/seed-cli dist:cli && echo 'Run node --enable-source-maps packages/seed/dist/cli.cjs'",
+    "seed:build": "turbo run dist:cli --filter=@fern-api/seed-cli && echo 'Run node --enable-source-maps packages/seed/dist/cli.cjs'",
     "publish": "pnpm -r publish --access public --no-git-checks --loglevel=verbose",
     "jsonschema": "pnpm definition-yml:jsonschema && pnpm api-yml:jsonschema && pnpm package-yml:jsonschema && pnpm docs-yml:jsonschema && pnpm generators-yml:jsonschema && pnpm versions-yml:jsonschema && pnpm products-yml:jsonschema",
     "definition-yml:jsonschema": "pnpm fern jsonschema fern.schema.json --api fern-definition --type file.DefinitionFileSchema && pnpm fern jsonschema packages/cli/workspace/lazy-fern-workspace/src/fern.schema.json --api fern-definition --type file.DefinitionFileSchema",
@@ -75,7 +76,16 @@
     "prepare": "husky",
     "pre-commit": "tsx scripts/pre-commit.ts",
     "fix:references": "npx nx g @nx/js:typescript-sync --updateReferences=true --updatePaths=false",
-    "test:update-package": "sh -c 'for arg in \"$@\"; do if [[ $arg == --package=* ]]; then PACKAGE=${arg#--package=}; break; fi; done; pnpm --filter \"$PACKAGE\" compile && pnpm --filter \"$PACKAGE\" test:update' --"
+    "test:update-package": "sh -c 'for arg in \"$@\"; do if [[ $arg == --package=* ]]; then PACKAGE=${arg#--package=}; break; fi; done; pnpm --filter \"$PACKAGE\" compile && pnpm --filter \"$PACKAGE\" test:update' --",
+    "csharp:build": "pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest",
+    "go:build": "pnpm --filter @fern-api/go-sdk dockerTagLatest",
+    "java:build": "pnpm --filter @fern-api/java-sdk dockerTagLatest",
+    "php:build": "pnpm --filter @fern-api/php-sdk dockerTagLatest",
+    "python:build": "pnpm --filter @fern-api/python-sdk dockerTagLatest",
+    "ruby:build": "pnpm --filter @fern-api/ruby-sdk dockerTagLatest",
+    "rust:build": "pnpm --filter @fern-api/rust-sdk dockerTagLatest",
+    "swift:build": "pnpm --filter @fern-api/swift-sdk dockerTagLatest",
+    "typescript:build": "pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLatest"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
@@ -127,7 +137,7 @@
       "node-fetch@2.x>whatwg-url": "^14.0.0",
       "qs": "6.13.0",
       "url-join": "^4.0.1",
-      "@fern-api/fdr-sdk": "0.141.0-5b515bbf0",
+      "@fern-api/fdr-sdk": "0.142.0-aae6ba0ae",
       "es-toolkit": "^1.39.10",
       "ts-essentials": "^10.1.1",
       "form-data": "^4.0.4"
@@ -138,5 +148,8 @@
     "qs": "^6.13.0",
     "ts-essentials": "^10.1.1",
     "url-join": "^4.0.1"
+  },
+  "dependencies": {
+    "js-yaml": "^4.1.1"
   }
 }

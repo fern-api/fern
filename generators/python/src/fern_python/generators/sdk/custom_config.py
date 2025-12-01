@@ -52,6 +52,7 @@ class SDKCustomConfig(pydantic.BaseModel):
     include_union_utils: bool = False
     use_api_name_in_package: bool = False
     package_name: Optional[str] = None
+    package_path: Optional[str] = None
     timeout_in_seconds: Union[Literal["infinity"], int] = 60
     flat_layout: bool = False
     pydantic_config: SdkPydanticModelCustomConfig = SdkPydanticModelCustomConfig()
@@ -63,6 +64,8 @@ class SDKCustomConfig(pydantic.BaseModel):
     improved_imports: bool = True
 
     follow_redirects_by_default: Optional[bool] = True
+
+    environment_class_name: Optional[str] = None
 
     # Feature flag that removes the usage of request objects, and instead
     # parameters in function signatures where possible.
@@ -119,6 +122,8 @@ class SDKCustomConfig(pydantic.BaseModel):
     # If set, the root __init__.py will include sys.setrecursionlimit() to ensure
     # the recursion limit is at least this value.
     recursion_limit: Optional[int] = pydantic.Field(None, gt=1000)
+
+    enable_wire_tests: bool = False
 
     custom_pager_name: Optional[str] = None
 

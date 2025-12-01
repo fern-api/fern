@@ -7,11 +7,11 @@ client = Seed::Client.new(
 
 client.service.list_clients(
   fields: 'fields',
-  includeFields: true,
+  include_fields: true,
   page: 1,
-  perPage: 1,
-  includeTotals: true,
-  isGlobal: true,
-  isFirstParty: true,
-  appType: ['app_type', 'app_type']
+  per_page: 1,
+  include_totals: true,
+  is_global: true,
+  is_first_party: true,
+  app_type: ['app_type', 'app_type']
 );

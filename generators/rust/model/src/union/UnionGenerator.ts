@@ -17,6 +17,7 @@ import {
     typeSupportsHashAndEq,
     typeSupportsPartialEq
 } from "../utils/primitiveTypeUtils";
+import { isFieldRecursive } from "../utils/recursiveTypeUtils";
 import { canDeriveHashAndEq, canDerivePartialEq, hasHashMapFields, hasHashSetFields } from "../utils/structUtils";
 
 export class UnionGenerator {
@@ -219,6 +220,9 @@ export class UnionGenerator {
         const variantName = this.context.escapeRustReservedType(rawVariantName); // Escape reserved types with r#
         const discriminantValue = unionType.discriminantValue.wireValue;
 
+        // Find the typeId for this union to detect recursive fields
+        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
+
         // Generate variant attributes
         const variantAttributes = this.generateVariantAttributes(unionType, variantName);
         variantAttributes.forEach((attr) => {
@@ -233,7 +237,10 @@ export class UnionGenerator {
                 writer.writeLine(`    ${variantName},`);
             },
             singleProperty: (singleProperty) => {
-                const fieldType = generateRustTypeForTypeReference(singleProperty.type, this.context);
+                // Check if this field creates a recursive reference
+                const isRecursive = typeId ? isFieldRecursive(typeId, singleProperty.type, this.context.ir) : false;
+
+                const fieldType = generateRustTypeForTypeReference(singleProperty.type, this.context, isRecursive);
                 const fieldName = singleProperty.name.name.snakeCase.unsafeName;
                 const wireValue = singleProperty.name.wireValue;
 
@@ -252,11 +259,29 @@ export class UnionGenerator {
                 writer.writeLine(`    },`);
             },
             samePropertiesAsObject: (declaredTypeName) => {
+                // Check if this referenced type creates a recursive reference
+                // For direct recursion, just check if the typeId matches
+                // For indirect recursion, we'd need to traverse the type graph
+                const isDirectRecursion = typeId && declaredTypeName.typeId === typeId;
+
+                // For indirect recursion, check if this type eventually references back to the union
+                let isRecursive = isDirectRecursion;
+                if (!isRecursive && typeId) {
+                    // Check if the referenced type contains a field that points back to this union
+                    const referencedType = this.context.ir.types[declaredTypeName.typeId];
+                    if (referencedType?.shape.type === "object") {
+                        isRecursive = referencedType.shape.properties.some((prop) =>
+                            isFieldRecursive(typeId, prop.valueType, this.context.ir)
+                        );
+                    }
+                }
+
                 const objectTypeName = this.context.getUniqueTypeNameForReference(declaredTypeName);
+                const fieldTypeName = isRecursive ? `Box<${objectTypeName}>` : objectTypeName;
 
                 writer.writeLine(`    ${variantName} {`);
                 writer.writeLine(`        #[serde(flatten)]`);
-                writer.writeLine(`        data: ${objectTypeName},`);
+                writer.writeLine(`        data: ${fieldTypeName},`);
 
                 // Add base properties if they exist
                 this.generateBaseProperties(writer);
@@ -296,10 +321,17 @@ export class UnionGenerator {
     }
 
     private generateBaseProperties(writer: rust.Writer): void {
+        // Find the typeId for this union to detect recursive fields
+        const typeId = Object.entries(this.context.ir.types).find(([_, type]) => type === this.typeDeclaration)?.[0];
+
         // Generate base properties that are common to all variants
         this.unionTypeDeclaration.baseProperties.forEach((property) => {
             const fieldName = property.name.name.snakeCase.unsafeName;
-            const fieldType = generateRustTypeForTypeReference(property.valueType, this.context);
+
+            // Check if this field creates a recursive reference
+            const isRecursive = typeId ? isFieldRecursive(typeId, property.valueType, this.context.ir) : false;
+
+            const fieldType = generateRustTypeForTypeReference(property.valueType, this.context, isRecursive);
             const wireValue = property.name.wireValue;
 
             if (fieldName !== wireValue) {

@@ -101,19 +101,86 @@ function checkRecursion(
         return false;
     }
 
-    // Only object types can have fields that create recursion
-    if (referencedTypeDecl.shape.type !== "object") {
-        return false;
-    }
+    // Check different type shapes for recursion
+    return referencedTypeDecl.shape._visit({
+        // Object types: check all properties
+        object: (objectShape) => {
+            for (const property of objectShape.properties) {
+                if (checkRecursion(targetTypeId, property.valueType, ir, newVisited)) {
+                    return true;
+                }
+            }
+            return false;
+        },
 
-    // Recursively check all fields of the referenced type
-    for (const property of referencedTypeDecl.shape.properties) {
-        if (checkRecursion(targetTypeId, property.valueType, ir, newVisited)) {
-            return true;
-        }
-    }
+        // Discriminated unions: check all variants
+        union: (unionShape) => {
+            for (const variant of unionShape.types) {
+                // Check all variant shapes for recursion
+                const hasRecursion = variant.shape._visit({
+                    singleProperty: (prop) => checkRecursion(targetTypeId, prop.type, ir, newVisited),
+                    samePropertiesAsObject: (ref) => {
+                        // Direct match with target type
+                        if (ref.typeId === targetTypeId) {
+                            return true;
+                        }
+                        // Recursively check the referenced type
+                        const refType = ir.types[ref.typeId];
+                        if (!refType || newVisited.has(ref.typeId)) {
+                            return false;
+                        }
+                        const extendedVisited = new Set(newVisited);
+                        extendedVisited.add(ref.typeId);
+                        // Only check object types for properties
+                        if (refType.shape.type === "object") {
+                            for (const prop of refType.shape.properties) {
+                                if (checkRecursion(targetTypeId, prop.valueType, ir, extendedVisited)) {
+                                    return true;
+                                }
+                            }
+                        }
+                        return false;
+                    },
+                    noProperties: () => false,
+                    _other: () => false
+                });
 
-    return false;
+                if (hasRecursion) {
+                    return true;
+                }
+            }
+
+            // Check base properties if present
+            if (unionShape.baseProperties) {
+                for (const property of unionShape.baseProperties) {
+                    if (checkRecursion(targetTypeId, property.valueType, ir, newVisited)) {
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        },
+
+        // Undiscriminated unions: check all members
+        undiscriminatedUnion: (undiscriminatedUnion) => {
+            for (const member of undiscriminatedUnion.members) {
+                if (checkRecursion(targetTypeId, member.type, ir, newVisited)) {
+                    return true;
+                }
+            }
+            return false;
+        },
+
+        // Enum types cannot create structural recursion
+        enum: () => false,
+
+        // Alias types: check the aliased type
+        alias: (aliasShape) => checkRecursion(targetTypeId, aliasShape.aliasOf, ir, newVisited),
+
+        // Other types are not recursive
+        _other: () => false
+    });
 }
 
 /**

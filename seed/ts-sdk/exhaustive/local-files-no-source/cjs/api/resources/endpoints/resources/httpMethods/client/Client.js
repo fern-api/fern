@@ -50,7 +50,7 @@ const core = __importStar(require("../../../../../../core/index.js"));
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class HttpMethodsClient {
     constructor(options) {
-        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
+        this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
     }
     /**
      * @param {string} id
@@ -65,7 +65,8 @@ class HttpMethodsClient {
     __testGet(id, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
                 method: "GET",
@@ -94,6 +95,11 @@ class HttpMethodsClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /http-methods/{id}.");
                 case "unknown":
@@ -119,7 +125,8 @@ class HttpMethodsClient {
     __testPost(request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/http-methods"),
                 method: "POST",
@@ -154,6 +161,11 @@ class HttpMethodsClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /http-methods.");
                 case "unknown":
@@ -180,7 +192,8 @@ class HttpMethodsClient {
     __testPut(id, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
                 method: "PUT",
@@ -213,6 +226,11 @@ class HttpMethodsClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":
@@ -255,7 +273,8 @@ class HttpMethodsClient {
     __testPatch(id, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
                 method: "PATCH",
@@ -290,6 +309,11 @@ class HttpMethodsClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PATCH /http-methods/{id}.");
                 case "unknown":
@@ -313,7 +337,8 @@ class HttpMethodsClient {
     __testDelete(id, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/http-methods/${core.url.encodePathParam(id)}`),
                 method: "DELETE",
@@ -342,6 +367,11 @@ class HttpMethodsClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling DELETE /http-methods/{id}.");
                 case "unknown":
@@ -350,15 +380,6 @@ class HttpMethodsClient {
                         rawResponse: _response.rawResponse,
                     });
             }
-        });
-    }
-    _getAuthorizationHeader() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const bearer = yield core.Supplier.get(this._options.token);
-            if (bearer != null) {
-                return `Bearer ${bearer}`;
-            }
-            return undefined;
         });
     }
 }

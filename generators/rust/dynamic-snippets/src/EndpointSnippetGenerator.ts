@@ -1,4 +1,4 @@
-import { Scope, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractAstNode, Options, Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { formatRustSnippet, formatRustSnippetAsync } from "@fern-api/rust-base";
@@ -43,7 +43,19 @@ export class EndpointSnippetGenerator {
         return formattedCode;
     }
 
-    private buildCodeComponents({
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<AbstractAstNode> {
+        throw new Error("Unsupported");
+    }
+
+    public buildCodeComponents({
         endpoint,
         snippet
     }: {

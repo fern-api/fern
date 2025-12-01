@@ -37,7 +37,7 @@
         "bearer-token-environment-variable",
         "nullable",
         "mixed-file-directory",
-        "custom-auth",
+        "header-auth",
         "literals-unions",
         "oauth-client-credentials",
         "basic-auth",
@@ -62,7 +62,7 @@
     {
       "fixtures": [
         "simple-fhir",
-        "auth-environment-variables",
+        "header-auth-environment-variable",
         "pagination",
         "websocket-inferred-auth",
         "literal",

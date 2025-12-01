@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
+import { AnnouncementConfig } from "./AnnouncementConfig";
 import { ProductConfigBase } from "./ProductConfigBase";
 
 export const InternalProduct: core.serialization.ObjectSchema<
@@ -14,6 +15,7 @@ export const InternalProduct: core.serialization.ObjectSchema<
     .object({
         path: core.serialization.string(),
         slug: core.serialization.string().optional(),
+        announcement: AnnouncementConfig.optional(),
     })
     .extend(ProductConfigBase);
 
@@ -21,5 +23,6 @@ export declare namespace InternalProduct {
     export interface Raw extends ProductConfigBase.Raw {
         path: string;
         slug?: string | null;
+        announcement?: AnnouncementConfig.Raw | null;
     }
 }

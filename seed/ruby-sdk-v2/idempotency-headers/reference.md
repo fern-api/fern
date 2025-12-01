@@ -13,10 +13,7 @@
 <dd>
 
 ```ruby
-client.payment.create(
-  amount: 1,
-  currency: 
-);
+client.payment.create(amount: 1);
 ```
 </dd>
 </dl>
@@ -64,7 +61,7 @@ client.payment.create(
 <dd>
 
 ```ruby
-client.payment.delete();
+client.payment.delete('paymentId');
 ```
 </dd>
 </dl>

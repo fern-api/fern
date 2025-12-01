@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.organizations.get_organization();
+client.organizations.get_organization('organization_id');
 ```
 </dd>
 </dl>
@@ -62,8 +62,8 @@ client.organizations.get_organization();
 
 ```ruby
 client.organizations.get_organization_user(
-  organizationId: 'organization_id',
-  userId: 'user_id'
+  organization_id: 'organization_id',
+  user_id: 'user_id'
 );
 ```
 </dd>
@@ -121,7 +121,7 @@ client.organizations.get_organization_user(
 
 ```ruby
 client.organizations.search_organizations(
-  organizationId: 'organization_id',
+  organization_id: 'organization_id',
   limit: 1
 );
 ```
@@ -180,7 +180,7 @@ client.organizations.search_organizations(
 <dd>
 
 ```ruby
-client.user.get_user(userId: 'user_id');
+client.user.get_user(user_id: 'user_id');
 ```
 </dd>
 </dl>
@@ -279,7 +279,7 @@ client.user.create_user({
 <dd>
 
 ```ruby
-client.user.update_user(userId: 'user_id');
+client.user.update_user(user_id: 'user_id');
 ```
 </dd>
 </dl>
@@ -336,7 +336,7 @@ client.user.update_user(userId: 'user_id');
 
 ```ruby
 client.user.search_users(
-  userId: 'user_id',
+  user_id: 'user_id',
   limit: 1
 );
 ```
@@ -409,7 +409,7 @@ Test endpoint with path parameter that has a text prefix (v{version})
 
 ```ruby
 client.user.get_user_metadata(
-  userId: 'user_id',
+  user_id: 'user_id',
   version: 1
 );
 ```
@@ -482,7 +482,7 @@ Test endpoint with path parameters listed in different order than found in path
 
 ```ruby
 client.user.get_user_specifics(
-  userId: 'user_id',
+  user_id: 'user_id',
   version: 1,
   thought: 'thought'
 );

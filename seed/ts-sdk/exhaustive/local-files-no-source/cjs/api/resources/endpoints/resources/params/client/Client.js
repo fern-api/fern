@@ -50,7 +50,7 @@ const core = __importStar(require("../../../../../../core/index.js"));
 const errors = __importStar(require("../../../../../../errors/index.js"));
 class ParamsClient {
     constructor(options) {
-        this._options = (0, BaseClient_js_1.normalizeClientOptions)(options);
+        this._options = (0, BaseClient_js_1.normalizeClientOptionsWithAuth)(options);
     }
     /**
      * GET with path param
@@ -67,7 +67,8 @@ class ParamsClient {
     __getWithPath(param, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
                 method: "GET",
@@ -94,6 +95,11 @@ class ParamsClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":
@@ -124,7 +130,8 @@ class ParamsClient {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             const { param } = request;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
                 method: "GET",
@@ -151,6 +158,11 @@ class ParamsClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":
@@ -185,7 +197,8 @@ class ParamsClient {
             const _queryParams = {};
             _queryParams.query = query;
             _queryParams.number = number_.toString();
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/params"),
                 method: "GET",
@@ -212,6 +225,11 @@ class ParamsClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":
@@ -256,7 +274,8 @@ class ParamsClient {
             else {
                 _queryParams.number = number_.toString();
             }
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), "/params"),
                 method: "GET",
@@ -283,6 +302,11 @@ class ParamsClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":
@@ -316,7 +340,8 @@ class ParamsClient {
             const { query } = request;
             const _queryParams = {};
             _queryParams.query = query;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path-query/${core.url.encodePathParam(param)}`),
                 method: "GET",
@@ -343,6 +368,11 @@ class ParamsClient {
                     throw new errors.SeedExhaustiveError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.rawBody,
+                        rawResponse: _response.rawResponse,
+                    });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
                         rawResponse: _response.rawResponse,
                     });
                 case "timeout":
@@ -376,7 +406,8 @@ class ParamsClient {
             const { param, query } = request;
             const _queryParams = {};
             _queryParams.query = query;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path-query/${core.url.encodePathParam(param)}`),
                 method: "GET",
@@ -405,6 +436,11 @@ class ParamsClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /params/path-query/{param}.");
                 case "unknown":
@@ -431,7 +467,8 @@ class ParamsClient {
     __modifyWithPath(param, request, requestOptions) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
                 method: "PUT",
@@ -463,6 +500,11 @@ class ParamsClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PUT /params/path/{param}.");
                 case "unknown":
@@ -492,7 +534,8 @@ class ParamsClient {
         return __awaiter(this, void 0, void 0, function* () {
             var _a, _b, _c, _d, _e, _f, _g, _h;
             const { param, body: _body } = request;
-            const _headers = (0, headers_js_1.mergeHeaders)((_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, (0, headers_js_1.mergeOnlyDefinedHeaders)({ Authorization: yield this._getAuthorizationHeader() }), requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
+            const _authRequest = yield this._options.authProvider.getAuthRequest();
+            const _headers = (0, headers_js_1.mergeHeaders)(_authRequest.headers, (_a = this._options) === null || _a === void 0 ? void 0 : _a.headers, requestOptions === null || requestOptions === void 0 ? void 0 : requestOptions.headers);
             const _response = yield core.fetcher({
                 url: core.url.join((_b = (yield core.Supplier.get(this._options.baseUrl))) !== null && _b !== void 0 ? _b : (yield core.Supplier.get(this._options.environment)), `/params/path/${core.url.encodePathParam(param)}`),
                 method: "PUT",
@@ -524,6 +567,11 @@ class ParamsClient {
                         body: _response.error.rawBody,
                         rawResponse: _response.rawResponse,
                     });
+                case "body-is-null":
+                    throw new errors.SeedExhaustiveError({
+                        statusCode: _response.error.statusCode,
+                        rawResponse: _response.rawResponse,
+                    });
                 case "timeout":
                     throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling PUT /params/path/{param}.");
                 case "unknown":
@@ -532,15 +580,6 @@ class ParamsClient {
                         rawResponse: _response.rawResponse,
                     });
             }
-        });
-    }
-    _getAuthorizationHeader() {
-        return __awaiter(this, void 0, void 0, function* () {
-            const bearer = yield core.Supplier.get(this._options.token);
-            if (bearer != null) {
-                return `Bearer ${bearer}`;
-            }
-            return undefined;
         });
     }
 }

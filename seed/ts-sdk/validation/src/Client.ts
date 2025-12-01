@@ -2,7 +2,7 @@
 
 import type * as SeedValidation from "./api/index.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
@@ -14,7 +14,7 @@ export declare namespace SeedValidationClient {
 }
 
 export class SeedValidationClient {
-    protected readonly _options: SeedValidationClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedValidationClient.Options>;
 
     constructor(options: SeedValidationClient.Options) {
         this._options = normalizeClientOptions(options);
@@ -79,6 +79,11 @@ export class SeedValidationClient {
                 throw new errors.SeedValidationError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedValidationError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -149,6 +154,11 @@ export class SeedValidationClient {
                 throw new errors.SeedValidationError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedValidationError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

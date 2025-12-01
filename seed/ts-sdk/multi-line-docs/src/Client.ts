@@ -2,7 +2,7 @@
 
 import { UserClient } from "./api/resources/user/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedMultiLineDocsClient {
     export interface Options extends BaseClientOptions {}
@@ -11,7 +11,7 @@ export declare namespace SeedMultiLineDocsClient {
 }
 
 export class SeedMultiLineDocsClient {
-    protected readonly _options: SeedMultiLineDocsClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedMultiLineDocsClient.Options>;
     protected _user: UserClient | undefined;
 
     constructor(options: SeedMultiLineDocsClient.Options) {

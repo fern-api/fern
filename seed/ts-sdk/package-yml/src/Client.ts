@@ -3,7 +3,7 @@
 import type * as SeedPackageYml from "./api/index.js";
 import { ServiceClient } from "./api/resources/service/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import * as errors from "./errors/index.js";
@@ -15,7 +15,7 @@ export declare namespace SeedPackageYmlClient {
 }
 
 export class SeedPackageYmlClient {
-    protected readonly _options: SeedPackageYmlClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedPackageYmlClient.Options>;
     protected _service: ServiceClient | undefined;
 
     constructor(options: SeedPackageYmlClient.Options) {
@@ -83,6 +83,11 @@ export class SeedPackageYmlClient {
                 throw new errors.SeedPackageYmlError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedPackageYmlError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "childId": {
+      "type": "string"
+    },
+    "childValue": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "childId",
+    "childValue"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

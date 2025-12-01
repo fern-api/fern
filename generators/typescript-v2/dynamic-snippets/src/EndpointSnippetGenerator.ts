@@ -1,7 +1,7 @@
 import { Scope, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
-import { ts } from "@fern-api/typescript-ast";
+import { AstNode, ts } from "@fern-api/typescript-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 import { FilePropertyInfo } from "./context/FilePropertyMapper";
@@ -40,6 +40,16 @@ export class EndpointSnippetGenerator {
     }): string {
         const code = this.buildCodeBlock({ endpoint, snippet: request });
         return code.toString({ customConfig: this.context.customConfig });
+    }
+
+    public async generateSnippetAst({
+        endpoint,
+        request
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+    }): Promise<AstNode> {
+        return this.buildCodeBlock({ endpoint, snippet: request });
     }
 
     private buildCodeBlock({

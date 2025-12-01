@@ -5,15 +5,20 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::Headers::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [Seed::Headers::Types::SendLiteralsInHeadersRequest]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       # @option params [String] :endpoint_version
-      # @option params [bool] :async
+      # @option params [Boolean] :async
       #
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)

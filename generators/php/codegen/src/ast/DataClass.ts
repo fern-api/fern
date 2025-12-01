@@ -52,11 +52,11 @@ export class DataClass extends AstNode {
                     name: convertFromPhpVariableName(field.name)
                 }) as Field
         );
-        if (orderedFields.length > 0) {
-            this.class_.addConstructor({
-                access: this.constructorAccess,
-                parameters: this.getConstructorParameters({ orderedFields }),
-                body: php.codeblock((writer) => {
+        this.class_.addConstructor({
+            access: this.constructorAccess,
+            parameters: this.getConstructorParameters({ orderedFields }),
+            body: php.codeblock((writer) => {
+                if (orderedFields.length > 0) {
                     for (const field of orderedFields) {
                         writer.write(`$this->${field.name} = $${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`);
                         if (field.type.isOptional()) {
@@ -64,9 +64,11 @@ export class DataClass extends AstNode {
                         }
                         writer.write(";");
                     }
-                })
-            });
-        }
+                } else {
+                    writer.writeLine(`unset($${CONSTRUCTOR_PARAMETER_NAME});`);
+                }
+            })
+        });
         this.class_.write(writer);
     }
 
