@@ -31,7 +31,7 @@ use Seed\Types\Types\PaginatedClientResponse;
 use Seed\Service\Requests\GetClientRequest;
 use Seed\Types\Types\Client;
 
-class ServiceClient
+class ServiceClient 
 {
     /**
      * @var array{
@@ -40,7 +40,7 @@ class ServiceClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -59,10 +59,11 @@ class ServiceClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -83,8 +84,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listResources(ListResourcesRequest $request, ?array $options = null): array
-    {
+    public function listResources(ListResourcesRequest $request, ?array $options = null): array {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['page'] = $request->page;
@@ -92,10 +92,10 @@ class ServiceClient
         $query['sort'] = $request->sort;
         $query['order'] = $request->order;
         $query['include_totals'] = $request->includeTotals;
-        if ($request->fields != null) {
+        if ($request->fields != null){
             $query['fields'] = $request->fields;
         }
-        if ($request->search != null) {
+        if ($request->search != null){
             $query['search'] = $request->search;
         }
         try {
@@ -109,15 +109,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeArray($json, [Resource::class]); // @phpstan-ignore-line
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -152,8 +152,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getResource(string $resourceId, GetResourceRequest $request, ?array $options = null): Resource
-    {
+    public function getResource(string $resourceId, GetResourceRequest $request, ?array $options = null): Resource {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['include_metadata'] = $request->includeMetadata;
@@ -169,15 +168,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return Resource::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -211,8 +210,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function searchResources(SearchResourcesRequest $request, ?array $options = null): SearchResponse
-    {
+    public function searchResources(SearchResourcesRequest $request, ?array $options = null): SearchResponse {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['limit'] = $request->limit;
@@ -229,15 +227,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return SearchResponse::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -271,32 +269,31 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listUsers(ListUsersRequest $request = new ListUsersRequest(), ?array $options = null): PaginatedUserResponse
-    {
+    public function listUsers(ListUsersRequest $request = new ListUsersRequest(), ?array $options = null): PaginatedUserResponse {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->page != null) {
+        if ($request->page != null){
             $query['page'] = $request->page;
         }
-        if ($request->perPage != null) {
+        if ($request->perPage != null){
             $query['per_page'] = $request->perPage;
         }
-        if ($request->includeTotals != null) {
+        if ($request->includeTotals != null){
             $query['include_totals'] = $request->includeTotals;
         }
-        if ($request->sort != null) {
+        if ($request->sort != null){
             $query['sort'] = $request->sort;
         }
-        if ($request->connection != null) {
+        if ($request->connection != null){
             $query['connection'] = $request->connection;
         }
-        if ($request->q != null) {
+        if ($request->q != null){
             $query['q'] = $request->q;
         }
-        if ($request->searchEngine != null) {
+        if ($request->searchEngine != null){
             $query['search_engine'] = $request->searchEngine;
         }
-        if ($request->fields != null) {
+        if ($request->fields != null){
             $query['fields'] = $request->fields;
         }
         try {
@@ -310,15 +307,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return PaginatedUserResponse::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -353,14 +350,13 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUserById(string $userId, GetUserRequest $request = new GetUserRequest(), ?array $options = null): User
-    {
+    public function getUserById(string $userId, GetUserRequest $request = new GetUserRequest(), ?array $options = null): User {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->fields != null) {
+        if ($request->fields != null){
             $query['fields'] = $request->fields;
         }
-        if ($request->includeFields != null) {
+        if ($request->includeFields != null){
             $query['include_fields'] = $request->includeFields;
         }
         try {
@@ -374,15 +370,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return User::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -416,8 +412,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createUser(CreateUserRequest $request, ?array $options = null): User
-    {
+    public function createUser(CreateUserRequest $request, ?array $options = null): User {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -430,15 +425,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return User::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -473,8 +468,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function updateUser(string $userId, UpdateUserRequest $request, ?array $options = null): User
-    {
+    public function updateUser(string $userId, UpdateUserRequest $request, ?array $options = null): User {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -487,15 +481,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return User::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -528,8 +522,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function deleteUser(string $userId, ?array $options = null): void
-    {
+    public function deleteUser(string $userId, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -541,12 +534,12 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -580,17 +573,16 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listConnections(ListConnectionsRequest $request = new ListConnectionsRequest(), ?array $options = null): array
-    {
+    public function listConnections(ListConnectionsRequest $request = new ListConnectionsRequest(), ?array $options = null): array {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->strategy != null) {
+        if ($request->strategy != null){
             $query['strategy'] = $request->strategy;
         }
-        if ($request->name != null) {
+        if ($request->name != null){
             $query['name'] = $request->name;
         }
-        if ($request->fields != null) {
+        if ($request->fields != null){
             $query['fields'] = $request->fields;
         }
         try {
@@ -604,15 +596,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeArray($json, [Connection::class]); // @phpstan-ignore-line
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -647,11 +639,10 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getConnection(string $connectionId, GetConnectionRequest $request = new GetConnectionRequest(), ?array $options = null): Connection
-    {
+    public function getConnection(string $connectionId, GetConnectionRequest $request = new GetConnectionRequest(), ?array $options = null): Connection {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->fields != null) {
+        if ($request->fields != null){
             $query['fields'] = $request->fields;
         }
         try {
@@ -665,15 +656,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return Connection::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -707,32 +698,31 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listClients(ListClientsRequest $request = new ListClientsRequest(), ?array $options = null): PaginatedClientResponse
-    {
+    public function listClients(ListClientsRequest $request = new ListClientsRequest(), ?array $options = null): PaginatedClientResponse {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->fields != null) {
+        if ($request->fields != null){
             $query['fields'] = $request->fields;
         }
-        if ($request->includeFields != null) {
+        if ($request->includeFields != null){
             $query['include_fields'] = $request->includeFields;
         }
-        if ($request->page != null) {
+        if ($request->page != null){
             $query['page'] = $request->page;
         }
-        if ($request->perPage != null) {
+        if ($request->perPage != null){
             $query['per_page'] = $request->perPage;
         }
-        if ($request->includeTotals != null) {
+        if ($request->includeTotals != null){
             $query['include_totals'] = $request->includeTotals;
         }
-        if ($request->isGlobal != null) {
+        if ($request->isGlobal != null){
             $query['is_global'] = $request->isGlobal;
         }
-        if ($request->isFirstParty != null) {
+        if ($request->isFirstParty != null){
             $query['is_first_party'] = $request->isFirstParty;
         }
-        if ($request->appType != null) {
+        if ($request->appType != null){
             $query['app_type'] = $request->appType;
         }
         try {
@@ -746,15 +736,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return PaginatedClientResponse::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -789,14 +779,13 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getClient(string $clientId, GetClientRequest $request = new GetClientRequest(), ?array $options = null): Client
-    {
+    public function getClient(string $clientId, GetClientRequest $request = new GetClientRequest(), ?array $options = null): Client {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->fields != null) {
+        if ($request->fields != null){
             $query['fields'] = $request->fields;
         }
-        if ($request->includeFields != null) {
+        if ($request->includeFields != null){
             $query['include_fields'] = $request->includeFields;
         }
         try {
@@ -810,15 +799,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return Client::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

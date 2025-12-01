@@ -6,6 +6,8 @@ use Seed\SeedClient;
 use Seed\Auth\Requests\RefreshTokenRequest;
 
 $client = new SeedClient(
+    clientId: '<clientId>',
+    clientSecret: '<clientSecret>',
     options: [
         'baseUrl' => 'https://api.fern.com',
     ],

@@ -28,50 +28,39 @@ class User extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->name = $values['name'];
-        $this->tags = $values['tags'];
+    )
+    {
+        $this->name = $values['name'];$this->tags = $values['tags'];
     }
 
     /**
      * @return string
      */
-    public function getName(): string
-    {
-        return $this->name;
-    }
+    public function getName(): string {
+        return $this->name;}
 
     /**
      * @param string $value
      */
-    public function setName(string $value): self
-    {
-        $this->name = $value;
-        return $this;
-    }
+    public function setName(string $value): self {
+        $this->name = $value;return $this;}
 
     /**
      * @return array<string>
      */
-    public function getTags(): array
-    {
-        return $this->tags;
-    }
+    public function getTags(): array {
+        return $this->tags;}
 
     /**
      * @param array<string> $value
      */
-    public function setTags(array $value): self
-    {
-        $this->tags = $value;
-        return $this;
-    }
+    public function setTags(array $value): self {
+        $this->tags = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

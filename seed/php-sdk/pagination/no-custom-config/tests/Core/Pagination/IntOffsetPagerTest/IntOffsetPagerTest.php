@@ -79,7 +79,7 @@ class IntOffsetPagerTest extends TestCase
                 $responses->next();
                 return $response;
             },
-            fn (Request $request) => $request->pagination?->page ?? 0,
+            fn(Request $request) => $request->pagination?->page ?? 0,
             function (Request $request, int $offset) {
                 if ($request->pagination === null) {
                     $request->pagination = new Pagination(0);
@@ -87,7 +87,7 @@ class IntOffsetPagerTest extends TestCase
                 $request->pagination->page = $offset;
             },
             null,
-            fn (Response $response) => $response->data->items,
+            fn(Response $response) => $response->data->items,
             null
         );
     }
@@ -100,7 +100,7 @@ class IntOffsetPagerTest extends TestCase
     {
         $pages = iterator_to_array($pager->getPages());
         $pageCounter = count($pages);
-        $itemCounter = array_reduce($pages, fn ($carry, $page) => $carry + count($page->getItems()), 0);
+        $itemCounter = array_reduce($pages, fn($carry, $page) => $carry + count($page->getItems()), 0);
 
         $this->assertEquals(3, $pageCounter);
         $this->assertEquals(3, $itemCounter);

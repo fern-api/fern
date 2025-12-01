@@ -34,68 +34,51 @@ class Movie extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->title = $values['title'];
-        $this->rating = $values['rating'];
+    )
+    {
+        $this->id = $values['id'];$this->title = $values['title'];$this->rating = $values['rating'];
     }
 
     /**
      * @return string
      */
-    public function getId(): string
-    {
-        return $this->id;
-    }
+    public function getId(): string {
+        return $this->id;}
 
     /**
      * @param string $value
      */
-    public function setId(string $value): self
-    {
-        $this->id = $value;
-        return $this;
-    }
+    public function setId(string $value): self {
+        $this->id = $value;return $this;}
 
     /**
      * @return string
      */
-    public function getTitle(): string
-    {
-        return $this->title;
-    }
+    public function getTitle(): string {
+        return $this->title;}
 
     /**
      * @param string $value
      */
-    public function setTitle(string $value): self
-    {
-        $this->title = $value;
-        return $this;
-    }
+    public function setTitle(string $value): self {
+        $this->title = $value;return $this;}
 
     /**
      * @return float
      */
-    public function getRating(): float
-    {
-        return $this->rating;
-    }
+    public function getRating(): float {
+        return $this->rating;}
 
     /**
      * @param float $value
      */
-    public function setRating(float $value): self
-    {
-        $this->rating = $value;
-        return $this;
-    }
+    public function setRating(float $value): self {
+        $this->rating = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

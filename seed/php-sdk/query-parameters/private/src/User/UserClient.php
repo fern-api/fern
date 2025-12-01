@@ -8,14 +8,14 @@ use Seed\User\Requests\GetUsersRequest;
 use Seed\User\Types\User;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\Types\Constant;
+use Seed\Core\Json\JsonSerializer;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class UserClient
+class UserClient 
 {
     /**
      * @var array{
@@ -24,7 +24,7 @@ class UserClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -43,10 +43,11 @@ class UserClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -65,14 +66,13 @@ class UserClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUsername(GetUsersRequest $request, ?array $options = null): User
-    {
+    public function getUsername(GetUsersRequest $request, ?array $options = null): User {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['limit'] = $request->getLimit();
         $query['id'] = $request->getId();
-        $query['date'] = $request->getDate()->format(Constant::DateFormat);
-        $query['deadline'] = $request->getDeadline()->format(Constant::DateTimeFormat);
+        $query['date'] = JsonSerializer::serializeDate($request->getDate());
+        $query['deadline'] = JsonSerializer::serializeDateTime($request->getDeadline());
         $query['bytes'] = $request->getBytes();
         $query['user'] = $request->getUser();
         $query['userList'] = $request->getUserList();
@@ -80,13 +80,13 @@ class UserClient
         $query['nestedUser'] = $request->getNestedUser();
         $query['excludeUser'] = $request->getExcludeUser();
         $query['filter'] = $request->getFilter();
-        if ($request->getOptionalDeadline() != null) {
-            $query['optionalDeadline'] = $request->getOptionalDeadline();
+        if ($request->getOptionalDeadline() != null){
+            $query['optionalDeadline'] = JsonSerializer::serializeDateTime($request->getOptionalDeadline());
         }
-        if ($request->getOptionalString() != null) {
+        if ($request->getOptionalString() != null){
             $query['optionalString'] = $request->getOptionalString();
         }
-        if ($request->getOptionalUser() != null) {
+        if ($request->getOptionalUser() != null){
             $query['optionalUser'] = $request->getOptionalUser();
         }
         try {
@@ -100,15 +100,15 @@ class UserClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return User::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

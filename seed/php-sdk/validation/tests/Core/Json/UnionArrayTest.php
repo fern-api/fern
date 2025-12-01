@@ -37,7 +37,7 @@ class UnionArrayTest extends TestCase
         $expectedJson = json_encode(
             [
                 'mixed_dates' => [
-                    1 => '2023-01-01T12:00:00+00:00',
+                    1 => '2023-01-01T12:00:00Z',
                     2 => null,
                     3 => 'Some String'
                 ]

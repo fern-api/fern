@@ -24,24 +24,20 @@ class ListUsersBodyOffsetPaginationRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
+    )
+    {
         $this->pagination = $values['pagination'] ?? null;
     }
 
     /**
      * @return ?WithPage
      */
-    public function getPagination(): ?WithPage
-    {
-        return $this->pagination;
-    }
+    public function getPagination(): ?WithPage {
+        return $this->pagination;}
 
     /**
      * @param ?WithPage $value
      */
-    public function setPagination(?WithPage $value = null): self
-    {
-        $this->pagination = $value;
-        return $this;
-    }
+    public function setPagination(?WithPage $value = null): self {
+        $this->pagination = $value;return $this;}
 }

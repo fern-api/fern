@@ -93,8 +93,8 @@ class CursorPagerTest extends TestCase
                 $request->cursor = $cursor;
                 $this->cursorCopy = $cursor;
             },
-            fn (Response $response) => $response->next->cursor ?? null,
-            fn (Response $response) => $response->items ?? []
+            fn(Response $response) => $response->next->cursor ?? null,
+            fn(Response $response) => $response->items ?? []
         );
     }
 

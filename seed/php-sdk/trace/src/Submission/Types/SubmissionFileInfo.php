@@ -34,17 +34,15 @@ class SubmissionFileInfo extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->directory = $values['directory'];
-        $this->filename = $values['filename'];
-        $this->contents = $values['contents'];
+    )
+    {
+        $this->directory = $values['directory'];$this->filename = $values['filename'];$this->contents = $values['contents'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

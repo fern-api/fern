@@ -20,7 +20,7 @@ class SearchRequest extends JsonSerializableType
      *   |MultipleFilterSearchRequest
      * ) $query
      */
-    #[JsonProperty('query'), Union(SingleFilterSearchRequest::class, MultipleFilterSearchRequest::class)]
+    #[JsonProperty('query'), Union(SingleFilterSearchRequest::class,MultipleFilterSearchRequest::class)]
     private SingleFilterSearchRequest|MultipleFilterSearchRequest $query;
 
     /**
@@ -34,27 +34,22 @@ class SearchRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->pagination = $values['pagination'] ?? null;
-        $this->query = $values['query'];
+    )
+    {
+        $this->pagination = $values['pagination'] ?? null;$this->query = $values['query'];
     }
 
     /**
      * @return ?StartingAfterPaging
      */
-    public function getPagination(): ?StartingAfterPaging
-    {
-        return $this->pagination;
-    }
+    public function getPagination(): ?StartingAfterPaging {
+        return $this->pagination;}
 
     /**
      * @param ?StartingAfterPaging $value
      */
-    public function setPagination(?StartingAfterPaging $value = null): self
-    {
-        $this->pagination = $value;
-        return $this;
-    }
+    public function setPagination(?StartingAfterPaging $value = null): self {
+        $this->pagination = $value;return $this;}
 
     /**
      * @return (
@@ -62,10 +57,8 @@ class SearchRequest extends JsonSerializableType
      *   |MultipleFilterSearchRequest
      * )
      */
-    public function getQuery(): SingleFilterSearchRequest|MultipleFilterSearchRequest
-    {
-        return $this->query;
-    }
+    public function getQuery(): SingleFilterSearchRequest|MultipleFilterSearchRequest {
+        return $this->query;}
 
     /**
      * @param (
@@ -73,17 +66,13 @@ class SearchRequest extends JsonSerializableType
      *   |MultipleFilterSearchRequest
      * ) $value
      */
-    public function setQuery(SingleFilterSearchRequest|MultipleFilterSearchRequest $value): self
-    {
-        $this->query = $value;
-        return $this;
-    }
+    public function setQuery(SingleFilterSearchRequest|MultipleFilterSearchRequest $value): self {
+        $this->query = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

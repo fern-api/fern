@@ -45,17 +45,16 @@ class ProblemDescriptionBoard extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    ) {
-        $this->type = $values['type'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->type = $values['type'];$this->value = $values['value'];
     }
 
     /**
      * @param string $html
      * @return ProblemDescriptionBoard
      */
-    public static function html(string $html): ProblemDescriptionBoard
-    {
+    public static function html(string $html): ProblemDescriptionBoard {
         return new ProblemDescriptionBoard([
             'type' => 'html',
             'value' => $html,
@@ -66,8 +65,7 @@ class ProblemDescriptionBoard extends JsonSerializableType
      * @param VariableValue $variable
      * @return ProblemDescriptionBoard
      */
-    public static function variable(VariableValue $variable): ProblemDescriptionBoard
-    {
+    public static function variable(VariableValue $variable): ProblemDescriptionBoard {
         return new ProblemDescriptionBoard([
             'type' => 'variable',
             'value' => $variable,
@@ -78,8 +76,7 @@ class ProblemDescriptionBoard extends JsonSerializableType
      * @param string $testCaseId
      * @return ProblemDescriptionBoard
      */
-    public static function testCaseId(string $testCaseId): ProblemDescriptionBoard
-    {
+    public static function testCaseId(string $testCaseId): ProblemDescriptionBoard {
         return new ProblemDescriptionBoard([
             'type' => 'testCaseId',
             'value' => $testCaseId,
@@ -89,89 +86,81 @@ class ProblemDescriptionBoard extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isHtml(): bool
-    {
-        return is_string($this->value) && $this->type === 'html';
+    public function isHtml(): bool {
+        return is_string($this->value)&& $this->type === 'html';
     }
 
     /**
      * @return string
      */
-    public function asHtml(): string
-    {
-        if (!(is_string($this->value) && $this->type === 'html')) {
+    public function asHtml(): string {
+        if (!(is_string($this->value)&& $this->type === 'html')){
             throw new Exception(
                 "Expected html; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isVariable(): bool
-    {
-        return $this->value instanceof VariableValue && $this->type === 'variable';
+    public function isVariable(): bool {
+        return $this->value instanceof VariableValue&& $this->type === 'variable';
     }
 
     /**
      * @return VariableValue
      */
-    public function asVariable(): VariableValue
-    {
-        if (!($this->value instanceof VariableValue && $this->type === 'variable')) {
+    public function asVariable(): VariableValue {
+        if (!($this->value instanceof VariableValue&& $this->type === 'variable')){
             throw new Exception(
                 "Expected variable; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isTestCaseId(): bool
-    {
-        return is_string($this->value) && $this->type === 'testCaseId';
+    public function isTestCaseId(): bool {
+        return is_string($this->value)&& $this->type === 'testCaseId';
     }
 
     /**
      * @return string
      */
-    public function asTestCaseId(): string
-    {
-        if (!(is_string($this->value) && $this->type === 'testCaseId')) {
+    public function asTestCaseId(): string {
+        if (!(is_string($this->value)&& $this->type === 'testCaseId')){
             throw new Exception(
                 "Expected testCaseId; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $result = [];
         $result['type'] = $this->type;
-
+        
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-
-        switch ($this->type) {
+        
+        switch ($this->type){
             case 'html':
                 $value = $this->value;
                 $result['html'] = $value;
@@ -186,27 +175,26 @@ class ProblemDescriptionBoard extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)) {
+                if (is_null($this->value)){
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType) {
+                if ($this->value instanceof JsonSerializableType){
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)) {
+                } elseif (is_array($this->value)){
                     $result = array_merge($this->value, $result);
                 }
         }
-
+        
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static
-    {
+    public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
+        if (!is_array($decodedJson)){
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -215,40 +203,39 @@ class ProblemDescriptionBoard extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static
-    {
+    public static function jsonDeserialize(array $data): static {
         $args = [];
-        if (!array_key_exists('type', $data)) {
+        if (!array_key_exists('type', $data)){
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))) {
+        if (!(is_string($type))){
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-
+        
         $args['type'] = $type;
-        switch ($type) {
+        switch ($type){
             case 'html':
-                if (!array_key_exists('html', $data)) {
+                if (!array_key_exists('html', $data)){
                     throw new Exception(
                         "JSON data is missing property 'html'",
                     );
                 }
-
+                
                 $args['value'] = $data['html'];
                 break;
             case 'variable':
-                if (!array_key_exists('variable', $data)) {
+                if (!array_key_exists('variable', $data)){
                     throw new Exception(
                         "JSON data is missing property 'variable'",
                     );
                 }
-
-                if (!(is_array($data['variable']))) {
+                
+                if (!(is_array($data['variable']))){
                     throw new Exception(
                         "Expected property 'variable' in JSON data to be array, instead received " . get_debug_type($data['variable']),
                     );
@@ -256,12 +243,12 @@ class ProblemDescriptionBoard extends JsonSerializableType
                 $args['value'] = VariableValue::jsonDeserialize($data['variable']);
                 break;
             case 'testCaseId':
-                if (!array_key_exists('testCaseId', $data)) {
+                if (!array_key_exists('testCaseId', $data)){
                     throw new Exception(
                         "JSON data is missing property 'testCaseId'",
                     );
                 }
-
+                
                 $args['value'] = $data['testCaseId'];
                 break;
             case '_unknown':
@@ -269,7 +256,7 @@ class ProblemDescriptionBoard extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-
+        
         // @phpstan-ignore-next-line
         return new static($args);
     }

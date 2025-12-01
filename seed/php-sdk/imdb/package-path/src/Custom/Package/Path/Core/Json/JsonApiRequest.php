@@ -1,7 +1,6 @@
 <?php
 
 namespace Custom\Package\Path\Core\Json;
-
 use Custom\Package\Path\Core\Client\BaseApiRequest;
 use Custom\Package\Path\Core\Client\HttpMethod;
 

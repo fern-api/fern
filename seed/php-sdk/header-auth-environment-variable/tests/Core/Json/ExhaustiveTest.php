@@ -142,7 +142,7 @@ class ExhaustiveTest extends TestCase
                 'simple_property' => 'Test String',
                 // Omit 'nullable_property' to test null serialization
                 'date_property' => '2023-01-01',
-                'datetime_property' => '2023-01-01T12:34:56+00:00',
+                'datetime_property' => '2023-01-01T12:34:56Z',
                 'string_array' => ['one', 'two', 'three'],
                 'map_property' => ['key1' => 1, 'key2' => 2],
                 'object_array' => [

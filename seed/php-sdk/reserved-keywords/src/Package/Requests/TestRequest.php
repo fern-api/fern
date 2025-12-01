@@ -18,7 +18,8 @@ class TestRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->for = $values['for'];
     }
 }

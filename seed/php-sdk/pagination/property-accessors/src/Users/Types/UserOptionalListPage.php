@@ -27,50 +27,39 @@ class UserOptionalListPage extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->data = $values['data'];
-        $this->next = $values['next'] ?? null;
+    )
+    {
+        $this->data = $values['data'];$this->next = $values['next'] ?? null;
     }
 
     /**
      * @return UserOptionalListContainer
      */
-    public function getData(): UserOptionalListContainer
-    {
-        return $this->data;
-    }
+    public function getData(): UserOptionalListContainer {
+        return $this->data;}
 
     /**
      * @param UserOptionalListContainer $value
      */
-    public function setData(UserOptionalListContainer $value): self
-    {
-        $this->data = $value;
-        return $this;
-    }
+    public function setData(UserOptionalListContainer $value): self {
+        $this->data = $value;return $this;}
 
     /**
      * @return ?string
      */
-    public function getNext(): ?string
-    {
-        return $this->next;
-    }
+    public function getNext(): ?string {
+        return $this->next;}
 
     /**
      * @param ?string $value
      */
-    public function setNext(?string $value = null): self
-    {
-        $this->next = $value;
-        return $this;
-    }
+    public function setNext(?string $value = null): self {
+        $this->next = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

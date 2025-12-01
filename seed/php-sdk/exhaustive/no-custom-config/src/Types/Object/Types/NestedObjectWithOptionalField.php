@@ -27,16 +27,15 @@ class NestedObjectWithOptionalField extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->string = $values['string'] ?? null;
-        $this->nestedObject = $values['nestedObject'] ?? null;
+    )
+    {
+        $this->string = $values['string'] ?? null;$this->nestedObject = $values['nestedObject'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

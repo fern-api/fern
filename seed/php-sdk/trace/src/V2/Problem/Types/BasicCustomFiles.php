@@ -43,18 +43,15 @@ class BasicCustomFiles extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->methodName = $values['methodName'];
-        $this->signature = $values['signature'];
-        $this->additionalFiles = $values['additionalFiles'];
-        $this->basicTestCaseTemplate = $values['basicTestCaseTemplate'];
+    )
+    {
+        $this->methodName = $values['methodName'];$this->signature = $values['signature'];$this->additionalFiles = $values['additionalFiles'];$this->basicTestCaseTemplate = $values['basicTestCaseTemplate'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

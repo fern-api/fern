@@ -30,60 +30,44 @@ class GetOrganizationUserRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->tenantId = $values['tenantId'];
-        $this->organizationId = $values['organizationId'];
-        $this->userId = $values['userId'];
+    )
+    {
+        $this->tenantId = $values['tenantId'];$this->organizationId = $values['organizationId'];$this->userId = $values['userId'];
     }
 
     /**
      * @return string
      */
-    public function getTenantId(): string
-    {
-        return $this->tenantId;
-    }
+    public function getTenantId(): string {
+        return $this->tenantId;}
 
     /**
      * @param string $value
      */
-    public function setTenantId(string $value): self
-    {
-        $this->tenantId = $value;
-        return $this;
-    }
+    public function setTenantId(string $value): self {
+        $this->tenantId = $value;return $this;}
 
     /**
      * @return string
      */
-    public function getOrganizationId(): string
-    {
-        return $this->organizationId;
-    }
+    public function getOrganizationId(): string {
+        return $this->organizationId;}
 
     /**
      * @param string $value
      */
-    public function setOrganizationId(string $value): self
-    {
-        $this->organizationId = $value;
-        return $this;
-    }
+    public function setOrganizationId(string $value): self {
+        $this->organizationId = $value;return $this;}
 
     /**
      * @return string
      */
-    public function getUserId(): string
-    {
-        return $this->userId;
-    }
+    public function getUserId(): string {
+        return $this->userId;}
 
     /**
      * @param string $value
      */
-    public function setUserId(string $value): self
-    {
-        $this->userId = $value;
-        return $this;
-    }
+    public function setUserId(string $value): self {
+        $this->userId = $value;return $this;}
 }
