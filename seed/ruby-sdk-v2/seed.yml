@@ -44,6 +44,9 @@ fixtures:
   examples:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
     - outputFolder: readme-config
       customConfig:
         customReadmeSections:
