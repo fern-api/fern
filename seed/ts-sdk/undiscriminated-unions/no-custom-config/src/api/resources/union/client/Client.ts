@@ -74,6 +74,11 @@ export class UnionClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
@@ -132,6 +137,11 @@ export class UnionClient {
                 throw new errors.SeedUndiscriminatedUnionsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -202,6 +212,11 @@ export class UnionClient {
                 throw new errors.SeedUndiscriminatedUnionsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -276,6 +291,11 @@ export class UnionClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedUndiscriminatedUnionsTimeoutError("Timeout exceeded when calling POST /call.");
             case "unknown":
@@ -345,6 +365,11 @@ export class UnionClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedUndiscriminatedUnionsTimeoutError(
                     "Timeout exceeded when calling POST /duplicate.",
@@ -411,6 +436,11 @@ export class UnionClient {
                 throw new errors.SeedUndiscriminatedUnionsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -482,6 +512,11 @@ export class UnionClient {
                 throw new errors.SeedUndiscriminatedUnionsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedUndiscriminatedUnionsError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

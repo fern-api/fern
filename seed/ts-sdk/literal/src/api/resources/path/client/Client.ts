@@ -80,6 +80,11 @@ export class PathClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedLiteralError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedLiteralTimeoutError("Timeout exceeded when calling POST /path/{id}.");
             case "unknown":

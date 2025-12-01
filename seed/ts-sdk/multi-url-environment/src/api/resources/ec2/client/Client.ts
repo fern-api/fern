@@ -87,6 +87,11 @@ export class Ec2Client {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedMultiUrlEnvironmentError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedMultiUrlEnvironmentTimeoutError("Timeout exceeded when calling POST /ec2/boot.");
             case "unknown":

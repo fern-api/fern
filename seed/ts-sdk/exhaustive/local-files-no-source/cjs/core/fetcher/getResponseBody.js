@@ -12,12 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getResponseBody = getResponseBody;
 const json_js_1 = require("../json.js");
 const BinaryResponse_js_1 = require("./BinaryResponse.js");
-const ResponseWithBody_js_1 = require("./ResponseWithBody.js");
 function getResponseBody(response, responseType) {
     return __awaiter(this, void 0, void 0, function* () {
-        if (!(0, ResponseWithBody_js_1.isResponseWithBody)(response)) {
-            return undefined;
-        }
         switch (responseType) {
             case "binary-response":
                 return (0, BinaryResponse_js_1.getBinaryResponse)(response);
@@ -26,13 +22,32 @@ function getResponseBody(response, responseType) {
             case "arrayBuffer":
                 return yield response.arrayBuffer();
             case "sse":
+                if (response.body == null) {
+                    return {
+                        ok: false,
+                        error: {
+                            reason: "body-is-null",
+                            statusCode: response.status,
+                        },
+                    };
+                }
                 return response.body;
             case "streaming":
+                if (response.body == null) {
+                    return {
+                        ok: false,
+                        error: {
+                            reason: "body-is-null",
+                            statusCode: response.status,
+                        },
+                    };
+                }
                 return response.body;
             case "text":
                 return yield response.text();
         }
         // if responseType is "json" or not specified, try to parse as JSON
+        // Use text() for better React Native compatibility (response.body may not be available)
         const text = yield response.text();
         if (text.length > 0) {
             try {

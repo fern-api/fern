@@ -68,6 +68,11 @@ export class RetriesClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedNoRetriesError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedNoRetriesTimeoutError("Timeout exceeded when calling GET /users.");
             case "unknown":

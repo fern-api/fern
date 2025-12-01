@@ -70,6 +70,11 @@ export class ApiClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedInferredAuthImplicitError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedInferredAuthImplicitTimeoutError(
                     "Timeout exceeded when calling GET /nested/get-something.",

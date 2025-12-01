@@ -83,6 +83,11 @@ export class AuthClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedOauthClientCredentialsWithVariablesError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedOauthClientCredentialsWithVariablesTimeoutError(
                     "Timeout exceeded when calling POST /token.",
@@ -157,6 +162,11 @@ export class AuthClient {
                 throw new errors.SeedOauthClientCredentialsWithVariablesError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedOauthClientCredentialsWithVariablesError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

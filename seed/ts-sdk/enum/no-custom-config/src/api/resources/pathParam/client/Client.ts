@@ -76,6 +76,11 @@ export class PathParamClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedEnumError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedEnumTimeoutError(
                     "Timeout exceeded when calling POST /path/{operand}/{operandOrColor}.",

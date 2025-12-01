@@ -83,6 +83,11 @@ export class SeedPropertyAccessClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedPropertyAccessError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedPropertyAccessTimeoutError("Timeout exceeded when calling POST /users.");
             case "unknown":

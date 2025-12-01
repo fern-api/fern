@@ -100,6 +100,11 @@ export class SimpleClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedErrorsError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedErrorsTimeoutError("Timeout exceeded when calling POST /foo1.");
             case "unknown":
@@ -202,6 +207,11 @@ export class SimpleClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedErrorsError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedErrorsTimeoutError("Timeout exceeded when calling POST /foo2.");
             case "unknown":
@@ -302,6 +312,11 @@ export class SimpleClient {
                 throw new errors.SeedErrorsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedErrorsError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
