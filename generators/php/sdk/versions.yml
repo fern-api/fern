@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.23.8
+  changelogEntry:
+    - summary: |
+        Update unit test expectations to use Z suffix for UTC datetime values. The test templates now expect `2023-01-01T12:34:56Z` instead of `2023-01-01T12:34:56+00:00` to match the SDK's datetime formatting behavior that normalizes UTC times to use the Z suffix.
+      type: fix
+  createdAt: "2025-12-01"
+  irVersion: 62
+
 - version: 1.23.7
   changelogEntry:
     - summary: |
