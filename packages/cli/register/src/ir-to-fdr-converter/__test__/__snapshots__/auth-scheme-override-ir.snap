@@ -53,83 +53,6 @@
         "tokenEnvVar": "YOUR_TOKEN_NAME",
         "type": "bearer",
       },
-      {
-        "_visit": [Function],
-        "docs": "API key authentication using custom header",
-        "headerEnvVar": undefined,
-        "key": "api-key",
-        "name": {
-          "name": {
-            "camelCase": {
-              "safeName": "apiKey",
-              "unsafeName": "apiKey",
-            },
-            "originalName": "apiKey",
-            "pascalCase": {
-              "safeName": "ApiKey",
-              "unsafeName": "ApiKey",
-            },
-            "screamingSnakeCase": {
-              "safeName": "API_KEY",
-              "unsafeName": "API_KEY",
-            },
-            "snakeCase": {
-              "safeName": "api_key",
-              "unsafeName": "api_key",
-            },
-          },
-          "wireValue": "X-API-Key",
-        },
-        "prefix": undefined,
-        "type": "header",
-        "valueType": {
-          "_visit": [Function],
-          "container": {
-            "_visit": [Function],
-            "optional": {
-              "_visit": [Function],
-              "primitive": {
-                "v1": "STRING",
-                "v2": {
-                  "_visit": [Function],
-                  "default": undefined,
-                  "type": "string",
-                  "validation": undefined,
-                },
-              },
-              "type": "primitive",
-            },
-            "type": "optional",
-          },
-          "type": "container",
-        },
-      },
-      {
-        "_visit": [Function],
-        "docs": "Bearer token authentication with JWT format",
-        "key": "token",
-        "token": {
-          "camelCase": {
-            "safeName": "token",
-            "unsafeName": "token",
-          },
-          "originalName": "token",
-          "pascalCase": {
-            "safeName": "Token",
-            "unsafeName": "Token",
-          },
-          "screamingSnakeCase": {
-            "safeName": "TOKEN",
-            "unsafeName": "TOKEN",
-          },
-          "snakeCase": {
-            "safeName": "token",
-            "unsafeName": "token",
-          },
-        },
-        "tokenEnvVar": undefined,
-        "type": "bearer",
-      },
     ],
   },
   "basePath": undefined,
@@ -572,7 +495,7 @@
           "sdkRequest": undefined,
           "security": [
             {
-              "api-key": [],
+              "bearerAuth": [],
             },
           ],
           "source": {
@@ -818,7 +741,7 @@
           "sdkRequest": undefined,
           "security": [
             {
-              "token": [],
+              "bearerAuth": [],
             },
           ],
           "source": {

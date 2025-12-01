@@ -799,26 +799,27 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         expect(intermediateRepresentation.auth.schemes).toBeDefined();
         expect(intermediateRepresentation.auth.schemes.length).toBeGreaterThan(0);
 
-        // The OpenAPI spec has two security schemes: 'api-key' (apiKey type) and 'token' (bearer type)
-        // Plus generators.yml defines 'bearerAuth' override
-        // All three should be present in the IR
+        // When generators.yml defines auth, it completely overrides OpenAPI auth
+        // The OpenAPI spec originally has two security schemes: 'api-key' and 'token'
+        // But generators.yml defines 'bearerAuth' override, which completely replaces them
+        // Only the generators.yml auth scheme should be present in the IR
         const authSchemes = intermediateRepresentation.auth.schemes;
 
-        // Check that we have all 3 auth schemes in the IR (bearerAuth override + 2 OpenAPI schemes)
-        expect(authSchemes.length).toBe(3);
+        // Check that we have only 1 auth scheme in the IR (generators.yml completely overrides OpenAPI)
+        expect(authSchemes.length).toBe(1);
 
-        // Validate that all expected scheme keys exist
+        // Validate that only the generators.yml scheme exists
         const schemeKeys = authSchemes.map((scheme) => scheme.key);
         expect(schemeKeys).toContain("bearerAuth"); // From generators.yml override
-        expect(schemeKeys).toContain("api-key"); // From OpenAPI
-        expect(schemeKeys).toContain("token"); // From OpenAPI
+        expect(schemeKeys).not.toContain("api-key"); // OpenAPI schemes are replaced
+        expect(schemeKeys).not.toContain("token"); // OpenAPI schemes are replaced
 
-        // Validate FDR auth schemes contain all three schemes
+        // Validate FDR auth schemes contain only the generators.yml scheme
         expect(fdrApiDefinition.authSchemes).toBeDefined();
         expect(Object.keys(fdrApiDefinition.authSchemes ?? {})).toContain("bearerAuth");
-        expect(Object.keys(fdrApiDefinition.authSchemes ?? {})).toContain("api-key");
-        expect(Object.keys(fdrApiDefinition.authSchemes ?? {})).toContain("token");
-        expect(Object.keys(fdrApiDefinition.authSchemes ?? {}).length).toBe(3);
+        expect(Object.keys(fdrApiDefinition.authSchemes ?? {})).not.toContain("api-key");
+        expect(Object.keys(fdrApiDefinition.authSchemes ?? {})).not.toContain("token");
+        expect(Object.keys(fdrApiDefinition.authSchemes ?? {}).length).toBe(1);
 
         // Validate services and endpoints exist
         expect(intermediateRepresentation.services).toBeDefined();
@@ -842,5 +843,93 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         // Snapshot the complete output for regression testing
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/auth-scheme-override-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-scheme-override-ir.snap");
+    });
+
+    it("should handle auth scheme name collision between OpenAPI and generators.yml", async () => {
+        // Test what happens when OpenAPI has a security scheme with the same name as generators.yml
+        // Both have "bearerAuth" but with different configurations
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/auth-name-collision")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "auth-name-collision"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate IR has auth schemes
+        expect(intermediateRepresentation.auth).toBeDefined();
+        expect(intermediateRepresentation.auth.schemes).toBeDefined();
+        const authSchemes = intermediateRepresentation.auth.schemes;
+
+        // Check that we have bearerAuth scheme in IR (should be only one due to name collision handling)
+        const schemeKeys = authSchemes.map((scheme) => scheme.key);
+        const bearerAuthSchemes = authSchemes.filter((scheme) => scheme.key === "bearerAuth");
+
+        // Should have bearerAuth scheme present
+        expect(schemeKeys).toContain("bearerAuth");
+
+        // Should only have one bearerAuth scheme (generators.yml should override OpenAPI)
+        expect(bearerAuthSchemes.length).toBe(1);
+
+        // Validate FDR auth schemes - should have bearerAuth
+        expect(fdrApiDefinition.authSchemes).toBeDefined();
+        const fdrAuthSchemeKeys = Object.keys(fdrApiDefinition.authSchemes ?? {});
+        expect(fdrAuthSchemeKeys).toContain("bearerAuth");
+
+        // Should have the generators.yml version of bearerAuth (with custom token name)
+        const fdrBearerAuth = fdrApiDefinition.authSchemes?.["bearerAuth" as keyof typeof fdrApiDefinition.authSchemes];
+        expect(fdrBearerAuth).toBeDefined();
+
+        // The FDR bearerAuth should reflect the generators.yml configuration (custom token name)
+        // rather than the OpenAPI version (which would be standard JWT bearer format)
+
+        // Validate services and endpoints
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/auth-name-collision-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-name-collision-ir.snap");
     });
 });

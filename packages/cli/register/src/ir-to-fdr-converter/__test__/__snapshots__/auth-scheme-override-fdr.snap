@@ -5,21 +5,9 @@
     "type": "bearerAuth",
   },
   "authSchemes": {
-    "api-key": {
-      "description": "API key authentication using custom header",
-      "headerWireValue": "X-API-Key",
-      "nameOverride": "apiKey",
-      "prefix": undefined,
-      "type": "header",
-    },
     "bearerAuth": {
       "description": undefined,
       "tokenName": "apiKey",
-      "type": "bearerAuth",
-    },
-    "token": {
-      "description": "Bearer token authentication with JWT format",
-      "tokenName": "token",
       "type": "bearerAuth",
     },
   },
@@ -30,7 +18,7 @@
       {
         "auth": true,
         "authV2": [
-          "api-key",
+          "bearerAuth",
         ],
         "availability": undefined,
         "defaultEnvironment": "https://api.example.com/v1",
@@ -94,7 +82,7 @@
         "multiAuth": [
           {
             "schemes": [
-              "api-key",
+              "bearerAuth",
             ],
           },
         ],
@@ -156,7 +144,7 @@
       {
         "auth": true,
         "authV2": [
-          "token",
+          "bearerAuth",
         ],
         "availability": undefined,
         "defaultEnvironment": "https://api.example.com/v1",
@@ -220,7 +208,7 @@
         "multiAuth": [
           {
             "schemes": [
-              "token",
+              "bearerAuth",
             ],
           },
         ],
