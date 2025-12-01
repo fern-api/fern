@@ -3,7 +3,7 @@
 - version: 1.24.0
   changelogEntry:
     - summary: |
-        Add refreshable auth headers support for inferred auth. Auth headers are now dynamically retrieved on each request instead of being set once during client construction. This implements a pattern similar to Java's Supplier<String> where the InferredAuthProvider's getAuthHeaders() method is called on each request to get fresh tokens, ensuring tokens are automatically refreshed when expired.
+        Add refreshable auth headers support for inferred auth. Auth headers are now dynamically retrieved on each request instead of being set once during client construction. This implements a pattern similar to Java's `Supplier<String>` where the InferredAuthProvider's getAuthHeaders() method is called on each request to get fresh tokens, ensuring tokens are automatically refreshed when expired.
       type: feat
   createdAt: "2025-12-01"
   irVersion: 62

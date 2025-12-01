@@ -392,7 +392,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const inferredAuthScheme = this.context.getInferredAuth();
                 if (inferredAuthScheme != null) {
                     writer.writeLine(
-                        "$this->options['authHeadersSupplier'] = fn() => $this->inferredAuthProvider->getAuthHeaders();"
+                        `$this->${this.context.getClientOptionsName()}['authHeadersSupplier'] = fn() => $this->inferredAuthProvider->getAuthHeaders();`
                     );
                 }
 
@@ -442,6 +442,8 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
                     if (isMultiUrl) {
                         subClientArgs.push(php.codeblock(`$this->environment`));
+                        // Pass options to subpackage clients for refreshable auth headers
+                        subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
                     } else {
                         subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
                     }
