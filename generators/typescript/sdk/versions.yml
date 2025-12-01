@@ -2,7 +2,8 @@
 - version: 3.35.2
   changelogEntry:
     - summary: |
-        Add --frozen-lockfile flag to pnpm and yarn install commands in generated ci.yml workflow.
+        * Add --frozen-lockfile flag to pnpm and yarn install commands in generated ci.yml workflow.
+        * Update actions/checkout to v6 and actions/setup-node to v6 in generated ci.yml workflow.
       type: chore
   createdAt: "2025-12-01"
   irVersion: 62
