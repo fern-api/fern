@@ -8,11 +8,11 @@ client.inlined.send_(
   query: 'query',
   temperature: 1.1,
   stream: false,
-  aliasedContext: "You're super wise",
-  maybeContext: "You're super wise",
-  objectWithLiteral: {
-    nestedLiteral: {
-      myLiteral: 'How super cool'
+  aliased_context: "You're super wise",
+  maybe_context: "You're super wise",
+  object_with_literal: {
+    nested_literal: {
+      my_literal: 'How super cool'
     }
   }
 );

@@ -6,7 +6,8 @@ import * as serializers from "../../../index";
 import * as FernDefinition from "../../../../api/index";
 import * as core from "../../../../core";
 import { ApiAuthSchema } from "../../fernDefinition/resources/auth/types/ApiAuthSchema";
-import { ApiDefinitionSettingsSchema } from "../../generators/types/ApiDefinitionSettingsSchema";
+import { AuthSchemeDeclarationSchema } from "../../fernDefinition/resources/auth/types/AuthSchemeDeclarationSchema";
+import { ApiConfigurationV2SettingsSchema } from "../../generators/types/ApiConfigurationV2SettingsSchema";
 import { ApiConfigurationV2SpecsSchema } from "../../generators/types/ApiConfigurationV2SpecsSchema";
 
 export const GeneratorApiSettingsSchema: core.serialization.ObjectSchema<
@@ -14,14 +15,16 @@ export const GeneratorApiSettingsSchema: core.serialization.ObjectSchema<
     FernDefinition.GeneratorApiSettingsSchema
 > = core.serialization.object({
     auth: ApiAuthSchema.optional(),
-    settings: ApiDefinitionSettingsSchema.optional(),
+    "auth-schemes": core.serialization.record(core.serialization.string(), AuthSchemeDeclarationSchema).optional(),
+    settings: ApiConfigurationV2SettingsSchema.optional(),
     specs: ApiConfigurationV2SpecsSchema.optional(),
 });
 
 export declare namespace GeneratorApiSettingsSchema {
     export interface Raw {
         auth?: ApiAuthSchema.Raw | null;
-        settings?: ApiDefinitionSettingsSchema.Raw | null;
+        "auth-schemes"?: Record<string, AuthSchemeDeclarationSchema.Raw> | null;
+        settings?: ApiConfigurationV2SettingsSchema.Raw | null;
         specs?: ApiConfigurationV2SpecsSchema.Raw | null;
     }
 }

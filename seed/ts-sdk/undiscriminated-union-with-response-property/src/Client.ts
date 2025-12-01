@@ -73,6 +73,11 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedUndiscriminatedUnionWithResponsePropertyError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedUndiscriminatedUnionWithResponsePropertyTimeoutError(
                     "Timeout exceeded when calling GET /union.",
@@ -136,6 +141,11 @@ export class SeedUndiscriminatedUnionWithResponsePropertyClient {
                 throw new errors.SeedUndiscriminatedUnionWithResponsePropertyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedUndiscriminatedUnionWithResponsePropertyError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

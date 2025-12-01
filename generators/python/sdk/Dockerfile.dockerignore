@@ -7,3 +7,4 @@
 !generators/python/tests
 !generators/python/src
 !generators/python-v2/sdk/dist/cli.cjs
+**/.DS_Store

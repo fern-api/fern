@@ -2508,6 +2508,19 @@
             }
           ]
         },
+        "auth-schemes": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fernDefinition.auth.AuthSchemeDeclarationSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "specs": {
           "$ref": "#/definitions/generators.APIConfigurationV2SpecsSchema"
         },
@@ -3549,10 +3562,23 @@
             }
           ]
         },
+        "auth-schemes": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": {
+                "$ref": "#/definitions/fernDefinition.auth.AuthSchemeDeclarationSchema"
+              }
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
         "settings": {
           "oneOf": [
             {
-              "$ref": "#/definitions/generators.APIDefinitionSettingsSchema"
+              "$ref": "#/definitions/generators.APIConfigurationV2SettingsSchema"
             },
             {
               "type": "null"

@@ -81,6 +81,11 @@ export class CompletionsClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedServerSentEventsError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedServerSentEventsTimeoutError("Timeout exceeded when calling POST /stream.");
             case "unknown":

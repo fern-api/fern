@@ -153,11 +153,13 @@ export interface GeneratorInvocation {
     readme: ReadmeSchema | undefined;
     settings: ApiDefinitionSettingsSchema | undefined;
     /**
-     * Override the specs configuration for this generator.
-     * When provided, this completely replaces the top-level api.specs configuration.
+     * Override the API configuration for this generator.
+     * When provided, these values take precedence over the top-level api configuration.
      */
     apiOverride?: {
         specs?: ApiConfigurationV2SpecsSchema;
+        auth?: RawSchemas.ApiAuthSchema;
+        "auth-schemes"?: Record<string, RawSchemas.AuthSchemeDeclarationSchema>;
     };
 }
 

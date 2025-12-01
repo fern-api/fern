@@ -28,7 +28,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -57,11 +57,11 @@ class SeedClient
         ];
 
         $this->options = $options ?? [];
+
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
 
         $this->client = new RawClient(
             options: $this->options,
@@ -97,7 +97,7 @@ class SeedClient
             $query['userList'] = $request->userList;
         }
         if ($request->optionalDeadline != null) {
-            $query['optionalDeadline'] = $request->optionalDeadline;
+            $query['optionalDeadline'] = $request->optionalDeadline->format(Constant::DateTimeFormat);
         }
         if ($request->keyValue != null) {
             $query['keyValue'] = $request->keyValue;

@@ -5,6 +5,53 @@
         Log the pull request URL when an SDK is generated with self-hosted GitHub pull-request mode.
       type: feat
   irVersion: 62
+  createdAt: "2025-12-01"
+  version: 2.14.0
+
+- changelogEntry:
+    - summary: |
+        Respect generators.yml auth-schemes override.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-01"
+  version: 2.13.1
+
+- changelogEntry:
+    - summary: Allow all API settings to be overridden at the generator level in generators.yml.
+      type: feat
+    - summary: |
+        Add CLI migration to automatically convert deprecated generator-level API settings keys to their new equivalents: `use-title` to `title-as-schema-name`, and `unions: v1` to `prefer-undiscriminated-unions-with-literals: true`.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.13.0
+
+- changelogEntry:
+    - summary: |
+        Support per-generator auth-schemes override in generators.yml. Generators can now define their own `auth-schemes` at the generator level, which takes precedence over top-level definitions.
+
+        ```yml
+        # generators.yml
+        api:
+          auth: Bearer
+          auth-schemes:
+            Bearer:
+              scheme: bearer
+
+        groups:
+          php-sdk:
+            generators:
+              - name: fernapi/fern-php-sdk
+                version: 1.23.0
+                api:
+                  auth: Bearer
+                  auth-schemes:
+                    Bearer:
+                      scheme: bearer
+                      get-token: POST /authorize
+        ```
+      type: feat
+  irVersion: 62
   createdAt: "2025-11-27"
   version: 2.12.0
 

@@ -62,6 +62,11 @@ export class ServiceClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedPublicObjectError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedPublicObjectTimeoutError("Timeout exceeded when calling GET /helloworld.txt.");
             case "unknown":

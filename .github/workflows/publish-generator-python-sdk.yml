@@ -40,3 +40,20 @@ jobs:
           manual-trigger: "true"
           fern-token: ${{ secrets.FERN_TOKEN }}
           docker-pwd: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+  bulk-update-generator:
+    needs: publish
+    if: ${{ always() && needs.publish.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Trigger bulk update
+        uses: ./.github/actions/bulk-update-generator
+        with:
+          generator-name: "python-sdk"
+          version-file: "generators/python/sdk/versions.yml"
+          manual-version: ${{ inputs.version }}
+          fern-token: ${{ secrets.FERN_TOKEN }}
+          autopilot-host: ${{ vars.AUTOPILOT_HOST != '' && vars.AUTOPILOT_HOST || 'https://autopilot.buildwithfern.com' }}

@@ -36,18 +36,18 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
         });
 
         const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
-        const hasBaseUrl = this.service != null && this.service.endpoints.some((e) => e.baseUrl != null);
 
         class_.addField(
             php.field({
                 name: `$${this.context.getClientOptionsName()}`,
                 access: "private",
-                type: this.context.getClientOptionsType()
+                type: this.context.getClientOptionsType(),
+                docs: "@phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator"
             })
         );
         class_.addField(this.context.rawClient.getField());
 
-        if (isMultiUrl && hasBaseUrl) {
+        if (isMultiUrl) {
             class_.addField(
                 php.field({
                     name: "$environment",
@@ -84,7 +84,6 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
 
     private getConstructorMethod({ subpackages }: { subpackages: Subpackage[] }): php.Class.Constructor {
         const isMultiUrl = this.context.ir.environments?.environments.type === "multipleBaseUrls";
-        const hasBaseUrl = this.service != null && this.service.endpoints.some((e) => e.baseUrl != null);
 
         const parameters: php.Parameter[] = [
             php.parameter({
@@ -93,7 +92,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             })
         ];
 
-        if (isMultiUrl && hasBaseUrl) {
+        if (isMultiUrl) {
             parameters.push(
                 php.parameter({
                     name: "environment",
@@ -115,7 +114,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
             body: php.codeblock((writer) => {
                 writer.writeLine(`$this->client = $${this.context.rawClient.getFieldName()};`);
 
-                if (isMultiUrl && hasBaseUrl) {
+                if (isMultiUrl) {
                     writer.writeTextStatement("$this->environment = $environment");
                     writer.writeNodeStatement(
                         php.codeblock((writer) => {
@@ -139,7 +138,7 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                         php.codeblock(`$this->${this.context.rawClient.getFieldName()}`)
                     ];
 
-                    if (isMultiUrl && hasBaseUrl) {
+                    if (isMultiUrl) {
                         subClientArgs.push(php.codeblock(`$this->environment`));
                     } else {
                         subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
