@@ -464,6 +464,24 @@ function withNoOpAuthProvider<T extends BaseClientOptions>(
                 ),
                 ts.factory.createCaseClause(
                     ts.factory.createStringLiteral(
+                        context.coreUtilities.fetcher.Fetcher.BodyIsNullError._reasonLiteralValue
+                    ),
+                    [
+                        ts.factory.createThrowStatement(
+                            context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                                message: undefined,
+                                statusCode: ts.factory.createPropertyAccessExpression(
+                                    ts.factory.createIdentifier("error"),
+                                    context.coreUtilities.fetcher.Fetcher.BodyIsNullError.statusCode
+                                ),
+                                responseBody: undefined,
+                                rawResponse: ts.factory.createIdentifier("rawResponse")
+                            })
+                        )
+                    ]
+                ),
+                ts.factory.createCaseClause(
+                    ts.factory.createStringLiteral(
                         context.coreUtilities.fetcher.Fetcher.TimeoutSdkError._reasonLiteralValue
                     ),
                     [
