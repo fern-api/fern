@@ -5,6 +5,7 @@ import { type NormalizedClientOptions, normalizeClientOptions } from "../../../.
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedTrace from "../../../index.js";
 
@@ -79,28 +80,12 @@ export class SubmissionClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedTraceError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedTraceError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling POST /sessions/create-session/{language}.",
-                );
-            case "unknown":
-                throw new errors.SeedTraceError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/sessions/create-session/{language}",
+        );
     }
 
     /**
@@ -161,26 +146,7 @@ export class SubmissionClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedTraceError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedTraceError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedTraceTimeoutError("Timeout exceeded when calling GET /sessions/{sessionId}.");
-            case "unknown":
-                throw new errors.SeedTraceError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/sessions/{sessionId}");
     }
 
     /**
@@ -238,28 +204,7 @@ export class SubmissionClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedTraceError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedTraceError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling DELETE /sessions/stop/{sessionId}.",
-                );
-            case "unknown":
-                throw new errors.SeedTraceError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/sessions/stop/{sessionId}");
     }
 
     /**
@@ -315,27 +260,11 @@ export class SubmissionClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedTraceError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedTraceError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedTraceTimeoutError(
-                    "Timeout exceeded when calling GET /sessions/execution-sessions-state.",
-                );
-            case "unknown":
-                throw new errors.SeedTraceError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/sessions/execution-sessions-state",
+        );
     }
 }
