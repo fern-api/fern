@@ -8,7 +8,7 @@ use Seed\User\Requests\GetUsersRequest;
 use Seed\User\Types\User;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
-use Seed\Core\Types\Constant;
+use Seed\Core\Json\JsonSerializer;
 use Seed\Core\Json\JsonApiRequest;
 use Seed\Core\Client\HttpMethod;
 use JsonException;
@@ -71,8 +71,8 @@ class UserClient
         $query = [];
         $query['limit'] = $request->getLimit();
         $query['id'] = $request->getId();
-        $query['date'] = $request->getDate()->format(Constant::DateFormat);
-        $query['deadline'] = $request->getDeadline()->format(Constant::DateTimeFormat);
+        $query['date'] = JsonSerializer::serializeDate($request->getDate());
+        $query['deadline'] = JsonSerializer::serializeDateTime($request->getDeadline());
         $query['bytes'] = $request->getBytes();
         $query['user'] = $request->getUser();
         $query['userList'] = $request->getUserList();
@@ -81,7 +81,7 @@ class UserClient
         $query['excludeUser'] = $request->getExcludeUser();
         $query['filter'] = $request->getFilter();
         if ($request->getOptionalDeadline() != null){
-            $query['optionalDeadline'] = $request->getOptionalDeadline()->format(Constant::DateTimeFormat);
+            $query['optionalDeadline'] = JsonSerializer::serializeDateTime($request->getOptionalDeadline());
         }
         if ($request->getOptionalString() != null){
             $query['optionalString'] = $request->getOptionalString();

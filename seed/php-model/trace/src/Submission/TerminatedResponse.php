@@ -8,6 +8,17 @@ class TerminatedResponse extends JsonSerializableType
 {
 
     /**
+     * @param array{
+     * } $values
+     */
+    public function __construct(
+        array $values = [],
+    )
+    {
+        unset($values);
+    }
+
+    /**
      * @return string
      */
     public function __toString(): string {
