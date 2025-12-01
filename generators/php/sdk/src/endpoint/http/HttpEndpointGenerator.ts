@@ -98,6 +98,23 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                     )
                 );
 
+                // Merge auth headers from the authHeadersSupplier if it exists (for refreshable auth tokens)
+                const inferredAuth = this.context.getInferredAuth();
+                if (inferredAuth != null) {
+                    const authHeadersSupplierKey = this.context.getAuthHeadersSupplierOptionName();
+                    const headersKey = this.context.getHeadersOptionName();
+                    writer.controlFlow(
+                        "if",
+                        php.codeblock(
+                            `isset($${this.context.getRequestOptionsName()}['${authHeadersSupplierKey}']) && is_callable($${this.context.getRequestOptionsName()}['${authHeadersSupplierKey}'])`
+                        )
+                    );
+                    writer.writeLine(
+                        `$${this.context.getRequestOptionsName()}['${headersKey}'] = array_merge($${this.context.getRequestOptionsName()}['${headersKey}'] ?? [], $${this.context.getRequestOptionsName()}['${authHeadersSupplierKey}']());`
+                    );
+                    writer.endControlFlow();
+                }
+
                 const queryParameterCodeBlock = endpointSignatureInfo.request?.getQueryParameterCodeBlock();
                 if (queryParameterCodeBlock != null) {
                     queryParameterCodeBlock.code.write(writer);

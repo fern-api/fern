@@ -99,6 +99,14 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
                     type: php.Type.reference(this.context.getEnvironmentsClassReference())
                 })
             );
+            // Add options parameter for multi-URL mode to support refreshable auth headers
+            parameters.push(
+                php.parameter({
+                    name: this.context.getClientOptionsName(),
+                    type: php.Type.optional(this.context.getClientOptionsType()),
+                    initializer: php.codeblock("null")
+                })
+            );
         } else {
             parameters.push(
                 php.parameter({
@@ -116,9 +124,12 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
 
                 if (isMultiUrl) {
                     writer.writeTextStatement("$this->environment = $environment");
+                    // Use options parameter to support refreshable auth headers in multi-URL mode
                     writer.writeNodeStatement(
                         php.codeblock((writer) => {
-                            writer.write(`$this->${this.context.getClientOptionsName()} = []`);
+                            writer.write(`$this->${this.context.getClientOptionsName()} = `);
+                            writer.writeNode(php.variable(this.context.getClientOptionsName()));
+                            writer.write(" ?? []");
                         })
                     );
                 } else {
@@ -140,6 +151,8 @@ export class SubPackageClientGenerator extends FileGenerator<PhpFile, SdkCustomC
 
                     if (isMultiUrl) {
                         subClientArgs.push(php.codeblock(`$this->environment`));
+                        // Pass options to nested subpackage clients for refreshable auth headers
+                        subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
                     } else {
                         subClientArgs.push(php.codeblock(`$this->${this.context.getClientOptionsName()}`));
                     }
