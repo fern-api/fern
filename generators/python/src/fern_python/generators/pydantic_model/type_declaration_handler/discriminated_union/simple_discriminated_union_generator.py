@@ -2,9 +2,11 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import List, Optional, Set, Union
 
+import fern.ir.resources as ir_types
 from ....context.pydantic_generator_context import PydanticGeneratorContext
 from ...custom_config import PydanticModelCustomConfig, UnionNamingVersions
 from ..abc.abstract_type_generator import AbstractTypeGenerator
+
 from fern_python.codegen import AST, LocalClassReference, SourceFile
 from fern_python.codegen.ast.references.class_reference import ClassReference
 from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract_type_snippet_generator import (
@@ -13,8 +15,6 @@ from fern_python.generators.pydantic_model.type_declaration_handler.abc.abstract
 from fern_python.pydantic_codegen import PydanticField
 from fern_python.pydantic_codegen.pydantic_field import FernAwarePydanticField
 from fern_python.snippet import SnippetWriter
-
-import fern.ir.resources as ir_types
 
 
 @dataclass(frozen=True)
@@ -137,8 +137,16 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                         default_value=discriminant_value,
                     )
                 ]
+                discriminant_name_snake = get_discriminant_parameter_name(self._union.discriminant)
+                discriminant_wire_name = self._union.discriminant.wire_value
                 object_properties = self._context.get_all_properties_including_extensions(shape.type_id)
                 for object_property in object_properties:
+                    # Skip any property that conflicts with the discriminant to avoid duplicate fields
+                    if (
+                        object_property.name.name.snake_case.safe_name == discriminant_name_snake
+                        or object_property.name.wire_value == discriminant_wire_name
+                    ):
+                        continue
                     self._all_referenced_types.append(object_property.value_type)
                     same_properties_as_object_property_fields.append(
                         FernAwarePydanticField(
