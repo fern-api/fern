@@ -47,7 +47,6 @@ function getResponseBody(response, responseType) {
                 return yield response.text();
         }
         // if responseType is "json" or not specified, try to parse as JSON
-        // Use text() for better React Native compatibility (response.body may not be available)
         const text = yield response.text();
         if (text.length > 0) {
             try {
