@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.23.9
+  changelogEntry:
+    - summary: |
+        Fix JsonException "No constructor found" for empty object types. Previously, object types with no properties would not generate a constructor, causing JSON deserialization to fail. Now all JsonSerializableType subclasses generate a constructor with the expected `array $values` parameter signature.
+      type: fix
+  createdAt: "2025-12-01"
+  irVersion: 62
+
 - version: 1.23.8
   changelogEntry:
     - summary: |
