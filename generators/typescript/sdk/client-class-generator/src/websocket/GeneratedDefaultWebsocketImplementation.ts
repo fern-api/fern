@@ -341,7 +341,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         const mergeHeaders: ts.Expression[] = [];
         const authProviderStatements = [];
         const mergeOnlyDefinedHeaders: (ts.PropertyAssignment | ts.SpreadAssignment)[] = [];
-        if (this.generatedSdkClientClass.hasAuthProvider()) {
+        if (this.generatedSdkClientClass.hasAuthProvider() && this.channel.auth) {
             const metadataArg = this.generatedSdkClientClass.getGenerateEndpointMetadata()
                 ? ts.factory.createObjectLiteralExpression([
                       ts.factory.createPropertyAssignment(

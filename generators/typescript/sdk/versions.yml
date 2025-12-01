@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.35.2
+  changelogEntry:
+    - summary: |
+        Fix WebSocket client to only generate auth code when the channel has `auth: true`.
+        Previously, auth code was generated whenever the API had auth schemes defined, even if the WebSocket channel didn't require auth.
+        This caused a mismatch where the client used `NormalizedClientOptions` but the connect method tried to access `authProvider`.
+      type: fix
+  createdAt: "2025-12-01"
+  irVersion: 62
+
 - version: 3.35.1
   changelogEntry:
     - summary: |
