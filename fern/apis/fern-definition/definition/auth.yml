@@ -91,7 +91,7 @@ types:
     properties:
       scheme: literal<"bearer">
       get-token: InferredGetTokenEndpointSchema
-    # refresh-token: optional<InferredRefreshTokenEndpointSchema>
+      refresh-token: optional<InferredRefreshTokenEndpointSchema>
 
   InferredGetTokenEndpointSchema:
     discriminated: false
@@ -124,6 +124,24 @@ types:
       value-prefix:
         type: optional<string>
         docs: Commonly used for setting the `Authorization` scheme, but could be used for other things.
+
+  InferredRefreshTokenEndpointSchema:
+    discriminated: false
+    union:
+      - string
+      - InferredRefreshTokenEndpointSchemaObject
+
+  InferredRefreshTokenEndpointSchemaObject:
+    properties:
+      endpoint:
+        type: string
+        docs: The endpoint to refresh the access token, such as 'auth.refresh_token'
+      expiry-response-property:
+        type: optional<string>
+        docs: The property name for the expiry time in the response.
+      authenticated-request-headers:
+        type: optional<list<InferredAuthenticatedRequestHeader>>
+        docs: The headers that will be set on HTTP requests when the inferred auth scheme is applied to an endpoint. These will override the headers defined on the get-token endpoint.
 
   OAuthSchemeSchema:
     extends:
