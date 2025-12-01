@@ -75,6 +75,11 @@ export class SeedApiClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedApiError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedApiTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":

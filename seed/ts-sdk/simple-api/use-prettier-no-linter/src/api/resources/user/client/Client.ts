@@ -76,6 +76,11 @@ export class UserClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedSimpleApiError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedSimpleApiTimeoutError("Timeout exceeded when calling GET /users/{id}.");
             case "unknown":

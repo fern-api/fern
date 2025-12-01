@@ -66,6 +66,11 @@ export class ServiceClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedPlainTextError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedPlainTextTimeoutError("Timeout exceeded when calling POST /text.");
             case "unknown":

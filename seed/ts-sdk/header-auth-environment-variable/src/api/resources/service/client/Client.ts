@@ -74,6 +74,11 @@ export class ServiceClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedHeaderTokenEnvironmentVariableError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedHeaderTokenEnvironmentVariableTimeoutError(
                     "Timeout exceeded when calling GET /apiKey.",

@@ -80,6 +80,11 @@ export class PropertyBasedErrorClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedErrorPropertyError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedErrorPropertyTimeoutError(
                     "Timeout exceeded when calling GET /property-based-error.",
