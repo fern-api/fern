@@ -542,10 +542,13 @@ export class EndpointSnippetGenerator {
                     const wireValue = property.name.wireValue;
                     const value = bodyRecord[wireValue];
                     if (value !== undefined) {
+                        // Scope errors to the property name for better error messages
+                        this.context.errors.scope(wireValue);
                         const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
                             typeReference: property.typeReference,
                             value
                         });
+                        this.context.errors.unscope();
                         if (!ruby.TypeLiteral.isNop(convertedValue)) {
                             args.push(
                                 ruby.keywordArgument({
