@@ -70,7 +70,8 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                         name: this.context.getPropertyName(pathParameter.name),
                         type: this.context.phpTypeMapper.convert({ reference: pathParameter.valueType }),
                         access: this.context.getPropertyAccess(),
-                        docs: pathParameter.docs
+                        docs: pathParameter.docs,
+                        initializer: this.context.getInitializerForTypeReference(pathParameter.valueType)
                     }),
                     includeGetters,
                     includeSetters
@@ -86,7 +87,8 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     name: this.context.getPropertyName(query.name.name),
                     type: this.getQueryParameterType(query),
                     access: this.context.getPropertyAccess(),
-                    docs: query.docs
+                    docs: query.docs,
+                    initializer: this.context.getInitializerForTypeReference(query.valueType)
                 }),
                 includeGetters,
                 includeSetters
@@ -101,7 +103,8 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                     name: this.context.getPropertyName(header.name.name),
                     type: this.context.phpTypeMapper.convert({ reference: header.valueType }),
                     access: this.context.getPropertyAccess(),
-                    docs: header.docs
+                    docs: header.docs,
+                    initializer: this.context.getInitializerForTypeReference(header.valueType)
                 }),
                 includeGetters,
                 includeSetters
@@ -220,6 +223,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                 type: convertedType,
                 property
             }),
+            initializer: this.context.getInitializerForTypeReference(property.valueType),
             inherited
         });
     }

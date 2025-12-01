@@ -564,6 +564,91 @@ export abstract class AbstractPhpGeneratorContext<
         return undefined;
     }
 
+    /**
+     * Returns a CodeBlock initializer for a type reference if it has a default value.
+     * Only returns defaults when useProvidedDefaults is enabled in the custom config.
+     * Supports primitive types (integer, double, string, boolean, long, bigInteger) and literals.
+     */
+    public getInitializerForTypeReference(typeReference: TypeReference): php.CodeBlock | undefined {
+        switch (typeReference.type) {
+            case "primitive": {
+                // Only populate primitive defaults if useProvidedDefaults is enabled
+                if (!this.customConfig.useProvidedDefaults) {
+                    return undefined;
+                }
+                const v2 = typeReference.primitive.v2;
+                if (v2 == null) {
+                    return undefined;
+                }
+                switch (v2.type) {
+                    case "integer":
+                        if (v2.default != null) {
+                            return php.codeblock(`${v2.default}`);
+                        }
+                        return undefined;
+                    case "double":
+                        if (v2.default != null) {
+                            return php.codeblock(`${v2.default}`);
+                        }
+                        return undefined;
+                    case "string":
+                        if (v2.default != null) {
+                            return php.codeblock(`"${v2.default}"`);
+                        }
+                        return undefined;
+                    case "boolean":
+                        if (v2.default != null) {
+                            return php.codeblock(v2.default ? "true" : "false");
+                        }
+                        return undefined;
+                    case "long":
+                        if (v2.default != null) {
+                            return php.codeblock(`${v2.default}`);
+                        }
+                        return undefined;
+                    case "bigInteger":
+                        if (v2.default != null) {
+                            return php.codeblock(`"${v2.default}"`);
+                        }
+                        return undefined;
+                    default:
+                        return undefined;
+                }
+            }
+            case "named": {
+                const typeDeclaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
+                if (typeDeclaration.shape.type === "alias") {
+                    return this.getInitializerForTypeReference(typeDeclaration.shape.aliasOf);
+                }
+                return undefined;
+            }
+            case "container": {
+                switch (typeReference.container.type) {
+                    case "literal": {
+                        // Literals always get defaults regardless of useProvidedDefaults
+                        const literal = typeReference.container.literal;
+                        if (literal.type === "string") {
+                            return php.codeblock(`"${literal.string}"`);
+                        }
+                        return php.codeblock(literal.boolean ? "true" : "false");
+                    }
+                    case "optional":
+                        // Don't provide defaults for optional types (they default to null)
+                        return undefined;
+                    case "nullable":
+                        // Don't provide defaults for nullable types (they default to null)
+                        return undefined;
+                    default:
+                        return undefined;
+                }
+            }
+            case "unknown":
+                return undefined;
+            default:
+                assertNever(typeReference);
+        }
+    }
+
     public getTypeDeclarationOrThrow(typeId: TypeId): TypeDeclaration {
         const typeDeclaration = this.getTypeDeclaration(typeId);
         if (typeDeclaration == null) {
