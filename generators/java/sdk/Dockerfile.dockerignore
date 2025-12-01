@@ -3,3 +3,4 @@
 !generators/java-v2/sdk/features.yml
 !generators/java/sdk/build/distributions/sdk.tar
 !generators/java/sdk/init.sh
+**/.DS_Store
