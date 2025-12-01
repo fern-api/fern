@@ -60,11 +60,11 @@ import { EndpointDeclarationReferencer } from "./declaration-referencers/Endpoin
 import { EnvironmentsDeclarationReferencer } from "./declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "./declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
 import { JsonDeclarationReferencer } from "./declaration-referencers/JsonDeclarationReferencer";
+import { NonStatusCodeErrorHandlerDeclarationReferencer } from "./declaration-referencers/NonStatusCodeErrorHandlerDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/RequestWrapperDeclarationReferencer";
 import { SdkClientClassDeclarationReferencer } from "./declaration-referencers/SdkClientClassDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErrorDeclarationReferencer";
 import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
-import { NonStatusCodeErrorHandlerDeclarationReferencer } from "./declaration-referencers/NonStatusCodeErrorHandlerDeclarationReferencer";
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
@@ -857,9 +857,7 @@ export class SdkGenerator {
             filepath: this.nonStatusCodeErrorHandlerDeclarationReferencer.getExportedFilepath(),
             run: ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
-                this.nonStatusCodeErrorHandlerGenerator
-                    .generateNonStatusCodeErrorHandler()
-                    .writeToFile(context);
+                this.nonStatusCodeErrorHandlerGenerator.generateNonStatusCodeErrorHandler().writeToFile(context);
             }
         });
     }

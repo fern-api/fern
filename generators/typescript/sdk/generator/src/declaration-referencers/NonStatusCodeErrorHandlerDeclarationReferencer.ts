@@ -1,4 +1,10 @@
-import { ExportedFilePath, ExportsManager, getReferenceToExportFromRoot, ImportsManager, Reference } from "@fern-typescript/commons";
+import {
+    ExportedFilePath,
+    ExportsManager,
+    getReferenceToExportFromRoot,
+    ImportsManager,
+    Reference
+} from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
