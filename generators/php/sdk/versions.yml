@@ -1,6 +1,6 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
-- version: 1.23.12
+- version: 1.24.0
   changelogEntry:
     - summary: |
         Retries now check `Retry-After` and `X-RateLimit-Reset` response headers before defaulting to exponential backoff. Added jitter to retry delays and capped maximum retry delay at 60 seconds.
