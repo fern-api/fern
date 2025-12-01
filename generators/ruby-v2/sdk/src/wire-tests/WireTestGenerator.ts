@@ -307,6 +307,15 @@ export class WireTestGenerator {
         const endpointsByService = new Map<string, HttpEndpoint[]>();
 
         for (const service of Object.values(this.context.ir.services)) {
+            // Skip root-level services (services without a fernFilepath)
+            // The Ruby SDK doesn't generate methods for root-level endpoints on the main client
+            if (!service.name?.fernFilepath?.allParts || service.name.fernFilepath.allParts.length === 0) {
+                this.context.logger.debug(
+                    `Skipping root-level service for wire tests: ${service.name?.fernFilepath?.file?.snakeCase?.safeName ?? "unknown"}`
+                );
+                continue;
+            }
+
             const serviceName = this.getFormattedServiceName(service);
             endpointsByService.set(serviceName, service.endpoints);
         }

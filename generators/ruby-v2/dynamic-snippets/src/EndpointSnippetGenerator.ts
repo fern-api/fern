@@ -342,7 +342,8 @@ export class EndpointSnippetGenerator {
                 });
                 break;
             case "body":
-                invokeMethodArgs.arguments_ = this.getMethodArgsForBodyRequest({
+                // Ruby SDK methods use keyword arguments (via **params), not positional arguments
+                invokeMethodArgs.keywordArguments = this.getMethodArgsForBodyRequest({
                     request: endpoint.request,
                     snippet
                 });
@@ -473,28 +474,19 @@ export class EndpointSnippetGenerator {
     }: {
         request: FernIr.dynamic.BodyRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ruby.AstNode[] {
-        const args: ruby.AstNode[] = [];
+    }): ruby.KeywordArgument[] {
+        const args: ruby.KeywordArgument[] = [];
 
-        // Add path parameters as positional arguments
-        this.context.errors.scope("PathParameters");
-        if (request.pathParameters != null) {
-            const associated = this.context.associateByWireValue({
-                parameters: request.pathParameters,
-                values: snippet.pathParameters ?? {},
-                ignoreMissingParameters: true
-            });
-            for (const parameter of associated) {
-                args.push(
-                    ruby.positionalArgument({
-                        value: this.context.dynamicTypeLiteralMapper.convert(parameter)
-                    })
-                );
-            }
-        }
-        this.context.errors.unscope();
+        // Add path parameters as keyword arguments (Ruby SDK uses **params)
+        args.push(
+            ...this.getNamedParameterArgs({
+                kind: "PathParameters",
+                namedParameters: request.pathParameters,
+                values: snippet.pathParameters
+            })
+        );
 
-        // Add body as a positional argument
+        // Add body fields as keyword arguments
         if (request.body != null) {
             switch (request.body.type) {
                 case "bytes":
@@ -504,19 +496,77 @@ export class EndpointSnippetGenerator {
                         message: "Bytes request body is not supported in Ruby snippets yet"
                     });
                     break;
-                case "typeReference":
-                    args.push(
-                        ruby.positionalArgument({
-                            value: this.context.dynamicTypeLiteralMapper.convert({
-                                typeReference: request.body.value,
-                                value: this.context.getRecord(snippet.requestBody)
-                            })
-                        })
-                    );
+                case "typeReference": {
+                    // For typeReference bodies, we need to flatten the body fields into keyword arguments
+                    // The Ruby SDK expects keyword args that get wrapped into the type by the method
+                    const bodyRecord = this.context.getRecord(snippet.requestBody);
+                    if (bodyRecord != null) {
+                        // Get the type definition to understand the field names
+                        const typeRef = request.body.value;
+                        if (typeRef.type === "named") {
+                            const namedType = this.context.resolveNamedType({ typeId: typeRef.value });
+                            if (namedType != null) {
+                                // Convert the body record fields to keyword arguments
+                                const bodyFields = this.getBodyFieldsAsKeywordArgs({
+                                    namedType,
+                                    bodyRecord
+                                });
+                                args.push(...bodyFields);
+                            }
+                        }
+                    }
                     break;
+                }
                 default:
                     assertNever(request.body);
             }
+        }
+
+        return args;
+    }
+
+    private getBodyFieldsAsKeywordArgs({
+        namedType,
+        bodyRecord
+    }: {
+        namedType: FernIr.dynamic.NamedType;
+        bodyRecord: Record<string, unknown>;
+    }): ruby.KeywordArgument[] {
+        const args: ruby.KeywordArgument[] = [];
+
+        // Handle different type shapes
+        switch (namedType.type) {
+            case "object": {
+                // For objects, convert each property to a keyword argument
+                for (const property of namedType.properties) {
+                    const wireValue = property.name.wireValue;
+                    const value = bodyRecord[wireValue];
+                    if (value !== undefined) {
+                        const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
+                            typeReference: property.typeReference,
+                            value
+                        });
+                        if (!ruby.TypeLiteral.isNop(convertedValue)) {
+                            args.push(
+                                ruby.keywordArgument({
+                                    name: this.context.getPropertyName(property.name.name),
+                                    value: convertedValue
+                                })
+                            );
+                        }
+                    }
+                }
+                break;
+            }
+            case "alias":
+            case "discriminatedUnion":
+            case "undiscriminatedUnion":
+            case "enum":
+                // For these types, we can't easily flatten to keyword args
+                // Fall back to passing the whole body as-is (this may need refinement)
+                break;
+            default:
+                assertNever(namedType);
         }
 
         return args;
