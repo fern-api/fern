@@ -70,6 +70,11 @@ export class SimpleClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedInferredAuthImplicitNoExpiryError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedInferredAuthImplicitNoExpiryTimeoutError(
                     "Timeout exceeded when calling GET /get-something.",

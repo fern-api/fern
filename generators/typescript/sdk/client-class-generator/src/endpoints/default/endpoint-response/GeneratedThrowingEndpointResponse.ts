@@ -955,6 +955,24 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     ),
                     ts.factory.createCaseClause(
                         ts.factory.createStringLiteral(
+                            context.coreUtilities.fetcher.Fetcher.BodyIsNullError._reasonLiteralValue
+                        ),
+                        [
+                            ts.factory.createThrowStatement(
+                                context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
+                                    message: undefined,
+                                    statusCode: ts.factory.createPropertyAccessExpression(
+                                        referenceToError,
+                                        context.coreUtilities.fetcher.Fetcher.BodyIsNullError.statusCode
+                                    ),
+                                    responseBody: undefined,
+                                    rawResponse: referenceToRawResponse
+                                })
+                            )
+                        ]
+                    ),
+                    ts.factory.createCaseClause(
+                        ts.factory.createStringLiteral(
                             context.coreUtilities.fetcher.Fetcher.TimeoutSdkError._reasonLiteralValue
                         ),
                         [

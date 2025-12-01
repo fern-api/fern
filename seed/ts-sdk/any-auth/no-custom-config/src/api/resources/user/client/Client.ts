@@ -71,6 +71,11 @@ export class UserClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedAnyAuthError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedAnyAuthTimeoutError("Timeout exceeded when calling POST /users.");
             case "unknown":
@@ -132,6 +137,11 @@ export class UserClient {
                 throw new errors.SeedAnyAuthError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedAnyAuthError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
