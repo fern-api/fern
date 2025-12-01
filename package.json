@@ -76,7 +76,16 @@
     "prepare": "husky",
     "pre-commit": "tsx scripts/pre-commit.ts",
     "fix:references": "npx nx g @nx/js:typescript-sync --updateReferences=true --updatePaths=false",
-    "test:update-package": "sh -c 'for arg in \"$@\"; do if [[ $arg == --package=* ]]; then PACKAGE=${arg#--package=}; break; fi; done; pnpm --filter \"$PACKAGE\" compile && pnpm --filter \"$PACKAGE\" test:update' --"
+    "test:update-package": "sh -c 'for arg in \"$@\"; do if [[ $arg == --package=* ]]; then PACKAGE=${arg#--package=}; break; fi; done; pnpm --filter \"$PACKAGE\" compile && pnpm --filter \"$PACKAGE\" test:update' --",
+    "csharp:build": "pnpm --filter @fern-api/fern-csharp-sdk dockerTagLatest",
+    "go:build": "pnpm --filter @fern-api/go-sdk dockerTagLatest",
+    "java:build": "pnpm --filter @fern-api/java-sdk dockerTagLatest",
+    "php:build": "pnpm --filter @fern-api/php-sdk dockerTagLatest",
+    "python:build": "pnpm --filter @fern-api/python-sdk dockerTagLatest",
+    "ruby:build": "pnpm --filter @fern-api/ruby-sdk dockerTagLatest",
+    "rust:build": "pnpm --filter @fern-api/rust-sdk dockerTagLatest",
+    "swift:build": "pnpm --filter @fern-api/swift-sdk dockerTagLatest",
+    "typescript:build": "pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLatest"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
