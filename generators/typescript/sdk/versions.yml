@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.35.1
+- version: 3.35.2
   changelogEntry:
     - summary: |
         Add --frozen-lockfile flag to pnpm and yarn install commands in generated ci.yml workflow.
