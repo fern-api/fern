@@ -372,7 +372,8 @@ export class SdkGenerator {
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             requireDefaultEnvironment: config.requireDefaultEnvironment,
             retainOriginalCasing: config.retainOriginalCasing,
-            parameterNaming: config.parameterNaming
+            parameterNaming: config.parameterNaming,
+            baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],

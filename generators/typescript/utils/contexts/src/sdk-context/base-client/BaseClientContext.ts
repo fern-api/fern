@@ -1,5 +1,6 @@
 import { SetRequired } from "@fern-api/core-utils";
-import { InterfaceDeclarationStructure } from "ts-morph";
+import { ExportsManager, ImportsManager, Reference } from "@fern-typescript/commons";
+import { InterfaceDeclarationStructure, SourceFile } from "ts-morph";
 import { SdkContext } from "../SdkContext";
 
 export interface BaseClientContext {
@@ -10,4 +11,9 @@ export interface BaseClientContext {
     generateBaseIdempotentRequestOptionsInterface(
         context: SdkContext
     ): SetRequired<InterfaceDeclarationStructure, "properties">;
+    getReferenceToHandleNonStatusCodeError(args: {
+        importsManager: ImportsManager;
+        exportsManager: ExportsManager;
+        sourceFile: SourceFile;
+    }): Reference;
 }

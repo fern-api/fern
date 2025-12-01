@@ -1,16 +1,25 @@
 import type { SetRequired } from "@fern-api/core-utils";
 import { FernIr } from "@fern-fern/ir-sdk";
 import type { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { getParameterNameForRootPathParameter, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import {
+    ExportsManager,
+    getParameterNameForRootPathParameter,
+    getPropertyKey,
+    getTextOfTsNode,
+    ImportsManager,
+    Reference
+} from "@fern-typescript/commons";
 import type { BaseClientContext, SdkContext } from "@fern-typescript/contexts";
 import { endpointUtils } from "@fern-typescript/sdk-client-class-generator";
 import {
     type InterfaceDeclarationStructure,
     type OptionalKind,
     type PropertySignatureStructure,
+    SourceFile,
     StructureKind,
     ts
 } from "ts-morph";
+import { BaseClientTypeDeclarationReferencer } from "../../declaration-referencers/BaseClientTypeDeclarationReferencer";
 
 export declare namespace BaseClientContextImpl {
     export interface Init {
@@ -20,6 +29,7 @@ export declare namespace BaseClientContextImpl {
         retainOriginalCasing: boolean;
         generateIdempotentRequestOptions: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
+        baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -39,6 +49,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly retainOriginalCasing: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly generateIdempotentRequestOptions: boolean;
+    private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -62,7 +73,8 @@ export class BaseClientContextImpl implements BaseClientContext {
         requireDefaultEnvironment,
         retainOriginalCasing,
         generateIdempotentRequestOptions,
-        parameterNaming
+        parameterNaming,
+        baseClientTypeDeclarationReferencer
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
@@ -70,6 +82,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.retainOriginalCasing = retainOriginalCasing;
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.parameterNaming = parameterNaming;
+        this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -504,6 +517,14 @@ export class BaseClientContextImpl implements BaseClientContext {
     }
     private getOptionNameForVariable(variable: FernIr.VariableDeclaration): string {
         return variable.name.camelCase.unsafeName;
+    }
+
+    public getReferenceToHandleNonStatusCodeError(args: {
+        importsManager: ImportsManager;
+        exportsManager: ExportsManager;
+        sourceFile: SourceFile;
+    }): Reference {
+        return this.baseClientTypeDeclarationReferencer.getReferenceToHandleNonStatusCodeError(args);
     }
 }
 

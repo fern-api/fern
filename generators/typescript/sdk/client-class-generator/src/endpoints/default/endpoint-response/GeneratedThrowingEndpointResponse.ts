@@ -925,69 +925,20 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private getThrowsForNonStatusCodeErrors(context: SdkContext): ts.Statement[] {
         const referenceToError = this.getReferenceToError(context);
         const referenceToRawResponse = this.getReferenceToRawResponse(context);
+
+        const handleNonStatusCodeErrorReference = context.baseClient.getReferenceToHandleNonStatusCodeError({
+            importsManager: context.importsManager,
+            exportsManager: context.exportsManager,
+            sourceFile: context.sourceFile
+        });
+
         return [
-            ts.factory.createSwitchStatement(
-                ts.factory.createPropertyAccessExpression(
+            ts.factory.createReturnStatement(
+                ts.factory.createCallExpression(handleNonStatusCodeErrorReference.getExpression(), undefined, [
                     referenceToError,
-                    context.coreUtilities.fetcher.Fetcher.Error.reason
-                ),
-                ts.factory.createCaseBlock([
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(
-                            context.coreUtilities.fetcher.Fetcher.NonJsonError._reasonLiteralValue
-                        ),
-                        [
-                            ts.factory.createThrowStatement(
-                                context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                                    message: undefined,
-                                    statusCode: ts.factory.createPropertyAccessExpression(
-                                        referenceToError,
-                                        context.coreUtilities.fetcher.Fetcher.NonJsonError.statusCode
-                                    ),
-                                    responseBody: ts.factory.createPropertyAccessExpression(
-                                        referenceToError,
-                                        context.coreUtilities.fetcher.Fetcher.NonJsonError.rawBody
-                                    ),
-                                    rawResponse: referenceToRawResponse
-                                })
-                            )
-                        ]
-                    ),
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(
-                            context.coreUtilities.fetcher.Fetcher.TimeoutSdkError._reasonLiteralValue
-                        ),
-                        [
-                            ts.factory.createThrowStatement(
-                                context.timeoutSdkError
-                                    .getGeneratedTimeoutSdkError()
-                                    .build(
-                                        context,
-                                        `Timeout exceeded when calling ${this.endpoint.method} ${getFullPathForEndpoint(
-                                            this.endpoint
-                                        )}.`
-                                    )
-                            )
-                        ]
-                    ),
-                    ts.factory.createCaseClause(
-                        ts.factory.createStringLiteral(
-                            context.coreUtilities.fetcher.Fetcher.UnknownError._reasonLiteralValue
-                        ),
-                        [
-                            ts.factory.createThrowStatement(
-                                context.genericAPISdkError.getGeneratedGenericAPISdkError().build(context, {
-                                    message: ts.factory.createPropertyAccessExpression(
-                                        referenceToError,
-                                        context.coreUtilities.fetcher.Fetcher.UnknownError.message
-                                    ),
-                                    statusCode: undefined,
-                                    responseBody: undefined,
-                                    rawResponse: referenceToRawResponse
-                                })
-                            )
-                        ]
-                    )
+                    referenceToRawResponse,
+                    ts.factory.createStringLiteral(this.endpoint.method),
+                    ts.factory.createStringLiteral(getFullPathForEndpoint(this.endpoint))
                 ])
             )
         ];
