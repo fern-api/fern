@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Log the pull request URL when an SDK is generated with self-hosted GitHub pull-request mode.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-01"
+  version: 2.14.0
+
+- changelogEntry:
+    - summary: |
         Respect generators.yml auth-schemes override.
       type: fix
   irVersion: 62
