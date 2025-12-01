@@ -3,6 +3,7 @@
 import { BearerAuthProvider } from "./auth/BearerAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
+import * as errors from "./errors/index.js";
 
 export interface BaseClientOptions {
     environment: core.Supplier<string>;
@@ -79,4 +80,36 @@ function withNoOpAuthProvider<T extends BaseClientOptions>(
         ...options,
         authProvider: new core.NoOpAuthProvider(),
     };
+}
+export function handleNonStatusCodeError(
+    error: core.Fetcher.Error,
+    rawResponse: core.RawResponse,
+    method: string,
+    path: string,
+): never {
+    switch (error.reason) {
+        case "non-json":
+            throw new errors.SeedAcceptError({
+                statusCode: error.statusCode,
+                body: error.rawBody,
+                rawResponse: rawResponse,
+            });
+        case "body-is-null":
+            throw new errors.SeedAcceptError({
+                statusCode: error.statusCode,
+                rawResponse: rawResponse,
+            });
+        case "timeout":
+            throw new errors.SeedAcceptTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
+        case "unknown":
+            throw new errors.SeedAcceptError({
+                message: error.errorMessage,
+                rawResponse: rawResponse,
+            });
+        default:
+            throw new errors.SeedAcceptError({
+                message: "Unknown error",
+                rawResponse: rawResponse,
+            });
+    }
 }
