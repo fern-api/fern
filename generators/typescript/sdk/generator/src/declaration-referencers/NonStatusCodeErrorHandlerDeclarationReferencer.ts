@@ -27,10 +27,7 @@ export class NonStatusCodeErrorHandlerDeclarationReferencer extends AbstractDecl
                 }
             ],
             file: {
-                nameOnDisk: this.getFilename(),
-                exportDeclaration: {
-                    namedExports: [FUNCTION_NAME]
-                }
+                nameOnDisk: this.getFilename()
             }
         };
     }
