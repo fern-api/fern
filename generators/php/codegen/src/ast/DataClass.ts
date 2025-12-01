@@ -56,12 +56,16 @@ export class DataClass extends AstNode {
             access: this.constructorAccess,
             parameters: this.getConstructorParameters({ orderedFields }),
             body: php.codeblock((writer) => {
-                for (const field of orderedFields) {
-                    writer.write(`$this->${field.name} = $${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`);
-                    if (field.type.isOptional()) {
-                        writer.write(" ?? null");
+                if (orderedFields.length > 0) {
+                    for (const field of orderedFields) {
+                        writer.write(`$this->${field.name} = $${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`);
+                        if (field.type.isOptional()) {
+                            writer.write(" ?? null");
+                        }
+                        writer.write(";");
                     }
-                    writer.write(";");
+                } else {
+                    writer.writeLine(`(void) $${CONSTRUCTOR_PARAMETER_NAME};`);
                 }
             })
         });
