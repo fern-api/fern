@@ -65,7 +65,7 @@ export async function getFernUpgradeMessage({
     return boxen(message, {
         padding: 1,
         float: "center",
-        textAlignment: "center",
+        textAlignment: "left",
         borderColor: "yellow",
         borderStyle: "round"
     });
@@ -114,7 +114,7 @@ export async function getGeneratorUpgradeMessage({
         ? boxen(message, {
               padding: 1,
               float: "center",
-              textAlignment: "center",
+              textAlignment: "left",
               borderColor: "yellow",
               borderStyle: "round"
           })
