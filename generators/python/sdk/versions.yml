@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.41.4
+  changelogEntry:
+    - summary: |
+        Fix empty request body handling to preserve explicit empty JSON bodies instead of dropping them.
+        When an endpoint has a request body type but all fields are optional, the SDK now correctly sends
+        an empty JSON body `{}` instead of omitting the body entirely.
+      type: fix
+  createdAt: "2025-11-28"
+  irVersion: 61
+
 - version: 4.41.3
   changelogEntry:
     - summary: |
