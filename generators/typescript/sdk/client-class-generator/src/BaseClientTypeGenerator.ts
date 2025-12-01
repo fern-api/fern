@@ -43,7 +43,9 @@ export class BaseClientTypeGenerator {
         this.generateNormalizedClientOptionsTypes(context);
         this.generateNormalizeClientOptionsFunction(context);
         this.generateNormalizeClientOptionsWithAuthFunction(context);
-        this.generateHandleNonStatusCodeErrorFunction(context);
+        if (!context.neverThrowErrors) {
+            this.generateHandleNonStatusCodeErrorFunction(context);
+        }
     }
 
     private generateNormalizeClientOptionsFunction(context: SdkContext): void {
@@ -394,10 +396,6 @@ function withNoOpAuthProvider<T extends BaseClientOptions>(
     }
 
     private generateHandleNonStatusCodeErrorFunction(context: SdkContext): void {
-        context.importsManager.addImportFromRoot("errors", {
-            namespaceImport: "errors"
-        });
-
         const errorType = context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType();
         const rawResponseType = context.coreUtilities.fetcher.RawResponse.RawResponse._getReferenceToType();
 
