@@ -232,6 +232,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         });
     }
 
+    public getCustomPagerClassReference(): php.ClassReference {
+        return php.classReference({
+            name: "CustomPager",
+            namespace: this.getCorePaginationNamespace()
+        });
+    }
+
     public getHttpMethod(method: HttpMethod): php.CodeBlock {
         return php.codeblock((writer) => {
             writer.writeNode(this.getHttpMethodClassReference());
@@ -569,6 +576,7 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return this.hasPagination()
             ? [
                   AsIsFiles.CursorPager,
+                  AsIsFiles.CustomPager,
                   AsIsFiles.OffsetPager,
                   AsIsFiles.Page,
                   AsIsFiles.Pager,
