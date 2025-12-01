@@ -287,6 +287,10 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
         return "timeout";
     }
 
+    public getAuthHeadersSupplierOptionName(): string {
+        return "authHeadersSupplier";
+    }
+
     public getClientOptionsName(): string {
         return this.getOptionsName();
     }
@@ -320,6 +324,11 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
             {
                 key: this.getHeadersOptionName(),
                 valueType: php.Type.map(php.Type.string(), php.Type.string()),
+                optional: true
+            },
+            {
+                key: this.getAuthHeadersSupplierOptionName(),
+                valueType: php.Type.mixed(),
                 optional: true
             }
         ];

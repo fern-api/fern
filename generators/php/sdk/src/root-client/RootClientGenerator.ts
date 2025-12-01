@@ -392,7 +392,7 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 const inferredAuthScheme = this.context.getInferredAuth();
                 if (inferredAuthScheme != null) {
                     writer.writeLine(
-                        `$this->${this.context.getClientOptionsName()}['authHeadersSupplier'] = fn() => $this->inferredAuthProvider->getAuthHeaders();`
+                        `$this->${this.context.getClientOptionsName()}['${this.context.getAuthHeadersSupplierOptionName()}'] = fn() => $this->inferredAuthProvider->getAuthHeaders();`
                     );
                 }
 
