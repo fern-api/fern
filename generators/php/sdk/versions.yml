@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.23.8
+  changelogEntry:
+    - summary: |
+        Normalize UTC datetime serialization to use Z suffix instead of +00:00. The JsonSerializer now converts `2023-01-01T12:34:56+00:00` to `2023-01-01T12:34:56Z` for UTC times while preserving RFC3339 format for non-UTC timezones. Query parameters and headers now use JsonSerializer::serializeDateTime() for consistent datetime formatting. Test templates updated to match the new behavior.
+      type: fix
+  createdAt: "2025-12-01"
+  irVersion: 62
+
 - version: 1.23.7
   changelogEntry:
     - summary: |
