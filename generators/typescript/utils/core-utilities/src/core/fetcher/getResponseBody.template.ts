@@ -1,44 +1,38 @@
 import { getBinaryResponse } from "./BinaryResponse";
-import { isResponseWithBody } from "./ResponseWithBody";
 import { fromJson } from "../json";
-import { RUNTIME } from "../runtime/index";
 <% if (streamType === "wrapper") { %>
 import { chooseStreamWrapper } from "./stream-wrappers/chooseStreamWrapper";
 <% } %>
 
 export async function getResponseBody(response: Response, responseType?: string): Promise<unknown> {
-    // In React Native (RUNTIME.type === "react-native"), response.body might not be available
-    // even for responses with bodies. We only skip the isResponseWithBody check in React Native
-    // for types that can use alternative methods (text/blob/arrayBuffer/json).
-    // For binary-response, sse, and streaming, we preserve the original behavior.
-    const isReactNative = RUNTIME.type === "react-native";
-
-    if (!isResponseWithBody(response)) {
-        // Always preserve original behavior for types that require body stream
-        if (responseType === "binary-response" || responseType === "sse" || responseType === "streaming") {
-            return undefined;
-        }
-        // For non-RN runtimes, preserve original behavior for all types
-        if (!isReactNative) {
-            return undefined;
-        }
-        // React Native + types that can use alternative methods: fall through to switch
-    }
-
     switch (responseType) {
         case "binary-response":
-            // Re-check here so TypeScript can narrow to ResponseWithBody
-            if (!isResponseWithBody(response)) {
-                return undefined;
-            }
             return getBinaryResponse(response);
         case "blob":
             return await response.blob();
         case "arrayBuffer":
             return await response.arrayBuffer();
         case "sse":
+            if (response.body == null) {
+                return {
+                    ok: false,
+                    error: {
+                        reason: "body-is-null",
+                        statusCode: response.status,
+                    },
+                };
+            }
             return response.body;
         case "streaming":
+            if (response.body == null) {
+                return {
+                    ok: false,
+                    error: {
+                        reason: "body-is-null",
+                        statusCode: response.status,
+                    },
+                };
+            }
             <% if (streamType === "wrapper") { %>
             return chooseStreamWrapper(response.body);
             <% } else { %>
