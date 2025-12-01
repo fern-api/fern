@@ -43,7 +43,6 @@ export async function getResponseBody(response: Response, responseType?: string)
     }
 
     // if responseType is "json" or not specified, try to parse as JSON
-    // Use text() for better React Native compatibility (response.body may not be available)
     const text = await response.text();
     if (text.length > 0) {
         try {
