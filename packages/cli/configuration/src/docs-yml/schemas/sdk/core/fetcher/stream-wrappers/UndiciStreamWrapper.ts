@@ -164,9 +164,9 @@ export class UndiciStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | U
             if (done) {
                 break;
             }
-            if (value) {
-                chunks.push(value);
-            }
+                if (value) {
+                    chunks.push(value as BlobPart);
+                }
         }
 
         const decoder = new TextDecoder(this.encoding || "utf-8");
