@@ -11,3 +11,14 @@ export interface RegularPatchRequest {
     field1?: string;
     field2?: number;
 }
+
+export namespace RegularPatchRequest {
+    export namespace _ {
+        export function body(request: RegularPatchRequest): unknown {
+            return {
+                field1: request.field1,
+                field2: request.field2,
+            };
+        }
+    }
+}

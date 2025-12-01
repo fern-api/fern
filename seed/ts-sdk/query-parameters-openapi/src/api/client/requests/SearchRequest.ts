@@ -67,3 +67,28 @@ export interface SearchRequest {
     neighbor?: SeedApi.SearchRequestNeighbor;
     neighborRequired: SeedApi.SearchRequestNeighborRequired;
 }
+
+export namespace SearchRequest {
+    export namespace _ {
+        export function qs(request: SearchRequest): Record<string, unknown> {
+            return {
+                limit: request.limit,
+                id: request.id,
+                date: request.date,
+                deadline: request.deadline,
+                bytes: request.bytes,
+                user: request.user,
+                userList: request.userList,
+                optionalDeadline: request.optionalDeadline,
+                keyValue: request.keyValue,
+                optionalString: request.optionalString,
+                nestedUser: request.nestedUser,
+                optionalUser: request.optionalUser,
+                excludeUser: request.excludeUser,
+                filter: request.filter,
+                neighbor: request.neighbor,
+                neighborRequired: request.neighborRequired,
+            };
+        }
+    }
+}

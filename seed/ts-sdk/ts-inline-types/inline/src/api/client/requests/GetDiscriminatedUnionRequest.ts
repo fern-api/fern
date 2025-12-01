@@ -76,4 +76,13 @@ export namespace GetDiscriminatedUnionRequest {
             type: "ref";
         }
     }
+
+    export namespace _ {
+        export function body(request: GetDiscriminatedUnionRequest): unknown {
+            return {
+                bar: request.bar,
+                foo: request.foo,
+            };
+        }
+    }
 }

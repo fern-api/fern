@@ -9,3 +9,13 @@
 export interface SearchOrganizationsRequest {
     limit?: number;
 }
+
+export namespace SearchOrganizationsRequest {
+    export namespace _ {
+        export function qs(request: SearchOrganizationsRequest): Record<string, unknown> {
+            return {
+                limit: request.limit,
+            };
+        }
+    }
+}

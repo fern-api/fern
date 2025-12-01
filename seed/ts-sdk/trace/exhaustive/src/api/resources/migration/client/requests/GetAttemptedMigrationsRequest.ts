@@ -9,3 +9,13 @@
 export interface GetAttemptedMigrationsRequest {
     "admin-key-header": string;
 }
+
+export namespace GetAttemptedMigrationsRequest {
+    export namespace _ {
+        export function headers(request: GetAttemptedMigrationsRequest): Record<string, string> {
+            return {
+                "admin-key-header": request["admin-key-header"],
+            };
+        }
+    }
+}

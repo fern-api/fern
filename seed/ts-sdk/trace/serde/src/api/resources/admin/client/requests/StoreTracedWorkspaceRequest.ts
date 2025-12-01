@@ -94,3 +94,14 @@ export interface StoreTracedWorkspaceRequest {
     workspaceRunDetails: SeedTrace.WorkspaceRunDetails;
     traceResponses: SeedTrace.TraceResponse[];
 }
+
+export namespace StoreTracedWorkspaceRequest {
+    export namespace _ {
+        export function body(request: StoreTracedWorkspaceRequest): unknown {
+            return {
+                workspaceRunDetails: request.workspaceRunDetails,
+                traceResponses: request.traceResponses,
+            };
+        }
+    }
+}

@@ -23,3 +23,16 @@ export interface ListUsersDoubleOffsetPaginationRequest {
      */
     starting_after?: string;
 }
+
+export namespace ListUsersDoubleOffsetPaginationRequest {
+    export namespace _ {
+        export function qs(request: ListUsersDoubleOffsetPaginationRequest): Record<string, unknown> {
+            return {
+                page: request.page,
+                per_page: request.per_page,
+                order: request.order,
+                starting_after: request.starting_after,
+            };
+        }
+    }
+}

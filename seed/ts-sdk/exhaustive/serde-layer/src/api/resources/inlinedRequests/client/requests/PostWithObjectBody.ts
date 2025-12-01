@@ -31,3 +31,15 @@ export interface PostWithObjectBody {
     integer: number;
     nestedObject: SeedExhaustive.types.ObjectWithOptionalField;
 }
+
+export namespace PostWithObjectBody {
+    export namespace _ {
+        export function body(request: PostWithObjectBody): unknown {
+            return {
+                string: request.string,
+                integer: request.integer,
+                NestedObject: request.nestedObject,
+            };
+        }
+    }
+}

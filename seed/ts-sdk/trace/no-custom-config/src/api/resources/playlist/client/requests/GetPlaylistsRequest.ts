@@ -22,3 +22,17 @@ export interface GetPlaylistsRequest {
     optionalMultipleField?: string | string[];
     multipleField: string | string[];
 }
+
+export namespace GetPlaylistsRequest {
+    export namespace _ {
+        export function qs(request: GetPlaylistsRequest): Record<string, unknown> {
+            return {
+                limit: request.limit,
+                otherField: request.otherField,
+                multiLineDocs: request.multiLineDocs,
+                optionalMultipleField: request.optionalMultipleField,
+                multipleField: request.multipleField,
+            };
+        }
+    }
+}

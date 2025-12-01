@@ -31,3 +31,20 @@ export interface ListClientsRequest {
     /** Filter by application type (spa, native, regular_web, non_interactive) */
     app_type?: string[];
 }
+
+export namespace ListClientsRequest {
+    export namespace _ {
+        export function qs(request: ListClientsRequest): Record<string, unknown> {
+            return {
+                fields: request.fields,
+                include_fields: request.include_fields,
+                page: request.page,
+                per_page: request.per_page,
+                include_totals: request.include_totals,
+                is_global: request.is_global,
+                is_first_party: request.is_first_party,
+                app_type: request.app_type,
+            };
+        }
+    }
+}

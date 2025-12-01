@@ -9,3 +9,15 @@ export interface UploadDocumentRequest {
     tags?: string[];
     title?: string;
 }
+
+export namespace UploadDocumentRequest {
+    export namespace _ {
+        export function body(request: UploadDocumentRequest): unknown {
+            return {
+                author: request.author,
+                tags: request.tags,
+                title: request.title,
+            };
+        }
+    }
+}

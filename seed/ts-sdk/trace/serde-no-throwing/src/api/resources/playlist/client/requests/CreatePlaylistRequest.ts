@@ -18,3 +18,18 @@ export interface CreatePlaylistRequest {
     optionalDatetime?: Date;
     body: SeedTrace.PlaylistCreateRequest;
 }
+
+export namespace CreatePlaylistRequest {
+    export namespace _ {
+        export function qs(request: CreatePlaylistRequest): Record<string, unknown> {
+            return {
+                datetime: request.datetime,
+                optionalDatetime: request.optionalDatetime,
+            };
+        }
+
+        export function body(request: CreatePlaylistRequest): unknown {
+            return request.body;
+        }
+    }
+}

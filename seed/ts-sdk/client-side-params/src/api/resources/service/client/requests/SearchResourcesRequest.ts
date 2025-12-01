@@ -22,3 +22,21 @@ export interface SearchResourcesRequest {
     query?: string;
     filters?: Record<string, unknown>;
 }
+
+export namespace SearchResourcesRequest {
+    export namespace _ {
+        export function qs(request: SearchResourcesRequest): Record<string, unknown> {
+            return {
+                limit: request.limit,
+                offset: request.offset,
+            };
+        }
+
+        export function body(request: SearchResourcesRequest): unknown {
+            return {
+                query: request.query,
+                filters: request.filters,
+            };
+        }
+    }
+}

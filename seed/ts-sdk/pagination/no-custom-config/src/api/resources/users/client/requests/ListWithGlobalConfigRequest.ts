@@ -9,3 +9,13 @@
 export interface ListWithGlobalConfigRequest {
     offset?: number;
 }
+
+export namespace ListWithGlobalConfigRequest {
+    export namespace _ {
+        export function qs(request: ListWithGlobalConfigRequest): Record<string, unknown> {
+            return {
+                offset: request.offset,
+            };
+        }
+    }
+}

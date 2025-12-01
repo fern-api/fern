@@ -16,3 +16,11 @@ export interface UpdateUserRequest {
     user_id: string;
     body: SeedPathParameters.User;
 }
+
+export namespace UpdateUserRequest {
+    export namespace _ {
+        export function body(request: UpdateUserRequest): unknown {
+            return request.body;
+        }
+    }
+}

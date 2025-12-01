@@ -15,3 +15,20 @@ export interface FindRequest {
     publicProperty?: string;
     privateProperty?: number;
 }
+
+export namespace FindRequest {
+    export namespace _ {
+        export function qs(request: FindRequest): Record<string, unknown> {
+            return {
+                optionalString: request.optionalString,
+            };
+        }
+
+        export function body(request: FindRequest): unknown {
+            return {
+                publicProperty: request.publicProperty,
+                privateProperty: request.privateProperty,
+            };
+        }
+    }
+}

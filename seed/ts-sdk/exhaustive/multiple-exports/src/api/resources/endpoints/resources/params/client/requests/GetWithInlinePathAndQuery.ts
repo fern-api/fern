@@ -11,3 +11,13 @@ export interface GetWithInlinePathAndQuery {
     param: string;
     query: string;
 }
+
+export namespace GetWithInlinePathAndQuery {
+    export namespace _ {
+        export function qs(request: GetWithInlinePathAndQuery): Record<string, unknown> {
+            return {
+                query: request.query,
+            };
+        }
+    }
+}

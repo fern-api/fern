@@ -9,3 +9,13 @@
 export interface GetPresignedUrlRequest {
     s3Key: string;
 }
+
+export namespace GetPresignedUrlRequest {
+    export namespace _ {
+        export function body(request: GetPresignedUrlRequest): unknown {
+            return {
+                s3Key: request.s3Key,
+            };
+        }
+    }
+}

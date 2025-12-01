@@ -19,3 +19,14 @@ export interface CreateUserRequest {
      */
     age?: number;
 }
+
+export namespace CreateUserRequest {
+    export namespace _ {
+        export function body(request: CreateUserRequest): unknown {
+            return {
+                name: request.name,
+                age: request.age,
+            };
+        }
+    }
+}

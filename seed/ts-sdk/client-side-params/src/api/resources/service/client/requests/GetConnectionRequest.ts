@@ -10,3 +10,13 @@ export interface GetConnectionRequest {
     /** Comma-separated list of fields to include */
     fields?: string;
 }
+
+export namespace GetConnectionRequest {
+    export namespace _ {
+        export function qs(request: GetConnectionRequest): Record<string, unknown> {
+            return {
+                fields: request.fields,
+            };
+        }
+    }
+}

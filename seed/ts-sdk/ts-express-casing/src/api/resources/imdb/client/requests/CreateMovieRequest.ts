@@ -16,3 +16,15 @@ export interface CreateMovieRequest {
     /** The rating scale is one to five stars */
     movie_rating: number;
 }
+
+export namespace CreateMovieRequest {
+    export namespace _ {
+        export function body(request: CreateMovieRequest): unknown {
+            return {
+                id: request.id,
+                movie_title: request.movie_title,
+                movie_rating: request.movie_rating,
+            };
+        }
+    }
+}

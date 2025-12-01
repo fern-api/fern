@@ -9,3 +9,13 @@
 export interface GetFileRequest {
     "X-File-API-Version": string;
 }
+
+export namespace GetFileRequest {
+    export namespace _ {
+        export function headers(request: GetFileRequest): Record<string, string> {
+            return {
+                "X-File-API-Version": request["X-File-API-Version"],
+            };
+        }
+    }
+}

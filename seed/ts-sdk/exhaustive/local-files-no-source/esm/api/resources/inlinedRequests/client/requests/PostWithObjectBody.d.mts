@@ -28,3 +28,8 @@ export interface PostWithObjectBody {
     integer: number;
     NestedObject: SeedExhaustive.types.ObjectWithOptionalField;
 }
+export declare namespace PostWithObjectBody {
+    namespace _ {
+        function body(request: PostWithObjectBody): unknown;
+    }
+}

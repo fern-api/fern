@@ -24,6 +24,17 @@ export interface GetWithQuery {
     number: number;
 }
 
+export namespace GetWithQuery {
+    export namespace _ {
+        export function qs(request: GetWithQuery): Record<string, unknown> {
+            return {
+                query: request.query,
+                number: request.number,
+            };
+        }
+    }
+}
+
 /**
  * @example
  *     {
@@ -36,6 +47,17 @@ export interface GetWithMultipleQuery {
     number: number | number[];
 }
 
+export namespace GetWithMultipleQuery {
+    export namespace _ {
+        export function qs(request: GetWithMultipleQuery): Record<string, unknown> {
+            return {
+                query: request.query,
+                number: request.number,
+            };
+        }
+    }
+}
+
 /**
  * @example
  *     {
@@ -44,6 +66,16 @@ export interface GetWithMultipleQuery {
  */
 export interface GetWithPathAndQuery {
     query: string;
+}
+
+export namespace GetWithPathAndQuery {
+    export namespace _ {
+        export function qs(request: GetWithPathAndQuery): Record<string, unknown> {
+            return {
+                query: request.query,
+            };
+        }
+    }
 }
 
 /**
@@ -58,6 +90,16 @@ export interface GetWithInlinePathAndQuery {
     query: string;
 }
 
+export namespace GetWithInlinePathAndQuery {
+    export namespace _ {
+        export function qs(request: GetWithInlinePathAndQuery): Record<string, unknown> {
+            return {
+                query: request.query,
+            };
+        }
+    }
+}
+
 /**
  * @example
  *     {
@@ -68,6 +110,14 @@ export interface GetWithInlinePathAndQuery {
 export interface ModifyResourceAtInlinedPath {
     param: string;
     body: string;
+}
+
+export namespace ModifyResourceAtInlinedPath {
+    export namespace _ {
+        export function body(request: ModifyResourceAtInlinedPath): unknown {
+            return request.body;
+        }
+    }
 }
 
 /**
@@ -110,6 +160,18 @@ export interface PostWithObjectBody {
     NestedObject: SeedExhaustive.types.ObjectWithOptionalField;
 }
 
+export namespace PostWithObjectBody {
+    export namespace _ {
+        export function body(request: PostWithObjectBody): unknown {
+            return {
+                string: request.string,
+                integer: request.integer,
+                NestedObject: request.NestedObject,
+            };
+        }
+    }
+}
+
 /**
  * @example
  *     {
@@ -122,4 +184,19 @@ export interface ReqWithHeaders {
     "X-TEST-SERVICE-HEADER": string;
     "X-TEST-ENDPOINT-HEADER": string;
     body: string;
+}
+
+export namespace ReqWithHeaders {
+    export namespace _ {
+        export function headers(request: ReqWithHeaders): Record<string, string> {
+            return {
+                "X-TEST-SERVICE-HEADER": request["X-TEST-SERVICE-HEADER"],
+                "X-TEST-ENDPOINT-HEADER": request["X-TEST-ENDPOINT-HEADER"],
+            };
+        }
+
+        export function body(request: ReqWithHeaders): unknown {
+            return request.body;
+        }
+    }
 }

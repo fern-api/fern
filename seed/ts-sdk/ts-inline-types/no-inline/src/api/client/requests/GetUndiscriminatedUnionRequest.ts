@@ -24,3 +24,14 @@ export interface GetUndiscriminatedUnionRequest {
     bar: SeedObject.UndiscriminatedUnion1;
     foo: string;
 }
+
+export namespace GetUndiscriminatedUnionRequest {
+    export namespace _ {
+        export function body(request: GetUndiscriminatedUnionRequest): unknown {
+            return {
+                bar: request.bar,
+                foo: request.foo,
+            };
+        }
+    }
+}

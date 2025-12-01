@@ -13,3 +13,15 @@ export interface UpdateTagsRequest {
     categories?: string[];
     labels?: string[] | null;
 }
+
+export namespace UpdateTagsRequest {
+    export namespace _ {
+        export function body(request: UpdateTagsRequest): unknown {
+            return {
+                tags: request.tags,
+                categories: request.categories,
+                labels: request.labels,
+            };
+        }
+    }
+}

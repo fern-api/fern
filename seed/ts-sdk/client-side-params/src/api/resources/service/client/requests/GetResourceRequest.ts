@@ -13,3 +13,14 @@ export interface GetResourceRequest {
     /** Response format */
     format: string;
 }
+
+export namespace GetResourceRequest {
+    export namespace _ {
+        export function qs(request: GetResourceRequest): Record<string, unknown> {
+            return {
+                include_metadata: request.include_metadata,
+                format: request.format,
+            };
+        }
+    }
+}

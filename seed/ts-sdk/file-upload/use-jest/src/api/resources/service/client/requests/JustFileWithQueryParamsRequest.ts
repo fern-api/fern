@@ -10,3 +10,17 @@ export interface JustFileWithQueryParamsRequest {
     optionalListOfStrings?: string | string[];
     file: core.file.Uploadable;
 }
+
+export namespace JustFileWithQueryParamsRequest {
+    export namespace _ {
+        export function qs(request: JustFileWithQueryParamsRequest): Record<string, unknown> {
+            return {
+                maybeString: request.maybeString,
+                integer: request.integer,
+                maybeInteger: request.maybeInteger,
+                listOfStrings: request.listOfStrings,
+                optionalListOfStrings: request.optionalListOfStrings,
+            };
+        }
+    }
+}

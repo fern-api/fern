@@ -11,3 +11,14 @@ export interface PatchProxyRequest {
     application: string | null;
     require_auth: boolean | null;
 }
+
+export namespace PatchProxyRequest {
+    export namespace _ {
+        export function body(request: PatchProxyRequest): unknown {
+            return {
+                application: request.application,
+                require_auth: request.require_auth,
+            };
+        }
+    }
+}

@@ -18,3 +18,21 @@ export interface UpdateFooRequest {
     /** Regular non-nullable field */
     non_nullable_text?: string;
 }
+
+export namespace UpdateFooRequest {
+    export namespace _ {
+        export function headers(request: UpdateFooRequest): Record<string, string> {
+            return {
+                "X-Idempotency-Key": request["X-Idempotency-Key"],
+            };
+        }
+
+        export function body(request: UpdateFooRequest): unknown {
+            return {
+                nullable_text: request.nullable_text,
+                nullable_number: request.nullable_number,
+                non_nullable_text: request.non_nullable_text,
+            };
+        }
+    }
+}

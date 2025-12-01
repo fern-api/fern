@@ -22,4 +22,13 @@ export namespace PostRootRequest {
         /** lorem ipsum */
         foo: string;
     }
+
+    export namespace _ {
+        export function body(request: PostRootRequest): unknown {
+            return {
+                bar: request.bar,
+                foo: request.foo,
+            };
+        }
+    }
 }

@@ -11,3 +11,14 @@ export interface GetWithMultipleQuery {
     query: string | string[];
     number: number | number[];
 }
+
+export namespace GetWithMultipleQuery {
+    export namespace _ {
+        export function qs(request: GetWithMultipleQuery): Record<string, unknown> {
+            return {
+                query: request.query,
+                number: request.number,
+            };
+        }
+    }
+}

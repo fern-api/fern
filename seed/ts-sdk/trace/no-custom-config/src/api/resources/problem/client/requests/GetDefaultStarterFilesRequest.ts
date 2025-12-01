@@ -35,3 +35,15 @@ export interface GetDefaultStarterFilesRequest {
      */
     methodName: string;
 }
+
+export namespace GetDefaultStarterFilesRequest {
+    export namespace _ {
+        export function body(request: GetDefaultStarterFilesRequest): unknown {
+            return {
+                inputParams: request.inputParams,
+                outputType: request.outputType,
+                methodName: request.methodName,
+            };
+        }
+    }
+}

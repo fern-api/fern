@@ -9,3 +9,13 @@
 export interface GetWithPathAndQuery {
     query: string;
 }
+
+export namespace GetWithPathAndQuery {
+    export namespace _ {
+        export function qs(request: GetWithPathAndQuery): Record<string, unknown> {
+            return {
+                query: request.query,
+            };
+        }
+    }
+}

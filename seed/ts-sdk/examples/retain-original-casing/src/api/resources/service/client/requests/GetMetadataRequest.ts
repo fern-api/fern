@@ -13,3 +13,20 @@ export interface GetMetadataRequest {
     tag?: string | string[];
     "X-API-Version": string;
 }
+
+export namespace GetMetadataRequest {
+    export namespace _ {
+        export function headers(request: GetMetadataRequest): Record<string, string> {
+            return {
+                "X-API-Version": request["X-API-Version"],
+            };
+        }
+
+        export function qs(request: GetMetadataRequest): Record<string, unknown> {
+            return {
+                shallow: request.shallow,
+                tag: request.tag,
+            };
+        }
+    }
+}

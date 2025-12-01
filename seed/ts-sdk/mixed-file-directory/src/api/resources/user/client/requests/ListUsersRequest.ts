@@ -10,3 +10,13 @@ export interface ListUsersRequest {
     /** The maximum number of results to return. */
     limit?: number;
 }
+
+export namespace ListUsersRequest {
+    export namespace _ {
+        export function qs(request: ListUsersRequest): Record<string, unknown> {
+            return {
+                limit: request.limit,
+            };
+        }
+    }
+}

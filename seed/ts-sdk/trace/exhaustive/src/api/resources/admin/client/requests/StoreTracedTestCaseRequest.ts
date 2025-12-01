@@ -97,3 +97,14 @@ export interface StoreTracedTestCaseRequest {
     result: SeedTrace.TestCaseResultWithStdout;
     traceResponses: SeedTrace.TraceResponse[];
 }
+
+export namespace StoreTracedTestCaseRequest {
+    export namespace _ {
+        export function body(request: StoreTracedTestCaseRequest): unknown {
+            return {
+                result: request.result,
+                traceResponses: request.traceResponses,
+            };
+        }
+    }
+}

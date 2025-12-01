@@ -9,3 +9,13 @@
 export interface ListUsersMixedTypeCursorPaginationRequest {
     cursor?: string;
 }
+
+export namespace ListUsersMixedTypeCursorPaginationRequest {
+    export namespace _ {
+        export function qs(request: ListUsersMixedTypeCursorPaginationRequest): Record<string, unknown> {
+            return {
+                cursor: request.cursor,
+            };
+        }
+    }
+}

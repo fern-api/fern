@@ -13,3 +13,14 @@ export interface PostSubmitRequest {
     /** The user's email address */
     email: string;
 }
+
+export namespace PostSubmitRequest {
+    export namespace _ {
+        export function body(request: PostSubmitRequest): unknown {
+            return {
+                username: request.username,
+                email: request.email,
+            };
+        }
+    }
+}

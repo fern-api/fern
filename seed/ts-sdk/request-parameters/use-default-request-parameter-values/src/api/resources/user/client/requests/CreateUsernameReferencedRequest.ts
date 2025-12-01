@@ -17,3 +17,17 @@ export interface CreateUsernameReferencedRequest {
     tags: string[];
     body: SeedRequestParameters.CreateUsernameBody;
 }
+
+export namespace CreateUsernameReferencedRequest {
+    export namespace _ {
+        export function qs(request: CreateUsernameReferencedRequest): Record<string, unknown> {
+            return {
+                tags: request.tags,
+            };
+        }
+
+        export function body(request: CreateUsernameReferencedRequest): unknown {
+            return request.body;
+        }
+    }
+}

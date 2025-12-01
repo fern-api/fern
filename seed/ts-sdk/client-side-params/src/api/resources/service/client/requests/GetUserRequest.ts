@@ -13,3 +13,14 @@ export interface GetUserRequest {
     /** true to include the fields specified, false to exclude them */
     include_fields?: boolean;
 }
+
+export namespace GetUserRequest {
+    export namespace _ {
+        export function qs(request: GetUserRequest): Record<string, unknown> {
+            return {
+                fields: request.fields,
+                include_fields: request.include_fields,
+            };
+        }
+    }
+}

@@ -17,3 +17,24 @@ export interface RefreshTokenRequest {
     refresh_token: string;
     scope?: string;
 }
+
+export namespace RefreshTokenRequest {
+    export namespace _ {
+        export function headers(request: RefreshTokenRequest): Record<string, string> {
+            return {
+                "X-Api-Key": request["X-Api-Key"],
+            };
+        }
+
+        export function body(request: RefreshTokenRequest): unknown {
+            return {
+                client_id: request.client_id,
+                client_secret: request.client_secret,
+                refresh_token: request.refresh_token,
+                audience: "https://api.example.com",
+                grant_type: "refresh_token",
+                scope: request.scope,
+            };
+        }
+    }
+}

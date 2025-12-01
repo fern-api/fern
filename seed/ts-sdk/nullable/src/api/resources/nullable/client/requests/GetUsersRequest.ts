@@ -17,3 +17,17 @@ export interface GetUsersRequest {
     tags?: (string | null) | (string | null)[];
     extra?: boolean | null;
 }
+
+export namespace GetUsersRequest {
+    export namespace _ {
+        export function qs(request: GetUsersRequest): Record<string, unknown> {
+            return {
+                usernames: request.usernames,
+                avatar: request.avatar,
+                activated: request.activated,
+                tags: request.tags,
+                extra: request.extra,
+            };
+        }
+    }
+}

@@ -25,3 +25,14 @@ export interface GetDiscriminatedUnionRequest {
     bar: SeedObject.DiscriminatedUnion1;
     foo: string;
 }
+
+export namespace GetDiscriminatedUnionRequest {
+    export namespace _ {
+        export function body(request: GetDiscriminatedUnionRequest): unknown {
+            return {
+                bar: request.bar,
+                foo: request.foo,
+            };
+        }
+    }
+}

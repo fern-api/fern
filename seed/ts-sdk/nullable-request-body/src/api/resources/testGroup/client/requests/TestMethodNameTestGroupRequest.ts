@@ -15,3 +15,18 @@ export interface TestMethodNameTestGroupRequest {
     query_param_integer?: number | null;
     body: SeedApi.PlainObject | null;
 }
+
+export namespace TestMethodNameTestGroupRequest {
+    export namespace _ {
+        export function qs(request: TestMethodNameTestGroupRequest): Record<string, unknown> {
+            return {
+                query_param_object: request.query_param_object,
+                query_param_integer: request.query_param_integer,
+            };
+        }
+
+        export function body(request: TestMethodNameTestGroupRequest): unknown {
+            return request.body;
+        }
+    }
+}

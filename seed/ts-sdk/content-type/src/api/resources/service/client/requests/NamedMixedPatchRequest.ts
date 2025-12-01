@@ -13,3 +13,15 @@ export interface NamedMixedPatchRequest {
     instructions: string | null;
     active: boolean | null;
 }
+
+export namespace NamedMixedPatchRequest {
+    export namespace _ {
+        export function body(request: NamedMixedPatchRequest): unknown {
+            return {
+                appId: request.appId,
+                instructions: request.instructions,
+                active: request.active,
+            };
+        }
+    }
+}

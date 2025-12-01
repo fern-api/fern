@@ -17,3 +17,16 @@ export interface CreateRequest {
     name: string;
     shape: SeedValidation.Shape;
 }
+
+export namespace CreateRequest {
+    export namespace _ {
+        export function body(request: CreateRequest): unknown {
+            return {
+                decimal: request.decimal,
+                even: request.even,
+                name: request.name,
+                shape: request.shape,
+            };
+        }
+    }
+}

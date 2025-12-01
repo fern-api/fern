@@ -11,3 +11,13 @@ export interface SearchUsersRequest {
     user_id: string;
     limit?: number;
 }
+
+export namespace SearchUsersRequest {
+    export namespace _ {
+        export function qs(request: SearchUsersRequest): Record<string, unknown> {
+            return {
+                limit: request.limit,
+            };
+        }
+    }
+}

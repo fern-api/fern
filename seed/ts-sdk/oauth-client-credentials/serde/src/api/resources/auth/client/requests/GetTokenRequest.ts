@@ -13,3 +13,17 @@ export interface GetTokenRequest {
     clientSecret: string;
     scope?: string;
 }
+
+export namespace GetTokenRequest {
+    export namespace _ {
+        export function body(request: GetTokenRequest): unknown {
+            return {
+                client_id: request.clientId,
+                client_secret: request.clientSecret,
+                audience: "https://api.example.com",
+                grant_type: "client_credentials",
+                scope: request.scope,
+            };
+        }
+    }
+}

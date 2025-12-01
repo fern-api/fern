@@ -15,3 +15,15 @@ export interface FilterByRoleRequest {
     status?: SeedNullableOptional.UserStatus;
     secondaryRole?: SeedNullableOptional.UserRole | null;
 }
+
+export namespace FilterByRoleRequest {
+    export namespace _ {
+        export function qs(request: FilterByRoleRequest): Record<string, unknown> {
+            return {
+                role: request.role,
+                status: request.status,
+                secondaryRole: request.secondaryRole,
+            };
+        }
+    }
+}

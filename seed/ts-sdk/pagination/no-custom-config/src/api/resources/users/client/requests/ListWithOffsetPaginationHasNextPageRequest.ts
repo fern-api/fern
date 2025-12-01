@@ -21,3 +21,15 @@ export interface ListWithOffsetPaginationHasNextPageRequest {
     limit?: number;
     order?: SeedPagination.Order;
 }
+
+export namespace ListWithOffsetPaginationHasNextPageRequest {
+    export namespace _ {
+        export function qs(request: ListWithOffsetPaginationHasNextPageRequest): Record<string, unknown> {
+            return {
+                page: request.page,
+                limit: request.limit,
+                order: request.order,
+            };
+        }
+    }
+}

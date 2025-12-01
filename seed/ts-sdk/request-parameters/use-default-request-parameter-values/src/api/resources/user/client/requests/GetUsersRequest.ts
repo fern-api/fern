@@ -64,3 +64,28 @@ export interface GetUsersRequest {
     longParam?: number;
     bigIntParam?: string;
 }
+
+export namespace GetUsersRequest {
+    export namespace _ {
+        export function qs(request: GetUsersRequest): Record<string, unknown> {
+            return {
+                limit: request.limit,
+                id: request.id,
+                date: request.date,
+                deadline: request.deadline,
+                bytes: request.bytes,
+                user: request.user,
+                userList: request.userList,
+                optionalDeadline: request.optionalDeadline,
+                keyValue: request.keyValue,
+                optionalString: request.optionalString,
+                nestedUser: request.nestedUser,
+                optionalUser: request.optionalUser,
+                excludeUser: request.excludeUser,
+                filter: request.filter,
+                longParam: request.longParam,
+                bigIntParam: request.bigIntParam,
+            };
+        }
+    }
+}

@@ -11,3 +11,13 @@ import type * as SeedMixedFileDirectory from "../../../../../../../../index.js";
 export interface GetEventMetadataRequest {
     id: SeedMixedFileDirectory.Id;
 }
+
+export namespace GetEventMetadataRequest {
+    export namespace _ {
+        export function qs(request: GetEventMetadataRequest): Record<string, unknown> {
+            return {
+                id: request.id,
+            };
+        }
+    }
+}

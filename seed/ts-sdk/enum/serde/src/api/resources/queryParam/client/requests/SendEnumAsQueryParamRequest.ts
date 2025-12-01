@@ -15,3 +15,16 @@ export interface SendEnumAsQueryParamRequest {
     operandOrColor: SeedEnum.ColorOrOperand;
     maybeOperandOrColor?: SeedEnum.ColorOrOperand;
 }
+
+export namespace SendEnumAsQueryParamRequest {
+    export namespace _ {
+        export function qs(request: SendEnumAsQueryParamRequest): Record<string, unknown> {
+            return {
+                operand: request.operand,
+                maybeOperand: request.maybeOperand,
+                operandOrColor: request.operandOrColor,
+                maybeOperandOrColor: request.maybeOperandOrColor,
+            };
+        }
+    }
+}

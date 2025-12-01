@@ -9,3 +9,13 @@
 export interface ListUsersRequest {
     limit: number;
 }
+
+export namespace ListUsersRequest {
+    export namespace _ {
+        export function qs(request: ListUsersRequest): Record<string, unknown> {
+            return {
+                limit: request.limit,
+            };
+        }
+    }
+}

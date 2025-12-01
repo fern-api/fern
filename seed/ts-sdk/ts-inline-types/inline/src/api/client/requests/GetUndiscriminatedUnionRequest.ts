@@ -93,4 +93,13 @@ export namespace GetUndiscriminatedUnionRequest {
         /**
          * lorem ipsum */
         | SeedObject.ReferenceType;
+
+    export namespace _ {
+        export function body(request: GetUndiscriminatedUnionRequest): unknown {
+            return {
+                bar: request.bar,
+                foo: request.foo,
+            };
+        }
+    }
 }

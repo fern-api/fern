@@ -17,3 +17,19 @@ export interface GetTokenRequest {
     entity_id: string;
     scope?: string;
 }
+
+export namespace GetTokenRequest {
+    export namespace _ {
+        export function body(request: GetTokenRequest): unknown {
+            return {
+                cid: request.cid,
+                csr: request.csr,
+                scp: request.scp,
+                entity_id: request.entity_id,
+                audience: "https://api.example.com",
+                grant_type: "client_credentials",
+                scope: request.scope,
+            };
+        }
+    }
+}

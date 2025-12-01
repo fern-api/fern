@@ -15,3 +15,15 @@ export interface SearchRequest {
     filters?: Record<string, string | null>;
     includeTypes: string[] | null;
 }
+
+export namespace SearchRequest {
+    export namespace _ {
+        export function body(request: SearchRequest): unknown {
+            return {
+                query: request.query,
+                filters: request.filters,
+                includeTypes: request.includeTypes,
+            };
+        }
+    }
+}

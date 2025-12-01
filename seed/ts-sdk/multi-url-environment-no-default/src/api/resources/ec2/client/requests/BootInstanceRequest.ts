@@ -9,3 +9,13 @@
 export interface BootInstanceRequest {
     size: string;
 }
+
+export namespace BootInstanceRequest {
+    export namespace _ {
+        export function body(request: BootInstanceRequest): unknown {
+            return {
+                size: request.size,
+            };
+        }
+    }
+}

@@ -41,3 +41,17 @@ export interface UpdateComplexProfileRequest {
     nullableSearchResult?: SeedNullableOptional.SearchResult | null;
     nullableArray?: string[] | null;
 }
+
+export namespace UpdateComplexProfileRequest {
+    export namespace _ {
+        export function body(request: UpdateComplexProfileRequest): unknown {
+            return {
+                nullableRole: request.nullableRole,
+                nullableStatus: request.nullableStatus,
+                nullableNotification: request.nullableNotification,
+                nullableSearchResult: request.nullableSearchResult,
+                nullableArray: request.nullableArray,
+            };
+        }
+    }
+}

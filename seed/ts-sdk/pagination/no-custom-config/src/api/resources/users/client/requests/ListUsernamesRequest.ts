@@ -13,3 +13,13 @@ export interface ListUsernamesRequest {
      */
     starting_after?: string;
 }
+
+export namespace ListUsernamesRequest {
+    export namespace _ {
+        export function qs(request: ListUsernamesRequest): Record<string, unknown> {
+            return {
+                starting_after: request.starting_after,
+            };
+        }
+    }
+}

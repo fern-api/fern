@@ -15,3 +15,16 @@ export interface ListUsersRequest {
     includeDeleted?: boolean;
     sortBy?: string | null;
 }
+
+export namespace ListUsersRequest {
+    export namespace _ {
+        export function qs(request: ListUsersRequest): Record<string, unknown> {
+            return {
+                limit: request.limit,
+                offset: request.offset,
+                includeDeleted: request.includeDeleted,
+                sortBy: request.sortBy,
+            };
+        }
+    }
+}

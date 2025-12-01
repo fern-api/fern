@@ -9,3 +9,14 @@
 export interface Generateequest {
     numEvents: number;
 }
+
+export namespace Generateequest {
+    export namespace _ {
+        export function body(request: Generateequest): unknown {
+            return {
+                stream: false,
+                num_events: request.numEvents,
+            };
+        }
+    }
+}

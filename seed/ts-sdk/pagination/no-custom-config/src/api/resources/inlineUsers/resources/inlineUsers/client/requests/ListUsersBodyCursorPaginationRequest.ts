@@ -17,3 +17,13 @@ export interface ListUsersBodyCursorPaginationRequest {
      */
     pagination?: SeedPagination.inlineUsers.WithCursor;
 }
+
+export namespace ListUsersBodyCursorPaginationRequest {
+    export namespace _ {
+        export function body(request: ListUsersBodyCursorPaginationRequest): unknown {
+            return {
+                pagination: request.pagination,
+            };
+        }
+    }
+}

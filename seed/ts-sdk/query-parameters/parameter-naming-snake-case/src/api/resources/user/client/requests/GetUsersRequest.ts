@@ -60,3 +60,26 @@ export interface GetUsersRequest {
     exclude_user: SeedQueryParameters.User | SeedQueryParameters.User[];
     filter: string | string[];
 }
+
+export namespace GetUsersRequest {
+    export namespace _ {
+        export function qs(request: GetUsersRequest): Record<string, unknown> {
+            return {
+                limit: request.limit,
+                id: request.id,
+                date: request.date,
+                deadline: request.deadline,
+                bytes: request.bytes,
+                user: request.user,
+                userList: request.user_list,
+                optionalDeadline: request.optional_deadline,
+                keyValue: request.key_value,
+                optionalString: request.optional_string,
+                nestedUser: request.nested_user,
+                optionalUser: request.optional_user,
+                excludeUser: request.exclude_user,
+                filter: request.filter,
+            };
+        }
+    }
+}

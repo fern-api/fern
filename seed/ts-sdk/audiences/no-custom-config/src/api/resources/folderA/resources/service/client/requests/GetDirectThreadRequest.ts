@@ -11,3 +11,14 @@ export interface GetDirectThreadRequest {
     ids: string | string[];
     tags: string | string[];
 }
+
+export namespace GetDirectThreadRequest {
+    export namespace _ {
+        export function qs(request: GetDirectThreadRequest): Record<string, unknown> {
+            return {
+                ids: request.ids,
+                tags: request.tags,
+            };
+        }
+    }
+}

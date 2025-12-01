@@ -15,3 +15,18 @@ export interface RefreshTokenRequest {
     refreshToken: string;
     scope?: string;
 }
+
+export namespace RefreshTokenRequest {
+    export namespace _ {
+        export function body(request: RefreshTokenRequest): unknown {
+            return {
+                client_id: request.clientId,
+                client_secret: request.clientSecret,
+                refresh_token: request.refreshToken,
+                audience: "https://api.example.com",
+                grant_type: "refresh_token",
+                scope: request.scope,
+            };
+        }
+    }
+}

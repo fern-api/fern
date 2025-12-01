@@ -15,3 +15,14 @@ export interface PostRootRequest {
     bar: SeedObject.RequestTypeInlineType1;
     foo: string;
 }
+
+export namespace PostRootRequest {
+    export namespace _ {
+        export function body(request: PostRootRequest): unknown {
+            return {
+                bar: request.bar,
+                foo: request.foo,
+            };
+        }
+    }
+}

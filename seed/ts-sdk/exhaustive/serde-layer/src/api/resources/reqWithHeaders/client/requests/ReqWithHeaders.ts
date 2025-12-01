@@ -13,3 +13,18 @@ export interface ReqWithHeaders {
     xTestEndpointHeader: string;
     body: string;
 }
+
+export namespace ReqWithHeaders {
+    export namespace _ {
+        export function headers(request: ReqWithHeaders): Record<string, string> {
+            return {
+                "X-TEST-SERVICE-HEADER": request.xTestServiceHeader,
+                "X-TEST-ENDPOINT-HEADER": request.xTestEndpointHeader,
+            };
+        }
+
+        export function body(request: ReqWithHeaders): unknown {
+            return request.body;
+        }
+    }
+}

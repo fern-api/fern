@@ -10,3 +10,13 @@ export interface DeleteUserRequest {
     /** The user to delete. */
     username?: string | null;
 }
+
+export namespace DeleteUserRequest {
+    export namespace _ {
+        export function body(request: DeleteUserRequest): unknown {
+            return {
+                username: request.username,
+            };
+        }
+    }
+}

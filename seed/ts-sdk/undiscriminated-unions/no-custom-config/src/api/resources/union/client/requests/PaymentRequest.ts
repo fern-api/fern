@@ -14,3 +14,13 @@ import type * as SeedUndiscriminatedUnions from "../../../../index.js";
 export interface PaymentRequest {
     paymentMethod: SeedUndiscriminatedUnions.PaymentMethodUnion;
 }
+
+export namespace PaymentRequest {
+    export namespace _ {
+        export function body(request: PaymentRequest): unknown {
+            return {
+                paymentMethod: request.paymentMethod,
+            };
+        }
+    }
+}

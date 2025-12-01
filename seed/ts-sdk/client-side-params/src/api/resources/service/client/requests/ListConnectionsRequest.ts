@@ -16,3 +16,15 @@ export interface ListConnectionsRequest {
     /** Comma-separated list of fields to include */
     fields?: string;
 }
+
+export namespace ListConnectionsRequest {
+    export namespace _ {
+        export function qs(request: ListConnectionsRequest): Record<string, unknown> {
+            return {
+                strategy: request.strategy,
+                name: request.name,
+                fields: request.fields,
+            };
+        }
+    }
+}

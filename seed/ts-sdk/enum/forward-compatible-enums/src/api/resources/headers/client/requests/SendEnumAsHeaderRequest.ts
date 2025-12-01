@@ -17,3 +17,16 @@ export interface SendEnumAsHeaderRequest {
     operandOrColor: SeedEnum.ColorOrOperand;
     maybeOperandOrColor?: SeedEnum.ColorOrOperand;
 }
+
+export namespace SendEnumAsHeaderRequest {
+    export namespace _ {
+        export function headers(request: SendEnumAsHeaderRequest): Record<string, string> {
+            return {
+                operand: request.operand,
+                maybeOperand: request.maybeOperand,
+                operandOrColor: request.operandOrColor,
+                maybeOperandOrColor: request.maybeOperandOrColor,
+            };
+        }
+    }
+}

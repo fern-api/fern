@@ -31,3 +31,20 @@ export interface ListUsersRequest {
     /** Comma-separated list of fields to include or exclude */
     fields?: string;
 }
+
+export namespace ListUsersRequest {
+    export namespace _ {
+        export function qs(request: ListUsersRequest): Record<string, unknown> {
+            return {
+                page: request.page,
+                per_page: request.per_page,
+                include_totals: request.include_totals,
+                sort: request.sort,
+                connection: request.connection,
+                q: request.q,
+                search_engine: request.search_engine,
+                fields: request.fields,
+            };
+        }
+    }
+}

@@ -28,3 +28,16 @@ export interface CreateUserRequest {
     metadata?: SeedNullable.Metadata;
     avatar?: string | null;
 }
+
+export namespace CreateUserRequest {
+    export namespace _ {
+        export function body(request: CreateUserRequest): unknown {
+            return {
+                username: request.username,
+                tags: request.tags,
+                metadata: request.metadata,
+                avatar: request.avatar,
+            };
+        }
+    }
+}

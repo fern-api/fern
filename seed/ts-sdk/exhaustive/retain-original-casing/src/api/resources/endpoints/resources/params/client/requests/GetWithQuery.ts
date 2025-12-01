@@ -11,3 +11,14 @@ export interface GetWithQuery {
     query: string;
     number: number;
 }
+
+export namespace GetWithQuery {
+    export namespace _ {
+        export function qs(request: GetWithQuery): Record<string, unknown> {
+            return {
+                query: request.query,
+                number: request.number,
+            };
+        }
+    }
+}

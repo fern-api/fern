@@ -13,3 +13,13 @@ import type * as SeedExtends from "../../index.js";
 export interface Inlined extends SeedExtends.ExampleType {
     unique: string;
 }
+
+export namespace Inlined {
+    export namespace _ {
+        export function body(request: Inlined): unknown {
+            return {
+                unique: request.unique,
+            };
+        }
+    }
+}

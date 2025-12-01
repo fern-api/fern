@@ -9,3 +9,13 @@
 export interface ListUsersExtendedRequest {
     cursor?: string;
 }
+
+export namespace ListUsersExtendedRequest {
+    export namespace _ {
+        export function qs(request: ListUsersExtendedRequest): Record<string, unknown> {
+            return {
+                cursor: request.cursor,
+            };
+        }
+    }
+}

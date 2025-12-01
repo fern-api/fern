@@ -9,3 +9,13 @@
 export interface TestRequest {
     for: string;
 }
+
+export namespace TestRequest {
+    export namespace _ {
+        export function qs(request: TestRequest): Record<string, unknown> {
+            return {
+                for: request.for,
+            };
+        }
+    }
+}

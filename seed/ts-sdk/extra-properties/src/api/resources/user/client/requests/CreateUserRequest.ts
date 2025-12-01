@@ -13,3 +13,15 @@ export interface CreateUserRequest {
     /** Accepts any additional properties */
     [key: string]: any;
 }
+
+export namespace CreateUserRequest {
+    export namespace _ {
+        export function body(request: CreateUserRequest): unknown {
+            return {
+                _type: "CreateUserRequest",
+                _version: "v1",
+                name: request.name,
+            };
+        }
+    }
+}

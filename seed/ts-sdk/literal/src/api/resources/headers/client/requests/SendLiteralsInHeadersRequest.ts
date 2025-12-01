@@ -9,3 +9,20 @@
 export interface SendLiteralsInHeadersRequest {
     query: string;
 }
+
+export namespace SendLiteralsInHeadersRequest {
+    export namespace _ {
+        export function headers(_request: SendLiteralsInHeadersRequest): Record<string, string> {
+            return {
+                "X-Endpoint-Version": "02-12-2024",
+                "X-Async": "true",
+            };
+        }
+
+        export function body(request: SendLiteralsInHeadersRequest): unknown {
+            return {
+                query: request.query,
+            };
+        }
+    }
+}

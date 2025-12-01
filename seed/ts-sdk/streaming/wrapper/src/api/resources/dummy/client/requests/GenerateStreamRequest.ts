@@ -9,3 +9,14 @@
 export interface GenerateStreamRequest {
     num_events: number;
 }
+
+export namespace GenerateStreamRequest {
+    export namespace _ {
+        export function body(request: GenerateStreamRequest): unknown {
+            return {
+                stream: true,
+                num_events: request.num_events,
+            };
+        }
+    }
+}

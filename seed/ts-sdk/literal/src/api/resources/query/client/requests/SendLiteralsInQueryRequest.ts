@@ -27,3 +27,21 @@ export interface SendLiteralsInQueryRequest {
     alias_stream: SeedLiteral.AliasToStream;
     alias_optional_stream?: SeedLiteral.AliasToStream;
 }
+
+export namespace SendLiteralsInQueryRequest {
+    export namespace _ {
+        export function qs(request: SendLiteralsInQueryRequest): Record<string, unknown> {
+            return {
+                prompt: "You are a helpful assistant",
+                optional_prompt: request.optional_prompt,
+                alias_prompt: "You are a helpful assistant",
+                alias_optional_prompt: request.alias_optional_prompt,
+                query: request.query,
+                stream: false,
+                optional_stream: request.optional_stream,
+                alias_stream: false,
+                alias_optional_stream: request.alias_optional_stream,
+            };
+        }
+    }
+}

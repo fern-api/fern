@@ -11,3 +11,14 @@ export interface ListResourcesRequest {
     page_limit: number;
     beforeDate: string;
 }
+
+export namespace ListResourcesRequest {
+    export namespace _ {
+        export function qs(request: ListResourcesRequest): Record<string, unknown> {
+            return {
+                page_limit: request.page_limit,
+                beforeDate: request.beforeDate,
+            };
+        }
+    }
+}

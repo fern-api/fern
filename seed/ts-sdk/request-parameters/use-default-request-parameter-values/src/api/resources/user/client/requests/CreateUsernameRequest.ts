@@ -15,3 +15,21 @@ export interface CreateUsernameRequest {
     password: string;
     name: string;
 }
+
+export namespace CreateUsernameRequest {
+    export namespace _ {
+        export function qs(request: CreateUsernameRequest): Record<string, unknown> {
+            return {
+                tags: request.tags,
+            };
+        }
+
+        export function body(request: CreateUsernameRequest): unknown {
+            return {
+                username: request.username,
+                password: request.password,
+                name: request.name,
+            };
+        }
+    }
+}

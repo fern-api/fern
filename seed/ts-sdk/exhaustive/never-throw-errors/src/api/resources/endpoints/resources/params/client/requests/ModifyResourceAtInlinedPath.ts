@@ -11,3 +11,11 @@ export interface ModifyResourceAtInlinedPath {
     param: string;
     body: string;
 }
+
+export namespace ModifyResourceAtInlinedPath {
+    export namespace _ {
+        export function body(request: ModifyResourceAtInlinedPath): unknown {
+            return request.body;
+        }
+    }
+}

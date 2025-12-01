@@ -15,3 +15,16 @@ export interface SendEnumInlinedRequest {
     operandOrColor: SeedEnum.ColorOrOperand;
     maybeOperandOrColor?: SeedEnum.ColorOrOperand;
 }
+
+export namespace SendEnumInlinedRequest {
+    export namespace _ {
+        export function body(request: SendEnumInlinedRequest): unknown {
+            return {
+                operand: request.operand,
+                maybeOperand: request.maybeOperand,
+                operandOrColor: request.operandOrColor,
+                maybeOperandOrColor: request.maybeOperandOrColor,
+            };
+        }
+    }
+}

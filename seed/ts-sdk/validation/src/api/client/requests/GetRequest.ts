@@ -13,3 +13,15 @@ export interface GetRequest {
     even: number;
     name: string;
 }
+
+export namespace GetRequest {
+    export namespace _ {
+        export function qs(request: GetRequest): Record<string, unknown> {
+            return {
+                decimal: request.decimal,
+                even: request.even,
+                name: request.name,
+            };
+        }
+    }
+}

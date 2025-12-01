@@ -21,3 +21,15 @@ export interface ListUsersOffsetStepPaginationRequest {
     limit?: number;
     order?: SeedPagination.inlineUsers.Order;
 }
+
+export namespace ListUsersOffsetStepPaginationRequest {
+    export namespace _ {
+        export function qs(request: ListUsersOffsetStepPaginationRequest): Record<string, unknown> {
+            return {
+                page: request.page,
+                limit: request.limit,
+                order: request.order,
+            };
+        }
+    }
+}

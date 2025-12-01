@@ -17,3 +17,13 @@ export interface ListUsersBodyOffsetPaginationRequest {
      */
     pagination?: SeedPagination.WithPage;
 }
+
+export namespace ListUsersBodyOffsetPaginationRequest {
+    export namespace _ {
+        export function body(request: ListUsersBodyOffsetPaginationRequest): unknown {
+            return {
+                pagination: request.pagination,
+            };
+        }
+    }
+}

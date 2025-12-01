@@ -17,3 +17,17 @@ export interface OptionalMergePatchRequest {
     optionalBoolean?: boolean;
     nullableString: string | null;
 }
+
+export namespace OptionalMergePatchRequest {
+    export namespace _ {
+        export function body(request: OptionalMergePatchRequest): unknown {
+            return {
+                requiredField: request.requiredField,
+                optionalString: request.optionalString,
+                optionalInteger: request.optionalInteger,
+                optionalBoolean: request.optionalBoolean,
+                nullableString: request.nullableString,
+            };
+        }
+    }
+}

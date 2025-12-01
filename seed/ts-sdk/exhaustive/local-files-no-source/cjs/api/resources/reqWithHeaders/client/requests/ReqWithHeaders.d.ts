@@ -11,3 +11,9 @@ export interface ReqWithHeaders {
     "X-TEST-ENDPOINT-HEADER": string;
     body: string;
 }
+export declare namespace ReqWithHeaders {
+    namespace _ {
+        function headers(request: ReqWithHeaders): Record<string, string>;
+        function body(request: ReqWithHeaders): unknown;
+    }
+}

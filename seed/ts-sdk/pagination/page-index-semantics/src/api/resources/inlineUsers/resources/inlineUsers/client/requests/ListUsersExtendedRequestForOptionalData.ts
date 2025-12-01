@@ -9,3 +9,13 @@
 export interface ListUsersExtendedRequestForOptionalData {
     cursor?: string;
 }
+
+export namespace ListUsersExtendedRequestForOptionalData {
+    export namespace _ {
+        export function qs(request: ListUsersExtendedRequestForOptionalData): Record<string, unknown> {
+            return {
+                cursor: request.cursor,
+            };
+        }
+    }
+}

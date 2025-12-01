@@ -35,3 +35,22 @@ export interface PatchComplexRequest {
     profileImageUrl?: string | null;
     settings?: Record<string, unknown> | null;
 }
+
+export namespace PatchComplexRequest {
+    export namespace _ {
+        export function body(request: PatchComplexRequest): unknown {
+            return {
+                name: request.name,
+                age: request.age,
+                active: request.active,
+                metadata: request.metadata,
+                tags: request.tags,
+                email: request.email,
+                nickname: request.nickname,
+                bio: request.bio,
+                profileImageUrl: request.profileImageUrl,
+                settings: request.settings,
+            };
+        }
+    }
+}

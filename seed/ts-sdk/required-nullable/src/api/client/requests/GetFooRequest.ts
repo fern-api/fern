@@ -17,3 +17,16 @@ export interface GetFooRequest {
     /** A required baz */
     required_nullable_baz: string | null;
 }
+
+export namespace GetFooRequest {
+    export namespace _ {
+        export function qs(request: GetFooRequest): Record<string, unknown> {
+            return {
+                optional_baz: request.optional_baz,
+                optional_nullable_baz: request.optional_nullable_baz,
+                required_baz: request.required_baz,
+                required_nullable_baz: request.required_nullable_baz,
+            };
+        }
+    }
+}

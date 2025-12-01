@@ -12,3 +12,13 @@ import type * as SeedAliasExtends from "../../index.js";
 export interface InlinedChildRequest extends SeedAliasExtends.AliasType {
     child: string;
 }
+
+export namespace InlinedChildRequest {
+    export namespace _ {
+        export function body(request: InlinedChildRequest): unknown {
+            return {
+                child: request.child,
+            };
+        }
+    }
+}

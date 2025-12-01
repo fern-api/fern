@@ -9,3 +9,13 @@
 export interface StreamCompletionRequest {
     query: string;
 }
+
+export namespace StreamCompletionRequest {
+    export namespace _ {
+        export function body(request: StreamCompletionRequest): unknown {
+            return {
+                query: request.query,
+            };
+        }
+    }
+}

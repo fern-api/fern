@@ -13,3 +13,14 @@ export interface CreatePaymentRequest {
     amount: number;
     currency: SeedIdempotencyHeaders.Currency;
 }
+
+export namespace CreatePaymentRequest {
+    export namespace _ {
+        export function body(request: CreatePaymentRequest): unknown {
+            return {
+                amount: request.amount,
+                currency: request.currency,
+            };
+        }
+    }
+}

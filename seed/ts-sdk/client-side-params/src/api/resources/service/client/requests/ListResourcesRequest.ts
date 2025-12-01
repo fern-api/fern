@@ -28,3 +28,19 @@ export interface ListResourcesRequest {
     /** Search query */
     search?: string;
 }
+
+export namespace ListResourcesRequest {
+    export namespace _ {
+        export function qs(request: ListResourcesRequest): Record<string, unknown> {
+            return {
+                page: request.page,
+                per_page: request.per_page,
+                sort: request.sort,
+                order: request.order,
+                include_totals: request.include_totals,
+                fields: request.fields,
+                search: request.search,
+            };
+        }
+    }
+}

@@ -11,3 +11,14 @@ export interface GenerateRequest {
     stream: boolean;
     num_events: number;
 }
+
+export namespace GenerateRequest {
+    export namespace _ {
+        export function body(request: GenerateRequest): unknown {
+            return {
+                stream: request.stream,
+                num_events: request.num_events,
+            };
+        }
+    }
+}

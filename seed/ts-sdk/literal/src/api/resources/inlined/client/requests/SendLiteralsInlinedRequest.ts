@@ -23,3 +23,20 @@ export interface SendLiteralsInlinedRequest {
     maybeContext?: SeedLiteral.SomeAliasedLiteral;
     objectWithLiteral: SeedLiteral.ATopLevelLiteral;
 }
+
+export namespace SendLiteralsInlinedRequest {
+    export namespace _ {
+        export function body(request: SendLiteralsInlinedRequest): unknown {
+            return {
+                prompt: "You are a helpful assistant",
+                context: request.context,
+                query: request.query,
+                temperature: request.temperature,
+                stream: false,
+                aliasedContext: "You're super wise",
+                maybeContext: request.maybeContext,
+                objectWithLiteral: request.objectWithLiteral,
+            };
+        }
+    }
+}

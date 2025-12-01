@@ -11,3 +11,15 @@ export interface GetTokenRequest {
     client_id: string;
     client_secret: string;
 }
+
+export namespace GetTokenRequest {
+    export namespace _ {
+        export function body(request: GetTokenRequest): unknown {
+            return {
+                client_id: request.client_id,
+                client_secret: request.client_secret,
+                grant_type: "client_credentials",
+            };
+        }
+    }
+}

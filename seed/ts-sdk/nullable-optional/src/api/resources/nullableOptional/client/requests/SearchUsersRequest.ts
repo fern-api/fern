@@ -15,3 +15,16 @@ export interface SearchUsersRequest {
     role?: string;
     isActive?: boolean | null;
 }
+
+export namespace SearchUsersRequest {
+    export namespace _ {
+        export function qs(request: SearchUsersRequest): Record<string, unknown> {
+            return {
+                query: request.query,
+                department: request.department,
+                role: request.role,
+                isActive: request.isActive,
+            };
+        }
+    }
+}
