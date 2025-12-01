@@ -98,6 +98,23 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
             );
         }
 
+        // Add field for InferredAuthProvider if inferred auth is configured
+        const inferredAuth = this.context.getInferredAuth();
+        if (inferredAuth != null) {
+            class_.addField(
+                php.field({
+                    name: "$inferredAuthProvider",
+                    access: "private",
+                    type: php.Type.reference(
+                        php.classReference({
+                            name: "InferredAuthProvider",
+                            namespace: this.context.getCoreNamespace()
+                        })
+                    )
+                })
+            );
+        }
+
         const subpackages = this.getRootSubpackages();
         const constructorParameters = this.getConstructorParameters();
         class_.addConstructor(
@@ -126,6 +143,11 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
 
         if (constructorParameters.optional.some((parameter) => parameter.environmentVariable != null)) {
             class_.addMethod(this.getFromEnvOrThrowMethod());
+        }
+
+        // Add getAuthHeaders method if inferred auth is configured
+        if (inferredAuth != null) {
+            class_.addMethod(this.getAuthHeadersMethod());
         }
 
         return this.newRootClientFile(class_);
@@ -365,9 +387,13 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                     writer.writeLine("$defaultHeaders['Authorization'] = \"Bearer $token\";");
                 }
 
+                // For inferred auth, store a callable that returns fresh auth headers on each request.
+                // This implements the "refreshable header" pattern similar to Java's Supplier<String>.
                 const inferredAuthScheme = this.context.getInferredAuth();
                 if (inferredAuthScheme != null) {
-                    writer.writeLine("$defaultHeaders = array_merge($defaultHeaders, $authHeaders);");
+                    writer.writeLine(
+                        "$this->options['authHeadersSupplier'] = fn() => $this->inferredAuthProvider->getAuthHeaders();"
+                    );
                 }
 
                 // Update client options with the updated headers
@@ -451,6 +477,19 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
                 writer.write("return $value ? (string) $value : throw new ");
                 writer.writeNode(this.context.getExceptionClassReference());
                 writer.writeTextStatement("($message)");
+            })
+        });
+    }
+
+    private getAuthHeadersMethod(): php.Method {
+        return php.method({
+            access: "public",
+            name: "getAuthHeaders",
+            return_: php.Type.map(php.Type.string(), php.Type.string()),
+            parameters: [],
+            docs: "Returns the authentication headers to be included in requests.\nThis method retrieves fresh tokens from the InferredAuthProvider on each call.",
+            body: php.codeblock((writer) => {
+                writer.writeLine("return $this->inferredAuthProvider->getAuthHeaders();");
             })
         });
     }
@@ -879,11 +918,9 @@ export class RootClientGenerator extends FileGenerator<PhpFile, SdkCustomConfigS
         writer.dedent();
         writer.writeLine("];");
 
-        writer.write("$inferredAuthProvider = new ");
+        writer.write("$this->inferredAuthProvider = new ");
         writer.writeNode(inferredAuthProviderClassReference);
         writer.writeLine("($authClient, $inferredAuthOptions);");
-
-        writer.writeLine("$authHeaders = $inferredAuthProvider->getAuthHeaders();");
         writer.writeLine();
     }
 
