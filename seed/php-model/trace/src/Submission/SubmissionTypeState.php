@@ -42,17 +42,16 @@ class SubmissionTypeState extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    ) {
-        $this->type = $values['type'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->type = $values['type'];$this->value = $values['value'];
     }
 
     /**
      * @param TestSubmissionState $test
      * @return SubmissionTypeState
      */
-    public static function test(TestSubmissionState $test): SubmissionTypeState
-    {
+    public static function test(TestSubmissionState $test): SubmissionTypeState {
         return new SubmissionTypeState([
             'type' => 'test',
             'value' => $test,
@@ -63,8 +62,7 @@ class SubmissionTypeState extends JsonSerializableType
      * @param WorkspaceSubmissionState $workspace
      * @return SubmissionTypeState
      */
-    public static function workspace(WorkspaceSubmissionState $workspace): SubmissionTypeState
-    {
+    public static function workspace(WorkspaceSubmissionState $workspace): SubmissionTypeState {
         return new SubmissionTypeState([
             'type' => 'workspace',
             'value' => $workspace,
@@ -74,67 +72,61 @@ class SubmissionTypeState extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isTest(): bool
-    {
-        return $this->value instanceof TestSubmissionState && $this->type === 'test';
+    public function isTest(): bool {
+        return $this->value instanceof TestSubmissionState&& $this->type === 'test';
     }
 
     /**
      * @return TestSubmissionState
      */
-    public function asTest(): TestSubmissionState
-    {
-        if (!($this->value instanceof TestSubmissionState && $this->type === 'test')) {
+    public function asTest(): TestSubmissionState {
+        if (!($this->value instanceof TestSubmissionState&& $this->type === 'test')){
             throw new Exception(
                 "Expected test; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isWorkspace(): bool
-    {
-        return $this->value instanceof WorkspaceSubmissionState && $this->type === 'workspace';
+    public function isWorkspace(): bool {
+        return $this->value instanceof WorkspaceSubmissionState&& $this->type === 'workspace';
     }
 
     /**
      * @return WorkspaceSubmissionState
      */
-    public function asWorkspace(): WorkspaceSubmissionState
-    {
-        if (!($this->value instanceof WorkspaceSubmissionState && $this->type === 'workspace')) {
+    public function asWorkspace(): WorkspaceSubmissionState {
+        if (!($this->value instanceof WorkspaceSubmissionState&& $this->type === 'workspace')){
             throw new Exception(
                 "Expected workspace; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $result = [];
         $result['type'] = $this->type;
-
+        
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-
-        switch ($this->type) {
+        
+        switch ($this->type){
             case 'test':
                 $value = $this->asTest()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -145,27 +137,26 @@ class SubmissionTypeState extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)) {
+                if (is_null($this->value)){
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType) {
+                if ($this->value instanceof JsonSerializableType){
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)) {
+                } elseif (is_array($this->value)){
                     $result = array_merge($this->value, $result);
                 }
         }
-
+        
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static
-    {
+    public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
+        if (!is_array($decodedJson)){
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -174,23 +165,22 @@ class SubmissionTypeState extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static
-    {
+    public static function jsonDeserialize(array $data): static {
         $args = [];
-        if (!array_key_exists('type', $data)) {
+        if (!array_key_exists('type', $data)){
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))) {
+        if (!(is_string($type))){
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-
+        
         $args['type'] = $type;
-        switch ($type) {
+        switch ($type){
             case 'test':
                 $args['value'] = TestSubmissionState::jsonDeserialize($data);
                 break;
@@ -202,7 +192,7 @@ class SubmissionTypeState extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-
+        
         // @phpstan-ignore-next-line
         return new static($args);
     }

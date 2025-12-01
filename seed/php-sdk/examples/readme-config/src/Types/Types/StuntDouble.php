@@ -27,16 +27,15 @@ class StuntDouble extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->name = $values['name'];
-        $this->actorOrActressId = $values['actorOrActressId'];
+    )
+    {
+        $this->name = $values['name'];$this->actorOrActressId = $values['actorOrActressId'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

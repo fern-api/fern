@@ -1,7 +1,7 @@
 <?php
 
-namespace Fern\Core\Multipart;
 
+namespace Fern\Core\Multipart;
 use Fern\Core\Client\BaseApiRequest;
 use Fern\Core\Client\HttpMethod;
 
@@ -22,7 +22,8 @@ class MultipartApiRequest extends BaseApiRequest
         array $headers = [],
         array $query = [],
         public readonly ?MultipartFormData $body = null
-    ) {
+    )
+    {
         parent::__construct($baseUrl, $path, $method, $headers, $query);
     }
 }

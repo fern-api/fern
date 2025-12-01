@@ -151,33 +151,15 @@ class ComplexProfile extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->nullableRole = $values['nullableRole'] ?? null;
-        $this->optionalRole = $values['optionalRole'] ?? null;
-        $this->optionalNullableRole = $values['optionalNullableRole'] ?? null;
-        $this->nullableStatus = $values['nullableStatus'] ?? null;
-        $this->optionalStatus = $values['optionalStatus'] ?? null;
-        $this->optionalNullableStatus = $values['optionalNullableStatus'] ?? null;
-        $this->nullableNotification = $values['nullableNotification'] ?? null;
-        $this->optionalNotification = $values['optionalNotification'] ?? null;
-        $this->optionalNullableNotification = $values['optionalNullableNotification'] ?? null;
-        $this->nullableSearchResult = $values['nullableSearchResult'] ?? null;
-        $this->optionalSearchResult = $values['optionalSearchResult'] ?? null;
-        $this->nullableArray = $values['nullableArray'] ?? null;
-        $this->optionalArray = $values['optionalArray'] ?? null;
-        $this->optionalNullableArray = $values['optionalNullableArray'] ?? null;
-        $this->nullableListOfNullables = $values['nullableListOfNullables'] ?? null;
-        $this->nullableMapOfNullables = $values['nullableMapOfNullables'] ?? null;
-        $this->nullableListOfUnions = $values['nullableListOfUnions'] ?? null;
-        $this->optionalMapOfEnums = $values['optionalMapOfEnums'] ?? null;
+    )
+    {
+        $this->id = $values['id'];$this->nullableRole = $values['nullableRole'] ?? null;$this->optionalRole = $values['optionalRole'] ?? null;$this->optionalNullableRole = $values['optionalNullableRole'] ?? null;$this->nullableStatus = $values['nullableStatus'] ?? null;$this->optionalStatus = $values['optionalStatus'] ?? null;$this->optionalNullableStatus = $values['optionalNullableStatus'] ?? null;$this->nullableNotification = $values['nullableNotification'] ?? null;$this->optionalNotification = $values['optionalNotification'] ?? null;$this->optionalNullableNotification = $values['optionalNullableNotification'] ?? null;$this->nullableSearchResult = $values['nullableSearchResult'] ?? null;$this->optionalSearchResult = $values['optionalSearchResult'] ?? null;$this->nullableArray = $values['nullableArray'] ?? null;$this->optionalArray = $values['optionalArray'] ?? null;$this->optionalNullableArray = $values['optionalNullableArray'] ?? null;$this->nullableListOfNullables = $values['nullableListOfNullables'] ?? null;$this->nullableMapOfNullables = $values['nullableMapOfNullables'] ?? null;$this->nullableListOfUnions = $values['nullableListOfUnions'] ?? null;$this->optionalMapOfEnums = $values['optionalMapOfEnums'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

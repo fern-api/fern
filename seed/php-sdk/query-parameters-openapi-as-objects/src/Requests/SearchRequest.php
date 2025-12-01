@@ -131,22 +131,8 @@ class SearchRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->limit = $values['limit'];
-        $this->id = $values['id'];
-        $this->date = $values['date'];
-        $this->deadline = $values['deadline'];
-        $this->bytes = $values['bytes'];
-        $this->user = $values['user'];
-        $this->userList = $values['userList'] ?? null;
-        $this->optionalDeadline = $values['optionalDeadline'] ?? null;
-        $this->keyValue = $values['keyValue'] ?? null;
-        $this->optionalString = $values['optionalString'] ?? null;
-        $this->nestedUser = $values['nestedUser'] ?? null;
-        $this->optionalUser = $values['optionalUser'] ?? null;
-        $this->excludeUser = $values['excludeUser'] ?? null;
-        $this->filter = $values['filter'] ?? null;
-        $this->neighbor = $values['neighbor'] ?? null;
-        $this->neighborRequired = $values['neighborRequired'];
+    )
+    {
+        $this->limit = $values['limit'];$this->id = $values['id'];$this->date = $values['date'];$this->deadline = $values['deadline'];$this->bytes = $values['bytes'];$this->user = $values['user'];$this->userList = $values['userList'] ?? null;$this->optionalDeadline = $values['optionalDeadline'] ?? null;$this->keyValue = $values['keyValue'] ?? null;$this->optionalString = $values['optionalString'] ?? null;$this->nestedUser = $values['nestedUser'] ?? null;$this->optionalUser = $values['optionalUser'] ?? null;$this->excludeUser = $values['excludeUser'] ?? null;$this->filter = $values['filter'] ?? null;$this->neighbor = $values['neighbor'] ?? null;$this->neighborRequired = $values['neighborRequired'];
     }
 }

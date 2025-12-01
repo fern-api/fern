@@ -43,10 +43,8 @@ class MultipartFormRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->color = $values['color'];
-        $this->maybeColor = $values['maybeColor'] ?? null;
-        $this->colorList = $values['colorList'];
-        $this->maybeColorList = $values['maybeColorList'] ?? null;
+    )
+    {
+        $this->color = $values['color'];$this->maybeColor = $values['maybeColor'] ?? null;$this->colorList = $values['colorList'];$this->maybeColorList = $values['maybeColorList'] ?? null;
     }
 }

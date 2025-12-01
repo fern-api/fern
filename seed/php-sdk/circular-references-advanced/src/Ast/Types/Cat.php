@@ -14,7 +14,7 @@ class Cat extends JsonSerializableType
      *   |Fig
      * ) $fruit
      */
-    #[JsonProperty('fruit'), Union(Acai::class, Fig::class)]
+    #[JsonProperty('fruit'), Union(Acai::class,Fig::class)]
     public Acai|Fig $fruit;
 
     /**
@@ -27,15 +27,15 @@ class Cat extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->fruit = $values['fruit'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

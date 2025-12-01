@@ -27,16 +27,15 @@ class MyObjectWithOptional extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->prop = $values['prop'];
-        $this->optionalProp = $values['optionalProp'] ?? null;
+    )
+    {
+        $this->prop = $values['prop'];$this->optionalProp = $values['optionalProp'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

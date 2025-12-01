@@ -2,8 +2,8 @@
 
 namespace Seed\Complex;
 
-enum SingleFilterSearchRequestOperator: string
-{
+enum SingleFilterSearchRequestOperator
+ : string {
     case Equals = "=";
     case NotEquals = "!=";
     case In = "IN";

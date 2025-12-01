@@ -9,7 +9,7 @@ use Seed\Core\Json\JsonProperty;
  * @property UserOptionalListContainer $data
  * @property ?string $next
  */
-trait UserOptionalListPage
+trait UserOptionalListPage 
 {
     /**
      * @var UserOptionalListContainer $data

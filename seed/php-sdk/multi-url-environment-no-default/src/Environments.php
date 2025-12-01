@@ -5,7 +5,7 @@ namespace Seed;
 /**
  * Represents the available environments for the API with multiple base URLs.
  */
-class Environments
+class Environments 
 {
     /**
      * @var string $ec2
@@ -24,7 +24,8 @@ class Environments
     private function __construct(
         string $ec2,
         string $s3,
-    ) {
+    )
+    {
         $this->ec2 = $ec2;
         $this->s3 = $s3;
     }
@@ -34,8 +35,7 @@ class Environments
      *
      * @return Environments
      */
-    public static function Production(): Environments
-    {
+    public static function Production(): Environments {
         return new self(
             ec2: 'https://ec2.aws.com',
             s3: 'https://s3.aws.com'
@@ -47,8 +47,7 @@ class Environments
      *
      * @return Environments
      */
-    public static function Staging(): Environments
-    {
+    public static function Staging(): Environments {
         return new self(
             ec2: 'https://staging.ec2.aws.com',
             s3: 'https://staging.s3.aws.com'
@@ -62,8 +61,7 @@ class Environments
      * @param string $s3 The s3 base URL
      * @return Environments
      */
-    public static function custom(string $ec2, string $s3): Environments
-    {
+    public static function custom(string $ec2, string $s3): Environments {
         return new self(
             ec2: $ec2,
             s3: $s3

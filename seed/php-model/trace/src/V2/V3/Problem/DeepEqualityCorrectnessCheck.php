@@ -20,15 +20,15 @@ class DeepEqualityCorrectnessCheck extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->expectedValueParameterId = $values['expectedValueParameterId'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

@@ -40,10 +40,8 @@ class UpdateFooRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->xIdempotencyKey = $values['xIdempotencyKey'];
-        $this->nullableText = $values['nullableText'] ?? null;
-        $this->nullableNumber = $values['nullableNumber'] ?? null;
-        $this->nonNullableText = $values['nonNullableText'] ?? null;
+    )
+    {
+        $this->xIdempotencyKey = $values['xIdempotencyKey'];$this->nullableText = $values['nullableText'] ?? null;$this->nullableNumber = $values['nullableNumber'] ?? null;$this->nonNullableText = $values['nonNullableText'] ?? null;
     }
 }

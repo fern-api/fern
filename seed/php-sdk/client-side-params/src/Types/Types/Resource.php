@@ -58,20 +58,15 @@ class Resource extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->name = $values['name'];
-        $this->description = $values['description'] ?? null;
-        $this->createdAt = $values['createdAt'];
-        $this->updatedAt = $values['updatedAt'];
-        $this->metadata = $values['metadata'] ?? null;
+    )
+    {
+        $this->id = $values['id'];$this->name = $values['name'];$this->description = $values['description'] ?? null;$this->createdAt = $values['createdAt'];$this->updatedAt = $values['updatedAt'];$this->metadata = $values['metadata'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

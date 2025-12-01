@@ -35,17 +35,15 @@ class StackFrame extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->methodName = $values['methodName'];
-        $this->lineNumber = $values['lineNumber'];
-        $this->scopes = $values['scopes'];
+    )
+    {
+        $this->methodName = $values['methodName'];$this->lineNumber = $values['lineNumber'];$this->scopes = $values['scopes'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

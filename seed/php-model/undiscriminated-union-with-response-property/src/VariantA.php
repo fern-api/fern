@@ -27,16 +27,15 @@ class VariantA extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->type = $values['type'];
-        $this->valueA = $values['valueA'];
+    )
+    {
+        $this->type = $values['type'];$this->valueA = $values['valueA'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

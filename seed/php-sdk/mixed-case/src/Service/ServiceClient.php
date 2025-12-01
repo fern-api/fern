@@ -13,10 +13,10 @@ use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Service\Requests\ListResourcesRequest;
-use Seed\Core\Types\Constant;
+use Seed\Core\Json\JsonSerializer;
 use Seed\Core\Json\JsonDecoder;
 
-class ServiceClient
+class ServiceClient 
 {
     /**
      * @var array{
@@ -25,7 +25,7 @@ class ServiceClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -44,10 +44,11 @@ class ServiceClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -66,8 +67,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getResource(string $resourceId, ?array $options = null): Resource
-    {
+    public function getResource(string $resourceId, ?array $options = null): Resource {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -79,15 +79,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return Resource::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -119,12 +119,11 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listResources(ListResourcesRequest $request, ?array $options = null): array
-    {
+    public function listResources(ListResourcesRequest $request, ?array $options = null): array {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         $query['page_limit'] = $request->pageLimit;
-        $query['beforeDate'] = $request->beforeDate->format(Constant::DateFormat);
+        $query['beforeDate'] = JsonSerializer::serializeDate($request->beforeDate);
         try {
             $response = $this->client->sendRequest(
                 new JsonApiRequest(
@@ -136,15 +135,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeArray($json, [Resource::class]); // @phpstan-ignore-line
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

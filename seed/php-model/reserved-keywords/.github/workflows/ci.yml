@@ -27,7 +27,7 @@ jobs:
         run: |
           composer analyze
 
-  unit-tests:
+  test:
     runs-on: ubuntu-latest
 
     steps:

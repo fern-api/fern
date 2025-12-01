@@ -36,17 +36,15 @@ class GeneratedFiles extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->generatedTestCaseFiles = $values['generatedTestCaseFiles'];
-        $this->generatedTemplateFiles = $values['generatedTemplateFiles'];
-        $this->other = $values['other'];
+    )
+    {
+        $this->generatedTestCaseFiles = $values['generatedTestCaseFiles'];$this->generatedTemplateFiles = $values['generatedTemplateFiles'];$this->other = $values['other'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

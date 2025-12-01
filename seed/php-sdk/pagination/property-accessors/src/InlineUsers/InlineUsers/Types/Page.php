@@ -41,86 +41,63 @@ class Page extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->page = $values['page'];
-        $this->next = $values['next'] ?? null;
-        $this->perPage = $values['perPage'];
-        $this->totalPage = $values['totalPage'];
+    )
+    {
+        $this->page = $values['page'];$this->next = $values['next'] ?? null;$this->perPage = $values['perPage'];$this->totalPage = $values['totalPage'];
     }
 
     /**
      * @return int
      */
-    public function getPage(): int
-    {
-        return $this->page;
-    }
+    public function getPage(): int {
+        return $this->page;}
 
     /**
      * @param int $value
      */
-    public function setPage(int $value): self
-    {
-        $this->page = $value;
-        return $this;
-    }
+    public function setPage(int $value): self {
+        $this->page = $value;return $this;}
 
     /**
      * @return ?NextPage
      */
-    public function getNext(): ?NextPage
-    {
-        return $this->next;
-    }
+    public function getNext(): ?NextPage {
+        return $this->next;}
 
     /**
      * @param ?NextPage $value
      */
-    public function setNext(?NextPage $value = null): self
-    {
-        $this->next = $value;
-        return $this;
-    }
+    public function setNext(?NextPage $value = null): self {
+        $this->next = $value;return $this;}
 
     /**
      * @return int
      */
-    public function getPerPage(): int
-    {
-        return $this->perPage;
-    }
+    public function getPerPage(): int {
+        return $this->perPage;}
 
     /**
      * @param int $value
      */
-    public function setPerPage(int $value): self
-    {
-        $this->perPage = $value;
-        return $this;
-    }
+    public function setPerPage(int $value): self {
+        $this->perPage = $value;return $this;}
 
     /**
      * @return int
      */
-    public function getTotalPage(): int
-    {
-        return $this->totalPage;
-    }
+    public function getTotalPage(): int {
+        return $this->totalPage;}
 
     /**
      * @param int $value
      */
-    public function setTotalPage(int $value): self
-    {
-        $this->totalPage = $value;
-        return $this;
-    }
+    public function setTotalPage(int $value): self {
+        $this->totalPage = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

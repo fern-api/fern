@@ -27,8 +27,8 @@ class PostSubmitRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->username = $values['username'];
-        $this->email = $values['email'];
+    )
+    {
+        $this->username = $values['username'];$this->email = $values['email'];
     }
 }

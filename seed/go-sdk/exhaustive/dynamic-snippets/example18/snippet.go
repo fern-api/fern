@@ -19,11 +19,11 @@ func do() {
         ),
     )
     request := &types.NestedObjectWithOptionalField{
-        String: fern.String(
+        FieldString: fern.String(
             "string",
         ),
         NestedObject: &types.ObjectWithOptionalField{
-            String: fern.String(
+            FieldString: fern.String(
                 "string",
             ),
             Integer: fern.Int(

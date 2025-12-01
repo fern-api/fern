@@ -30,9 +30,8 @@ class ListConnectionsRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->strategy = $values['strategy'] ?? null;
-        $this->name = $values['name'] ?? null;
-        $this->fields = $values['fields'] ?? null;
+    )
+    {
+        $this->strategy = $values['strategy'] ?? null;$this->name = $values['name'] ?? null;$this->fields = $values['fields'] ?? null;
     }
 }

@@ -17,7 +17,7 @@ class BigEntity extends JsonSerializableType
      *   |StuntDouble
      * )|null $castMember
      */
-    #[JsonProperty('castMember'), Union(Actor::class, Actress::class, StuntDouble::class, 'null')]
+    #[JsonProperty('castMember'), Union(Actor::class,Actress::class,StuntDouble::class,'null')]
     public Actor|Actress|StuntDouble|null $castMember;
 
     /**
@@ -115,27 +115,15 @@ class BigEntity extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->castMember = $values['castMember'] ?? null;
-        $this->extendedMovie = $values['extendedMovie'] ?? null;
-        $this->entity = $values['entity'] ?? null;
-        $this->metadata = $values['metadata'] ?? null;
-        $this->commonMetadata = $values['commonMetadata'] ?? null;
-        $this->eventInfo = $values['eventInfo'] ?? null;
-        $this->data = $values['data'] ?? null;
-        $this->migration = $values['migration'] ?? null;
-        $this->exception = $values['exception'] ?? null;
-        $this->test = $values['test'] ?? null;
-        $this->node = $values['node'] ?? null;
-        $this->directory = $values['directory'] ?? null;
-        $this->moment = $values['moment'] ?? null;
+    )
+    {
+        $this->castMember = $values['castMember'] ?? null;$this->extendedMovie = $values['extendedMovie'] ?? null;$this->entity = $values['entity'] ?? null;$this->metadata = $values['metadata'] ?? null;$this->commonMetadata = $values['commonMetadata'] ?? null;$this->eventInfo = $values['eventInfo'] ?? null;$this->data = $values['data'] ?? null;$this->migration = $values['migration'] ?? null;$this->exception = $values['exception'] ?? null;$this->test = $values['test'] ?? null;$this->node = $values['node'] ?? null;$this->directory = $values['directory'] ?? null;$this->moment = $values['moment'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

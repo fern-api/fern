@@ -1,7 +1,7 @@
 <?php
 
-namespace Seed\Core\Multipart;
 
+namespace Seed\Core\Multipart;
 use Seed\Core\Client\BaseApiRequest;
 use Seed\Core\Client\HttpMethod;
 
@@ -22,7 +22,8 @@ class MultipartApiRequest extends BaseApiRequest
         array $headers = [],
         array $query = [],
         public readonly ?MultipartFormData $body = null
-    ) {
+    )
+    {
         parent::__construct($baseUrl, $path, $method, $headers, $query);
     }
 }

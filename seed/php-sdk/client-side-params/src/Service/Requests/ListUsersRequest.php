@@ -60,14 +60,8 @@ class ListUsersRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->page = $values['page'] ?? null;
-        $this->perPage = $values['perPage'] ?? null;
-        $this->includeTotals = $values['includeTotals'] ?? null;
-        $this->sort = $values['sort'] ?? null;
-        $this->connection = $values['connection'] ?? null;
-        $this->q = $values['q'] ?? null;
-        $this->searchEngine = $values['searchEngine'] ?? null;
-        $this->fields = $values['fields'] ?? null;
+    )
+    {
+        $this->page = $values['page'] ?? null;$this->perPage = $values['perPage'] ?? null;$this->includeTotals = $values['includeTotals'] ?? null;$this->sort = $values['sort'] ?? null;$this->connection = $values['connection'] ?? null;$this->q = $values['q'] ?? null;$this->searchEngine = $values['searchEngine'] ?? null;$this->fields = $values['fields'] ?? null;
     }
 }

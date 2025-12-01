@@ -15,12 +15,12 @@ pub enum VariableType {
 
         ListType {
             #[serde(flatten)]
-            data: ListType,
+            data: Box<ListType>,
         },
 
         MapType {
             #[serde(flatten)]
-            data: MapType,
+            data: Box<MapType>,
         },
 
         BinaryTreeType,

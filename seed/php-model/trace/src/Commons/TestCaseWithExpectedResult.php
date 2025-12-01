@@ -27,16 +27,15 @@ class TestCaseWithExpectedResult extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->testCase = $values['testCase'];
-        $this->expectedResult = $values['expectedResult'];
+    )
+    {
+        $this->testCase = $values['testCase'];$this->expectedResult = $values['expectedResult'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

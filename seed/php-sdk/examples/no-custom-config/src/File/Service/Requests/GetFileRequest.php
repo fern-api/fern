@@ -18,7 +18,8 @@ class GetFileRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->xFileApiVersion = $values['xFileApiVersion'];
     }
 }

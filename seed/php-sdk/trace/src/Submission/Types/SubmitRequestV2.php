@@ -57,20 +57,15 @@ class SubmitRequestV2 extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->submissionId = $values['submissionId'];
-        $this->language = $values['language'];
-        $this->submissionFiles = $values['submissionFiles'];
-        $this->problemId = $values['problemId'];
-        $this->problemVersion = $values['problemVersion'] ?? null;
-        $this->userId = $values['userId'] ?? null;
+    )
+    {
+        $this->submissionId = $values['submissionId'];$this->language = $values['language'];$this->submissionFiles = $values['submissionFiles'];$this->problemId = $values['problemId'];$this->problemVersion = $values['problemVersion'] ?? null;$this->userId = $values['userId'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

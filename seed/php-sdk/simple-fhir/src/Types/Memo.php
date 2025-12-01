@@ -27,16 +27,15 @@ class Memo extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->description = $values['description'];
-        $this->account = $values['account'] ?? null;
+    )
+    {
+        $this->description = $values['description'];$this->account = $values['account'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

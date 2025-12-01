@@ -27,16 +27,15 @@ class StreamedCompletion extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->delta = $values['delta'];
-        $this->tokens = $values['tokens'] ?? null;
+    )
+    {
+        $this->delta = $values['delta'];$this->tokens = $values['tokens'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

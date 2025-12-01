@@ -28,16 +28,15 @@ class Metadata extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->data = $values['data'] ?? null;
+    )
+    {
+        $this->id = $values['id'];$this->data = $values['data'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

@@ -25,8 +25,8 @@ class CreateUsernameReferencedRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->tags = $values['tags'];
-        $this->body = $values['body'];
+    )
+    {
+        $this->tags = $values['tags'];$this->body = $values['body'];
     }
 }

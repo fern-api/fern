@@ -19,7 +19,7 @@ use Seed\Types\Types\BigEntity;
 use Seed\Types\Types\Response;
 use Seed\Types\Types\RefreshTokenRequest;
 
-class ServiceClient
+class ServiceClient 
 {
     /**
      * @var array{
@@ -28,7 +28,7 @@ class ServiceClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -47,10 +47,11 @@ class ServiceClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -69,8 +70,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMovie(string $movieId, ?array $options = null): Movie
-    {
+    public function getMovie(string $movieId, ?array $options = null): Movie {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -82,15 +82,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return Movie::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -122,8 +122,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createMovie(Movie $request, ?array $options = null): string
-    {
+    public function createMovie(Movie $request, ?array $options = null): string {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -136,15 +135,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeString($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -176,14 +175,13 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getMetadata(GetMetadataRequest $request, ?array $options = null): Metadata
-    {
+    public function getMetadata(GetMetadataRequest $request, ?array $options = null): Metadata {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->shallow != null) {
+        if ($request->shallow != null){
             $query['shallow'] = $request->shallow;
         }
-        if ($request->tag != null) {
+        if ($request->tag != null){
             $query['tag'] = $request->tag;
         }
         $headers = [];
@@ -200,15 +198,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return Metadata::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -240,8 +238,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createBigEntity(BigEntity $request, ?array $options = null): Response
-    {
+    public function createBigEntity(BigEntity $request, ?array $options = null): Response {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -254,15 +251,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return Response::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -293,8 +290,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function refreshToken(?RefreshTokenRequest $request = null, ?array $options = null): void
-    {
+    public function refreshToken(?RefreshTokenRequest $request = null, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -307,12 +303,12 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

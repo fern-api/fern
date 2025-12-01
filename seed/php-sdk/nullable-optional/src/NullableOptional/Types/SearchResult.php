@@ -49,17 +49,16 @@ class SearchResult extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    ) {
-        $this->type = $values['type'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->type = $values['type'];$this->value = $values['value'];
     }
 
     /**
      * @param UserResponse $user
      * @return SearchResult
      */
-    public static function user(UserResponse $user): SearchResult
-    {
+    public static function user(UserResponse $user): SearchResult {
         return new SearchResult([
             'type' => 'user',
             'value' => $user,
@@ -70,8 +69,7 @@ class SearchResult extends JsonSerializableType
      * @param Organization $organization
      * @return SearchResult
      */
-    public static function organization(Organization $organization): SearchResult
-    {
+    public static function organization(Organization $organization): SearchResult {
         return new SearchResult([
             'type' => 'organization',
             'value' => $organization,
@@ -82,8 +80,7 @@ class SearchResult extends JsonSerializableType
      * @param Document $document
      * @return SearchResult
      */
-    public static function document(Document $document): SearchResult
-    {
+    public static function document(Document $document): SearchResult {
         return new SearchResult([
             'type' => 'document',
             'value' => $document,
@@ -93,89 +90,81 @@ class SearchResult extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isUser(): bool
-    {
-        return $this->value instanceof UserResponse && $this->type === 'user';
+    public function isUser(): bool {
+        return $this->value instanceof UserResponse&& $this->type === 'user';
     }
 
     /**
      * @return UserResponse
      */
-    public function asUser(): UserResponse
-    {
-        if (!($this->value instanceof UserResponse && $this->type === 'user')) {
+    public function asUser(): UserResponse {
+        if (!($this->value instanceof UserResponse&& $this->type === 'user')){
             throw new Exception(
                 "Expected user; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isOrganization(): bool
-    {
-        return $this->value instanceof Organization && $this->type === 'organization';
+    public function isOrganization(): bool {
+        return $this->value instanceof Organization&& $this->type === 'organization';
     }
 
     /**
      * @return Organization
      */
-    public function asOrganization(): Organization
-    {
-        if (!($this->value instanceof Organization && $this->type === 'organization')) {
+    public function asOrganization(): Organization {
+        if (!($this->value instanceof Organization&& $this->type === 'organization')){
             throw new Exception(
                 "Expected organization; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isDocument(): bool
-    {
-        return $this->value instanceof Document && $this->type === 'document';
+    public function isDocument(): bool {
+        return $this->value instanceof Document&& $this->type === 'document';
     }
 
     /**
      * @return Document
      */
-    public function asDocument(): Document
-    {
-        if (!($this->value instanceof Document && $this->type === 'document')) {
+    public function asDocument(): Document {
+        if (!($this->value instanceof Document&& $this->type === 'document')){
             throw new Exception(
                 "Expected document; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $result = [];
         $result['type'] = $this->type;
-
+        
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-
-        switch ($this->type) {
+        
+        switch ($this->type){
             case 'user':
                 $value = $this->asUser()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -190,27 +179,26 @@ class SearchResult extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)) {
+                if (is_null($this->value)){
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType) {
+                if ($this->value instanceof JsonSerializableType){
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)) {
+                } elseif (is_array($this->value)){
                     $result = array_merge($this->value, $result);
                 }
         }
-
+        
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static
-    {
+    public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
+        if (!is_array($decodedJson)){
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -219,23 +207,22 @@ class SearchResult extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static
-    {
+    public static function jsonDeserialize(array $data): static {
         $args = [];
-        if (!array_key_exists('type', $data)) {
+        if (!array_key_exists('type', $data)){
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))) {
+        if (!(is_string($type))){
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-
+        
         $args['type'] = $type;
-        switch ($type) {
+        switch ($type){
             case 'user':
                 $args['value'] = UserResponse::jsonDeserialize($data);
                 break;
@@ -250,7 +237,7 @@ class SearchResult extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-
+        
         // @phpstan-ignore-next-line
         return new static($args);
     }
