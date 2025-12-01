@@ -43,9 +43,6 @@ export class BaseClientTypeGenerator {
         this.generateNormalizedClientOptionsTypes(context);
         this.generateNormalizeClientOptionsFunction(context);
         this.generateNormalizeClientOptionsWithAuthFunction(context);
-        if (!context.neverThrowErrors) {
-            this.generateHandleNonStatusCodeErrorFunction(context);
-        }
     }
 
     private generateNormalizeClientOptionsFunction(context: SdkContext): void {

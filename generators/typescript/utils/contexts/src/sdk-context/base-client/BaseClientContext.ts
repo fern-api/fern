@@ -16,4 +16,5 @@ export interface BaseClientContext {
         exportsManager: ExportsManager;
         sourceFile: SourceFile;
     }): Reference;
+    writeHandleNonStatusCodeErrorToFile(context: SdkContext): void;
 }

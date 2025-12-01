@@ -2,7 +2,6 @@
 
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
-import * as errors from "./errors/index.js";
 
 export interface BaseClientOptions {
     environment: core.Supplier<string>;
@@ -55,36 +54,4 @@ export function normalizeClientOptions<T extends BaseClientOptions>(options: T):
         logging: core.logging.createLogger(options?.logging),
         headers,
     } as NormalizedClientOptions<T>;
-}
-export function handleNonStatusCodeError(
-    error: core.Fetcher.Error,
-    rawResponse: core.RawResponse,
-    method: string,
-    path: string,
-): never {
-    switch (error.reason) {
-        case "non-json":
-            throw new errors.SeedStreamingError({
-                statusCode: error.statusCode,
-                body: error.rawBody,
-                rawResponse: rawResponse,
-            });
-        case "body-is-null":
-            throw new errors.SeedStreamingError({
-                statusCode: error.statusCode,
-                rawResponse: rawResponse,
-            });
-        case "timeout":
-            throw new errors.SeedStreamingTimeoutError(`Timeout exceeded when calling ${method} ${path}.`);
-        case "unknown":
-            throw new errors.SeedStreamingError({
-                message: error.errorMessage,
-                rawResponse: rawResponse,
-            });
-        default:
-            throw new errors.SeedStreamingError({
-                message: "Unknown error",
-                rawResponse: rawResponse,
-            });
-    }
 }

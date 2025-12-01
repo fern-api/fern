@@ -53,6 +53,23 @@ export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationRefe
         return "BaseClient.ts";
     }
 
+    public getExportedFilepathForHandleNonStatusCodeError(): ExportedFilePath {
+        return {
+            directories: [
+                ...this.containingDirectory,
+                {
+                    nameOnDisk: "errors"
+                }
+            ],
+            file: {
+                nameOnDisk: "handleNonStatusCodeError.ts",
+                exportDeclaration: {
+                    namedExports: [this.getExportedNameOfHandleNonStatusCodeError()]
+                }
+            }
+        };
+    }
+
     public getReferenceToBaseClientOptions({
         importsManager,
         exportsManager,
@@ -131,11 +148,12 @@ export class BaseClientTypeDeclarationReferencer extends AbstractDeclarationRefe
         exportsManager: ExportsManager;
         sourceFile: SourceFile;
     }): Reference {
-        return this.getReferenceToExport({
-            importsManager,
+        return getReferenceToExportFromRoot({
+            exportedName: this.getExportedNameOfHandleNonStatusCodeError(),
+            exportedFromPath: this.getExportedFilepathForHandleNonStatusCodeError(),
             exportsManager,
-            sourceFile,
-            exportedName: this.getExportedNameOfHandleNonStatusCodeError()
+            importsManager,
+            referencedIn: sourceFile
         });
     }
 

@@ -550,6 +550,8 @@ export class SdkGenerator {
         this.context.logger.debug("Generated types");
         this.generateErrorDeclarations();
         this.context.logger.debug("Generated errors");
+        this.generateHandleNonStatusCodeError();
+        this.context.logger.debug("Generated handleNonStatusCodeError");
         if (this.shouldGenerateWebsocketClients) {
             if (this.config.includeSerdeLayer) {
                 this.generateUnionedResponseSchemas();
@@ -836,6 +838,19 @@ export class SdkGenerator {
                 }
             });
         }
+    }
+
+    private generateHandleNonStatusCodeError() {
+        if (this.config.neverThrowErrors) {
+            return;
+        }
+        this.withSourceFile({
+            filepath: this.baseClientTypeDeclarationReferencer.getExportedFilepathForHandleNonStatusCodeError(),
+            run: ({ sourceFile, importsManager }) => {
+                const context = this.generateSdkContext({ sourceFile, importsManager });
+                context.baseClient.writeHandleNonStatusCodeErrorToFile(context);
+            }
+        });
     }
 
     private generateSdkErrorSchemas() {
