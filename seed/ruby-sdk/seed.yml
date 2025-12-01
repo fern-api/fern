@@ -60,7 +60,6 @@ fixtures:
       outputFolder: flattened-module-structure
 allowedFailures:
   - accept-header
-  - examples:wire-tests
   - alias
   - alias-extends
   - any-auth
