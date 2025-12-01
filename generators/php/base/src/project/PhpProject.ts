@@ -296,6 +296,7 @@ class ComposerJson {
             description: `${this.projectName} PHP Library`,
             keywords: [this.context.config.organization, "api", "sdk"],
             license: this.license ?? [],
+            type: "library",
             require: {
                 php: "^8.1",
                 "ext-json": "*",
