@@ -64,11 +64,13 @@ import { RequestWrapperDeclarationReferencer } from "./declaration-referencers/R
 import { SdkClientClassDeclarationReferencer } from "./declaration-referencers/SdkClientClassDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "./declaration-referencers/SdkErrorDeclarationReferencer";
 import { SdkInlinedRequestBodyDeclarationReferencer } from "./declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
+import { NonStatusCodeErrorHandlerDeclarationReferencer } from "./declaration-referencers/NonStatusCodeErrorHandlerDeclarationReferencer";
 import { TimeoutSdkErrorDeclarationReferencer } from "./declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "./declaration-referencers/TypeDeclarationReferencer";
 import { VersionDeclarationReferencer } from "./declaration-referencers/VersionDeclarationReferencer";
 import { WebsocketSocketDeclarationReferencer } from "./declaration-referencers/WebsocketSocketDeclarationReferencer";
 import { WebsocketTypeSchemaDeclarationReferencer } from "./declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
+import { NonStatusCodeErrorHandlerGenerator } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator";
 import { ReadmeConfigBuilder } from "./readme/ReadmeConfigBuilder";
 import { TypeScriptGeneratorAgent } from "./TypeScriptGeneratorAgent";
 import { TestGenerator } from "./test-generator/TestGenerator";
@@ -203,6 +205,7 @@ export class SdkGenerator {
     private baseClientContext: BaseClientContext;
     private genericAPISdkErrorDeclarationReferencer: GenericAPISdkErrorDeclarationReferencer;
     private timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
+    private nonStatusCodeErrorHandlerDeclarationReferencer: NonStatusCodeErrorHandlerDeclarationReferencer;
     private jsonDeclarationReferencer: JsonDeclarationReferencer;
 
     private versionGenerator: VersionGenerator;
@@ -221,6 +224,7 @@ export class SdkGenerator {
     private baseClientTypeGenerator: BaseClientTypeGenerator;
     private genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
+    private nonStatusCodeErrorHandlerGenerator: NonStatusCodeErrorHandlerGenerator;
     private testGenerator: TestGenerator;
     private websocketGenerator: WebsocketClassGenerator;
     private referenceConfigBuilder: ReferenceConfigBuilder;
@@ -383,6 +387,10 @@ export class SdkGenerator {
             containingDirectory: [],
             namespaceExport
         });
+        this.nonStatusCodeErrorHandlerDeclarationReferencer = new NonStatusCodeErrorHandlerDeclarationReferencer({
+            containingDirectory: [],
+            namespaceExport
+        });
         this.jsonDeclarationReferencer = new JsonDeclarationReferencer({
             containingDirectory: [
                 {
@@ -478,6 +486,7 @@ export class SdkGenerator {
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
+        this.nonStatusCodeErrorHandlerGenerator = new NonStatusCodeErrorHandlerGenerator();
         this.sdkInlinedRequestBodySchemaGenerator = new SdkInlinedRequestBodySchemaGenerator({
             includeSerdeLayer: config.includeSerdeLayer,
             allowExtraFields: config.allowExtraFields,
@@ -845,10 +854,12 @@ export class SdkGenerator {
             return;
         }
         this.withSourceFile({
-            filepath: this.baseClientTypeDeclarationReferencer.getExportedFilepathForHandleNonStatusCodeError(),
+            filepath: this.nonStatusCodeErrorHandlerDeclarationReferencer.getExportedFilepath(),
             run: ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
-                context.baseClient.writeHandleNonStatusCodeErrorToFile(context);
+                this.nonStatusCodeErrorHandlerGenerator
+                    .generateNonStatusCodeErrorHandler()
+                    .writeToFile(context);
             }
         });
     }
@@ -1698,6 +1709,8 @@ export class SdkGenerator {
             genericAPISdkErrorGenerator: this.genericAPISdkErrorGenerator,
             timeoutSdkErrorDeclarationReferencer: this.timeoutSdkErrorDeclarationReferencer,
             timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
+            nonStatusCodeErrorHandlerDeclarationReferencer: this.nonStatusCodeErrorHandlerDeclarationReferencer,
+            nonStatusCodeErrorHandlerGenerator: this.nonStatusCodeErrorHandlerGenerator,
             treatUnknownAsAny: this.config.treatUnknownAsAny,
             includeSerdeLayer: this.config.includeSerdeLayer,
             retainOriginalCasing: this.config.retainOriginalCasing,

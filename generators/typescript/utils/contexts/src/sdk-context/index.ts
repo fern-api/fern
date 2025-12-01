@@ -3,6 +3,7 @@ export * from "./base-client";
 export * from "./endpoint-error-union";
 export * from "./environments";
 export * from "./generic-api-sdk-error";
+export * from "./non-status-code-error-handler";
 export * from "./request-wrapper";
 export { type SdkContext } from "./SdkContext";
 export * from "./sdk-client-class";

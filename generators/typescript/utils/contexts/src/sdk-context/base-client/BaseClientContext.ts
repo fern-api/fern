@@ -11,10 +11,4 @@ export interface BaseClientContext {
     generateBaseIdempotentRequestOptionsInterface(
         context: SdkContext
     ): SetRequired<InterfaceDeclarationStructure, "properties">;
-    getReferenceToHandleNonStatusCodeError(args: {
-        importsManager: ImportsManager;
-        exportsManager: ExportsManager;
-        sourceFile: SourceFile;
-    }): Reference;
-    writeHandleNonStatusCodeErrorToFile(context: SdkContext): void;
 }

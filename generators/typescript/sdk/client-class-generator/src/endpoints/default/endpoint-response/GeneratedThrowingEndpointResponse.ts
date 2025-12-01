@@ -926,7 +926,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         const referenceToError = this.getReferenceToError(context);
         const referenceToRawResponse = this.getReferenceToRawResponse(context);
 
-        const handleNonStatusCodeErrorReference = context.baseClient.getReferenceToHandleNonStatusCodeError({
+        const handleNonStatusCodeErrorReference = context.nonStatusCodeErrorHandler.getReferenceToHandleNonStatusCodeError({
             importsManager: context.importsManager,
             exportsManager: context.exportsManager,
             sourceFile: context.sourceFile
