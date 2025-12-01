@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
 - changelogEntry:
+    - summary: |
+        Respect generators.yml auth-schemes override.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-01"
+  version: 2.13.0
+
+- changelogEntry:
     - summary: Allow all API settings to be overridden at the generator level in generators.yml.
       type: feat
     - summary: |
