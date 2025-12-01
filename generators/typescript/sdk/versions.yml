@@ -2,8 +2,8 @@
 - version: 3.35.2
   changelogEntry:
     - summary: |
-        TypeScript SDKs now handle non-status-code errors (non-JSON, body-is-null, timeout, unknown) consistently across endpoints, improving consistency and reducing duplication.
-      type: feat
+        Internal refactor: move non-status-code error handler to dedicated generator classes. No change to generated SDK output.
+      type: chore
   createdAt: "2025-12-01"
   irVersion: 62
 
