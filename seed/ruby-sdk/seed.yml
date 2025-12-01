@@ -30,6 +30,10 @@ language: ruby
 generatorType: SDK
 defaultOutputMode: github
 fixtures:
+  examples:
+    - customConfig:
+        enableWireTests: true
+      outputFolder: wire-tests
   exhaustive:
     - customConfig: null
       outputFolder: no-custom-config
@@ -56,6 +60,7 @@ fixtures:
       outputFolder: flattened-module-structure
 allowedFailures:
   - accept-header
+  - examples:wire-tests
   - alias
   - alias-extends
   - any-auth

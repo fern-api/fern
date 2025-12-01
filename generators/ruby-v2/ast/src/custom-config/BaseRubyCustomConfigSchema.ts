@@ -5,7 +5,9 @@ export const BaseRubyCustomConfigSchema = z.object({
     module: z.optional(z.string()),
     clientModuleName: z.optional(z.string()),
     customReadmeSections: z.optional(z.array(CustomReadmeSectionSchema)),
-    customPagerName: z.optional(z.string())
+    customPagerName: z.optional(z.string()),
+    // Generate wire tests for serialization/deserialization
+    enableWireTests: z.boolean().optional().default(false)
 });
 
 export type BaseRubyCustomConfigSchema = z.infer<typeof BaseRubyCustomConfigSchema>;
