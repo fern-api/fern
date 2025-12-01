@@ -31,7 +31,10 @@ class InlinedClient:
     def send(
         self,
         *,
+        prompt: typing.Literal["You are a helpful assistant"] = "You are a helpful assistant",
         query: str,
+        stream: typing.Literal[False] = False,
+        aliased_context: SomeAliasedLiteral = "You're super wise",
         object_with_literal: ATopLevelLiteralParams,
         context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
         temperature: typing.Optional[float] = OMIT,
@@ -41,7 +44,13 @@ class InlinedClient:
         """
         Parameters
         ----------
+        prompt : typing.Literal["You are a helpful assistant"]
+
         query : str
+
+        stream : typing.Literal[False]
+
+        aliased_context : SomeAliasedLiteral
 
         object_with_literal : ATopLevelLiteralParams
 
@@ -74,7 +83,10 @@ class InlinedClient:
         )
         """
         _response = self._raw_client.send(
+            prompt=prompt,
             query=query,
+            stream=stream,
+            aliased_context=aliased_context,
             object_with_literal=object_with_literal,
             context=context,
             temperature=temperature,
@@ -102,7 +114,10 @@ class AsyncInlinedClient:
     async def send(
         self,
         *,
+        prompt: typing.Literal["You are a helpful assistant"] = "You are a helpful assistant",
         query: str,
+        stream: typing.Literal[False] = False,
+        aliased_context: SomeAliasedLiteral = "You're super wise",
         object_with_literal: ATopLevelLiteralParams,
         context: typing.Optional[typing.Literal["You're super wise"]] = OMIT,
         temperature: typing.Optional[float] = OMIT,
@@ -112,7 +127,13 @@ class AsyncInlinedClient:
         """
         Parameters
         ----------
+        prompt : typing.Literal["You are a helpful assistant"]
+
         query : str
+
+        stream : typing.Literal[False]
+
+        aliased_context : SomeAliasedLiteral
 
         object_with_literal : ATopLevelLiteralParams
 
@@ -155,7 +176,10 @@ class AsyncInlinedClient:
         asyncio.run(main())
         """
         _response = await self._raw_client.send(
+            prompt=prompt,
             query=query,
+            stream=stream,
+            aliased_context=aliased_context,
             object_with_literal=object_with_literal,
             context=context,
             temperature=temperature,

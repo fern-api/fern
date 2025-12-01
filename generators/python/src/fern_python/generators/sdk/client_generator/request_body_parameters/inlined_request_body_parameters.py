@@ -34,31 +34,30 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
     def get_parameters(self, names_to_deconflict: Optional[List[str]] = None) -> List[AST.NamedFunctionParameter]:
         parameters: List[AST.NamedFunctionParameter] = []
         for property in self._get_all_properties_for_inlined_request_body():
-            if not self._is_type_literal(property.value_type):
-                type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                    property.value_type,
-                    in_endpoint=True,
-                )
-                maybe_default_value = self._context.pydantic_generator_context.get_initializer_for_type_reference(
-                    property.value_type,
-                )
-                parameters.append(
-                    AST.NamedFunctionParameter(
-                        name=self._get_property_name(property),
-                        docs=property.docs,
-                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                            property.value_type,
-                            in_endpoint=True,
-                        ),
-                        initializer=maybe_default_value
-                        if maybe_default_value is not None
-                        else AST.Expression(DEFAULT_BODY_PARAMETER_VALUE)
-                        if type_hint.is_optional
-                        else None,
-                        raw_type=property.value_type,
-                        raw_name=property.name.wire_value,
+            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                property.value_type,
+                in_endpoint=True,
+            )
+            maybe_default_value = self._context.pydantic_generator_context.get_initializer_for_type_reference(
+                property.value_type,
+            )
+            parameters.append(
+                AST.NamedFunctionParameter(
+                    name=self._get_property_name(property),
+                    docs=property.docs,
+                    type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                        property.value_type,
+                        in_endpoint=True,
                     ),
-                )
+                    initializer=maybe_default_value
+                    if maybe_default_value is not None
+                    else AST.Expression(DEFAULT_BODY_PARAMETER_VALUE)
+                    if type_hint.is_optional
+                    else None,
+                    raw_type=property.value_type,
+                    raw_name=property.name.wire_value,
+                ),
+            )
         return parameters
 
     def _get_non_parameter_properties(self) -> List[AST.NamedFunctionParameter]:

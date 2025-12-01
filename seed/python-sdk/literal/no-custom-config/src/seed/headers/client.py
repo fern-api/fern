@@ -26,10 +26,21 @@ class HeadersClient:
         """
         return self._raw_client
 
-    def send(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
+    def send(
+        self,
+        *,
+        endpoint_version: typing.Literal["02-12-2024"],
+        async_: typing.Literal[True],
+        query: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SendResponse:
         """
         Parameters
         ----------
+        endpoint_version : typing.Literal["02-12-2024"]
+
+        async_ : typing.Literal[True]
+
         query : str
 
         request_options : typing.Optional[RequestOptions]
@@ -50,7 +61,9 @@ class HeadersClient:
             query="What is the weather today",
         )
         """
-        _response = self._raw_client.send(query=query, request_options=request_options)
+        _response = self._raw_client.send(
+            endpoint_version=endpoint_version, async_=async_, query=query, request_options=request_options
+        )
         return _response.data
 
 
@@ -69,10 +82,21 @@ class AsyncHeadersClient:
         """
         return self._raw_client
 
-    async def send(self, *, query: str, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
+    async def send(
+        self,
+        *,
+        endpoint_version: typing.Literal["02-12-2024"],
+        async_: typing.Literal[True],
+        query: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> SendResponse:
         """
         Parameters
         ----------
+        endpoint_version : typing.Literal["02-12-2024"]
+
+        async_ : typing.Literal[True]
+
         query : str
 
         request_options : typing.Optional[RequestOptions]
@@ -101,5 +125,7 @@ class AsyncHeadersClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.send(query=query, request_options=request_options)
+        _response = await self._raw_client.send(
+            endpoint_version=endpoint_version, async_=async_, query=query, request_options=request_options
+        )
         return _response.data

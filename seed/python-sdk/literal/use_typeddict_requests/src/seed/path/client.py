@@ -23,7 +23,9 @@ class PathClient:
         """
         return self._raw_client
 
-    def send(self, *, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
+    def send(
+        self, id: typing.Literal["123"], *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SendResponse:
         """
         Parameters
         ----------
@@ -43,7 +45,7 @@ class PathClient:
         )
         client.path.send()
         """
-        _response = self._raw_client.send(request_options=request_options)
+        _response = self._raw_client.send(id, request_options=request_options)
         return _response.data
 
 
@@ -62,7 +64,9 @@ class AsyncPathClient:
         """
         return self._raw_client
 
-    async def send(self, *, request_options: typing.Optional[RequestOptions] = None) -> SendResponse:
+    async def send(
+        self, id: typing.Literal["123"], *, request_options: typing.Optional[RequestOptions] = None
+    ) -> SendResponse:
         """
         Parameters
         ----------
@@ -90,5 +94,5 @@ class AsyncPathClient:
 
         asyncio.run(main())
         """
-        _response = await self._raw_client.send(request_options=request_options)
+        _response = await self._raw_client.send(id, request_options=request_options)
         return _response.data

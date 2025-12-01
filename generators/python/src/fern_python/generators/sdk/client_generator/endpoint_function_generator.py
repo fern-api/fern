@@ -156,10 +156,9 @@ class EndpointFunctionGenerator:
         _named_parameter_names: List[str] = [param.name for param in self._named_parameters_raw]
 
         for path_parameter in self._endpoint.all_path_parameters:
-            if not self._is_type_literal(path_parameter.value_type):
-                name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
-                _named_parameter_names.append(name)
-                self._path_parameter_names[path_parameter.name] = name
+            name = self.deconflict_parameter_name(get_parameter_name(path_parameter.name), _named_parameter_names)
+            _named_parameter_names.append(name)
+            self._path_parameter_names[path_parameter.name] = name
 
         self.is_default_body_parameter_used = self.request_body_parameters is not None
         self.collect_metadata()
@@ -386,17 +385,16 @@ class EndpointFunctionGenerator:
         if not self._context.custom_config.inline_path_params:
             non_variable_path_parameters = filter_variable_path_parameters(self._endpoint.all_path_parameters)
             for path_parameter in non_variable_path_parameters:
-                if not self._is_type_literal(path_parameter.value_type):
-                    name = self._path_parameter_names[path_parameter.name]
-                    parameters.append(
-                        AST.FunctionParameter(
-                            name=name,
-                            type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                path_parameter.value_type,
-                                in_endpoint=True,
-                            ),
+                name = self._path_parameter_names[path_parameter.name]
+                parameters.append(
+                    AST.FunctionParameter(
+                        name=name,
+                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            path_parameter.value_type,
+                            in_endpoint=True,
                         ),
-                    )
+                    ),
+                )
         return parameters
 
     def _get_endpoint_named_parameters(
@@ -410,50 +408,48 @@ class EndpointFunctionGenerator:
         parameters: List[AST.NamedFunctionParameter] = []
 
         for query_parameter in endpoint.query_parameters:
-            if not self._is_type_literal(type_reference=query_parameter.value_type):
-                query_parameter_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                    query_parameter.value_type,
-                    in_endpoint=True,
-                )
-                parameters.append(
-                    AST.NamedFunctionParameter(
-                        name=get_parameter_name(query_parameter.name.name),
-                        docs=query_parameter.docs,
-                        type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
-                        initializer=self._context.pydantic_generator_context.get_initializer_for_type_reference(
-                            query_parameter.value_type
-                        ),
+            query_parameter_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                query_parameter.value_type,
+                in_endpoint=True,
+            )
+            parameters.append(
+                AST.NamedFunctionParameter(
+                    name=get_parameter_name(query_parameter.name.name),
+                    docs=query_parameter.docs,
+                    type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
+                    initializer=self._context.pydantic_generator_context.get_initializer_for_type_reference(
+                        query_parameter.value_type
                     ),
-                )
+                ),
+            )
 
         for header in service.headers + endpoint.headers:
-            if not self._is_header_literal(header):
-                header_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                    header.value_type,
-                    in_endpoint=True,
-                )
-                if header.env is not None:
-                    header_type_hint = AST.TypeHint.optional(header_type_hint)
-                parameters.append(
-                    AST.NamedFunctionParameter(
-                        name=get_parameter_name(header.name.name),
-                        docs=header.docs,
-                        type_hint=header_type_hint,
-                        initializer=(
-                            AST.Expression(
-                                AST.FunctionInvocation(
-                                    function_definition=AST.Reference(
-                                        import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
-                                        qualified_name_excluding_import=("getenv",),
-                                    ),
-                                    args=[AST.Expression(f'"{header.env}"')],
-                                )
+            header_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                header.value_type,
+                in_endpoint=True,
+            )
+            if header.env is not None:
+                header_type_hint = AST.TypeHint.optional(header_type_hint)
+            parameters.append(
+                AST.NamedFunctionParameter(
+                    name=get_parameter_name(header.name.name),
+                    docs=header.docs,
+                    type_hint=header_type_hint,
+                    initializer=(
+                        AST.Expression(
+                            AST.FunctionInvocation(
+                                function_definition=AST.Reference(
+                                    import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                    qualified_name_excluding_import=("getenv",),
+                                ),
+                                args=[AST.Expression(f'"{header.env}"')],
                             )
-                            if header.env is not None
-                            else None
-                        ),
+                        )
+                        if header.env is not None
+                        else None
                     ),
-                )
+                ),
+            )
 
         parameter_names_to_deconflict: List[str] = []
         if request_body_parameters is not None:
@@ -464,17 +460,16 @@ class EndpointFunctionGenerator:
         # Always include the idempotency header parameters second to last.
         if endpoint.idempotent:
             for header in idempotency_headers:
-                if not self._is_header_literal(header):
-                    parameters.append(
-                        AST.NamedFunctionParameter(
-                            name=get_parameter_name(header.name.name),
-                            docs=header.docs,
-                            type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                                header.value_type,
-                                in_endpoint=True,
-                            ),
+                parameters.append(
+                    AST.NamedFunctionParameter(
+                        name=get_parameter_name(header.name.name),
+                        docs=header.docs,
+                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            header.value_type,
+                            in_endpoint=True,
                         ),
-                    )
+                    ),
+                )
         parameters.sort(key=lambda x: x.type_hint is None or x.type_hint.is_optional)
         # Always include request options last.
         if (

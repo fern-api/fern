@@ -20,7 +20,11 @@ class RawQueryClient:
     def send(
         self,
         *,
+        prompt: typing.Literal["You are a helpful assistant"] = "You are a helpful assistant",
+        alias_prompt: AliasToPrompt = "You are a helpful assistant",
         query: str,
+        stream: typing.Literal[False] = False,
+        alias_stream: AliasToStream = False,
         optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
         alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
         optional_stream: typing.Optional[typing.Literal[False]] = None,
@@ -30,7 +34,15 @@ class RawQueryClient:
         """
         Parameters
         ----------
+        prompt : typing.Literal["You are a helpful assistant"]
+
+        alias_prompt : AliasToPrompt
+
         query : str
+
+        stream : typing.Literal[False]
+
+        alias_stream : AliasToStream
 
         optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
 
@@ -86,7 +98,11 @@ class AsyncRawQueryClient:
     async def send(
         self,
         *,
+        prompt: typing.Literal["You are a helpful assistant"] = "You are a helpful assistant",
+        alias_prompt: AliasToPrompt = "You are a helpful assistant",
         query: str,
+        stream: typing.Literal[False] = False,
+        alias_stream: AliasToStream = False,
         optional_prompt: typing.Optional[typing.Literal["You are a helpful assistant"]] = None,
         alias_optional_prompt: typing.Optional[AliasToPrompt] = None,
         optional_stream: typing.Optional[typing.Literal[False]] = None,
@@ -96,7 +112,15 @@ class AsyncRawQueryClient:
         """
         Parameters
         ----------
+        prompt : typing.Literal["You are a helpful assistant"]
+
+        alias_prompt : AliasToPrompt
+
         query : str
+
+        stream : typing.Literal[False]
+
+        alias_stream : AliasToStream
 
         optional_prompt : typing.Optional[typing.Literal["You are a helpful assistant"]]
 
