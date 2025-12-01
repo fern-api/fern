@@ -1,6 +1,5 @@
-import { vi } from "vitest";
-
 import { replaceEnvVariables } from "@fern-api/core-utils";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 describe("environment variable substitution in docs", () => {
     const originalEnv = process.env;
@@ -31,11 +30,7 @@ describe("environment variable substitution in docs", () => {
         };
 
         const onError = vi.fn();
-        const substituted = replaceEnvVariables(
-            docsDefinition,
-            { onError },
-            { substituteAsEmpty: false }
-        );
+        const substituted = replaceEnvVariables(docsDefinition, { onError }, { substituteAsEmpty: false });
 
         expect(onError).not.toHaveBeenCalled();
         expect(substituted.config.apiKey).toEqual("test-api-key-123");
@@ -66,11 +61,7 @@ describe("environment variable substitution in docs", () => {
         };
 
         const onError = vi.fn();
-        const substituted = replaceEnvVariables(
-            docsDefinition,
-            { onError },
-            { substituteAsEmpty: true }
-        );
+        const substituted = replaceEnvVariables(docsDefinition, { onError }, { substituteAsEmpty: true });
 
         expect(onError).not.toHaveBeenCalled();
         expect(substituted.config.definedVar).toEqual("");
@@ -85,11 +76,7 @@ describe("environment variable substitution in docs", () => {
         };
 
         const onError = vi.fn();
-        replaceEnvVariables(
-            docsDefinition,
-            { onError },
-            { substituteAsEmpty: false }
-        );
+        replaceEnvVariables(docsDefinition, { onError }, { substituteAsEmpty: false });
 
         expect(onError).toHaveBeenCalled();
     });
@@ -110,11 +97,7 @@ describe("environment variable substitution in docs", () => {
         };
 
         const onError = vi.fn();
-        const substituted = replaceEnvVariables(
-            docsDefinition,
-            { onError },
-            { substituteAsEmpty: false }
-        );
+        const substituted = replaceEnvVariables(docsDefinition, { onError }, { substituteAsEmpty: false });
 
         expect(onError).not.toHaveBeenCalled();
         expect(substituted.nested.deep.value).toEqual("value1");
@@ -132,11 +115,7 @@ describe("environment variable substitution in docs", () => {
         };
 
         const onError = vi.fn();
-        const substituted = replaceEnvVariables(
-            docsDefinition,
-            { onError },
-            { substituteAsEmpty: false }
-        );
+        const substituted = replaceEnvVariables(docsDefinition, { onError }, { substituteAsEmpty: false });
 
         expect(onError).not.toHaveBeenCalled();
         expect(substituted.config.url).toEqual("http://localhost:3000/api");
