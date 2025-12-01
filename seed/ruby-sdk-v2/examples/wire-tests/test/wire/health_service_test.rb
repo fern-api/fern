@@ -10,6 +10,13 @@ class HealthServiceWireTest < Minitest::Test
   WIREMOCK_BASE_URL = "http://localhost:8080"
   WIREMOCK_ADMIN_URL = "http://localhost:8080/__admin"
 
+  def setup
+    super
+    return if ENV["RUN_WIRE_TESTS"] == "true"
+
+    skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."
+  end
+
   def reset_wiremock_requests
     uri = URI("#{WIREMOCK_ADMIN_URL}/requests")
     http = Net::HTTP.new(uri.host, uri.port)

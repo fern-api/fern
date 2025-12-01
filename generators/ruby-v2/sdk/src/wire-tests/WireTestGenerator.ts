@@ -103,6 +103,17 @@ export class WireTestGenerator {
         lines.push('  WIREMOCK_ADMIN_URL = "http://localhost:8080/__admin"');
         lines.push("");
 
+        // Setup method to skip wire tests unless RUN_WIRE_TESTS=true
+        lines.push("  def setup");
+        lines.push("    super");
+        lines.push('    unless ENV["RUN_WIRE_TESTS"] == "true"');
+        lines.push(
+            '      skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."'
+        );
+        lines.push("    end");
+        lines.push("  end");
+        lines.push("");
+
         // Helper methods
         lines.push(...this.generateHelperMethods());
         lines.push("");
