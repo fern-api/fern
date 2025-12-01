@@ -107,9 +107,7 @@ export class WireTestGenerator {
         lines.push("  def setup");
         lines.push("    super");
         lines.push('    unless ENV["RUN_WIRE_TESTS"] == "true"');
-        lines.push(
-            '      skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."'
-        );
+        lines.push('      skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."');
         lines.push("    end");
         lines.push("  end");
         lines.push("");
