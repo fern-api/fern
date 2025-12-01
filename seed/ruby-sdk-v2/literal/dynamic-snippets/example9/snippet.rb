@@ -8,16 +8,16 @@ client.reference.send_({
   stream: false,
   ending: '$ending',
   context: "You're super wise",
-  maybeContext: "You're super wise",
-  containerObject: {
-    nestedObjects: [{
-      literal1: 'literal1',
-      literal2: 'literal2',
-      strProp: 'strProp'
+  maybe_context: "You're super wise",
+  container_object: {
+    nested_objects: [{
+      literal_1: 'literal1',
+      literal_2: 'literal2',
+      str_prop: 'strProp'
     }, {
-      literal1: 'literal1',
-      literal2: 'literal2',
-      strProp: 'strProp'
+      literal_1: 'literal1',
+      literal_2: 'literal2',
+      str_prop: 'strProp'
     }]
   }
 });

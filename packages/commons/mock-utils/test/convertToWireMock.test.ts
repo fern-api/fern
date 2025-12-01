@@ -160,6 +160,46 @@ describe("new WireMock().convertToWireMock", () => {
             }
         ]);
     });
+    it("should convert SSE IR to WireMock format with proper SSE response", () => {
+        // Load the SSE test fixture
+        const ir = loadIr(join(__dirname, "fixtures", "sse-test", "ir.json"));
+
+        // Convert IR to WireMock format
+        const result = new WireMock().convertToWireMock(ir);
+
+        // Should have at least one mapping
+        expect(result.mappings.length).toBeGreaterThan(0);
+
+        // Find the SSE mapping
+        const sseMapping = result.mappings[0];
+        expect(sseMapping).toBeDefined();
+
+        // Verify response structure for SSE
+        expect(sseMapping.response.headers["Content-Type"]).toBe("text/event-stream");
+
+        // Verify SSE body format contains the expected events
+        expect(sseMapping.response.body).toContain("event: message");
+        expect(sseMapping.response.body).toContain('data: {"text":"Hello from SSE"}');
+        expect(sseMapping.response.body).toContain("event: update");
+        expect(sseMapping.response.body).toContain('data: {"progress":50,"status":"Processing..."}');
+        expect(sseMapping.response.body).toContain("event: complete");
+        expect(sseMapping.response.body).toContain('data: {"status":"complete","result":"Success"}');
+
+        // Verify SSE protocol format (events separated by newlines)
+        const lines = sseMapping.response.body.split("\n");
+        const eventLines = lines.filter((line) => line.startsWith("event:"));
+        expect(eventLines.length).toBeGreaterThanOrEqual(3); // At least 3 events
+
+        // Verify status code is correct
+        expect(sseMapping.response.status).toBe(201);
+
+        // Verify URL and method
+        expect(sseMapping.request.method).toBe("POST");
+        expect(sseMapping.request.urlPathTemplate).toBe("/movies/create-movie");
+
+        // Verify SDK config shows streaming endpoints
+        expect(ir.sdkConfig.hasStreamingEndpoints).toBe(true);
+    });
 });
 
 // Helper function to build URL path template from IR endpoint (matches convertTonew WireMock().ts logic)

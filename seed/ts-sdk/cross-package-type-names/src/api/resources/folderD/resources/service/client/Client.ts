@@ -71,6 +71,11 @@ export class ServiceClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedCrossPackageTypeNamesError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedCrossPackageTypeNamesTimeoutError("Timeout exceeded when calling GET /.");
             case "unknown":

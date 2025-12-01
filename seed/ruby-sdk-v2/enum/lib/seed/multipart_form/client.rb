@@ -48,7 +48,8 @@ module Seed
         end
 
         _request = Seed::Internal::Multipart::Request.new(
-          method: POST,
+          base_url: request_options[:base_url],
+          method: "POST",
           path: "multipart",
           body: body
         )

@@ -7,7 +7,7 @@ client = Seed::Client.new(
 );
 
 client.auth.get_token(
-  clientId: 'client_id',
-  clientSecret: 'client_secret',
-  grantType: 'client_credentials'
+  client_id: 'client_id',
+  client_secret: 'client_secret',
+  grant_type: 'client_credentials'
 );

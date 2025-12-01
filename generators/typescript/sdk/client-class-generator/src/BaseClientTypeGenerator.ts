@@ -165,9 +165,6 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
     }
 
     private generateNormalizeClientOptionsWithAuthFunction(context: SdkContext): void {
-        // Note: normalizeClientOptions is defined in this same file (BaseClient.ts),
-        // so we don't need to import it
-
         // Determine which auth provider to use
         let authProviderCreation = "";
         const isAnyAuth = this.ir.auth.requirement === "ANY";
@@ -191,7 +188,7 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                     });
                     providerImports.push("BearerAuthProvider");
                     providerInstantiations.push(
-                        "if (BearerAuthProvider.canCreate(options)) { authProviders.push(new BearerAuthProvider(options)); }"
+                        "if (BearerAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new BearerAuthProvider(normalizedWithNoOpAuthProvider)); }"
                     );
                 } else if (authScheme.type === "basic") {
                     context.sourceFile.addImportDeclaration({
@@ -200,7 +197,7 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                     });
                     providerImports.push("BasicAuthProvider");
                     providerInstantiations.push(
-                        "if (BasicAuthProvider.canCreate(options)) { authProviders.push(new BasicAuthProvider(options)); }"
+                        "if (BasicAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new BasicAuthProvider(normalizedWithNoOpAuthProvider)); }"
                     );
                 } else if (authScheme.type === "header") {
                     context.sourceFile.addImportDeclaration({
@@ -209,7 +206,7 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                     });
                     providerImports.push("HeaderAuthProvider");
                     providerInstantiations.push(
-                        "if (HeaderAuthProvider.canCreate(options)) { authProviders.push(new HeaderAuthProvider(options)); }"
+                        "if (HeaderAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new HeaderAuthProvider(normalizedWithNoOpAuthProvider)); }"
                     );
                 } else if (authScheme.type === "oauth") {
                     context.sourceFile.addImportDeclaration({
@@ -218,7 +215,7 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                     });
                     providerImports.push("OAuthAuthProvider");
                     providerInstantiations.push(
-                        "if (OAuthAuthProvider.canCreate(options)) { authProviders.push(new OAuthAuthProvider(options)); }"
+                        "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider)); }"
                     );
                 }
             }
@@ -237,35 +234,35 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                         moduleSpecifier: "./auth/BearerAuthProvider.js",
                         namedImports: ["BearerAuthProvider"]
                     });
-                    authProviderCreation = "new BearerAuthProvider(options)";
+                    authProviderCreation = "new BearerAuthProvider(normalizedWithNoOpAuthProvider)";
                     break;
                 } else if (authScheme.type === "basic") {
                     context.sourceFile.addImportDeclaration({
                         moduleSpecifier: "./auth/BasicAuthProvider.js",
                         namedImports: ["BasicAuthProvider"]
                     });
-                    authProviderCreation = "new BasicAuthProvider(options)";
+                    authProviderCreation = "new BasicAuthProvider(normalizedWithNoOpAuthProvider)";
                     break;
                 } else if (authScheme.type === "header") {
                     context.sourceFile.addImportDeclaration({
                         moduleSpecifier: "./auth/HeaderAuthProvider.js",
                         namedImports: ["HeaderAuthProvider"]
                     });
-                    authProviderCreation = "new HeaderAuthProvider(options)";
+                    authProviderCreation = "new HeaderAuthProvider(normalizedWithNoOpAuthProvider)";
                     break;
                 } else if (authScheme.type === "oauth") {
                     context.sourceFile.addImportDeclaration({
                         moduleSpecifier: "./auth/OAuthAuthProvider.js",
                         namedImports: ["OAuthAuthProvider"]
                     });
-                    authProviderCreation = "new OAuthAuthProvider(options)";
+                    authProviderCreation = "new OAuthAuthProvider(normalizedWithNoOpAuthProvider)";
                     break;
                 } else if (authScheme.type === "inferred") {
                     context.sourceFile.addImportDeclaration({
                         moduleSpecifier: "./auth/InferredAuthProvider.js",
                         namedImports: ["InferredAuthProvider"]
                     });
-                    authProviderCreation = "new InferredAuthProvider(options)";
+                    authProviderCreation = "new InferredAuthProvider(normalizedWithNoOpAuthProvider)";
                     break;
                 }
             }
@@ -281,8 +278,18 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(${OPTIONS_PARAMETER_NAME}) as NormalizedClientOptionsWithAuth<T>;
+    const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
     normalized.authProvider ??= ${authProviderCreation};
     return normalized;
+}
+
+function withNoOpAuthProvider<T extends BaseClientOptions>(
+    options: NormalizedClientOptions<T>
+): NormalizedClientOptionsWithAuth<T> {
+    return {
+        ...options,
+        authProvider: new ${getTextOfTsNode(context.coreUtilities.auth.NoOpAuthProvider._getReferenceTo())}()
+    };
 }`;
 
         context.sourceFile.addStatements(functionCode);

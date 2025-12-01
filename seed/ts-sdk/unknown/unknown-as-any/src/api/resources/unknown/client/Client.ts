@@ -73,6 +73,11 @@ export class UnknownClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedUnknownAsAnyError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedUnknownAsAnyTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":
@@ -141,6 +146,11 @@ export class UnknownClient {
                 throw new errors.SeedUnknownAsAnyError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedUnknownAsAnyError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

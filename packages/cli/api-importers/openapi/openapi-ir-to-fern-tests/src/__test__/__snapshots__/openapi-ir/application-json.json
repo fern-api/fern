@@ -36,7 +36,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/vnd.fern.user+json;version=1",
       "examples": [
@@ -104,7 +103,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/application-json",
       "examples": [

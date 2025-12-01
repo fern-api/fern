@@ -80,6 +80,11 @@ export class ServiceClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedApiWideBasePathError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedApiWideBasePathTimeoutError(
                     "Timeout exceeded when calling POST /test/{pathParam}/{serviceParam}/{endpointParam}/{resourceParam}.",

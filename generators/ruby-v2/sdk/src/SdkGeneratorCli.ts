@@ -7,7 +7,9 @@ import { generateModels } from "@fern-api/ruby-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
+import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProviderGenerator";
 import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -89,9 +91,18 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 });
                 context.project.addRawFiles(environments.generate());
             },
-            multipleBaseUrls: () => undefined,
+            multipleBaseUrls: (value) => {
+                context.logger.info("Visiting multipleBaseUrls environment case.");
+                const environments = new MultiUrlEnvironmentGenerator({
+                    context,
+                    multiUrlEnvironments: value
+                });
+                context.project.addRawFiles(environments.generate());
+            },
             _other: () => undefined
         });
+
+        this.generateInferredAuthProvider(context);
 
         await context.snippetGenerator.populateSnippetsCache();
 
@@ -154,6 +165,18 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             }
         });
     }
+
+    private generateInferredAuthProvider(context: SdkGeneratorContext): void {
+        const inferredAuth = context.getInferredAuth();
+        if (inferredAuth != null) {
+            const inferredAuthProvider = new InferredAuthProviderGenerator({
+                context,
+                scheme: inferredAuth
+            });
+            context.project.addRawFiles(inferredAuthProvider.generate());
+        }
+    }
+
     private shouldGenerateReadme(context: SdkGeneratorContext): boolean {
         const hasSnippetFilepath = context.config.output.snippetFilepath != null;
         const publishConfig = context.ir.publishConfig;

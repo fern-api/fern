@@ -489,15 +489,21 @@ export abstract class AbstractPhpGeneratorContext<
             case "container":
                 switch (typeReference.container.type) {
                     case "optional":
-                        return this.isDate(typeReference.container.optional);
+                        return this.isEquivalentToPrimitive({
+                            typeReference: typeReference.container.optional,
+                            primitive
+                        });
                     case "nullable":
-                        return this.isDate(typeReference.container.nullable);
+                        return this.isEquivalentToPrimitive({
+                            typeReference: typeReference.container.nullable,
+                            primitive
+                        });
                 }
                 return false;
             case "named": {
                 const declaration = this.getTypeDeclarationOrThrow(typeReference.typeId);
                 if (declaration.shape.type === "alias") {
-                    return this.isDate(declaration.shape.aliasOf);
+                    return this.isEquivalentToPrimitive({ typeReference: declaration.shape.aliasOf, primitive });
                 }
                 return false;
             }

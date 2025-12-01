@@ -85,6 +85,11 @@ export class BasicAuthClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedBasicAuthError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedBasicAuthTimeoutError("Timeout exceeded when calling GET /basic-auth.");
             case "unknown":
@@ -171,6 +176,11 @@ export class BasicAuthClient {
                 throw new errors.SeedBasicAuthError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedBasicAuthError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

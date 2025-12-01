@@ -75,6 +75,11 @@ export class NullableOptionalClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedNullableOptionalTimeoutError(
                     "Timeout exceeded when calling GET /api/users/{userId}.",
@@ -156,6 +161,11 @@ export class NullableOptionalClient {
                 throw new errors.SeedNullableOptionalError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -240,6 +250,11 @@ export class NullableOptionalClient {
                 throw new errors.SeedNullableOptionalError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -332,6 +347,11 @@ export class NullableOptionalClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedNullableOptionalTimeoutError("Timeout exceeded when calling GET /api/users.");
             case "unknown":
@@ -415,6 +435,11 @@ export class NullableOptionalClient {
                 throw new errors.SeedNullableOptionalError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -578,6 +603,11 @@ export class NullableOptionalClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedNullableOptionalTimeoutError(
                     "Timeout exceeded when calling POST /api/profiles/complex.",
@@ -643,6 +673,11 @@ export class NullableOptionalClient {
                 throw new errors.SeedNullableOptionalError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -744,6 +779,11 @@ export class NullableOptionalClient {
                 throw new errors.SeedNullableOptionalError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -869,6 +909,11 @@ export class NullableOptionalClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedNullableOptionalTimeoutError(
                     "Timeout exceeded when calling POST /api/test/deserialization.",
@@ -954,6 +999,11 @@ export class NullableOptionalClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedNullableOptionalTimeoutError(
                     "Timeout exceeded when calling GET /api/users/filter.",
@@ -1022,6 +1072,11 @@ export class NullableOptionalClient {
                 throw new errors.SeedNullableOptionalError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -1101,6 +1156,11 @@ export class NullableOptionalClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedNullableOptionalTimeoutError(
                     "Timeout exceeded when calling PUT /api/users/{userId}/tags.",
@@ -1178,6 +1238,11 @@ export class NullableOptionalClient {
                 throw new errors.SeedNullableOptionalError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedNullableOptionalError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

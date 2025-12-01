@@ -80,6 +80,11 @@ export class OptionalClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedObjectsWithImportsError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedObjectsWithImportsTimeoutError(
                     "Timeout exceeded when calling POST /send-optional-body.",
@@ -148,6 +153,11 @@ export class OptionalClient {
                 throw new errors.SeedObjectsWithImportsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedObjectsWithImportsError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
@@ -232,6 +242,11 @@ export class OptionalClient {
                 throw new errors.SeedObjectsWithImportsError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "body-is-null":
+                throw new errors.SeedObjectsWithImportsError({
+                    statusCode: _response.error.statusCode,
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":

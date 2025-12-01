@@ -169,7 +169,9 @@ export class EndpointSnippetGenerator {
             case "oauth":
                 return values.type === "oauth" ? this.getRootClientOAuthArgs({ auth, values }) : [];
             case "inferred":
-                this.addWarning("Ruby SDK does not support inferred auth yet");
+                // Inferred auth parameters are handled by the root client constructor
+                // (e.g., client_id, client_secret from the token endpoint request)
+                // No additional auth arguments needed here
                 return [];
             default:
                 assertNever(auth);
@@ -419,10 +421,15 @@ export class EndpointSnippetGenerator {
                 ignoreMissingParameters: true
             });
             for (const parameter of associated) {
+                const value = this.context.dynamicTypeLiteralMapper.convert(parameter);
+                // Skip nop values (undefined/null) to avoid generating empty arguments like "channel: ,"
+                if (ruby.TypeLiteral.isNop(value)) {
+                    continue;
+                }
                 args.push(
                     ruby.keywordArgument({
                         name: this.context.getPropertyName(parameter.name.name),
-                        value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                        value
                     })
                 );
             }
@@ -445,10 +452,15 @@ export class EndpointSnippetGenerator {
             values: this.context.getRecord(snippet.requestBody) ?? {}
         });
         for (const parameter of bodyProperties) {
+            const value = this.context.dynamicTypeLiteralMapper.convert(parameter);
+            // Skip nop values (undefined/null) to avoid generating empty arguments like "channel: ,"
+            if (ruby.TypeLiteral.isNop(value)) {
+                continue;
+            }
             args.push(
                 ruby.keywordArgument({
                     name: this.context.getPropertyName(parameter.name.name),
-                    value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                    value
                 })
             );
         }

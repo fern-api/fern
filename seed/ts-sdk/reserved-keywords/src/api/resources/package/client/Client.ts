@@ -76,6 +76,11 @@ export class PackageClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedNurseryApiError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedNurseryApiTimeoutError("Timeout exceeded when calling POST /.");
             case "unknown":

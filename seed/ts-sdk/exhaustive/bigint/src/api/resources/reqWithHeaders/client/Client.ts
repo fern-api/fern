@@ -94,6 +94,11 @@ export class ReqWithHeadersClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedExhaustiveError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedExhaustiveTimeoutError(
                     "Timeout exceeded when calling POST /test-headers/custom-header.",

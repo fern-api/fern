@@ -1,4 +1,90 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc53
+  createdAt: "2025-11-29"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Pass raw_client to custom pager for pagination. This allows custom pager implementations
+        to fetch additional pages using the HTTP client.
+  irVersion: 61
+
+- version: 1.0.0-rc52
+  createdAt: "2025-11-29"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix root client generation for inferred auth. The client now correctly creates an
+        unauthenticated client for the auth endpoint, passes auth_client and options to
+        InferredAuthProvider, and uses the correct Internal namespace.
+  irVersion: 61
+
+- version: 1.0.0-rc51
+  createdAt: "2025-11-29"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix inferred auth token refresh to properly refresh when within buffer period.
+        The token is now refreshed when the current time is within 2 minutes of expiration,
+        rather than only after the token has fully expired.
+  irVersion: 61
+
+- version: 1.0.0-rc50
+  createdAt: "2025-11-29"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add inferred auth support for Ruby SDKs. The SDK now generates an InferredAuthProvider class
+        that handles automatic token retrieval and caching with expiration handling. Root clients
+        accept the token endpoint request parameters for inferred authentication.
+  irVersion: 61
+
+- version: 1.0.0-rc49
+  createdAt: "2025-11-28"
+  changelogEntry:
+    - type: fix
+      summary: Added automatic redaction of sensitive fields in inspect output to prevent accidental exposure of credentials and tokens in logs and debug output.
+  irVersion: 61
+
+- version: 1.0.0-rc48
+  createdAt: "2025-11-28"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add custom pagination support with customPagerName configuration option.
+        When customPagerName is configured, the generator includes a CustomPager utility class
+        that provides navigation methods (has_next_page?, has_prev_page?, get_next_page, get_prev_page)
+        for custom pagination endpoints.
+  irVersion: 61
+
+- version: 1.0.0-rc47
+  createdAt: "2025-11-26"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix request_options[:base_url] being ignored.
+        The RawClient.build_url method now correctly uses the per-request base_url override when provided.
+  irVersion: 61
+
+- version: 1.0.0-rc46
+  createdAt: "2025-11-26"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Improve README snippet generation: use SCREAMING_SNAKE_CASE for Environment references,
+        snake_case for nested object property names, and filter out empty/undefined values to
+        avoid syntax errors like "param: ,".
+  irVersion: 61
+
+- version: 1.0.0-rc45
+  createdAt: "2025-11-26"
+  changelogEntry:
+    - type: feat
+      summary: |
+        Add support for multi-URL environments. APIs with multiple base URLs per environment
+        (e.g., separate api and identity URLs) now generate a proper Environment class using
+        the first base URL for each environment.
+  irVersion: 61
+
 - version: 1.0.0-rc44
   createdAt: "2025-11-26"
   changelogEntry:

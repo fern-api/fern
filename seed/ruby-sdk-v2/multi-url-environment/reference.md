@@ -54,7 +54,7 @@ client.ec_2.boot_instance(size: 'size');
 <dd>
 
 ```ruby
-client.s_3.get_presigned_url(s3Key: 's3Key');
+client.s_3.get_presigned_url(s_3_key: 's3Key');
 ```
 </dd>
 </dl>

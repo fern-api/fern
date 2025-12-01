@@ -79,6 +79,11 @@ export class SeedAliasExtendsClient {
                     body: _response.error.rawBody,
                     rawResponse: _response.rawResponse,
                 });
+            case "body-is-null":
+                throw new errors.SeedAliasExtendsError({
+                    statusCode: _response.error.statusCode,
+                    rawResponse: _response.rawResponse,
+                });
             case "timeout":
                 throw new errors.SeedAliasExtendsTimeoutError(
                     "Timeout exceeded when calling POST /extends/extended-inline-request-body.",
