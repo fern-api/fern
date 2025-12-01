@@ -28,6 +28,7 @@ class RawRealtimeClient:
         *,
         model: typing.Optional[str] = None,
         temperature: typing.Optional[int] = None,
+        language_code: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Iterator[RealtimeSocketClient]:
         """
@@ -38,6 +39,8 @@ class RawRealtimeClient:
         model : typing.Optional[str]
 
         temperature : typing.Optional[int]
+
+        language_code : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -52,6 +55,8 @@ class RawRealtimeClient:
             query_params = query_params.add("model", model)
         if temperature is not None:
             query_params = query_params.add("temperature", temperature)
+        if language_code is not None:
+            query_params = query_params.add("language-code", language_code)
         ws_url = ws_url + f"?{query_params}"
         headers = self._client_wrapper.get_headers()
         if request_options and "additional_headers" in request_options:
@@ -85,6 +90,7 @@ class AsyncRawRealtimeClient:
         *,
         model: typing.Optional[str] = None,
         temperature: typing.Optional[int] = None,
+        language_code: typing.Optional[str] = None,
         request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.AsyncIterator[AsyncRealtimeSocketClient]:
         """
@@ -95,6 +101,8 @@ class AsyncRawRealtimeClient:
         model : typing.Optional[str]
 
         temperature : typing.Optional[int]
+
+        language_code : typing.Optional[str]
 
         request_options : typing.Optional[RequestOptions]
             Request-specific configuration.
@@ -109,6 +117,8 @@ class AsyncRawRealtimeClient:
             query_params = query_params.add("model", model)
         if temperature is not None:
             query_params = query_params.add("temperature", temperature)
+        if language_code is not None:
+            query_params = query_params.add("language-code", language_code)
         ws_url = ws_url + f"?{query_params}"
         headers = self._client_wrapper.get_headers()
         if request_options and "additional_headers" in request_options:

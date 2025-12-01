@@ -7,7 +7,7 @@ use Seed\S3\S3Client;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class SeedClient
+class SeedClient 
 {
     /**
      * @var Ec2Client $ec2
@@ -25,7 +25,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -53,7 +53,8 @@ class SeedClient
         string $token,
         Environments $environment,
         ?array $options = null,
-    ) {
+    )
+    {
         $defaultHeaders = [
             'Authorization' => "Bearer $token",
             'X-Fern-Language' => 'PHP',
@@ -61,19 +62,19 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-
+        
         $this->options = $options ?? [];
+        $this->environment = $environment;
+        
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
-        $this->environment = $environment;
-
+        
         $this->client = new RawClient(
             options: $this->options,
         );
-
+        
         $this->ec2 = new Ec2Client($this->client, $this->environment);
         $this->s3 = new S3Client($this->client, $this->environment);
     }

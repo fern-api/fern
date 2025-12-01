@@ -17,7 +17,7 @@ use Seed\Core\Types\ArrayType;
  * @property array<string, mixed> $metadata
  * @property int $revenue
  */
-trait Movie
+trait Movie 
 {
     /**
      * @var string $id

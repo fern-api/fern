@@ -21,32 +21,27 @@ class UsernameContainer extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->results = $values['results'];
     }
 
     /**
      * @return array<string>
      */
-    public function getResults(): array
-    {
-        return $this->results;
-    }
+    public function getResults(): array {
+        return $this->results;}
 
     /**
      * @param array<string> $value
      */
-    public function setResults(array $value): self
-    {
-        $this->results = $value;
-        return $this;
-    }
+    public function setResults(array $value): self {
+        $this->results = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

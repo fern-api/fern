@@ -27,50 +27,39 @@ class EchoRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->name = $values['name'];
-        $this->size = $values['size'];
+    )
+    {
+        $this->name = $values['name'];$this->size = $values['size'];
     }
 
     /**
      * @return string
      */
-    public function getName(): string
-    {
-        return $this->name;
-    }
+    public function getName(): string {
+        return $this->name;}
 
     /**
      * @param string $value
      */
-    public function setName(string $value): self
-    {
-        $this->name = $value;
-        return $this;
-    }
+    public function setName(string $value): self {
+        $this->name = $value;return $this;}
 
     /**
      * @return int
      */
-    public function getSize(): int
-    {
-        return $this->size;
-    }
+    public function getSize(): int {
+        return $this->size;}
 
     /**
      * @param int $value
      */
-    public function setSize(int $value): self
-    {
-        $this->size = $value;
-        return $this;
-    }
+    public function setSize(int $value): self {
+        $this->size = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

@@ -18,7 +18,7 @@ func do() {
     )
     request := []*types.ObjectWithRequiredField{
         &types.ObjectWithRequiredField{
-            String: "string",
+            FieldString: "string",
         },
     }
     client.Endpoints.Container.GetAndReturnSetOfObjects(

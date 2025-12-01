@@ -36,17 +36,15 @@ class Moment extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->date = $values['date'];
-        $this->datetime = $values['datetime'];
+    )
+    {
+        $this->id = $values['id'];$this->date = $values['date'];$this->datetime = $values['datetime'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

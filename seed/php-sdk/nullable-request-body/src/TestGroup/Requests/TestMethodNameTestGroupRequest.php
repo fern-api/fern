@@ -31,9 +31,8 @@ class TestMethodNameTestGroupRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->queryParamObject = $values['queryParamObject'] ?? null;
-        $this->queryParamInteger = $values['queryParamInteger'] ?? null;
-        $this->body = $values['body'] ?? null;
+    )
+    {
+        $this->queryParamObject = $values['queryParamObject'] ?? null;$this->queryParamInteger = $values['queryParamInteger'] ?? null;$this->body = $values['body'] ?? null;
     }
 }

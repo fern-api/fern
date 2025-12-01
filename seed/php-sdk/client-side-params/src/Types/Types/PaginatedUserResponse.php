@@ -52,19 +52,15 @@ class PaginatedUserResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->users = $values['users'];
-        $this->start = $values['start'];
-        $this->limit = $values['limit'];
-        $this->length = $values['length'];
-        $this->total = $values['total'] ?? null;
+    )
+    {
+        $this->users = $values['users'];$this->start = $values['start'];$this->limit = $values['limit'];$this->length = $values['length'];$this->total = $values['total'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

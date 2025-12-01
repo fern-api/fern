@@ -27,16 +27,15 @@ class RunningResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->submissionId = $values['submissionId'];
-        $this->state = $values['state'];
+    )
+    {
+        $this->submissionId = $values['submissionId'];$this->state = $values['state'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

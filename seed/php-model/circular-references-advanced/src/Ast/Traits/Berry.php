@@ -13,7 +13,7 @@ use Seed\Core\Types\Union;
  *   |Dog
  * ) $animal
  */
-trait Berry
+trait Berry 
 {
     /**
      * @var (
@@ -21,6 +21,6 @@ trait Berry
      *   |Dog
      * ) $animal
      */
-    #[JsonProperty('animal'), Union(Cat::class, Dog::class)]
+    #[JsonProperty('animal'), Union(Cat::class,Dog::class)]
     public Cat|Dog $animal;
 }

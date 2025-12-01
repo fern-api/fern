@@ -7,7 +7,7 @@ import (
 )
 
 type PostWithObjectBody struct {
-	String       string                         `json:"string" url:"-"`
+	FieldString  string                         `json:"string" url:"-"`
 	Integer      int                            `json:"integer" url:"-"`
 	NestedObject *types.ObjectWithOptionalField `json:"NestedObject,omitempty" url:"-"`
 }

@@ -7,6 +7,15 @@
   createdAt: "2025-12-01"
   irVersion: 62
 
+- version: 3.35.1
+  changelogEntry:
+    - summary: |
+        Fix WebSocket query parameter destructuring for property names that are not valid JavaScript identifiers (e.g., `language-code`).
+        The generated code now correctly uses renaming syntax in destructuring (e.g., `const { "language-code": languageCode } = args;`).
+      type: fix
+  createdAt: "2025-12-01"
+  irVersion: 62
+
 - version: 3.35.0
   changelogEntry:
     - summary: |

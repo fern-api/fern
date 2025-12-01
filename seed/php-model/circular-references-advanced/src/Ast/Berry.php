@@ -14,7 +14,7 @@ class Berry extends JsonSerializableType
      *   |Dog
      * ) $animal
      */
-    #[JsonProperty('animal'), Union(Cat::class, Dog::class)]
+    #[JsonProperty('animal'), Union(Cat::class,Dog::class)]
     public Cat|Dog $animal;
 
     /**
@@ -27,15 +27,15 @@ class Berry extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->animal = $values['animal'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

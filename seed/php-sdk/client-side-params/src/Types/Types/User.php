@@ -166,35 +166,15 @@ class User extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->userId = $values['userId'];
-        $this->email = $values['email'];
-        $this->emailVerified = $values['emailVerified'];
-        $this->username = $values['username'] ?? null;
-        $this->phoneNumber = $values['phoneNumber'] ?? null;
-        $this->phoneVerified = $values['phoneVerified'] ?? null;
-        $this->createdAt = $values['createdAt'];
-        $this->updatedAt = $values['updatedAt'];
-        $this->identities = $values['identities'] ?? null;
-        $this->appMetadata = $values['appMetadata'] ?? null;
-        $this->userMetadata = $values['userMetadata'] ?? null;
-        $this->picture = $values['picture'] ?? null;
-        $this->name = $values['name'] ?? null;
-        $this->nickname = $values['nickname'] ?? null;
-        $this->multifactor = $values['multifactor'] ?? null;
-        $this->lastIp = $values['lastIp'] ?? null;
-        $this->lastLogin = $values['lastLogin'] ?? null;
-        $this->loginsCount = $values['loginsCount'] ?? null;
-        $this->blocked = $values['blocked'] ?? null;
-        $this->givenName = $values['givenName'] ?? null;
-        $this->familyName = $values['familyName'] ?? null;
+    )
+    {
+        $this->userId = $values['userId'];$this->email = $values['email'];$this->emailVerified = $values['emailVerified'];$this->username = $values['username'] ?? null;$this->phoneNumber = $values['phoneNumber'] ?? null;$this->phoneVerified = $values['phoneVerified'] ?? null;$this->createdAt = $values['createdAt'];$this->updatedAt = $values['updatedAt'];$this->identities = $values['identities'] ?? null;$this->appMetadata = $values['appMetadata'] ?? null;$this->userMetadata = $values['userMetadata'] ?? null;$this->picture = $values['picture'] ?? null;$this->name = $values['name'] ?? null;$this->nickname = $values['nickname'] ?? null;$this->multifactor = $values['multifactor'] ?? null;$this->lastIp = $values['lastIp'] ?? null;$this->lastLogin = $values['lastLogin'] ?? null;$this->loginsCount = $values['loginsCount'] ?? null;$this->blocked = $values['blocked'] ?? null;$this->givenName = $values['givenName'] ?? null;$this->familyName = $values['familyName'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

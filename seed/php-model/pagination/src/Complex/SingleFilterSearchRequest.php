@@ -34,17 +34,15 @@ class SingleFilterSearchRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->field = $values['field'] ?? null;
-        $this->operator = $values['operator'] ?? null;
-        $this->value = $values['value'] ?? null;
+    )
+    {
+        $this->field = $values['field'] ?? null;$this->operator = $values['operator'] ?? null;$this->value = $values['value'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

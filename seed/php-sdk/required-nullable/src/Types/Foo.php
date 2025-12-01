@@ -41,18 +41,15 @@ class Foo extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->bar = $values['bar'] ?? null;
-        $this->nullableBar = $values['nullableBar'] ?? null;
-        $this->nullableRequiredBar = $values['nullableRequiredBar'] ?? null;
-        $this->requiredBar = $values['requiredBar'];
+    )
+    {
+        $this->bar = $values['bar'] ?? null;$this->nullableBar = $values['nullableBar'] ?? null;$this->nullableRequiredBar = $values['nullableRequiredBar'] ?? null;$this->requiredBar = $values['requiredBar'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

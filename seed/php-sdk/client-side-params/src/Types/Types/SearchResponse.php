@@ -35,17 +35,15 @@ class SearchResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->results = $values['results'];
-        $this->total = $values['total'] ?? null;
-        $this->nextOffset = $values['nextOffset'] ?? null;
+    )
+    {
+        $this->results = $values['results'];$this->total = $values['total'] ?? null;$this->nextOffset = $values['nextOffset'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }
