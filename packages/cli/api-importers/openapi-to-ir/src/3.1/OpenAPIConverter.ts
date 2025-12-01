@@ -72,8 +72,6 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     }
 
     private convertSecuritySchemes(): void {
-        // If we have auth overrides, they have already been injected into the OpenAPI spec
-        // by overrideOpenApiAuthWithGeneratorsAuth(), so we can just convert normally
         if (this.context.authOverrides) {
             const overrideAuth = convertApiAuth({
                 rawApiFileSchema: this.context.authOverrides,
@@ -88,12 +86,8 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             return;
         }
 
-        // No auth overrides, just convert OpenAPI security schemes normally
         const openApiSchemes = this.convertOpenApiSecuritySchemes();
         if (openApiSchemes.length > 0) {
-            // TODO(kenny): we're not using `requirement` here, and should remove.
-            //              this field is oversimplified, since it implies either all,
-            //              or any, but endpoints can have a subset.
             this.addAuthToIR({
                 requirement: openApiSchemes.length === 1 ? "ALL" : "ANY",
                 schemes: openApiSchemes,
@@ -303,70 +297,23 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
     }
 
     private overrideOpenApiAuthWithGeneratorsAuth(): void {
-        if (!this.context.authOverrides) {
+        if (!this.context.authOverrides?.["auth-schemes"]) {
             return;
         }
 
-        // Step 1: Replace all OpenAPI security schemes with generators.yml auth schemes
-        // We need to convert generators.yml auth to OpenAPI security scheme format
-        const generatorsAuth = this.context.authOverrides;
-
-        if (!generatorsAuth["auth-schemes"]) {
-            return;
-        }
-
-        // Clear existing security schemes
         if (!this.context.spec.components) {
             this.context.spec.components = {};
         }
         this.context.spec.components.securitySchemes = {};
 
-        // Convert generators.yml auth schemes to OpenAPI security schemes
-        const newSecurityRequirement: OpenAPIV3_1.SecurityRequirementObject = {};
-
-        for (const [schemeId, schemeConfig] of Object.entries(generatorsAuth["auth-schemes"])) {
-            // Convert each generators.yml auth scheme to OpenAPI format
-            const openApiSecurityScheme = this.convertGeneratorsAuthToOpenApiScheme(schemeConfig);
-            if (openApiSecurityScheme) {
-                this.context.spec.components.securitySchemes[schemeId] = openApiSecurityScheme;
-                // Add to global security requirement
-                newSecurityRequirement[schemeId] = [];
-            }
+        const securityRequirement: OpenAPIV3_1.SecurityRequirementObject = {};
+        for (const schemeId of Object.keys(this.context.authOverrides["auth-schemes"])) {
+            this.context.spec.components.securitySchemes[schemeId] = { type: "http", scheme: "bearer" };
+            securityRequirement[schemeId] = [];
         }
 
-        // Step 2: Set generators.yml auth as global security
-        this.context.spec.security = [newSecurityRequirement];
-
-        // Step 3: Remove endpoint-specific auth from all paths
+        this.context.spec.security = [securityRequirement];
         this.removeEndpointSpecificAuth();
-    }
-
-    private convertGeneratorsAuthToOpenApiScheme(schemeConfig: any): OpenAPIV3_1.SecuritySchemeObject | null {
-        if (!schemeConfig.scheme) {
-            return null;
-        }
-
-        switch (schemeConfig.scheme) {
-            case "bearer":
-                return {
-                    type: "http",
-                    scheme: "bearer",
-                    bearerFormat: "JWT"
-                };
-            case "basic":
-                return {
-                    type: "http",
-                    scheme: "basic"
-                };
-            case "api-key":
-                return {
-                    type: "apiKey",
-                    in: schemeConfig.header?.name ? "header" : "query",
-                    name: schemeConfig.header?.name || schemeConfig.query?.name || "Authorization"
-                };
-            default:
-                return null;
-        }
     }
 
     private removeEndpointSpecificAuth(): void {
@@ -374,14 +321,15 @@ export class OpenAPIConverter extends AbstractSpecConverter<OpenAPIConverterCont
             return;
         }
 
-        for (const [path, pathItem] of Object.entries(this.context.spec.paths)) {
-            if (!pathItem) continue;
+        for (const pathItem of Object.values(this.context.spec.paths)) {
+            if (!pathItem) {
+                continue;
+            }
 
-            // Remove security from all HTTP methods
             const methods = ["get", "post", "put", "patch", "delete", "options", "head", "trace"] as const;
             for (const method of methods) {
                 const operation = pathItem[method];
-                if (operation && "security" in operation) {
+                if (operation?.security) {
                     delete operation.security;
                 }
             }
