@@ -932,4 +932,87 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/auth-name-collision-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-name-collision-ir.snap");
     });
+
+    it("should handle OpenAPI auth overrides combined with OpenAPI overrides file", async () => {
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/auth-with-overrides")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "auth-with-overrides"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate IR has auth schemes - should only have generators.yml auth (customAuth)
+        expect(intermediateRepresentation.auth).toBeDefined();
+        expect(intermediateRepresentation.auth.schemes).toBeDefined();
+        const authSchemes = intermediateRepresentation.auth.schemes;
+        expect(authSchemes.length).toBe(1);
+
+        const schemeKeys = authSchemes.map((scheme) => scheme.key);
+        expect(schemeKeys).toContain("customAuth");
+        expect(schemeKeys).not.toContain("apiKey");
+
+        // Validate FDR auth schemes
+        expect(fdrApiDefinition.authSchemes).toBeDefined();
+        const fdrAuthSchemeKeys = Object.keys(fdrApiDefinition.authSchemes ?? {});
+        expect(fdrAuthSchemeKeys).toContain("customAuth");
+        expect(fdrAuthSchemeKeys).not.toContain("apiKey");
+        expect(fdrAuthSchemeKeys.length).toBe(1);
+
+        // Validate services and endpoints exist
+        expect(intermediateRepresentation.services).toBeDefined();
+        const services = Object.values(intermediateRepresentation.services);
+        expect(services.length).toBeGreaterThan(0);
+
+        const service = services[0];
+        expect(service).toBeDefined();
+        if (service && typeof service === "object" && "endpoints" in service) {
+            const serviceWithEndpoints = service as { endpoints?: unknown[] };
+            expect(serviceWithEndpoints.endpoints).toBeDefined();
+            expect(serviceWithEndpoints.endpoints?.length).toBe(2);
+        }
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/auth-with-overrides-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-with-overrides-ir.snap");
+    });
 });
