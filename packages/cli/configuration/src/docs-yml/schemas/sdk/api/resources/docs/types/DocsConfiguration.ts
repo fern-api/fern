@@ -49,4 +49,10 @@ export interface DocsConfiguration {
     integrations?: FernDocsConfig.IntegrationsConfig;
     css?: FernDocsConfig.CssConfig;
     js?: FernDocsConfig.JsConfig;
+    /**
+     * When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,
+     * including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
+     * @default false
+     */
+    enableEnvironmentVariableSubstitution?: boolean;
 }

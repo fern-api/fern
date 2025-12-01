@@ -2,6 +2,16 @@
 
 - changelogEntry:
     - summary: |
+        Add `enable-environment-variable-substitution` flag to `docs.yml` configuration. When set to `true`, 
+        environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
+        including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-01"
+  version: 2.15.0
+
+- changelogEntry:
+    - summary: |
         Log the pull request URL when an SDK is generated with self-hosted GitHub pull-request mode.
       type: feat
   irVersion: 62

@@ -1,3 +1,4 @@
+import { replaceEnvVariables } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, filterOssWorkspaces } from "@fern-api/docs-resolver";
 import {
     APIV1Read,
@@ -292,7 +293,7 @@ export async function getPreviewDocsDefinition({
         }
     }
 
-    return {
+    let docsDefinition: DocsV1Read.DocsDefinition = {
         apis: apiCollector.getAPIsForDefinition(),
         apisV2: apiCollectorV2.getAPIsForDefinition(),
         config: readDocsConfig,
@@ -302,6 +303,16 @@ export async function getPreviewDocsDefinition({
         jsFiles: dbDocsDefinition.jsFiles,
         id: undefined
     };
+
+    if (docsWorkspace.config.enableEnvironmentVariableSubstitution) {
+        docsDefinition = replaceEnvVariables(
+            docsDefinition,
+            { onError: (e) => context.logger.error(e) },
+            { substituteAsEmpty: true }
+        );
+    }
+
+    return docsDefinition;
 }
 
 type APIDefinitionID = string;

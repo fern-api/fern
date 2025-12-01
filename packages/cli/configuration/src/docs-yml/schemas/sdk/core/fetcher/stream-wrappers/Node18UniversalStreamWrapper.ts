@@ -2,10 +2,12 @@ import type { Writable } from "readable-stream";
 
 import { EventCallback, StreamWrapper } from "./chooseStreamWrapper";
 
-export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16Array | Uint32Array>
-    implements
-        StreamWrapper<Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>, ReadFormat>
-{
+export class Node18UniversalStreamWrapper<
+    ReadFormat extends Uint8Array | Uint16Array | Uint32Array,
+> implements StreamWrapper<
+    Node18UniversalStreamWrapper<ReadFormat> | Writable | WritableStream<ReadFormat>,
+    ReadFormat
+> {
     private readableStream: ReadableStream<ReadFormat>;
     private reader: ReadableStreamDefaultReader<ReadFormat>;
     private events: Record<string, EventCallback[] | undefined>;
@@ -183,7 +185,7 @@ export class Node18UniversalStreamWrapper<ReadFormat extends Uint8Array | Uint16
         }
 
         const decoder = new TextDecoder(this.encoding || "utf-8");
-        return decoder.decode(await new Blob(chunks as BlobPart[]).arrayBuffer());
+        return decoder.decode(await new Blob(chunks).arrayBuffer());
     }
 
     public async json<T>(): Promise<T> {
