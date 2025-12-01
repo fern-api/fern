@@ -65,7 +65,7 @@ export class DataClass extends AstNode {
                         writer.write(";");
                     }
                 } else {
-                    writer.writeLine(`(void) $${CONSTRUCTOR_PARAMETER_NAME};`);
+                    writer.writeLine(`unset($${CONSTRUCTOR_PARAMETER_NAME});`);
                 }
             })
         });
