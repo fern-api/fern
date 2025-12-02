@@ -2,8 +2,8 @@ import { ruby } from "@fern-api/ruby-ast";
 import { ObjectProperty, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
-// Rubocop Naming/VariableNumber: disallow "_" directly before digits
-const normalizeVariableNumber = (name: string): string => name.replace(/_(\d)/g, "$1");
+// Rubocop Naming/VariableNumber: disallow "_" directly before digits (but preserve leading underscores)
+const normalizeVariableNumber = (name: string): string => name.replace(/([a-zA-Z\d])_(\d)/g, "$1$2");
 
 export function generateFields({
     typeDeclaration,

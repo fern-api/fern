@@ -5,8 +5,8 @@ import { ruby } from "@fern-api/ruby-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
-// Rubocop Naming/VariableNumber: disallow "_" directly before digits
-const normalizeVariableNumber = (name: string): string => name.replace(/_(\d)/g, "$1");
+// Rubocop Naming/VariableNumber: disallow "_" directly before digits (but preserve leading underscores)
+const normalizeVariableNumber = (name: string): string => name.replace(/([a-zA-Z\d])_(\d)/g, "$1$2");
 
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
