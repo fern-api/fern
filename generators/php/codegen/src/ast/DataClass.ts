@@ -60,7 +60,13 @@ export class DataClass extends AstNode {
                     for (const field of orderedFields) {
                         writer.write(`$this->${field.name} = $${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`);
                         if (field.type.isOptional()) {
-                            writer.write(" ?? null");
+                            writer.write(" ?? ");
+                            const initializer = field.getInitializer();
+                            if (initializer != null) {
+                                initializer.write(writer);
+                            } else {
+                                writer.write("null");
+                            }
                         }
                         writer.write(";");
                     }
