@@ -5,6 +5,7 @@ import { type NormalizedClientOptions, normalizeClientOptions } from "../../../.
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedClientSideParams from "../../../index.js";
 
@@ -92,26 +93,7 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/resources.");
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/resources");
     }
 
     /**
@@ -172,28 +154,7 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling GET /api/resources/{resourceId}.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/resources/{resourceId}");
     }
 
     /**
@@ -260,28 +221,7 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling POST /api/resources/search.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/api/resources/search");
     }
 
     /**
@@ -387,26 +327,7 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/users.");
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/users");
     }
 
     /**
@@ -473,28 +394,7 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling GET /api/users/{userId}.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/users/{userId}");
     }
 
     /**
@@ -566,26 +466,7 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling POST /api/users.");
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/api/users");
     }
 
     /**
@@ -660,28 +541,7 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling PATCH /api/users/{userId}.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/api/users/{userId}");
     }
 
     /**
@@ -729,28 +589,7 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling DELETE /api/users/{userId}.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/api/users/{userId}");
     }
 
     /**
@@ -819,28 +658,7 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling GET /api/connections.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/connections");
     }
 
     /**
@@ -902,28 +720,12 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling GET /api/connections/{connectionId}.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/api/connections/{connectionId}",
+        );
     }
 
     /**
@@ -1029,26 +831,7 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError("Timeout exceeded when calling GET /api/clients.");
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/clients");
     }
 
     /**
@@ -1115,27 +898,6 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedClientSideParamsError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedClientSideParamsTimeoutError(
-                    "Timeout exceeded when calling GET /api/clients/{clientId}.",
-                );
-            case "unknown":
-                throw new errors.SeedClientSideParamsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/api/clients/{clientId}");
     }
 }
