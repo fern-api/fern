@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Fix 2.0.0-rc0 CLI migration to properly migrate `coerce-enums-to-literals` setting for AsyncAPI specs. Previously, the migration only handled this setting for OpenAPI specs.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.14.1
+
+- changelogEntry:
+    - summary: |
         Log the pull request URL when an SDK is generated with self-hosted GitHub pull-request mode.
       type: feat
   irVersion: 62
