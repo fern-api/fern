@@ -5,6 +5,60 @@ import { AbstractConverter, AbstractConverterContext, APIError } from "..";
 
 const LITERAL_REGEX = /^literal<\s*(?:"(.*)"|(true|false))\s*>$/;
 
+/**
+ * Checks if a schema is "simple" (primitive-like, no nested structure).
+ * Simple schemas are those that don't have properties, items, or nested unions.
+ */
+function isSimpleSchema(schema: OpenAPIV3_1.SchemaObject): boolean {
+    // Check for nested structure that would make this complex
+    if (
+        schema.properties ||
+        schema.items ||
+        schema.oneOf ||
+        schema.anyOf ||
+        schema.allOf ||
+        schema.additionalProperties
+    ) {
+        return false;
+    }
+
+    // Primitive types are simple
+    if (
+        schema.type === "string" ||
+        schema.type === "number" ||
+        schema.type === "integer" ||
+        schema.type === "boolean"
+    ) {
+        return true;
+    }
+
+    // Const-only schemas are simple
+    if (schema.const !== undefined) {
+        return true;
+    }
+
+    // Enum-only schemas are simple
+    if (Array.isArray(schema.enum) && schema.enum.length > 0) {
+        return true;
+    }
+
+    return false;
+}
+
+/**
+ * Gets the literal/const value from a schema if it has one.
+ * Returns undefined if the schema doesn't have a const or enum value.
+ */
+function getLiteralValueFromSchema(schema: OpenAPIV3_1.SchemaObject): unknown | undefined {
+    if (schema.const !== undefined) {
+        return schema.const;
+    }
+    if (Array.isArray(schema.enum) && schema.enum.length > 0) {
+        return schema.enum[0];
+    }
+    return undefined;
+}
+
 export declare namespace ExampleConverter {
     export interface Args extends AbstractConverter.Args<AbstractConverterContext<object>> {
         schema: OpenAPIV3_1.SchemaObject | OpenAPIV3_1.ReferenceObject;
@@ -965,6 +1019,67 @@ export class ExampleConverter extends AbstractConverter<AbstractConverterContext
         }
 
         const containerExample = this.example ?? this.maybeResolveSchemaExample(resolvedSchema);
+
+        // For simple unions (all members are primitives/literals/enums) without a provided example,
+        // prefer const/literal variants over primitive types that would fall back to generic examples
+        if (this.example === undefined) {
+            const resolvedUnionSchemas: OpenAPIV3_1.SchemaObject[] = [];
+            for (const subSchema of unionSchemas) {
+                if (!subSchema) {
+                    continue;
+                }
+                const resolved = this.context.resolveMaybeReference<OpenAPIV3_1.SchemaObject>({
+                    schemaOrReference: subSchema,
+                    breadcrumbs: this.breadcrumbs,
+                    skipErrorCollector: true
+                });
+                if (resolved) {
+                    resolvedUnionSchemas.push(resolved);
+                }
+            }
+
+            const hasOnlySimpleMembers =
+                resolvedUnionSchemas.length > 0 && resolvedUnionSchemas.every((s) => isSimpleSchema(s));
+
+            if (hasOnlySimpleMembers) {
+                const literalCandidateIndex = resolvedUnionSchemas.findIndex(
+                    (s) => getLiteralValueFromSchema(s) !== undefined
+                );
+
+                if (literalCandidateIndex !== -1) {
+                    const literalSchema = unionSchemas[literalCandidateIndex];
+                    const resolvedLiteralSchema = resolvedUnionSchemas[literalCandidateIndex];
+                    if (literalSchema && resolvedLiteralSchema) {
+                        const literalValue = getLiteralValueFromSchema(resolvedLiteralSchema);
+
+                        const exampleConverter = new ExampleConverter({
+                            breadcrumbs: [...this.breadcrumbs, `${unionType}[${literalCandidateIndex}]`],
+                            context: this.context,
+                            schema:
+                                unionType === "oneOf"
+                                    ? { ...resolvedSchema, ...literalSchema, oneOf: undefined }
+                                    : literalSchema,
+                            example: literalValue,
+                            depth: this.depth + 1,
+                            generateOptionalProperties: this.generateOptionalProperties,
+                            exampleGenerationStrategy: this.exampleGenerationStrategy,
+                            seenRefs: this.getMaybeUpdatedSeenRefs()
+                        });
+
+                        const literalResult = exampleConverter.convert();
+                        if (literalResult.isValid) {
+                            return {
+                                isValid: true,
+                                coerced: false,
+                                usedProvidedExample: true,
+                                validExample: literalResult.validExample,
+                                errors: []
+                            };
+                        }
+                    }
+                }
+            }
+        }
 
         const results: ExampleConverter.Output[] = [];
         let firstValidResult: ExampleConverter.Output | null = null;
