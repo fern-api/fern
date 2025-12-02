@@ -16,7 +16,15 @@ export class JavaProject extends AbstractProject<AbstractJavaGeneratorContext<Ba
     }
 
     public addJavaFiles(file: File): void {
+        const filepath = file.directory.length > 0 ? `${file.directory}/${file.filename}` : file.filename;
+        this.context.logger.debug(`Generating ${filepath}`);
         this.sourceFiles.push(file);
+    }
+
+    public override addRawFiles(file: File): void {
+        const filepath = file.directory.length > 0 ? `${file.directory}/${file.filename}` : file.filename;
+        this.context.logger.debug(`Generating ${filepath}`);
+        super.addRawFiles(file);
     }
 
     public async persist(): Promise<void> {
