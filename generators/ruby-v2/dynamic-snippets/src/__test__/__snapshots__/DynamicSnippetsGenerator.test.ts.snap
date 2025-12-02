@@ -98,7 +98,7 @@ client.endpoints.object.get_and_return_with_optional_field(
   list: ['list', 'list'],
   set: Set.new(['set']),
   map: {
-    1: 'map'
+    1 => 'map'
   },
   bigint: '1000000'
 );
