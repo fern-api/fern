@@ -6,7 +6,7 @@ client = Seed::Client.new(
 );
 
 client.service.create_big_entity({
-  extendedMovie: {
+  extended_movie: {
     cast: ['cast', 'cast'],
     id: 'id',
     prequel: 'prequel',
@@ -22,12 +22,12 @@ client.service.create_big_entity({
   entity: {
     name: 'name'
   },
-  commonMetadata: {
+  common_metadata: {
     id: 'id',
     data: {
       data: 'data'
     },
-    jsonString: 'jsonString'
+    json_string: 'jsonString'
   },
   migration: {
     name: 'name'

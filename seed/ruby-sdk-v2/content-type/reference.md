@@ -15,7 +15,7 @@
 ```ruby
 client.service.patch(
   application: 'application',
-  requireAuth: true
+  require_auth: true
 );
 ```
 </dd>
@@ -91,7 +91,7 @@ client.service.patch_complex(
   email: 'email',
   nickname: 'nickname',
   bio: 'bio',
-  profileImageUrl: 'profileImageUrl',
+  profile_image_url: 'profileImageUrl',
   settings: {}
 );
 ```
@@ -230,7 +230,7 @@ This should trigger the NPE issue when optional fields aren't initialized.
 ```ruby
 client.service.named_patch_with_mixed(
   id: 'id',
-  appId: 'appId',
+  app_id: 'appId',
   instructions: 'instructions',
   active: true
 );
@@ -315,11 +315,11 @@ This endpoint should:
 
 ```ruby
 client.service.optional_merge_patch_test(
-  requiredField: 'requiredField',
-  optionalString: 'optionalString',
-  optionalInteger: 1,
-  optionalBoolean: true,
-  nullableString: 'nullableString'
+  required_field: 'requiredField',
+  optional_string: 'optionalString',
+  optional_integer: 1,
+  optional_boolean: true,
+  nullable_string: 'nullableString'
 );
 ```
 </dd>
@@ -408,8 +408,8 @@ Regular PATCH endpoint without merge-patch semantics
 ```ruby
 client.service.regular_patch(
   id: 'id',
-  field1: 'field1',
-  field2: 1
+  field_1: 'field1',
+  field_2: 1
 );
 ```
 </dd>

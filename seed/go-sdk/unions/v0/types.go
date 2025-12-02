@@ -407,19 +407,19 @@ func (u *Union) validate() error {
 }
 
 type UnionWithBaseProperties struct {
-	Type    string
-	Id      string
-	Integer int
-	String  string
-	Foo     *Foo
+	Type        string
+	Id          string
+	Integer     int
+	FieldString string
+	Foo         *Foo
 }
 
 func NewUnionWithBasePropertiesFromInteger(value int) *UnionWithBaseProperties {
 	return &UnionWithBaseProperties{Type: "integer", Integer: value}
 }
 
-func NewUnionWithBasePropertiesFromString(value string) *UnionWithBaseProperties {
-	return &UnionWithBaseProperties{Type: "string", String: value}
+func NewUnionWithBasePropertiesFromFieldString(value string) *UnionWithBaseProperties {
+	return &UnionWithBaseProperties{Type: "string", FieldString: value}
 }
 
 func NewUnionWithBasePropertiesFromFoo(value *Foo) *UnionWithBaseProperties {
@@ -447,11 +447,11 @@ func (u *UnionWithBaseProperties) GetInteger() int {
 	return u.Integer
 }
 
-func (u *UnionWithBaseProperties) GetString() string {
+func (u *UnionWithBaseProperties) GetFieldString() string {
 	if u == nil {
 		return ""
 	}
-	return u.String
+	return u.FieldString
 }
 
 func (u *UnionWithBaseProperties) GetFoo() *Foo {
@@ -485,12 +485,12 @@ func (u *UnionWithBaseProperties) UnmarshalJSON(data []byte) error {
 		u.Integer = valueUnmarshaler.Integer
 	case "string":
 		var valueUnmarshaler struct {
-			String string `json:"value"`
+			FieldString string `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		u.String = valueUnmarshaler.String
+		u.FieldString = valueUnmarshaler.FieldString
 	case "foo":
 		value := new(Foo)
 		if err := json.Unmarshal(data, &value); err != nil {
@@ -521,13 +521,13 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "string":
 		var marshaler = struct {
-			Type   string `json:"type"`
-			Id     string `json:"id"`
-			String string `json:"value"`
+			Type        string `json:"type"`
+			Id          string `json:"id"`
+			FieldString string `json:"value"`
 		}{
-			Type:   "string",
-			Id:     u.Id,
-			String: u.String,
+			Type:        "string",
+			Id:          u.Id,
+			FieldString: u.FieldString,
 		}
 		return json.Marshal(marshaler)
 	case "foo":
@@ -537,7 +537,7 @@ func (u UnionWithBaseProperties) MarshalJSON() ([]byte, error) {
 
 type UnionWithBasePropertiesVisitor interface {
 	VisitInteger(int) error
-	VisitString(string) error
+	VisitFieldString(string) error
 	VisitFoo(*Foo) error
 }
 
@@ -548,7 +548,7 @@ func (u *UnionWithBaseProperties) Accept(visitor UnionWithBasePropertiesVisitor)
 	case "integer":
 		return visitor.VisitInteger(u.Integer)
 	case "string":
-		return visitor.VisitString(u.String)
+		return visitor.VisitFieldString(u.FieldString)
 	case "foo":
 		return visitor.VisitFoo(u.Foo)
 	}
@@ -562,7 +562,7 @@ func (u *UnionWithBaseProperties) validate() error {
 	if u.Integer != 0 {
 		fields = append(fields, "integer")
 	}
-	if u.String != "" {
+	if u.FieldString != "" {
 		fields = append(fields, "string")
 	}
 	if u.Foo != nil {
@@ -1654,17 +1654,17 @@ func (u *UnionWithOptionalTime) validate() error {
 }
 
 type UnionWithPrimitive struct {
-	Type    string
-	Integer int
-	String  string
+	Type        string
+	Integer     int
+	FieldString string
 }
 
 func NewUnionWithPrimitiveFromInteger(value int) *UnionWithPrimitive {
 	return &UnionWithPrimitive{Type: "integer", Integer: value}
 }
 
-func NewUnionWithPrimitiveFromString(value string) *UnionWithPrimitive {
-	return &UnionWithPrimitive{Type: "string", String: value}
+func NewUnionWithPrimitiveFromFieldString(value string) *UnionWithPrimitive {
+	return &UnionWithPrimitive{Type: "string", FieldString: value}
 }
 
 func (u *UnionWithPrimitive) GetType() string {
@@ -1681,11 +1681,11 @@ func (u *UnionWithPrimitive) GetInteger() int {
 	return u.Integer
 }
 
-func (u *UnionWithPrimitive) GetString() string {
+func (u *UnionWithPrimitive) GetFieldString() string {
 	if u == nil {
 		return ""
 	}
-	return u.String
+	return u.FieldString
 }
 
 func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
@@ -1710,12 +1710,12 @@ func (u *UnionWithPrimitive) UnmarshalJSON(data []byte) error {
 		u.Integer = valueUnmarshaler.Integer
 	case "string":
 		var valueUnmarshaler struct {
-			String string `json:"value"`
+			FieldString string `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		u.String = valueUnmarshaler.String
+		u.FieldString = valueUnmarshaler.FieldString
 	}
 	return nil
 }
@@ -1738,11 +1738,11 @@ func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "string":
 		var marshaler = struct {
-			Type   string `json:"type"`
-			String string `json:"value"`
+			Type        string `json:"type"`
+			FieldString string `json:"value"`
 		}{
-			Type:   "string",
-			String: u.String,
+			Type:        "string",
+			FieldString: u.FieldString,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -1750,7 +1750,7 @@ func (u UnionWithPrimitive) MarshalJSON() ([]byte, error) {
 
 type UnionWithPrimitiveVisitor interface {
 	VisitInteger(int) error
-	VisitString(string) error
+	VisitFieldString(string) error
 }
 
 func (u *UnionWithPrimitive) Accept(visitor UnionWithPrimitiveVisitor) error {
@@ -1760,7 +1760,7 @@ func (u *UnionWithPrimitive) Accept(visitor UnionWithPrimitiveVisitor) error {
 	case "integer":
 		return visitor.VisitInteger(u.Integer)
 	case "string":
-		return visitor.VisitString(u.String)
+		return visitor.VisitFieldString(u.FieldString)
 	}
 }
 
@@ -1772,7 +1772,7 @@ func (u *UnionWithPrimitive) validate() error {
 	if u.Integer != 0 {
 		fields = append(fields, "integer")
 	}
-	if u.String != "" {
+	if u.FieldString != "" {
 		fields = append(fields, "string")
 	}
 	if len(fields) == 0 {

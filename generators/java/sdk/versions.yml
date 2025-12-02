@@ -1,3 +1,11 @@
+- version: 3.20.1
+  changelogEntry:
+    - summary: |
+        Fix StreamTest generator to use Java 8 compatible constructs. Replaced List.of() and Map.of() (Java 9+) with Arrays.asList() and a createMap() helper method using HashMap.
+      type: fix
+  createdAt: "2025-11-27"
+  irVersion: 61
+
 - version: 3.20.0
   changelogEntry:
     - summary: |

@@ -35,9 +35,8 @@ class UpdateTagsRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->tags = $values['tags'] ?? null;
-        $this->categories = $values['categories'] ?? null;
-        $this->labels = $values['labels'] ?? null;
+    )
+    {
+        $this->tags = $values['tags'] ?? null;$this->categories = $values['categories'] ?? null;$this->labels = $values['labels'] ?? null;
     }
 }

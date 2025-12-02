@@ -114,7 +114,7 @@ client.optional.send_optional_nullable_with_all_optional_properties(
   'actionId',
   'id',
   {
-    updateDraft: true
+    update_draft: true
   }
 );
 ```

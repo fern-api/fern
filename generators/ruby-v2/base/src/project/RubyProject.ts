@@ -118,7 +118,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
             this.coreFiles.push(
                 await this.createAsIsFile({
                     filename,
-                    gemNamespace: firstCharUpperCase(this.context.config.organization || "fern")
+                    gemNamespace: firstCharUpperCase(this.context.config.organization || "fern"),
+                    customPagerClassName: this.rubyContext.customConfig.customPagerName
                 })
             );
         }
@@ -126,10 +127,12 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
 
     private async createAsIsFile({
         filename,
-        gemNamespace
+        gemNamespace,
+        customPagerClassName
     }: {
         filename: string;
         gemNamespace: string;
+        customPagerClassName?: string;
     }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
         return new File(
@@ -138,7 +141,8 @@ export class RubyProject extends AbstractProject<AbstractRubyGeneratorContext<Ba
             replaceTemplate({
                 contents,
                 variables: getTemplateVariables({
-                    gemNamespace
+                    gemNamespace,
+                    customPagerClassName
                 })
             })
         );
@@ -190,10 +194,17 @@ function replaceTemplate({ contents, variables }: { contents: string; variables:
     return template(contents)(variables);
 }
 
-function getTemplateVariables({ gemNamespace }: { gemNamespace: string }): Record<string, unknown> {
+function getTemplateVariables({
+    gemNamespace,
+    customPagerClassName
+}: {
+    gemNamespace: string;
+    customPagerClassName?: string;
+}): Record<string, unknown> {
     return {
         gem_namespace: gemNamespace,
-        sdkName: gemNamespace.toLowerCase()
+        sdkName: gemNamespace.toLowerCase(),
+        custom_pager_class_name: customPagerClassName ?? "CustomPager"
     };
 }
 

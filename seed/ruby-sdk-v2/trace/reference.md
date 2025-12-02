@@ -93,7 +93,7 @@ client.admin.update_test_submission_status(
 client.admin.send_test_submission_update(
   'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
   {
-    updateTime: '2024-01-15T09:30:00Z'
+    update_time: '2024-01-15T09:30:00Z'
   }
 );
 ```
@@ -197,7 +197,7 @@ client.admin.update_workspace_submission_status(
 client.admin.send_workspace_submission_update(
   'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
   {
-    updateTime: '2024-01-15T09:30:00Z'
+    update_time: '2024-01-15T09:30:00Z'
   }
 );
 ```
@@ -248,26 +248,26 @@ client.admin.send_workspace_submission_update(
 
 ```ruby
 client.admin.store_traced_test_case(
-  submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  testCaseId: 'testCaseId',
+  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  test_case_id: 'testCaseId',
   result: {
     result: {
       passed: true
     },
     stdout: 'stdout'
   },
-  traceResponses: [{
-    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber: 1,
-    expressionLocation: {
+  trace_responses: [{
+    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    line_number: 1,
+    expression_location: {
       start: 1,
       offset: 1
     },
     stack: {
-      numStackFrames: 1,
-      topStackFrame: {
-        methodName: 'methodName',
-        lineNumber: 1,
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: 'methodName',
+        line_number: 1,
         scopes: [{
           variables: {}
         }, {
@@ -277,17 +277,17 @@ client.admin.store_traced_test_case(
     },
     stdout: 'stdout'
   }, {
-    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber: 1,
-    expressionLocation: {
+    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    line_number: 1,
+    expression_location: {
       start: 1,
       offset: 1
     },
     stack: {
-      numStackFrames: 1,
-      topStackFrame: {
-        methodName: 'methodName',
-        lineNumber: 1,
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: 'methodName',
+        line_number: 1,
         scopes: [{
           variables: {}
         }, {
@@ -422,27 +422,27 @@ client.admin.store_traced_test_case_v_2(
 
 ```ruby
 client.admin.store_traced_workspace(
-  submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  workspaceRunDetails: {
+  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  workspace_run_details: {
     exception: {
-      exceptionType: 'exceptionType',
-      exceptionMessage: 'exceptionMessage',
-      exceptionStacktrace: 'exceptionStacktrace'
+      exception_type: 'exceptionType',
+      exception_message: 'exceptionMessage',
+      exception_stacktrace: 'exceptionStacktrace'
     },
     stdout: 'stdout'
   },
-  traceResponses: [{
-    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber: 1,
-    expressionLocation: {
+  trace_responses: [{
+    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    line_number: 1,
+    expression_location: {
       start: 1,
       offset: 1
     },
     stack: {
-      numStackFrames: 1,
-      topStackFrame: {
-        methodName: 'methodName',
-        lineNumber: 1,
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: 'methodName',
+        line_number: 1,
         scopes: [{
           variables: {}
         }, {
@@ -452,17 +452,17 @@ client.admin.store_traced_workspace(
     },
     stdout: 'stdout'
   }, {
-    submissionId: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    lineNumber: 1,
-    expressionLocation: {
+    submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    line_number: 1,
+    expression_location: {
       start: 1,
       offset: 1
     },
     stack: {
-      numStackFrames: 1,
-      topStackFrame: {
-        methodName: 'methodName',
-        lineNumber: 1,
+      num_stack_frames: 1,
+      top_stack_frame: {
+        method_name: 'methodName',
+        line_number: 1,
         scopes: [{
           variables: {}
         }, {
@@ -646,7 +646,7 @@ client.homepage.set_homepage_problems();
 <dd>
 
 ```ruby
-client.migration.get_attempted_migrations(adminKeyHeader: 'admin-key-header');
+client.migration.get_attempted_migrations(admin_key_header: 'admin-key-header');
 ```
 </dd>
 </dl>
@@ -702,9 +702,9 @@ Create a new playlist
 
 ```ruby
 client.playlist.create_playlist(
-  serviceParam: 1,
+  service_param: 1,
   datetime: '2024-01-15T09:30:00Z',
-  optionalDatetime: '2024-01-15T09:30:00Z'
+  optional_datetime: '2024-01-15T09:30:00Z'
 );
 ```
 </dd>
@@ -784,12 +784,10 @@ Returns the user's playlists
 
 ```ruby
 client.playlist.get_playlists(
-  serviceParam: 1,
+  service_param: 1,
   limit: 1,
-  otherField: 'otherField',
-  multiLineDocs: 'multiLineDocs',
-  optionalMultipleField: ,
-  multipleField: 
+  other_field: 'otherField',
+  multi_line_docs: 'multiLineDocs'
 );
 ```
 </dd>
@@ -1096,28 +1094,28 @@ Creates a problem
 
 ```ruby
 client.problem.create_problem({
-  problemName: 'problemName',
-  problemDescription: {
+  problem_name: 'problemName',
+  problem_description: {
     boards: []
   },
   files: {},
-  inputParams: [{
+  input_params: [{
     name: 'name'
   }, {
     name: 'name'
   }],
   testcases: [{
-    testCase: {
+    test_case: {
       id: 'id',
       params: []
     }
   }, {
-    testCase: {
+    test_case: {
       id: 'id',
       params: []
     }
   }],
-  methodName: 'methodName'
+  method_name: 'methodName'
 });
 ```
 </dd>
@@ -1175,28 +1173,28 @@ Updates a problem
 client.problem.update_problem(
   'problemId',
   {
-    problemName: 'problemName',
-    problemDescription: {
+    problem_name: 'problemName',
+    problem_description: {
       boards: []
     },
     files: {},
-    inputParams: [{
+    input_params: [{
       name: 'name'
     }, {
       name: 'name'
     }],
     testcases: [{
-      testCase: {
+      test_case: {
         id: 'id',
         params: []
       }
     }, {
-      testCase: {
+      test_case: {
         id: 'id',
         params: []
       }
     }],
-    methodName: 'methodName'
+    method_name: 'methodName'
   }
 );
 ```
@@ -1315,13 +1313,12 @@ Returns default starter files for problem
 
 ```ruby
 client.problem.get_default_starter_files(
-  inputParams: [{
+  input_params: [{
     name: 'name'
   }, {
     name: 'name'
   }],
-  outputType: ,
-  methodName: 'methodName'
+  method_name: 'methodName'
 );
 ```
 </dd>

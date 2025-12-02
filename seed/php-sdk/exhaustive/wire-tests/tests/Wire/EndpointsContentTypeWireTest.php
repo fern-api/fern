@@ -1,30 +1,24 @@
+<?php
+
 namespace Seed\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 use Seed\Types\Object\Types\ObjectWithOptionalField;
 use DateTime;
 
-class EndpointsContentTypeWireTest extends TestCase
+class EndpointsContentTypeWireTest extends WireMockTestCase
 {
+    /**
+     * @var SeedClient $client
+     */
+    private SeedClient $client;
 
     /**
      */
     public function testPostJsonPatchContentType(): void {
         $testId = 'endpoints.content_type.post_json_patch_content_type.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->contentType->postJsonPatchContentType(
+        $this->client->endpoints->contentType->postJsonPatchContentType(
             new ObjectWithOptionalField([
                 'string' => 'string',
                 'integer' => 1,
@@ -47,6 +41,11 @@ class EndpointsContentTypeWireTest extends TestCase
                 ],
                 'bigint' => '1000000',
             ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.content_type.post_json_patch_content_type.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -61,19 +60,7 @@ class EndpointsContentTypeWireTest extends TestCase
      */
     public function testPostJsonPatchContentWithCharsetType(): void {
         $testId = 'endpoints.content_type.post_json_patch_content_with_charset_type.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->endpoints->contentType->postJsonPatchContentWithCharsetType(
+        $this->client->endpoints->contentType->postJsonPatchContentWithCharsetType(
             new ObjectWithOptionalField([
                 'string' => 'string',
                 'integer' => 1,
@@ -96,6 +83,11 @@ class EndpointsContentTypeWireTest extends TestCase
                 ],
                 'bigint' => '1000000',
             ]),
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.content_type.post_json_patch_content_with_charset_type.0',
+                ],
+            ],
         );
         $this->verifyRequestCount(
             $testId,
@@ -103,6 +95,18 @@ class EndpointsContentTypeWireTest extends TestCase
             "/foo/baz",
             null,
             1
+        );
+    }
+
+    /**
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->client = new SeedClient(
+            token: 'test-token',
+        options: [
+            'baseUrl' => 'http://localhost:8080',
+        ],
         );
     }
 }

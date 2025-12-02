@@ -70,14 +70,8 @@ class SendLiteralsInlinedRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->prompt = $values['prompt'];
-        $this->context = $values['context'] ?? null;
-        $this->query = $values['query'];
-        $this->temperature = $values['temperature'] ?? null;
-        $this->stream = $values['stream'];
-        $this->aliasedContext = $values['aliasedContext'];
-        $this->maybeContext = $values['maybeContext'] ?? null;
-        $this->objectWithLiteral = $values['objectWithLiteral'];
+    )
+    {
+        $this->prompt = $values['prompt'];$this->context = $values['context'] ?? null;$this->query = $values['query'];$this->temperature = $values['temperature'] ?? null;$this->stream = $values['stream'];$this->aliasedContext = $values['aliasedContext'];$this->maybeContext = $values['maybeContext'] ?? null;$this->objectWithLiteral = $values['objectWithLiteral'];
     }
 }

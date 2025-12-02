@@ -27,16 +27,15 @@ class DebugKeyValuePairs extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->key = $values['key'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->key = $values['key'];$this->value = $values['value'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

@@ -37,6 +37,10 @@ scripts:
       - bundle exec rake test
 
 fixtures:
+  pagination-custom:
+    - customConfig:
+        customPagerName: FooPager
+      outputFolder: .
   examples:
     - outputFolder: no-custom-config
       customConfig: null

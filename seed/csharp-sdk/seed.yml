@@ -64,6 +64,12 @@ scripts:
       
 
 fixtures:
+  literal:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        experimental-readonly-constants: true
+      outputFolder: readonly-constants
   pagination:
     - customConfig: null
       outputFolder: no-custom-config

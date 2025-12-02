@@ -1,30 +1,29 @@
+<?php
+
 namespace Seed\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 
-class NoAuthWireTest extends TestCase
+class NoAuthWireTest extends WireMockTestCase
 {
+    /**
+     * @var SeedClient $client
+     */
+    private SeedClient $client;
 
     /**
      */
     public function testPostWithNoAuth(): void {
         $testId = 'no_auth.post_with_no_auth.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-            ],
-        );
-        $client->noAuth->postWithNoAuth(
+        $this->client->noAuth->postWithNoAuth(
             [
                 'key' => "value",
+            ],
+            [
+                'headers' => [
+                    'X-Test-Id' => 'no_auth.post_with_no_auth.0',
+                ],
             ],
         );
         $this->verifyRequestCount(
@@ -33,6 +32,18 @@ class NoAuthWireTest extends TestCase
             "/no-auth",
             null,
             1
+        );
+    }
+
+    /**
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->client = new SeedClient(
+            token: 'test-token',
+        options: [
+            'baseUrl' => 'http://localhost:8080',
+        ],
         );
     }
 }

@@ -54,9 +54,10 @@ export class FernDefinitionConverter {
      * those referenced by the effective auth (per-generator override or top-level).
      */
     private buildAuthOverrides(
-        perGeneratorAuth: RawSchemas.ApiAuthSchema | undefined
+        perGeneratorAuth: RawSchemas.ApiAuthSchema | undefined,
+        perGeneratorAuthSchemes: Record<string, RawSchemas.AuthSchemeDeclarationSchema> | undefined
     ): RawSchemas.WithAuthSchema | undefined {
-        const allAuthSchemes = this.args.generatorsConfiguration?.api?.["auth-schemes"];
+        const topLevelAuthSchemes = this.args.generatorsConfiguration?.api?.["auth-schemes"];
         const topLevelAuth = this.args.generatorsConfiguration?.api?.auth;
 
         // Determine the effective auth (per-generator override takes precedence)
@@ -65,6 +66,12 @@ export class FernDefinitionConverter {
         if (effectiveAuth == null) {
             return undefined;
         }
+
+        // Merge auth-schemes: per-generator overrides take precedence over top-level
+        const allAuthSchemes =
+            perGeneratorAuthSchemes != null || topLevelAuthSchemes != null
+                ? { ...topLevelAuthSchemes, ...perGeneratorAuthSchemes }
+                : undefined;
 
         // Filter auth-schemes to only include those referenced by the effective auth
         const filteredAuthSchemes = filterAuthSchemes(allAuthSchemes, effectiveAuth);
@@ -93,7 +100,7 @@ export class FernDefinitionConverter {
                 options: settings,
                 overrides: this.args
             }),
-            authOverrides: this.buildAuthOverrides(settings?.auth),
+            authOverrides: this.buildAuthOverrides(settings?.auth, settings?.authSchemes),
             environmentOverrides:
                 this.args.generatorsConfiguration?.api?.environments != null
                     ? { ...this.args.generatorsConfiguration?.api }

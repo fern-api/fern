@@ -59,7 +59,8 @@ export async function runLocalGenerationForWorkspace({
 
                 const fernWorkspace = await workspace.toFernWorkspace(
                     { context },
-                    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation),
+                    generatorInvocation.apiOverride?.specs
                 );
 
                 const dynamicGeneratorConfig = getDynamicGeneratorConfig({
@@ -372,7 +373,7 @@ async function postProcessGithubSelfHosted(
                 const { prTitle, prBody } = parseCommitMessageForPR(finalCommitMessage);
 
                 try {
-                    await octokit.pulls.create({
+                    const { data: pullRequest } = await octokit.pulls.create({
                         owner,
                         repo,
                         title: prTitle,
@@ -382,9 +383,7 @@ async function postProcessGithubSelfHosted(
                         draft: false
                     });
 
-                    context.logger.info(
-                        `Created pull request ${head} -> ${baseBranch} on ${selfhostedGithubConfig.uri}`
-                    );
+                    context.logger.info(`Created pull request: ${pullRequest.html_url}`);
                 } catch (error) {
                     const message = error instanceof Error ? error.message : String(error);
                     if (message.includes("A pull request already exists for")) {

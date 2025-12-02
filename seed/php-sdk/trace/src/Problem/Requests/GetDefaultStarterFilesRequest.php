@@ -44,9 +44,8 @@ class GetDefaultStarterFilesRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->inputParams = $values['inputParams'];
-        $this->outputType = $values['outputType'];
-        $this->methodName = $values['methodName'];
+    )
+    {
+        $this->inputParams = $values['inputParams'];$this->outputType = $values['outputType'];$this->methodName = $values['methodName'];
     }
 }

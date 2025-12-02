@@ -19,12 +19,11 @@ docs: |
   Find and filter train stations across Europe, including their location
   and local timezone.
 service:
-  auth: false
+  auth: true
   base-path: ''
   display-name: Stations
   endpoints:
     get-stations:
-      auth: true
       display-name: Get a list of train stations
       docs: Returns a list of all train stations in the system.
       errors:

@@ -35,9 +35,8 @@ class PostWithObjectBody extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->string = $values['string'];
-        $this->integer = $values['integer'];
-        $this->nestedObject = $values['nestedObject'];
+    )
+    {
+        $this->string = $values['string'];$this->integer = $values['integer'];$this->nestedObject = $values['nestedObject'];
     }
 }

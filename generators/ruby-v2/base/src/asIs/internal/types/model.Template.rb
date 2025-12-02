@@ -187,7 +187,9 @@ module <%= gem_namespace %>
         # @return [String]
         def inspect
           attrs = @data.map do |name, value|
-            "#{name}=#{value.inspect}"
+            field = self.class.fields[name] || self.class.extra_fields[name]
+            display_value = field&.sensitive? ? "[REDACTED]" : value.inspect
+            "#{name}=#{display_value}"
           end
 
           "#<#{self.class.name}:0x#{object_id&.to_s(16)} #{attrs.join(" ")}>"

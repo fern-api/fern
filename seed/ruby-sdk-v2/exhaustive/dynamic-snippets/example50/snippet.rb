@@ -6,6 +6,6 @@ client = Seed::Client.new(
 );
 
 client.req_with_headers.get_with_custom_header(
-  xTestServiceHeader: 'X-TEST-SERVICE-HEADER',
-  xTestEndpointHeader: 'X-TEST-ENDPOINT-HEADER'
+  x_test_service_header: 'X-TEST-SERVICE-HEADER',
+  x_test_endpoint_header: 'X-TEST-ENDPOINT-HEADER'
 );

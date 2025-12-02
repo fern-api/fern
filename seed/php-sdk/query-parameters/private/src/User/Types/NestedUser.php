@@ -27,50 +27,39 @@ class NestedUser extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->name = $values['name'];
-        $this->user = $values['user'];
+    )
+    {
+        $this->name = $values['name'];$this->user = $values['user'];
     }
 
     /**
      * @return string
      */
-    public function getName(): string
-    {
-        return $this->name;
-    }
+    public function getName(): string {
+        return $this->name;}
 
     /**
      * @param string $value
      */
-    public function setName(string $value): self
-    {
-        $this->name = $value;
-        return $this;
-    }
+    public function setName(string $value): self {
+        $this->name = $value;return $this;}
 
     /**
      * @return User
      */
-    public function getUser(): User
-    {
-        return $this->user;
-    }
+    public function getUser(): User {
+        return $this->user;}
 
     /**
      * @param User $value
      */
-    public function setUser(User $value): self
-    {
-        $this->user = $value;
-        return $this;
-    }
+    public function setUser(User $value): self {
+        $this->user = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

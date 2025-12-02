@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedPagination from "../../../index.js";
 
@@ -86,21 +87,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -174,21 +161,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users");
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -258,21 +231,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users");
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -358,21 +317,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
         let _offset = request?.page != null ? request?.page : 0;
@@ -455,21 +400,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
         let _offset = request?.page != null ? request?.page : 1;
@@ -540,21 +471,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling POST /users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/users");
             },
         );
         let _offset = request?.pagination?.page != null ? request?.pagination?.page : 1;
@@ -633,21 +550,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
         let _offset = request?.page != null ? request?.page : 1;
@@ -726,21 +629,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
         let _offset = request?.page != null ? request?.page : 1;
@@ -812,21 +701,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -896,21 +771,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -980,21 +841,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
@@ -1065,21 +912,7 @@ export class UsersClient {
                         rawResponse: _response.rawResponse,
                     });
                 }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.SeedPaginationError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.SeedPaginationTimeoutError("Timeout exceeded when calling GET /users.");
-                    case "unknown":
-                        throw new errors.SeedPaginationError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
             },
         );
         let _offset = request?.offset != null ? request?.offset : 1;

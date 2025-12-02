@@ -76,17 +76,16 @@ class VariableValue extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    ) {
-        $this->type = $values['type'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->type = $values['type'];$this->value = $values['value'];
     }
 
     /**
      * @param int $integerValue
      * @return VariableValue
      */
-    public static function integerValue(int $integerValue): VariableValue
-    {
+    public static function integerValue(int $integerValue): VariableValue {
         return new VariableValue([
             'type' => 'integerValue',
             'value' => $integerValue,
@@ -97,8 +96,7 @@ class VariableValue extends JsonSerializableType
      * @param bool $booleanValue
      * @return VariableValue
      */
-    public static function booleanValue(bool $booleanValue): VariableValue
-    {
+    public static function booleanValue(bool $booleanValue): VariableValue {
         return new VariableValue([
             'type' => 'booleanValue',
             'value' => $booleanValue,
@@ -109,8 +107,7 @@ class VariableValue extends JsonSerializableType
      * @param float $doubleValue
      * @return VariableValue
      */
-    public static function doubleValue(float $doubleValue): VariableValue
-    {
+    public static function doubleValue(float $doubleValue): VariableValue {
         return new VariableValue([
             'type' => 'doubleValue',
             'value' => $doubleValue,
@@ -121,8 +118,7 @@ class VariableValue extends JsonSerializableType
      * @param string $stringValue
      * @return VariableValue
      */
-    public static function stringValue(string $stringValue): VariableValue
-    {
+    public static function stringValue(string $stringValue): VariableValue {
         return new VariableValue([
             'type' => 'stringValue',
             'value' => $stringValue,
@@ -133,8 +129,7 @@ class VariableValue extends JsonSerializableType
      * @param string $charValue
      * @return VariableValue
      */
-    public static function charValue(string $charValue): VariableValue
-    {
+    public static function charValue(string $charValue): VariableValue {
         return new VariableValue([
             'type' => 'charValue',
             'value' => $charValue,
@@ -145,8 +140,7 @@ class VariableValue extends JsonSerializableType
      * @param MapValue $mapValue
      * @return VariableValue
      */
-    public static function mapValue(MapValue $mapValue): VariableValue
-    {
+    public static function mapValue(MapValue $mapValue): VariableValue {
         return new VariableValue([
             'type' => 'mapValue',
             'value' => $mapValue,
@@ -157,8 +151,7 @@ class VariableValue extends JsonSerializableType
      * @param array<VariableValue> $listValue
      * @return VariableValue
      */
-    public static function listValue(array $listValue): VariableValue
-    {
+    public static function listValue(array $listValue): VariableValue {
         return new VariableValue([
             'type' => 'listValue',
             'value' => $listValue,
@@ -169,8 +162,7 @@ class VariableValue extends JsonSerializableType
      * @param BinaryTreeValue $binaryTreeValue
      * @return VariableValue
      */
-    public static function binaryTreeValue(BinaryTreeValue $binaryTreeValue): VariableValue
-    {
+    public static function binaryTreeValue(BinaryTreeValue $binaryTreeValue): VariableValue {
         return new VariableValue([
             'type' => 'binaryTreeValue',
             'value' => $binaryTreeValue,
@@ -181,8 +173,7 @@ class VariableValue extends JsonSerializableType
      * @param SinglyLinkedListValue $singlyLinkedListValue
      * @return VariableValue
      */
-    public static function singlyLinkedListValue(SinglyLinkedListValue $singlyLinkedListValue): VariableValue
-    {
+    public static function singlyLinkedListValue(SinglyLinkedListValue $singlyLinkedListValue): VariableValue {
         return new VariableValue([
             'type' => 'singlyLinkedListValue',
             'value' => $singlyLinkedListValue,
@@ -193,8 +184,7 @@ class VariableValue extends JsonSerializableType
      * @param DoublyLinkedListValue $doublyLinkedListValue
      * @return VariableValue
      */
-    public static function doublyLinkedListValue(DoublyLinkedListValue $doublyLinkedListValue): VariableValue
-    {
+    public static function doublyLinkedListValue(DoublyLinkedListValue $doublyLinkedListValue): VariableValue {
         return new VariableValue([
             'type' => 'doublyLinkedListValue',
             'value' => $doublyLinkedListValue,
@@ -204,8 +194,7 @@ class VariableValue extends JsonSerializableType
     /**
      * @return VariableValue
      */
-    public static function nullValue(): VariableValue
-    {
+    public static function nullValue(): VariableValue {
         return new VariableValue([
             'type' => 'nullValue',
             'value' => null,
@@ -215,251 +204,228 @@ class VariableValue extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isIntegerValue(): bool
-    {
-        return is_int($this->value) && $this->type === 'integerValue';
+    public function isIntegerValue(): bool {
+        return is_int($this->value)&& $this->type === 'integerValue';
     }
 
     /**
      * @return int
      */
-    public function asIntegerValue(): int
-    {
-        if (!(is_int($this->value) && $this->type === 'integerValue')) {
+    public function asIntegerValue(): int {
+        if (!(is_int($this->value)&& $this->type === 'integerValue')){
             throw new Exception(
                 "Expected integerValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isBooleanValue(): bool
-    {
-        return is_bool($this->value) && $this->type === 'booleanValue';
+    public function isBooleanValue(): bool {
+        return is_bool($this->value)&& $this->type === 'booleanValue';
     }
 
     /**
      * @return bool
      */
-    public function asBooleanValue(): bool
-    {
-        if (!(is_bool($this->value) && $this->type === 'booleanValue')) {
+    public function asBooleanValue(): bool {
+        if (!(is_bool($this->value)&& $this->type === 'booleanValue')){
             throw new Exception(
                 "Expected booleanValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isDoubleValue(): bool
-    {
-        return is_float($this->value) && $this->type === 'doubleValue';
+    public function isDoubleValue(): bool {
+        return is_float($this->value)&& $this->type === 'doubleValue';
     }
 
     /**
      * @return float
      */
-    public function asDoubleValue(): float
-    {
-        if (!(is_float($this->value) && $this->type === 'doubleValue')) {
+    public function asDoubleValue(): float {
+        if (!(is_float($this->value)&& $this->type === 'doubleValue')){
             throw new Exception(
                 "Expected doubleValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isStringValue(): bool
-    {
-        return is_string($this->value) && $this->type === 'stringValue';
+    public function isStringValue(): bool {
+        return is_string($this->value)&& $this->type === 'stringValue';
     }
 
     /**
      * @return string
      */
-    public function asStringValue(): string
-    {
-        if (!(is_string($this->value) && $this->type === 'stringValue')) {
+    public function asStringValue(): string {
+        if (!(is_string($this->value)&& $this->type === 'stringValue')){
             throw new Exception(
                 "Expected stringValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isCharValue(): bool
-    {
-        return is_string($this->value) && $this->type === 'charValue';
+    public function isCharValue(): bool {
+        return is_string($this->value)&& $this->type === 'charValue';
     }
 
     /**
      * @return string
      */
-    public function asCharValue(): string
-    {
-        if (!(is_string($this->value) && $this->type === 'charValue')) {
+    public function asCharValue(): string {
+        if (!(is_string($this->value)&& $this->type === 'charValue')){
             throw new Exception(
                 "Expected charValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isMapValue(): bool
-    {
-        return $this->value instanceof MapValue && $this->type === 'mapValue';
+    public function isMapValue(): bool {
+        return $this->value instanceof MapValue&& $this->type === 'mapValue';
     }
 
     /**
      * @return MapValue
      */
-    public function asMapValue(): MapValue
-    {
-        if (!($this->value instanceof MapValue && $this->type === 'mapValue')) {
+    public function asMapValue(): MapValue {
+        if (!($this->value instanceof MapValue&& $this->type === 'mapValue')){
             throw new Exception(
                 "Expected mapValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isListValue(): bool
-    {
-        return is_array($this->value) && $this->type === 'listValue';
+    public function isListValue(): bool {
+        return is_array($this->value)&& $this->type === 'listValue';
     }
 
     /**
      * @return array<VariableValue>
      */
-    public function asListValue(): array
-    {
-        if (!(is_array($this->value) && $this->type === 'listValue')) {
+    public function asListValue(): array {
+        if (!(is_array($this->value)&& $this->type === 'listValue')){
             throw new Exception(
                 "Expected listValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isBinaryTreeValue(): bool
-    {
-        return $this->value instanceof BinaryTreeValue && $this->type === 'binaryTreeValue';
+    public function isBinaryTreeValue(): bool {
+        return $this->value instanceof BinaryTreeValue&& $this->type === 'binaryTreeValue';
     }
 
     /**
      * @return BinaryTreeValue
      */
-    public function asBinaryTreeValue(): BinaryTreeValue
-    {
-        if (!($this->value instanceof BinaryTreeValue && $this->type === 'binaryTreeValue')) {
+    public function asBinaryTreeValue(): BinaryTreeValue {
+        if (!($this->value instanceof BinaryTreeValue&& $this->type === 'binaryTreeValue')){
             throw new Exception(
                 "Expected binaryTreeValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isSinglyLinkedListValue(): bool
-    {
-        return $this->value instanceof SinglyLinkedListValue && $this->type === 'singlyLinkedListValue';
+    public function isSinglyLinkedListValue(): bool {
+        return $this->value instanceof SinglyLinkedListValue&& $this->type === 'singlyLinkedListValue';
     }
 
     /**
      * @return SinglyLinkedListValue
      */
-    public function asSinglyLinkedListValue(): SinglyLinkedListValue
-    {
-        if (!($this->value instanceof SinglyLinkedListValue && $this->type === 'singlyLinkedListValue')) {
+    public function asSinglyLinkedListValue(): SinglyLinkedListValue {
+        if (!($this->value instanceof SinglyLinkedListValue&& $this->type === 'singlyLinkedListValue')){
             throw new Exception(
                 "Expected singlyLinkedListValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isDoublyLinkedListValue(): bool
-    {
-        return $this->value instanceof DoublyLinkedListValue && $this->type === 'doublyLinkedListValue';
+    public function isDoublyLinkedListValue(): bool {
+        return $this->value instanceof DoublyLinkedListValue&& $this->type === 'doublyLinkedListValue';
     }
 
     /**
      * @return DoublyLinkedListValue
      */
-    public function asDoublyLinkedListValue(): DoublyLinkedListValue
-    {
-        if (!($this->value instanceof DoublyLinkedListValue && $this->type === 'doublyLinkedListValue')) {
+    public function asDoublyLinkedListValue(): DoublyLinkedListValue {
+        if (!($this->value instanceof DoublyLinkedListValue&& $this->type === 'doublyLinkedListValue')){
             throw new Exception(
                 "Expected doublyLinkedListValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isNullValue(): bool
-    {
-        return is_null($this->value) && $this->type === 'nullValue';
+    public function isNullValue(): bool {
+        return is_null($this->value)&& $this->type === 'nullValue';
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $result = [];
         $result['type'] = $this->type;
-
+        
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-
-        switch ($this->type) {
+        
+        switch ($this->type){
             case 'integerValue':
                 $value = $this->value;
                 $result['integerValue'] = $value;
@@ -505,27 +471,26 @@ class VariableValue extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)) {
+                if (is_null($this->value)){
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType) {
+                if ($this->value instanceof JsonSerializableType){
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)) {
+                } elseif (is_array($this->value)){
                     $result = array_merge($this->value, $result);
                 }
         }
-
+        
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static
-    {
+    public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
+        if (!is_array($decodedJson)){
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -534,78 +499,77 @@ class VariableValue extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static
-    {
+    public static function jsonDeserialize(array $data): static {
         $args = [];
-        if (!array_key_exists('type', $data)) {
+        if (!array_key_exists('type', $data)){
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))) {
+        if (!(is_string($type))){
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-
+        
         $args['type'] = $type;
-        switch ($type) {
+        switch ($type){
             case 'integerValue':
-                if (!array_key_exists('integerValue', $data)) {
+                if (!array_key_exists('integerValue', $data)){
                     throw new Exception(
                         "JSON data is missing property 'integerValue'",
                     );
                 }
-
+                
                 $args['value'] = $data['integerValue'];
                 break;
             case 'booleanValue':
-                if (!array_key_exists('booleanValue', $data)) {
+                if (!array_key_exists('booleanValue', $data)){
                     throw new Exception(
                         "JSON data is missing property 'booleanValue'",
                     );
                 }
-
+                
                 $args['value'] = $data['booleanValue'];
                 break;
             case 'doubleValue':
-                if (!array_key_exists('doubleValue', $data)) {
+                if (!array_key_exists('doubleValue', $data)){
                     throw new Exception(
                         "JSON data is missing property 'doubleValue'",
                     );
                 }
-
+                
                 $args['value'] = $data['doubleValue'];
                 break;
             case 'stringValue':
-                if (!array_key_exists('stringValue', $data)) {
+                if (!array_key_exists('stringValue', $data)){
                     throw new Exception(
                         "JSON data is missing property 'stringValue'",
                     );
                 }
-
+                
                 $args['value'] = $data['stringValue'];
                 break;
             case 'charValue':
-                if (!array_key_exists('charValue', $data)) {
+                if (!array_key_exists('charValue', $data)){
                     throw new Exception(
                         "JSON data is missing property 'charValue'",
                     );
                 }
-
+                
                 $args['value'] = $data['charValue'];
                 break;
             case 'mapValue':
                 $args['value'] = MapValue::jsonDeserialize($data);
                 break;
             case 'listValue':
-                if (!array_key_exists('listValue', $data)) {
+                if (!array_key_exists('listValue', $data)){
                     throw new Exception(
                         "JSON data is missing property 'listValue'",
                     );
                 }
-
+                
                 $args['value'] = $data['listValue'];
                 break;
             case 'binaryTreeValue':
@@ -625,7 +589,7 @@ class VariableValue extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-
+        
         // @phpstan-ignore-next-line
         return new static($args);
     }

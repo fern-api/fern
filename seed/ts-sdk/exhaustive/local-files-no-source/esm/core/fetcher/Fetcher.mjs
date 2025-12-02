@@ -208,9 +208,10 @@ export function fetcherImpl(args) {
                     };
                     logger.debug("HTTP request succeeded", metadata);
                 }
+                const body = yield getResponseBody(response, args.responseType);
                 return {
                     ok: true,
-                    body: (yield getResponseBody(response, args.responseType)),
+                    body: body,
                     headers: response.headers,
                     rawResponse: toRawResponse(response),
                 };

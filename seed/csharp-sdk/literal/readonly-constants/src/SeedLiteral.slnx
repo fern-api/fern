@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SeedLiteral.Test/SeedLiteral.Test.csproj" />
+  <Project Path="SeedLiteral/SeedLiteral.csproj" />
+</Solution>

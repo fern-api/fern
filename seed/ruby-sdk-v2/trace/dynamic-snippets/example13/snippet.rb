@@ -6,10 +6,8 @@ client = Seed::Client.new(
 );
 
 client.playlist.get_playlists(
-  serviceParam: 1,
+  service_param: 1,
   limit: 1,
-  otherField: 'otherField',
-  multiLineDocs: 'multiLineDocs',
-  optionalMultipleField: ,
-  multipleField: 
+  other_field: 'otherField',
+  multi_line_docs: 'multiLineDocs'
 );

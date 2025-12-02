@@ -311,6 +311,10 @@ fixtures:
         pydantic_config:
           skip_validation: true
       outputFolder: skip-pydantic-validation
+  server-sent-events:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: with-wire-tests
   unions:
     - customConfig: null
       outputFolder: no-custom-config
@@ -372,5 +376,8 @@ allowedFailures:
   - pagination-custom
   - response-property
   - streaming-parameter
+  - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
+  - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
+  - exhaustive:package-path
   - trace
   - websocket

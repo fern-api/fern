@@ -4,7 +4,6 @@
     {
       "fixtures": [
         "version",
-        "server-sent-events",
         "simple-api",
         "oauth-client-credentials",
         "imdb:deep-package-path",
@@ -120,7 +119,6 @@
       "fixtures": [
         "query-parameters-openapi-as-objects",
         "imdb:with-wiremock-tests",
-        "server-sent-event-examples",
         "mixed-file-directory",
         "idempotency-headers:.",
         "enum",

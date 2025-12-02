@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 import { normalizeClientOptionsWithAuth } from "../../../../BaseClient.mjs";
 import { mergeHeaders } from "../../../../core/headers.mjs";
 import * as core from "../../../../core/index.mjs";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.mjs";
 import * as errors from "../../../../errors/index.mjs";
 export class NoReqBodyClient {
     constructor(options) {
@@ -54,21 +55,7 @@ export class NoReqBodyClient {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling GET /no-req-body.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/no-req-body");
         });
     }
     /**
@@ -106,21 +93,7 @@ export class NoReqBodyClient {
                     rawResponse: _response.rawResponse,
                 });
             }
-            switch (_response.error.reason) {
-                case "non-json":
-                    throw new errors.SeedExhaustiveError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.rawBody,
-                        rawResponse: _response.rawResponse,
-                    });
-                case "timeout":
-                    throw new errors.SeedExhaustiveTimeoutError("Timeout exceeded when calling POST /no-req-body.");
-                case "unknown":
-                    throw new errors.SeedExhaustiveError({
-                        message: _response.error.errorMessage,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/no-req-body");
         });
     }
 }

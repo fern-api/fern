@@ -116,4 +116,33 @@ describe("no-duplicate-overrides", () => {
         expect(violations.length).toBeGreaterThan(0);
         expect(violations[0]?.message).toContain("SDK method members.add already exists");
     }, 10_000);
+
+    it("different namespaces - no conflict", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoDuplicateOverridesRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("different-namespaces")
+            ),
+            cliVersion: "0.1.3-rc0"
+        });
+
+        expect(violations).toEqual([]);
+    }, 10_000);
+
+    it("same namespace - conflict", async () => {
+        const violations = await getViolationsForRule({
+            rule: NoDuplicateOverridesRule,
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures"),
+                RelativeFilePath.of("same-namespace")
+            ),
+            cliVersion: "0.1.3-rc0"
+        });
+
+        expect(violations.length).toBeGreaterThan(0);
+        expect(violations[0]?.message).toContain("SDK method payment.referrals.fetchRewardBalance already exists");
+    }, 10_000);
 });

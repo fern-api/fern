@@ -42,10 +42,8 @@ class CreateRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->decimal = $values['decimal'];
-        $this->even = $values['even'];
-        $this->name = $values['name'];
-        $this->shape = $values['shape'];
+    )
+    {
+        $this->decimal = $values['decimal'];$this->even = $values['even'];$this->name = $values['name'];$this->shape = $values['shape'];
     }
 }

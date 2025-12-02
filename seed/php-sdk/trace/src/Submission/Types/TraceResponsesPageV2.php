@@ -31,16 +31,15 @@ class TraceResponsesPageV2 extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->offset = $values['offset'] ?? null;
-        $this->traceResponses = $values['traceResponses'];
+    )
+    {
+        $this->offset = $values['offset'] ?? null;$this->traceResponses = $values['traceResponses'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Seed\Submission;
 
-enum SubmissionTypeEnum: string
-{
+enum SubmissionTypeEnum
+ : string {
     case Test = "TEST";
 }

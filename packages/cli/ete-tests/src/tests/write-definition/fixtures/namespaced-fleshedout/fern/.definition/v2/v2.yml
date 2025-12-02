@@ -28,13 +28,12 @@ types:
     source:
       openapi: openapi/cohere-v2.yaml
 service:
-  auth: false
+  auth: true
   base-path: ''
   endpoints:
     chat:
       audiences:
         - v2-beta
-      auth: true
       display-name: Chat with the model
       docs: >
         Generates a message from the model in response to a provided

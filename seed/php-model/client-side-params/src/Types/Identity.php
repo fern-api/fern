@@ -55,20 +55,15 @@ class Identity extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->connection = $values['connection'];
-        $this->userId = $values['userId'];
-        $this->provider = $values['provider'];
-        $this->isSocial = $values['isSocial'];
-        $this->accessToken = $values['accessToken'] ?? null;
-        $this->expiresIn = $values['expiresIn'] ?? null;
+    )
+    {
+        $this->connection = $values['connection'];$this->userId = $values['userId'];$this->provider = $values['provider'];$this->isSocial = $values['isSocial'];$this->accessToken = $values['accessToken'] ?? null;$this->expiresIn = $values['expiresIn'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

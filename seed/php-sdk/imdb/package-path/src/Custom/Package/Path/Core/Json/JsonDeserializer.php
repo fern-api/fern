@@ -95,7 +95,9 @@ class JsonDeserializer
         foreach ($type->types as $unionType) {
             try {
                 return self::deserializeValue($data, $unionType);
-            } catch (Exception) {
+            } catch (\Throwable) {
+                // Catching Throwable instead of Exception to handle TypeError
+                // that occurs when assigning null to non-nullable typed properties
                 continue;
             }
         }

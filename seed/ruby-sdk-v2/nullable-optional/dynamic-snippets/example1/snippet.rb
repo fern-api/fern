@@ -10,9 +10,9 @@ client.nullable_optional.create_user({
     street: 'street',
     city: 'city',
     state: 'state',
-    zipCode: 'zipCode',
+    zip_code: 'zipCode',
     country: 'country',
-    buildingId: 'buildingId',
-    tenantId: 'tenantId'
+    building_id: 'buildingId',
+    tenant_id: 'tenantId'
   }
 });

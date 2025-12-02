@@ -1,28 +1,28 @@
+<?php
+
 namespace Seed\Tests;
 
-use PHPUnit\Framework\TestCase;
+use Seed\Tests\Wire\WireMockTestCase;
 use Seed\SeedClient;
 
-class EndpointsUrlsWireTest extends TestCase
+class EndpointsUrlsWireTest extends WireMockTestCase
 {
+    /**
+     * @var SeedClient $client
+     */
+    private SeedClient $client;
 
     /**
      */
     public function testWithMixedCase(): void {
         $testId = 'endpoints.urls.with_mixed_case.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
+        $this->client->endpoints->urls->withMixedCase(
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.urls.with_mixed_case.0',
+                ],
             ],
         );
-        $client->endpoints->urls->withMixedCase();
         $this->verifyRequestCount(
             $testId,
             "GET",
@@ -36,19 +36,13 @@ class EndpointsUrlsWireTest extends TestCase
      */
     public function testNoEndingSlash(): void {
         $testId = 'endpoints.urls.no_ending_slash.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
+        $this->client->endpoints->urls->noEndingSlash(
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.urls.no_ending_slash.0',
+                ],
             ],
         );
-        $client->endpoints->urls->noEndingSlash();
         $this->verifyRequestCount(
             $testId,
             "GET",
@@ -62,19 +56,13 @@ class EndpointsUrlsWireTest extends TestCase
      */
     public function testWithEndingSlash(): void {
         $testId = 'endpoints.urls.with_ending_slash.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
+        $this->client->endpoints->urls->withEndingSlash(
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.urls.with_ending_slash.0',
+                ],
             ],
         );
-        $client->endpoints->urls->withEndingSlash();
         $this->verifyRequestCount(
             $testId,
             "GET",
@@ -88,25 +76,31 @@ class EndpointsUrlsWireTest extends TestCase
      */
     public function testWithUnderscores(): void {
         $testId = 'endpoints.urls.with_underscores.0';
-        $client = new SeedClient(
-            options: [
-                'baseUrl' => 'http://localhost:8080',
-                'headers' => ['X-Test-Id' => $testId],
-            ]
-        );
-        $client = new SeedClient(
-            token: '<token>',
-            options: [
-                'baseUrl' => 'http://localhost:8080',
+        $this->client->endpoints->urls->withUnderscores(
+            [
+                'headers' => [
+                    'X-Test-Id' => 'endpoints.urls.with_underscores.0',
+                ],
             ],
         );
-        $client->endpoints->urls->withUnderscores();
         $this->verifyRequestCount(
             $testId,
             "GET",
             "/urls/with_underscores",
             null,
             1
+        );
+    }
+
+    /**
+     */
+    protected function setUp(): void {
+        parent::setUp();
+        $this->client = new SeedClient(
+            token: 'test-token',
+        options: [
+            'baseUrl' => 'http://localhost:8080',
+        ],
         );
     }
 }

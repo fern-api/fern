@@ -2,8 +2,8 @@
 
 namespace Seed\Union\Types;
 
-enum KeyType: string
-{
+enum KeyType
+ : string {
     case Name = "name";
     case Value = "value";
 }

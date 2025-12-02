@@ -44,7 +44,8 @@ class Person extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->name = $values['name'];
         $this->email = $values['email'] ?? null;
     }
@@ -66,8 +67,7 @@ class AdditionalPropertiesTest extends TestCase
         $person = Person::fromJson($expectedJson);
         $this->assertEquals('john.doe', $person->getName());
         $this->assertEquals('john.doe@example.com', $person->getEmail());
-        $this->assertEquals(
-            [
+        $this->assertEquals([
             'age' => 42
         ],
             $person->getAdditionalProperties(),

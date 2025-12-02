@@ -18,7 +18,8 @@ class SearchUsersRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
+    )
+    {
         $this->limit = $values['limit'] ?? null;
     }
 }

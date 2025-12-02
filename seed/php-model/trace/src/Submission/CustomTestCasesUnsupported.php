@@ -27,16 +27,15 @@ class CustomTestCasesUnsupported extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->problemId = $values['problemId'];
-        $this->submissionId = $values['submissionId'];
+    )
+    {
+        $this->problemId = $values['problemId'];$this->submissionId = $values['submissionId'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

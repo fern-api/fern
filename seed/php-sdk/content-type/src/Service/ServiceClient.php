@@ -16,7 +16,7 @@ use Seed\Service\Requests\NamedMixedPatchRequest;
 use Seed\Service\Requests\OptionalMergePatchRequest;
 use Seed\Service\Requests\RegularPatchRequest;
 
-class ServiceClient
+class ServiceClient 
 {
     /**
      * @var array{
@@ -25,7 +25,7 @@ class ServiceClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -44,10 +44,11 @@ class ServiceClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -65,8 +66,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function patch(PatchProxyRequest $request, ?array $options = null): void
-    {
+    public function patch(PatchProxyRequest $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -79,12 +79,12 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -121,8 +121,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function patchComplex(string $id, PatchComplexRequest $request = new PatchComplexRequest(), ?array $options = null): void
-    {
+    public function patchComplex(string $id, PatchComplexRequest $request = new PatchComplexRequest(), ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -135,12 +134,12 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -175,8 +174,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function namedPatchWithMixed(string $id, NamedMixedPatchRequest $request, ?array $options = null): void
-    {
+    public function namedPatchWithMixed(string $id, NamedMixedPatchRequest $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -189,12 +187,12 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -230,8 +228,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function optionalMergePatchTest(OptionalMergePatchRequest $request, ?array $options = null): void
-    {
+    public function optionalMergePatchTest(OptionalMergePatchRequest $request, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -244,12 +241,12 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -283,8 +280,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function regularPatch(string $id, RegularPatchRequest $request = new RegularPatchRequest(), ?array $options = null): void
-    {
+    public function regularPatch(string $id, RegularPatchRequest $request = new RegularPatchRequest(), ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -297,12 +293,12 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

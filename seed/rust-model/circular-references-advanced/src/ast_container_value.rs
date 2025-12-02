@@ -4,10 +4,10 @@ pub use crate::prelude::*;
 #[serde(tag = "type")]
 pub enum ContainerValue {
         List {
-            value: Vec<FieldValue>,
+            value: Vec<Box<FieldValue>>,
         },
 
         Optional {
-            value: Option<FieldValue>,
+            value: Option<Box<FieldValue>>,
         },
 }

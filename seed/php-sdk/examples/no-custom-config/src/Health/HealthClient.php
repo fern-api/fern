@@ -6,7 +6,7 @@ use Seed\Health\Service\ServiceClient;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 
-class HealthClient
+class HealthClient 
 {
     /**
      * @var ServiceClient $service
@@ -20,7 +20,7 @@ class HealthClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -39,10 +39,11 @@ class HealthClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
         $this->service = new ServiceClient($this->client, $this->options);

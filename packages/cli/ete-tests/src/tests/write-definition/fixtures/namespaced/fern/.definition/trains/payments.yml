@@ -16,12 +16,11 @@ docs: |
   > Bookings usually expire within 1 hour so you'll need to make your payment
   > before the expiry date
 service:
-  auth: false
+  auth: true
   base-path: ''
   display-name: Payments
   endpoints:
     create-booking-payment:
-      auth: true
       display-name: Pay for a Booking
       docs: >-
         A payment is an attempt to pay for the booking, which will confirm the

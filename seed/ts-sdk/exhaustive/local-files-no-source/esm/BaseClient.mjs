@@ -13,6 +13,10 @@ export function normalizeClientOptions(options) {
 export function normalizeClientOptionsWithAuth(options) {
     var _a;
     const normalized = normalizeClientOptions(options);
-    (_a = normalized.authProvider) !== null && _a !== void 0 ? _a : (normalized.authProvider = new BearerAuthProvider(options));
+    const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
+    (_a = normalized.authProvider) !== null && _a !== void 0 ? _a : (normalized.authProvider = new BearerAuthProvider(normalizedWithNoOpAuthProvider));
     return normalized;
+}
+function withNoOpAuthProvider(options) {
+    return Object.assign(Object.assign({}, options), { authProvider: new core.NoOpAuthProvider() });
 }

@@ -1,7 +1,7 @@
 <?php
 
-namespace Custom\Package\Path\Core\Multipart;
 
+namespace Custom\Package\Path\Core\Multipart;
 use Custom\Package\Path\Core\Client\BaseApiRequest;
 use Custom\Package\Path\Core\Client\HttpMethod;
 
@@ -22,7 +22,8 @@ class MultipartApiRequest extends BaseApiRequest
         array $headers = [],
         array $query = [],
         public readonly ?MultipartFormData $body = null
-    ) {
+    )
+    {
         parent::__construct($baseUrl, $path, $method, $headers, $query);
     }
 }

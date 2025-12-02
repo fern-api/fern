@@ -1,4 +1,159 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+
+- changelogEntry:
+    - summary: |
+        Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`, 
+        environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
+        including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
+        Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.17.0
+
+- changelogEntry:
+    - summary: |
+        Add support for aliases in generators.yml. You can now define aliases that map to multiple groups, allowing you to run multiple groups with a single command.
+
+        ```yaml
+        # generators.yml
+        aliases:
+          all: ["php-sdk", "ts-sdk", "go-sdk"]
+
+        groups:
+          php-sdk:
+            generators: ...
+          ts-sdk:
+            generators: ...
+          go-sdk:
+            generators: ...
+        ```
+
+        Then run `fern generate all` to generate all three SDKs at once.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.16.0
+
+- changelogEntry:
+    - summary: |
+        Fix `fern check` incorrectly reporting SDK method conflicts for endpoints with the same `x-fern-sdk-group-name` and `x-fern-sdk-method-name` when they are in different namespaces. The validator now correctly allows duplicate SDK method names across different namespaces, matching the generator behavior where namespace is prepended to the SDK group name.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.15.2
+
+- changelogEntry:
+    - summary: |
+        Improve CI environment detection to properly detect Azure Pipelines and other CI systems. This prevents unnecessary prompts when running `fern generate --docs` in CI environments.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.15.1
+
+- changelogEntry:
+    - summary: |
+        Infer example for literal and enum types when generating IR from OpenAPI and Fern Definition.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.15.0
+
+- changelogEntry:
+    - summary: |
+        Fix 2.0.0-rc0 CLI migration to properly migrate `coerce-enums-to-literals` setting for AsyncAPI specs. Previously, the migration only handled this setting for OpenAPI specs.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.14.1
+
+- changelogEntry:
+    - summary: |
+        Log the pull request URL when an SDK is generated with self-hosted GitHub pull-request mode.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-01"
+  version: 2.14.0
+
+- changelogEntry:
+    - summary: |
+        Respect generators.yml auth-schemes override.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-01"
+  version: 2.13.1
+
+- changelogEntry:
+    - summary: Allow all API settings to be overridden at the generator level in generators.yml.
+      type: feat
+    - summary: |
+        Add CLI migration to automatically convert deprecated generator-level API settings keys to their new equivalents: `use-title` to `title-as-schema-name`, and `unions: v1` to `prefer-undiscriminated-unions-with-literals: true`.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.13.0
+
+- changelogEntry:
+    - summary: |
+        Support per-generator auth-schemes override in generators.yml. Generators can now define their own `auth-schemes` at the generator level, which takes precedence over top-level definitions.
+
+        ```yml
+        # generators.yml
+        api:
+          auth: Bearer
+          auth-schemes:
+            Bearer:
+              scheme: bearer
+
+        groups:
+          php-sdk:
+            generators:
+              - name: fernapi/fern-php-sdk
+                version: 1.23.0
+                api:
+                  auth: Bearer
+                  auth-schemes:
+                    Bearer:
+                      scheme: bearer
+                      get-token: POST /authorize
+        ```
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.12.0
+
+- changelogEntry:
+    - summary: |
+        When converting OpenAPI to Fern Definition, if all endpoints in a service have `auth: true`, set the `auth: true` at the service level, and remove it from individual endpoints.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-26"
+  version: 2.11.0
+
+- changelogEntry:
+    - summary: |
+        Support per-generator specs override in generators.yml. Generators can now redefine the `api.specs` configuration at the individual generator level, allowing different specs configurations for different generators.
+
+        ```yml
+        # generators.yml
+        api:
+          specs:
+            - openapi: openapi.yml
+
+        groups:
+          php-sdk:
+            generators:
+              - name: fernapi/fern-php-sdk
+                version: 1.23.1
+                api:
+                  specs:
+                    - openapi: custom-openapi.yml
+        ```
+      type: feat
+  irVersion: 62
+  createdAt: "2025-11-27"
+  version: 2.10.0
+
 - changelogEntry:
     - summary: |
         Fix file scope type resolution for inline request properties

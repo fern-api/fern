@@ -116,3 +116,15 @@ fixtures:
           timeouts:
             - GET /movie/{movieId}
       outputFolder: readme-config
+  server-sent-event-examples:
+    - customConfig:
+        enableWireTests: true
+        packageName: sse_examples
+        packageVersion: "0.1.0"
+      outputFolder: with-wire-tests
+  server-sent-events:
+    - customConfig:
+        enableWireTests: true
+        packageName: sse_events
+        packageVersion: "0.1.0"
+      outputFolder: with-wire-tests

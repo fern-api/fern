@@ -15,5 +15,5 @@ groups:
         config: {}
         api:
           settings:
-            unions: v1
-            use-title: false
+            prefer-undiscriminated-unions-with-literals: true
+            title-as-schema-name: false

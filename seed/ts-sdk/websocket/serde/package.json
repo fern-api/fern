@@ -58,9 +58,9 @@
         "ws": "^8.16.0"
     },
     "devDependencies": {
-        "@types/ws": "^8.5.10",
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",
+        "@types/ws": "^8.5.10",
         "vitest": "^3.2.4",
         "msw": "2.11.2",
         "@types/node": "^18.19.70",

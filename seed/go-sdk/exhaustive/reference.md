@@ -63,10 +63,10 @@ client.Endpoints.Container.GetAndReturnListOfPrimitives(
 ```go
 request := []*types.ObjectWithRequiredField{
         &types.ObjectWithRequiredField{
-            String: "string",
+            FieldString: "string",
         },
         &types.ObjectWithRequiredField{
-            String: "string",
+            FieldString: "string",
         },
     }
 client.Endpoints.Container.GetAndReturnListOfObjects(
@@ -162,7 +162,7 @@ client.Endpoints.Container.GetAndReturnSetOfPrimitives(
 ```go
 request := []*types.ObjectWithRequiredField{
         &types.ObjectWithRequiredField{
-            String: "string",
+            FieldString: "string",
         },
     }
 client.Endpoints.Container.GetAndReturnSetOfObjects(
@@ -258,7 +258,7 @@ client.Endpoints.Container.GetAndReturnMapPrimToPrim(
 ```go
 request := map[string]*types.ObjectWithRequiredField{
         "string": &types.ObjectWithRequiredField{
-            String: "string",
+            FieldString: "string",
         },
     }
 client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
@@ -306,7 +306,7 @@ client.Endpoints.Container.GetAndReturnMapOfPrimToObject(
 
 ```go
 request := &types.ObjectWithRequiredField{
-        String: "string",
+        FieldString: "string",
     }
 client.Endpoints.Container.GetAndReturnOptional(
         context.TODO(),
@@ -354,7 +354,7 @@ client.Endpoints.Container.GetAndReturnOptional(
 
 ```go
 request := &types.ObjectWithOptionalField{
-        String: fern.String(
+        FieldString: fern.String(
             "string",
         ),
         Integer: fern.Int(
@@ -444,7 +444,7 @@ client.Endpoints.ContentType.PostJsonPatchContentType(
 
 ```go
 request := &types.ObjectWithOptionalField{
-        String: fern.String(
+        FieldString: fern.String(
             "string",
         ),
         Integer: fern.Int(
@@ -624,7 +624,7 @@ client.Endpoints.HttpMethods.TestGet(
 
 ```go
 request := &types.ObjectWithRequiredField{
-        String: "string",
+        FieldString: "string",
     }
 client.Endpoints.HttpMethods.TestPost(
         context.TODO(),
@@ -671,7 +671,7 @@ client.Endpoints.HttpMethods.TestPost(
 
 ```go
 request := &types.ObjectWithRequiredField{
-        String: "string",
+        FieldString: "string",
     }
 client.Endpoints.HttpMethods.TestPut(
         context.TODO(),
@@ -727,7 +727,7 @@ client.Endpoints.HttpMethods.TestPut(
 
 ```go
 request := &types.ObjectWithOptionalField{
-        String: fern.String(
+        FieldString: fern.String(
             "string",
         ),
         Integer: fern.Int(
@@ -871,7 +871,7 @@ client.Endpoints.HttpMethods.TestDelete(
 
 ```go
 request := &types.ObjectWithOptionalField{
-        String: fern.String(
+        FieldString: fern.String(
             "string",
         ),
         Integer: fern.Int(
@@ -961,7 +961,7 @@ client.Endpoints.Object.GetAndReturnWithOptionalField(
 
 ```go
 request := &types.ObjectWithRequiredField{
-        String: "string",
+        FieldString: "string",
     }
 client.Endpoints.Object.GetAndReturnWithRequiredField(
         context.TODO(),
@@ -1059,11 +1059,11 @@ client.Endpoints.Object.GetAndReturnWithMapOfMap(
 
 ```go
 request := &types.NestedObjectWithOptionalField{
-        String: fern.String(
+        FieldString: fern.String(
             "string",
         ),
         NestedObject: &types.ObjectWithOptionalField{
-            String: fern.String(
+            FieldString: fern.String(
                 "string",
             ),
             Integer: fern.Int(
@@ -1154,9 +1154,9 @@ client.Endpoints.Object.GetAndReturnNestedWithOptionalField(
 
 ```go
 request := &types.NestedObjectWithRequiredField{
-        String: "string",
+        FieldString: "string",
         NestedObject: &types.ObjectWithOptionalField{
-            String: fern.String(
+            FieldString: fern.String(
                 "string",
             ),
             Integer: fern.Int(
@@ -1257,9 +1257,9 @@ client.Endpoints.Object.GetAndReturnNestedWithRequiredField(
 ```go
 request := []*types.NestedObjectWithRequiredField{
         &types.NestedObjectWithRequiredField{
-            String: "string",
+            FieldString: "string",
             NestedObject: &types.ObjectWithOptionalField{
-                String: fern.String(
+                FieldString: fern.String(
                     "string",
                 ),
                 Integer: fern.Int(
@@ -1306,9 +1306,9 @@ request := []*types.NestedObjectWithRequiredField{
             },
         },
         &types.NestedObjectWithRequiredField{
-            String: "string",
+            FieldString: "string",
             NestedObject: &types.ObjectWithOptionalField{
-                String: fern.String(
+                FieldString: fern.String(
                     "string",
                 ),
                 Integer: fern.Int(
@@ -2558,7 +2558,7 @@ request := &fern.PostWithObjectBody{
         String: "string",
         Integer: 1,
         NestedObject: &types.ObjectWithOptionalField{
-            String: fern.String(
+            FieldString: fern.String(
                 "string",
             ),
             Integer: fern.Int(
