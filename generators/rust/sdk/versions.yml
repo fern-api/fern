@@ -1,5 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 0.13.4
+  createdAt: "2025-12-02"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix getGitHubConfig to return RawGithubConfig with undefined values instead of throwing errors when publishing config is missing, aligning with TypeScript/Python generator behavior.
+  irVersion: 61
+
 - version: 0.13.3
   createdAt: "2025-11-26"
   changelogEntry:

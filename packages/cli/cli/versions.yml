@@ -2,13 +2,22 @@
 
 - changelogEntry:
     - summary: |
-        Add `substitute-env-variables` flag to `docs.yml` settings configuration. When set to `true`, 
+        Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`, 
         environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
         including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
+        Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
       type: feat
   irVersion: 62
   createdAt: "2025-12-02"
   version: 2.16.0
+
+- changelogEntry:
+    - summary: |
+        Fix `fern check` incorrectly reporting SDK method conflicts for endpoints with the same `x-fern-sdk-group-name` and `x-fern-sdk-method-name` when they are in different namespaces. The validator now correctly allows duplicate SDK method names across different namespaces, matching the generator behavior where namespace is prepended to the SDK group name.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.15.2
 
 - changelogEntry:
     - summary: |
