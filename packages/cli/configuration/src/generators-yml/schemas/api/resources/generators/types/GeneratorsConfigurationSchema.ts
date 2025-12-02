@@ -11,6 +11,16 @@ export interface GeneratorsConfigurationSchema {
     metadata?: FernDefinition.OutputMetadataSchema;
     readme?: FernDefinition.ReadmeSchema;
     "default-group"?: string;
+    /**
+     * Aliases that map to multiple groups. When running `fern generate <alias>`,
+     * all groups in the alias will be run. For example:
+     * ```yaml
+     * group-aliases:
+     *   all: ["php-sdk", "ts-sdk", "go-sdk"]
+     * ```
+     * Then `fern generate all` will run all three groups.
+     */
+    "group-aliases"?: Record<string, string[]>;
     groups?: Record<string, FernDefinition.GeneratorGroupSchema>;
     reviewers?: FernDefinition.ReviewersSchema;
     ai?: FernDefinition.AiServicesSchema;

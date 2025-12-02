@@ -2,6 +2,30 @@
 
 - changelogEntry:
     - summary: |
+        Add support for group aliases in generators.yml. You can now define aliases that map to multiple groups, allowing you to run multiple groups with a single command.
+
+        ```yaml
+        # generators.yml
+        group-aliases:
+          all: ["php-sdk", "ts-sdk", "go-sdk"]
+
+        groups:
+          php-sdk:
+            generators: ...
+          ts-sdk:
+            generators: ...
+          go-sdk:
+            generators: ...
+        ```
+
+        Then run `fern generate all` to generate all three SDKs at once.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.16.0
+
+- changelogEntry:
+    - summary: |
         Fix `fern check` incorrectly reporting SDK method conflicts for endpoints with the same `x-fern-sdk-group-name` and `x-fern-sdk-method-name` when they are in different namespaces. The validator now correctly allows duplicate SDK method names across different namespaces, matching the generator behavior where namespace is prepended to the SDK group name.
       type: fix
   irVersion: 62

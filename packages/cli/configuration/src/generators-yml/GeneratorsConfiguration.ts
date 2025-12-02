@@ -19,6 +19,11 @@ import {
 export interface GeneratorsConfiguration {
     api?: APIDefinition;
     defaultGroup: string | undefined;
+    /**
+     * Aliases that map to multiple groups. When running `fern generate <alias>`,
+     * all groups in the alias will be run.
+     */
+    groupAliases: Record<string, string[]>;
     reviewers: Reviewers | undefined;
     groups: GeneratorGroup[];
     whitelabel: FernFiddle.WhitelabelConfig | undefined;

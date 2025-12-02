@@ -67,58 +67,117 @@ export async function generateWorkspace({
         );
     }
 
-    let group = workspace.generatorsConfiguration.groups.find(
-        (otherGroup) => otherGroup.groupName === groupNameOrDefault
+    // Resolve group aliases - if the groupName is an alias, expand it to multiple groups
+    const resolvedGroupNames = resolveGroupAlias(
+        groupNameOrDefault,
+        workspace.generatorsConfiguration.groupAliases,
+        workspace.generatorsConfiguration.groups.map((g) => g.groupName),
+        context
     );
-    if (group == null) {
-        return context.failAndThrow(`Group '${groupNameOrDefault}' does not exist.`);
-    }
 
     const { ai } = workspace.generatorsConfiguration;
 
-    // Apply lfs-override if specified
-    if (lfsOverride != null) {
-        group = applyLfsOverride(group, lfsOverride, context);
-    }
-
+    // Validate workspace once before running all groups
     await validateAPIWorkspaceAndLogIssues({
         workspace: await workspace.toFernWorkspace({ context }),
         context,
         logWarnings: false
     });
 
-    if (useLocalDocker) {
-        await runLocalGenerationForWorkspace({
-            token,
-            projectConfig,
-            workspace,
-            generatorGroup: group,
-            version,
-            keepDocker,
-            context,
-            runner,
-            absolutePathToPreview,
-            inspect,
-            ai
-        });
-    } else {
-        if (!token) {
-            return context.failAndThrow("Please run fern login");
+    // Run generation for each resolved group
+    for (const resolvedGroupName of resolvedGroupNames) {
+        let group = workspace.generatorsConfiguration.groups.find(
+            (otherGroup) => otherGroup.groupName === resolvedGroupName
+        );
+        if (group == null) {
+            return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`);
         }
-        await runRemoteGenerationForAPIWorkspace({
-            projectConfig,
-            organization,
-            workspace,
-            context,
-            generatorGroup: group,
-            version,
-            shouldLogS3Url,
-            token,
-            whitelabel: workspace.generatorsConfiguration.whitelabel,
-            absolutePathToPreview,
-            mode
-        });
+
+        // Apply lfs-override if specified
+        if (lfsOverride != null) {
+            group = applyLfsOverride(group, lfsOverride, context);
+        }
+
+        if (resolvedGroupNames.length > 1) {
+            context.logger.info(`Running generation for group '${resolvedGroupName}'...`);
+        }
+
+        if (useLocalDocker) {
+            await runLocalGenerationForWorkspace({
+                token,
+                projectConfig,
+                workspace,
+                generatorGroup: group,
+                version,
+                keepDocker,
+                context,
+                runner,
+                absolutePathToPreview,
+                inspect,
+                ai
+            });
+        } else {
+            if (!token) {
+                return context.failAndThrow("Please run fern login");
+            }
+            await runRemoteGenerationForAPIWorkspace({
+                projectConfig,
+                organization,
+                workspace,
+                context,
+                generatorGroup: group,
+                version,
+                shouldLogS3Url,
+                token,
+                whitelabel: workspace.generatorsConfiguration.whitelabel,
+                absolutePathToPreview,
+                mode
+            });
+        }
     }
+}
+
+/**
+ * Resolves a group name or alias to a list of group names.
+ * If the name is an alias, returns the list of groups it maps to.
+ * If the name is a direct group name, returns it as a single-element array.
+ * Validates that all resolved group names exist.
+ */
+function resolveGroupAlias(
+    groupNameOrAlias: string,
+    groupAliases: Record<string, string[]>,
+    availableGroups: string[],
+    context: TaskContext
+): string[] {
+    // Check if it's an alias
+    const aliasGroups = groupAliases[groupNameOrAlias];
+    if (aliasGroups != null) {
+        // Validate that all groups in the alias exist
+        for (const groupName of aliasGroups) {
+            if (!availableGroups.includes(groupName)) {
+                context.failAndThrow(
+                    `Group alias '${groupNameOrAlias}' references non-existent group '${groupName}'. ` +
+                        `Available groups: ${availableGroups.join(", ")}`
+                );
+            }
+        }
+        return aliasGroups;
+    }
+
+    // Check if it's a direct group name
+    if (availableGroups.includes(groupNameOrAlias)) {
+        return [groupNameOrAlias];
+    }
+
+    // Neither an alias nor a group - fail with helpful message
+    const availableAliases = Object.keys(groupAliases);
+    const suggestions = [...availableGroups, ...availableAliases];
+    context.failAndThrow(
+        `'${groupNameOrAlias}' is not a valid group or alias. ` +
+            `Available groups: ${availableGroups.join(", ")}` +
+            (availableAliases.length > 0 ? `. Available aliases: ${availableAliases.join(", ")}` : "")
+    );
+    return []; // unreachable, but TypeScript needs this
 }
 
 function applyLfsOverride(

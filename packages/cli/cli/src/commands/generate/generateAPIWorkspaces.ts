@@ -1,4 +1,5 @@
 import { createOrganizationIfDoesNotExist, FernToken } from "@fern-api/auth";
+import { generatorsYml } from "@fern-api/configuration-loader";
 import { ContainerRunner, Values } from "@fern-api/core-utils";
 import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { askToLogin } from "@fern-api/login";
@@ -63,8 +64,9 @@ export async function generateAPIWorkspaces({
     }
 
     for (const workspace of project.apiWorkspaces) {
+        const resolvedGroupNames = resolveGroupNamesForWorkspace(groupName, workspace.generatorsConfiguration);
         for (const generator of workspace.generatorsConfiguration?.groups
-            .filter((group) => groupName == null || groupName === group.groupName)
+            .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
             .flatMap((group) => group.generators) ?? []) {
             const { shouldProceed } = await checkOutputDirectory(
                 generator.absolutePathToLocalOutput,
@@ -82,11 +84,12 @@ export async function generateAPIWorkspaces({
         command: "fern generate",
         properties: {
             workspaces: project.apiWorkspaces.map((workspace) => {
+                const resolvedGroupNames = resolveGroupNamesForWorkspace(groupName, workspace.generatorsConfiguration);
                 return {
                     name: workspace.workspaceName,
                     group: groupName,
                     generators: workspace.generatorsConfiguration?.groups
-                        .filter((group) => (groupName == null ? true : group.groupName === groupName))
+                        .filter((group) => resolvedGroupNames == null || resolvedGroupNames.includes(group.groupName))
                         .map((group) => {
                             return group.generators.map((generator) => {
                                 return {
@@ -133,4 +136,31 @@ export async function generateAPIWorkspaces({
             });
         })
     );
+}
+
+/**
+ * Resolves a group name to a list of group names, handling aliases.
+ * Returns null if no group name is specified (meaning all groups should be included).
+ * Returns the resolved list of group names if a group name or alias is specified.
+ */
+function resolveGroupNamesForWorkspace(
+    groupName: string | undefined,
+    generatorsConfiguration: generatorsYml.GeneratorsConfiguration | undefined
+): string[] | null {
+    if (groupName == null) {
+        return null; // No filter - include all groups
+    }
+
+    if (generatorsConfiguration == null) {
+        return [groupName]; // No configuration - just use the group name as-is
+    }
+
+    // Check if it's an alias
+    const aliasGroups = generatorsConfiguration.groupAliases[groupName];
+    if (aliasGroups != null) {
+        return aliasGroups;
+    }
+
+    // Not an alias - return as single group
+    return [groupName];
 }
