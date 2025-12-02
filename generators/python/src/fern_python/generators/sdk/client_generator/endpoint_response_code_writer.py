@@ -10,9 +10,6 @@ from fern_python.generators.sdk.client_generator.pagination.abstract_paginator i
 from fern_python.generators.sdk.client_generator.pagination.cursor import (
     CursorPagination,
 )
-from fern_python.generators.sdk.client_generator.pagination.custom import (
-    CustomPagination,
-)
 from fern_python.generators.sdk.client_generator.pagination.offset import (
     OffsetPagination,
 )
@@ -402,42 +399,41 @@ class EndpointResponseCodeWriter:
                     config=self._pagination_snippet_config,
                     offset=offset,
                 ),
-                custom=lambda custom: CustomPagination(
-                    context=self._context,
-                    is_async=self._is_async,
-                    pydantic_parse_expression=pydantic_parse_expression,
-                    config=self._pagination_snippet_config,
-                    custom=custom,
-                ),
+                # Custom pagination is not fully supported yet, so we fall back to
+                # returning the response without auto-pagination
+                custom=lambda custom: None,
             )
             if paginator is not None:
                 paginator.write(writer=writer)
-        else:
-            # For non-raw clients, just return the parsed expression
-            if not self._is_raw_client:
-                writer.write("return ")
-                writer.write_node(pydantic_parse_expression)
-                writer.write_newline_if_last_line_not()
                 return
 
-            # For raw clients, wrap in HttpResponse/AsyncHttpResponse
-            # Create a variable to store the parsed data
-            if isinstance(pydantic_parse_expression.expression, AST.CodeWriter) and not str(
-                pydantic_parse_expression.expression._code_writer
-            ).startswith("data"):
-                writer.write("_data = ")
-                writer.write_node(pydantic_parse_expression)
-                writer.write_newline_if_last_line_not()
-                is_optional = str(pydantic_parse_expression.expression._code_writer).endswith(
-                    f"if {EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE} is not None else None"
-                )
-
-            # Return wrapped in either HttpResponse or AsyncHttpResponse
+        # Fall back to non-paginated behavior (either no pagination or unsupported pagination type)
+        # For non-raw clients, just return the parsed expression
+        if not self._is_raw_client:
             writer.write("return ")
-            writer.write_node(self._instantiate_http_response(data=AST.Expression("_data")))
-            if is_optional:
-                writer.write("  # type: ignore")
+            writer.write_node(pydantic_parse_expression)
             writer.write_newline_if_last_line_not()
+            return
+
+        # For raw clients, wrap in HttpResponse/AsyncHttpResponse
+        # Create a variable to store the parsed data
+        is_optional = False
+        if isinstance(pydantic_parse_expression.expression, AST.CodeWriter) and not str(
+            pydantic_parse_expression.expression._code_writer
+        ).startswith("data"):
+            writer.write("_data = ")
+            writer.write_node(pydantic_parse_expression)
+            writer.write_newline_if_last_line_not()
+            is_optional = str(pydantic_parse_expression.expression._code_writer).endswith(
+                f"if {EndpointResponseCodeWriter.PARSED_RESPONSE_VARIABLE} is not None else None"
+            )
+
+        # Return wrapped in either HttpResponse or AsyncHttpResponse
+        writer.write("return ")
+        writer.write_node(self._instantiate_http_response(data=AST.Expression("_data")))
+        if is_optional:
+            writer.write("  # type: ignore")
+        writer.write_newline_if_last_line_not()
 
     def _handle_alias_type_property_access(
         self, alias_shape: Any, response_property: Optional[str]

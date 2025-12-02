@@ -105,11 +105,20 @@ class EndpointFunctionGenerator:
         self.endpoint_metadata_collector = endpoint_metadata_collector
         self._is_raw_client = is_raw_client
 
+        # Custom pagination is not fully supported yet, so we treat it as non-paginated
+        # and fall back to returning the response without auto-pagination
+        is_custom_pagination = (
+            self._endpoint.pagination is not None and self._endpoint.pagination.get_as_union().type == "custom"
+        )
         self.is_paginated = (
-            self._endpoint.pagination is not None and self._context.generator_config.generate_paginated_clients
+            self._endpoint.pagination is not None
+            and self._context.generator_config.generate_paginated_clients
+            and not is_custom_pagination
         )
         self.pagination = (
-            self._endpoint.pagination if self._context.generator_config.generate_paginated_clients else None
+            self._endpoint.pagination
+            if self._context.generator_config.generate_paginated_clients and not is_custom_pagination
+            else None
         )
 
         self._named_parameter_names: List[str] = []

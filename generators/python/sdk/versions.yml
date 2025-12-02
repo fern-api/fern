@@ -1,5 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.41.4
+  changelogEntry:
+    - summary: |
+        Custom pagination now falls back to returning the response without auto-pagination instead of hard failing.
+        This allows APIs with custom pagination to still generate SDKs while custom pagination support is being developed.
+      type: fix
+  createdAt: "2025-12-02"
+  irVersion: 61
+
 - version: 4.41.3
   changelogEntry:
     - summary: |
