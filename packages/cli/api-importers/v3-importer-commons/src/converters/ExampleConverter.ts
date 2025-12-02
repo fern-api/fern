@@ -10,15 +10,13 @@ const LITERAL_REGEX = /^literal<\s*(?:"(.*)"|(true|false))\s*>$/;
  * Simple schemas are those that don't have properties, items, or nested unions.
  */
 function isSimpleSchema(schema: OpenAPIV3_1.SchemaObject): boolean {
+    // Arrays are always considered complex for our heuristic
+    if (schema.type === "array") {
+        return false;
+    }
+
     // Check for nested structure that would make this complex
-    if (
-        schema.properties ||
-        schema.items ||
-        schema.oneOf ||
-        schema.anyOf ||
-        schema.allOf ||
-        schema.additionalProperties
-    ) {
+    if (schema.properties || schema.oneOf || schema.anyOf || schema.allOf || schema.additionalProperties) {
         return false;
     }
 
