@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Improve CI environment detection to properly detect Azure Pipelines and other CI systems. This prevents unnecessary prompts when running `fern generate --docs` in CI environments.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.15.1
+
+- changelogEntry:
+    - summary: |
         Infer example for literal and enum types when generating IR from OpenAPI and Fern Definition.
       type: feat
   irVersion: 62
