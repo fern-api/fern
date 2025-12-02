@@ -157,6 +157,19 @@ export class WrappedEndpointRequest extends EndpointRequest {
             };
         }
 
+        // Fallback case: if there are path parameters, we need to define _body
+        if (this.hasPathParameters()) {
+            return {
+                code: ruby.codeblock((writer) => {
+                    writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toRubySymbolArray(this.getPathParameterNames())}`);
+                    writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
+                }),
+                requestBodyReference: ruby.codeblock((writer) => {
+                    writer.write(BODY_BAG_NAME);
+                })
+            };
+        }
+
         return {
             requestBodyReference: ruby.codeblock((writer) => {
                 writer.write(bodyParamsVar);

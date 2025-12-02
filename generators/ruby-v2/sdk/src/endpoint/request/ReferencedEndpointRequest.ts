@@ -42,7 +42,15 @@ export class ReferencedEndpointRequest extends EndpointRequest {
         return {
             requestBodyReference: ruby.codeblock((writer) => {
                 if (this.requestBodyShape.type === "named") {
-                    writer.write(`${this.context.getReferenceToTypeId(this.requestBodyShape.typeId)}.new(params).to_h`);
+                    const typeDeclaration = this.context.getTypeDeclarationOrThrow(this.requestBodyShape.typeId);
+                    // Enums are modules, not classes, so they don't have a .new() method
+                    if (typeDeclaration.shape.type === "enum") {
+                        writer.write(`params`);
+                    } else {
+                        writer.write(
+                            `${this.context.getReferenceToTypeId(this.requestBodyShape.typeId)}.new(params).to_h`
+                        );
+                    }
                 } else {
                     writer.write(`params`);
                 }
