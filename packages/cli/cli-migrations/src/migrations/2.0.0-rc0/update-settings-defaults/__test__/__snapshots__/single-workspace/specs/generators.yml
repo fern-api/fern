@@ -11,10 +11,12 @@ api:
         title-as-schema-name: false
         coerce-enums-to-literals: true
     - asyncapi: ./asyncapi.yml
-      settings: {}
+      settings:
+        coerce-enums-to-literals: true
     - asyncapi: ./asyncapi2.yml
       overrides: ./asyncapi2.overrides.yml
       origin: dummy2
       settings:
         message-naming: v2
+        coerce-enums-to-literals: true
 groups: {}
