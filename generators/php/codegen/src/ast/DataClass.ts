@@ -45,20 +45,15 @@ export class DataClass extends AstNode {
     }
 
     public write(writer: Writer): void {
-        const orderedFields = orderByAccess(this.class_.fields).map(
-            (field) =>
-                ({
-                    ...field,
-                    name: convertFromPhpVariableName(field.name)
-                }) as Field
-        );
+        const orderedFields = orderByAccess(this.class_.fields);
         this.class_.addConstructor({
             access: this.constructorAccess,
             parameters: this.getConstructorParameters({ orderedFields }),
             body: php.codeblock((writer) => {
                 if (orderedFields.length > 0) {
                     for (const field of orderedFields) {
-                        writer.write(`$this->${field.name} = $${CONSTRUCTOR_PARAMETER_NAME}['${field.name}']`);
+                        const name = convertFromPhpVariableName(field.name);
+                        writer.write(`$this->${name} = $${CONSTRUCTOR_PARAMETER_NAME}['${name}']`);
                         if (field.type.isOptional()) {
                             writer.write(" ?? ");
                             const initializer = field.getInitializer();
@@ -88,7 +83,7 @@ export class DataClass extends AstNode {
                 name: CONSTRUCTOR_PARAMETER_NAME,
                 type: Type.typeDict(
                     orderedFields.map((field) => ({
-                        key: field.name,
+                        key: convertFromPhpVariableName(field.name),
                         valueType: field.type,
                         optional: field.type.isOptional()
                     })),
