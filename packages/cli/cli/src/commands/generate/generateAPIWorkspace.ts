@@ -77,6 +77,11 @@ export async function generateWorkspace({
 
     const { ai } = workspace.generatorsConfiguration;
 
+    // Pre-check token for remote generation before starting any work
+    if (!useLocalDocker && !token) {
+        return context.failAndThrow("Please run fern login");
+    }
+
     // Validate workspace once before running all groups
     await validateAPIWorkspaceAndLogIssues({
         workspace: await workspace.toFernWorkspace({ context }),
@@ -84,57 +89,56 @@ export async function generateWorkspace({
         logWarnings: false
     });
 
-    // Run generation for each resolved group
-    for (const resolvedGroupName of resolvedGroupNames) {
-        let group = workspace.generatorsConfiguration.groups.find(
-            (otherGroup) => otherGroup.groupName === resolvedGroupName
-        );
-        if (group == null) {
-            return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`);
-        }
-
-        // Apply lfs-override if specified
-        if (lfsOverride != null) {
-            group = applyLfsOverride(group, lfsOverride, context);
-        }
-
-        if (resolvedGroupNames.length > 1) {
-            context.logger.info(`Running generation for group '${resolvedGroupName}'...`);
-        }
-
-        if (useLocalDocker) {
-            await runLocalGenerationForWorkspace({
-                token,
-                projectConfig,
-                workspace,
-                generatorGroup: group,
-                version,
-                keepDocker,
-                context,
-                runner,
-                absolutePathToPreview,
-                inspect,
-                ai
-            });
-        } else {
-            if (!token) {
-                return context.failAndThrow("Please run fern login");
+    // Run generation for all resolved groups in parallel
+    await Promise.all(
+        resolvedGroupNames.map(async (resolvedGroupName) => {
+            let group = workspace.generatorsConfiguration?.groups.find(
+                (otherGroup) => otherGroup.groupName === resolvedGroupName
+            );
+            if (group == null) {
+                return context.failAndThrow(`Group '${resolvedGroupName}' does not exist.`);
             }
-            await runRemoteGenerationForAPIWorkspace({
-                projectConfig,
-                organization,
-                workspace,
-                context,
-                generatorGroup: group,
-                version,
-                shouldLogS3Url,
-                token,
-                whitelabel: workspace.generatorsConfiguration.whitelabel,
-                absolutePathToPreview,
-                mode
-            });
-        }
-    }
+
+            // Apply lfs-override if specified
+            if (lfsOverride != null) {
+                group = applyLfsOverride(group, lfsOverride, context);
+            }
+
+            if (resolvedGroupNames.length > 1) {
+                context.logger.info(`Running generation for group '${resolvedGroupName}'...`);
+            }
+
+            if (useLocalDocker) {
+                await runLocalGenerationForWorkspace({
+                    token,
+                    projectConfig,
+                    workspace,
+                    generatorGroup: group,
+                    version,
+                    keepDocker,
+                    context,
+                    runner,
+                    absolutePathToPreview,
+                    inspect,
+                    ai
+                });
+            } else if (token != null) {
+                await runRemoteGenerationForAPIWorkspace({
+                    projectConfig,
+                    organization,
+                    workspace,
+                    context,
+                    generatorGroup: group,
+                    version,
+                    shouldLogS3Url,
+                    token,
+                    whitelabel: workspace.generatorsConfiguration?.whitelabel,
+                    absolutePathToPreview,
+                    mode
+                });
+            }
+        })
+    );
 }
 
 /**
