@@ -48,6 +48,11 @@ types:
       stream-condition: optional<string>
       request: optional<HttpRequest>
       response: optional<HttpResponseSchema>
+      responses:
+        type: optional<list<HttpResponsesItemSchema>>
+        docs: |
+          Array of responses with different status codes. Use this instead of 'response' 
+          when an endpoint can return multiple successful response types.
       response-stream: optional<HttpResponseStreamSchema>
       errors: optional<ResponseErrorsSchema>
       examples: optional<list<examples.ExampleEndpointCallSchema>>
@@ -184,6 +189,19 @@ types:
       type: optional<string>
       property: optional<string>
       status-code: optional<integer>
+
+  HttpResponsesItemSchema:
+    docs: |
+      A response item in the responses array, representing a specific status code response.
+    extends:
+      - commons.WithDocsSchema
+    properties:
+      status-code:
+        type: integer
+        docs: The HTTP status code for this response
+      type:
+        type: optional<string>
+        docs: The response body type
 
   HttpResponseStreamSchema:
     discriminated: false

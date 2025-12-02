@@ -1,0 +1,42 @@
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: /api
+  endpoints:
+    createResource:
+      docs: Creates a resource with multiple possible response types
+      method: POST
+      path: /resource
+      request: string
+      responses:
+        - status-code: 200
+          type: root.SuccessResponse
+          docs: Resource created successfully
+        - status-code: 202
+          type: root.AcceptedResponse
+          docs: Resource creation accepted for processing
+        - status-code: 207
+          type: root.MultiStatusResponse
+          docs: Multiple operations completed with different statuses
+
+    getStatus:
+      docs: Gets status with multiple response types
+      method: GET
+      path: /status
+      responses:
+        - status-code: 200
+          type: root.SuccessResponse
+          docs: OK response
+        - status-code: 207
+          type: root.MultiStatusResponse
+          docs: Multi-status response
+
+    singleResponse:
+      docs: Endpoint with single response for backwards compatibility
+      method: GET
+      path: /single
+      response:
+        type: root.SuccessResponse
+        docs: Single response type

@@ -1,0 +1,20 @@
+types:
+  SuccessResponse:
+    properties:
+      id: string
+      message: string
+
+  AcceptedResponse:
+    properties:
+      id: string
+      status: string
+
+  MultiStatusResponse:
+    properties:
+      results: list<StatusResult>
+
+  StatusResult:
+    properties:
+      id: string
+      success: boolean
+      error: optional<string>

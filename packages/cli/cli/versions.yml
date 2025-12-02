@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Add support for multiple responses in Fern Definition syntax. Users can now define a `responses:` array field in endpoint definitions to specify multiple response types with different status codes. Each response in the array supports `status-code`, `type`, and `docs` fields. The parsed responses are converted to the existing `V2HttpResponses` IR structure.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.16.0
+
+- changelogEntry:
+    - summary: |
         Improve CI environment detection to properly detect Azure Pipelines and other CI systems. This prevents unnecessary prompts when running `fern generate --docs` in CI environments.
       type: fix
   irVersion: 62

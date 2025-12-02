@@ -10,6 +10,7 @@ import { HttpPathParameterSchema } from "./HttpPathParameterSchema";
 import { HttpEndpointAuth } from "./HttpEndpointAuth";
 import { HttpRequest } from "./HttpRequest";
 import { HttpResponseSchema } from "./HttpResponseSchema";
+import { HttpResponsesItemSchema } from "./HttpResponsesItemSchema";
 import { HttpResponseStreamSchema } from "./HttpResponseStreamSchema";
 import { ResponseErrorsSchema } from "./ResponseErrorsSchema";
 import { ExampleEndpointCallSchema } from "../../examples/types/ExampleEndpointCallSchema";
@@ -36,6 +37,7 @@ export const HttpEndpointSchema: core.serialization.ObjectSchema<
         "stream-condition": core.serialization.string().optional(),
         request: HttpRequest.optional(),
         response: HttpResponseSchema.optional(),
+        responses: core.serialization.list(HttpResponsesItemSchema).optional(),
         "response-stream": HttpResponseStreamSchema.optional(),
         errors: ResponseErrorsSchema.optional(),
         examples: core.serialization.list(ExampleEndpointCallSchema).optional(),
@@ -59,6 +61,7 @@ export declare namespace HttpEndpointSchema {
         "stream-condition"?: string | null;
         request?: HttpRequest.Raw | null;
         response?: HttpResponseSchema.Raw | null;
+        responses?: HttpResponsesItemSchema.Raw[] | null;
         "response-stream"?: HttpResponseStreamSchema.Raw | null;
         errors?: ResponseErrorsSchema.Raw | null;
         examples?: ExampleEndpointCallSchema.Raw[] | null;

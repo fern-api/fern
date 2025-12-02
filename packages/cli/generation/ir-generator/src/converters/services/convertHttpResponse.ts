@@ -11,7 +11,8 @@ import {
     HttpResponseBody,
     JsonResponse,
     NonStreamHttpResponseBody,
-    StreamingResponse
+    StreamingResponse,
+    V2HttpResponses
 } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";
@@ -217,4 +218,66 @@ function convertJsonResponse(
             v2Examples: undefined
         })
     );
+}
+
+export function convertV2HttpResponses({
+    endpoint,
+    file,
+    typeResolver
+}: {
+    endpoint: RawSchemas.HttpEndpointSchema;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): V2HttpResponses | undefined {
+    const { responses } = endpoint;
+
+    if (responses == null || responses.length === 0) {
+        return undefined;
+    }
+
+    const convertedResponses: HttpResponse[] = responses.map((responseItem) => {
+        const statusCode = responseItem["status-code"];
+        const responseType = responseItem.type;
+        const docs = responseItem.docs;
+
+        let body: HttpResponseBody | undefined;
+
+        if (responseType != null) {
+            if (parseRawFileType(responseType) != null) {
+                body = HttpResponseBody.fileDownload({
+                    docs,
+                    v2Examples: undefined
+                });
+            } else if (parseRawTextType(responseType) != null) {
+                body = HttpResponseBody.text({
+                    docs,
+                    v2Examples: undefined
+                });
+            } else if (parseRawBytesType(responseType) != null) {
+                body = HttpResponseBody.bytes({
+                    docs,
+                    v2Examples: undefined
+                });
+            } else {
+                const responseBodyType = file.parseTypeReference(responseType);
+                body = HttpResponseBody.json(
+                    JsonResponse.response({
+                        docs,
+                        responseBodyType,
+                        v2Examples: undefined
+                    })
+                );
+            }
+        }
+
+        return {
+            statusCode,
+            isWildcardStatusCode: undefined,
+            body
+        };
+    });
+
+    return {
+        responses: convertedResponses
+    };
 }

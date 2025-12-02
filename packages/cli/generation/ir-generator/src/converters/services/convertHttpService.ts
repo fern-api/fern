@@ -32,7 +32,7 @@ import { convertAvailability, convertDeclaration } from "../convertDeclaration";
 import { convertCodeSample } from "./convertCodeSamples";
 import { convertExampleEndpointCall } from "./convertExampleEndpointCall";
 import { convertHttpRequestBody } from "./convertHttpRequestBody";
-import { convertHttpResponse } from "./convertHttpResponse";
+import { convertHttpResponse, convertV2HttpResponses } from "./convertHttpResponse";
 import { convertHttpSdkRequest } from "./convertHttpSdkRequest";
 import { convertPagination } from "./convertPagination";
 import { convertQueryParameter } from "./convertQueryParameter";
@@ -217,7 +217,7 @@ export function convertHttpService({
                     propertyResolver
                 }),
                 response: convertHttpResponse({ endpoint, file, typeResolver }),
-                v2Responses: undefined,
+                v2Responses: convertV2HttpResponses({ endpoint, file, typeResolver }),
                 errors: [...convertResponseErrors({ errors: endpoint.errors, file }), ...globalErrors],
                 userSpecifiedExamples:
                     endpoint.examples != null

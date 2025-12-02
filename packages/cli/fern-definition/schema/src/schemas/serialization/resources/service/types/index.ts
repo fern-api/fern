@@ -23,6 +23,7 @@ export * from "./HttpQueryParameterSchema";
 export * from "./QueryParameterTypeReferenceDetailed";
 export * from "./HttpResponseSchema";
 export * from "./HttpResponseSchemaDetailed";
+export * from "./HttpResponsesItemSchema";
 export * from "./HttpResponseStreamSchema";
 export * from "./HttpResponseStreamSchemaDetailed";
 export * from "./StreamFormat";

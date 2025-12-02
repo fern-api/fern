@@ -15,6 +15,11 @@ export interface HttpEndpointSchema extends FernDefinition.WithDisplayName, Fern
     "stream-condition"?: string;
     request?: FernDefinition.HttpRequest;
     response?: FernDefinition.HttpResponseSchema;
+    /**
+     * Array of responses with different status codes. Use this instead of 'response'
+     * when an endpoint can return multiple successful response types.
+     */
+    responses?: FernDefinition.HttpResponsesItemSchema[];
     "response-stream"?: FernDefinition.HttpResponseStreamSchema;
     errors?: FernDefinition.ResponseErrorsSchema;
     examples?: FernDefinition.ExampleEndpointCallSchema[];
