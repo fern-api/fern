@@ -63,15 +63,20 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         });
         if (includePathParameters) {
             for (const pathParameter of this.endpoint.allPathParameters) {
+                const defaultInfo = this.context.getDefaultInfo(pathParameter.valueType);
+                let type = this.context.phpTypeMapper.convert({ reference: pathParameter.valueType });
+                if (defaultInfo?.makeOptional) {
+                    type = type.toOptionalIfNotAlready();
+                }
                 this.addFieldWithMethods({
                     clazz,
                     name: pathParameter.name,
                     field: php.field({
                         name: this.context.getPropertyName(pathParameter.name),
-                        type: this.context.phpTypeMapper.convert({ reference: pathParameter.valueType }),
+                        type,
                         access: this.context.getPropertyAccess(),
                         docs: pathParameter.docs,
-                        initializer: this.context.getInitializerForTypeReference(pathParameter.valueType)
+                        initializer: defaultInfo?.initializer
                     }),
                     includeGetters,
                     includeSetters
@@ -80,15 +85,20 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         }
 
         for (const query of this.endpoint.queryParameters) {
+            const defaultInfo = this.context.getDefaultInfo(query.valueType);
+            let type = this.getQueryParameterType(query);
+            if (defaultInfo?.makeOptional) {
+                type = type.toOptionalIfNotAlready();
+            }
             this.addFieldWithMethods({
                 clazz,
                 name: query.name.name,
                 field: php.field({
                     name: this.context.getPropertyName(query.name.name),
-                    type: this.getQueryParameterType(query),
+                    type,
                     access: this.context.getPropertyAccess(),
                     docs: query.docs,
-                    initializer: this.context.getInitializerForTypeReference(query.valueType)
+                    initializer: defaultInfo?.initializer
                 }),
                 includeGetters,
                 includeSetters
@@ -96,15 +106,20 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         }
 
         for (const header of [...service.headers, ...this.endpoint.headers]) {
+            const defaultInfo = this.context.getDefaultInfo(header.valueType);
+            let type = this.context.phpTypeMapper.convert({ reference: header.valueType });
+            if (defaultInfo?.makeOptional) {
+                type = type.toOptionalIfNotAlready();
+            }
             this.addFieldWithMethods({
                 clazz,
                 name: header.name.name,
                 field: php.field({
                     name: this.context.getPropertyName(header.name.name),
-                    type: this.context.phpTypeMapper.convert({ reference: header.valueType }),
+                    type,
                     access: this.context.getPropertyAccess(),
                     docs: header.docs,
-                    initializer: this.context.getInitializerForTypeReference(header.valueType)
+                    initializer: defaultInfo?.initializer
                 }),
                 includeGetters,
                 includeSetters
@@ -213,7 +228,11 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
         property: InlinedRequestBodyProperty;
         inherited?: boolean;
     }): php.Field {
-        const convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
+        const defaultInfo = this.context.getDefaultInfo(property.valueType);
+        let convertedType = this.context.phpTypeMapper.convert({ reference: property.valueType });
+        if (defaultInfo?.makeOptional) {
+            convertedType = convertedType.toOptionalIfNotAlready();
+        }
         return php.field({
             type: convertedType,
             name: this.context.getPropertyName(property.name.name),
@@ -223,7 +242,7 @@ export class WrappedEndpointRequestGenerator extends FileGenerator<
                 type: convertedType,
                 property
             }),
-            initializer: this.context.getInitializerForTypeReference(property.valueType),
+            initializer: defaultInfo?.initializer,
             inherited
         });
     }

@@ -1,0 +1,63 @@
+types:
+  User:
+    properties:
+      id: string
+      name: string
+
+service:
+  base-path: /defaults
+  auth: false
+  endpoints:
+    getWithDefaults:
+      method: GET
+      path: ""
+      request:
+        name: GetWithDefaultsRequest
+        query-parameters:
+          limit:
+            type: integer
+            default: 10
+          offset:
+            type: integer
+            default: 0
+          enabled:
+            type: boolean
+            default: true
+          name:
+            type: string
+            default: "default-name"
+          score:
+            type: double
+            default: 1.5
+          longParam:
+            type: long
+            default: 9223372036854775807
+          bigIntParam:
+            type: bigint
+            default: "18446744073709551615"
+      response: User
+
+    createWithDefaults:
+      method: POST
+      path: ""
+      request:
+        name: CreateWithDefaultsRequest
+        body:
+          properties:
+            name:
+              type: string
+              default: "default-name"
+            count:
+              type: integer
+              default: 42
+            active:
+              type: boolean
+              default: false
+            rate:
+              type: double
+              default: 0.5
+        query-parameters:
+          version:
+            type: string
+            default: "v1"
+      response: User

@@ -565,6 +565,27 @@ export abstract class AbstractPhpGeneratorContext<
     }
 
     /**
+     * Returns default value information for a type reference if it has a default value.
+     * Only returns defaults when useProvidedDefaults is enabled in the custom config.
+     * Supports primitive types (integer, double, string, boolean, long, bigInteger) and literals.
+     * Returns both the initializer and whether the type should be made optional.
+     */
+    public getDefaultInfo(
+        typeReference: TypeReference
+    ): { initializer: php.CodeBlock; makeOptional: boolean } | undefined {
+        const initializer = this.getInitializerForTypeReference(typeReference);
+        if (initializer == null) {
+            return undefined;
+        }
+        // Literals should not make the type optional (they're always the same value)
+        const isLiteral = typeReference.type === "container" && typeReference.container.type === "literal";
+        return {
+            initializer,
+            makeOptional: !isLiteral
+        };
+    }
+
+    /**
      * Returns a CodeBlock initializer for a type reference if it has a default value.
      * Only returns defaults when useProvidedDefaults is enabled in the custom config.
      * Supports primitive types (integer, double, string, boolean, long, bigInteger) and literals.
