@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 1.0.0-rc54
+- version: 1.0.0-rc55
   createdAt: "2025-12-02"
   changelogEntry:
     - type: fix
@@ -8,6 +8,15 @@
         Renamed underscore-prefixed local variables (_query, _request, _response, etc.)
         to non-underscore names (query_params, request, response, etc.) to follow
         Ruby conventions for used variables.
+  irVersion: 61
+
+- version: 1.0.0-rc54
+  createdAt: "2025-12-02"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Auto-wrap long comment lines to fit within RuboCop's 120 character line length limit.
+        This prevents Layout/LineLength warnings for comments generated from long OpenAPI descriptions.
   irVersion: 61
 
 - version: 1.0.0-rc53
