@@ -38,7 +38,7 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "execa": "^5.1.1",
-    "express": "^4.21.2",
+    "express": "^4.22.0",
     "js-yaml": "^4.1.1",
     "node-fetch": "2.7.0",
     "openapi-types": "^12.1.3",
