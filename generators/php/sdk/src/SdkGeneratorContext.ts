@@ -573,16 +573,23 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
     }
 
     private getCorePagerAsIsFiles(): string[] {
-        return this.hasPagination()
-            ? [
-                  AsIsFiles.CursorPager,
-                  AsIsFiles.CustomPager,
-                  AsIsFiles.OffsetPager,
-                  AsIsFiles.Page,
-                  AsIsFiles.Pager,
-                  AsIsFiles.PaginationHelper
-              ]
-            : [];
+        if (!this.hasPagination()) {
+            return [];
+        }
+
+        const files = [
+            AsIsFiles.CursorPager,
+            AsIsFiles.OffsetPager,
+            AsIsFiles.Page,
+            AsIsFiles.Pager,
+            AsIsFiles.PaginationHelper
+        ];
+
+        if (this.hasCustomPagination()) {
+            files.push(AsIsFiles.CustomPager);
+        }
+
+        return files;
     }
 
     public getCoreTestAsIsFiles(): string[] {
@@ -715,6 +722,15 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public hasPagination(): boolean {
         return this.config.generatePaginatedClients === true && this.ir.sdkConfig.hasPaginatedEndpoints;
+    }
+
+    public hasCustomPagination(): boolean {
+        if (!this.hasPagination()) {
+            return false;
+        }
+        return Object.values(this.ir.services).some((service) =>
+            service.endpoints.some((endpoint) => endpoint.pagination?.type === "custom")
+        );
     }
 
     public getOauth(): OAuthScheme | undefined {
