@@ -327,16 +327,6 @@
           "type": "null"
         }
       ]
-    },
-    "enable-environment-variable-substitution": {
-      "oneOf": [
-        {
-          "type": "boolean"
-        },
-        {
-          "type": "null"
-        }
-      ]
     }
   },
   "required": [
@@ -4689,6 +4679,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/docs.Language"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "substitute-env-vars": {
+          "oneOf": [
+            {
+              "type": "boolean"
             },
             {
               "type": "null"
