@@ -127,6 +127,53 @@ export function generateTypeDeclarationExample({
             };
         }
         case "undiscriminatedUnion": {
+            // First, try to find a variant that has an inherent example (enum or literal)
+            // These are preferred over primitive types that would fall back to using the field name
+            const preferredVariantIndex = typeDeclaration.shape.members.findIndex((variant) => {
+                // Check for literal container types (e.g., const values converted to literals)
+                if (variant.type.type === "container" && variant.type.container.type === "literal") {
+                    return true;
+                }
+                // Check for named types that are enums
+                if (variant.type.type === "named") {
+                    const variantTypeDeclaration = typeDeclarations[variant.type.typeId];
+                    if (variantTypeDeclaration != null) {
+                        // Prefer enum types (including single-value enums from const)
+                        if (variantTypeDeclaration.shape.type === "enum") {
+                            return variantTypeDeclaration.shape.values.length > 0;
+                        }
+                    }
+                }
+                return false;
+            });
+
+            // If we found a preferred variant, try to generate an example for it first
+            if (preferredVariantIndex !== -1) {
+                const preferredVariant = typeDeclaration.shape.members[preferredVariantIndex];
+                if (preferredVariant != null) {
+                    const variantExample = generateTypeReferenceExample({
+                        fieldName,
+                        typeReference: preferredVariant.type,
+                        typeDeclarations,
+                        currentDepth: currentDepth + 1,
+                        maxDepth,
+                        skipOptionalProperties
+                    });
+                    if (variantExample.type === "success") {
+                        const { example, jsonExample } = variantExample;
+                        return {
+                            type: "success",
+                            example: ExampleTypeShape.undiscriminatedUnion({
+                                index: preferredVariantIndex,
+                                singleUnionType: example
+                            }),
+                            jsonExample
+                        };
+                    }
+                }
+            }
+
+            // Fall back to the original behavior: try each variant in order
             let i = 0;
             for (const variant of typeDeclaration.shape.members) {
                 const variantExample = generateTypeReferenceExample({
