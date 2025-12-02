@@ -37,7 +37,7 @@ export class Comment extends AstNode {
      */
     private wrapLine(line: string, writer: Writer): string[] {
         // Calculate available width: max length - indentation - "# " prefix
-        const indentWidth = writer.indentLevel * 2; // Ruby uses 2-space indentation
+        const indentWidth = writer.currentIndentLevel * 2; // Ruby uses 2-space indentation
         const availableWidth = MAX_LINE_LENGTH - indentWidth - COMMENT_PREFIX_LENGTH;
 
         // If the line fits, return it as-is

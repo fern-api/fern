@@ -42,7 +42,7 @@ export class Writer extends AbstractWriter {
     /**
      * Gets the current indentation level.
      */
-    public get indentLevel(): number {
+    public get currentIndentLevel(): number {
         return this._indentLevel;
     }
 
