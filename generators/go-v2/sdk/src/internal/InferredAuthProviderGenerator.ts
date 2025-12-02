@@ -30,8 +30,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
 
     public doGenerate(): GoFile {
         const struct = go.struct({
-            name: "InferredAuthProvider",
-            importPath: this.getImportPath()
+            name: "InferredAuthProvider"
         });
 
         // Add fields
@@ -80,7 +79,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
         struct.addField(
             go.field({
                 name: "cachedToken",
-                type: go.Type.pointer(go.Type.reference(this.getTokenResponseTypeReference()))
+                type: go.Type.pointer(this.getTokenResponseType())
             })
         );
 
@@ -248,8 +247,10 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
         responseProperty: import("@fern-fern/ir-sdk/api").ResponseProperty
     ): string {
         const parts: string[] = [variable];
-        for (const pathPart of responseProperty.propertyPath) {
-            parts.push(pathPart.name.pascalCase.unsafeName);
+        if (responseProperty.propertyPath != null) {
+            for (const pathPart of responseProperty.propertyPath) {
+                parts.push(pathPart.name.pascalCase.unsafeName);
+            }
         }
         parts.push(responseProperty.property.name.name.pascalCase.unsafeName);
         return parts.join(".");
@@ -293,7 +294,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
         });
     }
 
-    private getTokenResponseTypeReference(): go.TypeReference {
+    private getTokenResponseType(): go.Type {
         // Get the response type from the token endpoint
         const endpoint = this.inferredAuthScheme.tokenEndpoint.endpoint;
         const service = this.context.ir.services[endpoint.serviceId];
