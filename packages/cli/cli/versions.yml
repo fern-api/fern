@@ -2,6 +2,15 @@
 
 - changelogEntry:
     - summary: |
+        Filter out discriminant property from union base-properties to prevent duplicate fields when the discriminant
+        is also defined as a base property. This ensures the discriminant is modeled only once at the union level.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.14.1
+
+- changelogEntry:
+    - summary: |
         Log the pull request URL when an SDK is generated with self-hosted GitHub pull-request mode.
       type: feat
   irVersion: 62
