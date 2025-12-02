@@ -10,9 +10,9 @@ export declare namespace RealtimeClient {
 
     export interface ConnectArgs {
         session_id: string;
-        model?: string | undefined;
-        temperature?: number | undefined;
-        "language-code"?: string | undefined;
+        model?: string;
+        temperature?: number;
+        "language-code"?: string;
         /** Arbitrary headers to send with the websocket connect request. */
         headers?: Record<string, string>;
         /** Enable debug mode on the websocket. Defaults to false. */
