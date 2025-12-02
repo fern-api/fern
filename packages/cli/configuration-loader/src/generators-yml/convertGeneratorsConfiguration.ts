@@ -57,7 +57,7 @@ export async function convertGeneratorsConfiguration({
         api: parsedApiConfiguration,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
-        groupAliases: rawGeneratorsConfiguration["group-aliases"] ?? {},
+        groupAliases: rawGeneratorsConfiguration.aliases ?? {},
         reviewers: rawGeneratorsConfiguration.reviewers,
         groups:
             rawGeneratorsConfiguration.groups != null

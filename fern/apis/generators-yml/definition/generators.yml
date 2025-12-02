@@ -22,13 +22,13 @@ types:
         type: optional<ReadmeSchema>
       default-group:
         type: optional<string>
-      group-aliases:
+      aliases:
         type: optional<map<string, list<string>>>
         docs: |
           Aliases that map to multiple groups. When running `fern generate <alias>`,
           all groups in the alias will be run. For example:
           ```yaml
-          group-aliases:
+          aliases:
             all: ["php-sdk", "ts-sdk", "go-sdk"]
           ```
           Then `fern generate all` will run all three groups.

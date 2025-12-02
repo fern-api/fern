@@ -26,7 +26,7 @@ export const GeneratorsConfigurationSchema: core.serialization.ObjectSchema<
     metadata: OutputMetadataSchema.optional(),
     readme: ReadmeSchema.optional(),
     "default-group": core.serialization.string().optional(),
-    "group-aliases": core.serialization
+    aliases: core.serialization
         .record(core.serialization.string(), core.serialization.list(core.serialization.string()))
         .optional(),
     groups: core.serialization.record(core.serialization.string(), GeneratorGroupSchema).optional(),
@@ -47,7 +47,7 @@ export declare namespace GeneratorsConfigurationSchema {
         metadata?: OutputMetadataSchema.Raw | null;
         readme?: ReadmeSchema.Raw | null;
         "default-group"?: string | null;
-        "group-aliases"?: Record<string, string[]> | null;
+        aliases?: Record<string, string[]> | null;
         groups?: Record<string, GeneratorGroupSchema.Raw> | null;
         reviewers?: ReviewersSchema.Raw | null;
         ai?: AiServicesSchema.Raw | null;

@@ -2,11 +2,11 @@
 
 - changelogEntry:
     - summary: |
-        Add support for group aliases in generators.yml. You can now define aliases that map to multiple groups, allowing you to run multiple groups with a single command.
+        Add support for aliases in generators.yml. You can now define aliases that map to multiple groups, allowing you to run multiple groups with a single command.
 
         ```yaml
         # generators.yml
-        group-aliases:
+        aliases:
           all: ["php-sdk", "ts-sdk", "go-sdk"]
 
         groups:
