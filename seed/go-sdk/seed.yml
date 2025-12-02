@@ -261,6 +261,9 @@ allowedFailures:
   - oauth-client-credentials-with-variables
   - variables
 
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults
+
   # Will include these back in once we fix dynamic snippets for inline file properties
   - file-upload:no-custom-config 
   - file-upload:package-name 

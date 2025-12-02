@@ -22,3 +22,6 @@ fixtures:
       outputFolder: collection-name
 generatorType: Documentation
 defaultOutputMode: local_files
+allowedFailures:
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults

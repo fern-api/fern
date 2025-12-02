@@ -46,4 +46,7 @@ fixtures:
             schemas: 
               Operand: 
                 type: null     
-      outputFolder: custom-overrides  
+      outputFolder: custom-overrides
+allowedFailures:
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults      

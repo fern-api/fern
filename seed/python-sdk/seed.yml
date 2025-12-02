@@ -381,3 +381,5 @@ allowedFailures:
   - exhaustive:package-path
   - trace
   - websocket
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults

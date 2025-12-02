@@ -484,3 +484,5 @@ allowedFailures:
   - package-yml
   - trace:no-custom-config
   - trace:serde
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults

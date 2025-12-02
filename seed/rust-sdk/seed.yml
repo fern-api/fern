@@ -128,3 +128,6 @@ fixtures:
         packageName: sse_events
         packageVersion: "0.1.0"
       outputFolder: with-wire-tests
+allowedFailures:
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults

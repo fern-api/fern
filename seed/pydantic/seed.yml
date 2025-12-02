@@ -84,3 +84,5 @@ fixtures:
 allowedFailures:
   # Complex circular refs
   - simple-fhir
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults
