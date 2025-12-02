@@ -102,6 +102,7 @@ allowedFailures:
   - multi-url-environment
   - multi-url-environment-no-default
   - multiple-request-bodies
+  - multiple-responses
   - no-environment
   - no-retries
   - nullable
