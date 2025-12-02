@@ -232,7 +232,7 @@ export async function runLocalGenerationForWorkspace({
                     context: interactiveTaskContext,
                     irVersionOverride: generatorInvocation.irVersionOverride,
                     outputVersionOverride: version,
-                    writeUnitTests: false,
+                    writeUnitTests: true,
                     generateOauthClients: organization.ok ? (organization?.body.oauthClientEnabled ?? false) : false,
                     generatePaginatedClients: organization.ok ? (organization?.body.paginationEnabled ?? false) : false,
                     includeOptionalRequestPropertyExamples: false,
