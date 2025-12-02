@@ -3,16 +3,14 @@
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import * as core from "../../../../core/index.js";
-import { RealtimeSocket } from "./Socket.js";
+import { RealtimeNoAuthSocket } from "./Socket.js";
 
-export declare namespace RealtimeClient {
+export declare namespace RealtimeNoAuthClient {
     export interface Options extends BaseClientOptions {}
 
     export interface ConnectArgs {
-        sessionId: string;
+        session_id: string;
         model?: string;
-        temperature?: number;
-        languageCode?: string;
         /** Arbitrary headers to send with the websocket connect request. */
         headers?: Record<string, string>;
         /** Enable debug mode on the websocket. Defaults to false. */
@@ -22,26 +20,18 @@ export declare namespace RealtimeClient {
     }
 }
 
-export class RealtimeClient {
-    protected readonly _options: NormalizedClientOptions<RealtimeClient.Options>;
+export class RealtimeNoAuthClient {
+    protected readonly _options: NormalizedClientOptions<RealtimeNoAuthClient.Options>;
 
-    constructor(options: RealtimeClient.Options) {
+    constructor(options: RealtimeNoAuthClient.Options) {
         this._options = normalizeClientOptions(options);
     }
 
-    public async connect(args: RealtimeClient.ConnectArgs): Promise<RealtimeSocket> {
-        const { sessionId, model, temperature, languageCode, headers, debug, reconnectAttempts } = args;
+    public async connect(args: RealtimeNoAuthClient.ConnectArgs): Promise<RealtimeNoAuthSocket> {
+        const { session_id: sessionId, model, headers, debug, reconnectAttempts } = args;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (model != null) {
             _queryParams.model = model;
-        }
-
-        if (temperature != null) {
-            _queryParams.temperature = temperature.toString();
-        }
-
-        if (languageCode != null) {
-            _queryParams["language-code"] = languageCode;
         }
 
         const _headers: Record<string, unknown> = { ...headers };
@@ -49,13 +39,13 @@ export class RealtimeClient {
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)),
-                `/realtime/${core.url.encodePathParam(sessionId)}`,
+                `/realtime-no-auth/${core.url.encodePathParam(sessionId)}`,
             ),
             protocols: [],
             queryParameters: _queryParams,
             headers: _headers,
             options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
         });
-        return new RealtimeSocket({ socket });
+        return new RealtimeNoAuthSocket({ socket });
     }
 }
