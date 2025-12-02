@@ -185,7 +185,7 @@ export class Node18UniversalStreamWrapper<
         }
 
         const decoder = new TextDecoder(this.encoding || "utf-8");
-        return decoder.decode(await new Blob(chunks as BlobPart[]).arrayBuffer());
+        return decoder.decode(await new Blob(chunks as unknown as BlobPart[]).arrayBuffer());
     }
 
     public async json<T>(): Promise<T> {
