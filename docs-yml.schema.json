@@ -4698,7 +4698,7 @@
       },
       "additionalProperties": false
     },
-    "docs.SidebarThemeConfig": {
+    "docs.SidebarThemeConfig":{
       "type": "string",
       "enum": [
         "default",
