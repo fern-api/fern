@@ -61,10 +61,3 @@ jobs:
           pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ inputs.version }}
           cd dist
           npm publish --access public --tag latest
-
-      - name: Update fern-platform dependency
-        uses: ./.github/actions/update-fern-platform-dependency
-        with:
-          package-name: ${{ env.PACKAGE_NAME }}
-          version: ${{ inputs.version }}
-          github-token: ${{ secrets.ACTIONS_PAT }}
