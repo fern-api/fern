@@ -21,6 +21,9 @@ var (
 	//go:embed sdk/core/api_error.go
 	apiErrorFile string
 
+	//go:embed sdk/core/auth.go
+	authCoreFile string
+
 	//go:embed sdk/client/client_test.go.tmpl
 	clientTestFile string
 
@@ -3746,4 +3749,118 @@ func shouldGenerateHeader(header *ir.HttpHeader, types map[common.TypeId]*ir.Typ
 // shouldGenerateHeaderAuthScheme returns true if the given header auth scheme should be generated.
 func shouldGenerateHeaderAuthScheme(auth *ir.HeaderAuthScheme, types map[common.TypeId]*ir.TypeDeclaration) bool {
 	return auth.HeaderEnvVar != nil || !isLiteralType(auth.ValueType, types)
+}
+
+// WriteInferredAuthProvider writes the InferredAuthProvider struct that handles
+// token acquisition, caching, and refresh for inferred auth schemes.
+func (f *fileWriter) WriteInferredAuthProvider(
+	inferredAuth *ir.InferredAuthScheme,
+	authClientImportPath string,
+	tokenResponseType string,
+	getTokenMethodName string,
+) error {
+	// Buffer time before token expiry (2 minutes)
+	bufferMinutes := 2
+
+	// Write the InferredAuthProvider struct
+	f.P("// InferredAuthProvider handles token acquisition and caching for")
+	f.P("// OAuth-style authentication. It automatically refreshes tokens")
+	f.P("// when they expire.")
+	f.P("type InferredAuthProvider struct {")
+	f.P("mu sync.Mutex")
+	f.P("client *", f.scope.AddImport(authClientImportPath), ".Client")
+	f.P("options *core.RequestOptions")
+	if inferredAuth.TokenEndpoint.ExpiryProperty != nil {
+		f.P("expiresAt *time.Time")
+	}
+	f.P("cachedToken *", tokenResponseType)
+	f.P("}")
+	f.P()
+
+	// Write the constructor
+	f.P("// NewInferredAuthProvider creates a new InferredAuthProvider.")
+	f.P("func NewInferredAuthProvider(options *core.RequestOptions) *InferredAuthProvider {")
+	f.P("return &InferredAuthProvider{")
+	f.P("client: ", f.scope.AddImport(authClientImportPath), ".NewClient(options),")
+	f.P("options: options,")
+	f.P("}")
+	f.P("}")
+	f.P()
+
+	// Write the AuthHeaders method that implements the AuthProvider interface
+	f.P("// AuthHeaders returns the authentication headers for the request.")
+	f.P("// It handles token caching and automatic refresh when tokens expire.")
+	f.P("func (p *InferredAuthProvider) AuthHeaders(ctx context.Context) (http.Header, error) {")
+	f.P("p.mu.Lock()")
+	f.P("defer p.mu.Unlock()")
+	f.P()
+
+	// Check if token is cached and not expired
+	if inferredAuth.TokenEndpoint.ExpiryProperty != nil {
+		f.P("// Check if we have a valid cached token")
+		f.P("if p.cachedToken != nil && p.expiresAt != nil && time.Now().Before(*p.expiresAt) {")
+		f.P("return p.buildHeaders(), nil")
+		f.P("}")
+		f.P()
+	} else {
+		f.P("// Check if we have a cached token")
+		f.P("if p.cachedToken != nil {")
+		f.P("return p.buildHeaders(), nil")
+		f.P("}")
+		f.P()
+	}
+
+	// Fetch a new token
+	f.P("// Fetch a new token")
+	f.P("token, err := p.client.", getTokenMethodName, "(ctx, p.buildTokenRequest())")
+	f.P("if err != nil {")
+	f.P("return nil, err")
+	f.P("}")
+	f.P()
+	f.P("p.cachedToken = token")
+
+	// Set expiry if present
+	if inferredAuth.TokenEndpoint.ExpiryProperty != nil {
+		expiryPropertyPath := extractNamesFromPropertyPath(inferredAuth.TokenEndpoint.ExpiryProperty.PropertyPath)
+		expiryPath := responsePropertyPathToFullPathString("token", expiryPropertyPath)
+		expiryPropertyName := inferredAuth.TokenEndpoint.ExpiryProperty.Property.Name.Name.PascalCase.UnsafeName
+		f.P()
+		f.P("// Calculate expiry time with buffer")
+		f.P("expiresIn := ", expiryPath, expiryPropertyName)
+		f.P("expiresAt := time.Now().Add(time.Duration(expiresIn)*time.Second - time.Duration(", bufferMinutes, ")*time.Minute)")
+		f.P("p.expiresAt = &expiresAt")
+	}
+
+	f.P()
+	f.P("return p.buildHeaders(), nil")
+	f.P("}")
+	f.P()
+
+	// Write the buildHeaders helper method
+	f.P("// buildHeaders constructs the authentication headers from the cached token.")
+	f.P("func (p *InferredAuthProvider) buildHeaders() http.Header {")
+	f.P("headers := make(http.Header)")
+	for _, header := range inferredAuth.TokenEndpoint.AuthenticatedRequestHeaders {
+		responsePropertyPath := extractNamesFromPropertyPath(header.ResponseProperty.PropertyPath)
+		responsePath := responsePropertyPathToFullPathString("p.cachedToken", responsePropertyPath)
+		responsePropertyName := header.ResponseProperty.Property.Name.Name.PascalCase.UnsafeName
+		if header.ValuePrefix != nil {
+			f.P(`headers.Set("`, header.HeaderName, `", "`, *header.ValuePrefix, `" + `, responsePath, responsePropertyName, ")")
+		} else {
+			f.P(`headers.Set("`, header.HeaderName, `", `, responsePath, responsePropertyName, ")")
+		}
+	}
+	f.P("return headers")
+	f.P("}")
+	f.P()
+
+	// Write the buildTokenRequest helper method
+	f.P("// buildTokenRequest constructs the token request from the options.")
+	f.P("func (p *InferredAuthProvider) buildTokenRequest() *", tokenResponseType, "Request {")
+	f.P("// TODO: Build the token request from options")
+	f.P("return nil")
+	f.P("}")
+	f.P()
+
+	return nil
 }
