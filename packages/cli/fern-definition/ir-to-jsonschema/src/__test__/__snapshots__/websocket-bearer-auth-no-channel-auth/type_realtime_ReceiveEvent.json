@@ -1,0 +1,17 @@
+{
+  "type": "object",
+  "properties": {
+    "alpha": {
+      "type": "string"
+    },
+    "beta": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "alpha",
+    "beta"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}
