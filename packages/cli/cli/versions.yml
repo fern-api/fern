@@ -2,7 +2,7 @@
 
 - changelogEntry:
     - summary: |
-        Add `enable-environment-variable-substitution` flag to `docs.yml` configuration. When set to `true`, 
+        Add `substitute-env-variables` flag to `docs.yml` settings configuration. When set to `true`, 
         environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
         including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
       type: feat

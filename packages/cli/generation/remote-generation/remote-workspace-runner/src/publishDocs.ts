@@ -341,7 +341,7 @@ export async function publishDocs({
     let docsDefinition = await resolver.resolve();
     const resolveTime = performance.now() - resolveStart;
 
-    if (docsWorkspace.config.enableEnvironmentVariableSubstitution) {
+    if (docsWorkspace.config.settings?.substituteEnvVariables) {
         context.logger.debug("Applying environment variable substitution to docs definition...");
         docsDefinition = replaceEnvVariables(
             docsDefinition,

@@ -304,7 +304,7 @@ export async function getPreviewDocsDefinition({
         id: undefined
     };
 
-    if (docsWorkspace.config.enableEnvironmentVariableSubstitution) {
+    if (docsWorkspace.config.settings?.substituteEnvVariables) {
         docsDefinition = replaceEnvVariables(
             docsDefinition,
             { onError: (e) => context.logger.error(e ?? "Unknown error during environment variable substitution") },

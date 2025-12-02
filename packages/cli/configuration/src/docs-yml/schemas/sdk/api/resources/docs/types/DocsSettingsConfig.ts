@@ -61,4 +61,11 @@ export interface DocsSettingsConfig {
     disableExplorerProxy?: boolean;
     disableAnalytics?: boolean;
     language?: FernDocsConfig.Language;
+    /**
+     * When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,
+     * including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
+     *
+     * @default: false
+     */
+    substituteEnvVariables?: boolean;
 }

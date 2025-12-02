@@ -204,14 +204,6 @@ types:
       css: optional<CssConfig>
       js: optional<JsConfig>
 
-      # environment variable substitution
-      enable-environment-variable-substitution:
-        type: optional<boolean>
-        docs: |
-          When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,
-          including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
-          @default false
-
   TabId: string
 
   PageActionsConfig:
@@ -726,6 +718,13 @@ types:
           @default: false
       disable-analytics: optional<boolean>
       language: optional<Language>
+      substitute-env-variables:
+        type: optional<boolean>
+        docs: |
+          When true, substitutes ${ENV_VAR} expressions using environment variables across all files in the docs bundle,
+          including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
+
+          @default: false
 
   ThemeConfig:
     properties:

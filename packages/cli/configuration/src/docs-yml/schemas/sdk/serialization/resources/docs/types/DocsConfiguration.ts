@@ -70,10 +70,6 @@ export const DocsConfiguration: core.serialization.ObjectSchema<
     integrations: IntegrationsConfig.optional(),
     css: CssConfig.optional(),
     js: JsConfig.optional(),
-    enableEnvironmentVariableSubstitution: core.serialization.property(
-        "enable-environment-variable-substitution",
-        core.serialization.boolean().optional(),
-    ),
 });
 
 export declare namespace DocsConfiguration {
@@ -109,6 +105,5 @@ export declare namespace DocsConfiguration {
         integrations?: IntegrationsConfig.Raw | null;
         css?: CssConfig.Raw | null;
         js?: JsConfig.Raw | null;
-        "enable-environment-variable-substitution"?: boolean | null;
     }
 }
