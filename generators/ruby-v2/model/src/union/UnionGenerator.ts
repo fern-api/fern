@@ -9,6 +9,9 @@ import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
 // import { ExampleGenerator } from "../snippets/ExampleGenerator";
 
+// Rubocop Naming/VariableNumber: disallow "_" directly before digits
+const normalizeVariableNumber = (name: string): string => name.replace(/_(\d)/g, "$1");
+
 const basePropertiesClassName = "BaseProperties";
 
 interface UnionMember {
@@ -29,7 +32,7 @@ export class UnionGenerator extends FileGenerator<RubyFile, ModelCustomConfigSch
     ) {
         super(context);
         this.typeDeclaration = typeDeclaration;
-        this.discriminantPropertyName = unionDeclaration.discriminant.name.snakeCase.safeName;
+        this.discriminantPropertyName = normalizeVariableNumber(unionDeclaration.discriminant.name.snakeCase.safeName);
         this.classReference = this.context.typeMapper.convertToClassReference(this.typeDeclaration.name);
         this.unionMembers = this.unionDeclaration.types.map((type) => this.unionMemberFromUnionType(type));
     }

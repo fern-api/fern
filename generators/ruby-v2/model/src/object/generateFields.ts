@@ -1,7 +1,9 @@
 import { ruby } from "@fern-api/ruby-ast";
-import { toNormalcase } from "@fern-api/ruby-base";
 import { ObjectProperty, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
+
+// Rubocop Naming/VariableNumber: disallow "_" directly before digits
+const normalizeVariableNumber = (name: string): string => name.replace(/_(\d)/g, "$1");
 
 export function generateFields({
     typeDeclaration,
@@ -13,7 +15,7 @@ export function generateFields({
     context: ModelGeneratorContext;
 }): ruby.AstNode[] {
     return properties.map((prop, index) => {
-        const fieldName = toNormalcase(prop.name.name.snakeCase.safeName);
+        const fieldName = normalizeVariableNumber(prop.name.name.snakeCase.safeName);
         const wireValue = prop.name.wireValue;
         const rubyType = context.typeMapper.convert({ reference: prop.valueType });
 

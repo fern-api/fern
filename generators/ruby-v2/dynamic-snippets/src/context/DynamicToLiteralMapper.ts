@@ -5,6 +5,9 @@ import { ruby } from "@fern-api/ruby-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./DynamicSnippetsGeneratorContext";
 
+// Rubocop Naming/VariableNumber: disallow "_" directly before digits
+const normalizeVariableNumber = (name: string): string => name.replace(/_(\d)/g, "$1");
+
 export declare namespace DynamicTypeLiteralMapper {
     interface Args {
         typeReference: FernIr.dynamic.TypeReference;
@@ -273,7 +276,7 @@ export class DynamicTypeLiteralMapper {
                 const property = object.properties.find((p) => p.name.wireValue === key);
                 const typeReference = property?.typeReference ?? { type: "unknown" };
                 // Use snake_case property name for Ruby, falling back to wire value if not found
-                const propertyName = property?.name.name.snakeCase.safeName ?? key;
+                const propertyName = normalizeVariableNumber(property?.name.name.snakeCase.safeName ?? key);
                 const astNode = {
                     key: ruby.TypeLiteral.string(propertyName),
                     value: this.convert({ typeReference, value: val })

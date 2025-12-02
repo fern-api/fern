@@ -5,6 +5,9 @@ import { ruby } from "@fern-api/ruby-ast";
 
 import { DynamicSnippetsGeneratorContext } from "./context/DynamicSnippetsGeneratorContext";
 
+// Rubocop Naming/VariableNumber: disallow "_" directly before digits
+const normalizeVariableNumber = (name: string): string => name.replace(/_(\d)/g, "$1");
+
 const CLIENT_VAR_NAME = "client";
 
 export class EndpointSnippetGenerator {
@@ -195,11 +198,11 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         return [
             ruby.keywordArgument({
-                name: auth.username.snakeCase.safeName,
+                name: normalizeVariableNumber(auth.username.snakeCase.safeName),
                 value: ruby.TypeLiteral.string(values.username)
             }),
             ruby.keywordArgument({
-                name: auth.password.snakeCase.safeName,
+                name: normalizeVariableNumber(auth.password.snakeCase.safeName),
                 value: ruby.TypeLiteral.string(values.password)
             })
         ];
@@ -214,7 +217,7 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         return [
             ruby.keywordArgument({
-                name: auth.token.snakeCase.safeName,
+                name: normalizeVariableNumber(auth.token.snakeCase.safeName),
                 value: ruby.TypeLiteral.string(values.token)
             })
         ];
@@ -229,7 +232,7 @@ export class EndpointSnippetGenerator {
     }): ruby.KeywordArgument[] {
         return [
             ruby.keywordArgument({
-                name: auth.header.name.name.snakeCase.safeName,
+                name: normalizeVariableNumber(auth.header.name.name.snakeCase.safeName),
                 value: ruby.TypeLiteral.string(values.value as string)
             })
         ];
@@ -245,11 +248,11 @@ export class EndpointSnippetGenerator {
         // OAuth client credentials
         return [
             ruby.keywordArgument({
-                name: auth.clientId.snakeCase.safeName,
+                name: normalizeVariableNumber(auth.clientId.snakeCase.safeName),
                 value: ruby.TypeLiteral.string(values.clientId)
             }),
             ruby.keywordArgument({
-                name: auth.clientSecret.snakeCase.safeName,
+                name: normalizeVariableNumber(auth.clientSecret.snakeCase.safeName),
                 value: ruby.TypeLiteral.string(values.clientSecret)
             })
         ];
@@ -269,7 +272,7 @@ export class EndpointSnippetGenerator {
             if (value != null && typeof value === "string") {
                 args.push(
                     ruby.keywordArgument({
-                        name: header.name.name.snakeCase.safeName,
+                        name: normalizeVariableNumber(header.name.name.snakeCase.safeName),
                         value: ruby.TypeLiteral.string(value)
                     })
                 );

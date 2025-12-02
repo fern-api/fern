@@ -12,21 +12,6 @@ import { RubyTypeMapper } from "./RubyTypeMapper";
 
 const defaultVersion: string = "0.0.0";
 
-/**
- * Converts a snake_case name to normalcase by removing underscores before numbers.
- * This is required to satisfy Rubocop's Naming/VariableNumber rule which expects
- * normalcase for symbol numbers (e.g., `first6` instead of `first_6`).
- *
- * @example
- * toNormalcase("first_6") // returns "first6"
- * toNormalcase("base_64") // returns "base64"
- * toNormalcase("line_1") // returns "line1"
- * toNormalcase("normal_name") // returns "normal_name" (unchanged)
- */
-export function toNormalcase(name: string): string {
-    return name.replace(/_(\d)/g, "$1");
-}
-
 export abstract class AbstractRubyGeneratorContext<
     CustomConfig extends BaseRubyCustomConfigSchema
 > extends AbstractGeneratorContext {

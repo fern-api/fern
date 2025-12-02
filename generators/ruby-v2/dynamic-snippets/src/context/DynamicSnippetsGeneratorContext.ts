@@ -93,6 +93,7 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
     }
 
     private getName(name: string): string {
-        return name;
+        // Rubocop Naming/VariableNumber: disallow "_" directly before digits
+        return name.replace(/_(\d)/g, "$1");
     }
 }
