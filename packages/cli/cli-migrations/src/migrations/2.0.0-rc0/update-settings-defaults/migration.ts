@@ -151,6 +151,7 @@ async function updateGeneratorsYml({ context, files }: { context: TaskContext; f
                             spec.settings = {} as Record<string, unknown>;
                         }
                         if ("asyncapi" in spec) {
+                            setCoerceEnumsToLiteralsForAsyncApiSpec(spec.settings, context);
                             continue;
                         }
                         if ("openapi" in spec) {
@@ -231,6 +232,16 @@ function setCoerceEnumsToLiteralsDeprecated(settings: Record<string, unknown>, c
 }
 
 function setCoerceEnumsToLiteralsForOpenApiSpec(settings: Record<string, unknown>, context: TaskContext): void {
+    if ("coerce-enums-to-literals" in settings) {
+        // if explicitly set, keep as is
+        return;
+    }
+
+    context.logger.info("Setting 'coerce-enums-to-literals' to 'true' to maintain backwards compatibility.");
+    settings["coerce-enums-to-literals"] = true;
+}
+
+function setCoerceEnumsToLiteralsForAsyncApiSpec(settings: Record<string, unknown>, context: TaskContext): void {
     if ("coerce-enums-to-literals" in settings) {
         // if explicitly set, keep as is
         return;
