@@ -2,7 +2,7 @@
 
 - changelogEntry:
     - summary: |
-        Fix CLI migrations to properly migrate `coerce-enums-to-literals` setting for AsyncAPI specs. Previously, the 1.0.0 and 2.0.0-rc0 migrations only handled this setting for OpenAPI specs.
+        Fix 2.0.0-rc0 CLI migration to properly migrate `coerce-enums-to-literals` setting for AsyncAPI specs. Previously, the migration only handled this setting for OpenAPI specs.
       type: fix
   irVersion: 62
   createdAt: "2025-12-02"

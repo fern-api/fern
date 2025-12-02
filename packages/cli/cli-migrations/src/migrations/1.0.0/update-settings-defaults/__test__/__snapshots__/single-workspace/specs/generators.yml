@@ -30,7 +30,6 @@ api:
         respect-nullable-schemas: false
         wrap-references-to-nullable-in-optional: true
         coerce-optional-schemas-to-nullable: true
-        coerce-enums-to-literals: true
     - asyncapi: ./asyncapi2.yml
       overrides: ./asyncapi2.overrides.yml
       origin: dummy2
@@ -41,7 +40,6 @@ api:
         respect-nullable-schemas: false
         wrap-references-to-nullable-in-optional: true
         coerce-optional-schemas-to-nullable: true
-        coerce-enums-to-literals: true
     - proto:
         root: ./proto
         overrides: ./proto/overrides.yml

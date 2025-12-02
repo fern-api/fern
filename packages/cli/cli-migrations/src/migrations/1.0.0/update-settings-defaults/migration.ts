@@ -250,14 +250,9 @@ const NEW_OPENAPI_SPEC_SETTINGS_DEFAULTS: NewSettingsDefaults = {
     ...OPENAPI_SETTINGS_DEFAULTS
 };
 
-const ASYNCAPI_SETTINGS_DEFAULTS: NewSettingsDefaults = {
-    "coerce-enums-to-literals": [true, false]
-};
-
 const NEW_ASYNCAPI_SPEC_SETTINGS_DEFAULTS: NewSettingsDefaults = {
     "title-as-schema-name": [true, false],
-    ...COMMON_SETTINGS_DEFAULTS,
-    ...ASYNCAPI_SETTINGS_DEFAULTS
+    ...COMMON_SETTINGS_DEFAULTS
 };
 
 function setNewSettingsDefaultsDeprecated(settings: Record<string, unknown>, context: TaskContext): void {
