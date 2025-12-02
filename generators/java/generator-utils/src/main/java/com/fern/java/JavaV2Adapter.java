@@ -4,6 +4,7 @@ import com.fern.generator.exec.model.logging.GeneratorUpdate;
 import com.fern.generator.exec.model.logging.LogLevel;
 import com.fern.generator.exec.model.logging.LogUpdate;
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import org.slf4j.Logger;
@@ -32,6 +33,16 @@ public class JavaV2Adapter {
             System.out.println("Calling java v2 generator");
             Process v2 = Runtime.getRuntime().exec(command);
             System.out.println("Called java v2 generator");
+
+            if (args.enableLogging()) {
+                try (InputStream v2Result = v2.getInputStream()) {
+                    BufferedReader resultReader = new BufferedReader(new InputStreamReader(v2Result));
+                    String line;
+                    while ((line = resultReader.readLine()) != null) {
+                        System.out.println("Java V2: " + line);
+                    }
+                }
+            }
 
             System.out.println("Awaiting java v2 generator");
             // Print the logs from the v2 process to System.out
