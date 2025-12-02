@@ -11,6 +11,6 @@ export interface PlaygroundSettings {
     oauth?: boolean;
     /** The maximum number of websocket messages per connection in the playground. */
     limitWebsocketMessagesPerConnection?: number;
-    /** If true, the playground will be hidden from the documentation. */
+    /** Whether the playground should be hidden for this endpoint. */
     hidden?: boolean;
 }
