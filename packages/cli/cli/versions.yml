@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Infer example for literal and enum types when generating IR from OpenAPI and Fern Definition.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.15.0
+
+- changelogEntry:
+    - summary: |
         Fix 2.0.0-rc0 CLI migration to properly migrate `coerce-enums-to-literals` setting for AsyncAPI specs. Previously, the migration only handled this setting for OpenAPI specs.
       type: fix
   irVersion: 62
