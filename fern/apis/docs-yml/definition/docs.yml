@@ -1585,6 +1585,9 @@ types:
         type: optional<integer>
         docs: |
           The maximum number of websocket messages per connection in the playground.
+      hidden:
+        type: optional<boolean>
+        docs: Whether the playground should be hidden for this endpoint.
 
   PlaygroundButtonSettings:
     properties:

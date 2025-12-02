@@ -1594,6 +1594,16 @@
               "type": "null"
             }
           ]
+        },
+        "hidden": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false
@@ -4698,7 +4708,7 @@
       },
       "additionalProperties": false
     },
-    "docs.SidebarThemeConfig":{
+    "docs.SidebarThemeConfig": {
       "type": "string",
       "enum": [
         "default",
