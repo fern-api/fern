@@ -11,7 +11,6 @@ export const NoDuplicateOverridesRule: Rule = {
     run: async ({ workspace, specs, context }) => {
         const violations: ValidationViolation[] = [];
         const seenMethodsByAudience = new Map<string, string[][]>();
-        const seenGroupNames = new Set<string>();
 
         for (const spec of specs) {
             const contents = (await readFile(spec.absoluteFilepath)).toString();
@@ -50,16 +49,22 @@ export const NoDuplicateOverridesRule: Rule = {
                                     : [rawAudiences.trim()].filter((a) => a.length > 0)
                                 : [];
 
-                            const key = `${sdkGroupName}:${sdkMethodName}`;
+                            // Include namespace in the key to allow same SDK method names across different namespaces.
+                            // This aligns with the generator behavior where namespace is prepended to the SDK group name.
+                            const namespacePrefix = spec.namespace ?? "";
+                            const key = `${namespacePrefix}:${sdkGroupName}:${sdkMethodName}`;
                             const previousAudienceSets = seenMethodsByAudience.get(key) || [];
 
                             for (const prevAudiences of previousAudienceSets) {
                                 if (audiencesIntersect(audiences, prevAudiences)) {
+                                    // Show the effective SDK path (with namespace) in the error message
+                                    const displayGroup =
+                                        spec.namespace != null ? `${spec.namespace}.${sdkGroupName}` : sdkGroupName;
                                     violations.push({
                                         severity: "fatal",
                                         relativeFilepath: relative(workspace.absoluteFilePath, spec.source.file),
                                         nodePath: ["paths", path, method],
-                                        message: `SDK method ${sdkGroupName}.${sdkMethodName} already exists (x-fern-sdk-group-name: ${sdkGroupName}, x-fern-sdk-method-name: ${sdkMethodName})`
+                                        message: `SDK method ${displayGroup}.${sdkMethodName} already exists (x-fern-sdk-group-name: ${sdkGroupName}, x-fern-sdk-method-name: ${sdkMethodName})`
                                     });
                                     break; // Only report once per operation
                                 }
