@@ -10,6 +10,14 @@
 
 - changelogEntry:
     - summary: |
+        Fix `fern check` incorrectly reporting SDK method conflicts for endpoints with the same `x-fern-sdk-group-name` and `x-fern-sdk-method-name` when they are in different namespaces. The validator now correctly allows duplicate SDK method names across different namespaces, matching the generator behavior where namespace is prepended to the SDK group name.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.15.2
+
+- changelogEntry:
+    - summary: |
         Improve CI environment detection to properly detect Azure Pipelines and other CI systems. This prevents unnecessary prompts when running `fern generate --docs` in CI environments.
       type: fix
   irVersion: 62
