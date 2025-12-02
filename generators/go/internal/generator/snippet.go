@@ -122,11 +122,16 @@ func (s *SnippetWriter) getSnippetForExampleObjectType(
 			// Literal object properties aren't included in the snippet.
 			continue
 		}
+		valueExpr := s.GetSnippetForExampleTypeReference(property.Value)
+		if valueExpr == nil {
+			// No example for this property; don't include it in the snippet.
+			continue
+		}
 		fields = append(
 			fields,
 			&ast.Field{
 				Key:   goExportedFieldName(property.Name.Name.PascalCase.UnsafeName),
-				Value: s.GetSnippetForExampleTypeReference(property.Value),
+				Value: valueExpr,
 			},
 		)
 	}
