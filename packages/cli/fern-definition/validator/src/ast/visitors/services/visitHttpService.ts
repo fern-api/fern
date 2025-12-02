@@ -270,19 +270,43 @@ function visitEndpoint({
             if (responses == null) {
                 return;
             }
+
+            // Helper function to visit a single response
+            const visitSingleResponse = (
+                responseItem: RawSchemas.HttpResponseSchema,
+                nodePathForResponseItem: NodePath
+            ) => {
+                if (typeof responseItem === "string") {
+                    visitTypeReference(responseItem, nodePathForResponseItem, {
+                        location: TypeReferenceLocation.Response
+                    });
+                } else {
+                    visitObject(responseItem, {
+                        docs: createDocsVisitor(visitor, nodePathForResponseItem),
+                        "status-code": noop,
+                        property: noop,
+                        type: (type) => {
+                            if (type != null) {
+                                visitTypeReference(type, [...nodePathForResponseItem, "type"], {
+                                    location: TypeReferenceLocation.Response
+                                });
+                            }
+                        }
+                    });
+                }
+            };
+
+            // Handle single response (string or object)
+            if (!Array.isArray(responses)) {
+                const nodePathForResponse = [...nodePathForEndpoint, "responses"];
+                visitSingleResponse(responses, nodePathForResponse);
+                return;
+            }
+
+            // Handle array of responses
             for (const [index, responseItem] of responses.entries()) {
                 const nodePathForResponseItem = [...nodePathForEndpoint, { key: "responses", arrayIndex: index }];
-                visitObject(responseItem, {
-                    docs: createDocsVisitor(visitor, nodePathForResponseItem),
-                    "status-code": noop,
-                    type: (type) => {
-                        if (type != null) {
-                            visitTypeReference(type, [...nodePathForResponseItem, "type"], {
-                                location: TypeReferenceLocation.Response
-                            });
-                        }
-                    }
-                });
+                visitSingleResponse(responseItem, nodePathForResponseItem);
             }
         },
         errors: (errors) => {

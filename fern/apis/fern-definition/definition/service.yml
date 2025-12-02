@@ -47,12 +47,17 @@ types:
       idempotent: optional<boolean>
       stream-condition: optional<string>
       request: optional<HttpRequest>
-      response: optional<HttpResponseSchema>
-      responses:
-        type: optional<list<HttpResponsesItemSchema>>
+      response:
+        type: optional<HttpResponseSchema>
         docs: |
-          Array of responses with different status codes. Use this instead of 'response' 
-          when an endpoint can return multiple successful response types.
+          DEPRECATED: Use 'responses' instead. This field will be removed in a future version.
+          Single response type for the endpoint.
+      responses:
+        type: optional<HttpResponses>
+        docs: |
+          Response type(s) for the endpoint. Can be a single response or a list of responses
+          with different status codes. When a response is just a string, it's assumed to be a 200.
+          Only one 200 is allowed, and every status code in the list must be unique.
       response-stream: optional<HttpResponseStreamSchema>
       errors: optional<ResponseErrorsSchema>
       examples: optional<list<examples.ExampleEndpointCallSchema>>
@@ -190,18 +195,14 @@ types:
       property: optional<string>
       status-code: optional<integer>
 
-  HttpResponsesItemSchema:
+  HttpResponses:
+    discriminated: false
     docs: |
-      A response item in the responses array, representing a specific status code response.
-    extends:
-      - commons.WithDocsSchema
-    properties:
-      status-code:
-        type: integer
-        docs: The HTTP status code for this response
-      type:
-        type: optional<string>
-        docs: The response body type
+      Response type(s) for the endpoint. Can be a single response or a list of responses
+      with different status codes.
+    union:
+      - HttpResponseSchema
+      - list<HttpResponseSchema>
 
   HttpResponseStreamSchema:
     discriminated: false

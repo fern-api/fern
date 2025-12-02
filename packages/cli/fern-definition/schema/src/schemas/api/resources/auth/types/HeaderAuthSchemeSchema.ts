@@ -5,9 +5,7 @@
 import * as FernDefinition from "../../../index";
 
 export interface HeaderAuthSchemeSchema
-    extends FernDefinition.WithEnvironmentVariable,
-        FernDefinition.WithName,
-        FernDefinition.WithDocsSchema {
+    extends FernDefinition.WithEnvironmentVariable, FernDefinition.WithName, FernDefinition.WithDocsSchema {
     header: string;
     /** Defaults to string */
     type?: string;

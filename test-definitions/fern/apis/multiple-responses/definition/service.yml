@@ -34,9 +34,24 @@ service:
           docs: Multi-status response
 
     singleResponse:
-      docs: Endpoint with single response for backwards compatibility
+      docs: Endpoint with single response using deprecated response field
       method: GET
       path: /single
       response:
         type: root.SuccessResponse
-        docs: Single response type
+        docs: Single response type (deprecated format)
+
+    singleResponseNew:
+      docs: Endpoint with single response using new responses field (non-array)
+      method: GET
+      path: /single-new
+      responses: root.SuccessResponse
+
+    singleResponseNewDetailed:
+      docs: Endpoint with single response using new responses field (detailed object)
+      method: GET
+      path: /single-new-detailed
+      responses:
+        type: root.SuccessResponse
+        status-code: 200
+        docs: Single response using new format
