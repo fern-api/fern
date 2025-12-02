@@ -27,21 +27,15 @@ public class JavaV2Adapter {
             };
             Process v2 = Runtime.getRuntime().exec(command);
 
-            // Forward logs from the v2 process
+            // Print the logs from the v2 process to System.out
             try (BufferedReader stdOut = new BufferedReader(new InputStreamReader(v2.getInputStream()));
                     BufferedReader stdErr = new BufferedReader(new InputStreamReader(v2.getErrorStream()))) {
                 String line;
                 while ((line = stdOut.readLine()) != null) {
-                    execClient.sendUpdate(GeneratorUpdate.log(LogUpdate.builder()
-                            .level(LogLevel.DEBUG)
-                            .message(line)
-                            .build()));
+                    System.out.println("[Java V2 STDOUT] " + line);
                 }
                 while ((line = stdErr.readLine()) != null) {
-                    execClient.sendUpdate(GeneratorUpdate.log(LogUpdate.builder()
-                            .level(LogLevel.DEBUG)
-                            .message(line)
-                            .build()));
+                    System.out.println("[Java V2 STDERR] " + line);
                 }
             }
             int exitCode = v2.waitFor();
