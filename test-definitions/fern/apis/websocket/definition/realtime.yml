@@ -2,7 +2,7 @@
 
 channel:
   path: /realtime/{session_id}
-  auth: false
+  auth: true
   path-parameters:
     session_id: string
   query-parameters:

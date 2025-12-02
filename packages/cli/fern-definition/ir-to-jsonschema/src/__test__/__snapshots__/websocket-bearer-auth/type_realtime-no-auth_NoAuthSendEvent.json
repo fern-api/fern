@@ -1,16 +1,12 @@
 {
   "type": "object",
   "properties": {
-    "sendText": {
+    "text": {
       "type": "string"
-    },
-    "sendParam": {
-      "type": "integer"
     }
   },
   "required": [
-    "sendText",
-    "sendParam"
+    "text"
   ],
   "additionalProperties": false,
   "definitions": {}
