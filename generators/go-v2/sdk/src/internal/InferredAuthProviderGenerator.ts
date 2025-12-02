@@ -2,7 +2,7 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileGenerator, GoFile } from "@fern-api/go-base";
 
-import { InferredAuthScheme } from "@fern-fern/ir-sdk/api";
+import { HttpEndpoint, HttpService, InferredAuthScheme } from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
@@ -116,8 +116,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
                 writer.writeNode(
                     go.TypeInstantiation.structPointer({
                         typeReference: go.typeReference({
-                            name: "InferredAuthProvider",
-                            importPath: this.getImportPath()
+                            name: "InferredAuthProvider"
                         }),
                         fields: [
                             {
@@ -143,6 +142,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
 
     private getAuthHeadersMethod(): go.Method {
         const hasExpiry = this.inferredAuthScheme.tokenEndpoint.expiryProperty != null;
+        const recv = this.getReceiverName();
 
         return new go.Method({
             name: "AuthHeaders",
@@ -150,25 +150,25 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
             return_: [go.Type.reference(this.context.getNetHttpHeaderTypeReference()), go.Type.error()],
             body: go.codeblock((writer) => {
                 // Lock the mutex
-                writer.writeLine("p.mu.Lock()");
-                writer.writeLine("defer p.mu.Unlock()");
+                writer.writeLine(`${recv}.mu.Lock()`);
+                writer.writeLine(`defer ${recv}.mu.Unlock()`);
                 writer.newLine();
 
                 // Check if we have a valid cached token
                 if (hasExpiry) {
                     writer.writeLine("// Check if we have a valid cached token");
                     writer.writeLine(
-                        "if p.cachedToken != nil && p.expiresAt != nil && time.Now().Before(*p.expiresAt) {"
+                        `if ${recv}.cachedToken != nil && ${recv}.expiresAt != nil && time.Now().Before(*${recv}.expiresAt) {`
                     );
                     writer.indent();
-                    writer.writeLine("return p.buildHeaders(), nil");
+                    writer.writeLine(`return ${recv}.buildHeaders(), nil`);
                     writer.dedent();
                     writer.writeLine("}");
                 } else {
                     writer.writeLine("// Check if we have a cached token");
-                    writer.writeLine("if p.cachedToken != nil {");
+                    writer.writeLine(`if ${recv}.cachedToken != nil {`);
                     writer.indent();
-                    writer.writeLine("return p.buildHeaders(), nil");
+                    writer.writeLine(`return ${recv}.buildHeaders(), nil`);
                     writer.dedent();
                     writer.writeLine("}");
                 }
@@ -176,16 +176,16 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
 
                 // Fetch a new token
                 writer.writeLine("// Fetch a new token");
-                writer.write("token, err := p.client.");
+                writer.write(`token, err := ${recv}.client.`);
                 writer.write(this.getTokenEndpointMethodName());
-                writer.writeLine("(ctx)");
+                writer.writeLine("(ctx, nil)");
                 writer.writeLine("if err != nil {");
                 writer.indent();
                 writer.writeLine("return nil, err");
                 writer.dedent();
                 writer.writeLine("}");
                 writer.newLine();
-                writer.writeLine("p.cachedToken = token");
+                writer.writeLine(`${recv}.cachedToken = token`);
 
                 // Set expiry if present
                 if (hasExpiry && this.inferredAuthScheme.tokenEndpoint.expiryProperty != null) {
@@ -199,15 +199,14 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
                     writer.writeLine(
                         `expiresAt := time.Now().Add(time.Duration(expiresIn)*time.Second - time.Duration(${BUFFER_IN_MINUTES})*time.Minute)`
                     );
-                    writer.writeLine("p.expiresAt = &expiresAt");
+                    writer.writeLine(`${recv}.expiresAt = &expiresAt`);
                 }
 
                 writer.newLine();
-                writer.writeLine("return p.buildHeaders(), nil");
+                writer.writeLine(`return ${recv}.buildHeaders(), nil`);
             }),
             typeReference: go.typeReference({
-                name: "InferredAuthProvider",
-                importPath: this.getImportPath()
+                name: "InferredAuthProvider"
             }),
             pointerReceiver: true,
             docs: "AuthHeaders returns the authentication headers for the request. It handles token caching and automatic refresh when tokens expire."
@@ -215,6 +214,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
     }
 
     private getBuildHeadersMethod(): go.Method {
+        const recv = this.getReceiverName();
         return new go.Method({
             name: "buildHeaders",
             parameters: [],
@@ -222,7 +222,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
             body: go.codeblock((writer) => {
                 writer.writeLine("headers := make(http.Header)");
                 for (const header of this.inferredAuthScheme.tokenEndpoint.authenticatedRequestHeaders) {
-                    const responsePath = this.getResponsePropertyPath("p.cachedToken", header.responseProperty);
+                    const responsePath = this.getResponsePropertyPath(`${recv}.cachedToken`, header.responseProperty);
                     if (header.valuePrefix != null) {
                         writer.writeLine(
                             `headers.Set("${header.headerName}", "${header.valuePrefix}" + ${responsePath})`
@@ -234,8 +234,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
                 writer.writeLine("return headers");
             }),
             typeReference: go.typeReference({
-                name: "InferredAuthProvider",
-                importPath: this.getImportPath()
+                name: "InferredAuthProvider"
             }),
             pointerReceiver: true,
             docs: "buildHeaders constructs the authentication headers from the cached token."
@@ -256,51 +255,61 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
         return parts.join(".");
     }
 
+    private getReceiverName(): string {
+        // go-ast uses the first letter of the type name, lowercased
+        return "i";
+    }
+
+    private getTokenEndpoint(): HttpEndpoint {
+        const service = this.getService();
+        const endpointRef = this.inferredAuthScheme.tokenEndpoint.endpoint;
+        const httpEndpoint = service.endpoints.find((e) => e.id === endpointRef.endpointId);
+        if (httpEndpoint == null) {
+            throw new Error(`Endpoint with ID ${endpointRef.endpointId} not found`);
+        }
+        return httpEndpoint;
+    }
+
     private getTokenEndpointMethodName(): string {
-        // Get the endpoint from the IR
-        const endpoint = this.inferredAuthScheme.tokenEndpoint.endpoint;
-        // The method name is typically the endpoint name in PascalCase
-        return endpoint.endpointId;
+        const httpEndpoint = this.getTokenEndpoint();
+        return this.context.getMethodName(httpEndpoint.name);
+    }
+
+    private getService(): HttpService {
+        const endpointRef = this.inferredAuthScheme.tokenEndpoint.endpoint;
+        const service = this.context.ir.services[endpointRef.serviceId];
+        if (service == null) {
+            throw new Error(`Service with ID ${endpointRef.serviceId} not found`);
+        }
+        return service;
+    }
+
+    private getServiceClientLocation() {
+        const service = this.getService();
+        return this.context.getClientFileLocation({
+            fernFilepath: service.name.fernFilepath,
+            subpackage: undefined
+        });
     }
 
     private getAuthClientTypeReference(): go.TypeReference {
-        // The auth client is typically in the auth package
-        const endpoint = this.inferredAuthScheme.tokenEndpoint.endpoint;
-        const service = this.context.ir.services[endpoint.serviceId];
-        if (service == null) {
-            throw new Error(`Service with ID ${endpoint.serviceId} not found`);
-        }
+        // The provider is in the same package as the auth client, so no importPath needed
         return go.typeReference({
-            name: "Client",
-            importPath: this.context.getClientFileLocation({
-                fernFilepath: service.name.fernFilepath,
-                subpackage: undefined
-            }).importPath
+            name: "Client"
         });
     }
 
     private getAuthClientConstructorReference(): go.TypeReference {
-        const endpoint = this.inferredAuthScheme.tokenEndpoint.endpoint;
-        const service = this.context.ir.services[endpoint.serviceId];
-        if (service == null) {
-            throw new Error(`Service with ID ${endpoint.serviceId} not found`);
-        }
+        // The provider is in the same package as the auth client, so no importPath needed
         return go.typeReference({
-            name: "NewClient",
-            importPath: this.context.getClientFileLocation({
-                fernFilepath: service.name.fernFilepath,
-                subpackage: undefined
-            }).importPath
+            name: "NewClient"
         });
     }
 
     private getTokenResponseType(): go.Type {
         // Get the response type from the token endpoint
+        const service = this.getService();
         const endpoint = this.inferredAuthScheme.tokenEndpoint.endpoint;
-        const service = this.context.ir.services[endpoint.serviceId];
-        if (service == null) {
-            throw new Error(`Service with ID ${endpoint.serviceId} not found`);
-        }
         const httpEndpoint = service.endpoints.find((e) => e.id === endpoint.endpointId);
         if (httpEndpoint == null) {
             throw new Error(`Endpoint with ID ${endpoint.endpointId} not found`);
@@ -317,14 +326,18 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
     }
 
     private getPackageName(): string {
-        return "core";
+        const service = this.getService();
+        return this.context.getClientPackageName({
+            fernFilepath: service.name.fernFilepath,
+            subpackage: undefined
+        });
     }
 
     private getDirectory(): RelativeFilePath {
-        return RelativeFilePath.of("core");
+        return this.getServiceClientLocation().directory;
     }
 
     private getImportPath(): string {
-        return this.context.getCoreImportPath();
+        return this.getServiceClientLocation().importPath;
     }
 }
