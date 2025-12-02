@@ -8,6 +8,7 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { ClientGenerator } from "./client/ClientGenerator";
+import { InferredAuthProviderGenerator } from "./internal/InferredAuthProviderGenerator";
 import { InternalFilesGenerator } from "./internal/InternalFilesGenerator";
 import { RawClientGenerator } from "./raw-client/RawClientGenerator";
 import { buildReference } from "./reference/buildReference";
@@ -59,6 +60,7 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         this.generateClients(context);
         this.generateRawClients(context);
         this.generateInternalFiles(context);
+        this.generateInferredAuthProvider(context);
 
         await context.snippetGenerator.populateSnippetsCache();
 
@@ -174,6 +176,18 @@ export class SdkGeneratorCLI extends AbstractGoGeneratorCli<SdkCustomConfigSchem
         for (const file of internalFiles.generate()) {
             context.project.addGoFiles(file);
         }
+    }
+
+    private generateInferredAuthProvider(context: SdkGeneratorContext) {
+        const inferredAuthScheme = context.getInferredAuthScheme();
+        if (inferredAuthScheme == null) {
+            return;
+        }
+        const generator = new InferredAuthProviderGenerator({
+            context,
+            inferredAuthScheme
+        });
+        context.project.addGoFiles(generator.generate());
     }
 
     private generateSnippets({ context }: { context: SdkGeneratorContext }): Endpoint[] {
