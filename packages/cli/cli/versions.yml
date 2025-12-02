@@ -4,7 +4,7 @@
     - summary: |
         Escape `$` when inferring examples from literals that start with `$`.
         This fixes validation issues like `Example $ending is malformed. Examples should be formatted like $YourType.ExampleName`.
-      type: feat
+      type: fix
   irVersion: 62
   createdAt: "2025-12-02"
   version: 2.17.2
