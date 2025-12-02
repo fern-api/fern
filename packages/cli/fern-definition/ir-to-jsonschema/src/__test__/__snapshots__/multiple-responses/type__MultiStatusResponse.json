@@ -1,0 +1,43 @@
+{
+  "type": "object",
+  "properties": {
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/StatusResult"
+      }
+    }
+  },
+  "required": [
+    "results"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "StatusResult": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "success": {
+          "type": "boolean"
+        },
+        "error": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "success"
+      ],
+      "additionalProperties": false
+    }
+  }
+}
