@@ -266,6 +266,25 @@ function visitEndpoint({
                 });
             }
         },
+        responses: (responses) => {
+            if (responses == null) {
+                return;
+            }
+            for (const [index, responseItem] of responses.entries()) {
+                const nodePathForResponseItem = [...nodePathForEndpoint, { key: "responses", arrayIndex: index }];
+                visitObject(responseItem, {
+                    docs: createDocsVisitor(visitor, nodePathForResponseItem),
+                    "status-code": noop,
+                    type: (type) => {
+                        if (type != null) {
+                            visitTypeReference(type, [...nodePathForResponseItem, "type"], {
+                                location: TypeReferenceLocation.Response
+                            });
+                        }
+                    }
+                });
+            }
+        },
         errors: (errors) => {
             if (errors == null) {
                 return;
