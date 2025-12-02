@@ -1,10 +1,9 @@
+# NOTE: This workflow is now only for manual triggering.
+# Snippet packages are automatically published at the same version as their corresponding
+# generator when the generator is published (see .github/actions/publish-generator/action.yaml).
 name: Publish @fern-api/java-dynamic-snippets
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - generators/java-v2/dynamic-snippets/**
   workflow_dispatch:
     inputs:
       version:
@@ -23,7 +22,7 @@ permissions:
 jobs:
   run:
     runs-on: ubuntu-latest
-    if: ${{ github.repository == 'fern-api/fern' && (github.event_name == 'workflow_dispatch' || !contains(github.event.head_commit.message, '[skip publish]')) }}
+    if: ${{ github.repository == 'fern-api/fern' }}
     concurrency:
       group: publish-java-dynamic-snippets
       cancel-in-progress: true
@@ -38,19 +37,6 @@ jobs:
 
       - name: Update npm
         run: npm install -g npm@latest
-
-      - name: Determine version
-        id: ver
-        shell: bash
-        run: |
-          PKG="${{ env.PACKAGE_NAME }}"
-          if [ -n "${{ inputs.version }}" ]; then
-            NEW_VERSION="${{ inputs.version }}"
-          else
-            CURRENT=$(npm view "$PKG" version 2>/dev/null || echo "0.0.0")
-            NEW_VERSION=$(node -e "const v='$CURRENT'.split('.').map(Number); v[2]++; console.log(v.join('.'))")
-          fi
-          echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
 
       - uses: bufbuild/buf-setup-action@v1.34.0
         with:
@@ -72,7 +58,7 @@ jobs:
       - name: Publish @fern-api/java-dynamic-snippets
         run: |
           cd generators/java-v2/dynamic-snippets
-          pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ steps.ver.outputs.version }}
+          pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ inputs.version }}
           cd dist
           npm publish --access public --tag latest
 
@@ -80,5 +66,5 @@ jobs:
         uses: ./.github/actions/update-fern-platform-dependency
         with:
           package-name: ${{ env.PACKAGE_NAME }}
-          version: ${{ steps.ver.outputs.version }}
+          version: ${{ inputs.version }}
           github-token: ${{ secrets.ACTIONS_PAT }}
