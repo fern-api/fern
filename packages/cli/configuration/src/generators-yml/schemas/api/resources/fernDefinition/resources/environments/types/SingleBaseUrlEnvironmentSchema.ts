@@ -5,7 +5,6 @@
 import * as FernDefinition from "../../../../../index";
 
 export interface SingleBaseUrlEnvironmentSchema
-    extends FernDefinition.fernDefinition.WithAudiences,
-        FernDefinition.fernDefinition.WithDocsSchema {
+    extends FernDefinition.fernDefinition.WithAudiences, FernDefinition.fernDefinition.WithDocsSchema {
     url: string;
 }

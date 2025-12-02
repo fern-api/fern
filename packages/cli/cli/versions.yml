@@ -9,6 +9,30 @@
       type: feat
   irVersion: 62
   createdAt: "2025-12-02"
+  version: 2.17.0
+
+- changelogEntry:
+    - summary: |
+        Add support for aliases in generators.yml. You can now define aliases that map to multiple groups, allowing you to run multiple groups with a single command.
+
+        ```yaml
+        # generators.yml
+        aliases:
+          all: ["php-sdk", "ts-sdk", "go-sdk"]
+
+        groups:
+          php-sdk:
+            generators: ...
+          ts-sdk:
+            generators: ...
+          go-sdk:
+            generators: ...
+        ```
+
+        Then run `fern generate all` to generate all three SDKs at once.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
   version: 2.16.0
 
 - changelogEntry:

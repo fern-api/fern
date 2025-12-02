@@ -17,6 +17,7 @@ export async function visitGeneratorsYamlAst(
         metadata: noop,
         readme: noop,
         "default-group": noop,
+        aliases: noop,
         reviewers: noop,
         openapi: noop,
         "openapi-overrides": noop,
