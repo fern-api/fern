@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Infer example for literal and enum types when generating IR from OpenAPI and Fern Definition.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.15.0
+
+- changelogEntry:
+    - summary: |
         Log the pull request URL when an SDK is generated with self-hosted GitHub pull-request mode.
       type: feat
   irVersion: 62
