@@ -70,7 +70,22 @@ export async function loadRawDocsConfiguration({
         filePath: absolutePathOfConfiguration
     });
     if (result.success) {
-        return docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(contentsJson);
+        try {
+            return docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(contentsJson);
+        } catch (err) {
+            if (
+                err instanceof TypeError &&
+                typeof err.message === "string" &&
+                err.message.includes("Cannot convert undefined or null to object")
+            ) {
+                throw new Error(
+                    `Failed to parse ${absolutePathOfConfiguration}: encountered null or undefined where an object was expected.\n` +
+                        `This often happens in navigation or tabbed configuration when a section is set to null instead of an object.\n` +
+                        `Original error: ${err.message}`
+                );
+            }
+            throw err;
+        }
     } else {
         throw new Error(`Failed to parse docs.yml:\n${result.error?.message ?? "Unknown error"}`);
     }
