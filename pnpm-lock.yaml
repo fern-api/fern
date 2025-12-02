@@ -5381,6 +5381,9 @@ importers:
 
   packages/cli/docs-preview:
     dependencies:
+      '@fern-api/core-utils':
+        specifier: workspace:*
+        version: link:../../commons/core-utils
       '@fern-api/docs-resolver':
         specifier: workspace:*
         version: link:../docs-resolver
