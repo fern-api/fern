@@ -87,7 +87,6 @@ class ServiceWireTest < Minitest::Test
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
     client.service.get_metadata(
       shallow: false,
-      tag: "development",
       x_api_version: "0.0.1"
     )
 

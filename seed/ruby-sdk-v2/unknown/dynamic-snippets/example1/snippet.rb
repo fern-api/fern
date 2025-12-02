@@ -2,4 +2,4 @@ require "seed"
 
 client = Seed::Client.new(base_url: 'https://api.fern.com');
 
-client.unknown.post_object({});
+client.unknown.post_object();

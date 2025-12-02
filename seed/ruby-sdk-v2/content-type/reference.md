@@ -140,7 +140,7 @@ client.service.patch_complex(
 <dl>
 <dd>
 
-**metadata:** `Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]` 
+**metadata:** `Internal::Types::Hash[String, Object]` 
     
 </dd>
 </dl>
@@ -188,7 +188,7 @@ client.service.patch_complex(
 <dl>
 <dd>
 
-**settings:** `Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]` 
+**settings:** `Internal::Types::Hash[String, Object]` 
     
 </dd>
 </dl>

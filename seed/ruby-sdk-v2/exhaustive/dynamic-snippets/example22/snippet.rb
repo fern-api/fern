@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.endpoints.params.get_with_path('param');
+client.endpoints.params.get_with_path(param: 'param');

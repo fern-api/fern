@@ -5,7 +5,7 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.endpoints.object.get_and_return_with_optional_field({
+client.endpoints.object.get_and_return_with_optional_field(
   string: 'string',
   integer: 1,
   long: 1000000,
@@ -21,4 +21,4 @@ client.endpoints.object.get_and_return_with_optional_field({
     1: 'map'
   },
   bigint: '1000000'
-});
+);

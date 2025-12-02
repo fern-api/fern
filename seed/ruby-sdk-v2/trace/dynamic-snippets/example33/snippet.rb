@@ -6,6 +6,6 @@ client = Seed::Client.new(
 );
 
 client.v_2.problem.get_problem_version(
-  'problemId',
-  1
+  problem_id: 'problemId',
+  problem_version: 1
 );

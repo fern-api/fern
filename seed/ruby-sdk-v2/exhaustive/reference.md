@@ -173,9 +173,7 @@ client.endpoints.container.get_and_return_set_of_objects();
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_map_prim_to_prim({
-  string: 'string'
-});
+client.endpoints.container.get_and_return_map_prim_to_prim();
 ```
 </dd>
 </dl>
@@ -215,11 +213,7 @@ client.endpoints.container.get_and_return_map_prim_to_prim({
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_map_of_prim_to_object({
-  string: {
-    string: 'string'
-  }
-});
+client.endpoints.container.get_and_return_map_of_prim_to_object();
 ```
 </dd>
 </dl>
@@ -259,9 +253,7 @@ client.endpoints.container.get_and_return_map_of_prim_to_object({
 <dd>
 
 ```ruby
-client.endpoints.container.get_and_return_optional({
-  string: 'string'
-});
+client.endpoints.container.get_and_return_optional();
 ```
 </dd>
 </dl>
@@ -302,7 +294,7 @@ client.endpoints.container.get_and_return_optional({
 <dd>
 
 ```ruby
-client.endpoints.content_type.post_json_patch_content_type({
+client.endpoints.content_type.post_json_patch_content_type(
   string: 'string',
   integer: 1,
   long: 1000000,
@@ -318,7 +310,7 @@ client.endpoints.content_type.post_json_patch_content_type({
     1: 'map'
   },
   bigint: '1000000'
-});
+);
 ```
 </dd>
 </dl>
@@ -358,7 +350,7 @@ client.endpoints.content_type.post_json_patch_content_type({
 <dd>
 
 ```ruby
-client.endpoints.content_type.post_json_patch_content_with_charset_type({
+client.endpoints.content_type.post_json_patch_content_with_charset_type(
   string: 'string',
   integer: 1,
   long: 1000000,
@@ -374,7 +366,7 @@ client.endpoints.content_type.post_json_patch_content_with_charset_type({
     1: 'map'
   },
   bigint: '1000000'
-});
+);
 ```
 </dd>
 </dl>
@@ -456,7 +448,7 @@ client.endpoints.enum.get_and_return_enum();
 <dd>
 
 ```ruby
-client.endpoints.http_methods.test_get('id');
+client.endpoints.http_methods.test_get(id: 'id');
 ```
 </dd>
 </dl>
@@ -496,9 +488,7 @@ client.endpoints.http_methods.test_get('id');
 <dd>
 
 ```ruby
-client.endpoints.http_methods.test_post({
-  string: 'string'
-});
+client.endpoints.http_methods.test_post(string: 'string');
 ```
 </dd>
 </dl>
@@ -539,10 +529,8 @@ client.endpoints.http_methods.test_post({
 
 ```ruby
 client.endpoints.http_methods.test_put(
-  'id',
-  {
-    string: 'string'
-  }
+  id: 'id',
+  string: 'string'
 );
 ```
 </dd>
@@ -592,24 +580,22 @@ client.endpoints.http_methods.test_put(
 
 ```ruby
 client.endpoints.http_methods.test_patch(
-  'id',
-  {
-    string: 'string',
-    integer: 1,
-    long: 1000000,
-    double: 1.1,
-    bool: true,
-    datetime: '2024-01-15T09:30:00Z',
-    date: '2023-01-15',
-    uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-    base_64: 'SGVsbG8gd29ybGQh',
-    list: ['list', 'list'],
-    set: Set.new(['set']),
-    map: {
-      1: 'map'
-    },
-    bigint: '1000000'
-  }
+  id: 'id',
+  string: 'string',
+  integer: 1,
+  long: 1000000,
+  double: 1.1,
+  bool: true,
+  datetime: '2024-01-15T09:30:00Z',
+  date: '2023-01-15',
+  uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  base_64: 'SGVsbG8gd29ybGQh',
+  list: ['list', 'list'],
+  set: Set.new(['set']),
+  map: {
+    1: 'map'
+  },
+  bigint: '1000000'
 );
 ```
 </dd>
@@ -658,7 +644,7 @@ client.endpoints.http_methods.test_patch(
 <dd>
 
 ```ruby
-client.endpoints.http_methods.test_delete('id');
+client.endpoints.http_methods.test_delete(id: 'id');
 ```
 </dd>
 </dl>
@@ -699,7 +685,7 @@ client.endpoints.http_methods.test_delete('id');
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_with_optional_field({
+client.endpoints.object.get_and_return_with_optional_field(
   string: 'string',
   integer: 1,
   long: 1000000,
@@ -715,7 +701,7 @@ client.endpoints.object.get_and_return_with_optional_field({
     1: 'map'
   },
   bigint: '1000000'
-});
+);
 ```
 </dd>
 </dl>
@@ -755,9 +741,7 @@ client.endpoints.object.get_and_return_with_optional_field({
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_with_required_field({
-  string: 'string'
-});
+client.endpoints.object.get_and_return_with_required_field(string: 'string');
 ```
 </dd>
 </dl>
@@ -797,11 +781,9 @@ client.endpoints.object.get_and_return_with_required_field({
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_with_map_of_map({
+client.endpoints.object.get_and_return_with_map_of_map(map: {
   map: {
-    map: {
-      map: 'map'
-    }
+    map: 'map'
   }
 });
 ```
@@ -843,7 +825,7 @@ client.endpoints.object.get_and_return_with_map_of_map({
 <dd>
 
 ```ruby
-client.endpoints.object.get_and_return_nested_with_optional_field({
+client.endpoints.object.get_and_return_nested_with_optional_field(
   string: 'string',
   nested_object: {
     string: 'string',
@@ -862,7 +844,7 @@ client.endpoints.object.get_and_return_nested_with_optional_field({
     },
     bigint: '1000000'
   }
-});
+);
 ```
 </dd>
 </dl>
@@ -903,26 +885,24 @@ client.endpoints.object.get_and_return_nested_with_optional_field({
 
 ```ruby
 client.endpoints.object.get_and_return_nested_with_required_field(
-  'string',
-  {
+  string: 'string',
+  string: 'string',
+  nested_object: {
     string: 'string',
-    nested_object: {
-      string: 'string',
-      integer: 1,
-      long: 1000000,
-      double: 1.1,
-      bool: true,
-      datetime: '2024-01-15T09:30:00Z',
-      date: '2023-01-15',
-      uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-      base_64: 'SGVsbG8gd29ybGQh',
-      list: ['list', 'list'],
-      set: Set.new(['set']),
-      map: {
-        1: 'map'
-      },
-      bigint: '1000000'
-    }
+    integer: 1,
+    long: 1000000,
+    double: 1.1,
+    bool: true,
+    datetime: '2024-01-15T09:30:00Z',
+    date: '2023-01-15',
+    uuid: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+    base_64: 'SGVsbG8gd29ybGQh',
+    list: ['list', 'list'],
+    set: Set.new(['set']),
+    map: {
+      1: 'map'
+    },
+    bigint: '1000000'
   }
 );
 ```
@@ -1027,7 +1007,7 @@ GET with path param
 <dd>
 
 ```ruby
-client.endpoints.params.get_with_path('param');
+client.endpoints.params.get_with_path(param: 'param');
 ```
 </dd>
 </dl>
@@ -1081,7 +1061,7 @@ GET with path param
 <dd>
 
 ```ruby
-client.endpoints.params.get_with_path('param');
+client.endpoints.params.get_with_path(param: 'param');
 ```
 </dd>
 </dl>
@@ -2170,7 +2150,7 @@ client.no_auth.post_with_no_auth();
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, Object]` 
+**request:** `Object` 
     
 </dd>
 </dl>

@@ -23,8 +23,11 @@ module Seed
       # @option params [Seed::Types::PlainObject, nil] :query_param_object
       # @option params [Integer, nil] :query_param_integer
       #
-      # @return [Hash[String, Object]]
+      # @return [Object]
       def test_method_name(request_options: {}, **params)
+        _path_param_names = %i[path_param]
+        _body = params.except(*_path_param_names)
+
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
         _query_param_names = %i[query_param_object query_param_integer]
         _query = {}

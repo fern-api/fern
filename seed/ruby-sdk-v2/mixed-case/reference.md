@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.service.get_resource('rsc-xyz');
+client.service.get_resource(resource_id: 'rsc-xyz');
 ```
 </dd>
 </dl>

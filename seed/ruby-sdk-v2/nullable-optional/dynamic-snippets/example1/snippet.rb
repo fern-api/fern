@@ -2,7 +2,7 @@ require "seed"
 
 client = Seed::Client.new(base_url: 'https://api.fern.com');
 
-client.nullable_optional.create_user({
+client.nullable_optional.create_user(
   username: 'username',
   email: 'email',
   phone: 'phone',
@@ -15,4 +15,4 @@ client.nullable_optional.create_user({
     building_id: 'buildingId',
     tenant_id: 'tenantId'
   }
-});
+);
