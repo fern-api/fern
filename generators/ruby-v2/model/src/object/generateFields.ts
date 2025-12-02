@@ -1,4 +1,5 @@
 import { ruby } from "@fern-api/ruby-ast";
+import { toNormalcase } from "@fern-api/ruby-base";
 import { ObjectProperty, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { ModelGeneratorContext } from "../ModelGeneratorContext";
 
@@ -12,7 +13,7 @@ export function generateFields({
     context: ModelGeneratorContext;
 }): ruby.AstNode[] {
     return properties.map((prop, index) => {
-        const fieldName = prop.name.name.snakeCase.safeName;
+        const fieldName = toNormalcase(prop.name.name.snakeCase.safeName);
         const wireValue = prop.name.wireValue;
         const rubyType = context.typeMapper.convert({ reference: prop.valueType });
 

@@ -1,4 +1,13 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc54
+  createdAt: "2025-12-02"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix Rubocop Naming/VariableNumber violation by using normalcase for symbol numbers.
+        Field names like `first_6` are now generated as `first6` to comply with Ruby naming conventions.
+  irVersion: 61
+
 - version: 1.0.0-rc53
   createdAt: "2025-11-29"
   changelogEntry:
