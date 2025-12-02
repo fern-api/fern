@@ -64,6 +64,22 @@
         }
       ]
     },
+    "aliases": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "groups": {
       "oneOf": [
         {
