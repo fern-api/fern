@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import type * as SeedOauthClientCredentialsEnvironmentVariables from "../../../index.js";
 
@@ -76,28 +77,7 @@ export class AuthClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedOauthClientCredentialsEnvironmentVariablesTimeoutError(
-                    "Timeout exceeded when calling POST /token.",
-                );
-            case "unknown":
-                throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/token");
     }
 
     /**
@@ -157,27 +137,6 @@ export class AuthClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "body-is-null":
-                throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-                    statusCode: _response.error.statusCode,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedOauthClientCredentialsEnvironmentVariablesTimeoutError(
-                    "Timeout exceeded when calling POST /token.",
-                );
-            case "unknown":
-                throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/token");
     }
 }
