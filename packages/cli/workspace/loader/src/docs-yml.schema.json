@@ -327,6 +327,16 @@
           "type": "null"
         }
       ]
+    },
+    "enable-environment-variable-substitution": {
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "required": [
