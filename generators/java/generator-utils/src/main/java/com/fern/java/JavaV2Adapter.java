@@ -5,6 +5,7 @@ import com.fern.generator.exec.model.logging.LogLevel;
 import com.fern.generator.exec.model.logging.LogUpdate;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,12 +22,18 @@ public class JavaV2Adapter {
      * @param args Arguments to invoke the Java V2 generator.
      */
     public static void run(DefaultGeneratorExecClient execClient, JavaV2Arguments args) {
+        System.out.println("Starting java v2 sdk generation");
         try {
+            System.out.println("Generating command for java v2 sdk generation");
             String[] command = new String[] {
                 NODE, args.executable().toString(), args.generatorConfig().toString()
             };
+            System.out.println("Generated command for java v2 sdk generation: " + Arrays.asList(command));
+            System.out.println("Calling java v2 generator");
             Process v2 = Runtime.getRuntime().exec(command);
+            System.out.println("Called java v2 generator");
 
+            System.out.println("Awaiting java v2 generator");
             // Print the logs from the v2 process to System.out
             try (BufferedReader stdOut = new BufferedReader(new InputStreamReader(v2.getInputStream()));
                     BufferedReader stdErr = new BufferedReader(new InputStreamReader(v2.getErrorStream()))) {
@@ -39,6 +46,7 @@ public class JavaV2Adapter {
                 }
             }
             int exitCode = v2.waitFor();
+            System.out.println("Got exit code from java v2 generator: " + exitCode);
             if (exitCode == 0) {
                 log.info("Successfully ran Java V2 generator");
             } else {
