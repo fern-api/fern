@@ -64,7 +64,7 @@
         }
       ]
     },
-    "group-aliases": {
+    "aliases": {
       "oneOf": [
         {
           "type": "object",
