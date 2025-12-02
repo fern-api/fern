@@ -35,6 +35,7 @@ export class SdkGeneratorContext extends GeneratorContext {
     public readonly endpointGenerator: EndpointGenerator;
     public readonly generatorAgent: CsharpGeneratorAgent;
     public readonly snippetGenerator: EndpointSnippetsGenerator;
+    public readonly enableWireTests: boolean;
     public constructor(
         ir: IntermediateRepresentation,
         config: FernGeneratorExec.config.GeneratorConfig,
@@ -61,6 +62,7 @@ export class SdkGeneratorContext extends GeneratorContext {
         this.formatter = new CsharpFormatter();
         this.nopFormatter = new NopFormatter();
         this.endpointGenerator = new EndpointGenerator({ context: this });
+        this.enableWireTests = customConfig["enable-wire-tests"] === true;
         this.generatorAgent = new CsharpGeneratorAgent({
             logger: this.logger,
             config: this.config,

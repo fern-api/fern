@@ -56,6 +56,7 @@ export const CsharpConfigSchema = z.object({
     "generate-error-types": z.boolean().optional(),
     "package-id": z.string().optional(),
     "generate-mock-server-tests": z.boolean().optional(),
+    "enable-wire-tests": z.boolean().optional(),
     "include-exception-handler": z.boolean().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
 

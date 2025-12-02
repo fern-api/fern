@@ -213,7 +213,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 allowExtraFields: customConfig.allowExtraFields ?? false,
                 inlineFileProperties: customConfig.inlineFileProperties ?? true,
                 inlinePathParameters: customConfig.inlinePathParameters ?? true,
-                writeUnitTests: customConfig.generateWireTests ?? config.writeUnitTests,
+                writeUnitTests: customConfig.generateWireTests ?? false,
                 executionEnvironment: this.executionEnvironment(config),
                 packageJson: customConfig.packageJson,
                 outputJsr: customConfig.publishToJsr ?? false,
