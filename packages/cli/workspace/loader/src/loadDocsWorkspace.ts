@@ -8,6 +8,41 @@ import yaml from "js-yaml";
 import * as DocsYmlJsonSchema from "./docs-yml.schema.json";
 import { DocsWorkspace } from "./types/Workspace";
 
+const SKIP_MARKER = Symbol.for("fern:skip");
+
+/**
+ * Recursively removes null/undefined values from an object/array structure.
+ * Returns SKIP_MARKER for null/undefined values so they can be filtered out.
+ * Tracks which paths were removed for logging purposes.
+ */
+function sanitizeNullValues(value: unknown, path: string[] = [], removedPaths: string[][] = []): unknown {
+    if (value == null) {
+        removedPaths.push([...path]);
+        return SKIP_MARKER;
+    }
+    if (Array.isArray(value)) {
+        const result: unknown[] = [];
+        for (let i = 0; i < value.length; i++) {
+            const child = sanitizeNullValues(value[i], [...path, String(i)], removedPaths);
+            if (child !== SKIP_MARKER) {
+                result.push(child);
+            }
+        }
+        return result;
+    }
+    if (typeof value === "object") {
+        const result: Record<string, unknown> = {};
+        for (const [k, v] of Object.entries(value as Record<string, unknown>)) {
+            const child = sanitizeNullValues(v, [...path, k], removedPaths);
+            if (child !== SKIP_MARKER) {
+                result[k] = child;
+            }
+        }
+        return result;
+    }
+    return value;
+}
+
 export async function loadDocsWorkspace({
     fernDirectory,
     context
@@ -78,11 +113,25 @@ export async function loadRawDocsConfiguration({
                 typeof err.message === "string" &&
                 err.message.includes("Cannot convert undefined or null to object")
             ) {
-                throw new Error(
-                    `Failed to parse ${absolutePathOfConfiguration}: encountered null or undefined where an object was expected.\n` +
-                        `This often happens in navigation or tabbed configuration when a section is set to null instead of an object.\n` +
-                        `Original error: ${err.message}`
-                );
+                // Sanitize null/undefined values and retry parsing
+                const removedPaths: string[][] = [];
+                const sanitizedJson = sanitizeNullValues(contentsJson, [], removedPaths);
+
+                if (removedPaths.length > 0) {
+                    context.logger.warn(
+                        `docs.yml contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
+                    );
+                }
+
+                try {
+                    return docsYml.RawSchemas.Serializer.DocsConfiguration.parseOrThrow(sanitizedJson);
+                } catch (retryErr) {
+                    throw new Error(
+                        `Failed to parse ${absolutePathOfConfiguration}: encountered null or undefined where an object was expected.\n` +
+                            `Tried to ignore null/undefined sections but parsing still failed.\n` +
+                            `Original error: ${retryErr instanceof Error ? retryErr.message : String(retryErr)}`
+                    );
+                }
             }
             throw err;
         }
