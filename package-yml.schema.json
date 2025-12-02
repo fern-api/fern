@@ -2133,6 +2133,19 @@
         }
       ]
     },
+    "service.HttpResponses": {
+      "anyOf": [
+        {
+          "$ref": "#/definitions/service.HttpResponseSchema"
+        },
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/service.HttpResponseSchema"
+          }
+        }
+      ]
+    },
     "service.StreamFormat": {
       "type": "string",
       "enum": [
@@ -2808,6 +2821,16 @@
           "oneOf": [
             {
               "$ref": "#/definitions/service.HttpResponseSchema"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "responses": {
+          "oneOf": [
+            {
+              "$ref": "#/definitions/service.HttpResponses"
             },
             {
               "type": "null"
