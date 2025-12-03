@@ -189,7 +189,8 @@ export class GenerationRunner {
             executionEnvironment: this.executionEnvironment,
             ir: rawIr,
             runner: undefined,
-            ai: workspace.generatorsConfiguration?.ai
+            ai: workspace.generatorsConfiguration?.ai,
+            customFernignoreContents: undefined
         });
     }
 }
