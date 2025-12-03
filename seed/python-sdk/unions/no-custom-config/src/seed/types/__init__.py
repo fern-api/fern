@@ -8,8 +8,10 @@ from importlib import import_module
 if typing.TYPE_CHECKING:
     from .types import (
         Bar,
+        FirstItemType,
         Foo,
         FooExtended,
+        SecondItemType,
         Union,
         UnionWithBaseProperties,
         UnionWithBaseProperties_Foo,
@@ -26,6 +28,9 @@ if typing.TYPE_CHECKING:
         UnionWithDuplicateTypes,
         UnionWithDuplicateTypes_Foo1,
         UnionWithDuplicateTypes_Foo2,
+        UnionWithDuplicativeDiscriminants,
+        UnionWithDuplicativeDiscriminants_FirstItemType,
+        UnionWithDuplicativeDiscriminants_SecondItemType,
         UnionWithLiteral,
         UnionWithLiteral_Fern,
         UnionWithMultipleNoProperties,
@@ -66,8 +71,10 @@ if typing.TYPE_CHECKING:
     )
 _dynamic_imports: typing.Dict[str, str] = {
     "Bar": ".types",
+    "FirstItemType": ".types",
     "Foo": ".types",
     "FooExtended": ".types",
+    "SecondItemType": ".types",
     "Union": ".types",
     "UnionWithBaseProperties": ".types",
     "UnionWithBaseProperties_Foo": ".types",
@@ -84,6 +91,9 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithDuplicateTypes": ".types",
     "UnionWithDuplicateTypes_Foo1": ".types",
     "UnionWithDuplicateTypes_Foo2": ".types",
+    "UnionWithDuplicativeDiscriminants": ".types",
+    "UnionWithDuplicativeDiscriminants_FirstItemType": ".types",
+    "UnionWithDuplicativeDiscriminants_SecondItemType": ".types",
     "UnionWithLiteral": ".types",
     "UnionWithLiteral_Fern": ".types",
     "UnionWithMultipleNoProperties": ".types",
@@ -147,8 +157,10 @@ def __dir__():
 
 __all__ = [
     "Bar",
+    "FirstItemType",
     "Foo",
     "FooExtended",
+    "SecondItemType",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithBaseProperties_Foo",
@@ -165,6 +177,9 @@ __all__ = [
     "UnionWithDuplicateTypes",
     "UnionWithDuplicateTypes_Foo1",
     "UnionWithDuplicateTypes_Foo2",
+    "UnionWithDuplicativeDiscriminants",
+    "UnionWithDuplicativeDiscriminants_FirstItemType",
+    "UnionWithDuplicativeDiscriminants_SecondItemType",
     "UnionWithLiteral",
     "UnionWithLiteral_Fern",
     "UnionWithMultipleNoProperties",
