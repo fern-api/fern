@@ -73,6 +73,10 @@ export class PackageTreeGenerator {
             throw new Error("Found duplicate service for " + serviceId);
         }
         package_.service = serviceId;
+        // Leverage service-level docs to populate subpackage docs if not already set
+        if (package_.docs == null && service.docs != null) {
+            package_.docs = service.docs;
+        }
     }
 
     public addWebhookGroup(webhookGroupId: WebhookGroupId, fernFilepath: FernFilepath): void {

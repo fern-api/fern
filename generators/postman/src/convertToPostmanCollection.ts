@@ -127,7 +127,7 @@ function getCollectionItemsForPackage(
             const service = subpackage.service != null ? ir.services[subpackage.service] : undefined;
             items.push({
                 type: "container",
-                description: subpackage.docs ?? (service as HttpService & { docs?: string })?.docs ?? undefined,
+                description: subpackage.docs ?? undefined,
                 name: service?.displayName ?? startCase(subpackage.name.originalName),
                 item: getCollectionItemsForPackage(subpackage, ir, authHeaders)
             });
