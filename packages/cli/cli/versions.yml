@@ -49,6 +49,14 @@
 
 - changelogEntry:
     - summary: |
+        Extend `substitute-env-vars` to apply to API specs (OpenAPI and Fern definitions) when generating docs. Environment variables using `${VAR_NAME}` syntax in API spec descriptions, examples, and other string fields are now substituted when `substitute-env-vars: true` is set in `docs.yml`.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.2
+
+- changelogEntry:
+    - summary: |
         Fix `substitute-env-vars` not applying to arrays in docs configuration. The `replaceEnvVariables` function now recursively processes array elements, enabling environment variable substitution in arrays of strings, arrays of objects, and deeply nested array structures (such as navigation items, navbar links, footer links, redirects, etc.).
       type: fix
   irVersion: 62
