@@ -1739,7 +1739,8 @@
                     "docs": "POST request with basic auth scheme"
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {

@@ -2605,7 +2605,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_inlined-request": {
             "availability": null,
@@ -3693,7 +3694,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_multipart-form": {
             "availability": null,
@@ -4195,7 +4197,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_path-param": {
             "availability": null,
@@ -5024,7 +5027,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_query-param": {
             "availability": null,
@@ -6568,7 +6572,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {

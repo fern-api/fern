@@ -473,7 +473,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_a/b": {
             "availability": null,
@@ -664,7 +665,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_a/c": {
             "availability": null,
@@ -855,7 +857,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_folder": {
             "availability": null,
@@ -1008,7 +1011,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_folder/service": {
             "availability": null,
@@ -1589,7 +1593,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {

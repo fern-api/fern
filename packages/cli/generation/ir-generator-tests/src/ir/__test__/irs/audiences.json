@@ -1212,7 +1212,8 @@
                     "docs": "Add a movie to the database"
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {

@@ -283,7 +283,8 @@
                     "docs": "GET request with custom api key"
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {

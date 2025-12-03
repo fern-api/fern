@@ -3527,7 +3527,8 @@
                     "docs": "Regular PATCH endpoint without merge-patch semantics"
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {

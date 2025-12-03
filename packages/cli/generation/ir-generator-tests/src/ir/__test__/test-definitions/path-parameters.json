@@ -3157,7 +3157,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_user": {
             "availability": null,
@@ -9285,7 +9286,8 @@
                     "docs": "Test endpoint with path parameters listed in different order than found in path"
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {

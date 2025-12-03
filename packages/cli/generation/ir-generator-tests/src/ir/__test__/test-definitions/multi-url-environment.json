@@ -392,7 +392,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         },
         "service_s3": {
             "availability": null,
@@ -756,7 +757,8 @@
                     "docs": null
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {

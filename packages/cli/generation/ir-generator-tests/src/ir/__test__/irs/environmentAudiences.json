@@ -4972,7 +4972,8 @@
                     "docs": "Retrieve a movie from the database based on the ID"
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {

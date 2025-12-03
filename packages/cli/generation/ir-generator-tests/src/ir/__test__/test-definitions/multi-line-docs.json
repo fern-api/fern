@@ -1593,7 +1593,8 @@
                     "docs": "Create a new user.\nThis endpoint is used to create a new user."
                 }
             ],
-            "audiences": null
+            "audiences": null,
+            "docs": null
         }
     },
     "constants": {
