@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Gracefully handle null values in docs.yml.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.17.1
+
+- changelogEntry:
+    - summary: |
         Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`, 
         environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
         including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.

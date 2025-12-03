@@ -1,5 +1,5 @@
 import { docsYml } from "@fern-api/configuration";
-import { assertNever, isPlainObject } from "@fern-api/core-utils";
+import { assertNever, isPlainObject, sanitizeNullValues } from "@fern-api/core-utils";
 import { FdrAPI as CjsFdrSdk } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, doesPathExist, listFiles, resolve } from "@fern-api/fs-utils";
 import { TaskContext } from "@fern-api/task-context";
@@ -475,7 +475,17 @@ async function getVersionedNavigationConfiguration({
     for (const version of versions) {
         const absoluteFilepathToVersionFile = resolve(absolutePathToFernFolder, version.path);
         const versionContent = yaml.load((await readFile(absoluteFilepathToVersionFile)).toString());
-        const versionResult = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(versionContent);
+
+        // Sanitize null/undefined values before parsing
+        const removedPaths: string[][] = [];
+        const sanitizedVersionContent = sanitizeNullValues(versionContent, [], removedPaths);
+        if (removedPaths.length > 0) {
+            context.logger.warn(
+                `Version file ${version.path} contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
+            );
+        }
+
+        const versionResult = docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(sanitizedVersionContent);
         const versionNavigation = await convertNavigationConfiguration({
             tabs: versionResult.tabs,
             rawNavigationConfig: versionResult.navigation,
@@ -538,7 +548,17 @@ async function getNavigationConfiguration({
                 const absoluteFilepathToProductFile = resolve(absolutePathToFernFolder, product.path);
 
                 const content = yaml.load((await readFile(absoluteFilepathToProductFile)).toString());
-                const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(content);
+
+                // Sanitize null/undefined values before parsing
+                const removedPaths: string[][] = [];
+                const sanitizedContent = sanitizeNullValues(content, [], removedPaths);
+                if (removedPaths.length > 0) {
+                    context.logger.warn(
+                        `Product file ${product.path} contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
+                    );
+                }
+
+                const result = docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(sanitizedContent);
 
                 // If the product has versions defined, process them
                 if (product.versions != null && product.versions.length > 0) {
