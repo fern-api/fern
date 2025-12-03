@@ -6,7 +6,7 @@ import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-a
 import { loggingExeca } from "@fern-api/logging-execa";
 import { TaskContext } from "@fern-api/task-context";
 import decompress from "decompress";
-import { cp, readdir, readFile, rm } from "fs/promises";
+import { cp, readdir, readFile, rm, writeFile } from "fs/promises";
 import { tmpdir } from "os";
 import { join as pathJoin } from "path";
 import semver from "semver";
@@ -26,6 +26,7 @@ export declare namespace LocalTaskHandler {
         version: string | undefined;
         ai: AiServicesSchema | undefined;
         isWhitelabel: boolean;
+        customFernignoreContents: string | undefined;
     }
 }
 
@@ -40,6 +41,7 @@ export class LocalTaskHandler {
     private version: string | undefined;
     private ai: AiServicesSchema | undefined;
     private isWhitelabel: boolean;
+    private customFernignoreContents: string | undefined;
 
     constructor({
         context,
@@ -51,7 +53,8 @@ export class LocalTaskHandler {
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel
+        isWhitelabel,
+        customFernignoreContents
     }: LocalTaskHandler.Init) {
         this.context = context;
         this.absolutePathToLocalOutput = absolutePathToLocalOutput;
@@ -63,9 +66,19 @@ export class LocalTaskHandler {
         this.version = version;
         this.ai = ai;
         this.isWhitelabel = isWhitelabel;
+        this.customFernignoreContents = customFernignoreContents;
     }
 
     public async copyGeneratedFiles(): Promise<{ shouldCommit: boolean; autoVersioningCommitMessage?: string }> {
+        // Write custom fernignore if provided (replaces the one from main branch)
+        if (this.customFernignoreContents != null) {
+            const absolutePathToFernignore = AbsoluteFilePath.of(
+                join(this.absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME))
+            );
+            this.context.logger.debug("Writing custom .fernignore file...");
+            await writeFile(absolutePathToFernignore, this.customFernignoreContents, "utf-8");
+        }
+
         const isFernIgnorePresent = await this.isFernIgnorePresent();
         const isExistingGitRepo = await this.isGitRepository();
 

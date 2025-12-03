@@ -627,8 +627,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 })
                 .option("fernignore", {
                     type: "string",
-                    description:
-                        "Path to a custom .fernignore file to use instead of the one on the main branch (remote generation only)"
+                    description: "Path to a custom .fernignore file to use instead of the one on the main branch"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -639,11 +638,6 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             }
             if (argv.skipUpload && argv.docs == null) {
                 return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --docs.");
-            }
-            if (argv.fernignore != null && (argv.local || argv.runner != null)) {
-                return cliContext.failWithoutThrowing(
-                    "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
-                );
             }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({

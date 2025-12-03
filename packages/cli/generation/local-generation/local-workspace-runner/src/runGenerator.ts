@@ -74,7 +74,8 @@ export async function writeFilesToDiskAndRunGenerator({
     runner,
     whiteLabel,
     ir,
-    ai
+    ai,
+    customFernignoreContents
 }: {
     organization: string;
     absolutePathToFernConfig: AbsoluteFilePath | undefined;
@@ -100,6 +101,7 @@ export async function writeFilesToDiskAndRunGenerator({
     whiteLabel?: boolean;
     ir: IntermediateRepresentation;
     ai: generatorsYml.AiServicesSchema | undefined;
+    customFernignoreContents: string | undefined;
 }): Promise<{
     ir: IntermediateRepresentation;
     generatorConfig: FernGeneratorExec.GeneratorConfig;
@@ -224,7 +226,8 @@ export async function writeFilesToDiskAndRunGenerator({
         absolutePathToTmpSnippetTemplatesJSON,
         version,
         ai,
-        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false
+        isWhitelabel: ir.readmeConfig?.whiteLabel ?? false,
+        customFernignoreContents
     });
     const generatedFilesResult = await taskHandler.copyGeneratedFiles();
 

@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Extend `--fernignore` CLI option to work with local generation (`--local` flag). Previously, the `--fernignore` option only worked with remote generation. Now users can provide a custom `.fernignore` file when running local generation, which will replace the existing one during generation.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.1.0
+
+- changelogEntry:
+    - summary: |
         **Breaking Change**: Enable `smart-casing` by default for all generators.
 
         Smart-casing improves naming conventions in generated SDKs by:
