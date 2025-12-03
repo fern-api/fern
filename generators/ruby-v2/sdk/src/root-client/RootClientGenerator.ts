@@ -89,7 +89,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 writer.write(`headers: `);
                 writer.writeNode(this.getRawClientHeaders());
                 if (inferredAuth != null) {
-                    writer.writeLine(`.merge(@auth_provider.get_auth_headers)`);
+                    writer.writeLine(`.merge(@auth_provider.auth_headers)`);
                 } else {
                     writer.newLine();
                 }

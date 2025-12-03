@@ -57,6 +57,12 @@ Metrics/CyclomaticComplexity:
 Metrics/ModuleLength:
   Enabled: false
 
+Layout/LineLength:
+  Enabled: false
+
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+
 Style/Documentation:
   Enabled: false
 

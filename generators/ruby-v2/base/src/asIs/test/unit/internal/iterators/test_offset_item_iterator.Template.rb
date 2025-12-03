@@ -4,8 +4,8 @@ require "minitest/autorun"
 require "stringio"
 require "json"
 require "test_helper"
-require "ostruct"
 
+OffsetPageResponse = Struct.new(:items, :has_next, keyword_init: true)
 TestIteratorConfig = Struct.new(
   :step,
   :has_next_field,
@@ -68,7 +68,7 @@ class OffsetItemIteratorTest < Minitest::Test
         output[config.has_next_field] = slice_end < items.length
       end
 
-      OpenStruct.new(output)
+      OffsetPageResponse.new(**output)
     end
   end
 
