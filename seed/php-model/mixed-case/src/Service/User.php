@@ -35,17 +35,15 @@ class User extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->userName = $values['userName'];
-        $this->metadataTags = $values['metadataTags'];
-        $this->extraProperties = $values['extraProperties'];
+    )
+    {
+        $this->userName = $values['userName'];$this->metadataTags = $values['metadataTags'];$this->extraProperties = $values['extraProperties'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

@@ -1,0 +1,403 @@
+{
+  "auth": {
+    "description": undefined,
+    "tokenName": "token",
+    "type": "bearerAuth",
+  },
+  "authSchemes": {
+    "customAuth": {
+      "description": undefined,
+      "tokenName": "token",
+      "type": "bearerAuth",
+    },
+  },
+  "globalHeaders": [],
+  "navigation": undefined,
+  "rootPackage": {
+    "endpoints": [],
+    "pointsTo": undefined,
+    "subpackages": [
+      "subpackage_users",
+    ],
+    "types": [
+      "User",
+    ],
+    "webhooks": [],
+    "websockets": [],
+  },
+  "snippetsConfiguration": {
+    "csharpSdk": undefined,
+    "goSdk": undefined,
+    "javaSdk": undefined,
+    "phpSdk": undefined,
+    "pythonSdk": undefined,
+    "rubySdk": undefined,
+    "rustSdk": undefined,
+    "swiftSdk": undefined,
+    "typescriptSdk": undefined,
+  },
+  "subpackages": {
+    "subpackage_users": {
+      "description": undefined,
+      "displayName": undefined,
+      "endpoints": [
+        {
+          "auth": true,
+          "authV2": [
+            "customAuth",
+          ],
+          "availability": undefined,
+          "defaultEnvironment": "https://api.example.com/v1",
+          "description": undefined,
+          "environments": [
+            {
+              "baseUrl": "https://api.example.com/v1",
+              "id": "https://api.example.com/v1",
+            },
+          ],
+          "errors": undefined,
+          "errorsV2": [
+            {
+              "availability": undefined,
+              "description": "Unauthorized",
+              "examples": [],
+              "isWildcard": undefined,
+              "name": "UnauthorizedError",
+              "statusCode": 401,
+              "type": {
+                "type": "alias",
+                "value": {
+                  "type": "unknown",
+                },
+              },
+            },
+          ],
+          "examples": [
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": undefined,
+              "path": "/users",
+              "pathParameters": {},
+              "queryParameters": {},
+              "requestBody": undefined,
+              "requestBodyV3": undefined,
+              "responseBody": [
+                {
+                  "email": "string",
+                  "id": "string",
+                  "name": "string",
+                },
+              ],
+              "responseBodyV3": {
+                "type": "json",
+                "value": [
+                  {
+                    "email": "string",
+                    "id": "string",
+                    "name": "string",
+                  },
+                ],
+              },
+              "responseStatusCode": 200,
+            },
+          ],
+          "headers": [],
+          "id": "list",
+          "includeInApiExplorer": undefined,
+          "method": "GET",
+          "multiAuth": [
+            {
+              "schemes": [
+                "customAuth",
+              ],
+            },
+          ],
+          "name": "List all users with custom SDK naming",
+          "originalEndpointId": "endpoint_users.list",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
+                "value": "/users",
+              },
+            ],
+            "pathParameters": [],
+          },
+          "protocol": {
+            "type": "rest",
+          },
+          "queryParameters": [],
+          "request": undefined,
+          "requestsV2": {
+            "requests": undefined,
+          },
+          "response": {
+            "description": "List of users",
+            "isWildcard": undefined,
+            "statusCode": 200,
+            "type": {
+              "type": "reference",
+              "value": {
+                "itemType": {
+                  "default": undefined,
+                  "type": "id",
+                  "value": "User",
+                },
+                "type": "list",
+              },
+            },
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "description": "List of users",
+                "isWildcard": undefined,
+                "statusCode": 200,
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "itemType": {
+                      "default": undefined,
+                      "type": "id",
+                      "value": "User",
+                    },
+                    "type": "list",
+                  },
+                },
+              },
+            ],
+          },
+          "slug": undefined,
+        },
+        {
+          "auth": true,
+          "authV2": [
+            "customAuth",
+          ],
+          "availability": undefined,
+          "defaultEnvironment": "https://api.example.com/v1",
+          "description": undefined,
+          "environments": [
+            {
+              "baseUrl": "https://api.example.com/v1",
+              "id": "https://api.example.com/v1",
+            },
+          ],
+          "errors": undefined,
+          "errorsV2": [],
+          "examples": [
+            {
+              "codeSamples": undefined,
+              "description": "",
+              "headers": {},
+              "name": undefined,
+              "path": "/users/id",
+              "pathParameters": {
+                "id": "id",
+              },
+              "queryParameters": {},
+              "requestBody": undefined,
+              "requestBodyV3": undefined,
+              "responseBody": {
+                "email": "string",
+                "id": "string",
+                "name": "string",
+              },
+              "responseBodyV3": {
+                "type": "json",
+                "value": {
+                  "email": "string",
+                  "id": "string",
+                  "name": "string",
+                },
+              },
+              "responseStatusCode": 200,
+            },
+          ],
+          "headers": [],
+          "id": "get",
+          "includeInApiExplorer": undefined,
+          "method": "GET",
+          "multiAuth": [
+            {
+              "schemes": [
+                "customAuth",
+              ],
+            },
+          ],
+          "name": "Retrieve a specific user by ID",
+          "originalEndpointId": "endpoint_users.get",
+          "path": {
+            "parts": [
+              {
+                "type": "literal",
+                "value": "",
+              },
+              {
+                "type": "literal",
+                "value": "/users/",
+              },
+              {
+                "type": "pathParameter",
+                "value": "id",
+              },
+              {
+                "type": "literal",
+                "value": "",
+              },
+            ],
+            "pathParameters": [
+              {
+                "availability": undefined,
+                "description": undefined,
+                "explode": undefined,
+                "key": "id",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "format": undefined,
+                    "maxLength": undefined,
+                    "minLength": undefined,
+                    "regex": undefined,
+                    "type": "string",
+                  },
+                },
+              },
+            ],
+          },
+          "protocol": {
+            "type": "rest",
+          },
+          "queryParameters": [],
+          "request": undefined,
+          "requestsV2": {
+            "requests": undefined,
+          },
+          "response": {
+            "description": "User details",
+            "isWildcard": undefined,
+            "statusCode": 200,
+            "type": {
+              "type": "reference",
+              "value": {
+                "default": undefined,
+                "type": "id",
+                "value": "User",
+              },
+            },
+          },
+          "responsesV2": {
+            "responses": [
+              {
+                "description": "User details",
+                "isWildcard": undefined,
+                "statusCode": 200,
+                "type": {
+                  "type": "reference",
+                  "value": {
+                    "default": undefined,
+                    "type": "id",
+                    "value": "User",
+                  },
+                },
+              },
+            ],
+          },
+          "slug": undefined,
+        },
+      ],
+      "name": "users",
+      "pointsTo": undefined,
+      "subpackageId": "subpackage_users",
+      "subpackages": [],
+      "types": [],
+      "webhooks": [],
+      "websockets": [],
+    },
+  },
+  "types": {
+    "User": {
+      "availability": undefined,
+      "description": undefined,
+      "displayName": undefined,
+      "name": "User",
+      "shape": {
+        "extends": [],
+        "extraProperties": undefined,
+        "properties": [
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "id",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "name",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+          {
+            "availability": undefined,
+            "description": undefined,
+            "key": "email",
+            "propertyAccess": undefined,
+            "valueType": {
+              "defaultValue": undefined,
+              "itemType": {
+                "type": "primitive",
+                "value": {
+                  "default": undefined,
+                  "format": undefined,
+                  "maxLength": undefined,
+                  "minLength": undefined,
+                  "regex": undefined,
+                  "type": "string",
+                },
+              },
+              "type": "optional",
+            },
+          },
+        ],
+        "type": "object",
+      },
+    },
+  },
+}

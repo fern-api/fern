@@ -174,64 +174,46 @@ class BigUnion extends JsonSerializableType
      */
     private function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->createdAt = $values['createdAt'];
-        $this->archivedAt = $values['archivedAt'] ?? null;
-        $this->type = $values['type'];
-        $this->value = $values['value'];
+    )
+    {
+        $this->id = $values['id'];$this->createdAt = $values['createdAt'];$this->archivedAt = $values['archivedAt'] ?? null;$this->type = $values['type'];$this->value = $values['value'];
     }
 
     /**
      * @return string
      */
-    public function getId(): string
-    {
-        return $this->id;
-    }
+    public function getId(): string {
+        return $this->id;}
 
     /**
      * @param string $value
      */
-    public function setId(string $value): self
-    {
-        $this->id = $value;
-        return $this;
-    }
+    public function setId(string $value): self {
+        $this->id = $value;return $this;}
 
     /**
      * @return DateTime
      */
-    public function getCreatedAt(): DateTime
-    {
-        return $this->createdAt;
-    }
+    public function getCreatedAt(): DateTime {
+        return $this->createdAt;}
 
     /**
      * @param DateTime $value
      */
-    public function setCreatedAt(DateTime $value): self
-    {
-        $this->createdAt = $value;
-        return $this;
-    }
+    public function setCreatedAt(DateTime $value): self {
+        $this->createdAt = $value;return $this;}
 
     /**
      * @return ?DateTime
      */
-    public function getArchivedAt(): ?DateTime
-    {
-        return $this->archivedAt;
-    }
+    public function getArchivedAt(): ?DateTime {
+        return $this->archivedAt;}
 
     /**
      * @param ?DateTime $value
      */
-    public function setArchivedAt(?DateTime $value = null): self
-    {
-        $this->archivedAt = $value;
-        return $this;
-    }
+    public function setArchivedAt(?DateTime $value = null): self {
+        $this->archivedAt = $value;return $this;}
 
     /**
      * @return (
@@ -267,10 +249,8 @@ class BigUnion extends JsonSerializableType
      *   |'_unknown'
      * )
      */
-    public function getType(): string
-    {
-        return $this->type;
-    }
+    public function getType(): string {
+        return $this->type;}
 
     /**
      * @return (
@@ -306,10 +286,8 @@ class BigUnion extends JsonSerializableType
      *   |mixed
      * )
      */
-    public function getValue(): mixed
-    {
-        return $this->value;
-    }
+    public function getValue(): mixed {
+        return $this->value;}
 
     /**
      * @param string $id
@@ -318,8 +296,7 @@ class BigUnion extends JsonSerializableType
      * @param NormalSweet $normalSweet
      * @return BigUnion
      */
-    public static function normalSweet(string $id, DateTime $createdAt, NormalSweet $normalSweet, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function normalSweet(string $id, DateTime $createdAt, NormalSweet $normalSweet, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -336,8 +313,7 @@ class BigUnion extends JsonSerializableType
      * @param ThankfulFactor $thankfulFactor
      * @return BigUnion
      */
-    public static function thankfulFactor(string $id, DateTime $createdAt, ThankfulFactor $thankfulFactor, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function thankfulFactor(string $id, DateTime $createdAt, ThankfulFactor $thankfulFactor, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -354,8 +330,7 @@ class BigUnion extends JsonSerializableType
      * @param JumboEnd $jumboEnd
      * @return BigUnion
      */
-    public static function jumboEnd(string $id, DateTime $createdAt, JumboEnd $jumboEnd, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function jumboEnd(string $id, DateTime $createdAt, JumboEnd $jumboEnd, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -372,8 +347,7 @@ class BigUnion extends JsonSerializableType
      * @param HastyPain $hastyPain
      * @return BigUnion
      */
-    public static function hastyPain(string $id, DateTime $createdAt, HastyPain $hastyPain, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function hastyPain(string $id, DateTime $createdAt, HastyPain $hastyPain, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -390,8 +364,7 @@ class BigUnion extends JsonSerializableType
      * @param MistySnow $mistySnow
      * @return BigUnion
      */
-    public static function mistySnow(string $id, DateTime $createdAt, MistySnow $mistySnow, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function mistySnow(string $id, DateTime $createdAt, MistySnow $mistySnow, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -408,8 +381,7 @@ class BigUnion extends JsonSerializableType
      * @param DistinctFailure $distinctFailure
      * @return BigUnion
      */
-    public static function distinctFailure(string $id, DateTime $createdAt, DistinctFailure $distinctFailure, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function distinctFailure(string $id, DateTime $createdAt, DistinctFailure $distinctFailure, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -426,8 +398,7 @@ class BigUnion extends JsonSerializableType
      * @param PracticalPrinciple $practicalPrinciple
      * @return BigUnion
      */
-    public static function practicalPrinciple(string $id, DateTime $createdAt, PracticalPrinciple $practicalPrinciple, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function practicalPrinciple(string $id, DateTime $createdAt, PracticalPrinciple $practicalPrinciple, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -444,8 +415,7 @@ class BigUnion extends JsonSerializableType
      * @param LimpingStep $limpingStep
      * @return BigUnion
      */
-    public static function limpingStep(string $id, DateTime $createdAt, LimpingStep $limpingStep, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function limpingStep(string $id, DateTime $createdAt, LimpingStep $limpingStep, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -462,8 +432,7 @@ class BigUnion extends JsonSerializableType
      * @param VibrantExcitement $vibrantExcitement
      * @return BigUnion
      */
-    public static function vibrantExcitement(string $id, DateTime $createdAt, VibrantExcitement $vibrantExcitement, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function vibrantExcitement(string $id, DateTime $createdAt, VibrantExcitement $vibrantExcitement, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -480,8 +449,7 @@ class BigUnion extends JsonSerializableType
      * @param ActiveDiamond $activeDiamond
      * @return BigUnion
      */
-    public static function activeDiamond(string $id, DateTime $createdAt, ActiveDiamond $activeDiamond, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function activeDiamond(string $id, DateTime $createdAt, ActiveDiamond $activeDiamond, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -498,8 +466,7 @@ class BigUnion extends JsonSerializableType
      * @param PopularLimit $popularLimit
      * @return BigUnion
      */
-    public static function popularLimit(string $id, DateTime $createdAt, PopularLimit $popularLimit, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function popularLimit(string $id, DateTime $createdAt, PopularLimit $popularLimit, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -516,8 +483,7 @@ class BigUnion extends JsonSerializableType
      * @param FalseMirror $falseMirror
      * @return BigUnion
      */
-    public static function falseMirror(string $id, DateTime $createdAt, FalseMirror $falseMirror, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function falseMirror(string $id, DateTime $createdAt, FalseMirror $falseMirror, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -534,8 +500,7 @@ class BigUnion extends JsonSerializableType
      * @param PrimaryBlock $primaryBlock
      * @return BigUnion
      */
-    public static function primaryBlock(string $id, DateTime $createdAt, PrimaryBlock $primaryBlock, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function primaryBlock(string $id, DateTime $createdAt, PrimaryBlock $primaryBlock, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -552,8 +517,7 @@ class BigUnion extends JsonSerializableType
      * @param RotatingRatio $rotatingRatio
      * @return BigUnion
      */
-    public static function rotatingRatio(string $id, DateTime $createdAt, RotatingRatio $rotatingRatio, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function rotatingRatio(string $id, DateTime $createdAt, RotatingRatio $rotatingRatio, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -570,8 +534,7 @@ class BigUnion extends JsonSerializableType
      * @param ColorfulCover $colorfulCover
      * @return BigUnion
      */
-    public static function colorfulCover(string $id, DateTime $createdAt, ColorfulCover $colorfulCover, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function colorfulCover(string $id, DateTime $createdAt, ColorfulCover $colorfulCover, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -588,8 +551,7 @@ class BigUnion extends JsonSerializableType
      * @param DisloyalValue $disloyalValue
      * @return BigUnion
      */
-    public static function disloyalValue(string $id, DateTime $createdAt, DisloyalValue $disloyalValue, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function disloyalValue(string $id, DateTime $createdAt, DisloyalValue $disloyalValue, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -606,8 +568,7 @@ class BigUnion extends JsonSerializableType
      * @param GruesomeCoach $gruesomeCoach
      * @return BigUnion
      */
-    public static function gruesomeCoach(string $id, DateTime $createdAt, GruesomeCoach $gruesomeCoach, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function gruesomeCoach(string $id, DateTime $createdAt, GruesomeCoach $gruesomeCoach, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -624,8 +585,7 @@ class BigUnion extends JsonSerializableType
      * @param TotalWork $totalWork
      * @return BigUnion
      */
-    public static function totalWork(string $id, DateTime $createdAt, TotalWork $totalWork, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function totalWork(string $id, DateTime $createdAt, TotalWork $totalWork, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -642,8 +602,7 @@ class BigUnion extends JsonSerializableType
      * @param HarmoniousPlay $harmoniousPlay
      * @return BigUnion
      */
-    public static function harmoniousPlay(string $id, DateTime $createdAt, HarmoniousPlay $harmoniousPlay, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function harmoniousPlay(string $id, DateTime $createdAt, HarmoniousPlay $harmoniousPlay, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -660,8 +619,7 @@ class BigUnion extends JsonSerializableType
      * @param UniqueStress $uniqueStress
      * @return BigUnion
      */
-    public static function uniqueStress(string $id, DateTime $createdAt, UniqueStress $uniqueStress, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function uniqueStress(string $id, DateTime $createdAt, UniqueStress $uniqueStress, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -678,8 +636,7 @@ class BigUnion extends JsonSerializableType
      * @param UnwillingSmoke $unwillingSmoke
      * @return BigUnion
      */
-    public static function unwillingSmoke(string $id, DateTime $createdAt, UnwillingSmoke $unwillingSmoke, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function unwillingSmoke(string $id, DateTime $createdAt, UnwillingSmoke $unwillingSmoke, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -696,8 +653,7 @@ class BigUnion extends JsonSerializableType
      * @param FrozenSleep $frozenSleep
      * @return BigUnion
      */
-    public static function frozenSleep(string $id, DateTime $createdAt, FrozenSleep $frozenSleep, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function frozenSleep(string $id, DateTime $createdAt, FrozenSleep $frozenSleep, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -714,8 +670,7 @@ class BigUnion extends JsonSerializableType
      * @param DiligentDeal $diligentDeal
      * @return BigUnion
      */
-    public static function diligentDeal(string $id, DateTime $createdAt, DiligentDeal $diligentDeal, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function diligentDeal(string $id, DateTime $createdAt, DiligentDeal $diligentDeal, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -732,8 +687,7 @@ class BigUnion extends JsonSerializableType
      * @param AttractiveScript $attractiveScript
      * @return BigUnion
      */
-    public static function attractiveScript(string $id, DateTime $createdAt, AttractiveScript $attractiveScript, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function attractiveScript(string $id, DateTime $createdAt, AttractiveScript $attractiveScript, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -750,8 +704,7 @@ class BigUnion extends JsonSerializableType
      * @param HoarseMouse $hoarseMouse
      * @return BigUnion
      */
-    public static function hoarseMouse(string $id, DateTime $createdAt, HoarseMouse $hoarseMouse, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function hoarseMouse(string $id, DateTime $createdAt, HoarseMouse $hoarseMouse, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -768,8 +721,7 @@ class BigUnion extends JsonSerializableType
      * @param CircularCard $circularCard
      * @return BigUnion
      */
-    public static function circularCard(string $id, DateTime $createdAt, CircularCard $circularCard, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function circularCard(string $id, DateTime $createdAt, CircularCard $circularCard, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -786,8 +738,7 @@ class BigUnion extends JsonSerializableType
      * @param PotableBad $potableBad
      * @return BigUnion
      */
-    public static function potableBad(string $id, DateTime $createdAt, PotableBad $potableBad, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function potableBad(string $id, DateTime $createdAt, PotableBad $potableBad, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -804,8 +755,7 @@ class BigUnion extends JsonSerializableType
      * @param TriangularRepair $triangularRepair
      * @return BigUnion
      */
-    public static function triangularRepair(string $id, DateTime $createdAt, TriangularRepair $triangularRepair, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function triangularRepair(string $id, DateTime $createdAt, TriangularRepair $triangularRepair, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -822,8 +772,7 @@ class BigUnion extends JsonSerializableType
      * @param GaseousRoad $gaseousRoad
      * @return BigUnion
      */
-    public static function gaseousRoad(string $id, DateTime $createdAt, GaseousRoad $gaseousRoad, ?DateTime $archivedAt = null): BigUnion
-    {
+    public static function gaseousRoad(string $id, DateTime $createdAt, GaseousRoad $gaseousRoad, ?DateTime $archivedAt = null): BigUnion {
         return new BigUnion([
             'id' => $id,
             'createdAt' => $createdAt,
@@ -836,661 +785,601 @@ class BigUnion extends JsonSerializableType
     /**
      * @return bool
      */
-    public function isNormalSweet(): bool
-    {
-        return $this->value instanceof NormalSweet && $this->type === 'normalSweet';
+    public function isNormalSweet(): bool {
+        return $this->value instanceof NormalSweet&& $this->type === 'normalSweet';
     }
 
     /**
      * @return NormalSweet
      */
-    public function asNormalSweet(): NormalSweet
-    {
-        if (!($this->value instanceof NormalSweet && $this->type === 'normalSweet')) {
+    public function asNormalSweet(): NormalSweet {
+        if (!($this->value instanceof NormalSweet&& $this->type === 'normalSweet')){
             throw new Exception(
                 "Expected normalSweet; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isThankfulFactor(): bool
-    {
-        return $this->value instanceof ThankfulFactor && $this->type === 'thankfulFactor';
+    public function isThankfulFactor(): bool {
+        return $this->value instanceof ThankfulFactor&& $this->type === 'thankfulFactor';
     }
 
     /**
      * @return ThankfulFactor
      */
-    public function asThankfulFactor(): ThankfulFactor
-    {
-        if (!($this->value instanceof ThankfulFactor && $this->type === 'thankfulFactor')) {
+    public function asThankfulFactor(): ThankfulFactor {
+        if (!($this->value instanceof ThankfulFactor&& $this->type === 'thankfulFactor')){
             throw new Exception(
                 "Expected thankfulFactor; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isJumboEnd(): bool
-    {
-        return $this->value instanceof JumboEnd && $this->type === 'jumboEnd';
+    public function isJumboEnd(): bool {
+        return $this->value instanceof JumboEnd&& $this->type === 'jumboEnd';
     }
 
     /**
      * @return JumboEnd
      */
-    public function asJumboEnd(): JumboEnd
-    {
-        if (!($this->value instanceof JumboEnd && $this->type === 'jumboEnd')) {
+    public function asJumboEnd(): JumboEnd {
+        if (!($this->value instanceof JumboEnd&& $this->type === 'jumboEnd')){
             throw new Exception(
                 "Expected jumboEnd; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isHastyPain(): bool
-    {
-        return $this->value instanceof HastyPain && $this->type === 'hastyPain';
+    public function isHastyPain(): bool {
+        return $this->value instanceof HastyPain&& $this->type === 'hastyPain';
     }
 
     /**
      * @return HastyPain
      */
-    public function asHastyPain(): HastyPain
-    {
-        if (!($this->value instanceof HastyPain && $this->type === 'hastyPain')) {
+    public function asHastyPain(): HastyPain {
+        if (!($this->value instanceof HastyPain&& $this->type === 'hastyPain')){
             throw new Exception(
                 "Expected hastyPain; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isMistySnow(): bool
-    {
-        return $this->value instanceof MistySnow && $this->type === 'mistySnow';
+    public function isMistySnow(): bool {
+        return $this->value instanceof MistySnow&& $this->type === 'mistySnow';
     }
 
     /**
      * @return MistySnow
      */
-    public function asMistySnow(): MistySnow
-    {
-        if (!($this->value instanceof MistySnow && $this->type === 'mistySnow')) {
+    public function asMistySnow(): MistySnow {
+        if (!($this->value instanceof MistySnow&& $this->type === 'mistySnow')){
             throw new Exception(
                 "Expected mistySnow; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isDistinctFailure(): bool
-    {
-        return $this->value instanceof DistinctFailure && $this->type === 'distinctFailure';
+    public function isDistinctFailure(): bool {
+        return $this->value instanceof DistinctFailure&& $this->type === 'distinctFailure';
     }
 
     /**
      * @return DistinctFailure
      */
-    public function asDistinctFailure(): DistinctFailure
-    {
-        if (!($this->value instanceof DistinctFailure && $this->type === 'distinctFailure')) {
+    public function asDistinctFailure(): DistinctFailure {
+        if (!($this->value instanceof DistinctFailure&& $this->type === 'distinctFailure')){
             throw new Exception(
                 "Expected distinctFailure; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isPracticalPrinciple(): bool
-    {
-        return $this->value instanceof PracticalPrinciple && $this->type === 'practicalPrinciple';
+    public function isPracticalPrinciple(): bool {
+        return $this->value instanceof PracticalPrinciple&& $this->type === 'practicalPrinciple';
     }
 
     /**
      * @return PracticalPrinciple
      */
-    public function asPracticalPrinciple(): PracticalPrinciple
-    {
-        if (!($this->value instanceof PracticalPrinciple && $this->type === 'practicalPrinciple')) {
+    public function asPracticalPrinciple(): PracticalPrinciple {
+        if (!($this->value instanceof PracticalPrinciple&& $this->type === 'practicalPrinciple')){
             throw new Exception(
                 "Expected practicalPrinciple; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isLimpingStep(): bool
-    {
-        return $this->value instanceof LimpingStep && $this->type === 'limpingStep';
+    public function isLimpingStep(): bool {
+        return $this->value instanceof LimpingStep&& $this->type === 'limpingStep';
     }
 
     /**
      * @return LimpingStep
      */
-    public function asLimpingStep(): LimpingStep
-    {
-        if (!($this->value instanceof LimpingStep && $this->type === 'limpingStep')) {
+    public function asLimpingStep(): LimpingStep {
+        if (!($this->value instanceof LimpingStep&& $this->type === 'limpingStep')){
             throw new Exception(
                 "Expected limpingStep; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isVibrantExcitement(): bool
-    {
-        return $this->value instanceof VibrantExcitement && $this->type === 'vibrantExcitement';
+    public function isVibrantExcitement(): bool {
+        return $this->value instanceof VibrantExcitement&& $this->type === 'vibrantExcitement';
     }
 
     /**
      * @return VibrantExcitement
      */
-    public function asVibrantExcitement(): VibrantExcitement
-    {
-        if (!($this->value instanceof VibrantExcitement && $this->type === 'vibrantExcitement')) {
+    public function asVibrantExcitement(): VibrantExcitement {
+        if (!($this->value instanceof VibrantExcitement&& $this->type === 'vibrantExcitement')){
             throw new Exception(
                 "Expected vibrantExcitement; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isActiveDiamond(): bool
-    {
-        return $this->value instanceof ActiveDiamond && $this->type === 'activeDiamond';
+    public function isActiveDiamond(): bool {
+        return $this->value instanceof ActiveDiamond&& $this->type === 'activeDiamond';
     }
 
     /**
      * @return ActiveDiamond
      */
-    public function asActiveDiamond(): ActiveDiamond
-    {
-        if (!($this->value instanceof ActiveDiamond && $this->type === 'activeDiamond')) {
+    public function asActiveDiamond(): ActiveDiamond {
+        if (!($this->value instanceof ActiveDiamond&& $this->type === 'activeDiamond')){
             throw new Exception(
                 "Expected activeDiamond; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isPopularLimit(): bool
-    {
-        return $this->value instanceof PopularLimit && $this->type === 'popularLimit';
+    public function isPopularLimit(): bool {
+        return $this->value instanceof PopularLimit&& $this->type === 'popularLimit';
     }
 
     /**
      * @return PopularLimit
      */
-    public function asPopularLimit(): PopularLimit
-    {
-        if (!($this->value instanceof PopularLimit && $this->type === 'popularLimit')) {
+    public function asPopularLimit(): PopularLimit {
+        if (!($this->value instanceof PopularLimit&& $this->type === 'popularLimit')){
             throw new Exception(
                 "Expected popularLimit; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isFalseMirror(): bool
-    {
-        return $this->value instanceof FalseMirror && $this->type === 'falseMirror';
+    public function isFalseMirror(): bool {
+        return $this->value instanceof FalseMirror&& $this->type === 'falseMirror';
     }
 
     /**
      * @return FalseMirror
      */
-    public function asFalseMirror(): FalseMirror
-    {
-        if (!($this->value instanceof FalseMirror && $this->type === 'falseMirror')) {
+    public function asFalseMirror(): FalseMirror {
+        if (!($this->value instanceof FalseMirror&& $this->type === 'falseMirror')){
             throw new Exception(
                 "Expected falseMirror; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isPrimaryBlock(): bool
-    {
-        return $this->value instanceof PrimaryBlock && $this->type === 'primaryBlock';
+    public function isPrimaryBlock(): bool {
+        return $this->value instanceof PrimaryBlock&& $this->type === 'primaryBlock';
     }
 
     /**
      * @return PrimaryBlock
      */
-    public function asPrimaryBlock(): PrimaryBlock
-    {
-        if (!($this->value instanceof PrimaryBlock && $this->type === 'primaryBlock')) {
+    public function asPrimaryBlock(): PrimaryBlock {
+        if (!($this->value instanceof PrimaryBlock&& $this->type === 'primaryBlock')){
             throw new Exception(
                 "Expected primaryBlock; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isRotatingRatio(): bool
-    {
-        return $this->value instanceof RotatingRatio && $this->type === 'rotatingRatio';
+    public function isRotatingRatio(): bool {
+        return $this->value instanceof RotatingRatio&& $this->type === 'rotatingRatio';
     }
 
     /**
      * @return RotatingRatio
      */
-    public function asRotatingRatio(): RotatingRatio
-    {
-        if (!($this->value instanceof RotatingRatio && $this->type === 'rotatingRatio')) {
+    public function asRotatingRatio(): RotatingRatio {
+        if (!($this->value instanceof RotatingRatio&& $this->type === 'rotatingRatio')){
             throw new Exception(
                 "Expected rotatingRatio; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isColorfulCover(): bool
-    {
-        return $this->value instanceof ColorfulCover && $this->type === 'colorfulCover';
+    public function isColorfulCover(): bool {
+        return $this->value instanceof ColorfulCover&& $this->type === 'colorfulCover';
     }
 
     /**
      * @return ColorfulCover
      */
-    public function asColorfulCover(): ColorfulCover
-    {
-        if (!($this->value instanceof ColorfulCover && $this->type === 'colorfulCover')) {
+    public function asColorfulCover(): ColorfulCover {
+        if (!($this->value instanceof ColorfulCover&& $this->type === 'colorfulCover')){
             throw new Exception(
                 "Expected colorfulCover; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isDisloyalValue(): bool
-    {
-        return $this->value instanceof DisloyalValue && $this->type === 'disloyalValue';
+    public function isDisloyalValue(): bool {
+        return $this->value instanceof DisloyalValue&& $this->type === 'disloyalValue';
     }
 
     /**
      * @return DisloyalValue
      */
-    public function asDisloyalValue(): DisloyalValue
-    {
-        if (!($this->value instanceof DisloyalValue && $this->type === 'disloyalValue')) {
+    public function asDisloyalValue(): DisloyalValue {
+        if (!($this->value instanceof DisloyalValue&& $this->type === 'disloyalValue')){
             throw new Exception(
                 "Expected disloyalValue; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isGruesomeCoach(): bool
-    {
-        return $this->value instanceof GruesomeCoach && $this->type === 'gruesomeCoach';
+    public function isGruesomeCoach(): bool {
+        return $this->value instanceof GruesomeCoach&& $this->type === 'gruesomeCoach';
     }
 
     /**
      * @return GruesomeCoach
      */
-    public function asGruesomeCoach(): GruesomeCoach
-    {
-        if (!($this->value instanceof GruesomeCoach && $this->type === 'gruesomeCoach')) {
+    public function asGruesomeCoach(): GruesomeCoach {
+        if (!($this->value instanceof GruesomeCoach&& $this->type === 'gruesomeCoach')){
             throw new Exception(
                 "Expected gruesomeCoach; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isTotalWork(): bool
-    {
-        return $this->value instanceof TotalWork && $this->type === 'totalWork';
+    public function isTotalWork(): bool {
+        return $this->value instanceof TotalWork&& $this->type === 'totalWork';
     }
 
     /**
      * @return TotalWork
      */
-    public function asTotalWork(): TotalWork
-    {
-        if (!($this->value instanceof TotalWork && $this->type === 'totalWork')) {
+    public function asTotalWork(): TotalWork {
+        if (!($this->value instanceof TotalWork&& $this->type === 'totalWork')){
             throw new Exception(
                 "Expected totalWork; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isHarmoniousPlay(): bool
-    {
-        return $this->value instanceof HarmoniousPlay && $this->type === 'harmoniousPlay';
+    public function isHarmoniousPlay(): bool {
+        return $this->value instanceof HarmoniousPlay&& $this->type === 'harmoniousPlay';
     }
 
     /**
      * @return HarmoniousPlay
      */
-    public function asHarmoniousPlay(): HarmoniousPlay
-    {
-        if (!($this->value instanceof HarmoniousPlay && $this->type === 'harmoniousPlay')) {
+    public function asHarmoniousPlay(): HarmoniousPlay {
+        if (!($this->value instanceof HarmoniousPlay&& $this->type === 'harmoniousPlay')){
             throw new Exception(
                 "Expected harmoniousPlay; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isUniqueStress(): bool
-    {
-        return $this->value instanceof UniqueStress && $this->type === 'uniqueStress';
+    public function isUniqueStress(): bool {
+        return $this->value instanceof UniqueStress&& $this->type === 'uniqueStress';
     }
 
     /**
      * @return UniqueStress
      */
-    public function asUniqueStress(): UniqueStress
-    {
-        if (!($this->value instanceof UniqueStress && $this->type === 'uniqueStress')) {
+    public function asUniqueStress(): UniqueStress {
+        if (!($this->value instanceof UniqueStress&& $this->type === 'uniqueStress')){
             throw new Exception(
                 "Expected uniqueStress; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isUnwillingSmoke(): bool
-    {
-        return $this->value instanceof UnwillingSmoke && $this->type === 'unwillingSmoke';
+    public function isUnwillingSmoke(): bool {
+        return $this->value instanceof UnwillingSmoke&& $this->type === 'unwillingSmoke';
     }
 
     /**
      * @return UnwillingSmoke
      */
-    public function asUnwillingSmoke(): UnwillingSmoke
-    {
-        if (!($this->value instanceof UnwillingSmoke && $this->type === 'unwillingSmoke')) {
+    public function asUnwillingSmoke(): UnwillingSmoke {
+        if (!($this->value instanceof UnwillingSmoke&& $this->type === 'unwillingSmoke')){
             throw new Exception(
                 "Expected unwillingSmoke; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isFrozenSleep(): bool
-    {
-        return $this->value instanceof FrozenSleep && $this->type === 'frozenSleep';
+    public function isFrozenSleep(): bool {
+        return $this->value instanceof FrozenSleep&& $this->type === 'frozenSleep';
     }
 
     /**
      * @return FrozenSleep
      */
-    public function asFrozenSleep(): FrozenSleep
-    {
-        if (!($this->value instanceof FrozenSleep && $this->type === 'frozenSleep')) {
+    public function asFrozenSleep(): FrozenSleep {
+        if (!($this->value instanceof FrozenSleep&& $this->type === 'frozenSleep')){
             throw new Exception(
                 "Expected frozenSleep; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isDiligentDeal(): bool
-    {
-        return $this->value instanceof DiligentDeal && $this->type === 'diligentDeal';
+    public function isDiligentDeal(): bool {
+        return $this->value instanceof DiligentDeal&& $this->type === 'diligentDeal';
     }
 
     /**
      * @return DiligentDeal
      */
-    public function asDiligentDeal(): DiligentDeal
-    {
-        if (!($this->value instanceof DiligentDeal && $this->type === 'diligentDeal')) {
+    public function asDiligentDeal(): DiligentDeal {
+        if (!($this->value instanceof DiligentDeal&& $this->type === 'diligentDeal')){
             throw new Exception(
                 "Expected diligentDeal; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isAttractiveScript(): bool
-    {
-        return $this->value instanceof AttractiveScript && $this->type === 'attractiveScript';
+    public function isAttractiveScript(): bool {
+        return $this->value instanceof AttractiveScript&& $this->type === 'attractiveScript';
     }
 
     /**
      * @return AttractiveScript
      */
-    public function asAttractiveScript(): AttractiveScript
-    {
-        if (!($this->value instanceof AttractiveScript && $this->type === 'attractiveScript')) {
+    public function asAttractiveScript(): AttractiveScript {
+        if (!($this->value instanceof AttractiveScript&& $this->type === 'attractiveScript')){
             throw new Exception(
                 "Expected attractiveScript; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isHoarseMouse(): bool
-    {
-        return $this->value instanceof HoarseMouse && $this->type === 'hoarseMouse';
+    public function isHoarseMouse(): bool {
+        return $this->value instanceof HoarseMouse&& $this->type === 'hoarseMouse';
     }
 
     /**
      * @return HoarseMouse
      */
-    public function asHoarseMouse(): HoarseMouse
-    {
-        if (!($this->value instanceof HoarseMouse && $this->type === 'hoarseMouse')) {
+    public function asHoarseMouse(): HoarseMouse {
+        if (!($this->value instanceof HoarseMouse&& $this->type === 'hoarseMouse')){
             throw new Exception(
                 "Expected hoarseMouse; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isCircularCard(): bool
-    {
-        return $this->value instanceof CircularCard && $this->type === 'circularCard';
+    public function isCircularCard(): bool {
+        return $this->value instanceof CircularCard&& $this->type === 'circularCard';
     }
 
     /**
      * @return CircularCard
      */
-    public function asCircularCard(): CircularCard
-    {
-        if (!($this->value instanceof CircularCard && $this->type === 'circularCard')) {
+    public function asCircularCard(): CircularCard {
+        if (!($this->value instanceof CircularCard&& $this->type === 'circularCard')){
             throw new Exception(
                 "Expected circularCard; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isPotableBad(): bool
-    {
-        return $this->value instanceof PotableBad && $this->type === 'potableBad';
+    public function isPotableBad(): bool {
+        return $this->value instanceof PotableBad&& $this->type === 'potableBad';
     }
 
     /**
      * @return PotableBad
      */
-    public function asPotableBad(): PotableBad
-    {
-        if (!($this->value instanceof PotableBad && $this->type === 'potableBad')) {
+    public function asPotableBad(): PotableBad {
+        if (!($this->value instanceof PotableBad&& $this->type === 'potableBad')){
             throw new Exception(
                 "Expected potableBad; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isTriangularRepair(): bool
-    {
-        return $this->value instanceof TriangularRepair && $this->type === 'triangularRepair';
+    public function isTriangularRepair(): bool {
+        return $this->value instanceof TriangularRepair&& $this->type === 'triangularRepair';
     }
 
     /**
      * @return TriangularRepair
      */
-    public function asTriangularRepair(): TriangularRepair
-    {
-        if (!($this->value instanceof TriangularRepair && $this->type === 'triangularRepair')) {
+    public function asTriangularRepair(): TriangularRepair {
+        if (!($this->value instanceof TriangularRepair&& $this->type === 'triangularRepair')){
             throw new Exception(
                 "Expected triangularRepair; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return bool
      */
-    public function isGaseousRoad(): bool
-    {
-        return $this->value instanceof GaseousRoad && $this->type === 'gaseousRoad';
+    public function isGaseousRoad(): bool {
+        return $this->value instanceof GaseousRoad&& $this->type === 'gaseousRoad';
     }
 
     /**
      * @return GaseousRoad
      */
-    public function asGaseousRoad(): GaseousRoad
-    {
-        if (!($this->value instanceof GaseousRoad && $this->type === 'gaseousRoad')) {
+    public function asGaseousRoad(): GaseousRoad {
+        if (!($this->value instanceof GaseousRoad&& $this->type === 'gaseousRoad')){
             throw new Exception(
                 "Expected gaseousRoad; got " . $this->type . " with value of type " . get_debug_type($this->value),
             );
         }
-
+        
         return $this->value;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 
     /**
      * @return array<mixed>
      */
-    public function jsonSerialize(): array
-    {
+    public function jsonSerialize(): array {
         $result = [];
         $result['type'] = $this->type;
-
+        
         $base = parent::jsonSerialize();
         $result = array_merge($base, $result);
-
-        switch ($this->type) {
+        
+        switch ($this->type){
             case 'normalSweet':
                 $value = $this->asNormalSweet()->jsonSerialize();
                 $result = array_merge($value, $result);
@@ -1609,27 +1498,26 @@ class BigUnion extends JsonSerializableType
                 break;
             case '_unknown':
             default:
-                if (is_null($this->value)) {
+                if (is_null($this->value)){
                     break;
                 }
-                if ($this->value instanceof JsonSerializableType) {
+                if ($this->value instanceof JsonSerializableType){
                     $value = $this->value->jsonSerialize();
                     $result = array_merge($value, $result);
-                } elseif (is_array($this->value)) {
+                } elseif (is_array($this->value)){
                     $result = array_merge($this->value, $result);
                 }
         }
-
+        
         return $result;
     }
 
     /**
      * @param string $json
      */
-    public static function fromJson(string $json): static
-    {
+    public static function fromJson(string $json): static {
         $decodedJson = JsonDecoder::decode($json);
-        if (!is_array($decodedJson)) {
+        if (!is_array($decodedJson)){
             throw new Exception("Unexpected non-array decoded type: " . gettype($decodedJson));
         }
         return self::jsonDeserialize($decodedJson);
@@ -1638,59 +1526,58 @@ class BigUnion extends JsonSerializableType
     /**
      * @param array<string, mixed> $data
      */
-    public static function jsonDeserialize(array $data): static
-    {
+    public static function jsonDeserialize(array $data): static {
         $args = [];
-        if (!array_key_exists('id', $data)) {
+        if (!array_key_exists('id', $data)){
             throw new Exception(
                 "JSON data is missing property 'id'",
             );
         }
-        if (!(is_string($data['id']))) {
+        if (!(is_string($data['id']))){
             throw new Exception(
                 "Expected property 'id' in JSON data to be string, instead received " . get_debug_type($data['id']),
             );
         }
         $args['id'] = $data['id'];
-
-        if (!array_key_exists('created-at', $data)) {
+        
+        if (!array_key_exists('created-at', $data)){
             throw new Exception(
                 "JSON data is missing property 'created-at'",
             );
         }
-        if (!($data['created-at'] instanceof DateTime)) {
+        if (!($data['created-at'] instanceof DateTime)){
             throw new Exception(
                 "Expected property 'createdAt' in JSON data to be dateTime, instead received " . get_debug_type($data['created-at']),
             );
         }
         $args['createdAt'] = $data['created-at'];
-
-        if (!array_key_exists('archived-at', $data)) {
+        
+        if (!array_key_exists('archived-at', $data)){
             throw new Exception(
                 "JSON data is missing property 'archived-at'",
             );
         }
-        if (!((is_null($data['archived-at']) || $data['archived-at'] instanceof DateTime))) {
+        if (!((is_null($data['archived-at']) || $data['archived-at'] instanceof DateTime))){
             throw new Exception(
                 "Expected property 'archivedAt' in JSON data to be optional, instead received " . get_debug_type($data['archived-at']),
             );
         }
         $args['archivedAt'] = $data['archived-at'];
-
-        if (!array_key_exists('type', $data)) {
+        
+        if (!array_key_exists('type', $data)){
             throw new Exception(
                 "JSON data is missing property 'type'",
             );
         }
         $type = $data['type'];
-        if (!(is_string($type))) {
+        if (!(is_string($type))){
             throw new Exception(
                 "Expected property 'type' in JSON data to be string, instead received " . get_debug_type($data['type']),
             );
         }
-
+        
         $args['type'] = $type;
-        switch ($type) {
+        switch ($type){
             case 'normalSweet':
                 $args['value'] = NormalSweet::jsonDeserialize($data);
                 break;
@@ -1783,7 +1670,7 @@ class BigUnion extends JsonSerializableType
                 $args['type'] = '_unknown';
                 $args['value'] = $data;
         }
-
+        
         // @phpstan-ignore-next-line
         return new static($args);
     }

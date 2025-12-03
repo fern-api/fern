@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
 import type * as SeedMixedFileDirectory from "../../../../../index.js";
 import { MetadataClient } from "../resources/metadata/client/Client.js";
@@ -82,22 +83,6 @@ export class EventsClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedMixedFileDirectoryError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedMixedFileDirectoryTimeoutError(
-                    "Timeout exceeded when calling GET /users/events/.",
-                );
-            case "unknown":
-                throw new errors.SeedMixedFileDirectoryError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users/events/");
     }
 }

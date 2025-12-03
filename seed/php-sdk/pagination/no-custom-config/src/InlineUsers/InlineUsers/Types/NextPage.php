@@ -27,16 +27,15 @@ class NextPage extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->page = $values['page'];
-        $this->startingAfter = $values['startingAfter'];
+    )
+    {
+        $this->page = $values['page'];$this->startingAfter = $values['startingAfter'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

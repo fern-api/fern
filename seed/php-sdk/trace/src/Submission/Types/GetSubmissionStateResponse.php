@@ -44,18 +44,15 @@ class GetSubmissionStateResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->timeSubmitted = $values['timeSubmitted'] ?? null;
-        $this->submission = $values['submission'];
-        $this->language = $values['language'];
-        $this->submissionTypeState = $values['submissionTypeState'];
+    )
+    {
+        $this->timeSubmitted = $values['timeSubmitted'] ?? null;$this->submission = $values['submission'];$this->language = $values['language'];$this->submissionTypeState = $values['submissionTypeState'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

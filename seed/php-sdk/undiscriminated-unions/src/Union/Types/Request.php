@@ -15,7 +15,7 @@ class Request extends JsonSerializableType
      *   |null
      * ) $union
      */
-    #[JsonProperty('union'), Union(new Union(['string' => 'mixed'], 'null'), NamedMetadata::class, 'null')]
+    #[JsonProperty('union'), Union(new Union(['string' => 'mixed'], 'null'),NamedMetadata::class,'null')]
     public array|NamedMetadata|null $union;
 
     /**
@@ -29,15 +29,15 @@ class Request extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
+    )
+    {
         $this->union = $values['union'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

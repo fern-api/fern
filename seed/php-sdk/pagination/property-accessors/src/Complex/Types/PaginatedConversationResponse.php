@@ -42,86 +42,63 @@ class PaginatedConversationResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->conversations = $values['conversations'];
-        $this->pages = $values['pages'] ?? null;
-        $this->totalCount = $values['totalCount'];
-        $this->type = $values['type'];
+    )
+    {
+        $this->conversations = $values['conversations'];$this->pages = $values['pages'] ?? null;$this->totalCount = $values['totalCount'];$this->type = $values['type'];
     }
 
     /**
      * @return array<Conversation>
      */
-    public function getConversations(): array
-    {
-        return $this->conversations;
-    }
+    public function getConversations(): array {
+        return $this->conversations;}
 
     /**
      * @param array<Conversation> $value
      */
-    public function setConversations(array $value): self
-    {
-        $this->conversations = $value;
-        return $this;
-    }
+    public function setConversations(array $value): self {
+        $this->conversations = $value;return $this;}
 
     /**
      * @return ?CursorPages
      */
-    public function getPages(): ?CursorPages
-    {
-        return $this->pages;
-    }
+    public function getPages(): ?CursorPages {
+        return $this->pages;}
 
     /**
      * @param ?CursorPages $value
      */
-    public function setPages(?CursorPages $value = null): self
-    {
-        $this->pages = $value;
-        return $this;
-    }
+    public function setPages(?CursorPages $value = null): self {
+        $this->pages = $value;return $this;}
 
     /**
      * @return int
      */
-    public function getTotalCount(): int
-    {
-        return $this->totalCount;
-    }
+    public function getTotalCount(): int {
+        return $this->totalCount;}
 
     /**
      * @param int $value
      */
-    public function setTotalCount(int $value): self
-    {
-        $this->totalCount = $value;
-        return $this;
-    }
+    public function setTotalCount(int $value): self {
+        $this->totalCount = $value;return $this;}
 
     /**
      * @return 'conversation.list'
      */
-    public function getType(): string
-    {
-        return $this->type;
-    }
+    public function getType(): string {
+        return $this->type;}
 
     /**
      * @param 'conversation.list' $value
      */
-    public function setType(string $value): self
-    {
-        $this->type = $value;
-        return $this;
-    }
+    public function setType(string $value): self {
+        $this->type = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

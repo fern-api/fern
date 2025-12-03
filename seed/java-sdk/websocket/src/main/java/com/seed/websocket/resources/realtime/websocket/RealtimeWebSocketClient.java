@@ -48,6 +48,8 @@ public class RealtimeWebSocketClient {
 
     private final Optional<Integer> temperature;
 
+    private final Optional<String> languageCode;
+
     private Runnable onConnectedHandler;
 
     private Consumer<DisconnectReason> onDisconnectedHandler;
@@ -71,15 +73,21 @@ public class RealtimeWebSocketClient {
      * @param sessionId the sessionId path parameter
      * @param model Optional model query parameter
      * @param temperature Optional temperature query parameter
+     * @param languageCode Optional languageCode query parameter
      */
     public RealtimeWebSocketClient(
-            ClientOptions clientOptions, String sessionId, Optional<String> model, Optional<Integer> temperature) {
+            ClientOptions clientOptions,
+            String sessionId,
+            Optional<String> model,
+            Optional<Integer> temperature,
+            Optional<String> languageCode) {
         this.clientOptions = clientOptions;
         this.objectMapper = ObjectMappers.JSON_MAPPER;
         this.okHttpClient = clientOptions.httpClient();
         this.sessionId = sessionId;
         this.model = model;
         this.temperature = temperature;
+        this.languageCode = languageCode;
     }
 
     /**
@@ -105,6 +113,9 @@ public class RealtimeWebSocketClient {
         }
         if (temperature != null && temperature.isPresent()) {
             urlBuilder.addQueryParameter("temperature", String.valueOf(temperature.get()));
+        }
+        if (languageCode != null && languageCode.isPresent()) {
+            urlBuilder.addQueryParameter("language-code", String.valueOf(languageCode.get()));
         }
         Request.Builder requestBuilder = new Request.Builder().url(urlBuilder.build());
         clientOptions.headers(null).forEach(requestBuilder::addHeader);

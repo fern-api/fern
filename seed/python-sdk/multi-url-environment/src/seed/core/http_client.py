@@ -14,7 +14,7 @@ from .file import File, convert_file_dict_to_httpx_tuples
 from .force_multipart import FORCE_MULTIPART
 from .jsonable_encoder import jsonable_encoder
 from .query_encoder import encode_query
-from .remove_none_from_dict import remove_none_from_dict
+from .remove_none_from_dict import remove_none_from_dict as remove_none_from_dict
 from .request_options import RequestOptions
 from httpx._types import RequestFiles
 
@@ -121,6 +121,21 @@ def _retry_timeout(response: httpx.Response, retries: int) -> float:
 def _should_retry(response: httpx.Response) -> bool:
     retryable_400s = [429, 408, 409]
     return response.status_code >= 500 or response.status_code in retryable_400s
+
+
+def _maybe_filter_none_from_multipart_data(
+    data: typing.Optional[typing.Any],
+    request_files: typing.Optional[RequestFiles],
+    force_multipart: typing.Optional[bool],
+) -> typing.Optional[typing.Any]:
+    """
+    Filter None values from data body for multipart/form requests.
+    This prevents httpx from converting None to empty strings in multipart encoding.
+    Only applies when files are present or force_multipart is True.
+    """
+    if data is not None and isinstance(data, typing.Mapping) and (request_files or force_multipart):
+        return remove_none_from_dict(data)
+    return data
 
 
 def remove_omit_from_dict(
@@ -244,6 +259,8 @@ class HttpClient:
         if (request_files is None or len(request_files) == 0) and force_multipart:
             request_files = FORCE_MULTIPART
 
+        data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
         response = self.httpx_client.request(
             method=method,
             url=urllib.parse.urljoin(f"{base_url}/", path),
@@ -340,6 +357,8 @@ class HttpClient:
             request_files = FORCE_MULTIPART
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+
+        data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
         with self.httpx_client.stream(
             method=method,
@@ -442,6 +461,8 @@ class AsyncHttpClient:
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
 
+        data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
+
         # Add the input to each of these and do None-safety checks
         response = await self.httpx_client.request(
             method=method,
@@ -538,6 +559,8 @@ class AsyncHttpClient:
             request_files = FORCE_MULTIPART
 
         json_body, data_body = get_request_body(json=json, data=data, request_options=request_options, omit=omit)
+
+        data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
         async with self.httpx_client.stream(
             method=method,

@@ -18,24 +18,20 @@ class SearchOrganizationsRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
+    )
+    {
         $this->limit = $values['limit'] ?? null;
     }
 
     /**
      * @return ?int
      */
-    public function getLimit(): ?int
-    {
-        return $this->limit;
-    }
+    public function getLimit(): ?int {
+        return $this->limit;}
 
     /**
      * @param ?int $value
      */
-    public function setLimit(?int $value = null): self
-    {
-        $this->limit = $value;
-        return $this;
-    }
+    public function setLimit(?int $value = null): self {
+        $this->limit = $value;return $this;}
 }

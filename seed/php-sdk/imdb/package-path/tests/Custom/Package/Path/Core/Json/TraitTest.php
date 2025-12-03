@@ -53,7 +53,7 @@ class TraitTest extends TestCase
         $object = TypeWithTrait::fromJson($expectedJson);
         $this->assertEquals(42, $object->integerProperty, 'integer_property should be 42.');
         $this->assertEquals('Hello, World!', $object->stringProperty, 'string_property should be "Hello, World!".');
-
+        
         $actualJson = $object->toJson();
         $this->assertJsonStringEqualsJsonString($expectedJson, $actualJson, 'Serialized JSON does not match original JSON for ScalarTypesTestWithTrait.');
     }

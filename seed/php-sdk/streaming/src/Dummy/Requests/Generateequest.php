@@ -27,8 +27,8 @@ class Generateequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->stream = $values['stream'];
-        $this->numEvents = $values['numEvents'];
+    )
+    {
+        $this->stream = $values['stream'];$this->numEvents = $values['numEvents'];
     }
 }

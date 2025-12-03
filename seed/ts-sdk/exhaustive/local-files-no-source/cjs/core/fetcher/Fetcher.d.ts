@@ -22,7 +22,7 @@ export declare namespace Fetcher {
         fetchFn?: typeof fetch;
         logging?: LogConfig | Logger;
     }
-    type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
+    type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
     interface FailedStatusCodeError {
         reason: "status-code";
         statusCode: number;
@@ -32,6 +32,10 @@ export declare namespace Fetcher {
         reason: "non-json";
         statusCode: number;
         rawBody: string;
+    }
+    interface BodyIsNullError {
+        reason: "body-is-null";
+        statusCode: number;
     }
     interface TimeoutError {
         reason: "timeout";

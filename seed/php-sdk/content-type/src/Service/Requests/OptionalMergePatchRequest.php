@@ -48,11 +48,8 @@ class OptionalMergePatchRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->requiredField = $values['requiredField'];
-        $this->optionalString = $values['optionalString'] ?? null;
-        $this->optionalInteger = $values['optionalInteger'] ?? null;
-        $this->optionalBoolean = $values['optionalBoolean'] ?? null;
-        $this->nullableString = $values['nullableString'] ?? null;
+    )
+    {
+        $this->requiredField = $values['requiredField'];$this->optionalString = $values['optionalString'] ?? null;$this->optionalInteger = $values['optionalInteger'] ?? null;$this->optionalBoolean = $values['optionalBoolean'] ?? null;$this->nullableString = $values['nullableString'] ?? null;
     }
 }

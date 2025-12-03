@@ -27,8 +27,8 @@ class PatchProxyRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->application = $values['application'] ?? null;
-        $this->requireAuth = $values['requireAuth'] ?? null;
+    )
+    {
+        $this->application = $values['application'] ?? null;$this->requireAuth = $values['requireAuth'] ?? null;
     }
 }

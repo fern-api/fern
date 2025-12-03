@@ -24,16 +24,15 @@ class ExampleType extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->docs = $values['docs'];
-        $this->name = $values['name'];
+    )
+    {
+        $this->docs = $values['docs'];$this->name = $values['name'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

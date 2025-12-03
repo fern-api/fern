@@ -45,11 +45,8 @@ class GetPlaylistsRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->limit = $values['limit'] ?? null;
-        $this->otherField = $values['otherField'];
-        $this->multiLineDocs = $values['multiLineDocs'];
-        $this->optionalMultipleField = $values['optionalMultipleField'] ?? null;
-        $this->multipleField = $values['multipleField'];
+    )
+    {
+        $this->limit = $values['limit'] ?? null;$this->otherField = $values['otherField'];$this->multiLineDocs = $values['multiLineDocs'];$this->optionalMultipleField = $values['optionalMultipleField'] ?? null;$this->multipleField = $values['multipleField'];
     }
 }

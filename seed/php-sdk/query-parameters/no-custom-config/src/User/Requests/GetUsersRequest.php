@@ -99,20 +99,8 @@ class GetUsersRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->limit = $values['limit'];
-        $this->id = $values['id'];
-        $this->date = $values['date'];
-        $this->deadline = $values['deadline'];
-        $this->bytes = $values['bytes'];
-        $this->user = $values['user'];
-        $this->userList = $values['userList'];
-        $this->optionalDeadline = $values['optionalDeadline'] ?? null;
-        $this->keyValue = $values['keyValue'];
-        $this->optionalString = $values['optionalString'] ?? null;
-        $this->nestedUser = $values['nestedUser'];
-        $this->optionalUser = $values['optionalUser'] ?? null;
-        $this->excludeUser = $values['excludeUser'];
-        $this->filter = $values['filter'];
+    )
+    {
+        $this->limit = $values['limit'];$this->id = $values['id'];$this->date = $values['date'];$this->deadline = $values['deadline'];$this->bytes = $values['bytes'];$this->user = $values['user'];$this->userList = $values['userList'];$this->optionalDeadline = $values['optionalDeadline'] ?? null;$this->keyValue = $values['keyValue'];$this->optionalString = $values['optionalString'] ?? null;$this->nestedUser = $values['nestedUser'];$this->optionalUser = $values['optionalUser'] ?? null;$this->excludeUser = $values['excludeUser'];$this->filter = $values['filter'];
     }
 }

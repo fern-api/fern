@@ -267,7 +267,7 @@ export class PropertyResolverImpl implements PropertyResolver {
         });
         const objectProperty = getNestedObjectPropertyFromResolvedType({
             typeResolver,
-            file,
+            file: maybeFileFromResolvedType(resolvedSchema) ?? file,
             resolvedType: resolvedSchema,
             propertyComponents
         });

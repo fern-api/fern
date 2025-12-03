@@ -28,16 +28,15 @@ class TestCase extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->params = $values['params'];
+    )
+    {
+        $this->id = $values['id'];$this->params = $values['params'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

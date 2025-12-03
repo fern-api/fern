@@ -29,16 +29,15 @@ class WorkspaceFiles extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->mainFile = $values['mainFile'];
-        $this->readOnlyFiles = $values['readOnlyFiles'];
+    )
+    {
+        $this->mainFile = $values['mainFile'];$this->readOnlyFiles = $values['readOnlyFiles'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

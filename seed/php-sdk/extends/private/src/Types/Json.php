@@ -24,33 +24,27 @@ class Json extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->docs = $values['docs'];
-        $this->raw = $values['raw'];
+    )
+    {
+        $this->docs = $values['docs'];$this->raw = $values['raw'];
     }
 
     /**
      * @return string
      */
-    public function getRaw(): string
-    {
-        return $this->raw;
-    }
+    public function getRaw(): string {
+        return $this->raw;}
 
     /**
      * @param string $value
      */
-    public function setRaw(string $value): self
-    {
-        $this->raw = $value;
-        return $this;
-    }
+    public function setRaw(string $value): self {
+        $this->raw = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

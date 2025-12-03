@@ -17,7 +17,7 @@ use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class SeedClient
+class SeedClient 
 {
     /**
      * @var array{
@@ -26,7 +26,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -48,7 +48,8 @@ class SeedClient
     public function __construct(
         string $token,
         ?array $options = null,
-    ) {
+    )
+    {
         $defaultHeaders = [
             'Authorization' => "Bearer $token",
             'X-Fern-Language' => 'PHP',
@@ -56,14 +57,14 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-
+        
         $this->options = $options ?? [];
+        
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
-
+        
         $this->client = new RawClient(
             options: $this->options,
         );
@@ -86,8 +87,7 @@ class SeedClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function uploadJsonDocument(UploadDocumentRequest $request = new UploadDocumentRequest(), ?array $options = null): DocumentMetadata|DocumentUploadResult
-    {
+    public function uploadJsonDocument(UploadDocumentRequest $request = new UploadDocumentRequest(), ?array $options = null): DocumentMetadata|DocumentUploadResult {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -100,15 +100,15 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeUnion($json, new Union(DocumentMetadata::class, DocumentUploadResult::class)); // @phpstan-ignore-line
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -142,8 +142,7 @@ class SeedClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function uploadPdfDocument(?array $options = null): DocumentMetadata|DocumentUploadResult
-    {
+    public function uploadPdfDocument(?array $options = null): DocumentMetadata|DocumentUploadResult {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -155,15 +154,15 @@ class SeedClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeUnion($json, new Union(DocumentMetadata::class, DocumentUploadResult::class)); // @phpstan-ignore-line
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

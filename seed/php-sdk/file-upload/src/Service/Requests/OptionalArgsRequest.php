@@ -27,8 +27,8 @@ class OptionalArgsRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->imageFile = $values['imageFile'] ?? null;
-        $this->request = $values['request'] ?? null;
+    )
+    {
+        $this->imageFile = $values['imageFile'] ?? null;$this->request = $values['request'] ?? null;
     }
 }

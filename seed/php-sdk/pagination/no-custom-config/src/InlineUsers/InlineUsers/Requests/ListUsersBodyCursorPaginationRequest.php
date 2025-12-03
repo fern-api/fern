@@ -24,7 +24,8 @@ class ListUsersBodyCursorPaginationRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
+    )
+    {
         $this->pagination = $values['pagination'] ?? null;
     }
 }

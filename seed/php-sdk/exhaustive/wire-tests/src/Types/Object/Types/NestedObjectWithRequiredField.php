@@ -27,16 +27,15 @@ class NestedObjectWithRequiredField extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->string = $values['string'];
-        $this->nestedObject = $values['nestedObject'];
+    )
+    {
+        $this->string = $values['string'];$this->nestedObject = $values['nestedObject'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

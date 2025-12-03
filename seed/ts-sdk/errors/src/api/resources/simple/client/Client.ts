@@ -4,6 +4,7 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClie
 import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as SeedErrors from "../../../index.js";
 
@@ -93,21 +94,7 @@ export class SimpleClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedErrorsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedErrorsTimeoutError("Timeout exceeded when calling POST /foo1.");
-            case "unknown":
-                throw new errors.SeedErrorsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/foo1");
     }
 
     /**
@@ -195,21 +182,7 @@ export class SimpleClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedErrorsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedErrorsTimeoutError("Timeout exceeded when calling POST /foo2.");
-            case "unknown":
-                throw new errors.SeedErrorsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/foo2");
     }
 
     /**
@@ -297,20 +270,6 @@ export class SimpleClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedErrorsError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedErrorsTimeoutError("Timeout exceeded when calling POST /foo3.");
-            case "unknown":
-                throw new errors.SeedErrorsError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/foo3");
     }
 }

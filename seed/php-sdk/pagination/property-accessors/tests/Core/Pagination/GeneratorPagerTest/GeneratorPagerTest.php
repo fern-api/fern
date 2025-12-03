@@ -69,7 +69,7 @@ class GeneratorPagerTest extends TestCase
             new Response(new Data([])),
         ]);
 
-        return new class ($responses) extends Pager {
+        return new class($responses) extends Pager {
             /**
              * @var ArrayIterator<int, Response>
              */
