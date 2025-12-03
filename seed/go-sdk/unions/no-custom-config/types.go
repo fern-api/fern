@@ -89,6 +89,93 @@ func (b *Bar) String() string {
 }
 
 var (
+	firstItemTypeFieldType = big.NewInt(1 << 0)
+	firstItemTypeFieldName = big.NewInt(1 << 1)
+)
+
+type FirstItemType struct {
+	Type *string `json:"type,omitempty" url:"type,omitempty"`
+	Name string  `json:"name" url:"name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (f *FirstItemType) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *FirstItemType) GetExtraProperties() map[string]interface{} {
+	return f.extraProperties
+}
+
+func (f *FirstItemType) require(field *big.Int) {
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
+	}
+	f.explicitFields.Or(f.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FirstItemType) SetType(type_ *string) {
+	f.Type = type_
+	f.require(firstItemTypeFieldType)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (f *FirstItemType) SetName(name string) {
+	f.Name = name
+	f.require(firstItemTypeFieldName)
+}
+
+func (f *FirstItemType) UnmarshalJSON(data []byte) error {
+	type unmarshaler FirstItemType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FirstItemType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FirstItemType) MarshalJSON() ([]byte, error) {
+	type embed FirstItemType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*f),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, f.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (f *FirstItemType) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+var (
 	fooFieldName = big.NewInt(1 << 0)
 )
 
@@ -258,6 +345,93 @@ func (f *FooExtended) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
+}
+
+var (
+	secondItemTypeFieldType  = big.NewInt(1 << 0)
+	secondItemTypeFieldTitle = big.NewInt(1 << 1)
+)
+
+type SecondItemType struct {
+	Type  *string `json:"type,omitempty" url:"type,omitempty"`
+	Title string  `json:"title" url:"title"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SecondItemType) GetTitle() string {
+	if s == nil {
+		return ""
+	}
+	return s.Title
+}
+
+func (s *SecondItemType) GetExtraProperties() map[string]interface{} {
+	return s.extraProperties
+}
+
+func (s *SecondItemType) require(field *big.Int) {
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
+	}
+	s.explicitFields.Or(s.explicitFields, field)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SecondItemType) SetType(type_ *string) {
+	s.Type = type_
+	s.require(secondItemTypeFieldType)
+}
+
+// SetTitle sets the Title field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SecondItemType) SetTitle(title string) {
+	s.Title = title
+	s.require(secondItemTypeFieldTitle)
+}
+
+func (s *SecondItemType) UnmarshalJSON(data []byte) error {
+	type unmarshaler SecondItemType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SecondItemType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SecondItemType) MarshalJSON() ([]byte, error) {
+	type embed SecondItemType
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SecondItemType) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 // This is a simple union.
@@ -999,6 +1173,123 @@ func (u *UnionWithDuplicateTypes) validate() error {
 	}
 	if u.Foo2 != nil {
 		fields = append(fields, "foo2")
+	}
+	if len(fields) == 0 {
+		if u.Type != "" {
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
+		}
+		return fmt.Errorf("type %T is empty", u)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
+	}
+	if u.Type != "" {
+		field := fields[0]
+		if u.Type != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				u,
+				u.Type,
+				u,
+			)
+		}
+	}
+	return nil
+}
+
+type UnionWithDuplicativeDiscriminants struct {
+	Type           string
+	FirstItemType  *FirstItemType
+	SecondItemType *SecondItemType
+}
+
+func (u *UnionWithDuplicativeDiscriminants) GetType() string {
+	if u == nil {
+		return ""
+	}
+	return u.Type
+}
+
+func (u *UnionWithDuplicativeDiscriminants) GetFirstItemType() *FirstItemType {
+	if u == nil {
+		return nil
+	}
+	return u.FirstItemType
+}
+
+func (u *UnionWithDuplicativeDiscriminants) GetSecondItemType() *SecondItemType {
+	if u == nil {
+		return nil
+	}
+	return u.SecondItemType
+}
+
+func (u *UnionWithDuplicativeDiscriminants) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	if unmarshaler.Type == "" {
+		return fmt.Errorf("%T did not include discriminant type", u)
+	}
+	switch unmarshaler.Type {
+	case "firstItemType":
+		value := new(FirstItemType)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.FirstItemType = value
+	case "secondItemType":
+		value := new(SecondItemType)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		u.SecondItemType = value
+	}
+	return nil
+}
+
+func (u UnionWithDuplicativeDiscriminants) MarshalJSON() ([]byte, error) {
+	if err := u.validate(); err != nil {
+		return nil, err
+	}
+	if u.FirstItemType != nil {
+		return internal.MarshalJSONWithExtraProperty(u.FirstItemType, "type", "firstItemType")
+	}
+	if u.SecondItemType != nil {
+		return internal.MarshalJSONWithExtraProperty(u.SecondItemType, "type", "secondItemType")
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+}
+
+type UnionWithDuplicativeDiscriminantsVisitor interface {
+	VisitFirstItemType(*FirstItemType) error
+	VisitSecondItemType(*SecondItemType) error
+}
+
+func (u *UnionWithDuplicativeDiscriminants) Accept(visitor UnionWithDuplicativeDiscriminantsVisitor) error {
+	if u.FirstItemType != nil {
+		return visitor.VisitFirstItemType(u.FirstItemType)
+	}
+	if u.SecondItemType != nil {
+		return visitor.VisitSecondItemType(u.SecondItemType)
+	}
+	return fmt.Errorf("type %T does not define a non-empty union type", u)
+}
+
+func (u *UnionWithDuplicativeDiscriminants) validate() error {
+	if u == nil {
+		return fmt.Errorf("type %T is nil", u)
+	}
+	var fields []string
+	if u.FirstItemType != nil {
+		fields = append(fields, "firstItemType")
+	}
+	if u.SecondItemType != nil {
+		fields = append(fields, "secondItemType")
 	}
 	if len(fields) == 0 {
 		if u.Type != "" {

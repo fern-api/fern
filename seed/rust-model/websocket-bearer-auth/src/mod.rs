@@ -5,8 +5,10 @@
 //!
 //! ## Type Categories
 //!
-//! - **Model Types**: 7 types for data representation
+//! - **Model Types**: 9 types for data representation
 
+pub mod realtime_no_auth_no_auth_send_event;
+pub mod realtime_no_auth_no_auth_receive_event;
 pub mod realtime_send_event;
 pub mod realtime_send_snake_case;
 pub mod realtime_receive_event;
@@ -15,6 +17,8 @@ pub mod realtime_send_event_2;
 pub mod realtime_receive_event_2;
 pub mod realtime_receive_event_3;
 
+pub use realtime_no_auth_no_auth_send_event::NoAuthSendEvent;
+pub use realtime_no_auth_no_auth_receive_event::NoAuthReceiveEvent;
 pub use realtime_send_event::SendEvent;
 pub use realtime_send_snake_case::SendSnakeCase;
 pub use realtime_receive_event::ReceiveEvent;

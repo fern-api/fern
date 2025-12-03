@@ -4,13 +4,16 @@
 
 from .types import (
     Bar,
+    FirstItemType,
     Foo,
     FooExtended,
+    SecondItemType,
     Union,
     UnionWithBaseProperties,
     UnionWithDiscriminant,
     UnionWithDuplicatePrimitive,
     UnionWithDuplicateTypes,
+    UnionWithDuplicativeDiscriminants,
     UnionWithLiteral,
     UnionWithMultipleNoProperties,
     UnionWithNoProperties,
@@ -26,13 +29,16 @@ from .types import (
 
 __all__ = [
     "Bar",
+    "FirstItemType",
     "Foo",
     "FooExtended",
+    "SecondItemType",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithDiscriminant",
     "UnionWithDuplicatePrimitive",
     "UnionWithDuplicateTypes",
+    "UnionWithDuplicativeDiscriminants",
     "UnionWithLiteral",
     "UnionWithMultipleNoProperties",
     "UnionWithNoProperties",
