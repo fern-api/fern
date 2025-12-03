@@ -85,11 +85,7 @@ export class WireTestSetupGenerator {
      */
     private generateConftestFile(): void {
         const conftestContent = this.buildConftestContent();
-        const conftestFile = new File(
-            "conftest.py",
-            RelativeFilePath.of("tests/wire"),
-            conftestContent
-        );
+        const conftestFile = new File("conftest.py", RelativeFilePath.of("tests/wire"), conftestContent);
 
         this.context.project.addRawFiles(conftestFile);
         this.context.logger.debug("Generated conftest.py for WireMock container lifecycle management");
