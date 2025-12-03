@@ -1,20 +1,10 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 2.10.1
-  changelogEntry:
-    - summary: |
-        Fix `output-path.other` configuration to correctly place README.md and reference.md files 
-        in the specified directory. The `.csproj` file's README Include path is now dynamically 
-        computed based on the configured `other` path.
-      type: fix
-  createdAt: "2025-12-03"
-  irVersion: 61
-
 - version: 2.10.0
   changelogEntry:
     - summary: |
         Add support for flexible `output-path` configuration that allows specifying different paths 
         for the library project, test project, solution file, and other files (README.md, reference.md).
-        
+
         Configuration options:
         * Simple string: `output-path: src` - all projects go to that path
         * Object with specific paths:
@@ -22,7 +12,7 @@
           - `test`: path for the test project (default: "src")
           - `solution`: path for the solution file (default: ".")
           - `other`: path for README.md, reference.md, and other files (default: ".")
-        
+
         Example generators.yml configuration:
         ```yml
         groups:
@@ -37,9 +27,9 @@
                     solution: .
                     other: src/MyApi
         ```
-        
+
         The generated CI workflow and project references are automatically updated to use the configured paths.
-        Note: `.github`, `.fern`, and `.fernignore` are always generated in the root output folder.
+        Note: `.github`, `.fern`, `.editorconfig`, `.gitignore`, and `.fernignore` are always generated in the root output folder.
       type: feat
   createdAt: "2025-12-03"
   irVersion: 61
