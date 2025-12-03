@@ -185,7 +185,7 @@
           "availability": undefined,
           "basePath": undefined,
           "baseUrl": undefined,
-          "displayName": undefined,
+          "displayName": "Add a Comment",
           "docs": "buf:lint:ignore RPC_REQUEST_STANDARD_NAME
  Create a comment on a resource",
           "errors": [],
