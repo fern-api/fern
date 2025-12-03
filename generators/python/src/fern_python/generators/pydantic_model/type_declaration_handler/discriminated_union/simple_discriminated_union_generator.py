@@ -137,8 +137,16 @@ class AbstractSimpleDiscriminatedUnionGenerator(AbstractTypeGenerator, ABC):
                         default_value=discriminant_value,
                     )
                 ]
+                discriminant_name_snake = get_discriminant_parameter_name(self._union.discriminant)
+                discriminant_wire_name = self._union.discriminant.wire_value
                 object_properties = self._context.get_all_properties_including_extensions(shape.type_id)
                 for object_property in object_properties:
+                    # Skip any property that conflicts with the discriminant to avoid duplicate fields
+                    if (
+                        object_property.name.name.snake_case.safe_name == discriminant_name_snake
+                        or object_property.name.wire_value == discriminant_wire_name
+                    ):
+                        continue
                     self._all_referenced_types.append(object_property.value_type)
                     same_properties_as_object_property_fields.append(
                         FernAwarePydanticField(

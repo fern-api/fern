@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.41.4
+  changelogEntry:
+    - summary: |
+        Fix duplicate discriminant property in discriminated union types when the base object has a property
+        with the same name as the discriminator (e.g., `type`). The generator now filters out inherited
+        properties that conflict with the discriminant field to prevent duplicate field definitions.
+      type: fix
+  createdAt: "2025-12-01"
+  irVersion: 61
+
 - version: 4.41.3
   changelogEntry:
     - summary: |
