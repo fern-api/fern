@@ -5,13 +5,20 @@ import { TaskContext } from "@fern-api/task-context";
 import { writeFile } from "fs/promises";
 import tmp from "tmp-promise";
 
-import { Script } from "../../../config/api";
+import { ScriptCommands } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
 import { ScriptRunner } from "./ScriptRunner";
 
 interface InternalScriptResult {
     type: "success" | "failure";
     message?: string;
+}
+
+function getCommandsForPhase(commands: ScriptCommands, phase: "build" | "test"): string[] {
+    if (Array.isArray(commands)) {
+        return phase === "build" ? commands : [];
+    }
+    return commands[phase] ?? [];
 }
 
 /**
@@ -33,68 +40,71 @@ export class LocalScriptRunner extends ScriptRunner {
         }
 
         const scripts = this.workspace.workspaceConfig.scripts ?? [];
-        const buildScripts = scripts.filter((script) => !this.isTestScript(script));
-        const testScripts = scripts.filter((script) => this.isTestScript(script));
 
         let buildTimeMs: number | undefined;
         let testTimeMs: number | undefined;
+        let anyBuildCommands = false;
+        let anyTestCommands = false;
 
         const buildStartTime = Date.now();
-        for (const script of buildScripts) {
+        for (const script of scripts) {
             if (skipScripts != null && script.name != null && skipScripts.includes(script.name)) {
-                taskContext.logger.info(`Skipping build script "${script.name}" for ${id} (configured in fixture)`);
+                taskContext.logger.info(`Skipping script "${script.name}" for ${id} (configured in fixture)`);
                 continue;
             }
 
-            const result = await this.runScript({
-                taskContext,
-                outputDir,
-                script,
-                id
-            });
-            if (result.type === "failure") {
-                buildTimeMs = Date.now() - buildStartTime;
-                return {
-                    type: "failure",
-                    phase: "build",
-                    message: result.message ?? "Build script failed",
-                    buildTimeMs
-                };
+            const buildCommands = getCommandsForPhase(script.commands, "build");
+            if (buildCommands.length > 0) {
+                anyBuildCommands = true;
+                const result = await this.runScript({
+                    taskContext,
+                    outputDir,
+                    commands: buildCommands,
+                    id
+                });
+                if (result.type === "failure") {
+                    buildTimeMs = Date.now() - buildStartTime;
+                    return {
+                        type: "failure",
+                        phase: "build",
+                        message: result.message ?? "Build script failed",
+                        buildTimeMs
+                    };
+                }
             }
         }
-        buildTimeMs = Date.now() - buildStartTime;
+        buildTimeMs = anyBuildCommands ? Date.now() - buildStartTime : undefined;
 
         const testStartTime = Date.now();
-        for (const script of testScripts) {
+        for (const script of scripts) {
             if (skipScripts != null && script.name != null && skipScripts.includes(script.name)) {
-                taskContext.logger.info(`Skipping test script "${script.name}" for ${id} (configured in fixture)`);
                 continue;
             }
 
-            const result = await this.runScript({
-                taskContext,
-                outputDir,
-                script,
-                id
-            });
-            if (result.type === "failure") {
-                testTimeMs = Date.now() - testStartTime;
-                return {
-                    type: "failure",
-                    phase: "test",
-                    message: result.message ?? "Test script failed",
-                    buildTimeMs,
-                    testTimeMs
-                };
+            const testCommands = getCommandsForPhase(script.commands, "test");
+            if (testCommands.length > 0) {
+                anyTestCommands = true;
+                const result = await this.runScript({
+                    taskContext,
+                    outputDir,
+                    commands: testCommands,
+                    id
+                });
+                if (result.type === "failure") {
+                    testTimeMs = Date.now() - testStartTime;
+                    return {
+                        type: "failure",
+                        phase: "test",
+                        message: result.message ?? "Test script failed",
+                        buildTimeMs,
+                        testTimeMs
+                    };
+                }
             }
         }
-        testTimeMs = Date.now() - testStartTime;
+        testTimeMs = anyTestCommands ? Date.now() - testStartTime : undefined;
 
         return { type: "success", buildTimeMs, testTimeMs };
-    }
-
-    private isTestScript(script: Script): boolean {
-        return script.name != null && script.name.toLowerCase().startsWith("test");
     }
 
     public async stop(): Promise<void> {
@@ -108,16 +118,16 @@ export class LocalScriptRunner extends ScriptRunner {
     private async runScript({
         taskContext,
         outputDir,
-        script,
+        commands,
         id
     }: {
         id: string;
         outputDir: AbsoluteFilePath;
         taskContext: TaskContext;
-        script: { commands: string[] };
+        commands: string[];
     }): Promise<InternalScriptResult> {
         const scriptFile = await tmp.file();
-        const scriptContents = ["set -e", `cd ${outputDir}`, ...script.commands].join("\n");
+        const scriptContents = ["set -e", `cd ${outputDir}`, ...commands].join("\n");
         await writeFile(scriptFile.path, scriptContents);
 
         taskContext.logger.debug(`Running local script on ${id}:\n${scriptContents}`);
