@@ -122,7 +122,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
 
             // Add X-Fern-Language header
             const hasParams = inferredParams.length > 0;
-            writer.writeLine(`"X-Fern-Language": "Ruby"${hasParams ? "," : ""}`);
+            writer.writeLine(`"X-Fern-Language" => "Ruby"${hasParams ? "," : ""}`);
 
             // Add any header-based auth params to the auth client headers
             for (let i = 0; i < inferredParams.length; i++) {
@@ -132,7 +132,7 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
                 }
                 const headerName = this.snakeToHeaderCase(param.snakeName);
                 const isLast = i === inferredParams.length - 1;
-                writer.writeLine(`"${headerName}": ${param.snakeName}${isLast ? "" : ","}`);
+                writer.writeLine(`"${headerName}" => ${param.snakeName}${isLast ? "" : ","}`);
             }
 
             writer.dedent();
