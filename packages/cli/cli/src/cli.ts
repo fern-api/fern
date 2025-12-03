@@ -646,8 +646,17 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
                 );
             }
-            if (argv.fernignore != null && argv.fernignore.trim().length === 0) {
-                return cliContext.failWithoutThrowing("The --fernignore flag requires a path to a .fernignore file.");
+            // Handle case where --fernignore is provided without a value (yargs sets it to true)
+            // or with an empty string
+            if (argv.fernignore != null) {
+                if (
+                    argv.fernignore === true ||
+                    (typeof argv.fernignore === "string" && argv.fernignore.trim().length === 0)
+                ) {
+                    return cliContext.failWithoutThrowing(
+                        "The --fernignore flag requires a path to a .fernignore file."
+                    );
+                }
             }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
