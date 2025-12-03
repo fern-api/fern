@@ -3,7 +3,7 @@
     "tasks": {
         "dist:cli:prod:unminified": {
             "outputs": ["dist/**"],
-            "dependsOn": ["^compile"],
+            "dependsOn": ["^compile", "compile"],
             "inputs": [
                 "src/**",
                 "tests/**",

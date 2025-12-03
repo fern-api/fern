@@ -87,7 +87,7 @@
     },
     "dist:cli": {
       "outputs": ["dist/**"],
-      "dependsOn": ["^compile"],
+      "dependsOn": ["^compile", "compile"],
       "inputs": [
         "src/**",
         "tests/**",
@@ -102,7 +102,7 @@
     },
     "dist:cli:dev": {
       "outputs": ["dist/**"],
-      "dependsOn": ["^compile"],
+      "dependsOn": ["^compile", "compile"],
       "inputs": [
         "src/**",
         "tests/**",
@@ -118,7 +118,7 @@
     },
     "dist:cli:local": {
       "outputs": ["dist/**"],
-      "dependsOn": ["^compile"],
+      "dependsOn": ["^compile", "compile"],
       "inputs": [
         "src/**",
         "tests/**",
@@ -134,7 +134,7 @@
     },
     "dist:cli:prod": {
       "outputs": ["dist/**"],
-      "dependsOn": ["^compile"],
+      "dependsOn": ["^compile", "compile"],
       "inputs": [
         "src/**",
         "tests/**",
