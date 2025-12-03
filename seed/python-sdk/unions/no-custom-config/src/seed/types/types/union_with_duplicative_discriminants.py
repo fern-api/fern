@@ -11,7 +11,6 @@ from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 class UnionWithDuplicativeDiscriminants_FirstItemType(UniversalBaseModel):
     type: typing.Literal["firstItemType"] = "firstItemType"
-    type: typing.Optional[typing.Literal["firstItemType"]] = None
     name: str
 
     if IS_PYDANTIC_V2:
@@ -26,7 +25,6 @@ class UnionWithDuplicativeDiscriminants_FirstItemType(UniversalBaseModel):
 
 class UnionWithDuplicativeDiscriminants_SecondItemType(UniversalBaseModel):
     type: typing.Literal["secondItemType"] = "secondItemType"
-    type: typing.Optional[typing.Literal["secondItemType"]] = None
     title: str
 
     if IS_PYDANTIC_V2:
