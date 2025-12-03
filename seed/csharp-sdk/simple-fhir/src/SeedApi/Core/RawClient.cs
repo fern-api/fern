@@ -12,7 +12,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 {
     private const int MaxRetryDelayMs = 60000;
     private const double JitterFactor = 0.2;
-    private static readonly Random _random = new();
+    private static readonly Random JitterRandom = new();
     internal int BaseRetryDelay { get; set; } = 1000;
 
     /// <summary>
@@ -165,16 +165,16 @@ internal partial class RawClient(ClientOptions clientOptions)
         return statusCode is 408 or 429 or >= 500;
     }
 
-    private static double AddPositiveJitter(double delay)
+    private static int AddPositiveJitter(int delayMs)
     {
-        var jitterMultiplier = 1 + _random.NextDouble() * JitterFactor;
-        return delay * jitterMultiplier;
+        var jitterMultiplier = 1 + JitterRandom.NextDouble() * JitterFactor;
+        return (int)(delayMs * jitterMultiplier);
     }
 
-    private static double AddSymmetricJitter(double delay)
+    private static int AddSymmetricJitter(int delayMs)
     {
-        var jitterMultiplier = 1 + (_random.NextDouble() - 0.5) * JitterFactor;
-        return delay * jitterMultiplier;
+        var jitterMultiplier = 1 + (JitterRandom.NextDouble() - 0.5) * JitterFactor;
+        return (int)(delayMs * jitterMultiplier);
     }
 
     private int GetRetryDelayFromHeaders(HttpResponseMessage response, int retryAttempt)
@@ -194,7 +194,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                     var delay = (int)(retryAfterDate - DateTimeOffset.UtcNow).TotalMilliseconds;
                     if (delay > 0)
                     {
-                        return Math.Min(Math.Max(delay, 0), MaxRetryDelayMs);
+                        return Math.Min(delay, MaxRetryDelayMs);
                     }
                 }
             }
@@ -212,14 +212,13 @@ internal partial class RawClient(ClientOptions clientOptions)
                 var delay = (int)(resetDateTime - DateTimeOffset.UtcNow).TotalMilliseconds;
                 if (delay > 0)
                 {
-                    return (int)AddPositiveJitter(Math.Min(delay, MaxRetryDelayMs));
+                    return AddPositiveJitter(Math.Min(delay, MaxRetryDelayMs));
                 }
             }
         }
 
-        return (int)AddSymmetricJitter(
-            Math.Min(BaseRetryDelay * (int)Math.Pow(2, retryAttempt), MaxRetryDelayMs)
-        );
+        var exponentialDelay = Math.Min(BaseRetryDelay * (1 << retryAttempt), MaxRetryDelayMs);
+        return AddSymmetricJitter(exponentialDelay);
     }
 
     private static bool IsRetryableContent(HttpRequestMessage request)

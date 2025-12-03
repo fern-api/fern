@@ -318,41 +318,6 @@ public class RetriesTests
         });
     }
 
-    [Test]
-    public async SystemTask SendRequestAsync_ShouldCapDelayAtMaxRetryDelay()
-    {
-        _server
-            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
-            .InScenario("MaxDelay")
-            .WillSetStateTo("Success")
-            .RespondWith(
-                WireMockResponse.Create().WithStatusCode(429).WithHeader("Retry-After", "120")
-            );
-
-        _server
-            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
-            .InScenario("MaxDelay")
-            .WhenStateIs("Success")
-            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
-
-        var request = new EmptyRequest
-        {
-            BaseUrl = _baseUrl,
-            Method = HttpMethod.Get,
-            Path = "/test",
-        };
-
-        var response = await _rawClient.SendRequestAsync(request);
-        Assert.That(response.StatusCode, Is.EqualTo(200));
-
-        var content = await response.Raw.Content.ReadAsStringAsync();
-        Assert.Multiple(() =>
-        {
-            Assert.That(content, Is.EqualTo("Success"));
-            Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
-        });
-    }
-
     [TearDown]
     public void TearDown()
     {

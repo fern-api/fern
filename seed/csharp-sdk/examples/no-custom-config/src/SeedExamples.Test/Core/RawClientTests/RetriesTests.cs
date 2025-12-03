@@ -205,6 +205,119 @@ public class RetriesTests
         });
     }
 
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldRespectRetryAfterHeader_WithSecondsValue()
+    {
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RetryAfter")
+            .WillSetStateTo("Success")
+            .RespondWith(
+                WireMockResponse.Create().WithStatusCode(429).WithHeader("Retry-After", "1")
+            );
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RetryAfter")
+            .WhenStateIs("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        var request = new EmptyRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        Assert.Multiple(() =>
+        {
+            Assert.That(content, Is.EqualTo("Success"));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
+        });
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldRespectRetryAfterHeader_WithHttpDateValue()
+    {
+        var retryAfterDate = DateTimeOffset.UtcNow.AddSeconds(1).ToString("R");
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RetryAfterDate")
+            .WillSetStateTo("Success")
+            .RespondWith(
+                WireMockResponse
+                    .Create()
+                    .WithStatusCode(429)
+                    .WithHeader("Retry-After", retryAfterDate)
+            );
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RetryAfterDate")
+            .WhenStateIs("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        var request = new EmptyRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        Assert.Multiple(() =>
+        {
+            Assert.That(content, Is.EqualTo("Success"));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
+        });
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldRespectXRateLimitResetHeader()
+    {
+        var resetTime = DateTimeOffset.UtcNow.AddSeconds(1).ToUnixTimeSeconds().ToString();
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RateLimitReset")
+            .WillSetStateTo("Success")
+            .RespondWith(
+                WireMockResponse
+                    .Create()
+                    .WithStatusCode(429)
+                    .WithHeader("X-RateLimit-Reset", resetTime)
+            );
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RateLimitReset")
+            .WhenStateIs("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        var request = new EmptyRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        Assert.Multiple(() =>
+        {
+            Assert.That(content, Is.EqualTo("Success"));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
+        });
+    }
+
     [TearDown]
     public void TearDown()
     {

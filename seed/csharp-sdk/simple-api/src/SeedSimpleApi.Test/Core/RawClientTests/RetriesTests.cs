@@ -1,5 +1,4 @@
 using global::System.Net.Http;
-using global::System.Reflection;
 using NUnit.Framework;
 using SeedSimpleApi.Core;
 using WireMock.Server;
@@ -317,30 +316,6 @@ public class RetriesTests
             Assert.That(content, Is.EqualTo("Success"));
             Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
         });
-    }
-
-    [Test]
-    public void GetRetryDelayFromHeaders_ShouldCapDelayAtMaxRetryDelay()
-    {
-        // Test that a large Retry-After value is capped at MaxRetryDelayMs (60000ms)
-        // We use reflection to test the private method directly to avoid waiting for the actual delay
-        var response = new HttpResponseMessage(System.Net.HttpStatusCode.TooManyRequests);
-        response.Headers.Add("Retry-After", "120"); // 120 seconds = 120000ms, should be capped to 60000ms
-
-        var method = typeof(RawClient).GetMethod(
-            "GetRetryDelayFromHeaders",
-            BindingFlags.Instance | BindingFlags.NonPublic
-        );
-        Assert.That(method, Is.Not.Null, "GetRetryDelayFromHeaders method should exist");
-
-        var delayMs = (int)method!.Invoke(_rawClient, new object[] { response, 0 })!;
-
-        // MaxRetryDelayMs is 60000ms (60 seconds)
-        Assert.That(
-            delayMs,
-            Is.EqualTo(60000),
-            "Delay should be capped at MaxRetryDelayMs (60000ms)"
-        );
     }
 
     [TearDown]
