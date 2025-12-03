@@ -4,7 +4,7 @@
 
 import * as FernIr from "../../../index";
 
-export interface HttpService {
+export interface HttpService extends FernIr.WithDocs {
     availability: FernIr.Availability | undefined;
     name: FernIr.DeclaredServiceName;
     displayName: string | undefined;

@@ -4,6 +4,7 @@ imports:
 service:
   auth: false
   base-path: /
+  docs: This service provides endpoints for managing movies and metadata.
   endpoints:
     getMovie:
       method: GET

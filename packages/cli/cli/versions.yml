@@ -2,6 +2,15 @@
 
 - changelogEntry:
     - summary: |
+        Add support for `docs` field at the service level in Fern Definition files.
+        This enables documentation of service folders in generated Postman collections and other outputs.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 2.19.0
+
+- changelogEntry:
+    - summary: |
         Add `--fernignore` CLI option for remote generation. This allows users to provide a custom `.fernignore` file that will replace the existing one on the main branch during remote generation. The custom fernignore will be applied during generation and committed to the repository.
       type: feat
   irVersion: 62
