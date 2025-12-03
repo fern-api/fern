@@ -1,4 +1,5 @@
 using global::System.Net.Http;
+using global::System.Reflection;
 using NUnit.Framework;
 using SeedSimpleApi.Core;
 using WireMock.Server;
@@ -203,6 +204,143 @@ public class RetriesTests
             Assert.That(content, Is.EqualTo("Success"));
             Assert.That(_server.LogEntries, Has.Count.EqualTo(MaxRetries));
         });
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldRespectRetryAfterHeader_WithSecondsValue()
+    {
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RetryAfter")
+            .WillSetStateTo("Success")
+            .RespondWith(
+                WireMockResponse.Create().WithStatusCode(429).WithHeader("Retry-After", "1")
+            );
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RetryAfter")
+            .WhenStateIs("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        var request = new EmptyRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        Assert.Multiple(() =>
+        {
+            Assert.That(content, Is.EqualTo("Success"));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
+        });
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldRespectRetryAfterHeader_WithHttpDateValue()
+    {
+        var retryAfterDate = DateTimeOffset.UtcNow.AddSeconds(1).ToString("R");
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RetryAfterDate")
+            .WillSetStateTo("Success")
+            .RespondWith(
+                WireMockResponse
+                    .Create()
+                    .WithStatusCode(429)
+                    .WithHeader("Retry-After", retryAfterDate)
+            );
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RetryAfterDate")
+            .WhenStateIs("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        var request = new EmptyRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        Assert.Multiple(() =>
+        {
+            Assert.That(content, Is.EqualTo("Success"));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
+        });
+    }
+
+    [Test]
+    public async SystemTask SendRequestAsync_ShouldRespectXRateLimitResetHeader()
+    {
+        var resetTime = DateTimeOffset.UtcNow.AddSeconds(1).ToUnixTimeSeconds().ToString();
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RateLimitReset")
+            .WillSetStateTo("Success")
+            .RespondWith(
+                WireMockResponse
+                    .Create()
+                    .WithStatusCode(429)
+                    .WithHeader("X-RateLimit-Reset", resetTime)
+            );
+
+        _server
+            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
+            .InScenario("RateLimitReset")
+            .WhenStateIs("Success")
+            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+
+        var request = new EmptyRequest
+        {
+            BaseUrl = _baseUrl,
+            Method = HttpMethod.Get,
+            Path = "/test",
+        };
+
+        var response = await _rawClient.SendRequestAsync(request);
+        Assert.That(response.StatusCode, Is.EqualTo(200));
+
+        var content = await response.Raw.Content.ReadAsStringAsync();
+        Assert.Multiple(() =>
+        {
+            Assert.That(content, Is.EqualTo("Success"));
+            Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
+        });
+    }
+
+    [Test]
+    public void GetRetryDelayFromHeaders_ShouldCapDelayAtMaxRetryDelay()
+    {
+        // Test that a large Retry-After value is capped at MaxRetryDelayMs (60000ms)
+        // We use reflection to test the private method directly to avoid waiting for the actual delay
+        var response = new HttpResponseMessage(System.Net.HttpStatusCode.TooManyRequests);
+        response.Headers.Add("Retry-After", "120"); // 120 seconds = 120000ms, should be capped to 60000ms
+
+        var method = typeof(RawClient).GetMethod(
+            "GetRetryDelayFromHeaders",
+            BindingFlags.Instance | BindingFlags.NonPublic
+        );
+        Assert.That(method, Is.Not.Null, "GetRetryDelayFromHeaders method should exist");
+
+        var delayMs = (int)method!.Invoke(_rawClient, new object[] { response, 0 })!;
+
+        // MaxRetryDelayMs is 60000ms (60 seconds)
+        Assert.That(
+            delayMs,
+            Is.EqualTo(60000),
+            "Delay should be capped at MaxRetryDelayMs (60000ms)"
+        );
     }
 
     [TearDown]
