@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.41.6
+  changelogEntry:
+    - summary: |
+        Fix Python wire test generation to drop literal-only params and fill in required file arguments so tests match the generated SDK signatures.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
 - version: 4.41.5
   changelogEntry:
     - summary: |
