@@ -542,4 +542,72 @@ describe("replaceReferencedMarkdown", () => {
         expect(result.trim()).toContain("Child 1");
         expect(result.trim()).toContain("Child 2");
     });
+
+    it("should detect circular references in longer chains (A -> B -> C -> A)", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="snippetA.md" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetA.md")) {
+                    return 'Content A\n<Markdown src="snippetB.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetB.md")) {
+                    return 'Content B\n<Markdown src="snippetC.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetC.md")) {
+                    return 'Content C\n<Markdown src="snippetA.md" />';
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(/Circular reference detected.*snippetA\.md.*already being processed/)
+        );
+        expect(result.trim()).toContain("Content A");
+        expect(result.trim()).toContain("Content B");
+        expect(result.trim()).toContain("Content C");
+    });
+
+    it("should detect circular references that don't go back to the first snippet (A -> B -> C -> B)", async () => {
+        const { context: testContext, warnSpy } = makeContextWithWarnSpy();
+
+        const markdown = `
+            <Markdown src="snippetA.md" />
+        `;
+
+        const result = await replaceReferencedMarkdown({
+            markdown,
+            absolutePathToFernFolder,
+            absolutePathToMarkdownFile,
+            context: testContext,
+            markdownLoader: async (filepath) => {
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetA.md")) {
+                    return 'Content A\n<Markdown src="snippetB.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetB.md")) {
+                    return 'Content B\n<Markdown src="snippetC.md" />';
+                }
+                if (filepath === AbsoluteFilePath.of("/path/to/fern/pages/snippetC.md")) {
+                    return 'Content C\n<Markdown src="snippetB.md" />';
+                }
+                throw new Error(`Unexpected filepath: ${filepath}`);
+            }
+        });
+
+        expect(warnSpy).toHaveBeenCalledWith(
+            expect.stringMatching(/Circular reference detected.*snippetB\.md.*already being processed/)
+        );
+        expect(result.trim()).toContain("Content A");
+        expect(result.trim()).toContain("Content B");
+        expect(result.trim()).toContain("Content C");
+    });
 });
