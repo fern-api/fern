@@ -6,7 +6,7 @@ changelogLocation: ../../generators/csharp/model/versions.yml
 buildScripts:
   compileScript:
     commands:
-      - dotnet build src -c Release .
+      - dotnet build -c Release
 
 publish:
   preBuildCommands:
@@ -50,5 +50,5 @@ fixtures:
 scripts:
   - image: fernapi/csharp-seed
     commands:
-      - dotnet restore src
-      - dotnet build src -c Release --no-restore
+      - dotnet restore
+      - dotnet build -c Release --no-restore
