@@ -1,4 +1,5 @@
 using global::System.Net.Http;
+using global::System.Reflection;
 using SystemTask = global::System.Threading.Tasks.Task;
 using WireMock.Server;
 using WireMockRequest = WireMock.RequestBuilders.Request;
@@ -319,41 +320,23 @@ public class RetriesTests
     }
 
     [Test]
-    public async SystemTask SendRequestAsync_ShouldCapDelayAtMaxRetryDelay()
+    public void GetRetryDelayFromHeaders_ShouldCapDelayAtMaxRetryDelay()
     {
-        _server
-            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
-            .InScenario("MaxDelay")
-            .WillSetStateTo("Success")
-            .RespondWith(
-                WireMockResponse
-                    .Create()
-                    .WithStatusCode(429)
-                    .WithHeader("Retry-After", "120")
-            );
+        // Test that a large Retry-After value is capped at MaxRetryDelayMs (60000ms)
+        // We use reflection to test the private method directly to avoid waiting for the actual delay
+        var response = new HttpResponseMessage(System.Net.HttpStatusCode.TooManyRequests);
+        response.Headers.Add("Retry-After", "120"); // 120 seconds = 120000ms, should be capped to 60000ms
 
-        _server
-            .Given(WireMockRequest.Create().WithPath("/test").UsingGet())
-            .InScenario("MaxDelay")
-            .WhenStateIs("Success")
-            .RespondWith(WireMockResponse.Create().WithStatusCode(200).WithBody("Success"));
+        var method = typeof(RawClient).GetMethod(
+            "GetRetryDelayFromHeaders",
+            BindingFlags.Instance | BindingFlags.NonPublic
+        );
+        Assert.That(method, Is.Not.Null, "GetRetryDelayFromHeaders method should exist");
 
-        var request = new EmptyRequest
-        {
-            BaseUrl = _baseUrl,
-            Method = HttpMethod.Get,
-            Path = "/test",
-        };
+        var delayMs = (int)method!.Invoke(_rawClient, new object[] { response, 0 })!;
 
-        var response = await _rawClient.SendRequestAsync(request);
-        Assert.That(response.StatusCode, Is.EqualTo(200));
-
-        var content = await response.Raw.Content.ReadAsStringAsync();
-        Assert.Multiple(() =>
-        {
-            Assert.That(content, Is.EqualTo("Success"));
-            Assert.That(_server.LogEntries, Has.Count.EqualTo(2));
-        });
+        // MaxRetryDelayMs is 60000ms (60 seconds)
+        Assert.That(delayMs, Is.EqualTo(60000), "Delay should be capped at MaxRetryDelayMs (60000ms)");
     }
 
     [TearDown]
