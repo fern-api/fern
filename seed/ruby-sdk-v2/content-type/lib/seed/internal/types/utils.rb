@@ -76,8 +76,9 @@ module Seed
           in Module
             case type
             in ->(t) {
-              t.singleton_class.included_modules.include?(Enum) || t.singleton_class.included_modules.include?(Union)
-            }
+                 t.singleton_class.included_modules.include?(Enum) ||
+                   t.singleton_class.included_modules.include?(Union)
+               }
               return type.coerce(value, strict: strict)
             else
               value

@@ -4,7 +4,7 @@ module Seed
   module Problem
     module Types
       class ProblemDescription < Internal::Types::Model
-        field :boards, lambda {
+        field :boards, -> {
           Internal::Types::Array[Seed::Problem::Types::ProblemDescriptionBoard]
         }, optional: false, nullable: false
       end

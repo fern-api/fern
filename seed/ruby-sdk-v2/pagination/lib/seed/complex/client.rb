@@ -24,26 +24,26 @@ module Seed
         Seed::Internal::CursorItemIterator.new(
           cursor_field: :starting_after,
           item_field: :conversations,
-          initial_cursor: _query[:starting_after]
+          initial_cursor: query_params[:starting_after]
         ) do |next_cursor|
-          _query[:starting_after] = next_cursor
-          _request = Seed::Internal::JSON::Request.new(
+          query_params[:starting_after] = next_cursor
+          request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "POST",
             path: "#{params[:index]}/conversations/search",
             body: Seed::Complex::Types::SearchRequest.new(params).to_h
           )
           begin
-            _response = @client.send(_request)
+            response = @client.send(request)
           rescue Net::HTTPRequestTimeout
             raise Seed::Errors::TimeoutError
           end
-          code = _response.code.to_i
+          code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Complex::Types::PaginatedConversationResponse.load(_response.body)
+            Seed::Complex::Types::PaginatedConversationResponse.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-            raise error_class.new(_response.body, code: code)
+            raise error_class.new(response.body, code: code)
           end
         end
       end
