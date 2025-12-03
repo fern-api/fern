@@ -384,9 +384,15 @@ dotnet_diagnostic.IDE0005.severity = error
         );
 
         // Add library project to solution using absolute paths
-        await loggingExeca(this.context.logger, "dotnet", ["sln", solutionFilePath, "add", libraryCsprojPath], {
-            doNotPipeOutput: true
-        });
+        // Use --solution-folder / to place project at solution root without folder nesting
+        await loggingExeca(
+            this.context.logger,
+            "dotnet",
+            ["sln", solutionFilePath, "add", libraryCsprojPath, "--solution-folder", "/"],
+            {
+                doNotPipeOutput: true
+            }
+        );
 
         return absolutePathToProjectDirectory;
     }
@@ -419,10 +425,16 @@ dotnet_diagnostic.IDE0005.severity = error
         );
 
         // Add test project to solution using absolute paths
+        // Use --solution-folder / to place project at solution root without folder nesting
         const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
-        await loggingExeca(this.context.logger, "dotnet", ["sln", solutionFilePath, "add", testCsprojPath], {
-            doNotPipeOutput: true
-        });
+        await loggingExeca(
+            this.context.logger,
+            "dotnet",
+            ["sln", solutionFilePath, "add", testCsprojPath, "--solution-folder", "/"],
+            {
+                doNotPipeOutput: true
+            }
+        );
 
         // Update project reference in test project to point to the library project using absolute paths
         const libraryCsprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
