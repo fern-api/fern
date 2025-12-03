@@ -120,13 +120,13 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     }
 
     private async dotnetFormat(
-        absolutePathToSrcDirectory: AbsoluteFilePath,
+        absolutePathToSolutionDirectory: AbsoluteFilePath,
         absolutePathToProjectDirectory: AbsoluteFilePath,
         editorConfig: string
     ): Promise<void> {
-        // write a temporary '.editorconfig' file to the absolutePathToSrcDirectory
+        // write a temporary '.editorconfig' file to the solution directory
         // so we can use dotnet format to pre-format the project (ie, optimize namespace usage, scoping, etc)
-        const editorConfigPath = join(absolutePathToSrcDirectory, RelativeFilePath.of(".editorconfig"));
+        const editorConfigPath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(".editorconfig"));
         await writeFile(editorConfigPath, editorConfig);
 
         // patch the csproj file to only target net8.0 (dotnet format gets weird with multiple target frameworks)
@@ -146,10 +146,10 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
                 .replace(/<\/Project>/, `<ItemGroup><Using Include="System" /></ItemGroup></Project>`)
         );
 
-        // call dotnet format
-        await loggingExeca(this.context.logger, "dotnet", ["format", "--severity", "error"], {
-            doNotPipeOutput: false,
-            cwd: absolutePathToSrcDirectory
+        // call dotnet format on the solution file using absolute path
+        const solutionFile = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
+        await loggingExeca(this.context.logger, "dotnet", ["format", solutionFile, "--severity", "error"], {
+            doNotPipeOutput: false
         });
 
         await writeFile(csprojPath, csprojContents);
@@ -303,7 +303,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         if (this.settings.useDotnetFormat) {
             // apply dotnet analyzer and formatter pass 1
             await this.dotnetFormat(
-                absolutePathToLibraryDirectory,
+                absolutePathToSolutionDirectory,
                 absolutePathToProjectDirectory,
                 `[*.cs]
   dotnet_diagnostic.IDE0001.severity = error
@@ -317,7 +317,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
             );
             // apply dotnet analyzer and formatter pass 2
             await this.dotnetFormat(
-                absolutePathToLibraryDirectory,
+                absolutePathToSolutionDirectory,
                 absolutePathToProjectDirectory,
                 `[*.cs]
 dotnet_diagnostic.IDE0005.severity = error          
