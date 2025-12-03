@@ -120,4 +120,36 @@ describe("environment variable substitution in docs", () => {
         expect(onError).not.toHaveBeenCalled();
         expect(substituted.config.url).toEqual("http://localhost:3000/api");
     });
+
+    it("does not substitute env vars in jsFiles to avoid conflicts with template literals", () => {
+        process.env.API_KEY = "test-api-key";
+
+        const docsDefinition = {
+            config: {
+                title: "My API Docs",
+                apiKey: "${API_KEY}" // This should be substituted
+            },
+            jsFiles: {
+                "component.ts": `
+                    const template = \`Hello \${name}!\`;
+                    const apiKey = "\${API_KEY}";
+                    export default template;
+                `
+            },
+            pages: {}
+        };
+
+        // Simulate the same exclusion logic used in the actual code
+        const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
+        const onError = vi.fn();
+        const substitutedDocs = replaceEnvVariables(docsWithoutJsFiles, { onError }, { substituteAsEmpty: false });
+        const finalDocs = { ...substitutedDocs, jsFiles };
+
+        expect(onError).not.toHaveBeenCalled();
+        // Config should have env vars substituted
+        expect(finalDocs.config.apiKey).toEqual("test-api-key");
+        // JS files should preserve template literals and not substitute env vars
+        expect(finalDocs.jsFiles["component.ts"]).toContain("${name}"); // Template literal preserved
+        expect(finalDocs.jsFiles["component.ts"]).toContain("${API_KEY}"); // Env var not substituted in JS
+    });
 });

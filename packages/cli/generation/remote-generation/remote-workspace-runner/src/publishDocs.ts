@@ -343,11 +343,14 @@ export async function publishDocs({
 
     if (docsWorkspace.config.settings?.substituteEnvVars) {
         context.logger.debug("Applying environment variable substitution to docs definition...");
-        docsDefinition = replaceEnvVariables(
-            docsDefinition,
+        // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
+        const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
+        const substitutedDocs = replaceEnvVariables(
+            docsWithoutJsFiles,
             { onError: (e) => context.failAndThrow(e) },
             { substituteAsEmpty: false }
         );
+        docsDefinition = { ...substitutedDocs, jsFiles };
     }
 
     const pageCount = Object.keys(docsDefinition.pages).length;
