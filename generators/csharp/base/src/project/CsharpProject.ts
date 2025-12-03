@@ -279,7 +279,11 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
             projectName: this.name,
             libraryPath: path.posix.join(libraryPath, this.name),
             libraryProjectFile: path.posix.join(libraryPath, this.name, `${this.name}.csproj`),
-            testProjectFile: path.posix.join(testPath, this.names.files.testProject, `${this.names.files.testProject}.csproj`),
+            testProjectFile: path.posix.join(
+                testPath,
+                this.names.files.testProject,
+                `${this.names.files.testProject}.csproj`
+            ),
             shouldWritePublishBlock: this.context.publishConfig != null,
             nugetTokenEnvvar:
                 this.context.publishConfig?.apiKeyEnvironmentVariable == null ||
