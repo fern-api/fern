@@ -13,7 +13,7 @@ import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Fetcher } from "@fern-fern/fiddle-sdk/core";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
-import { mkdir, writeFile } from "fs/promises";
+import { mkdir, readFile, writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import urlJoin from "url-join";
 
@@ -29,7 +29,8 @@ export async function createAndStartJob({
     token,
     whitelabel,
     irVersionOverride,
-    absolutePathToPreview
+    absolutePathToPreview,
+    fernignorePath
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -43,7 +44,18 @@ export async function createAndStartJob({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    fernignorePath: string | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
+    // Read fernignore file contents if path is provided
+    let fernignoreContents: string | undefined;
+    if (fernignorePath != null) {
+        try {
+            fernignoreContents = await readFile(fernignorePath, "utf-8");
+        } catch (error) {
+            context.failAndThrow(`Failed to read fernignore file at ${fernignorePath}: ${error}`);
+        }
+    }
+
     const job = await createJob({
         projectConfig,
         workspace,
@@ -54,7 +66,8 @@ export async function createAndStartJob({
         shouldLogS3Url,
         token,
         whitelabel,
-        absolutePathToPreview
+        absolutePathToPreview,
+        fernignoreContents
     });
     await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersionOverride });
     return job;
@@ -70,7 +83,8 @@ async function createJob({
     shouldLogS3Url,
     token,
     whitelabel,
-    absolutePathToPreview
+    absolutePathToPreview,
+    fernignoreContents
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     workspace: FernWorkspace;
@@ -82,6 +96,7 @@ async function createJob({
     token: FernToken;
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
+    fernignoreContents: string | undefined;
 }): Promise<FernFiddle.remoteGen.CreateJobResponse> {
     const remoteGenerationService = createFiddleService({ token: token.value });
 
@@ -105,7 +120,8 @@ async function createJob({
             shouldLogS3Url
         }),
         whitelabel,
-        preview: absolutePathToPreview != null
+        preview: absolutePathToPreview != null,
+        fernignoreContents
     });
 
     if (!createResponse.ok) {
