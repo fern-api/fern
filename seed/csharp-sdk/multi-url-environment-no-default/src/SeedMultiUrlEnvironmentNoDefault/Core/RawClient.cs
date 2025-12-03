@@ -12,8 +12,12 @@ internal partial class RawClient(ClientOptions clientOptions)
 {
     private const int MaxRetryDelayMs = 60000;
     private const double JitterFactor = 0.2;
+#if NET6_0_OR_GREATER
+    // Use Random.Shared for thread-safe random number generation on .NET 6+
+#else
     private static readonly object JitterLock = new();
     private static readonly Random JitterRandom = new();
+#endif
     internal int BaseRetryDelay { get; set; } = 1000;
 
     /// <summary>
@@ -168,22 +172,30 @@ internal partial class RawClient(ClientOptions clientOptions)
 
     private static int AddPositiveJitter(int delayMs)
     {
+#if NET6_0_OR_GREATER
+        var random = Random.Shared.NextDouble();
+#else
         double random;
         lock (JitterLock)
         {
             random = JitterRandom.NextDouble();
         }
+#endif
         var jitterMultiplier = 1 + random * JitterFactor;
         return (int)(delayMs * jitterMultiplier);
     }
 
     private static int AddSymmetricJitter(int delayMs)
     {
+#if NET6_0_OR_GREATER
+        var random = Random.Shared.NextDouble();
+#else
         double random;
         lock (JitterLock)
         {
             random = JitterRandom.NextDouble();
         }
+#endif
         var jitterMultiplier = 1 + (random - 0.5) * JitterFactor;
         return (int)(delayMs * jitterMultiplier);
     }
