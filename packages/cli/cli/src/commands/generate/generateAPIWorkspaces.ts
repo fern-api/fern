@@ -29,7 +29,8 @@ export async function generateAPIWorkspaces({
     force,
     runner,
     inspect,
-    lfsOverride
+    lfsOverride,
+    fernignorePath
 }: {
     project: Project;
     cliContext: CliContext;
@@ -44,6 +45,7 @@ export async function generateAPIWorkspaces({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     lfsOverride: string | undefined;
+    fernignorePath: string | undefined;
 }): Promise<void> {
     let token: FernToken | undefined = undefined;
 
@@ -131,7 +133,8 @@ export async function generateAPIWorkspaces({
                     mode,
                     runner,
                     inspect,
-                    lfsOverride
+                    lfsOverride,
+                    fernignorePath
                 });
             });
         })

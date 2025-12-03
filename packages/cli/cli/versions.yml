@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Add `--fernignore` CLI option for remote generation. This allows users to provide a custom `.fernignore` file that will replace the existing one on the main branch during remote generation. The custom fernignore will be applied during generation and committed to the repository.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 2.18.0
+
+- changelogEntry:
+    - summary: |
         Gracefully handle null values in docs.yml structure.
       type: fix
   irVersion: 62
