@@ -6,7 +6,6 @@ from json.decoder import JSONDecodeError
 
 from ..core.api_error import ApiError
 from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.http_response import AsyncHttpResponse, HttpResponse
 from ..core.pagination import AsyncPager, SyncPager
 from ..core.pydantic_utilities import parse_obj_as
 from ..core.request_options import RequestOptions
@@ -679,7 +678,7 @@ class RawUsersClient:
         )
         try:
             if _response is None or not _response.text.strip():
-                return HttpResponse(response=_response, data=None)
+                return SyncPager(has_next=False, items=[], get_next=None, response=None)
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     typing.Optional[UsernameCursor],
@@ -688,11 +687,15 @@ class RawUsersClient:
                         object_=_response.json(),
                     ),
                 )
-                _items = _parsed_response.cursor.data if _parsed_response.cursor is not None else []
+                _items = (
+                    _parsed_response.cursor.data
+                    if _parsed_response is not None and _parsed_response.cursor is not None
+                    else []
+                )
 
                 _has_next = False
                 _get_next = None
-                if _parsed_response.cursor is not None:
+                if _parsed_response is not None and _parsed_response.cursor is not None:
                     _parsed_next = _parsed_response.cursor.after
                     _has_next = _parsed_next is not None and _parsed_next != ""
                     _get_next = lambda: self.list_usernames_with_optional_response(
@@ -1438,7 +1441,7 @@ class AsyncRawUsersClient:
         )
         try:
             if _response is None or not _response.text.strip():
-                return AsyncHttpResponse(response=_response, data=None)
+                return AsyncPager(has_next=False, items=[], get_next=None, response=None)
             if 200 <= _response.status_code < 300:
                 _parsed_response = typing.cast(
                     typing.Optional[UsernameCursor],
@@ -1447,11 +1450,15 @@ class AsyncRawUsersClient:
                         object_=_response.json(),
                     ),
                 )
-                _items = _parsed_response.cursor.data if _parsed_response.cursor is not None else []
+                _items = (
+                    _parsed_response.cursor.data
+                    if _parsed_response is not None and _parsed_response.cursor is not None
+                    else []
+                )
 
                 _has_next = False
                 _get_next = None
-                if _parsed_response.cursor is not None:
+                if _parsed_response is not None and _parsed_response.cursor is not None:
                     _parsed_next = _parsed_response.cursor.after
                     _has_next = _parsed_next is not None and _parsed_next != ""
 
