@@ -856,8 +856,12 @@ export class EndpointSnippetGenerator {
     }): python.NamedValue[] {
         const args: python.NamedValue[] = [];
 
+        const nonLiteralPathParameters = namedParameters.filter(
+            (parameter) => !this.resolvesToLiteralType(parameter.typeReference)
+        );
+
         const pathParameters = this.context.associateByWireValue({
-            parameters: namedParameters,
+            parameters: nonLiteralPathParameters,
             values: snippet.pathParameters ?? {},
 
             // Path parameters are distributed across the client constructor
