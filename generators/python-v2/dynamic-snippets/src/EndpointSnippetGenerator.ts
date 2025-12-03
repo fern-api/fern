@@ -578,13 +578,46 @@ export class EndpointSnippetGenerator {
                     parameters: named.properties,
                     values: this.context.getRecord(value) ?? {}
                 });
-                return bodyProperties.map((property) => ({
+
+                const nonLiteralBodyProperties = bodyProperties.filter(
+                    (property) => !this.resolvesToLiteralType(property.typeReference)
+                );
+
+                return nonLiteralBodyProperties.map((property) => ({
                     name: this.context.getPropertyName(property.name.name),
                     value: this.context.dynamicTypeLiteralMapper.convert(property)
                 }));
             }
             default:
                 assertNever(named);
+        }
+    }
+
+    private resolvesToLiteralType(typeReference: FernIr.dynamic.TypeReference): boolean {
+        switch (typeReference.type) {
+            case "literal":
+                return true;
+            case "optional":
+            case "nullable":
+                return this.resolvesToLiteralType(typeReference.value);
+            case "named": {
+                const named = this.context.resolveNamedType({ typeId: typeReference.value });
+                if (named == null) {
+                    return false;
+                }
+                if (named.type === "alias") {
+                    return this.resolvesToLiteralType(named.typeReference);
+                }
+                return false;
+            }
+            case "list":
+            case "map":
+            case "set":
+            case "primitive":
+            case "unknown":
+                return false;
+            default:
+                assertNever(typeReference);
         }
     }
 
@@ -799,7 +832,12 @@ export class EndpointSnippetGenerator {
             parameters,
             values: this.context.getRecord(value) ?? {}
         });
-        for (const parameter of bodyProperties) {
+
+        const nonLiteralBodyProperties = bodyProperties.filter(
+            (parameter) => !this.resolvesToLiteralType(parameter.typeReference)
+        );
+
+        for (const parameter of nonLiteralBodyProperties) {
             fields.push({
                 name: this.context.getPropertyName(parameter.name.name),
                 value: this.context.dynamicTypeLiteralMapper.convert(parameter)
