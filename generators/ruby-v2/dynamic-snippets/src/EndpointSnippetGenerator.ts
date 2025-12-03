@@ -352,7 +352,73 @@ export class EndpointSnippetGenerator {
                 assertNever(endpoint.request);
         }
 
+        // Add request_options with additional_headers for unmapped headers (e.g., X-Test-Id)
+        const requestOptions = this.getRequestOptions({ endpoint, snippet });
+        if (requestOptions != null) {
+            invokeMethodArgs.keywordArguments = invokeMethodArgs.keywordArguments ?? [];
+            invokeMethodArgs.keywordArguments.push(requestOptions);
+        }
+
         return ruby.invokeMethod(invokeMethodArgs);
+    }
+
+    /**
+     * Builds request_options from snippet headers for per-request options.
+     * This is used when generating snippets for wire tests where headers like X-Test-Id
+     * should be passed as request_options[:additional_headers] rather than as method parameters.
+     * Only includes headers that are NOT already mapped to the request directly (i.e., not defined in the IR).
+     */
+    private getRequestOptions({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ruby.KeywordArgument | undefined {
+        const headers = snippet.headers ?? {};
+        const entries = Object.entries(headers);
+        if (entries.length === 0) {
+            return undefined;
+        }
+
+        // Build a set of header names that are already mapped to the request directly
+        const mappedHeaderNames = new Set<string>();
+
+        // Add global headers from IR
+        if (this.context.ir.headers != null) {
+            for (const header of this.context.ir.headers) {
+                mappedHeaderNames.add(header.name.wireValue.toLowerCase());
+            }
+        }
+
+        // Add endpoint-level headers from inlined request
+        if (endpoint.request.type === "inlined" && endpoint.request.headers != null) {
+            for (const header of endpoint.request.headers) {
+                mappedHeaderNames.add(header.name.wireValue.toLowerCase());
+            }
+        }
+
+        // Filter out headers that are already mapped to the request
+        const unmappedEntries = entries.filter(([name]) => !mappedHeaderNames.has(name.toLowerCase()));
+        if (unmappedEntries.length === 0) {
+            return undefined;
+        }
+
+        // Build request_options: { additional_headers: { "X-Test-Id" => "value" } }
+        const additionalHeadersEntries = unmappedEntries.map(([name, value]) => ({
+            key: ruby.TypeLiteral.string(name),
+            value: ruby.TypeLiteral.string(String(value))
+        }));
+
+        return ruby.keywordArgument({
+            name: "request_options",
+            value: ruby.TypeLiteral.hash([
+                {
+                    key: ruby.TypeLiteral.string("additional_headers"),
+                    value: ruby.TypeLiteral.hash(additionalHeadersEntries)
+                }
+            ])
+        });
     }
 
     private getMethodArgsForInlinedRequest({

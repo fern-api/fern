@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.0.0-rc58
+  createdAt: "2025-12-03"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Use deterministic X-Test-Id header for wire test request identification instead of
+        reset_wiremock_requests. This allows tests to run in parallel and matches the
+        PHP/Python wire test implementations.
+  irVersion: 61
+
 - version: 1.0.0-rc57
   createdAt: "2025-12-03"
   changelogEntry:

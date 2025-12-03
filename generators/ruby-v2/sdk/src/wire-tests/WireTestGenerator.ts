@@ -8,6 +8,14 @@ import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSn
 import { convertIr } from "../utils/convertIr";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
+interface EndpointTestCase {
+    snippet: string;
+    endpoint: HttpEndpoint;
+    service: HttpService;
+    exampleIndex: number;
+    testId: string;
+}
+
 /**
  * Generates WireMock-based integration tests for Ruby SDK.
  *
@@ -58,20 +66,40 @@ export class WireTestGenerator {
     }
 
     private async generateServiceTestFile(serviceName: string, endpoints: HttpEndpoint[]): Promise<File> {
-        const endpointTestCases = new Map<string, { snippet: string; endpoint: HttpEndpoint }>();
+        const endpointTestCases = new Map<string, EndpointTestCase>();
 
         for (const endpoint of endpoints) {
             const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
             if (dynamicEndpoint?.examples && dynamicEndpoint.examples.length > 0) {
                 const firstExample = this.getDynamicEndpointExample(endpoint);
-                if (firstExample) {
-                    try {
-                        const snippet = await this.generateSnippetForExample(firstExample);
-                        endpointTestCases.set(endpoint.id, { snippet, endpoint });
-                    } catch (error) {
-                        this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
-                        continue;
-                    }
+                if (!firstExample) {
+                    continue;
+                }
+
+                // Find the service for this endpoint
+                const service = Object.values(this.context.ir.services).find((s) =>
+                    s.endpoints.some((e) => e.id === endpoint.id)
+                );
+                if (!service) {
+                    this.context.logger.warn(`No service found for endpoint ${endpoint.id}`);
+                    continue;
+                }
+
+                const exampleIndex = 0; // We only use the first example today
+                const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
+
+                try {
+                    const snippet = await this.generateSnippetForExample({
+                        example: firstExample,
+                        service,
+                        endpoint,
+                        exampleIndex,
+                        testId
+                    });
+                    endpointTestCases.set(endpoint.id, { snippet, endpoint, service, exampleIndex, testId });
+                } catch (error) {
+                    this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
+                    continue;
                 }
             }
         }
@@ -81,10 +109,21 @@ export class WireTestGenerator {
         return new File(`${serviceName}_test.rb`, RelativeFilePath.of("test/wire"), testFileContent);
     }
 
-    private buildTestFileContent(
-        serviceName: string,
-        endpointTestCases: Map<string, { snippet: string; endpoint: HttpEndpoint }>
-    ): string {
+    private buildDeterministicTestId(service: HttpService, endpoint: HttpEndpoint, exampleIndex: number): string {
+        const servicePathParts = service.name.fernFilepath.allParts.map((part) => part.snakeCase.safeName);
+        const endpointName = endpoint.name.snakeCase.safeName;
+
+        const segments: string[] = [];
+        if (servicePathParts.length > 0) {
+            segments.push(servicePathParts.join("."));
+        }
+        segments.push(endpointName);
+        segments.push(String(exampleIndex));
+
+        return segments.join(".");
+    }
+
+    private buildTestFileContent(serviceName: string, endpointTestCases: Map<string, EndpointTestCase>): string {
         const lines: string[] = [];
 
         // File header
@@ -117,8 +156,8 @@ export class WireTestGenerator {
         lines.push("");
 
         // Test methods
-        for (const { snippet, endpoint } of endpointTestCases.values()) {
-            const testMethod = this.generateEndpointTestMethod(endpoint, snippet, serviceName);
+        for (const { snippet, endpoint, testId } of endpointTestCases.values()) {
+            const testMethod = this.generateEndpointTestMethod(endpoint, snippet, serviceName, testId);
             if (testMethod) {
                 lines.push(...testMethod);
                 lines.push("");
@@ -133,22 +172,14 @@ export class WireTestGenerator {
     private generateHelperMethods(): string[] {
         const lines: string[] = [];
 
-        // reset_wiremock_requests method
-        lines.push("  def reset_wiremock_requests");
-        lines.push('    uri = URI("#{WIREMOCK_ADMIN_URL}/requests")');
-        lines.push("    http = Net::HTTP.new(uri.host, uri.port)");
-        lines.push('    request = Net::HTTP::Delete.new(uri.path, { "Content-Type" => "application/json" })');
-        lines.push("    http.request(request)");
-        lines.push("  end");
-        lines.push("");
-
-        // verify_request_count method
-        lines.push("  def verify_request_count(method:, url_path:, query_params: nil, expected:)");
+        // verify_request_count method - filters by X-Test-Id header
+        lines.push("  def verify_request_count(test_id:, method:, url_path:, query_params: nil, expected:)");
         lines.push('    uri = URI("#{WIREMOCK_ADMIN_URL}/requests/find")');
         lines.push("    http = Net::HTTP.new(uri.host, uri.port)");
         lines.push('    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })');
         lines.push("");
         lines.push('    request_body = { "method" => method, "urlPath" => url_path }');
+        lines.push('    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }');
         lines.push("    if query_params");
         lines.push('      request_body["queryParameters"] = query_params.transform_values { |v| { "equalTo" => v } }');
         lines.push("    end");
@@ -166,7 +197,12 @@ export class WireTestGenerator {
         return lines;
     }
 
-    private generateEndpointTestMethod(endpoint: HttpEndpoint, snippet: string, serviceName: string): string[] | null {
+    private generateEndpointTestMethod(
+        endpoint: HttpEndpoint,
+        snippet: string,
+        serviceName: string,
+        testId: string
+    ): string[] | null {
         try {
             const testName = this.getTestMethodName(endpoint, serviceName);
             const basePath = this.buildBasePath(endpoint);
@@ -175,7 +211,7 @@ export class WireTestGenerator {
             const lines: string[] = [];
 
             lines.push(`  def ${testName}`);
-            lines.push("    reset_wiremock_requests");
+            lines.push(`    test_id = "${testId}"`);
             lines.push("");
 
             // Process the snippet to use WireMock base URL
@@ -188,8 +224,9 @@ export class WireTestGenerator {
             }
             lines.push("");
 
-            // Verify request count
+            // Verify request count using test_id header
             lines.push(`    verify_request_count(`);
+            lines.push(`      test_id: test_id,`);
             lines.push(`      method: "${endpoint.method}",`);
             lines.push(`      url_path: "${basePath}",`);
             lines.push(`      query_params: ${queryParamsCode},`);
@@ -303,8 +340,26 @@ export class WireTestGenerator {
         return example.examples?.[0] ?? null;
     }
 
-    private async generateSnippetForExample(example: dynamic.EndpointSnippetRequest): Promise<string> {
-        const snippetRequest = convertDynamicEndpointSnippetRequest(example);
+    private async generateSnippetForExample({
+        example,
+        testId
+    }: {
+        example: dynamic.EndpointSnippetRequest;
+        service: HttpService;
+        endpoint: HttpEndpoint;
+        exampleIndex: number;
+        testId: string;
+    }): Promise<string> {
+        // Inject the X-Test-Id header into the example request
+        const exampleWithTestId: dynamic.EndpointSnippetRequest = {
+            ...example,
+            headers: {
+                ...(example.headers ?? {}),
+                "X-Test-Id": testId
+            }
+        };
+
+        const snippetRequest = convertDynamicEndpointSnippetRequest(exampleWithTestId);
         const response = this.dynamicSnippetsGenerator.generateSync(snippetRequest);
         if (!response.snippet) {
             throw new Error("No snippet generated for example");
