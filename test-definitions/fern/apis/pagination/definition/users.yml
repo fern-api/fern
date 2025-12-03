@@ -311,7 +311,7 @@ service:
       method: GET
       path: ""
       request:
-        name: ListUsernamesRequest
+        name: ListUsernamesWithOptionalResponseRequest
         query-parameters:
           starting_after:
             type: optional<string>
