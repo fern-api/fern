@@ -303,6 +303,23 @@ service:
               the next page of results.
       response: root.UsernameCursor
 
+    listUsernamesWithOptionalResponse:
+      pagination:
+        cursor: $request.starting_after
+        next_cursor: $response.cursor.after
+        results: $response.cursor.data
+      method: GET
+      path: ""
+      request:
+        name: ListUsernamesRequest
+        query-parameters:
+          starting_after:
+            type: optional<string>
+            docs: |
+              The cursor used for pagination in order to fetch
+              the next page of results.
+      response: optional<root.UsernameCursor>
+
     listWithGlobalConfig:
       method: GET
       path: ""
