@@ -59,12 +59,9 @@ class Project:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
 
         # Normalize package_path (strip leading/trailing slashes)
+        normalized_package_path: Optional[str] = None
         if package_path is not None:
-            normalized_package_path = package_path.strip("/")
-            if not normalized_package_path:
-                normalized_package_path = None
-        else:
-            normalized_package_path = None
+            normalized_package_path = package_path.strip("/") or None
 
         # Build the project-relative filepath (e.g., "src/seed" or "src/seed/package/path")
         # package_path is applied as a suffix within the module
