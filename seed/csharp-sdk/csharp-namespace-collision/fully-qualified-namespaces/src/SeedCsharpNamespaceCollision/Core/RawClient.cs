@@ -11,6 +11,7 @@ internal partial class RawClient(ClientOptions clientOptions)
 {
     private const int MaxRetryDelayMs = 60000;
     private const double JitterFactor = 0.2;
+    private static readonly object JitterLock = new();
     private static readonly Random JitterRandom = new();
     internal int BaseRetryDelay { get; set; } = 1000;
 
@@ -34,7 +35,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     )
     {
         // Apply the request timeout.
-        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var timeout = request.Options?.Timeout ?? Options.Timeout;
         cts.CancelAfter(timeout);
 
@@ -51,7 +52,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     )
     {
         // Apply the request timeout.
-        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var timeout = options?.Timeout ?? Options.Timeout;
         cts.CancelAfter(timeout);
 
@@ -160,13 +161,23 @@ internal partial class RawClient(ClientOptions clientOptions)
 
     private static int AddPositiveJitter(int delayMs)
     {
-        var jitterMultiplier = 1 + JitterRandom.NextDouble() * JitterFactor;
+        double random;
+        lock (JitterLock)
+        {
+            random = JitterRandom.NextDouble();
+        }
+        var jitterMultiplier = 1 + random * JitterFactor;
         return (int)(delayMs * jitterMultiplier);
     }
 
     private static int AddSymmetricJitter(int delayMs)
     {
-        var jitterMultiplier = 1 + (JitterRandom.NextDouble() - 0.5) * JitterFactor;
+        double random;
+        lock (JitterLock)
+        {
+            random = JitterRandom.NextDouble();
+        }
+        var jitterMultiplier = 1 + (random - 0.5) * JitterFactor;
         return (int)(delayMs * jitterMultiplier);
     }
 
