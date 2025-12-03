@@ -7,7 +7,8 @@ from __future__ import annotations
 import typing
 
 import typing_extensions
-from seed.core.serialization import FieldMetadata
+
+from seed.matryoshka.doll.structure.core.serialization import FieldMetadata
 
 
 class Base(typing_extensions.TypedDict):

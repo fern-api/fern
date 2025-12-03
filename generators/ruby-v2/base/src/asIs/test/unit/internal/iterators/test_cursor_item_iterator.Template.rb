@@ -4,9 +4,9 @@ require "minitest/autorun"
 require "stringio"
 require "json"
 require "test_helper"
-require "ostruct"
 
 NUMBERS = (1..65).to_a
+PageResponse = Struct.new(:cards, :next_cursor, keyword_init: true)
 
 class CursorItemIteratorTest < Minitest::Test
   def make_iterator(initial_cursor:)
@@ -16,7 +16,7 @@ class CursorItemIteratorTest < Minitest::Test
       @times_called += 1
       cursor ||= 0
       next_cursor = cursor + 10
-      OpenStruct.new(
+      PageResponse.new(
         cards: NUMBERS[cursor...next_cursor],
         next_cursor: next_cursor < NUMBERS.length ? next_cursor : nil
       )
@@ -76,10 +76,10 @@ class CursorItemIteratorTest < Minitest::Test
 
     items = []
     expected_times_called = 0
-    while item = iterator.get_next do
+    while item = iterator.next_element do
       expected_times_called += 1 if (item % 10) == 1
       assert_equal expected_times_called, @times_called
-      assert_equal item != NUMBERS.last, iterator.has_next?, "#{item} #{iterator}"
+      assert_equal item != NUMBERS.last, iterator.next?, "#{item} #{iterator}"
       items.push(item)
     end
 
@@ -139,7 +139,7 @@ class CursorItemIteratorTest < Minitest::Test
 
     iterator.each_with_index do |page, index|
       assert_equal index + 1, @times_called
-      assert_equal index < 6, iterator.has_next?
+      assert_equal index < 6, iterator.next?
     end
   end
 
@@ -149,7 +149,7 @@ class CursorItemIteratorTest < Minitest::Test
 
     lengths = []
     expected_times_called = 0
-    while page = iterator.get_next do
+    while page = iterator.next_page do
       expected_times_called += 1
       assert_equal expected_times_called, @times_called
       lengths.push(page.cards.length)
