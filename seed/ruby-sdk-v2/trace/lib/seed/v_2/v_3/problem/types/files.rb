@@ -6,7 +6,7 @@ module Seed
       module Problem
         module Types
           class Files < Internal::Types::Model
-            field :files, lambda {
+            field :files, -> {
               Internal::Types::Array[Seed::V2::V3::Problem::Types::FileInfoV2]
             }, optional: false, nullable: false
           end

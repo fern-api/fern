@@ -66,11 +66,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         // Add initialize method
         class_.addMethod(this.getInitializeMethod());
 
-        // Add get_token method
-        class_.addMethod(this.getGetTokenMethod());
+        // Add token method
+        class_.addMethod(this.getTokenMethod());
 
-        // Add get_auth_headers method
-        class_.addMethod(this.getGetAuthHeadersMethod());
+        // Add auth_headers method
+        class_.addMethod(this.getAuthHeadersMethod());
 
         // Add token_needs_refresh? method if we have an expiry property
         const expiryProperty = this.scheme.tokenEndpoint.expiryProperty;
@@ -141,11 +141,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         return method;
     }
 
-    private getGetTokenMethod(): ruby.Method {
+    private getTokenMethod(): ruby.Method {
         const expiryProperty = this.scheme.tokenEndpoint.expiryProperty;
 
         const method = ruby.method({
-            name: "get_token",
+            name: "token",
             kind: ruby.MethodKind.Instance,
             docstring:
                 "Returns a cached access token, refreshing if necessary.\nRefreshes the token if it's nil, or if we're within the buffer period before expiration.",
@@ -282,11 +282,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
         return properties;
     }
 
-    private getGetAuthHeadersMethod(): ruby.Method {
+    private getAuthHeadersMethod(): ruby.Method {
         const authenticatedRequestHeaders = this.scheme.tokenEndpoint.authenticatedRequestHeaders;
 
         const method = ruby.method({
-            name: "get_auth_headers",
+            name: "auth_headers",
             kind: ruby.MethodKind.Instance,
             docstring: "Returns the authentication headers to be included in requests.",
             returnType: ruby.Type.hash(ruby.Type.string(), ruby.Type.string())
@@ -294,7 +294,7 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
 
         method.addStatement(
             ruby.codeblock((writer) => {
-                writer.writeLine("token = get_token");
+                writer.writeLine("access_token = token");
                 writer.writeLine("{");
                 writer.indent();
 
@@ -303,9 +303,9 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
                     const valuePrefix = header.valuePrefix;
 
                     if (valuePrefix != null) {
-                        writer.writeLine(`"${headerName}" => "${valuePrefix}#{token}",`);
+                        writer.writeLine(`"${headerName}" => "${valuePrefix}#{access_token}",`);
                     } else {
-                        writer.writeLine(`"${headerName}" => token,`);
+                        writer.writeLine(`"${headerName}" => access_token,`);
                     }
                 }
 

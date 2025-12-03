@@ -31,6 +31,7 @@ export const DocsSettingsConfig: core.serialization.ObjectSchema<
     ),
     disableAnalytics: core.serialization.property("disable-analytics", core.serialization.boolean().optional()),
     language: Language.optional(),
+    substituteEnvVars: core.serialization.property("substitute-env-vars", core.serialization.boolean().optional()),
 });
 
 export declare namespace DocsSettingsConfig {
@@ -45,5 +46,6 @@ export declare namespace DocsSettingsConfig {
         "disable-explorer-proxy"?: boolean | null;
         "disable-analytics"?: boolean | null;
         language?: Language.Raw | null;
+        "substitute-env-vars"?: boolean | null;
     }
 }

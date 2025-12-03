@@ -20,22 +20,22 @@ module Seed
       #
       # @return [String]
       def send_optional_body(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "send-optional-body",
           body: params
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # @param request_options [Hash]
@@ -48,22 +48,22 @@ module Seed
       #
       # @return [String]
       def send_optional_typed_body(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "send-optional-typed-body",
           body: params
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
 
       # Tests optional(nullable(T)) where T has only optional properties.
@@ -81,23 +81,23 @@ module Seed
       #
       # @return [Seed::Optional::Types::DeployResponse]
       def send_optional_nullable_with_all_optional_properties(request_options: {}, **params)
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "deploy/#{params[:action_id]}/versions/#{params[:id]}",
           body: params
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Optional::Types::DeployResponse.load(_response.body)
+          Seed::Optional::Types::DeployResponse.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
     end

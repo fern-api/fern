@@ -19,7 +19,7 @@ from .pydantic_utilities import (
     parse_datetime,
     parse_obj_as,
 )
-from .serialization import get_field_to_alias_mapping
+from .serialization import convert_and_respect_annotation_metadata, get_field_to_alias_mapping
 from pydantic_core import PydanticUndefined
 
 
@@ -40,6 +40,26 @@ class UncheckedBaseModel(UniversalBaseModel):
 
         class Config:
             extra = pydantic.Extra.allow
+
+    if IS_PYDANTIC_V2:
+
+        @classmethod
+        def model_validate(
+            cls: typing.Type["Model"],
+            obj: typing.Any,
+            *args: typing.Any,
+            **kwargs: typing.Any,
+        ) -> "Model":
+            """
+            Ensure that when using Pydantic v2's `model_validate` entrypoint we still
+            respect our FieldMetadata-based aliasing.
+            """
+            dealiased_obj = convert_and_respect_annotation_metadata(
+                object_=obj,
+                annotation=cls,
+                direction="read",
+            )
+            return super().model_validate(dealiased_obj, *args, **kwargs)  # type: ignore[misc]
 
     @classmethod
     def model_construct(

@@ -4684,6 +4684,16 @@
               "type": "null"
             }
           ]
+        },
+        "substitute-env-vars": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
         }
       },
       "additionalProperties": false

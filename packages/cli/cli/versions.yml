@@ -2,6 +2,106 @@
 
 - changelogEntry:
     - summary: |
+        **Breaking Change**: Enable `smart-casing` by default for all generators.
+
+        Smart-casing improves naming conventions in generated SDKs by:
+        - Capitalizing common initialisms like API, HTTP, ID, UUID, URL, HTML, JSON, XML, etc. in camelCase and PascalCase identifiers
+        - Better handling of number-letter combinations (e.g., `v2` stays as `v2` instead of becoming `v_2`, `md5` stays as `md5` instead of `md_5`)
+
+        **Migration Behavior**: The CLI will automatically upgrade your `generators.yml` to explicitly set `smart-casing: false` for all existing generators that don't have it configured. This preserves backwards compatibility for existing projects while enabling the improved naming for new projects.
+
+        **Opting In**: To enable smart-casing for existing generators, remove the `smart-casing: false` line that the migration adds, or explicitly set `smart-casing: true`.
+      type: break
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.0
+
+- changelogEntry:
+    - summary: |
+        Improve enum validation error messages to show which enum value has an invalid name. When the API source is OpenAPI, the error message now includes guidance about using the `x-fern-enum` extension to specify valid names.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 2.18.1
+
+- changelogEntry:
+    - summary: |
+        Add `--fernignore` CLI option for remote generation. This allows users to provide a custom `.fernignore` file that will replace the existing one on the main branch during remote generation. The custom fernignore will be applied during generation and committed to the repository.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 2.18.0
+
+- changelogEntry:
+    - summary: |
+        Gracefully handle null values in docs.yml structure.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.17.3
+
+- changelogEntry:
+    - summary: |
+        Escape `$` when inferring examples from literals that start with `$`.
+        This fixes validation issues like `Example $ending is malformed. Examples should be formatted like $YourType.ExampleName`.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.17.2
+
+- changelogEntry:
+    - summary: |
+        Fix file scope type resolution for inline request properties
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.17.1
+
+- changelogEntry:
+    - summary: |
+        Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`, 
+        environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
+        including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
+        Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.17.0
+
+- changelogEntry:
+    - summary: |
+        Add support for aliases in generators.yml. You can now define aliases that map to multiple groups, allowing you to run multiple groups with a single command.
+
+        ```yaml
+        # generators.yml
+        aliases:
+          all: ["php-sdk", "ts-sdk", "go-sdk"]
+
+        groups:
+          php-sdk:
+            generators: ...
+          ts-sdk:
+            generators: ...
+          go-sdk:
+            generators: ...
+        ```
+
+        Then run `fern generate all` to generate all three SDKs at once.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.16.0
+
+- changelogEntry:
+    - summary: |
+        Fix `fern check` incorrectly reporting SDK method conflicts for endpoints with the same `x-fern-sdk-group-name` and `x-fern-sdk-method-name` when they are in different namespaces. The validator now correctly allows duplicate SDK method names across different namespaces, matching the generator behavior where namespace is prepended to the SDK group name.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.15.2
+
+- changelogEntry:
+    - summary: |
         Improve CI environment detection to properly detect Azure Pipelines and other CI systems. This prevents unnecessary prompts when running `fern generate --docs` in CI environments.
       type: fix
   irVersion: 62

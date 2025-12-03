@@ -27,7 +27,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     token,
     whitelabel,
     absolutePathToPreview,
-    mode
+    mode,
+    fernignorePath
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -40,6 +41,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     whitelabel: FernFiddle.WhitelabelConfig | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     mode: "pull-request" | undefined;
+    fernignorePath: string | undefined;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -95,7 +97,8 @@ export async function runRemoteGenerationForAPIWorkspace({
                     whitelabel,
                     readme: generatorInvocation.readme,
                     irVersionOverride: generatorInvocation.irVersionOverride,
-                    absolutePathToPreview
+                    absolutePathToPreview,
+                    fernignorePath
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);

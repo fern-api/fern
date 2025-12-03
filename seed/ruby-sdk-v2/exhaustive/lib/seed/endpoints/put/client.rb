@@ -22,22 +22,22 @@ module Seed
         #
         # @return [Seed::Endpoints::Put::Types::PutResponse]
         def add(request_options: {}, **params)
-          _request = Seed::Internal::JSON::Request.new(
+          request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "PUT",
             path: params[:id].to_s
           )
           begin
-            _response = @client.send(_request)
+            response = @client.send(request)
           rescue Net::HTTPRequestTimeout
             raise Seed::Errors::TimeoutError
           end
-          code = _response.code.to_i
+          code = response.code.to_i
           if code.between?(200, 299)
-            Seed::Endpoints::Put::Types::PutResponse.load(_response.body)
+            Seed::Endpoints::Put::Types::PutResponse.load(response.body)
           else
             error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-            raise error_class.new(_response.body, code: code)
+            raise error_class.new(response.body, code: code)
           end
         end
       end

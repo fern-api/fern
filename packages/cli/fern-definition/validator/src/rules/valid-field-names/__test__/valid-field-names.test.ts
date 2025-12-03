@@ -41,7 +41,7 @@ describe("valid-field-names", () => {
                 relativeFilepath: RelativeFilePath.of("enum.yml"),
                 nodePath: ["types", "ValidAndInvalidEnum"],
                 message:
-                    "Enum name _invalidName is not suitable for code generation. It must start with a letter and only contain letters, numbers, and underscores."
+                    "Enum name _invalidName for value _invalidName is not suitable for code generation. It must start with a letter and only contain letters, numbers, and underscores."
             },
             {
                 severity: "fatal",

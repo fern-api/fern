@@ -62,6 +62,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),
     includeUtilsOnUnionMembers: z.optional(z.boolean()),
     includeOtherInUnionTypes: z.optional(z.boolean()),
+    writeUnitTests: z.optional(z.boolean()),
     generateWireTests: z.optional(z.boolean()),
     noScripts: z.optional(z.boolean()),
     experimentalGenerateReadWriteOnlyTypes: z.optional(z.boolean()),

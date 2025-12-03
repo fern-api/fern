@@ -18,7 +18,7 @@ export class RubocopFile {
   - rubocop-minitest
 
 AllCops:
-  TargetRubyVersion: 3.1
+  TargetRubyVersion: 3.3
   NewCops: enable
 
 Style/StringLiterals:
@@ -51,7 +51,28 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Enabled: false
 
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/ModuleLength:
+  Enabled: false
+
+Layout/LineLength:
+  Enabled: false
+
+Naming/VariableNumber:
+  EnforcedStyle: snake_case
+
 Style/Documentation:
+  Enabled: false
+
+Style/Lambda:
+  EnforcedStyle: literal
+
+Minitest/MultipleAssertions:
+  Enabled: false
+
+Minitest/UselessAssertion:
   Enabled: false
 `;
     }

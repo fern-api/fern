@@ -13,8 +13,8 @@ export declare namespace HttpEndpointGenerator {
     }
 }
 
-const QUERY_PARAMETER_BAG_NAME = "_query";
-export const HTTP_RESPONSE_VN = "_response";
+const QUERY_PARAMETER_BAG_NAME = "query_params";
+export const HTTP_RESPONSE_VN = "response";
 export const PARAMS_VN = "params";
 export const CODE_VN = "code";
 export const ERROR_CLASS_VN = "error_class";
@@ -93,7 +93,7 @@ export class HttpEndpointGenerator {
                                 modules: [this.context.getRootModuleName(), "Internal"]
                             }),
                             method: "new",
-                            arguments_: [ruby.codeblock("_parsed_response")],
+                            arguments_: [ruby.codeblock("parsed_response")],
                             keywordArguments: [
                                 ruby.keywordArgument({
                                     name: "item_field",
@@ -233,7 +233,7 @@ export class HttpEndpointGenerator {
         } else {
             statements.push(
                 ruby.codeblock((writer) => {
-                    writer.write(`_request = ${PARAMS_VN}`);
+                    writer.write(`request = ${PARAMS_VN}`);
                 })
             );
         }
@@ -325,7 +325,7 @@ export class HttpEndpointGenerator {
             case "named": {
                 const loadExpression = `${this.context.getReferenceToTypeId(typeReference.typeId)}.load(${HTTP_RESPONSE_VN}.body)`;
                 if (storeInVariable) {
-                    writer.writeLine(`_parsed_response = ${loadExpression}`);
+                    writer.writeLine(`parsed_response = ${loadExpression}`);
                 } else {
                     writer.writeLine(loadExpression);
                 }

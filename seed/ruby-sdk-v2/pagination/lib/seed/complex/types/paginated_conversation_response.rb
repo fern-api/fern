@@ -4,7 +4,7 @@ module Seed
   module Complex
     module Types
       class PaginatedConversationResponse < Internal::Types::Model
-        field :conversations, lambda {
+        field :conversations, -> {
           Internal::Types::Array[Seed::Complex::Types::Conversation]
         }, optional: false, nullable: false
         field :pages, -> { Seed::Complex::Types::CursorPages }, optional: true, nullable: false
