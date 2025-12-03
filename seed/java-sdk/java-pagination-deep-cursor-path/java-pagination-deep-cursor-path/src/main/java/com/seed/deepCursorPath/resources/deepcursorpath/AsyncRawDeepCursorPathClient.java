@@ -4,6 +4,7 @@
 package com.seed.deepCursorPath.resources.deepcursorpath;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.seed.deepCursorPath.core.ClientOptions;
 import com.seed.deepCursorPath.core.MediaTypes;
 import com.seed.deepCursorPath.core.ObjectMappers;
@@ -83,10 +84,18 @@ public class AsyncRawDeepCursorPathClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString,
-                                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse;
+                        if (responseNode.isArray()) {
+                            JsonNode wrapper =
+                                    ObjectMappers.JSON_MAPPER.createObjectNode().set("results", responseNode);
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    wrapper, com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode,
+                                    com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
+                        }
                         Optional<String> startingAfter = parsedResponse.getStartingAfter();
                         Optional<D> d = request.getB()
                                 .map(B::getC)
@@ -171,10 +180,18 @@ public class AsyncRawDeepCursorPathClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString,
-                                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse;
+                        if (responseNode.isArray()) {
+                            JsonNode wrapper =
+                                    ObjectMappers.JSON_MAPPER.createObjectNode().set("results", responseNode);
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    wrapper, com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode,
+                                    com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
+                        }
                         Optional<String> startingAfter = parsedResponse.getStartingAfter();
                         IndirectionRequired indirection = IndirectionRequired.builder()
                                 .from(com.seed.deepCursorPath.resources.deepcursorpath.types.IndirectionRequired)
@@ -258,10 +275,18 @@ public class AsyncRawDeepCursorPathClient {
                 try (ResponseBody responseBody = response.body()) {
                     String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
-                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse =
-                                ObjectMappers.JSON_MAPPER.readValue(
-                                        responseBodyString,
-                                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
+                        JsonNode responseNode = ObjectMappers.JSON_MAPPER.readTree(responseBodyString);
+                        com.seed.deepCursorPath.resources.deepcursorpath.types.Response parsedResponse;
+                        if (responseNode.isArray()) {
+                            JsonNode wrapper =
+                                    ObjectMappers.JSON_MAPPER.createObjectNode().set("results", responseNode);
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    wrapper, com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
+                        } else {
+                            parsedResponse = ObjectMappers.JSON_MAPPER.convertValue(
+                                    responseNode,
+                                    com.seed.deepCursorPath.resources.deepcursorpath.types.Response.class);
+                        }
                         Optional<String> startingAfter = parsedResponse.getStartingAfter();
                         Optional<InlineD> b = request.getB()
                                 .map(B::getC)
