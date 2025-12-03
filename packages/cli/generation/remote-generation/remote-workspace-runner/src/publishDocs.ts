@@ -346,7 +346,7 @@ export async function publishDocs({
         docsDefinition = replaceEnvVariables(
             docsDefinition,
             { onError: (e) => context.failAndThrow(e) },
-            { substituteAsEmpty: preview }
+            { substituteAsEmpty: false }
         );
     }
 
