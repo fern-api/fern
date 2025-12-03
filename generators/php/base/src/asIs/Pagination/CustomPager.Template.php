@@ -20,7 +20,7 @@ use Generator;
  * @template TItem
  * @extends Pager<TItem>
  */
-class CustomPager extends Pager
+class <%= customPagerClassName%> extends Pager
 {
     /** @var TResponse */
     protected $response;
@@ -91,7 +91,7 @@ class CustomPager extends Pager
     public function getPages(): Generator
     {
         throw new \RuntimeException(
-            'CustomPager::getPages() must be implemented. ' .
+            '<%= customPagerClassName%>::getPages() must be implemented. ' .
             'Please extend this class and override the getPages() method to define your pagination logic.'
         );
     }

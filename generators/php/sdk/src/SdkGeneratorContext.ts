@@ -234,9 +234,13 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getCustomPagerClassReference(): php.ClassReference {
         return php.classReference({
-            name: "CustomPager",
+            name: this.getCustomPagerClassName(),
             namespace: this.getCorePaginationNamespace()
         });
+    }
+
+    public getCustomPagerClassName(): string {
+        return this.customConfig.customPagerClassname;
     }
 
     public getHttpMethod(method: HttpMethod): php.CodeBlock {
@@ -617,6 +621,15 @@ export class SdkGeneratorContext extends AbstractPhpGeneratorContext<SdkCustomCo
 
     public getUtilsAsIsFiles(): string[] {
         return [AsIsFiles.File];
+    }
+
+    public override getExtraTemplateVarsForFile(filename: string): Record<string, string> | undefined {
+        if (filename === AsIsFiles.CustomPager) {
+            return {
+                customPagerClassName: this.getCustomPagerClassName()
+            };
+        }
+        return undefined;
     }
 
     public getLocationForTypeId(typeId: TypeId): FileLocation {

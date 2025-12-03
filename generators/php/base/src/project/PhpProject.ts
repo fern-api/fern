@@ -115,7 +115,15 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         return new File(filename, RelativeFilePath.of(""), contents);
     }
 
-    private async createAsIsFile({ filename, namespace }: { filename: string; namespace: string }): Promise<File> {
+    private async createAsIsFile({
+        filename,
+        namespace,
+        extraTemplateVars
+    }: {
+        filename: string;
+        namespace: string;
+        extraTemplateVars?: Record<string, string>;
+    }): Promise<File> {
         const contents = (await readFile(getAsIsFilepath(filename))).toString();
 
         return new File(
@@ -123,7 +131,8 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
             RelativeFilePath.of(""),
             this.replaceTemplate({
                 contents,
-                namespace: this.getNestedNamespace({ namespace, filename })
+                namespace: this.getNestedNamespace({ namespace, filename }),
+                extraTemplateVars
             })
         );
     }
@@ -157,7 +166,8 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
             this.coreFiles.push(
                 await this.createAsIsFile({
                     filename,
-                    namespace: this.context.getCoreNamespace()
+                    namespace: this.context.getCoreNamespace(),
+                    extraTemplateVars: this.context.getExtraTemplateVarsForFile(filename)
                 })
             );
         }
@@ -228,10 +238,19 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         await mkdir(absolutePathToDirectory, { recursive: true });
     }
 
-    private replaceTemplate({ contents, namespace }: { contents: string; namespace: string }): string {
+    private replaceTemplate({
+        contents,
+        namespace,
+        extraTemplateVars
+    }: {
+        contents: string;
+        namespace: string;
+        extraTemplateVars?: Record<string, string>;
+    }): string {
         return template(contents)({
             namespace,
-            coreNamespace: this.context.getCoreNamespace()
+            coreNamespace: this.context.getCoreNamespace(),
+            ...extraTemplateVars
         });
     }
 }
