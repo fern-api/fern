@@ -150,10 +150,10 @@ describe("substituteEnvVariables", () => {
         expect(substituted.apiDisplayName).toEqual("My API v2");
         expect(substituted.apiDocs).toEqual("Base URL: https://api.example.com");
         expect(substituted.services.service1.basePath).toEqual("https://api.example.com/users");
-        expect(substituted.services.service1.endpoints[0].docs).toEqual(
+        expect(substituted.services.service1.endpoints[0]?.docs).toEqual(
             "Fetches user from https://api.example.com/v2/users"
         );
-        expect(substituted.services.service1.endpoints[0].examples[0].url).toEqual(
+        expect(substituted.services.service1.endpoints[0]?.examples[0]?.url).toEqual(
             "https://api.example.com/v2/users/123"
         );
     });
