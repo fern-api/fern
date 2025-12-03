@@ -294,6 +294,18 @@
             "id": {
                 "path": "/users",
                 "method": "GET",
+                "identifier_override": "endpoint_users.listUsernamesWithOptionalResponse"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedPagination;\n\nvar client = new SeedPaginationClient(\"TOKEN\");\nvar items = await client.Users.ListUsernamesWithOptionalResponseAsync(\n    new ListUsernamesWithOptionalResponseRequest { StartingAfter = \"starting_after\" }\n);\n\nawait foreach (var item in items)\n{\n    // do something with item\n}\n"
+            }
+        },
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users",
+                "method": "GET",
                 "identifier_override": "endpoint_users.listWithGlobalConfig"
             },
             "snippet": {

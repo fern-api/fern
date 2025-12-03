@@ -5,9 +5,7 @@ module Seed
     module InlineUsers
       module Types
         class Users < Internal::Types::Model
-          field :users, -> {
-            Internal::Types::Array[Seed::InlineUsers::InlineUsers::Types::User]
-          }, optional: false, nullable: false
+          field :users, -> { Internal::Types::Array[Seed::InlineUsers::InlineUsers::Types::User] }, optional: false, nullable: false
         end
       end
     end
