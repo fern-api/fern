@@ -36,4 +36,40 @@ describe("substituteEnvVariables", () => {
         const context = createMockTaskContext({ logger: NOOP_LOGGER });
         expect(() => replaceEnvVariables(content, { onError: (e) => context.failAndThrow(e) })).toThrow(FernCliError);
     });
+
+    it("substitutes as empty in preview mode when substituteEnvVars is false", () => {
+        process.env.TEST_VAR = "test-value";
+        const content = {
+            testField: "${TEST_VAR}"
+        };
+
+        const context = createMockTaskContext();
+        // simulate preview mode with substituteEnvVars disabled
+        const shouldSubstituteAsEmpty = true && !false; // preview && !substituteEnvVars
+        const substituted = replaceEnvVariables(
+            content,
+            { onError: (e) => context.failAndThrow(e) },
+            { substituteAsEmpty: shouldSubstituteAsEmpty }
+        );
+
+        expect(substituted.testField).toEqual("");
+    });
+
+    it("substitutes with actual values in preview mode when substituteEnvVars is true", () => {
+        process.env.TEST_VAR = "test-value";
+        const content = {
+            testField: "${TEST_VAR}"
+        };
+
+        const context = createMockTaskContext();
+        // simulate preview mode with substituteEnvVars enabled
+        const shouldSubstituteAsEmpty = true && !true; // preview && !substituteEnvVars
+        const substituted = replaceEnvVariables(
+            content,
+            { onError: (e) => context.failAndThrow(e) },
+            { substituteAsEmpty: shouldSubstituteAsEmpty }
+        );
+
+        expect(substituted.testField).toEqual("test-value");
+    });
 });
