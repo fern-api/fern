@@ -384,11 +384,11 @@ dotnet_diagnostic.IDE0005.severity = error
         );
 
         // Add library project to solution using absolute paths
-        // Use --solution-folder / to place project at solution root without folder nesting
+        // Use --in-root to place project at solution root without folder nesting
         await loggingExeca(
             this.context.logger,
             "dotnet",
-            ["sln", solutionFilePath, "add", libraryCsprojPath, "--solution-folder", "/"],
+            ["sln", solutionFilePath, "add", libraryCsprojPath, "--in-root"],
             {
                 doNotPipeOutput: true
             }
@@ -425,12 +425,12 @@ dotnet_diagnostic.IDE0005.severity = error
         );
 
         // Add test project to solution using absolute paths
-        // Use --solution-folder / to place project at solution root without folder nesting
+        // Use --in-root to place project at solution root without folder nesting
         const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
         await loggingExeca(
             this.context.logger,
             "dotnet",
-            ["sln", solutionFilePath, "add", testCsprojPath, "--solution-folder", "/"],
+            ["sln", solutionFilePath, "add", testCsprojPath, "--in-root"],
             {
                 doNotPipeOutput: true
             }
