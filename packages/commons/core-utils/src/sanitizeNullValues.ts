@@ -36,8 +36,7 @@ export function sanitizeNullValues(value: unknown, path: string[] = [], removedP
                 }
             }
         } catch (err) {
-            // If Object.entries fails, log it and skip this object
-            console.error(`Failed to process object at path ${path.join(".")}: ${err}`);
+            // If Object.entries fails, skip this object
             removedPaths.push([...path]);
             return SKIP_MARKER;
         }

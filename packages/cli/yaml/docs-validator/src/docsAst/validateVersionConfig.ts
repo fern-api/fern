@@ -23,12 +23,6 @@ export async function validateVersionConfigFileSchema({ value }: { value: unknow
         const removedPaths: string[][] = [];
         const sanitizedValue = sanitizeNullValues(value, [], removedPaths);
 
-        if (removedPaths.length > 0) {
-            console.warn(
-                `Version config contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
-            );
-        }
-
         return {
             type: "success",
             contents: docsYml.RawSchemas.Serializer.VersionFileConfig.parseOrThrow(sanitizedValue)

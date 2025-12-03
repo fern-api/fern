@@ -23,12 +23,6 @@ export async function validateProductConfigFileSchema({ value }: { value: unknow
         const removedPaths: string[][] = [];
         const sanitizedValue = sanitizeNullValues(value, [], removedPaths);
 
-        if (removedPaths.length > 0) {
-            console.warn(
-                `Product config contained null/undefined sections that were ignored: ${removedPaths.map((p) => p.join(".")).join(", ")}`
-            );
-        }
-
         return {
             type: "success",
             contents: docsYml.RawSchemas.Serializer.ProductFileConfig.parseOrThrow(sanitizedValue)
