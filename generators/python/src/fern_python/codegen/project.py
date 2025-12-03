@@ -74,9 +74,7 @@ class Project:
             self._project_relative_filepath = os.path.join(self._project_relative_filepath, normalized_package_path)
 
         self._project_filepath = (
-            filepath
-            if project_config is None
-            else os.path.join(filepath, self._project_relative_filepath)
+            filepath if project_config is None else os.path.join(filepath, self._project_relative_filepath)
         )
         self._generate_readme = True
         self._root_filepath = filepath
