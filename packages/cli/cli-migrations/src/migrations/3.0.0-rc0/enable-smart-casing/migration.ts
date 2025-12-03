@@ -6,16 +6,12 @@ import { writeFile } from "fs/promises";
 import yaml from "js-yaml";
 import { Migration } from "../../../types/Migration";
 
-// Languages that benefit from smart-casing due to their conventions around initialisms
-// (e.g., API -> API instead of Api, HTTP -> HTTP instead of Http)
-const SMART_CASING_LANGUAGES = ["go", "ruby"];
-
 export const migration: Migration = {
     name: "enable-smart-casing",
-    summary: `Enables 'smart-casing' for Go and Ruby generators.
-Smart-casing improves naming conventions by:
-  - Capitalizing common initialisms (API, HTTP, ID, etc.) in camelCase and PascalCase
-  - Better handling of number-letter combinations (v2 stays as v2 instead of v_2)`,
+    summary: `Sets 'smart-casing: false' for existing generators to preserve backwards compatibility.
+Starting with this version, smart-casing defaults to true for all generators. This migration
+explicitly sets 'smart-casing: false' for generators that don't have it configured, ensuring
+existing projects maintain their current naming behavior.`,
     run: async ({ context }) => {
         const absolutePathToFernDirectory = await getFernDirectory();
         if (absolutePathToFernDirectory == null) {
@@ -91,7 +87,7 @@ async function updateGeneratorsYml({ context, files }: { context: TaskContext; f
                 }
 
                 const generatorObj = generator as Record<string, unknown>;
-                const wasModified = enableSmartCasingIfApplicable(generatorObj, context);
+                const wasModified = setSmartCasingFalseIfNotConfigured(generatorObj, context);
                 if (wasModified) {
                     modified = true;
                 }
@@ -118,11 +114,11 @@ async function updateGeneratorsYml({ context, files }: { context: TaskContext; f
 }
 
 /**
- * Enables smart-casing for generators that would benefit from it.
+ * Sets smart-casing to false for generators that don't have it explicitly configured.
+ * This preserves backwards compatibility as smart-casing now defaults to true.
  * Returns true if any modifications were made.
  */
-function enableSmartCasingIfApplicable(generator: Record<string, unknown>, context: TaskContext): boolean {
-    // Check if smart-casing is already explicitly set
+function setSmartCasingFalseIfNotConfigured(generator: Record<string, unknown>, context: TaskContext): boolean {
     if ("smart-casing" in generator) {
         return false;
     }
@@ -132,15 +128,8 @@ function enableSmartCasingIfApplicable(generator: Record<string, unknown>, conte
         return false;
     }
 
-    // Check if this generator is for a language that benefits from smart-casing
-    const shouldEnableSmartCasing = SMART_CASING_LANGUAGES.some((lang) => generatorName.includes(lang));
-
-    if (!shouldEnableSmartCasing) {
-        return false;
-    }
-
-    context.logger.info(`Enabling 'smart-casing' for ${generatorName}`);
-    generator["smart-casing"] = true;
+    context.logger.info(`Setting 'smart-casing: false' for ${generatorName} to preserve backwards compatibility`);
+    generator["smart-casing"] = false;
     return true;
 }
 
