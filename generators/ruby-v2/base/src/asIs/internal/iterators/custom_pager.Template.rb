@@ -37,7 +37,7 @@ module <%= gem_namespace %>
       # Returns true if there is a next page available.
       #
       # @return [Boolean]
-      def has_next_page?
+      def next_page?
         return false if @has_next_proc.nil?
         @has_next_proc.call(@current)
       end
@@ -45,7 +45,7 @@ module <%= gem_namespace %>
       # Returns true if there is a previous page available.
       #
       # @return [Boolean]
-      def has_prev_page?
+      def prev_page?
         return false if @has_prev_proc.nil?
         @has_prev_proc.call(@current)
       end
@@ -53,8 +53,8 @@ module <%= gem_namespace %>
       # Fetches the next page of results.
       #
       # @return [Object, nil] The next page response, or nil if not available
-      def get_next_page
-        return nil unless has_next_page?
+      def next_page
+        return nil unless next_page?
         return nil if @get_next_proc.nil?
         @current = @get_next_proc.call(@current)
         @current
@@ -63,8 +63,8 @@ module <%= gem_namespace %>
       # Fetches the previous page of results.
       #
       # @return [Object, nil] The previous page response, or nil if not available
-      def get_prev_page
-        return nil unless has_prev_page?
+      def prev_page
+        return nil unless prev_page?
         return nil if @get_prev_proc.nil?
         @current = @get_prev_proc.call(@current)
         @current
@@ -78,8 +78,8 @@ module <%= gem_namespace %>
         page = @current
         loop do
           block.call(page)
-          break unless has_next_page?
-          page = get_next_page
+          break unless next_page?
+          page = next_page
           break if page.nil?
         end
       end

@@ -5,7 +5,7 @@ module Seed
     module InlineUsers
       module Types
         class UserListContainer < Internal::Types::Model
-          field :users, lambda {
+          field :users, -> {
             Internal::Types::Array[Seed::InlineUsers::InlineUsers::Types::User]
           }, optional: false, nullable: false
         end

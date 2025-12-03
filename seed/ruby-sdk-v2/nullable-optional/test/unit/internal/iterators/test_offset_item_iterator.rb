@@ -84,8 +84,8 @@ class OffsetItemIteratorTest < Minitest::Test
       iterator = make_iterator(config)
       items = []
 
-      while (item = iterator.get_next)
-        assert_equal(item != config.total_item_count, iterator.has_next?, "#{item} #{iterator}")
+      while (item = iterator.next_element)
+        assert_equal(item != config.total_item_count, iterator.next?, "#{item} #{iterator}")
         items.push(item)
       end
 
@@ -99,10 +99,10 @@ class OffsetItemIteratorTest < Minitest::Test
       pages = []
 
       loop do
-        has_next_output = iterator.has_next?
-        page = iterator.get_next
+        has_next_output = iterator.next?
+        page = iterator.next_page
 
-        assert_equal(has_next_output, !page.nil?, "has_next was inaccurate: #{config} #{iterator.inspect}")
+        assert_equal(has_next_output, !page.nil?, "next? was inaccurate: #{config} #{iterator.inspect}")
         break if page.nil?
 
         pages.push(page)

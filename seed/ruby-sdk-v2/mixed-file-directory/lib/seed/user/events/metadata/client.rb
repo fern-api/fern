@@ -26,28 +26,28 @@ module Seed
           # @return [Seed::User::Events::Metadata::Types::Metadata]
           def get_metadata(request_options: {}, **params)
             params = Seed::Internal::Types::Utils.symbolize_keys(params)
-            _query_param_names = %i[id]
-            _query = {}
-            _query["id"] = params[:id] if params.key?(:id)
-            params.except(*_query_param_names)
+            query_param_names = %i[id]
+            query_params = {}
+            query_params["id"] = params[:id] if params.key?(:id)
+            params.except(*query_param_names)
 
-            _request = Seed::Internal::JSON::Request.new(
+            request = Seed::Internal::JSON::Request.new(
               base_url: request_options[:base_url],
               method: "GET",
               path: "/users/events/metadata/",
-              query: _query
+              query: query_params
             )
             begin
-              _response = @client.send(_request)
+              response = @client.send(request)
             rescue Net::HTTPRequestTimeout
               raise Seed::Errors::TimeoutError
             end
-            code = _response.code.to_i
+            code = response.code.to_i
             if code.between?(200, 299)
-              Seed::User::Events::Metadata::Types::Metadata.load(_response.body)
+              Seed::User::Events::Metadata::Types::Metadata.load(response.body)
             else
               error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-              raise error_class.new(_response.body, code: code)
+              raise error_class.new(response.body, code: code)
             end
           end
         end

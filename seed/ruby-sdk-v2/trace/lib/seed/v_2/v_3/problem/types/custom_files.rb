@@ -11,7 +11,7 @@ module Seed
             discriminant :type
 
             member -> { Seed::V2::V3::Problem::Types::BasicCustomFiles }, key: "BASIC"
-            member lambda {
+            member -> {
               Internal::Types::Hash[Seed::Commons::Types::Language, Seed::V2::V3::Problem::Types::Files]
             }, key: "CUSTOM"
           end

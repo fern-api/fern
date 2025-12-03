@@ -5,7 +5,7 @@ module Seed
     module Types
       class ErroredResponse < Internal::Types::Model
         field :submission_id, -> { String }, optional: false, nullable: false, api_name: "submissionId"
-        field :error_info, lambda {
+        field :error_info, -> {
           Seed::Submission::Types::ErrorInfo
         }, optional: false, nullable: false, api_name: "errorInfo"
       end

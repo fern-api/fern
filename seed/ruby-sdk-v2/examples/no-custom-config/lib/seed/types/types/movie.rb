@@ -12,7 +12,7 @@ module Seed
         field :type, -> { String }, optional: false, nullable: false
         field :tag, -> { String }, optional: false, nullable: false
         field :book, -> { String }, optional: true, nullable: false
-        field :metadata, lambda {
+        field :metadata, -> {
           Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
         }, optional: false, nullable: false
         field :revenue, -> { Integer }, optional: false, nullable: false
