@@ -11,7 +11,7 @@
           - `library`: path for the library project (default: "src")
           - `test`: path for the test project (default: "src")
           - `solution`: path for the solution file (default: ".")
-          - `other`: path for README.md and reference.md (default: ".")
+          - `other`: path for README.md, reference.md, and other files (default: ".")
         
         Example generators.yml configuration:
         ```yaml

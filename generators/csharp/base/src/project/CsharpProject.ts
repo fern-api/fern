@@ -278,8 +278,8 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         const githubWorkflow = template(githubWorkflowTemplate)({
             projectName: this.name,
             libraryPath: path.posix.join(libraryPath, this.name),
-            libraryProjectFile: path.posix.join(libraryPath, this.name, `${this.name}.csproj`),
-            testProjectFile: path.posix.join(
+            libraryProjectFilePath: path.posix.join(libraryPath, this.name, `${this.name}.csproj`),
+            testProjectFilePath: path.posix.join(
                 testPath,
                 this.names.files.testProject,
                 `${this.names.files.testProject}.csproj`
@@ -341,8 +341,8 @@ dotnet_diagnostic.IDE0005.severity = error
         solutionPath: string;
     }): Promise<AbsoluteFilePath> {
         // Create solution file in the solution directory using absolute paths
-        const solutionFile = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
-        await access(solutionFile).catch(() =>
+        const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
+        await access(solutionFilePath).catch(() =>
             loggingExeca(
                 this.context.logger,
                 "dotnet",
@@ -384,7 +384,7 @@ dotnet_diagnostic.IDE0005.severity = error
         );
 
         // Add library project to solution using absolute paths
-        await loggingExeca(this.context.logger, "dotnet", ["sln", solutionFile, "add", libraryCsprojPath], {
+        await loggingExeca(this.context.logger, "dotnet", ["sln", solutionFilePath, "add", libraryCsprojPath], {
             doNotPipeOutput: true
         });
 
@@ -419,8 +419,8 @@ dotnet_diagnostic.IDE0005.severity = error
         );
 
         // Add test project to solution using absolute paths
-        const solutionFile = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
-        await loggingExeca(this.context.logger, "dotnet", ["sln", solutionFile, "add", testCsprojPath], {
+        const solutionFilePath = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
+        await loggingExeca(this.context.logger, "dotnet", ["sln", solutionFilePath, "add", testCsprojPath], {
             doNotPipeOutput: true
         });
 

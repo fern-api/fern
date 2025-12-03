@@ -9,10 +9,10 @@ buildScripts:
       - dotnet tool restore
   compileScript:
     commands:
-      - dotnet build -c Release
+      - dotnet build "$(find . -maxdepth 4 -name '*.slnx' | head -n 1)" -c Release
   testScript:
     commands:
-      - dotnet test
+      - dotnet test "$(find . -maxdepth 4 -name '*.slnx' | head -n 1)"
 
 publish:
   preBuildCommands:
@@ -46,17 +46,17 @@ scripts:
       # otherwise install .NET 10 
       - 'command -v dotnet >/dev/null 2>&1 && ver=$(dotnet --version) && major=$(echo "$ver" | cut -d. -f1) && [ "$major" -ge 10 ] || { echo "ERROR: .NET SDK 10+ required (found ${ver:-not found})"; false; }'
 
-      # add the dynamic snippets project to the solution (solution file is at root level)
-      - dotnet sln add src/*DynamicSnippets/*.csproj 
+      # add the dynamic snippets project to the solution (dynamically find the .slnx file)
+      - 'solution_file="$(find . -maxdepth 4 -name ''*.slnx'' | head -n 1)"; if [ -z "$solution_file" ]; then echo "ERROR: No .slnx file found"; exit 1; fi; dotnet sln "$solution_file" add src/*DynamicSnippets/*.csproj'
       
-      # build it all (solution file is at root level)
-      - dotnet build -c Release
+      # build it all (dynamically find the .slnx file)
+      - 'solution_file="$(find . -maxdepth 4 -name ''*.slnx'' | head -n 1)"; dotnet build "$solution_file" -c Release'
       
       # something changed in seed so that fixtures are getting created with the correct namespace (not just 'SeedApi')
       # but that actually disabled the tests from running (because the pattern matching didn't find any)
       # and it turns out that `dotnet test` doesn't return an error if the filter fails to match anything
       # so this line ensures that if it doesn't find any tests, it will signal an error.
-      - dotnet test --filter "(FullyQualifiedName~Test.Core | FullyQualifiedName~Test_.Core)" --no-restore | tee /tmp/out && ! grep -q "No test matches the given testcase filter" /tmp/out
+      - 'solution_file="$(find . -maxdepth 4 -name ''*.slnx'' | head -n 1)"; dotnet test "$solution_file" --filter "(FullyQualifiedName~Test.Core | FullyQualifiedName~Test_.Core)" --no-restore | tee /tmp/out && ! grep -q "No test matches the given testcase filter" /tmp/out'
       
       # Than being the case however, the filter actually makes it so that all the generated tests don't get run 
       # so that should be fixed so that `dotnet test src` can be run instead of the filtered version of it.
