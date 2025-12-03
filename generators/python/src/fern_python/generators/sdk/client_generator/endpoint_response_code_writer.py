@@ -387,6 +387,7 @@ class EndpointResponseCodeWriter:
             pydantic_parse_expression = property_access_expression
 
         if self._pagination is not None:
+            response_is_optional = self.is_json_response_optional(json_response)
             paginator = self._pagination.visit(
                 cursor=lambda cursor: CursorPagination(
                     context=self._context,
@@ -394,6 +395,7 @@ class EndpointResponseCodeWriter:
                     pydantic_parse_expression=pydantic_parse_expression,
                     config=self._pagination_snippet_config,
                     cursor=cursor,
+                    response_is_optional=response_is_optional,
                 ),
                 offset=lambda offset: OffsetPagination(
                     context=self._context,
@@ -401,6 +403,7 @@ class EndpointResponseCodeWriter:
                     pydantic_parse_expression=pydantic_parse_expression,
                     config=self._pagination_snippet_config,
                     offset=offset,
+                    response_is_optional=response_is_optional,
                 ),
                 custom=lambda custom: CustomPagination(
                     context=self._context,
@@ -408,6 +411,7 @@ class EndpointResponseCodeWriter:
                     pydantic_parse_expression=pydantic_parse_expression,
                     config=self._pagination_snippet_config,
                     custom=custom,
+                    response_is_optional=response_is_optional,
                 ),
             )
             if paginator is not None:
