@@ -29,6 +29,7 @@ export enum AsIsFiles {
 
     // Core/Pagination files.
     CursorPager = "Pagination/CursorPager.Template.php",
+    CustomPager = "Pagination/CustomPager.Template.php",
     OffsetPager = "Pagination/OffsetPager.Template.php",
     Page = "Pagination/Page.Template.php",
     Pager = "Pagination/Pager.Template.php",

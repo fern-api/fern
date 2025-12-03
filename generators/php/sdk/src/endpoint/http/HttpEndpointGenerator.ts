@@ -3,6 +3,7 @@ import { assertNever } from "@fern-api/core-utils";
 import { php } from "@fern-api/php-codegen";
 import {
     CursorPagination,
+    CustomPagination,
     HttpEndpoint,
     HttpRequestBody,
     HttpService,
@@ -279,7 +280,14 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
                         });
                         break;
                     case "custom":
-                        throw new Error("Internal error: custom pagination should be filtered out by hasPagination()");
+                        this.generateCustomMethodBody({
+                            pagination: endpoint.pagination,
+                            parameters,
+                            unpagedEndpointResponseType,
+                            writer,
+                            unpagedEndpointMethodName
+                        });
+                        break;
                     default:
                         assertNever(endpoint.pagination);
                 }
@@ -495,6 +503,51 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
         );
     }
 
+    private generateCustomMethodBody({
+        pagination,
+        parameters,
+        unpagedEndpointResponseType,
+        writer,
+        unpagedEndpointMethodName
+    }: {
+        pagination: CustomPagination;
+        parameters: php.Parameter[];
+        unpagedEndpointResponseType: php.Type;
+        writer: php.Writer;
+        unpagedEndpointMethodName: string;
+    }) {
+        const customPagerClassReference = this.context.getCustomPagerClassReference();
+
+        // First, call the unpaged endpoint to get the initial response
+        writer.write("$response = ");
+        writer.writeNodeStatement(
+            php.invokeMethod({
+                on: php.variable("this"),
+                method: unpagedEndpointMethodName,
+                arguments_: parameters.map((parameter) => php.variable(parameter.name))
+            })
+        );
+
+        // Return a new CustomPager with the response and client
+        writer.write("return ");
+        writer.writeNodeStatement(
+            php.instantiateClass({
+                classReference: customPagerClassReference,
+                arguments_: [
+                    {
+                        name: "response",
+                        assignment: php.variable("response")
+                    },
+                    {
+                        name: "client",
+                        assignment: php.variable("this")
+                    }
+                ],
+                multiline: false
+            })
+        );
+    }
+
     private getFullPropertyPath(property: RequestProperty | ResponseProperty): Name[] {
         return [...(property.propertyPath?.map((elem) => elem.name) ?? []), property.property.name.name];
     }
@@ -560,9 +613,6 @@ export class HttpEndpointGenerator extends AbstractEndpointGenerator {
 
     protected hasPagination(endpoint: HttpEndpoint): endpoint is PagingEndpoint {
         if (!this.context.config.generatePaginatedClients) {
-            return false;
-        }
-        if (endpoint.pagination?.type === "custom") {
             return false;
         }
         return endpoint.pagination !== undefined;
