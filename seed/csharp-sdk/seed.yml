@@ -66,8 +66,16 @@ scripts:
           exit 1
         fi
         
-        # Add the dynamic snippets project to the solution
-        dotnet sln "$solution_file" add src/*DynamicSnippets/*.csproj
+        # Add the dynamic snippets project to the solution (only if library is in src/)
+        # When using custom output-path, the library may not be in src/, so we skip adding DynamicSnippets
+        # because its ProjectReference wildcard pattern expects the library to be a sibling directory
+        snippets_project="$(find src -maxdepth 2 -name '*DynamicSnippets*.csproj' 2>/dev/null | head -n 1)"
+        library_in_src="$(find src -maxdepth 2 -name '*.csproj' ! -name '*DynamicSnippets*' ! -name '*.Test.csproj' 2>/dev/null | head -n 1)"
+        if [ -n "$snippets_project" ] && [ -n "$library_in_src" ]; then
+          dotnet sln "$solution_file" add "$snippets_project"
+        elif [ -n "$snippets_project" ]; then
+          echo "Skipping DynamicSnippets project (library not in src/)"
+        fi
         
         # Build it all
         dotnet build "$solution_file" -c Release
@@ -84,6 +92,16 @@ fixtures:
   simple-api:
     - customConfig: null
       outputFolder: no-custom-config
+    - customConfig:
+        output-path: custom-src
+      outputFolder: custom-output-path
+    - customConfig:
+        output-path:
+          library: lib/SeedApi
+          test: test/SeedApi.Test
+          solution: .
+          other: lib/SeedApi
+      outputFolder: custom-output-path-object
   literal:
     - customConfig: null
       outputFolder: no-custom-config

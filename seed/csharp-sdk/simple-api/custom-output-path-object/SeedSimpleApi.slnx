@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/lib/" />
+  <Folder Name="/lib/SeedApi/">
+    <Project Path="lib/SeedApi/SeedSimpleApi/SeedSimpleApi.csproj" />
+  </Folder>
+  <Folder Name="/test/" />
+  <Folder Name="/test/SeedApi.Test/">
+    <Project Path="test/SeedApi.Test/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj" />
+  </Folder>
+</Solution>

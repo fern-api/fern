@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/custom-src/">
+    <Project Path="custom-src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj" />
+    <Project Path="custom-src/SeedSimpleApi/SeedSimpleApi.csproj" />
+  </Folder>
+</Solution>
