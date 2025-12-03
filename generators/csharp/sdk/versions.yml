@@ -3,8 +3,7 @@
   changelogEntry:
     - summary: |
         Retries now check `Retry-After` and `X-RateLimit-Reset` headers before defaulting to 
-        exponential backoff with jitter. Also ensures thread-safe Random access and proper 
-        CancellationTokenSource disposal.
+        exponential backoff with jitter.
       type: fix
   createdAt: "2025-12-03"
   irVersion: 61
