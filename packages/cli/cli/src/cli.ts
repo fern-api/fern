@@ -647,11 +647,13 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 );
             }
             // Handle case where --fernignore is provided without a value (yargs sets it to true)
-            // or with an empty string
+            // or with an empty string. Cast to unknown first since yargs types it as string but
+            // can set it to true at runtime when no value is provided.
             if (argv.fernignore != null) {
+                const fernignoreValue = argv.fernignore as unknown;
                 if (
-                    argv.fernignore === true ||
-                    (typeof argv.fernignore === "string" && argv.fernignore.trim().length === 0)
+                    fernignoreValue === true ||
+                    (typeof fernignoreValue === "string" && fernignoreValue.trim().length === 0)
                 ) {
                     return cliContext.failWithoutThrowing(
                         "The --fernignore flag requires a path to a .fernignore file."
