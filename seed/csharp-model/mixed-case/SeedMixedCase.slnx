@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedMixedCase.Test/SeedMixedCase.Test.csproj" />
+    <Project Path="src/SeedMixedCase/SeedMixedCase.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedBearerTokenEnvironmentVariable.Test/SeedBearerTokenEnvironmentVariable.Test.csproj" />
+    <Project Path="src/SeedBearerTokenEnvironmentVariable/SeedBearerTokenEnvironmentVariable.csproj" />
+  </Folder>
+</Solution>

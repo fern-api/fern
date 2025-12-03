@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedUndiscriminatedUnions.Test/SeedUndiscriminatedUnions.Test.csproj" />
+    <Project Path="src/SeedUndiscriminatedUnions/SeedUndiscriminatedUnions.csproj" />
+  </Folder>
+</Solution>

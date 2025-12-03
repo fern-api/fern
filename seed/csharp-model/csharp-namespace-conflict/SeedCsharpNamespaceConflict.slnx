@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedCsharpNamespaceConflict.Test/SeedCsharpNamespaceConflict.Test.csproj" />
+    <Project Path="src/SeedCsharpNamespaceConflict/SeedCsharpNamespaceConflict.csproj" />
+  </Folder>
+</Solution>

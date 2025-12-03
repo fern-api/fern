@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedExhaustive.Test/SeedExhaustive.Test.csproj" />
+    <Project Path="src/SeedExhaustive/SeedExhaustive.csproj" />
+  </Folder>
+</Solution>

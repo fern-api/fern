@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedNullableOptional.Test/SeedNullableOptional.Test.csproj" />
+    <Project Path="src/SeedNullableOptional/SeedNullableOptional.csproj" />
+  </Folder>
+</Solution>

@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedHttpHead.Test/SeedHttpHead.Test.csproj" />
+    <Project Path="src/SeedHttpHead/SeedHttpHead.csproj" />
+  </Folder>
+</Solution>

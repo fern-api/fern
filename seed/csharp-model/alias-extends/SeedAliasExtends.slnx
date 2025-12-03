@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedAliasExtends.Test/SeedAliasExtends.Test.csproj" />
+    <Project Path="src/SeedAliasExtends/SeedAliasExtends.csproj" />
+  </Folder>
+</Solution>

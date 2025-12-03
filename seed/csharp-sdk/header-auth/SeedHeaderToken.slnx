@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedHeaderToken.Test/SeedHeaderToken.Test.csproj" />
+    <Project Path="src/SeedHeaderToken/SeedHeaderToken.csproj" />
+  </Folder>
+</Solution>

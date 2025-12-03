@@ -28,10 +28,10 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedSimpleApi
+        run: dotnet restore src/SeedSimpleApi/SeedSimpleApi.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedSimpleApi -c Release --no-restore
+        run: dotnet build src/SeedSimpleApi/SeedSimpleApi.csproj -c Release --no-restore
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -53,13 +53,13 @@ jobs:
           dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src
+        run: dotnet restore src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj
 
       - name: Build Release
-        run: dotnet build src -c Release --no-restore
+        run: dotnet build src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj -c Release --no-restore
 
       - name: Run Tests
-        run: dotnet test src -c Release --no-build --no-restore
+        run: dotnet test src/SeedSimpleApi.Test/SeedSimpleApi.Test.csproj -c Release --no-build --no-restore
 
 
   publish:
@@ -83,15 +83,15 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedSimpleApi
+        run: dotnet restore src/SeedSimpleApi/SeedSimpleApi.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedSimpleApi -c Release --no-restore
+        run: dotnet build src/SeedSimpleApi/SeedSimpleApi.csproj -c Release --no-restore
 
       - name: Publish
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
-          dotnet pack src/SeedSimpleApi -c Release --no-build --no-restore
+          dotnet pack src/SeedSimpleApi/SeedSimpleApi.csproj -c Release --no-build --no-restore
           dotnet nuget push src/SeedSimpleApi/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 

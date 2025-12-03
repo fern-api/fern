@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedMultiLineDocs.Test/SeedMultiLineDocs.Test.csproj" />
+    <Project Path="src/SeedMultiLineDocs/SeedMultiLineDocs.csproj" />
+  </Folder>
+</Solution>

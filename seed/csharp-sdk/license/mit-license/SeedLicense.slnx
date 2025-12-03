@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedLicense.Test/SeedLicense.Test.csproj" />
+    <Project Path="src/SeedLicense/SeedLicense.csproj" />
+  </Folder>
+</Solution>

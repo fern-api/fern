@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedTrace.Test/SeedTrace.Test.csproj" />
+    <Project Path="src/SeedTrace/SeedTrace.csproj" />
+  </Folder>
+</Solution>

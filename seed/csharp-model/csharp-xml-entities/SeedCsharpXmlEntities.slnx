@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedCsharpXmlEntities.Test/SeedCsharpXmlEntities.Test.csproj" />
+    <Project Path="src/SeedCsharpXmlEntities/SeedCsharpXmlEntities.csproj" />
+  </Folder>
+</Solution>

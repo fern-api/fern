@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedStreaming.Test/SeedStreaming.Test.csproj" />
+    <Project Path="src/SeedStreaming/SeedStreaming.csproj" />
+  </Folder>
+</Solution>

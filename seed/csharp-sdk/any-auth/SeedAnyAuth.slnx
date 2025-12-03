@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedAnyAuth.Test/SeedAnyAuth.Test.csproj" />
+    <Project Path="src/SeedAnyAuth/SeedAnyAuth.csproj" />
+  </Folder>
+</Solution>

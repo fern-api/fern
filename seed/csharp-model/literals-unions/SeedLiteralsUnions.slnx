@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedLiteralsUnions.Test/SeedLiteralsUnions.Test.csproj" />
+    <Project Path="src/SeedLiteralsUnions/SeedLiteralsUnions.csproj" />
+  </Folder>
+</Solution>

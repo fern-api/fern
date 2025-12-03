@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedSingleUrlEnvironmentNoDefault.Test/SeedSingleUrlEnvironmentNoDefault.Test.csproj" />
+    <Project Path="src/SeedSingleUrlEnvironmentNoDefault/SeedSingleUrlEnvironmentNoDefault.csproj" />
+  </Folder>
+</Solution>

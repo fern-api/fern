@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="SeedClientSideParams.Test/SeedClientSideParams.Test.csproj" />
-  <Project Path="SeedClientSideParams/SeedClientSideParams.csproj" />
-</Solution>

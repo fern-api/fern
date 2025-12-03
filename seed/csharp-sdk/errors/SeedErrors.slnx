@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedErrors.Test/SeedErrors.Test.csproj" />
+    <Project Path="src/SeedErrors/SeedErrors.csproj" />
+  </Folder>
+</Solution>

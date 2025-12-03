@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedCrossPackageTypeNames.Test/SeedCrossPackageTypeNames.Test.csproj" />
+    <Project Path="src/SeedCrossPackageTypeNames/SeedCrossPackageTypeNames.csproj" />
+  </Folder>
+</Solution>

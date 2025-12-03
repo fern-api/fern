@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/SeedBytesUpload.Test/SeedBytesUpload.Test.csproj" />
+    <Project Path="src/SeedBytesUpload/SeedBytesUpload.csproj" />
+  </Folder>
+</Solution>
