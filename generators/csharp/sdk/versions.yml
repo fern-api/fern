@@ -13,6 +13,24 @@
           - `solution`: path for the solution file (default: ".")
           - `other`: path for README.md and reference.md (default: ".")
         
+        Example generators.yml configuration:
+        ```yaml
+        groups:
+          local:
+            generators:
+              - name: fernapi/fern-csharp-sdk
+                version: 2.10.0
+                output:
+                  location: local-file-system
+                  path: ../generated/csharp
+                config:
+                  output-path:
+                    library: src/MyApi
+                    test: test/MyApi.Test
+                    solution: .
+                    other: src/MyApi
+        ```
+        
         The generated CI workflow and project references are automatically updated to use the configured paths.
       type: feat
   createdAt: "2025-12-03"

@@ -215,10 +215,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         const absolutePathToTestProjectDirectory = await this.createTestProject({
             absolutePathToTestDirectory,
             absolutePathToSolutionDirectory,
-            absolutePathToProjectDirectory,
-            testPath,
-            libraryPath,
-            solutionPath
+            absolutePathToProjectDirectory
         });
 
         for (const file of this.sourceFiles) {
@@ -281,8 +278,8 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         const githubWorkflow = template(githubWorkflowTemplate)({
             projectName: this.name,
             libraryPath: path.posix.join(libraryPath, this.name),
-            testPath: path.posix.join(testPath, this.names.files.testProject),
-            solutionPath,
+            libraryProjectFile: path.posix.join(libraryPath, this.name, `${this.name}.csproj`),
+            testProjectFile: path.posix.join(testPath, this.names.files.testProject, `${this.names.files.testProject}.csproj`),
             shouldWritePublishBlock: this.context.publishConfig != null,
             nugetTokenEnvvar:
                 this.context.publishConfig?.apiKeyEnvironmentVariable == null ||
@@ -324,8 +321,8 @@ dotnet_diagnostic.IDE0005.severity = error
             );
         }
 
-        // format the code cleanly using csharpier
-        await this.csharpier(absolutePathToLibraryDirectory);
+        // format the code cleanly using csharpier on the full output directory
+        await this.csharpier(this.absolutePathToOutputDirectory);
     }
 
     private async createProject({
@@ -339,12 +336,17 @@ dotnet_diagnostic.IDE0005.severity = error
         libraryPath: string;
         solutionPath: string;
     }): Promise<AbsoluteFilePath> {
-        // Create solution file in the solution directory
-        await access(path.join(absolutePathToSolutionDirectory, `${this.name}.slnx`)).catch(() =>
-            loggingExeca(this.context.logger, "dotnet", ["new", "sln", "-n", this.name, "--no-update-check"], {
-                doNotPipeOutput: true,
-                cwd: absolutePathToSolutionDirectory
-            })
+        // Create solution file in the solution directory using absolute paths
+        const solutionFile = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
+        await access(solutionFile).catch(() =>
+            loggingExeca(
+                this.context.logger,
+                "dotnet",
+                ["new", "sln", "-n", this.name, "-o", absolutePathToSolutionDirectory, "--no-update-check"],
+                {
+                    doNotPipeOutput: true
+                }
+            )
         );
 
         const absolutePathToProjectDirectory = join(absolutePathToLibraryDirectory, RelativeFilePath.of(this.name));
@@ -369,24 +371,17 @@ dotnet_diagnostic.IDE0005.severity = error
             protobufSourceFilePaths
         });
         const templateCsProjContents = csproj.toString();
-        await writeFile(
-            join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`)),
-            templateCsProjContents
-        );
+        const libraryCsprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
+        await writeFile(libraryCsprojPath, templateCsProjContents);
 
         await writeFile(
             join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.Custom.props`)),
             (await readFile(getAsIsFilepath(AsIsFiles.CustomProps))).toString()
         );
 
-        // Calculate relative path from solution directory to project directory
-        const relativeProjectPath = path.posix.join(libraryPath, this.name, `${this.name}.csproj`);
-        const relativePathFromSolution =
-            solutionPath === "." ? relativeProjectPath : path.posix.relative(solutionPath, relativeProjectPath);
-
-        await loggingExeca(this.context.logger, "dotnet", ["sln", "add", relativePathFromSolution], {
-            doNotPipeOutput: true,
-            cwd: absolutePathToSolutionDirectory
+        // Add library project to solution using absolute paths
+        await loggingExeca(this.context.logger, "dotnet", ["sln", solutionFile, "add", libraryCsprojPath], {
+            doNotPipeOutput: true
         });
 
         return absolutePathToProjectDirectory;
@@ -395,17 +390,11 @@ dotnet_diagnostic.IDE0005.severity = error
     private async createTestProject({
         absolutePathToTestDirectory,
         absolutePathToSolutionDirectory,
-        absolutePathToProjectDirectory,
-        testPath,
-        libraryPath,
-        solutionPath
+        absolutePathToProjectDirectory
     }: {
         absolutePathToTestDirectory: AbsoluteFilePath;
         absolutePathToSolutionDirectory: AbsoluteFilePath;
         absolutePathToProjectDirectory: AbsoluteFilePath;
-        testPath: string;
-        libraryPath: string;
-        solutionPath: string;
     }): Promise<AbsoluteFilePath> {
         const testProjectName = this.names.files.testProject;
         const absolutePathToTestProject = join(absolutePathToTestDirectory, RelativeFilePath.of(testProjectName));
@@ -418,46 +407,36 @@ dotnet_diagnostic.IDE0005.severity = error
             projectName: this.name,
             testProjectName
         });
-        await writeFile(
-            join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`)),
-            testCsProjContents
-        );
+        const testCsprojPath = join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`));
+        await writeFile(testCsprojPath, testCsProjContents);
         await writeFile(
             join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.Custom.props`)),
             (await readFile(getAsIsFilepath(AsIsFiles.Test.TestCustomProps))).toString()
         );
 
-        // Calculate relative path from solution directory to test project directory
-        const relativeTestProjectPath = path.posix.join(testPath, testProjectName, `${testProjectName}.csproj`);
-        const relativePathFromSolution =
-            solutionPath === "." ? relativeTestProjectPath : path.posix.relative(solutionPath, relativeTestProjectPath);
-
-        await loggingExeca(this.context.logger, "dotnet", ["sln", "add", relativePathFromSolution], {
-            doNotPipeOutput: true,
-            cwd: absolutePathToSolutionDirectory
+        // Add test project to solution using absolute paths
+        const solutionFile = join(absolutePathToSolutionDirectory, RelativeFilePath.of(`${this.name}.slnx`));
+        await loggingExeca(this.context.logger, "dotnet", ["sln", solutionFile, "add", testCsprojPath], {
+            doNotPipeOutput: true
         });
 
-        // Update project reference in test project to point to the library project
-        // First remove the old reference (from template), then add the correct one
-        const testCsprojPath = join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`));
+        // Update project reference in test project to point to the library project using absolute paths
         const libraryCsprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
 
-        // Use dotnet CLI to update the project reference
+        // First remove the old reference (from template), then add the correct one
         await loggingExeca(
             this.context.logger,
             "dotnet",
             ["remove", testCsprojPath, "reference", `../${this.name}/${this.name}.csproj`],
             {
-                doNotPipeOutput: true,
-                cwd: absolutePathToTestProject
+                doNotPipeOutput: true
             }
         ).catch(() => {
             // Ignore error if reference doesn't exist
         });
 
         await loggingExeca(this.context.logger, "dotnet", ["add", testCsprojPath, "reference", libraryCsprojPath], {
-            doNotPipeOutput: true,
-            cwd: absolutePathToTestProject
+            doNotPipeOutput: true
         });
 
         return absolutePathToTestProject;

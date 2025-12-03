@@ -28,10 +28,10 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore <%= libraryPath%>
+        run: dotnet restore <%= libraryProjectFile %>
 
       - name: Build Release
-        run: dotnet build <%= libraryPath%> -c Release --no-restore
+        run: dotnet build <%= libraryProjectFile %> -c Release --no-restore
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -53,13 +53,13 @@ jobs:
           dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore <%= solutionPath === '.' ? projectName + '.slnx' : solutionPath + '/' + projectName + '.slnx'%>
+        run: dotnet restore <%= testProjectFile %>
 
       - name: Build Release
-        run: dotnet build <%= solutionPath === '.' ? projectName + '.slnx' : solutionPath + '/' + projectName + '.slnx'%> -c Release --no-restore
+        run: dotnet build <%= testProjectFile %> -c Release --no-restore
 
       - name: Run Tests
-        run: dotnet test <%= testPath%> -c Release --no-build --no-restore
+        run: dotnet test <%= testProjectFile %> -c Release --no-build --no-restore
 
 <% if (shouldWritePublishBlock) { %>
   publish:
@@ -83,15 +83,15 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore <%= libraryPath%>
+        run: dotnet restore <%= libraryProjectFile %>
 
       - name: Build Release
-        run: dotnet build <%= libraryPath%> -c Release --no-restore
+        run: dotnet build <%= libraryProjectFile %> -c Release --no-restore
 
       - name: Publish
         env:
           NUGET_API_KEY: $\{{ secrets.<%= nugetTokenEnvvar%> }}
         run: |
-          dotnet pack <%= libraryPath%> -c Release --no-build --no-restore
-          dotnet nuget push <%= libraryPath%>/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
+          dotnet pack <%= libraryProjectFile %> -c Release --no-build --no-restore
+          dotnet nuget push <%= libraryPath %>/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 <% } %>
