@@ -6,7 +6,7 @@ module Seed
       module Problem
         module Types
           class FunctionImplementationForMultipleLanguages < Internal::Types::Model
-            field :code_by_language, lambda {
+            field :code_by_language, -> {
               Internal::Types::Hash[Seed::Commons::Types::Language, Seed::V2::V3::Problem::Types::FunctionImplementation]
             }, optional: false, nullable: false, api_name: "codeByLanguage"
           end

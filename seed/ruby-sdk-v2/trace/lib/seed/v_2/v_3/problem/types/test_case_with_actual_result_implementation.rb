@@ -6,10 +6,10 @@ module Seed
       module Problem
         module Types
           class TestCaseWithActualResultImplementation < Internal::Types::Model
-            field :get_actual_result, lambda {
+            field :get_actual_result, -> {
               Seed::V2::V3::Problem::Types::NonVoidFunctionDefinition
             }, optional: false, nullable: false, api_name: "getActualResult"
-            field :assert_correctness_check, lambda {
+            field :assert_correctness_check, -> {
               Seed::V2::V3::Problem::Types::AssertCorrectnessCheck
             }, optional: false, nullable: false, api_name: "assertCorrectnessCheck"
           end

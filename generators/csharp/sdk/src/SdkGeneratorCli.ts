@@ -113,7 +113,7 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
 
         context.project.addSourceFiles(generateVersion({ context }));
 
-        if (context.enableWireTests) {
+        if (context.settings.shouldGenerateMockServerTests) {
             const modelTests = generateModelTests({ context });
             for (const file of modelTests) {
                 context.project.addTestFiles(file);
