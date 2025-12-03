@@ -16,6 +16,14 @@
   createdAt: "2025-12-02"
   irVersion: 62
 
+- version: 1.24.2
+  changelogEntry:
+    - summary: |
+        Fix php-cs-fixer creating .php-cs-fixer.dist.php config files in subdirectories during generation. The interactive prompt was causing config files with @auto ruleset to be created, which then failed when running from subdirectories without composer.json. Added --no-interaction flag to prevent this behavior.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 62
+
 - version: 1.24.1
   changelogEntry:
     - summary: |

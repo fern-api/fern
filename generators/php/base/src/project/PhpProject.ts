@@ -225,7 +225,7 @@ export class PhpProject extends AbstractProject<AbstractPhpGeneratorContext<Base
         await this.mkdir(absolutePathToDirectory);
         await Promise.all(files.map(async (file) => await file.write(absolutePathToDirectory)));
         if (files.length > 0) {
-            await loggingExeca(this.context.logger, "php-cs-fixer", ["fix", "."], {
+            await loggingExeca(this.context.logger, "php-cs-fixer", ["fix", ".", "--no-interaction"], {
                 doNotPipeOutput: true,
                 cwd: absolutePathToDirectory
             });

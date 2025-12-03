@@ -64,7 +64,9 @@
         "public-object",
         "path-parameters:no-inline-path-parameters",
         "extra-properties:no-custom-config",
-        "simple-api",
+        "simple-api:no-custom-config",
+        "simple-api:custom-output-path",
+        "simple-api:custom-output-path-object",
         "examples:readme-config"
       ],
       "groupTotalTimeSeconds": 3557
