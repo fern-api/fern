@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.10.1
+  changelogEntry:
+    - summary: |
+        Fix `output-path.other` configuration to correctly place README.md and reference.md files 
+        in the specified directory. The `.csproj` file's README Include path is now dynamically 
+        computed based on the configured `other` path.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
 - version: 2.10.0
   changelogEntry:
     - summary: |

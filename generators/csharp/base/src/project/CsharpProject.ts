@@ -209,6 +209,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         const absolutePathToProjectDirectory = await this.createProject({
             absolutePathToLibraryDirectory,
             absolutePathToSolutionDirectory,
+            absolutePathToOtherDirectory,
             libraryPath,
             solutionPath
         });
@@ -332,11 +333,13 @@ dotnet_diagnostic.IDE0005.severity = error
     private async createProject({
         absolutePathToLibraryDirectory,
         absolutePathToSolutionDirectory,
+        absolutePathToOtherDirectory,
         libraryPath,
         solutionPath
     }: {
         absolutePathToLibraryDirectory: AbsoluteFilePath;
         absolutePathToSolutionDirectory: AbsoluteFilePath;
+        absolutePathToOtherDirectory: AbsoluteFilePath;
         libraryPath: string;
         solutionPath: string;
     }): Promise<AbsoluteFilePath> {
@@ -357,6 +360,11 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToProjectDirectory}`);
         await mkdir(absolutePathToProjectDirectory, { recursive: true });
 
+        // Compute the relative path from the project directory to the README.md location
+        const readmeAbsolutePath = join(absolutePathToOtherDirectory, RelativeFilePath.of("README.md"));
+        const readmeRelativeFromProjectPosix = path.relative(absolutePathToProjectDirectory, readmeAbsolutePath);
+        const readmeRelativePathFromProject = path.win32.normalize(readmeRelativeFromProjectPosix);
+
         const absolutePathToProtoDirectory = join(
             this.absolutePathToOutputDirectory,
             RelativeFilePath.of(this.generation.constants.folders.protobuf)
@@ -372,7 +380,8 @@ dotnet_diagnostic.IDE0005.severity = error
                 _other: () => undefined
             }),
             context: this.context,
-            protobufSourceFilePaths
+            protobufSourceFilePaths,
+            readmeRelativePathFromProject
         });
         const templateCsProjContents = csproj.toString();
         const libraryCsprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
@@ -691,6 +700,7 @@ declare namespace CsProj {
         githubUrl?: string;
         context: GeneratorContext;
         protobufSourceFilePaths: RelativeFilePath[];
+        readmeRelativePathFromProject: string;
     }
 }
 
@@ -701,8 +711,16 @@ class CsProj extends WithGeneration {
     private packageId: string | undefined;
     private context: GeneratorContext;
     private protobufSourceFilePaths: RelativeFilePath[];
+    private readmeRelativePathFromProject: string;
 
-    public constructor({ name, license, githubUrl, context, protobufSourceFilePaths }: CsProj.Args) {
+    public constructor({
+        name,
+        license,
+        githubUrl,
+        context,
+        protobufSourceFilePaths,
+        readmeRelativePathFromProject
+    }: CsProj.Args) {
         super(context.generation);
         this.name = name;
         this.license = license;
@@ -710,6 +728,7 @@ class CsProj extends WithGeneration {
         this.context = context;
         this.protobufSourceFilePaths = protobufSourceFilePaths;
         this.packageId = this.generation.settings.packageId;
+        this.readmeRelativePathFromProject = readmeRelativePathFromProject;
     }
 
     public override toString(): string {
@@ -746,7 +765,7 @@ ${projectGroup.join("\n")}
     </ItemGroup>
 ${this.getProtobufDependencies(this.protobufSourceFilePaths).join(`\n${this.generation.constants.formatting.indent}`)}
     <ItemGroup>
-        <None Include="..\\..\\README.md" Pack="true" PackagePath=""/>
+        <None Include="${this.readmeRelativePathFromProject}" Pack="true" PackagePath=""/>
     </ItemGroup>
 ${this.getAdditionalItemGroups().join(`\n${this.generation.constants.formatting.indent}`)}
     <ItemGroup>
