@@ -1,4 +1,23 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.10.0
+  changelogEntry:
+    - summary: |
+        Add support for flexible `output-path` configuration that allows specifying different paths 
+        for the library project, test project, solution file, and other files (README.md, reference.md).
+        
+        Configuration options:
+        * Simple string: `output-path: src` - all projects go to that path
+        * Object with specific paths:
+          - `library`: path for the library project (default: "src")
+          - `test`: path for the test project (default: "src")
+          - `solution`: path for the solution file (default: ".")
+          - `other`: path for README.md and reference.md (default: ".")
+        
+        The generated CI workflow and project references are automatically updated to use the configured paths.
+      type: feat
+  createdAt: "2025-12-03"
+  irVersion: 61
+
 - version: 2.9.7
   changelogEntry:
     - summary: |

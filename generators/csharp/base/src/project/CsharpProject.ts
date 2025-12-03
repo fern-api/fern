@@ -173,12 +173,53 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
     }
 
     public async persist(): Promise<void> {
-        const absolutePathToSrcDirectory = join(this.absolutePathToOutputDirectory, this.constants.folders.sourceFiles);
-        this.context.logger.debug(`mkdir ${absolutePathToSrcDirectory}`);
-        await mkdir(absolutePathToSrcDirectory, { recursive: true });
+        // Get configurable output paths
+        const outputPath = this.settings.outputPath;
+        const libraryPath = outputPath.library;
+        const testPath = outputPath.test;
+        const solutionPath = outputPath.solution;
+        const otherPath = outputPath.other;
 
-        const absolutePathToProjectDirectory = await this.createProject({ absolutePathToSrcDirectory });
-        const absolutePathToTestProjectDirectory = await this.createTestProject({ absolutePathToSrcDirectory });
+        // Create the library directory
+        const absolutePathToLibraryDirectory = join(
+            this.absolutePathToOutputDirectory,
+            RelativeFilePath.of(libraryPath)
+        );
+        this.context.logger.debug(`mkdir ${absolutePathToLibraryDirectory}`);
+        await mkdir(absolutePathToLibraryDirectory, { recursive: true });
+
+        // Create the test directory (may be different from library directory)
+        const absolutePathToTestDirectory = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(testPath));
+        this.context.logger.debug(`mkdir ${absolutePathToTestDirectory}`);
+        await mkdir(absolutePathToTestDirectory, { recursive: true });
+
+        // Create the solution directory
+        const absolutePathToSolutionDirectory = join(
+            this.absolutePathToOutputDirectory,
+            RelativeFilePath.of(solutionPath)
+        );
+        this.context.logger.debug(`mkdir ${absolutePathToSolutionDirectory}`);
+        await mkdir(absolutePathToSolutionDirectory, { recursive: true });
+
+        // Create the "other" directory for README.md and reference.md
+        const absolutePathToOtherDirectory = join(this.absolutePathToOutputDirectory, RelativeFilePath.of(otherPath));
+        this.context.logger.debug(`mkdir ${absolutePathToOtherDirectory}`);
+        await mkdir(absolutePathToOtherDirectory, { recursive: true });
+
+        const absolutePathToProjectDirectory = await this.createProject({
+            absolutePathToLibraryDirectory,
+            absolutePathToSolutionDirectory,
+            libraryPath,
+            solutionPath
+        });
+        const absolutePathToTestProjectDirectory = await this.createTestProject({
+            absolutePathToTestDirectory,
+            absolutePathToSolutionDirectory,
+            absolutePathToProjectDirectory,
+            testPath,
+            libraryPath,
+            solutionPath
+        });
 
         for (const file of this.sourceFiles) {
             await file.write(absolutePathToProjectDirectory);
@@ -239,6 +280,9 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         const githubWorkflowTemplate = (await readFile(getAsIsFilepath(AsIsFiles.CiYaml))).toString();
         const githubWorkflow = template(githubWorkflowTemplate)({
             projectName: this.name,
+            libraryPath: path.posix.join(libraryPath, this.name),
+            testPath: path.posix.join(testPath, this.names.files.testProject),
+            solutionPath,
             shouldWritePublishBlock: this.context.publishConfig != null,
             nugetTokenEnvvar:
                 this.context.publishConfig?.apiKeyEnvironmentVariable == null ||
@@ -258,7 +302,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
         if (this.settings.useDotnetFormat) {
             // apply dotnet analyzer and formatter pass 1
             await this.dotnetFormat(
-                absolutePathToSrcDirectory,
+                absolutePathToLibraryDirectory,
                 absolutePathToProjectDirectory,
                 `[*.cs]
   dotnet_diagnostic.IDE0001.severity = error
@@ -272,7 +316,7 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
             );
             // apply dotnet analyzer and formatter pass 2
             await this.dotnetFormat(
-                absolutePathToSrcDirectory,
+                absolutePathToLibraryDirectory,
                 absolutePathToProjectDirectory,
                 `[*.cs]
 dotnet_diagnostic.IDE0005.severity = error          
@@ -281,22 +325,29 @@ dotnet_diagnostic.IDE0005.severity = error
         }
 
         // format the code cleanly using csharpier
-        await this.csharpier(absolutePathToSrcDirectory);
+        await this.csharpier(absolutePathToLibraryDirectory);
     }
 
     private async createProject({
-        absolutePathToSrcDirectory
+        absolutePathToLibraryDirectory,
+        absolutePathToSolutionDirectory,
+        libraryPath,
+        solutionPath
     }: {
-        absolutePathToSrcDirectory: AbsoluteFilePath;
+        absolutePathToLibraryDirectory: AbsoluteFilePath;
+        absolutePathToSolutionDirectory: AbsoluteFilePath;
+        libraryPath: string;
+        solutionPath: string;
     }): Promise<AbsoluteFilePath> {
-        await access(path.join(absolutePathToSrcDirectory, `${this.name}.slnx`)).catch(() =>
+        // Create solution file in the solution directory
+        await access(path.join(absolutePathToSolutionDirectory, `${this.name}.slnx`)).catch(() =>
             loggingExeca(this.context.logger, "dotnet", ["new", "sln", "-n", this.name, "--no-update-check"], {
                 doNotPipeOutput: true,
-                cwd: absolutePathToSrcDirectory
+                cwd: absolutePathToSolutionDirectory
             })
         );
 
-        const absolutePathToProjectDirectory = join(absolutePathToSrcDirectory, RelativeFilePath.of(this.name));
+        const absolutePathToProjectDirectory = join(absolutePathToLibraryDirectory, RelativeFilePath.of(this.name));
         this.context.logger.debug(`mkdir ${absolutePathToProjectDirectory}`);
         await mkdir(absolutePathToProjectDirectory, { recursive: true });
 
@@ -328,21 +379,36 @@ dotnet_diagnostic.IDE0005.severity = error
             (await readFile(getAsIsFilepath(AsIsFiles.CustomProps))).toString()
         );
 
-        await loggingExeca(this.context.logger, "dotnet", ["sln", "add", `${this.name}/${this.name}.csproj`], {
+        // Calculate relative path from solution directory to project directory
+        const relativeProjectPath = path.posix.join(libraryPath, this.name, `${this.name}.csproj`);
+        const relativePathFromSolution =
+            solutionPath === "." ? relativeProjectPath : path.posix.relative(solutionPath, relativeProjectPath);
+
+        await loggingExeca(this.context.logger, "dotnet", ["sln", "add", relativePathFromSolution], {
             doNotPipeOutput: true,
-            cwd: absolutePathToSrcDirectory
+            cwd: absolutePathToSolutionDirectory
         });
 
         return absolutePathToProjectDirectory;
     }
 
     private async createTestProject({
-        absolutePathToSrcDirectory
+        absolutePathToTestDirectory,
+        absolutePathToSolutionDirectory,
+        absolutePathToProjectDirectory,
+        testPath,
+        libraryPath,
+        solutionPath
     }: {
-        absolutePathToSrcDirectory: AbsoluteFilePath;
+        absolutePathToTestDirectory: AbsoluteFilePath;
+        absolutePathToSolutionDirectory: AbsoluteFilePath;
+        absolutePathToProjectDirectory: AbsoluteFilePath;
+        testPath: string;
+        libraryPath: string;
+        solutionPath: string;
     }): Promise<AbsoluteFilePath> {
         const testProjectName = this.names.files.testProject;
-        const absolutePathToTestProject = join(this.absolutePathToOutputDirectory, this.constants.folders.testFiles);
+        const absolutePathToTestProject = join(absolutePathToTestDirectory, RelativeFilePath.of(testProjectName));
         await mkdir(absolutePathToTestProject, { recursive: true });
 
         const testCsProjTemplateContents = (
@@ -360,15 +426,39 @@ dotnet_diagnostic.IDE0005.severity = error
             join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.Custom.props`)),
             (await readFile(getAsIsFilepath(AsIsFiles.Test.TestCustomProps))).toString()
         );
+
+        // Calculate relative path from solution directory to test project directory
+        const relativeTestProjectPath = path.posix.join(testPath, testProjectName, `${testProjectName}.csproj`);
+        const relativePathFromSolution =
+            solutionPath === "." ? relativeTestProjectPath : path.posix.relative(solutionPath, relativeTestProjectPath);
+
+        await loggingExeca(this.context.logger, "dotnet", ["sln", "add", relativePathFromSolution], {
+            doNotPipeOutput: true,
+            cwd: absolutePathToSolutionDirectory
+        });
+
+        // Update project reference in test project to point to the library project
+        // First remove the old reference (from template), then add the correct one
+        const testCsprojPath = join(absolutePathToTestProject, RelativeFilePath.of(`${testProjectName}.csproj`));
+        const libraryCsprojPath = join(absolutePathToProjectDirectory, RelativeFilePath.of(`${this.name}.csproj`));
+
+        // Use dotnet CLI to update the project reference
         await loggingExeca(
             this.context.logger,
             "dotnet",
-            ["sln", "add", `${testProjectName}/${testProjectName}.csproj`],
+            ["remove", testCsprojPath, "reference", `../${this.name}/${this.name}.csproj`],
             {
                 doNotPipeOutput: true,
-                cwd: absolutePathToSrcDirectory
+                cwd: absolutePathToTestProject
             }
-        );
+        ).catch(() => {
+            // Ignore error if reference doesn't exist
+        });
+
+        await loggingExeca(this.context.logger, "dotnet", ["add", testCsprojPath, "reference", libraryCsprojPath], {
+            doNotPipeOutput: true,
+            cwd: absolutePathToTestProject
+        });
 
         return absolutePathToTestProject;
     }

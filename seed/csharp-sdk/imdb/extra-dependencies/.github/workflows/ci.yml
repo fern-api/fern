@@ -53,13 +53,13 @@ jobs:
           dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src
+        run: dotnet restore SeedApi.slnx
 
       - name: Build Release
-        run: dotnet build src -c Release --no-restore
+        run: dotnet build SeedApi.slnx -c Release --no-restore
 
       - name: Run Tests
-        run: dotnet test src -c Release --no-build --no-restore
+        run: dotnet test src/SeedApi.Test -c Release --no-build --no-restore
 
 
   publish:

@@ -194,7 +194,39 @@ export class Generation {
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */
-        explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true
+        explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
+        /**
+         * Output path configuration for generated files.
+         * Returns normalized paths for library, test, solution, and other files.
+         */
+        outputPath: () => {
+            const config = this.customConfig["output-path"];
+            if (config == null) {
+                // Default: all files go to "src" for library/test, "." for solution/other
+                return {
+                    library: "src",
+                    test: "src",
+                    solution: ".",
+                    other: "."
+                };
+            }
+            if (typeof config === "string") {
+                // Simple string: library and test go to that path, solution/other go to "."
+                return {
+                    library: config,
+                    test: config,
+                    solution: ".",
+                    other: "."
+                };
+            }
+            // Object: use specified paths with defaults
+            return {
+                library: config.library ?? "src",
+                test: config.test ?? "src",
+                solution: config.solution ?? ".",
+                other: config.other ?? "."
+            };
+        }
     });
 
     public readonly constants = {
