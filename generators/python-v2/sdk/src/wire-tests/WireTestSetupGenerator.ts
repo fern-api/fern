@@ -11,19 +11,10 @@ import { SdkGeneratorContext } from "../SdkGeneratorContext";
 export class WireTestSetupGenerator {
     private readonly context: SdkGeneratorContext;
     private readonly ir: IntermediateRepresentation;
-    private readonly packagePathPrefix: string;
 
-    constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation, packagePathPrefix: string = "") {
+    constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
         this.context = context;
         this.ir = ir;
-        this.packagePathPrefix = packagePathPrefix;
-    }
-
-    /**
-     * Builds a path with the package path prefix if set.
-     */
-    private withPackagePrefix(relativePath: string): string {
-        return this.packagePathPrefix ? `${this.packagePathPrefix}/${relativePath}` : relativePath;
     }
 
     /**
@@ -45,7 +36,7 @@ export class WireTestSetupGenerator {
         const wireMockConfigContent = WireTestSetupGenerator.getWiremockConfigContent(this.ir);
         const wireMockConfigFile = new File(
             "wiremock-mappings.json",
-            RelativeFilePath.of(this.withPackagePrefix("wiremock")),
+            RelativeFilePath.of("wiremock"),
             JSON.stringify(wireMockConfigContent)
         );
         this.context.project.addRawFiles(wireMockConfigFile);
@@ -60,7 +51,7 @@ export class WireTestSetupGenerator {
         const dockerComposeContent = this.buildDockerComposeContent();
         const dockerComposeFile = new File(
             "docker-compose.test.yml",
-            RelativeFilePath.of(this.withPackagePrefix("wiremock")),
+            RelativeFilePath.of("wiremock"),
             dockerComposeContent
         );
 
@@ -96,7 +87,7 @@ export class WireTestSetupGenerator {
         const conftestContent = this.buildConftestContent();
         const conftestFile = new File(
             "conftest.py",
-            RelativeFilePath.of(this.withPackagePrefix("tests/wire")),
+            RelativeFilePath.of("tests/wire"),
             conftestContent
         );
 
@@ -108,7 +99,7 @@ export class WireTestSetupGenerator {
      * Generates an __init__.py file to make tests/wire a proper Python package
      */
     private generateInitFile(): void {
-        const initFile = new File("__init__.py", RelativeFilePath.of(this.withPackagePrefix("tests/wire")), "");
+        const initFile = new File("__init__.py", RelativeFilePath.of("tests/wire"), "");
         this.context.project.addRawFiles(initFile);
         this.context.logger.debug("Generated __init__.py for tests/wire package");
     }
@@ -240,9 +231,22 @@ def verify_request_count(
      * Gets the import statement for the client class.
      */
     private getClientImport(): string {
-        const orgName = this.context.config.organization;
         const clientClassName = this.getClientClassName();
-        return `from ${orgName}.client import ${clientClassName}`;
+        const modulePath = this.getModulePath();
+        return `from ${modulePath}.client import ${clientClassName}`;
+    }
+
+    /**
+     * Gets the full module path including package_path if set.
+     */
+    private getModulePath(): string {
+        const orgName = this.context.config.organization;
+        const packagePath = this.context.customConfig.package_path;
+        if (packagePath) {
+            const packagePathDotted = packagePath.replace(/\//g, ".");
+            return `${orgName}.${packagePathDotted}`;
+        }
+        return orgName;
     }
 
     /**

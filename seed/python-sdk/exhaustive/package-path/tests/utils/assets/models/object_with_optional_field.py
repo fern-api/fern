@@ -10,7 +10,8 @@ import typing_extensions
 from .color import Color
 from .shape import ShapeParams
 from .undiscriminated_shape import UndiscriminatedShapeParams
-from seed.core.serialization import FieldMetadata
+
+from seed.matryoshka.doll.structure.core.serialization import FieldMetadata
 
 
 class ObjectWithOptionalFieldParams(typing_extensions.TypedDict):

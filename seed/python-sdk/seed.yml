@@ -253,7 +253,8 @@ fixtures:
         lazy_imports: false
       outputFolder: eager-imports
     - customConfig:
-        package_path: in/here/please
+        package_path: matryoshka/doll/structure
+        enable_wire_tests: true
       outputFolder: package-path
   file-upload:
     - customConfig: null
@@ -371,13 +372,11 @@ allowedFailures:
   - exhaustive:additional_init_exports
   - exhaustive:deps_with_min_python_version
   - exhaustive:pydantic-v1-with-utils
-  - exhaustive:package-path  # generates fine and tests fine, but "mypy ./src" fails since src is somewhere else
   - oauth-client-credentials-custom
   - pagination-custom
   - response-property
   - streaming-parameter
   - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
   - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
-  - exhaustive:package-path
   - trace
   - websocket
