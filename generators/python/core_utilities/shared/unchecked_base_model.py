@@ -57,7 +57,7 @@ class UncheckedBaseModel(UniversalBaseModel):
                 annotation=cls,
                 direction="read",
             )
-            return super().model_validate(dealiased_obj, *args, **kwargs)
+            return super().model_validate(dealiased_obj, *args, **kwargs)  # type: ignore[misc]
 
     @classmethod
     def model_construct(
