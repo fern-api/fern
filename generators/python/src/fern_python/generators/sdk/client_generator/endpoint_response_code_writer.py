@@ -533,22 +533,9 @@ class EndpointResponseCodeWriter:
                 if is_optional:
                     writer.write_line(f"if {RESPONSE_VARIABLE} is None or not {RESPONSE_VARIABLE}.text.strip():")
                     with writer.indent():
-                        if self._pagination is not None:
-                            # For pagination endpoints, return an empty pager instead of HttpResponse[None]
-                            empty_pager_expr = self._context.core_utilities.instantiate_paginator(
-                                is_async=self._is_async,
-                                has_next=AST.Expression("False"),
-                                items=AST.Expression("[]"),
-                                get_next=AST.Expression("None"),
-                                response=AST.Expression("None"),
-                            )
-                            writer.write("return ")
-                            writer.write_node(empty_pager_expr)
-                            writer.write_newline_if_last_line_not()
-                        else:
-                            writer.write("return ")
-                            writer.write_node(self._instantiate_http_response(data=AST.Expression("None")))
-                            writer.write_newline_if_last_line_not()
+                        writer.write("return ")
+                        writer.write_node(self._instantiate_http_response(data=AST.Expression("None")))
+                        writer.write_newline_if_last_line_not()
             writer.write_line(f"if 200 <= {RESPONSE_VARIABLE}.status_code < 300:")
             with writer.indent():
                 if self._response is None or self._response.body is None:

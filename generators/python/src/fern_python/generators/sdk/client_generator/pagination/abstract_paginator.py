@@ -75,29 +75,28 @@ class Paginator:
     def write(self, *, writer: AST.NodeWriter) -> None:
         self.init_parsed_response(writer=writer)
 
-        # Always include a check for _parsed_response not being None to handle optional response types
-        parsed_response_not_none = f"{Paginator.PARSED_RESPONSE_VARIABLE} is not None"
         items_non_safe_condition = self._get_none_safe_property_condition(self.get_results_property())
         results_property = f"{Paginator.PARSED_RESPONSE_VARIABLE}.{self.access_results_property_path()}"
-
-        # Combine the parsed response check with any property path checks
         if items_non_safe_condition is not None:
-            full_condition = f"{parsed_response_not_none} and {items_non_safe_condition}"
-        else:
-            full_condition = parsed_response_not_none
-
-        writer.write_node(
-            AST.VariableDeclaration(
-                name=Paginator.PAGINATION_ITEMS_VARIABLE,
-                initializer=AST.Expression(
-                    AST.ConditionalExpression(
-                        test=AST.Expression(full_condition),
-                        left=AST.Expression(results_property),
-                        right=AST.Expression("[]"),
-                    )
-                ),
+            writer.write_node(
+                AST.VariableDeclaration(
+                    name=Paginator.PAGINATION_ITEMS_VARIABLE,
+                    initializer=AST.Expression(
+                        AST.ConditionalExpression(
+                            test=AST.Expression(items_non_safe_condition),
+                            left=AST.Expression(results_property),
+                            right=AST.Expression("[]"),
+                        )
+                    ),
+                )
             )
-        )
+        else:
+            writer.write_node(
+                AST.VariableDeclaration(
+                    name=Paginator.PAGINATION_ITEMS_VARIABLE,
+                    initializer=AST.Expression(results_property),
+                )
+            )
 
         def init_vars(writer: AST.NodeWriter) -> None:
             # Step 1: Initialize custom variables
@@ -112,17 +111,11 @@ class Paginator:
         next_none_safe_condition = self.get_next_none_safe_condition()
         if next_none_safe_condition is not None:
             self.init_custom_vars_pre_next(writer=writer)
-            # Add parsed response null check to the condition
-            full_next_condition = f"{parsed_response_not_none} and {next_none_safe_condition}"
-            writer.write_line(f"if {full_next_condition}:")
+            writer.write_line(f"if {next_none_safe_condition}:")
             with writer.indent():
                 init_vars(writer=writer)
         else:
-            # Still need to wrap in parsed response null check
-            self.init_custom_vars_pre_next(writer=writer)
-            writer.write_line(f"if {parsed_response_not_none}:")
-            with writer.indent():
-                init_vars(writer=writer)
+            init_vars(writer=writer)
 
         # Step 4: Instantiate paginator
         paginator_expr = self._context.core_utilities.instantiate_paginator(
