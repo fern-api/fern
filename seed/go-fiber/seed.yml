@@ -59,3 +59,5 @@ allowedFailures:
   - trace
   - request-parameters
   - property-access
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults

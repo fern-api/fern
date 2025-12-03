@@ -108,3 +108,5 @@ allowedFailures:
   - streaming
   - streaming-parameter
   - enum
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults

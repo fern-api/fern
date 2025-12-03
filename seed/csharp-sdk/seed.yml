@@ -227,4 +227,6 @@ fixtures:
       outputFolder: no-custom-config
 allowedFailures:
   - oauth-client-credentials-custom
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults
  

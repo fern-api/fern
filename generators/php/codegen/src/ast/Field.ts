@@ -41,6 +41,10 @@ export class Field extends AstNode {
     private attributes: Attribute[];
     public readonly inherited: boolean;
 
+    public getInitializer(): CodeBlock | undefined {
+        return this.initializer;
+    }
+
     constructor({ name, type, access, readonly_, initializer, docs, inlineDocs, attributes, inherited }: Field.Args) {
         super();
         this.name = convertToPhpVariableName(name);

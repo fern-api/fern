@@ -153,6 +153,8 @@ allowedFailures:
   - unions
   # Java-specific fixture for LocalDate support
   - unions-with-local-date
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults
   - variables
   - websocket-inferred-auth
   # Intermediate failures

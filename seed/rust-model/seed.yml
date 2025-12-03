@@ -49,3 +49,6 @@ fixtures:
     - customConfig:
         generateBuilders: true
       outputFolder: with-builders
+allowedFailures:
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults

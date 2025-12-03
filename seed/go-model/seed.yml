@@ -62,3 +62,5 @@ allowedFailures:
   - property-access
   - reserved-keywords
   - trace
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults

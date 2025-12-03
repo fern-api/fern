@@ -148,3 +148,5 @@ allowedFailures:
   - inferred-auth-implicit-no-expiry
   - websocket-inferred-auth
   - undiscriminated-union-with-response-property
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults

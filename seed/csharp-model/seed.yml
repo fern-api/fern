@@ -52,3 +52,6 @@ scripts:
     commands:
       - dotnet restore src
       - dotnet build src -c Release --no-restore
+allowedFailures:
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults

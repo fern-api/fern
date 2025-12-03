@@ -12,3 +12,5 @@ generatorType: Model
 defaultOutputMode: local_files
 allowedFailures:
   - version
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults

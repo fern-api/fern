@@ -73,6 +73,8 @@ fixtures:
 
 allowedFailures:
   - nullable-request-body
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults
 
 features:
   requestOptions: true

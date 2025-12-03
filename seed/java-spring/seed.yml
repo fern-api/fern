@@ -69,3 +69,5 @@ allowedFailures:
   - multiple-request-bodies
   - undiscriminated-union-with-response-property
   - enum
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults

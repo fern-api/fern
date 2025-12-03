@@ -148,6 +148,8 @@ allowedFailures:
   - unknown
   # Java-specific fixture for staged builder ordering
   - java-staged-builder-ordering
+  # PHP-specific fixture for useProvidedDefaults config
+  - php-use-provided-defaults
   - url-form-encoded
   - validation
   - variables

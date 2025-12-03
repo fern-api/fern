@@ -10,6 +10,8 @@ export const BasePhpCustomConfigSchema = z.object({
     namespace: z.string().optional(),
     composerJson: z.optional(z.record(z.any())),
     customReadmeSections: z.array(CustomReadmeSectionSchema).optional(),
+    // Leverage defaults specified in the API specification
+    useProvidedDefaults: z.boolean().optional(),
     // Deprecated; use clientName instead.
     "client-class-name": z.string().optional()
 });
