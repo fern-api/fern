@@ -332,6 +332,12 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
 			)
 		}
+		if authScheme.Inferred != nil {
+			// For inferred auth, we add a TokenRequest field that holds the token request.
+			// We use interface{} to avoid import cycles between core and the root package.
+			// The actual type is *GetTokenRequest and is cast in the InferredAuthProvider.
+			f.P("TokenRequest interface{}")
+		}
 	}
 	for _, header := range headers {
 		if !shouldGenerateHeader(header, f.types) {
@@ -558,6 +564,28 @@ func (f *fileWriter) writeRequestOptionStructs(
 				)
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
 					return err
+				}
+			}
+			if authScheme.Inferred != nil {
+				// For inferred auth, we generate a TokenRequestOption that holds the token request.
+				// We use interface{} to avoid import cycles between core and the root package.
+				// The actual type is *GetTokenRequest and is cast in the InferredAuthProvider.
+				f.P("// TokenRequestOption implements the RequestOption interface.")
+				f.P("type TokenRequestOption struct {")
+				f.P("TokenRequest interface{}")
+				f.P("}")
+				f.P()
+
+				f.P("func (t *TokenRequestOption) applyRequestOptions(opts *RequestOptions) {")
+				f.P("opts.TokenRequest = t.TokenRequest")
+				f.P("}")
+				f.P()
+
+				if asIdempotentRequestOption {
+					f.P("func (t *TokenRequestOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {")
+					f.P("opts.TokenRequest = t.TokenRequest")
+					f.P("}")
+					f.P()
 				}
 			}
 		}
@@ -834,6 +862,35 @@ func (f *fileWriter) WriteRequestOptions(
 			f.P("func ", optionName, "(", param, " ", value, ") *", typeName, " {")
 			f.P("return &", typeName, "{")
 			f.P(field, ": ", param, ",")
+			f.P("}")
+			f.P("}")
+			f.P()
+		}
+		if authScheme.Inferred != nil {
+			// For inferred auth, we generate a WithToken option that takes a pointer to the
+			// token request type. The token request type is generated in the root package.
+			if i == 0 {
+				option = ast.NewCallExpr(
+					ast.NewImportedReference(
+						"WithToken",
+						importPath,
+					),
+					[]ast.Expr{
+						ast.NewBasicLit(`nil`),
+					},
+				)
+			}
+			f.P("// WithToken sets the token request for inferred authentication.")
+			f.P("// The token request will be used to acquire and cache authentication tokens.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			// Import the root package to reference the token request type
+			rootImport := f.scope.AddImport(f.baseImportPath)
+			f.P("func WithToken(tokenRequest *", rootImport, ".GetTokenRequest) *core.TokenRequestOption {")
+			f.P("return &core.TokenRequestOption{")
+			f.P("TokenRequest: tokenRequest,")
 			f.P("}")
 			f.P("}")
 			f.P()

@@ -2,10 +2,28 @@ import { join, RelativeFilePath } from "@fern-api/fs-utils";
 import { go } from "@fern-api/go-ast";
 import { FileGenerator, GoFile } from "@fern-api/go-base";
 
-import { HttpEndpoint, HttpService, InferredAuthScheme } from "@fern-fern/ir-sdk/api";
+import {
+    HttpEndpoint,
+    HttpHeader,
+    HttpService,
+    InferredAuthScheme,
+    InlinedRequestBodyProperty,
+    TypeReference
+} from "@fern-fern/ir-sdk/api";
 
 import { SdkCustomConfigSchema } from "../SdkCustomConfig";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
+
+interface TokenRequestParameter {
+    name: string;
+    pascalCaseName: string;
+    camelCaseName: string;
+    type: go.Type;
+    typeReference: TypeReference;
+    isOptional: boolean;
+    isHeader: boolean;
+    wireValue: string;
+}
 
 export declare namespace InferredAuthProviderGenerator {
     interface Args {
@@ -83,6 +101,17 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
             })
         );
 
+        // Add tokenRequest field to store the request parameters
+        const tokenRequestTypeRef = this.getTokenRequestTypeReference();
+        if (tokenRequestTypeRef != null) {
+            struct.addField(
+                go.field({
+                    name: "tokenRequest",
+                    type: go.Type.pointer(go.Type.reference(tokenRequestTypeRef))
+                })
+            );
+        }
+
         // Add constructor
         struct.addConstructor(this.getConstructor());
 
@@ -108,32 +137,55 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
     }
 
     private getConstructor(): go.Struct.Constructor {
+        const tokenRequestTypeRef = this.getTokenRequestTypeReference();
+        const parameters: go.Parameter[] = [this.context.getRequestOptionsParameter()];
+
+        // Add tokenRequest parameter if the token endpoint has a request type
+        if (tokenRequestTypeRef != null) {
+            parameters.push(
+                go.parameter({
+                    name: "tokenRequest",
+                    type: go.Type.pointer(go.Type.reference(tokenRequestTypeRef))
+                })
+            );
+        }
+
         return {
             name: "NewInferredAuthProvider",
-            parameters: [this.context.getRequestOptionsParameter()],
+            parameters,
             body: go.codeblock((writer) => {
+                const fields: { name: string; value: go.TypeInstantiation }[] = [
+                    {
+                        name: "client",
+                        value: go.TypeInstantiation.reference(
+                            go.invokeFunc({
+                                func: this.getAuthClientConstructorReference(),
+                                arguments_: [go.codeblock("options")],
+                                multiline: false
+                            })
+                        )
+                    },
+                    {
+                        name: "options",
+                        value: go.TypeInstantiation.reference(go.codeblock("options"))
+                    }
+                ];
+
+                // Add tokenRequest field if present
+                if (tokenRequestTypeRef != null) {
+                    fields.push({
+                        name: "tokenRequest",
+                        value: go.TypeInstantiation.reference(go.codeblock("tokenRequest"))
+                    });
+                }
+
                 writer.write("return ");
                 writer.writeNode(
                     go.TypeInstantiation.structPointer({
                         typeReference: go.typeReference({
                             name: "InferredAuthProvider"
                         }),
-                        fields: [
-                            {
-                                name: "client",
-                                value: go.TypeInstantiation.reference(
-                                    go.invokeFunc({
-                                        func: this.getAuthClientConstructorReference(),
-                                        arguments_: [go.codeblock("options")],
-                                        multiline: false
-                                    })
-                                )
-                            },
-                            {
-                                name: "options",
-                                value: go.TypeInstantiation.reference(go.codeblock("options"))
-                            }
-                        ]
+                        fields
                     })
                 );
             })
@@ -178,7 +230,13 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
                 writer.writeLine("// Fetch a new token");
                 writer.write(`token, err := ${recv}.client.`);
                 writer.write(this.getTokenEndpointMethodName());
-                writer.writeLine("(ctx, nil)");
+                // Use the stored token request if available
+                const tokenRequestTypeRef = this.getTokenRequestTypeReference();
+                if (tokenRequestTypeRef != null) {
+                    writer.writeLine(`(ctx, ${recv}.tokenRequest)`);
+                } else {
+                    writer.writeLine("(ctx, nil)");
+                }
                 writer.writeLine("if err != nil {");
                 writer.indent();
                 writer.writeLine("return nil, err");
@@ -339,5 +397,92 @@ export class InferredAuthProviderGenerator extends FileGenerator<GoFile, SdkCust
 
     private getImportPath(): string {
         return this.getServiceClientLocation().importPath;
+    }
+
+    /**
+     * Extracts the non-literal parameters from the token endpoint request.
+     * These are the parameters that need to be provided by the user via WithToken().
+     */
+    public getTokenRequestParameters(): TokenRequestParameter[] {
+        const endpoint = this.getTokenEndpoint();
+        const parameters: TokenRequestParameter[] = [];
+
+        // Extract headers (excluding literals)
+        for (const header of endpoint.headers) {
+            if (!this.isLiteralType(header.valueType)) {
+                parameters.push(this.headerToParameter(header));
+            }
+        }
+
+        // Extract body properties (excluding literals)
+        const requestBody = endpoint.requestBody;
+        if (requestBody != null && requestBody.type === "inlinedRequestBody") {
+            for (const property of requestBody.properties) {
+                if (!this.isLiteralType(property.valueType)) {
+                    parameters.push(this.bodyPropertyToParameter(property));
+                }
+            }
+        }
+
+        return parameters;
+    }
+
+    private isLiteralType(typeReference: TypeReference): boolean {
+        return typeReference.type === "container" && typeReference.container.type === "literal";
+    }
+
+    private headerToParameter(header: HttpHeader): TokenRequestParameter {
+        const isOptional = this.context.isOptional(header.valueType);
+        return {
+            name: header.name.name.originalName,
+            pascalCaseName: header.name.name.pascalCase.unsafeName,
+            camelCaseName: header.name.name.camelCase.safeName,
+            type: this.context.goTypeMapper.convert({ reference: header.valueType }),
+            typeReference: header.valueType,
+            isOptional,
+            isHeader: true,
+            wireValue: header.name.wireValue
+        };
+    }
+
+    private bodyPropertyToParameter(property: InlinedRequestBodyProperty): TokenRequestParameter {
+        const isOptional = this.context.isOptional(property.valueType);
+        return {
+            name: property.name.name.originalName,
+            pascalCaseName: property.name.name.pascalCase.unsafeName,
+            camelCaseName: property.name.name.camelCase.safeName,
+            type: this.context.goTypeMapper.convert({ reference: property.valueType }),
+            typeReference: property.valueType,
+            isOptional,
+            isHeader: false,
+            wireValue: property.name.wireValue
+        };
+    }
+
+    /**
+     * Gets the type reference for the token request struct.
+     * This is the request type for the token endpoint.
+     */
+    public getTokenRequestTypeReference(): go.TypeReference | undefined {
+        const endpoint = this.getTokenEndpoint();
+        const sdkRequest = endpoint.sdkRequest;
+        if (sdkRequest == null) {
+            return undefined;
+        }
+        const shape = sdkRequest.shape;
+        if (shape.type !== "wrapper") {
+            return undefined;
+        }
+        // Get the request type name from the wrapper
+        const wrapperName = shape.wrapperName.pascalCase.unsafeName;
+        // The request type is generated in the root package (or based on exportAllRequestsAtRoot config)
+        const service = this.getService();
+        const location = this.context.customConfig.exportAllRequestsAtRoot
+            ? { importPath: this.context.getRootImportPath() }
+            : this.context.getPackageLocation(service.name.fernFilepath);
+        return go.typeReference({
+            name: wrapperName,
+            importPath: location.importPath
+        });
     }
 }

@@ -3,6 +3,7 @@
 package option
 
 import (
+	fern "github.com/inferred-auth-explicit/fern"
 	core "github.com/inferred-auth-explicit/fern/core"
 	http "net/http"
 	url "net/url"
@@ -60,5 +61,13 @@ func WithQueryParameters(queryParameters url.Values) *core.QueryParametersOption
 func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
 	return &core.MaxAttemptsOption{
 		MaxAttempts: attempts,
+	}
+}
+
+// WithToken sets the token request for inferred authentication.
+// The token request will be used to acquire and cache authentication tokens.
+func WithToken(tokenRequest *fern.GetTokenRequest) *core.TokenRequestOption {
+	return &core.TokenRequestOption{
+		TokenRequest: tokenRequest,
 	}
 }

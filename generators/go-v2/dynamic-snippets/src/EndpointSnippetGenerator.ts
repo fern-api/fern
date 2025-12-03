@@ -336,8 +336,7 @@ export class EndpointSnippetGenerator {
                 this.addWarning("The Go SDK doesn't support OAuth client credentials yet");
                 return TypeInst.nop();
             case "inferred":
-                this.addWarning("The Go SDK Generator does not support Inferred auth scheme yet");
-                return TypeInst.nop();
+                return this.getConstructorInferredAuthArg();
             default:
                 assertNever(auth);
         }
@@ -369,6 +368,22 @@ export class EndpointSnippetGenerator {
                         go.TypeInstantiation.string(values.username),
                         go.TypeInstantiation.string(values.password)
                     ]
+                })
+            );
+        });
+    }
+
+    private getConstructorInferredAuthArg(): go.AstNode {
+        // For inferred auth, we generate a WithToken call with a nil token request.
+        // The actual token request should be provided by the user at runtime.
+        return go.codeblock((writer) => {
+            writer.writeNode(
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "WithToken",
+                        importPath: this.context.getOptionImportPath()
+                    }),
+                    arguments_: [go.codeblock("nil")]
                 })
             );
         });

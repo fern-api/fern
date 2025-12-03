@@ -23,6 +23,7 @@ type RequestOptions struct {
 	BodyProperties  map[string]interface{}
 	QueryParameters url.Values
 	MaxAttempts     uint
+	TokenRequest    interface{}
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -109,4 +110,13 @@ type MaxAttemptsOption struct {
 
 func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
 	opts.MaxAttempts = m.MaxAttempts
+}
+
+// TokenRequestOption implements the RequestOption interface.
+type TokenRequestOption struct {
+	TokenRequest interface{}
+}
+
+func (t *TokenRequestOption) applyRequestOptions(opts *RequestOptions) {
+	opts.TokenRequest = t.TokenRequest
 }

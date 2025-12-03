@@ -12,17 +12,19 @@ import (
 )
 
 type InferredAuthProvider struct {
-	mu          sync.Mutex
-	client      *Client
-	options     *core.RequestOptions
-	expiresAt   *time.Time
-	cachedToken *fern.TokenResponse
+	mu           sync.Mutex
+	client       *Client
+	options      *core.RequestOptions
+	expiresAt    *time.Time
+	cachedToken  *fern.TokenResponse
+	tokenRequest *fern.GetTokenRequest
 }
 
-func NewInferredAuthProvider(options *core.RequestOptions) *InferredAuthProvider {
+func NewInferredAuthProvider(options *core.RequestOptions, tokenRequest *fern.GetTokenRequest) *InferredAuthProvider {
 	return &InferredAuthProvider{
-		client:  NewClient(options),
-		options: options,
+		client:       NewClient(options),
+		options:      options,
+		tokenRequest: tokenRequest,
 	}
 }
 
@@ -39,7 +41,7 @@ func (i *InferredAuthProvider) AuthHeaders(
 	}
 
 	// Fetch a new token
-	token, err := i.client.GetTokenWithClientCredentials(ctx, nil)
+	token, err := i.client.GetTokenWithClientCredentials(ctx, i.tokenRequest)
 	if err != nil {
 		return nil, err
 	}
