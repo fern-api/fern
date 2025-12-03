@@ -98,7 +98,7 @@ runs:
       shell: bash
       run: |
         GENERATOR_NAME="${{ inputs.generator-name }}"
-        
+
         # Map generator names to their corresponding snippet package names and directories
         case "$GENERATOR_NAME" in
           "python-sdk")
@@ -139,7 +139,7 @@ runs:
             SNIPPET_DIR=""
             ;;
         esac
-        
+
         echo "snippet_package=$SNIPPET_PACKAGE" >> "$GITHUB_OUTPUT"
         echo "snippet_dir=$SNIPPET_DIR" >> "$GITHUB_OUTPUT"
 
