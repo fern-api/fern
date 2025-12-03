@@ -14,6 +14,11 @@ interface RunningScriptConfig extends ContainerScriptConfig {
     containerId: string;
 }
 
+interface InternalScriptResult {
+    type: "success" | "failure";
+    message?: string;
+}
+
 /**
  * Runs scripts on the generated code to verify the output using container runtimes (Docker or Podman).
  */
@@ -59,10 +64,17 @@ export class ContainerScriptRunner extends ScriptRunner {
         skipScripts
     }: ScriptRunner.RunArgs): Promise<ScriptRunner.RunResponse> {
         await this.startContainersFn;
-        for (const script of this.scripts) {
-            // Check if this script should be skipped based on its name
+
+        const buildScripts = this.scripts.filter((script) => !this.isTestScript(script));
+        const testScripts = this.scripts.filter((script) => this.isTestScript(script));
+
+        let buildTimeMs: number | undefined;
+        let testTimeMs: number | undefined;
+
+        const buildStartTime = Date.now();
+        for (const script of buildScripts) {
             if (skipScripts != null && script.name != null && skipScripts.includes(script.name)) {
-                taskContext.logger.info(`Skipping script "${script.name}" for ${id} (configured in fixture)`);
+                taskContext.logger.info(`Skipping build script "${script.name}" for ${id} (configured in fixture)`);
                 continue;
             }
 
@@ -74,10 +86,49 @@ export class ContainerScriptRunner extends ScriptRunner {
                 id
             });
             if (result.type === "failure") {
-                return result;
+                buildTimeMs = Date.now() - buildStartTime;
+                return {
+                    type: "failure",
+                    phase: "build",
+                    message: result.message ?? "Build script failed",
+                    buildTimeMs
+                };
             }
         }
-        return { type: "success" };
+        buildTimeMs = Date.now() - buildStartTime;
+
+        const testStartTime = Date.now();
+        for (const script of testScripts) {
+            if (skipScripts != null && script.name != null && skipScripts.includes(script.name)) {
+                taskContext.logger.info(`Skipping test script "${script.name}" for ${id} (configured in fixture)`);
+                continue;
+            }
+
+            const result = await this.runScript({
+                taskContext,
+                containerId: script.containerId,
+                outputDir,
+                script,
+                id
+            });
+            if (result.type === "failure") {
+                testTimeMs = Date.now() - testStartTime;
+                return {
+                    type: "failure",
+                    phase: "test",
+                    message: result.message ?? "Test script failed",
+                    buildTimeMs,
+                    testTimeMs
+                };
+            }
+        }
+        testTimeMs = Date.now() - testStartTime;
+
+        return { type: "success", buildTimeMs, testTimeMs };
+    }
+
+    private isTestScript(script: RunningScriptConfig): boolean {
+        return script.name != null && script.name.toLowerCase().startsWith("test");
     }
 
     public async stop(): Promise<void> {
@@ -104,7 +155,7 @@ export class ContainerScriptRunner extends ScriptRunner {
         taskContext: TaskContext;
         containerId: string;
         script: ContainerScriptConfig;
-    }): Promise<ScriptRunner.RunResponse> {
+    }): Promise<InternalScriptResult> {
         const workDir = id.replace(":", "_");
         const scriptFile = await tmp.file();
         const scriptContents = ["set -e", `cd /${workDir}/generated`, ...script.commands].join("\n");
