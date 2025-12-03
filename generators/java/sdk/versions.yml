@@ -1,3 +1,11 @@
+- version: 3.20.2
+  changelogEntry:
+    - summary: |
+        Improve generator logging by removing verbose "java v2 generator" status messages and adding per-file logging. Each generated file is now logged individually, matching the C# generator pattern.
+      type: fix
+  createdAt: "2025-12-02"
+  irVersion: 61
+
 - version: 3.20.1
   changelogEntry:
     - summary: |

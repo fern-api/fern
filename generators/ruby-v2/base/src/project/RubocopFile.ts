@@ -51,6 +51,9 @@ Metrics/ParameterLists:
 Metrics/PerceivedComplexity:
   Enabled: false
 
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
 Style/Documentation:
   Enabled: false
 `;

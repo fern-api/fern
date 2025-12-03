@@ -138,6 +138,9 @@ function convertOneOfExample(oneOf: FullOneOfExample): RawSchemas.ExampleTypeRef
 function convertLiteralExample(literal: LiteralExample): RawSchemas.ExampleTypeReferenceSchema {
     switch (literal.type) {
         case "string":
+            if (literal.value.startsWith("$")) {
+                return `\\${literal.value}`;
+            }
             return literal.value;
         case "boolean":
             return literal.value;

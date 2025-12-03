@@ -2,7 +2,24 @@
 
 - changelogEntry:
     - summary: |
-        Gracefully handle null values in docs.yml.
+        Gracefully handle null values in docs.yml structure.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.17.3
+
+- changelogEntry:
+    - summary: |
+        Escape `$` when inferring examples from literals that start with `$`.
+        This fixes validation issues like `Example $ending is malformed. Examples should be formatted like $YourType.ExampleName`.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-02"
+  version: 2.17.2
+
+- changelogEntry:
+    - summary: |
+        Fix file scope type resolution for inline request properties
       type: fix
   irVersion: 62
   createdAt: "2025-12-02"
