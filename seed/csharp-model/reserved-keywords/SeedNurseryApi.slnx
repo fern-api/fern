@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedNurseryApi.Test/SeedNurseryApi.Test.csproj" />
+  <Project Path="src/SeedNurseryApi/SeedNurseryApi.csproj" />
+</Solution>

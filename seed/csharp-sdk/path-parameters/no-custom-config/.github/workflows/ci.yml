@@ -28,10 +28,10 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedPathParameters
+        run: dotnet restore src/SeedPathParameters/SeedPathParameters.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedPathParameters -c Release --no-restore
+        run: dotnet build src/SeedPathParameters/SeedPathParameters.csproj -c Release --no-restore
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -53,13 +53,13 @@ jobs:
           dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src
+        run: dotnet restore src/SeedPathParameters.Test/SeedPathParameters.Test.csproj
 
       - name: Build Release
-        run: dotnet build src -c Release --no-restore
+        run: dotnet build src/SeedPathParameters.Test/SeedPathParameters.Test.csproj -c Release --no-restore
 
       - name: Run Tests
-        run: dotnet test src -c Release --no-build --no-restore
+        run: dotnet test src/SeedPathParameters.Test/SeedPathParameters.Test.csproj -c Release --no-build --no-restore
 
 
   publish:
@@ -83,15 +83,15 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedPathParameters
+        run: dotnet restore src/SeedPathParameters/SeedPathParameters.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedPathParameters -c Release --no-restore
+        run: dotnet build src/SeedPathParameters/SeedPathParameters.csproj -c Release --no-restore
 
       - name: Publish
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
-          dotnet pack src/SeedPathParameters -c Release --no-build --no-restore
+          dotnet pack src/SeedPathParameters/SeedPathParameters.csproj -c Release --no-build --no-restore
           dotnet nuget push src/SeedPathParameters/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 

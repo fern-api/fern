@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedSingleUrlEnvironmentDefault.Test/SeedSingleUrlEnvironmentDefault.Test.csproj" />
+  <Project Path="src/SeedSingleUrlEnvironmentDefault/SeedSingleUrlEnvironmentDefault.csproj" />
+</Solution>

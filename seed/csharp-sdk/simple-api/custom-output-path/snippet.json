@@ -1,0 +1,17 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": null,
+            "id": {
+                "path": "/users/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.get"
+            },
+            "snippet": {
+                "type": "csharp",
+                "client": "using SeedSimpleApi;\n\nvar client = new SeedSimpleApiClient(\"TOKEN\");\nawait client.User.GetAsync(\"id\");\n"
+            }
+        }
+    ]
+}

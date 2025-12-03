@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedResponseProperty.Test/SeedResponseProperty.Test.csproj" />
+  <Project Path="src/SeedResponseProperty/SeedResponseProperty.csproj" />
+</Solution>

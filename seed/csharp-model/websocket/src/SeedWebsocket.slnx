@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="SeedWebsocket.Test/SeedWebsocket.Test.csproj" />
-  <Project Path="SeedWebsocket/SeedWebsocket.csproj" />
-</Solution>
