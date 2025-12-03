@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="SeedNurseryApi.Test/SeedNurseryApi.Test.csproj" />
-  <Project Path="SeedNurseryApi/SeedNurseryApi.csproj" />
-</Solution>

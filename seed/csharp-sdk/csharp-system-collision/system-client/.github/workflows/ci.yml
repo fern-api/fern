@@ -28,10 +28,10 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedCsharpSystemCollision
+        run: dotnet restore src/SeedCsharpSystemCollision/SeedCsharpSystemCollision.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedCsharpSystemCollision -c Release --no-restore
+        run: dotnet build src/SeedCsharpSystemCollision/SeedCsharpSystemCollision.csproj -c Release --no-restore
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -53,13 +53,13 @@ jobs:
           dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src
+        run: dotnet restore src/SeedCsharpSystemCollision.Test/SeedCsharpSystemCollision.Test.csproj
 
       - name: Build Release
-        run: dotnet build src -c Release --no-restore
+        run: dotnet build src/SeedCsharpSystemCollision.Test/SeedCsharpSystemCollision.Test.csproj -c Release --no-restore
 
       - name: Run Tests
-        run: dotnet test src -c Release --no-build --no-restore
+        run: dotnet test src/SeedCsharpSystemCollision.Test/SeedCsharpSystemCollision.Test.csproj -c Release --no-build --no-restore
 
 
   publish:
@@ -83,15 +83,15 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedCsharpSystemCollision
+        run: dotnet restore src/SeedCsharpSystemCollision/SeedCsharpSystemCollision.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedCsharpSystemCollision -c Release --no-restore
+        run: dotnet build src/SeedCsharpSystemCollision/SeedCsharpSystemCollision.csproj -c Release --no-restore
 
       - name: Publish
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
-          dotnet pack src/SeedCsharpSystemCollision -c Release --no-build --no-restore
+          dotnet pack src/SeedCsharpSystemCollision/SeedCsharpSystemCollision.csproj -c Release --no-build --no-restore
           dotnet nuget push src/SeedCsharpSystemCollision/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 

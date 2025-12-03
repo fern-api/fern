@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="SeedInferredAuthExplicit.Test/SeedInferredAuthExplicit.Test.csproj" />
-  <Project Path="SeedInferredAuthExplicit/SeedInferredAuthExplicit.csproj" />
-</Solution>

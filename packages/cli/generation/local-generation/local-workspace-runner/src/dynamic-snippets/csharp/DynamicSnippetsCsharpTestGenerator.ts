@@ -20,7 +20,7 @@ const PROJECT_FILE_CONTENT = `
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\\*\\*.csproj" Exclude="..\\*\\*.DynamicSnippets.csproj;..\\*\\*.Test.csproj" />
+        <ProjectReference Include="..\\..\\**\\*.csproj" Exclude="..\\..\\**\\*.DynamicSnippets.csproj;..\\..\\**\\*.Test.csproj" />
     </ItemGroup>
 </Project>`;
 
