@@ -24,7 +24,7 @@
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
     "compile": "tsc --build",
-    "postcompile": "cp -r ./src/asIs ./lib/asIs",
+    "postcompile": "rsync -a --delete ./src/asIs/ ./lib/asIs/",
     "compile:debug": "tsc --build --sourceMap",
     "depcheck": "depcheck",
     "format": "prettier --write --ignore-unknown --ignore-path ../../../shared/.prettierignore \"**\"",
