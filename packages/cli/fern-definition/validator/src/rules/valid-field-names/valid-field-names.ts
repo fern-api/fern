@@ -6,13 +6,14 @@ import { validateUnionNames } from "./validateUnionNames";
 
 export const ValidFieldNamesRule: Rule = {
     name: "valid-field-names",
-    create: () => {
+    create: (context) => {
+        const hasOpenAPISource = context.workspace.sources.some((source) => source.type === "openapi");
         return {
             definitionFile: {
                 typeDeclaration: ({ declaration }) => {
                     return visitRawTypeDeclaration<RuleViolation[]>(declaration, {
                         alias: () => [],
-                        enum: validateEnumNames,
+                        enum: (enumDeclaration) => validateEnumNames(enumDeclaration, { hasOpenAPISource }),
                         object: () => [],
                         undiscriminatedUnion: () => [],
                         discriminatedUnion: validateUnionNames
