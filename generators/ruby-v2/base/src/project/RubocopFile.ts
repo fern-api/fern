@@ -60,6 +60,9 @@ Metrics/ModuleLength:
 Style/Documentation:
   Enabled: false
 
+Style/Lambda:
+  EnforcedStyle: literal
+
 Minitest/MultipleAssertions:
   Enabled: false
 
