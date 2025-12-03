@@ -2,6 +2,15 @@
 
 - changelogEntry:
     - summary: |
+        Enable `smart-casing` by default for Go and Ruby generators. Smart-casing improves naming conventions by capitalizing common initialisms (API, HTTP, ID, etc.) and better handling number-letter combinations (v2 stays as v2 instead of v_2).
+        The CLI will automatically upgrade your _generators.yml_ to explicitly enable `smart-casing: true` for Go and Ruby generators.
+      type: break
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.0-rc0
+
+- changelogEntry:
+    - summary: |
         Improve enum validation error messages to show which enum value has an invalid name. When the API source is OpenAPI, the error message now includes guidance about using the `x-fern-enum` extension to specify valid names.
       type: fix
   irVersion: 62
