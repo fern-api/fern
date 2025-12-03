@@ -21,9 +21,9 @@ export declare namespace WrappedEndpointRequest {
     }
 }
 
-const BODY_BAG_NAME = "_body";
-const QUERY_PARAM_NAMES_VN = "_query_param_names";
-const PATH_PARAM_NAMES_VN = "_path_param_names";
+const BODY_BAG_NAME = "body_params";
+const QUERY_PARAM_NAMES_VN = "query_param_names";
+const PATH_PARAM_NAMES_VN = "path_param_names";
 
 export class WrappedEndpointRequest extends EndpointRequest {
     private serviceId: ServiceId;
@@ -129,7 +129,7 @@ export class WrappedEndpointRequest extends EndpointRequest {
                 ...(this.endpoint.requestBody.extendedProperties ?? [])
             ].map((prop) => prop.name.name.snakeCase.safeName);
 
-            const BODY_PROP_NAMES_VN = "_body_prop_names";
+            const BODY_PROP_NAMES_VN = "body_prop_names";
 
             if (this.hasPathParameters()) {
                 return {
@@ -137,22 +137,22 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         writer.writeLine(`${PATH_PARAM_NAMES_VN} = ${toRubySymbolArray(this.getPathParameterNames())}`);
                         writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
                         writer.writeLine(`${BODY_PROP_NAMES_VN} = ${toRubySymbolArray(bodyPropertyNames)}`);
-                        writer.writeLine(`_body_bag = ${BODY_BAG_NAME}.slice(*${BODY_PROP_NAMES_VN})`);
+                        writer.writeLine(`body_bag = ${BODY_BAG_NAME}.slice(*${BODY_PROP_NAMES_VN})`);
                     }),
                     requestBodyReference: ruby.codeblock((writer) => {
                         writer.writeNode(wrapperReference);
-                        writer.write(`.new(_body_bag).to_h`);
+                        writer.write(`.new(body_bag).to_h`);
                     })
                 };
             }
             return {
                 code: ruby.codeblock((writer) => {
                     writer.writeLine(`${BODY_PROP_NAMES_VN} = ${toRubySymbolArray(bodyPropertyNames)}`);
-                    writer.writeLine(`_body_bag = params.slice(*${BODY_PROP_NAMES_VN})`);
+                    writer.writeLine(`body_bag = params.slice(*${BODY_PROP_NAMES_VN})`);
                 }),
                 requestBodyReference: ruby.codeblock((writer) => {
                     writer.writeNode(wrapperReference);
-                    writer.write(`.new(_body_bag).to_h`);
+                    writer.write(`.new(body_bag).to_h`);
                 })
             };
         }
