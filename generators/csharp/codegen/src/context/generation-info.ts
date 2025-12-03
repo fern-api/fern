@@ -184,8 +184,9 @@ export class Generation {
         shouldInlinePathParameters: () => this.customConfig["inline-path-parameters"] ?? true,
         /** When true, includes exception handler infrastructure for custom error handling. Default: false. */
         includeExceptionHandler: () => this.customConfig["include-exception-handler"] ?? false,
-        /** When true, generates mock server tests for the SDK. Default: true. */
-        shouldGenerateMockServerTests: () => this.customConfig["generate-mock-server-tests"] ?? true,
+        /** When true, generates mock server tests for the SDK. Default: true. Also accepts enable-wire-tests as an alias. */
+        shouldGenerateMockServerTests: () =>
+            this.customConfig["generate-mock-server-tests"] ?? this.customConfig["enable-wire-tests"] ?? true,
         /** Access modifier for the root client class (Public or Internal). Default: Public. */
         rootClientAccess: () =>
             this.customConfig["root-client-class-access"] == "internal" ? ast.Access.Internal : ast.Access.Public,
