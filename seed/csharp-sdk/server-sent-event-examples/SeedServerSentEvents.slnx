@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedServerSentEvents.Test/SeedServerSentEvents.Test.csproj" />
-    <Project Path="src/SeedServerSentEvents/SeedServerSentEvents.csproj" />
-  </Folder>
+  <Project Path="src/SeedServerSentEvents.Test/SeedServerSentEvents.Test.csproj" />
+  <Project Path="src/SeedServerSentEvents/SeedServerSentEvents.csproj" />
 </Solution>

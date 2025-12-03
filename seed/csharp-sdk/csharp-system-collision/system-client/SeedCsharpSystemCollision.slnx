@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedCsharpSystemCollision.Test/SeedCsharpSystemCollision.Test.csproj" />
-    <Project Path="src/SeedCsharpSystemCollision/SeedCsharpSystemCollision.csproj" />
-  </Folder>
+  <Project Path="src/SeedCsharpSystemCollision.Test/SeedCsharpSystemCollision.Test.csproj" />
+  <Project Path="src/SeedCsharpSystemCollision/SeedCsharpSystemCollision.csproj" />
 </Solution>

@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedCsharpNamespaceCollision.Test/SeedCsharpNamespaceCollision.Test.csproj" />
-    <Project Path="src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollision.csproj" />
-  </Folder>
+  <Project Path="src/SeedCsharpNamespaceCollision.Test/SeedCsharpNamespaceCollision.Test.csproj" />
+  <Project Path="src/SeedCsharpNamespaceCollision/SeedCsharpNamespaceCollision.csproj" />
 </Solution>

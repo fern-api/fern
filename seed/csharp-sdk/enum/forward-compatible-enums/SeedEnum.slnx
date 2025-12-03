@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedEnum.Test/SeedEnum.Test.csproj" />
-    <Project Path="src/SeedEnum/SeedEnum.csproj" />
-  </Folder>
+  <Project Path="src/SeedEnum.Test/SeedEnum.Test.csproj" />
+  <Project Path="src/SeedEnum/SeedEnum.csproj" />
 </Solution>

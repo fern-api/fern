@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedPackageYml.Test/SeedPackageYml.Test.csproj" />
-    <Project Path="src/SeedPackageYml/SeedPackageYml.csproj" />
-  </Folder>
+  <Project Path="src/SeedPackageYml.Test/SeedPackageYml.Test.csproj" />
+  <Project Path="src/SeedPackageYml/SeedPackageYml.csproj" />
 </Solution>

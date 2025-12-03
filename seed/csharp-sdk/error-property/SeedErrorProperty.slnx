@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedErrorProperty.Test/SeedErrorProperty.Test.csproj" />
-    <Project Path="src/SeedErrorProperty/SeedErrorProperty.csproj" />
-  </Folder>
+  <Project Path="src/SeedErrorProperty.Test/SeedErrorProperty.Test.csproj" />
+  <Project Path="src/SeedErrorProperty/SeedErrorProperty.csproj" />
 </Solution>

@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedUndiscriminatedUnionWithResponseProperty.Test/SeedUndiscriminatedUnionWithResponseProperty.Test.csproj" />
-    <Project Path="src/SeedUndiscriminatedUnionWithResponseProperty/SeedUndiscriminatedUnionWithResponseProperty.csproj" />
-  </Folder>
+  <Project Path="src/SeedUndiscriminatedUnionWithResponseProperty.Test/SeedUndiscriminatedUnionWithResponseProperty.Test.csproj" />
+  <Project Path="src/SeedUndiscriminatedUnionWithResponseProperty/SeedUndiscriminatedUnionWithResponseProperty.csproj" />
 </Solution>

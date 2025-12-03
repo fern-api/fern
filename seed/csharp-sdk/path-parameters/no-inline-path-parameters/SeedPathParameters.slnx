@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedPathParameters.Test/SeedPathParameters.Test.csproj" />
-    <Project Path="src/SeedPathParameters/SeedPathParameters.csproj" />
-  </Folder>
+  <Project Path="src/SeedPathParameters.Test/SeedPathParameters.Test.csproj" />
+  <Project Path="src/SeedPathParameters/SeedPathParameters.csproj" />
 </Solution>

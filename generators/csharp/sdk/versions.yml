@@ -14,15 +14,12 @@
           - `other`: path for README.md, reference.md, and other files (default: ".")
         
         Example generators.yml configuration:
-        ```yaml
+        ```yml
         groups:
-          local:
+          dotnet-sdk:
             generators:
               - name: fernapi/fern-csharp-sdk
                 version: 2.10.0
-                output:
-                  location: local-file-system
-                  path: ../generated/csharp
                 config:
                   output-path:
                     library: src/MyApi
@@ -32,6 +29,7 @@
         ```
         
         The generated CI workflow and project references are automatically updated to use the configured paths.
+        Note: `.github`, `.fern`, and `.fernignore` are always generated in the root output folder.
       type: feat
   createdAt: "2025-12-03"
   irVersion: 61

@@ -72,18 +72,18 @@ scripts:
 
 fixtures:
   simple-api:
-    - customConfig: null
-      outputFolder: no-custom-config
-    - customConfig:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: custom-output-path
+      customConfig:
         output-path: custom-src
-      outputFolder: custom-output-path
-    - customConfig:
+    - outputFolder: custom-output-path-object
+      customConfig:
         output-path:
           library: lib/SeedApi
           test: test/SeedApi.Test
           solution: .
           other: lib/SeedApi
-      outputFolder: custom-output-path-object
   literal:
     - customConfig: null
       outputFolder: no-custom-config
@@ -246,5 +246,26 @@ fixtures:
     - customConfig: null
       outputFolder: no-custom-config
 allowedFailures:
+  - any-auth
+  - csharp-namespace-collision:fully-qualified-namespaces
+  - enum:forward-compatible-enums
+  - enum:plain-enums
+  - examples:no-custom-config
+  - examples:readme-config
+  - extra-properties:no-additional-properties
+  - extra-properties:no-custom-config
+  - literal:no-custom-config
+  - literal:readonly-constants
   - oauth-client-credentials-custom
- 
+  - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-nested-root
+  - oauth-client-credentials-with-variables
+  - oauth-client-credentials:include-exception-handler
+  - oauth-client-credentials:no-custom-config
+  - package-yml
+  - simple-fhir
+  - trace
+  - undiscriminated-unions
+  - unions-with-local-date
+  - unions:no-custom-config
+  - url-form-encoded

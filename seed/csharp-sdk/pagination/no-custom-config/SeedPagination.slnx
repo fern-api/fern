@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedPagination.Test/SeedPagination.Test.csproj" />
-    <Project Path="src/SeedPagination/SeedPagination.csproj" />
-  </Folder>
+  <Project Path="src/SeedPagination.Test/SeedPagination.Test.csproj" />
+  <Project Path="src/SeedPagination/SeedPagination.csproj" />
 </Solution>

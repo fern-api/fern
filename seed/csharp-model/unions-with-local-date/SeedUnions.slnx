@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedUnions.Test/SeedUnions.Test.csproj" />
-    <Project Path="src/SeedUnions/SeedUnions.csproj" />
-  </Folder>
+  <Project Path="src/SeedUnions.Test/SeedUnions.Test.csproj" />
+  <Project Path="src/SeedUnions/SeedUnions.csproj" />
 </Solution>

@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedNoRetries.Test/SeedNoRetries.Test.csproj" />
-    <Project Path="src/SeedNoRetries/SeedNoRetries.csproj" />
-  </Folder>
+  <Project Path="src/SeedNoRetries.Test/SeedNoRetries.Test.csproj" />
+  <Project Path="src/SeedNoRetries/SeedNoRetries.csproj" />
 </Solution>

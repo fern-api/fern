@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedBasicAuth.Test/SeedBasicAuth.Test.csproj" />
-    <Project Path="src/SeedBasicAuth/SeedBasicAuth.csproj" />
-  </Folder>
+  <Project Path="src/SeedBasicAuth.Test/SeedBasicAuth.Test.csproj" />
+  <Project Path="src/SeedBasicAuth/SeedBasicAuth.csproj" />
 </Solution>

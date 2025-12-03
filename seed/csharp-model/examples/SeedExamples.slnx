@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedExamples.Test/SeedExamples.Test.csproj" />
-    <Project Path="src/SeedExamples/SeedExamples.csproj" />
-  </Folder>
+  <Project Path="src/SeedExamples.Test/SeedExamples.Test.csproj" />
+  <Project Path="src/SeedExamples/SeedExamples.csproj" />
 </Solution>

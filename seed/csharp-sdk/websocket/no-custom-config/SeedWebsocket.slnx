@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedWebsocket.Test/SeedWebsocket.Test.csproj" />
-    <Project Path="src/SeedWebsocket/SeedWebsocket.csproj" />
-  </Folder>
+  <Project Path="src/SeedWebsocket.Test/SeedWebsocket.Test.csproj" />
+  <Project Path="src/SeedWebsocket/SeedWebsocket.csproj" />
 </Solution>

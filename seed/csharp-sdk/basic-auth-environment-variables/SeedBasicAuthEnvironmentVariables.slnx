@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedBasicAuthEnvironmentVariables.Test/SeedBasicAuthEnvironmentVariables.Test.csproj" />
-    <Project Path="src/SeedBasicAuthEnvironmentVariables/SeedBasicAuthEnvironmentVariables.csproj" />
-  </Folder>
+  <Project Path="src/SeedBasicAuthEnvironmentVariables.Test/SeedBasicAuthEnvironmentVariables.Test.csproj" />
+  <Project Path="src/SeedBasicAuthEnvironmentVariables/SeedBasicAuthEnvironmentVariables.csproj" />
 </Solution>

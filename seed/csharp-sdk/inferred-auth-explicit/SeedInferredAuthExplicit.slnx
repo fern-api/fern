@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedInferredAuthExplicit.Test/SeedInferredAuthExplicit.Test.csproj" />
-    <Project Path="src/SeedInferredAuthExplicit/SeedInferredAuthExplicit.csproj" />
-  </Folder>
+  <Project Path="src/SeedInferredAuthExplicit.Test/SeedInferredAuthExplicit.Test.csproj" />
+  <Project Path="src/SeedInferredAuthExplicit/SeedInferredAuthExplicit.csproj" />
 </Solution>

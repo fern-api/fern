@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedAudiences.Test/SeedAudiences.Test.csproj" />
-    <Project Path="src/SeedAudiences/SeedAudiences.csproj" />
-  </Folder>
+  <Project Path="src/SeedAudiences.Test/SeedAudiences.Test.csproj" />
+  <Project Path="src/SeedAudiences/SeedAudiences.csproj" />
 </Solution>

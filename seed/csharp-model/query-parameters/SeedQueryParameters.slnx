@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedQueryParameters.Test/SeedQueryParameters.Test.csproj" />
-    <Project Path="src/SeedQueryParameters/SeedQueryParameters.csproj" />
-  </Folder>
+  <Project Path="src/SeedQueryParameters.Test/SeedQueryParameters.Test.csproj" />
+  <Project Path="src/SeedQueryParameters/SeedQueryParameters.csproj" />
 </Solution>

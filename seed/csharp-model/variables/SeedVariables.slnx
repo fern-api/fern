@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedVariables.Test/SeedVariables.Test.csproj" />
-    <Project Path="src/SeedVariables/SeedVariables.csproj" />
-  </Folder>
+  <Project Path="src/SeedVariables.Test/SeedVariables.Test.csproj" />
+  <Project Path="src/SeedVariables/SeedVariables.csproj" />
 </Solution>

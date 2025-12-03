@@ -1,6 +1,4 @@
 <Solution>
-  <Folder Name="/src/">
-    <Project Path="src/SeedExtraProperties.Test/SeedExtraProperties.Test.csproj" />
-    <Project Path="src/SeedExtraProperties/SeedExtraProperties.csproj" />
-  </Folder>
+  <Project Path="src/SeedExtraProperties.Test/SeedExtraProperties.Test.csproj" />
+  <Project Path="src/SeedExtraProperties/SeedExtraProperties.csproj" />
 </Solution>
