@@ -4,7 +4,7 @@ module Seed
   module Ast
     module Types
       class NodesWrapper < Internal::Types::Model
-        field :nodes, lambda {
+        field :nodes, -> {
           Internal::Types::Array[Internal::Types::Array[Seed::Ast::Types::Node]]
         }, optional: false, nullable: false
       end

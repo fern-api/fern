@@ -5,10 +5,10 @@ module Seed
     module Problem
       module Types
         class VoidFunctionDefinition < Internal::Types::Model
-          field :parameters, lambda {
+          field :parameters, -> {
             Internal::Types::Array[Seed::V2::Problem::Types::Parameter]
           }, optional: false, nullable: false
-          field :code, lambda {
+          field :code, -> {
             Seed::V2::Problem::Types::FunctionImplementationForMultipleLanguages
           }, optional: false, nullable: false
         end

@@ -624,6 +624,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     boolean: true,
                     description: "Skip asset upload step and generate fake links for preview",
                     default: false
+                })
+                .option("fernignore", {
+                    type: "string",
+                    description:
+                        "Path to a custom .fernignore file to use instead of the one on the main branch (remote generation only)"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -634,6 +639,11 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
             }
             if (argv.skipUpload && argv.docs == null) {
                 return cliContext.failWithoutThrowing("The --skip-upload flag can only be used with --docs.");
+            }
+            if (argv.fernignore != null && (argv.local || argv.runner != null)) {
+                return cliContext.failWithoutThrowing(
+                    "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
+                );
             }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
@@ -652,7 +662,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     force: argv.force,
                     runner: argv.runner as ContainerRunner,
                     inspect: false,
-                    lfsOverride: argv.lfsOverride
+                    lfsOverride: argv.lfsOverride,
+                    fernignorePath: argv.fernignore
                 });
             }
             if (argv.docs != null) {
@@ -698,7 +709,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 force: argv.force,
                 runner: argv.runner as ContainerRunner,
                 inspect: false,
-                lfsOverride: argv.lfsOverride
+                lfsOverride: argv.lfsOverride,
+                fernignorePath: argv.fernignore
             });
         }
     );

@@ -1,4 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 1.0.0-rc57
+  createdAt: "2025-12-02"
+  changelogEntry:
+    - type: fix
+      summary: |
+        Fix additional RuboCop warnings in generated SDK code:
+        - Renamed iterator methods to follow Ruby conventions (get_next -> next_element/next_page, has_next? -> next?)
+        - Renamed custom pager methods (get_next_page -> next_page, has_next_page? -> next_page?)
+        - Added super() calls in iterator initializers to fix Lint/MissingSuper
+        - Combined duplicate pattern match branches in utils.rb to fix Lint/DuplicateBranch
+        - Updated .rubocop.yml to target Ruby 3.3 and disable additional cops
+  irVersion: 61
+
 - version: 1.0.0-rc56
   createdAt: "2025-12-02"
   changelogEntry:
