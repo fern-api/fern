@@ -11,6 +11,13 @@ namespace SeedMixedCase.Core;
 internal partial class RawClient(ClientOptions clientOptions)
 {
     private const int MaxRetryDelayMs = 60000;
+    private const double JitterFactor = 0.2;
+#if NET6_0_OR_GREATER
+    // Use Random.Shared for thread-safe random number generation on .NET 6+
+#else
+    private static readonly object JitterLock = new();
+    private static readonly Random JitterRandom = new();
+#endif
     internal int BaseRetryDelay { get; set; } = 1000;
 
     /// <summary>
@@ -33,7 +40,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     )
     {
         // Apply the request timeout.
-        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var timeout = request.Options?.Timeout ?? Options.Timeout;
         cts.CancelAfter(timeout);
 
@@ -50,7 +57,7 @@ internal partial class RawClient(ClientOptions clientOptions)
     )
     {
         // Apply the request timeout.
-        var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
         var timeout = options?.Timeout ?? Options.Timeout;
         cts.CancelAfter(timeout);
 
@@ -138,7 +145,7 @@ internal partial class RawClient(ClientOptions clientOptions)
                 break;
             }
 
-            var delayMs = Math.Min(BaseRetryDelay * (int)Math.Pow(2, i), MaxRetryDelayMs);
+            var delayMs = GetRetryDelayFromHeaders(response, i);
             await SystemTask.Delay(delayMs, cancellationToken).ConfigureAwait(false);
             using var retryRequest = await CloneRequestAsync(request).ConfigureAwait(false);
             response = await httpClient
@@ -161,6 +168,80 @@ internal partial class RawClient(ClientOptions clientOptions)
     {
         var statusCode = (int)response.StatusCode;
         return statusCode is 408 or 429 or >= 500;
+    }
+
+    private static int AddPositiveJitter(int delayMs)
+    {
+#if NET6_0_OR_GREATER
+        var random = Random.Shared.NextDouble();
+#else
+        double random;
+        lock (JitterLock)
+        {
+            random = JitterRandom.NextDouble();
+        }
+#endif
+        var jitterMultiplier = 1 + random * JitterFactor;
+        return (int)(delayMs * jitterMultiplier);
+    }
+
+    private static int AddSymmetricJitter(int delayMs)
+    {
+#if NET6_0_OR_GREATER
+        var random = Random.Shared.NextDouble();
+#else
+        double random;
+        lock (JitterLock)
+        {
+            random = JitterRandom.NextDouble();
+        }
+#endif
+        var jitterMultiplier = 1 + (random - 0.5) * JitterFactor;
+        return (int)(delayMs * jitterMultiplier);
+    }
+
+    private int GetRetryDelayFromHeaders(HttpResponseMessage response, int retryAttempt)
+    {
+        if (response.Headers.TryGetValues("Retry-After", out var retryAfterValues))
+        {
+            var retryAfter = retryAfterValues.FirstOrDefault();
+            if (!string.IsNullOrEmpty(retryAfter))
+            {
+                if (int.TryParse(retryAfter, out var retryAfterSeconds) && retryAfterSeconds > 0)
+                {
+                    return Math.Min(retryAfterSeconds * 1000, MaxRetryDelayMs);
+                }
+
+                if (DateTimeOffset.TryParse(retryAfter, out var retryAfterDate))
+                {
+                    var delay = (int)(retryAfterDate - DateTimeOffset.UtcNow).TotalMilliseconds;
+                    if (delay > 0)
+                    {
+                        return Math.Min(delay, MaxRetryDelayMs);
+                    }
+                }
+            }
+        }
+
+        if (response.Headers.TryGetValues("X-RateLimit-Reset", out var rateLimitResetValues))
+        {
+            var rateLimitReset = rateLimitResetValues.FirstOrDefault();
+            if (
+                !string.IsNullOrEmpty(rateLimitReset)
+                && long.TryParse(rateLimitReset, out var resetTime)
+            )
+            {
+                var resetDateTime = DateTimeOffset.FromUnixTimeSeconds(resetTime);
+                var delay = (int)(resetDateTime - DateTimeOffset.UtcNow).TotalMilliseconds;
+                if (delay > 0)
+                {
+                    return AddPositiveJitter(Math.Min(delay, MaxRetryDelayMs));
+                }
+            }
+        }
+
+        var exponentialDelay = Math.Min(BaseRetryDelay * (1 << retryAttempt), MaxRetryDelayMs);
+        return AddSymmetricJitter(exponentialDelay);
     }
 
     private static bool IsRetryableContent(HttpRequestMessage request)

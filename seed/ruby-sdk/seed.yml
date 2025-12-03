@@ -175,6 +175,6 @@ features:
   whitelabel: false
   apiReferenceGeneration: false
 scripts:
-  - image: ruby:2.7
+  - image: ruby:3.3
     commands:
-      - bundle install && bundle exec rake test
+      - bundle install && bundle exec rake test && bundle exec rubocop

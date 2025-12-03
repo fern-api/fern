@@ -6,10 +6,10 @@ module Seed
       module Types
         class TestCaseV2 < Internal::Types::Model
           field :metadata, -> { Seed::V2::Problem::Types::TestCaseMetadata }, optional: false, nullable: false
-          field :implementation, lambda {
+          field :implementation, -> {
             Seed::V2::Problem::Types::TestCaseImplementationReference
           }, optional: false, nullable: false
-          field :arguments, lambda {
+          field :arguments, -> {
             Internal::Types::Hash[String, Seed::Commons::Types::VariableValue]
           }, optional: false, nullable: false
           field :expects, -> { Seed::V2::Problem::Types::TestCaseExpects }, optional: true, nullable: false

@@ -4,7 +4,7 @@ module Seed
   module Union
     module Types
       class PaymentRequest < Internal::Types::Model
-        field :payment_method, lambda {
+        field :payment_method, -> {
           Seed::Union::Types::PaymentMethodUnion
         }, optional: false, nullable: false, api_name: "paymentMethod"
       end

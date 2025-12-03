@@ -7,10 +7,10 @@ module Seed
         module Types
           # The generated signature will include an additional param, actualResult
           class VoidFunctionDefinitionThatTakesActualResult < Internal::Types::Model
-            field :additional_parameters, lambda {
+            field :additional_parameters, -> {
               Internal::Types::Array[Seed::V2::V3::Problem::Types::Parameter]
             }, optional: false, nullable: false, api_name: "additionalParameters"
-            field :code, lambda {
+            field :code, -> {
               Seed::V2::V3::Problem::Types::FunctionImplementationForMultipleLanguages
             }, optional: false, nullable: false
           end

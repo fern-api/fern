@@ -5,7 +5,7 @@ module Seed
     module Object_
       module Types
         class ObjectWithMapOfMap < Internal::Types::Model
-          field :map, lambda {
+          field :map, -> {
             Internal::Types::Hash[String, Internal::Types::Hash[String, String]]
           }, optional: false, nullable: false
         end
