@@ -2,7 +2,7 @@
     "extends": ["//"],
     "tasks": {
         "dist:cli:prod:unminified": {
-            "outputs": ["dist/**"],
+            "outputs": ["dist/prod-unminified/**"],
             "dependsOn": ["^compile", "compile"],
             "inputs": [
                 "src/**",

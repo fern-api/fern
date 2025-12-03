@@ -1,9 +1,4 @@
-import { writeFile } from 'fs/promises';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import tsup from 'tsup';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 main();
 

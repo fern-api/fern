@@ -1,7 +1,7 @@
 import { polyfillNode } from 'esbuild-plugin-polyfill-node';
 import packageJson from "./package.json" with { type: "json" };
 import tsup from 'tsup';
-import { writeFile, mkdir } from "fs/promises";
+import { writeFile, mkdir, rm } from "fs/promises";
 import path from "path";
 import { fileURLToPath } from 'url';
 
@@ -12,6 +12,9 @@ main();
 async function main() {
     // Change to the package directory to ensure relative paths work
     process.chdir(__dirname);
+
+    // Remove dist directory entirely
+    await rm(path.join(__dirname, "dist"), { recursive: true, force: true });
 
     const config = {
         entry: ['src/**/*.ts', '!src/__test__'],
@@ -41,7 +44,7 @@ async function main() {
         ...config,
         format: ['cjs'],
         outDir: 'dist/cjs',
-        clean: true,
+        clean: false,
     });
 
     await tsup.build({

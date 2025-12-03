@@ -1,7 +1,7 @@
 import { buildCli, MINIMAL_EXTERNALS } from './build-utils.mjs';
 
 buildCli({
-    outDir: 'dist/prod',
+    outDir: 'dist/prod-unminified',
     minify: false,
     env: {
         AUTH0_DOMAIN: "fern-prod.us.auth0.com",

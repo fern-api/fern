@@ -17,12 +17,12 @@
     },
     "compile": {
       "dependsOn": ["^compile"],
-      "outputs": ["lib/**"],
+      "outputs": ["lib/**", "*.tsbuildinfo"],
       "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json", "$TURBO_ROOT$/packages/configs/**"]
     },
     "compile:debug": {
       "dependsOn": ["^compile:debug"],
-      "outputs": ["lib/**"],
+      "outputs": ["lib/**", "*.tsbuildinfo"],
       "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json", "$TURBO_ROOT$/packages/configs/**"]
     },
     "depcheck": {
@@ -93,6 +93,7 @@
         "tests/**",
         "package.json",
         "tsconfig.json",
+        "build-utils.mjs",
         "build.mjs",
         "$TURBO_ROOT$/packages/configs/**",
         "$TURBO_ROOT$/shared/.prettierignore",
@@ -101,7 +102,7 @@
       ]
     },
     "dist:cli:dev": {
-      "outputs": ["dist/**"],
+      "outputs": ["dist/dev/**"],
       "dependsOn": ["^compile", "compile"],
       "inputs": [
         "src/**",
@@ -117,7 +118,7 @@
       ]
     },
     "dist:cli:local": {
-      "outputs": ["dist/**"],
+      "outputs": ["dist/local/**"],
       "dependsOn": ["^compile", "compile"],
       "inputs": [
         "src/**",
@@ -133,7 +134,7 @@
       ]
     },
     "dist:cli:prod": {
-      "outputs": ["dist/**"],
+      "outputs": ["dist/prod/**"],
       "dependsOn": ["^compile", "compile"],
       "inputs": [
         "src/**",
@@ -157,6 +158,8 @@
         "tests/**",
         "package.json",
         "tsconfig.json",
+        "build-utils.mjs",
+        "build.mjs",
         "$TURBO_ROOT$/shared/.prettierignore",
         "$TURBO_ROOT$/shared/stylelintrc.shared.json",
         "$TURBO_ROOT$/tsconfig.eslint.json",
