@@ -58,34 +58,26 @@ class Project:
     ) -> None:
         relative_path_to_project = relative_path_to_project.replace(".", "/")
 
-        # Determine source filepath with optional package_path prefix
-        # package_path only affects source code location, not project-level files like pyproject.toml
+        # Normalize package_path (strip leading/trailing slashes)
+        normalized_package_path: Optional[str] = None
         if package_path is not None:
-            # Normalize: strip leading/trailing slashes
-            normalized_package_path = package_path.strip("/")
-            source_base_filepath = (
-                os.path.join(filepath, normalized_package_path) if normalized_package_path else filepath
-            )
-        else:
-            normalized_package_path = None
-            source_base_filepath = filepath
+            normalized_package_path = package_path.strip("/") or None
 
+        # Build the project-relative filepath (e.g., "src/seed" or "src/seed/package/path")
+        # package_path is applied as a suffix within the module
         if flat_layout:
             self._project_relative_filepath = relative_path_to_project
         else:
             self._project_relative_filepath = os.path.join("src", relative_path_to_project)
 
+        if normalized_package_path:
+            self._project_relative_filepath = os.path.join(self._project_relative_filepath, normalized_package_path)
+
         self._project_filepath = (
-            source_base_filepath
-            if project_config is None
-            else os.path.join(source_base_filepath, self._project_relative_filepath)
+            filepath if project_config is None else os.path.join(filepath, self._project_relative_filepath)
         )
         self._generate_readme = True
-        # _root_filepath is the original output path for project-level files (pyproject.toml, README, etc.)
         self._root_filepath = filepath
-        # _source_root_filepath is where source code goes (may include package_path prefix)
-        self._source_root_filepath = source_base_filepath
-        # _package_path is the normalized package_path prefix (None if not set)
         self._package_path = normalized_package_path
         self._flat_layout = flat_layout
         self._relative_path_to_project = relative_path_to_project
@@ -104,6 +96,21 @@ class Project:
         self._exclude_types_from_init_exports = exclude_types_from_init_exports
         self._enable_wire_tests = enable_wire_tests
         self._generator_exec_wrapper = generator_exec_wrapper
+
+    def get_module_path_for_imports(self) -> str:
+        """
+        Returns the full module path for use in import statements.
+        This includes the package_path suffix if set.
+
+        For example:
+        - Without package_path: "seed"
+        - With package_path "down/here/please": "seed.down.here.please"
+        """
+        base_path = self._relative_path_to_project.replace("/", ".")
+        if self._package_path:
+            package_path_dotted = self._package_path.replace("/", ".")
+            return f"{base_path}.{package_path_dotted}"
+        return base_path
 
     def add_init_exports(self, path: AST.ModulePath, exports: List[ModuleExport]) -> None:
         self._module_manager.register_additional_exports(path, exports)
@@ -161,7 +168,7 @@ class Project:
         return (
             os.path.join(self._project_filepath, str(filepath))
             if include_src_root
-            else os.path.join(self._source_root_filepath, str(filepath))
+            else os.path.join(self._root_filepath, str(filepath))
         )
 
     def register_export_in_project(self, filepath_in_project: Filepath, exports: Set[str]) -> None:
@@ -205,24 +212,34 @@ class Project:
         file.write_text(contents)
 
     def add_source_file(self, filepath: str, contents: str) -> None:
-        """Add a file relative to the source root directory (respects package_path)."""
-        file = Path(os.path.join(self._source_root_filepath, filepath))
+        """Add a file relative to the root output directory."""
+        file = Path(os.path.join(self._root_filepath, filepath))
         file.parent.mkdir(exist_ok=True, parents=True)
         file.write_text(contents)
 
     def finish(self) -> None:
-        self._module_manager.write_modules(base_filepath=self._source_root_filepath, filepath=self._project_filepath)
+        self._module_manager.write_modules(base_filepath=self._root_filepath, filepath=self._project_filepath)
+
+        # Generate intermediate __init__.py files for package_path directories
+        if self._package_path and self._project_config is not None:
+            self._create_package_path_init_files()
+
         if self._project_config is not None:
             # generate pyproject.toml
-            # Determine the 'from' path for pyproject.toml packages config
             if self._flat_layout:
-                package_from = self._package_path if self._package_path else None
+                package_from = None
+                include_path = self._relative_path_to_project
+                if self._package_path:
+                    include_path = os.path.join(include_path, self._package_path)
             else:
-                package_from = os.path.join(self._package_path, "src") if self._package_path else "src"
+                package_from = "src"
+                include_path = self._relative_path_to_project
+                if self._package_path:
+                    include_path = os.path.join(include_path, self._package_path)
             py_project_toml = PyProjectToml(
                 name=self._project_config.package_name,
                 version=self._project_config.package_version,
-                package=PyProjectTomlPackageConfig(include=self._relative_path_to_project, _from=package_from),
+                package=PyProjectTomlPackageConfig(include=include_path, _from=package_from),
                 path=self._root_filepath,
                 dependency_manager=self._dependency_manager,
                 python_version=self._python_version,
@@ -250,6 +267,49 @@ class Project:
 
             # copy LICENSE file if custom license is specified
             self._copy_license_file()
+
+    def _create_package_path_init_files(self) -> None:
+        """
+        Create __init__.py files for intermediate directories in the package_path.
+
+        For example, if package_path is "down/here/please" and the base module is "seed",
+        this creates:
+        - src/seed/__init__.py (re-exports 'down')
+        - src/seed/down/__init__.py (re-exports 'here')
+        - src/seed/down/here/__init__.py (re-exports 'please')
+
+        This enables imports like: from seed.down.here.please import Client
+        """
+        if not self._package_path:
+            return
+
+        package_path_parts = self._package_path.split("/")
+
+        # Build path incrementally from the base module (e.g., src/seed)
+        if self._flat_layout:
+            base_path = os.path.join(self._root_filepath, self._relative_path_to_project)
+        else:
+            base_path = os.path.join(self._root_filepath, "src", self._relative_path_to_project)
+
+        current_path = base_path
+        for i, part in enumerate(package_path_parts):
+            init_file = os.path.join(current_path, "__init__.py")
+
+            # The next submodule to re-export
+            next_part = package_path_parts[i] if i < len(package_path_parts) else None
+
+            if next_part:
+                init_content = f'''# This file was auto-generated by Fern from our API Definition.
+
+from . import {next_part}
+
+__all__ = ["{next_part}"]
+'''
+                os.makedirs(current_path, exist_ok=True)
+                with open(init_file, "w") as f:
+                    f.write(init_content)
+
+            current_path = os.path.join(current_path, part)
 
     def _copy_license_file(self) -> None:
         """Copy LICENSE file from /tmp/LICENSE to project root for local generation."""

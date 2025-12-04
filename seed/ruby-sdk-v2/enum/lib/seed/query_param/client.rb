@@ -37,8 +37,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "query",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)
@@ -79,8 +78,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "query-list",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)

@@ -58,8 +58,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/user",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)

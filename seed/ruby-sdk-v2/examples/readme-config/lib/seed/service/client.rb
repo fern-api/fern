@@ -24,8 +24,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/movie/#{params[:movie_id]}",
-          request_options: request_options
+          path: "/movie/#{params[:movie_id]}"
         )
         begin
           response = @client.send(request)
@@ -55,8 +54,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/movie",
-          body: Seed::Types::Types::Movie.new(params).to_h,
-          request_options: request_options
+          body: Seed::Types::Types::Movie.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -96,8 +94,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/metadata",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)
@@ -127,8 +124,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/big-entity",
-          body: Seed::Types::Types::BigEntity.new(params).to_h,
-          request_options: request_options
+          body: Seed::Types::Types::BigEntity.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -158,8 +154,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/refresh-token",
-          body: params,
-          request_options: request_options
+          body: params
         )
         begin
           response = @client.send(request)

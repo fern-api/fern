@@ -35,8 +35,7 @@ module Seed
           method: "POST",
           path: "/user/username",
           query: query_params,
-          body: Seed::User::Types::CreateUsernameRequest.new(body_bag).to_h,
-          request_options: request_options
+          body: Seed::User::Types::CreateUsernameRequest.new(body_bag).to_h
         )
         begin
           response = @client.send(request)
@@ -72,8 +71,7 @@ module Seed
           method: "POST",
           path: "/user/username-referenced",
           query: query_params,
-          body: Seed::User::Types::CreateUsernameBody.new(params).to_h,
-          request_options: request_options
+          body: Seed::User::Types::CreateUsernameBody.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -101,8 +99,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/user/username-optional",
-          body: params,
-          request_options: request_options
+          body: params
         )
         begin
           response = @client.send(request)
@@ -168,8 +165,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/user",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)

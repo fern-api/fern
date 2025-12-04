@@ -27,8 +27,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/ec2/boot",
-          body: Seed::Ec2::Types::BootInstanceRequest.new(body_bag).to_h,
-          request_options: request_options
+          body: Seed::Ec2::Types::BootInstanceRequest.new(body_bag).to_h
         )
         begin
           response = @client.send(request)

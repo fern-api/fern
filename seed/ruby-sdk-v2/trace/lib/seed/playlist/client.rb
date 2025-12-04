@@ -40,8 +40,7 @@ module Seed
           method: "POST",
           path: "/v2/playlist/#{params[:service_param]}/create",
           query: query_params,
-          body: Seed::Playlist::Types::PlaylistCreateRequest.new(body_params).to_h,
-          request_options: request_options
+          body: Seed::Playlist::Types::PlaylistCreateRequest.new(body_params).to_h
         )
         begin
           response = @client.send(request)
@@ -92,8 +91,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
           path: "/v2/playlist/#{params[:service_param]}/all",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)
@@ -124,8 +122,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
-          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}",
-          request_options: request_options
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}"
         )
         begin
           response = @client.send(request)
@@ -159,8 +156,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "PUT",
           path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}",
-          body: params,
-          request_options: request_options
+          body: params
         )
         begin
           response = @client.send(request)
@@ -191,8 +187,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "DELETE",
-          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}",
-          request_options: request_options
+          path: "/v2/playlist/#{params[:service_param]}/#{params[:playlist_id]}"
         )
         begin
           response = @client.send(request)

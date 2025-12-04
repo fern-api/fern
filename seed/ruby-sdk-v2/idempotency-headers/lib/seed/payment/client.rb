@@ -27,8 +27,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/payment",
-          body: Seed::Payment::Types::CreatePaymentRequest.new(body_bag).to_h,
-          request_options: request_options
+          body: Seed::Payment::Types::CreatePaymentRequest.new(body_bag).to_h
         )
         begin
           response = @client.send(request)
@@ -56,8 +55,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/payment/#{params[:payment_id]}",
-          request_options: request_options
+          path: "/payment/#{params[:payment_id]}"
         )
         begin
           response = @client.send(request)

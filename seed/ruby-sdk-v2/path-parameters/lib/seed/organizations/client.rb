@@ -25,8 +25,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/",
-          request_options: request_options
+          path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/"
         )
         begin
           response = @client.send(request)
@@ -58,8 +57,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/users/#{params[:user_id]}",
-          request_options: request_options
+          path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/users/#{params[:user_id]}"
         )
         begin
           response = @client.send(request)
@@ -98,8 +96,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/#{params[:tenant_id]}/organizations/#{params[:organization_id]}/search",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)

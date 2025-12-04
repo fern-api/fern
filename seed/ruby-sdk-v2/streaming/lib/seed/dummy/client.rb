@@ -27,8 +27,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "generate-stream",
-          body: Seed::Dummy::Types::GenerateStreamRequest.new(body_bag).to_h,
-          request_options: request_options
+          body: Seed::Dummy::Types::GenerateStreamRequest.new(body_bag).to_h
         )
         begin
           response = @client.send(request)
@@ -59,8 +58,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "generate",
-          body: Seed::Dummy::Types::Generateequest.new(body_bag).to_h,
-          request_options: request_options
+          body: Seed::Dummy::Types::Generateequest.new(body_bag).to_h
         )
         begin
           response = @client.send(request)

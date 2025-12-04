@@ -45,8 +45,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/resources",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)
@@ -86,8 +85,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/resources/#{params[:resource_id]}",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)
@@ -132,8 +130,7 @@ module Seed
           method: "POST",
           path: "/api/resources/search",
           query: query_params,
-          body: Seed::Service::Types::SearchResourcesRequest.new(body_bag).to_h,
-          request_options: request_options
+          body: Seed::Service::Types::SearchResourcesRequest.new(body_bag).to_h
         )
         begin
           response = @client.send(request)
@@ -186,8 +183,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)
@@ -229,8 +225,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users/#{params[:user_id]}",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)
@@ -262,8 +257,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/api/users",
-          body: Seed::Types::Types::CreateUserRequest.new(params).to_h,
-          request_options: request_options
+          body: Seed::Types::Types::CreateUserRequest.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -296,8 +290,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/api/users/#{params[:user_id]}",
-          body: Seed::Types::Types::UpdateUserRequest.new(params).to_h,
-          request_options: request_options
+          body: Seed::Types::Types::UpdateUserRequest.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -329,8 +322,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/api/users/#{params[:user_id]}",
-          request_options: request_options
+          path: "/api/users/#{params[:user_id]}"
         )
         begin
           response = @client.send(request)
@@ -371,8 +363,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/connections",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)
@@ -410,8 +401,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/connections/#{params[:connection_id]}",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)
@@ -464,8 +454,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/clients",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)
@@ -507,8 +496,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/clients/#{params[:client_id]}",
-          query: query_params,
-          request_options: request_options
+          query: query_params
         )
         begin
           response = @client.send(request)

@@ -25,8 +25,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-test-submission-status/#{params[:submission_id]}",
-          body: Seed::Submission::Types::TestSubmissionStatus.new(params).to_h,
-          request_options: request_options
+          body: Seed::Submission::Types::TestSubmissionStatus.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -55,8 +54,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-test-submission-status-v2/#{params[:submission_id]}",
-          body: Seed::Submission::Types::TestSubmissionUpdate.new(params).to_h,
-          request_options: request_options
+          body: Seed::Submission::Types::TestSubmissionUpdate.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -85,8 +83,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-workspace-submission-status/#{params[:submission_id]}",
-          body: Seed::Submission::Types::WorkspaceSubmissionStatus.new(params).to_h,
-          request_options: request_options
+          body: Seed::Submission::Types::WorkspaceSubmissionStatus.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -115,8 +112,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-workspace-submission-status-v2/#{params[:submission_id]}",
-          body: Seed::Submission::Types::WorkspaceSubmissionUpdate.new(params).to_h,
-          request_options: request_options
+          body: Seed::Submission::Types::WorkspaceSubmissionUpdate.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -151,8 +147,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-test-trace/submission/#{params[:submission_id]}/testCase/#{params[:test_case_id]}",
-          body: Seed::Admin::Types::StoreTracedTestCaseRequest.new(body_bag).to_h,
-          request_options: request_options
+          body: Seed::Admin::Types::StoreTracedTestCaseRequest.new(body_bag).to_h
         )
         begin
           response = @client.send(request)
@@ -182,8 +177,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-test-trace-v2/submission/#{params[:submission_id]}/testCase/#{params[:test_case_id]}",
-          body: params,
-          request_options: request_options
+          body: params
         )
         begin
           response = @client.send(request)
@@ -217,8 +211,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-workspace-trace/submission/#{params[:submission_id]}",
-          body: Seed::Admin::Types::StoreTracedWorkspaceRequest.new(body_bag).to_h,
-          request_options: request_options
+          body: Seed::Admin::Types::StoreTracedWorkspaceRequest.new(body_bag).to_h
         )
         begin
           response = @client.send(request)
@@ -247,8 +240,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/admin/store-workspace-trace-v2/submission/#{params[:submission_id]}",
-          body: params,
-          request_options: request_options
+          body: params
         )
         begin
           response = @client.send(request)

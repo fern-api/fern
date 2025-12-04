@@ -26,8 +26,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/problem-crud/create",
-          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h,
-          request_options: request_options
+          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -60,8 +59,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/problem-crud/update/#{params[:problem_id]}",
-          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h,
-          request_options: request_options
+          body: Seed::Problem::Types::CreateProblemRequest.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -93,8 +91,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "DELETE",
-          path: "/problem-crud/delete/#{params[:problem_id]}",
-          request_options: request_options
+          path: "/problem-crud/delete/#{params[:problem_id]}"
         )
         begin
           response = @client.send(request)
@@ -127,8 +124,7 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "POST",
           path: "/problem-crud/default-starter-files",
-          body: Seed::Problem::Types::GetDefaultStarterFilesRequest.new(body_bag).to_h,
-          request_options: request_options
+          body: Seed::Problem::Types::GetDefaultStarterFilesRequest.new(body_bag).to_h
         )
         begin
           response = @client.send(request)

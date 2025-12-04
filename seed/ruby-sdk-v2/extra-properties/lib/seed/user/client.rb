@@ -27,8 +27,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/user",
-          body: Seed::User::Types::CreateUserRequest.new(body_bag).to_h,
-          request_options: request_options
+          body: Seed::User::Types::CreateUserRequest.new(body_bag).to_h
         )
         begin
           response = @client.send(request)

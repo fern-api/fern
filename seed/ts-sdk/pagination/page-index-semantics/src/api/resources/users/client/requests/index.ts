@@ -1,4 +1,5 @@
 export type { ListUsernamesRequest } from "./ListUsernamesRequest.js";
+export type { ListUsernamesWithOptionalResponseRequest } from "./ListUsernamesWithOptionalResponseRequest.js";
 export type { ListUsersBodyCursorPaginationRequest } from "./ListUsersBodyCursorPaginationRequest.js";
 export type { ListUsersBodyOffsetPaginationRequest } from "./ListUsersBodyOffsetPaginationRequest.js";
 export type { ListUsersCursorPaginationRequest } from "./ListUsersCursorPaginationRequest.js";

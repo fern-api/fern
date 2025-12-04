@@ -23,11 +23,8 @@ module Seed
       # @option params [Seed::Types::PlainObject, nil] :query_param_object
       # @option params [Integer, nil] :query_param_integer
       #
-      # @return [Object]
+      # @return [Hash[String, Object]]
       def test_method_name(request_options: {}, **params)
-        path_param_names = %i[path_param]
-        body_params = params.except(*path_param_names)
-
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
         query_param_names = %i[query_param_object query_param_integer]
         query_params = {}
@@ -40,8 +37,7 @@ module Seed
           method: "POST",
           path: "optional-request-body/#{params[:path_param]}",
           query: query_params,
-          body: body_params,
-          request_options: request_options
+          body: body_params
         )
         begin
           response = @client.send(request)

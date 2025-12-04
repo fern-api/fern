@@ -11,7 +11,7 @@ module Seed
         member -> { Object }, key: "STOPPED"
         member -> { Seed::Submission::Types::ErrorInfo }, key: "ERRORED"
         member -> { Seed::Submission::Types::RunningSubmissionState }, key: "RUNNING"
-        member lambda {
+        member -> {
           Internal::Types::Hash[String, Seed::Submission::Types::SubmissionStatusForTestCase]
         }, key: "TEST_CASE_ID_TO_STATE"
       end

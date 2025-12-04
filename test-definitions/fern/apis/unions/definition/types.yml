@@ -241,6 +241,25 @@ types:
           name: example2
           age: 5
 
+  UnionWithDuplicativeDiscriminants:
+    base-properties: {}
+    discriminant: type
+    union:
+      firstItemType:
+        type: FirstItemType
+      secondItemType:
+        type: SecondItemType
+
+  FirstItemType:
+    properties:
+      type: optional<literal<"firstItemType">>
+      name: string
+
+  SecondItemType:
+    properties:
+      type: optional<literal<"secondItemType">>
+      title: string
+
   Foo:
     properties:
       name: string

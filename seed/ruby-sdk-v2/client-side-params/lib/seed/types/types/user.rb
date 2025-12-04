@@ -14,8 +14,12 @@ module Seed
         field :created_at, -> { String }, optional: false, nullable: false
         field :updated_at, -> { String }, optional: false, nullable: false
         field :identities, -> { Internal::Types::Array[Seed::Types::Types::Identity] }, optional: true, nullable: false
-        field :app_metadata, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
-        field :user_metadata, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
+        field :app_metadata, -> {
+          Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
+        }, optional: true, nullable: false
+        field :user_metadata, -> {
+          Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
+        }, optional: true, nullable: false
         field :picture, -> { String }, optional: true, nullable: false
         field :name, -> { String }, optional: true, nullable: false
         field :nickname, -> { String }, optional: true, nullable: false

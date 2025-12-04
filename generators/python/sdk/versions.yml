@@ -1,5 +1,48 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+
+- version: 4.41.8
+  changelogEntry:
+    - summary: |
+        Fix duplicate field names in discriminated union types.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 4.41.7
+  changelogEntry:
+    - summary: |
+        Fix paginated response handling when response type is optional or nullable.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 4.41.6
+  changelogEntry:
+    - summary: |
+        Fix Python wire test generation to drop literal-only params and fill in required file arguments so tests match the generated SDK signatures.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 4.41.5
+  changelogEntry:
+    - summary: |
+        The `package_path` configuration now works as a suffix within the module hierarchy instead of a prefix.
+        For example, `package_path: sub/dir` now generates to `src/name/sub/dir/...` enabling imports like
+        `from name.sub.dir import Client`.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 4.41.4
+  changelogEntry:
+    - summary: |
+        Ensure `UncheckedBaseModel.model_validate` in Pydantic v2 respects `FieldMetadata(alias=...)` so aliased fields validate correctly from JSON.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
 - version: 4.41.3
   changelogEntry:
     - summary: |

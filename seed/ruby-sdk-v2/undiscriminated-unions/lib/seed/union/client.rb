@@ -24,8 +24,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "",
-          body: Seed::Union::Types::MyUnion.new(params).to_h,
-          request_options: request_options
+          body: Seed::Union::Types::MyUnion.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -54,8 +53,7 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/metadata",
-          request_options: request_options
+          path: "/metadata"
         )
         begin
           response = @client.send(request)
@@ -85,8 +83,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "PUT",
           path: "/metadata",
-          body: Seed::Union::Types::MetadataUnion.new(params).to_h,
-          request_options: request_options
+          body: Seed::Union::Types::MetadataUnion.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -114,8 +111,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/call",
-          body: Seed::Union::Types::Request.new(params).to_h,
-          request_options: request_options
+          body: Seed::Union::Types::Request.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -143,8 +139,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/duplicate",
-          body: Seed::Union::Types::UnionWithDuplicateTypes.new(params).to_h,
-          request_options: request_options
+          body: Seed::Union::Types::UnionWithDuplicateTypes.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -174,8 +169,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/nested",
-          body: Seed::Union::Types::NestedUnionRoot.new(params).to_h,
-          request_options: request_options
+          body: Seed::Union::Types::NestedUnionRoot.new(params).to_h
         )
         begin
           response = @client.send(request)
@@ -206,8 +200,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/camel-case",
-          body: Seed::Union::Types::PaymentRequest.new(body_bag).to_h,
-          request_options: request_options
+          body: Seed::Union::Types::PaymentRequest.new(body_bag).to_h
         )
         begin
           response = @client.send(request)

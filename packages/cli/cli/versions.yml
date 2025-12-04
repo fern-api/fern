@@ -2,6 +2,46 @@
 
 - changelogEntry:
     - summary: |
+        Fix `substitute-env-vars` not applying to arrays in docs configuration. The `replaceEnvVariables` function now recursively processes array elements, enabling environment variable substitution in arrays of strings, arrays of objects, and deeply nested array structures (such as navigation items, navbar links, footer links, redirects, etc.).
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.1
+
+- changelogEntry:
+    - summary: |
+        **Breaking Change**: Enable `smart-casing` by default for all generators.
+
+        Smart-casing improves naming conventions in generated SDKs by:
+        - Capitalizing common initialisms like API, HTTP, ID, UUID, URL, HTML, JSON, XML, etc. in camelCase and PascalCase identifiers
+        - Better handling of number-letter combinations (e.g., `v2` stays as `v2` instead of becoming `v_2`, `md5` stays as `md5` instead of `md_5`)
+
+        **Migration Behavior**: The CLI will automatically upgrade your `generators.yml` to explicitly set `smart-casing: false` for all existing generators that don't have it configured. This preserves backwards compatibility for existing projects while enabling the improved naming for new projects.
+
+        **Opting In**: To enable smart-casing for existing generators, remove the `smart-casing: false` line that the migration adds, or explicitly set `smart-casing: true`.
+      type: break
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.0
+
+- changelogEntry:
+    - summary: |
+        Improve enum validation error messages to show which enum value has an invalid name. When the API source is OpenAPI, the error message now includes guidance about using the `x-fern-enum` extension to specify valid names.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 2.18.1
+
+- changelogEntry:
+    - summary: |
+        Add `--fernignore` CLI option for remote generation. This allows users to provide a custom `.fernignore` file that will replace the existing one on the main branch during remote generation. The custom fernignore will be applied during generation and committed to the repository.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 2.18.0
+
+- changelogEntry:
+    - summary: |
         Gracefully handle null values in docs.yml structure.
       type: fix
   irVersion: 62

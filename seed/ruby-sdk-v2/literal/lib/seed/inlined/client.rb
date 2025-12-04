@@ -27,8 +27,7 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "inlined",
-          body: Seed::Inlined::Types::SendLiteralsInlinedRequest.new(body_bag).to_h,
-          request_options: request_options
+          body: Seed::Inlined::Types::SendLiteralsInlinedRequest.new(body_bag).to_h
         )
         begin
           response = @client.send(request)

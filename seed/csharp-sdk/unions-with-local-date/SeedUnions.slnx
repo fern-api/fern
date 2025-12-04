@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedUnions.Test/SeedUnions.Test.csproj" />
+  <Project Path="src/SeedUnions/SeedUnions.csproj" />
+</Solution>

@@ -16,6 +16,12 @@ type ListUsernamesRequest struct {
 	StartingAfter *string `query:"starting_after"`
 }
 
+type ListUsernamesWithOptionalResponseRequest struct {
+	// The cursor used for pagination in order to fetch
+	// the next page of results.
+	StartingAfter *string `query:"starting_after"`
+}
+
 type ListUsersBodyCursorPaginationRequest struct {
 	// The object that contains the cursor used for pagination
 	// in order to fetch the next page of results.

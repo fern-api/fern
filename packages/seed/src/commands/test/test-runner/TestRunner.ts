@@ -69,7 +69,7 @@ export declare namespace TestRunner {
 
     interface TestFailure {
         type: "failure";
-        cause: "invalid-fixture" | "generation" | "compile";
+        cause: "invalid-fixture" | "generation" | "build" | "test";
         message?: string;
         id: string;
         outputFolder: string;
@@ -79,8 +79,10 @@ export declare namespace TestRunner {
     interface TestCaseMetrics {
         /** The time it takes to generate code via the generator */
         generationTime?: string;
-        /** The time it takes to verify/compile the code */
-        compileTime?: string;
+        /** The time it takes to build/compile the code */
+        buildTime?: string;
+        /** The time it takes to run tests */
+        testTime?: string;
     }
 }
 
@@ -253,9 +255,6 @@ export abstract class TestRunner {
                 };
             }
 
-            const scriptStopwatch = new Stopwatch();
-            scriptStopwatch.start();
-
             const scriptResponse = await this.scriptRunner?.run({
                 taskContext,
                 outputDir,
@@ -263,13 +262,15 @@ export abstract class TestRunner {
                 skipScripts: configuration?.skipScripts
             });
 
-            scriptStopwatch.stop();
-            metrics.compileTime = scriptStopwatch.duration();
+            if (scriptResponse != null) {
+                metrics.buildTime = this.formatDuration(scriptResponse.buildTimeMs);
+                metrics.testTime = this.formatDuration(scriptResponse.testTimeMs);
+            }
 
             if (scriptResponse?.type === "failure") {
                 return {
                     type: "failure",
-                    cause: "compile",
+                    cause: scriptResponse.phase,
                     id: fixture,
                     outputFolder,
                     metrics
@@ -293,5 +294,18 @@ export abstract class TestRunner {
     }
     protected getDockerImageName(): string {
         return this.generator.workspaceConfig.test.docker.image;
+    }
+
+    private formatDuration(ms: number | undefined): string | undefined {
+        if (ms == null) {
+            return undefined;
+        }
+        const seconds = ms / 1000;
+        if (seconds < 60) {
+            return `${seconds.toFixed(2)}s`;
+        }
+        const minutes = Math.floor(seconds / 60);
+        const remainingSeconds = seconds % 60;
+        return `${minutes}m ${remainingSeconds.toFixed(2)}s`;
     }
 }

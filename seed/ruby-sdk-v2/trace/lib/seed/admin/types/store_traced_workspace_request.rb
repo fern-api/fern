@@ -5,10 +5,10 @@ module Seed
     module Types
       class StoreTracedWorkspaceRequest < Internal::Types::Model
         field :submission_id, -> { String }, optional: false, nullable: false, api_name: "submissionId"
-        field :workspace_run_details, lambda {
+        field :workspace_run_details, -> {
           Seed::Submission::Types::WorkspaceRunDetails
         }, optional: false, nullable: false, api_name: "workspaceRunDetails"
-        field :trace_responses, lambda {
+        field :trace_responses, -> {
           Internal::Types::Array[Seed::Submission::Types::TraceResponse]
         }, optional: false, nullable: false, api_name: "traceResponses"
       end

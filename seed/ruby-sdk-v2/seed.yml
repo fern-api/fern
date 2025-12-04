@@ -33,8 +33,10 @@ publish:
 scripts:
   - image: ruby:3.3
     commands:
-      - bundle install
-      - bundle exec rake test
+      build:
+        - bundle install
+      test:
+        - bundle exec rake test
 
 fixtures:
   exhaustive:
