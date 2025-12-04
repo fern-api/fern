@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Fix OpenAPI parsing to properly handle `allOf` with `$ref` references inside `oneOf`/`anyOf` schemas. Previously, inline objects with `allOf` references but no direct properties were incorrectly converted to `map<string, any>`. Now they are properly preserved as named types with inheritance.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-04"
+  version: 3.0.2
+
+- changelogEntry:
+    - summary: |
         Fix `substitute-env-vars` not applying to arrays in docs configuration. The `replaceEnvVariables` function now recursively processes array elements, enabling environment variable substitution in arrays of strings, arrays of objects, and deeply nested array structures (such as navigation items, navbar links, footer links, redirects, etc.).
       type: fix
   irVersion: 62
