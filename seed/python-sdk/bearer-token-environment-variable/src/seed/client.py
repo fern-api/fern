@@ -6,7 +6,6 @@ import os
 import typing
 
 import httpx
-from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 
 if typing.TYPE_CHECKING:
@@ -60,10 +59,6 @@ class SeedBearerTokenEnvironmentVariable:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        if api_key is None:
-            raise ApiError(
-                body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
-            )
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url,
             api_key=api_key,
@@ -134,10 +129,6 @@ class AsyncSeedBearerTokenEnvironmentVariable:
         _defaulted_timeout = (
             timeout if timeout is not None else 60 if httpx_client is None else httpx_client.timeout.read
         )
-        if api_key is None:
-            raise ApiError(
-                body="The client must be instantiated be either passing in api_key or setting COURIER_API_KEY"
-            )
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url,
             api_key=api_key,

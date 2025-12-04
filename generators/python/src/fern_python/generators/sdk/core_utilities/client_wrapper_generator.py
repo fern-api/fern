@@ -3,10 +3,12 @@ from dataclasses import dataclass
 from enum import Enum
 from typing import List, Optional
 
-import fern_python.generators.sdk.names as names
+import fern.ir.resources as ir_types
 from ..context.sdk_generator_context import SdkGeneratorContext
 from ..environment_generators import GeneratedEnvironment
 from fdr import PayloadInput, Template, TemplateInput
+
+import fern_python.generators.sdk.names as names
 from fern_python.codegen import AST, Project, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.external_dependencies import httpx
@@ -15,8 +17,6 @@ from fern_python.generators.sdk.client_generator.base_client_generator import (
 )
 from fern_python.generators.sdk.core_utilities.core_utilities import CoreUtilities
 from fern_python.snippet.template_utils import TemplateGenerator
-
-import fern.ir.resources as ir_types
 
 
 @dataclass
@@ -569,11 +569,10 @@ class ClientWrapperGenerator:
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,
                     private_member_name=names.get_token_member_name(bearer_auth_scheme),
-                    type_hint=(
-                        ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
-                        if self._context.ir.sdk_config.is_auth_mandatory
-                        else AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
-                    ),
+                    # Always use optional type hint for the client wrapper to support OAuth flows
+                    # where the OAuthTokenProvider needs to create a SyncClientWrapper without a token
+                    # to fetch the initial token. The root client can still enforce auth requirements.
+                    type_hint=AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
                     initializer=AST.Expression(
                         f'{constructor_parameter_name}="YOUR_{bearer_auth_scheme.token.screaming_snake_case.safe_name}"',
                     ),
@@ -581,18 +580,11 @@ class ClientWrapperGenerator:
                         name=names.get_token_getter_name(bearer_auth_scheme),
                         signature=AST.FunctionSignature(
                             parameters=[],
-                            return_type=(
-                                AST.TypeHint.str_()
-                                if self._context.ir.sdk_config.is_auth_mandatory
-                                else AST.TypeHint.optional(AST.TypeHint.str_())
-                            ),
+                            # Always use optional return type to match the optional type hint
+                            return_type=AST.TypeHint.optional(AST.TypeHint.str_()),
                         ),
                         body=AST.CodeWriter(
-                            self._get_required_getter_body_writer(
-                                member_name=names.get_token_member_name(bearer_auth_scheme)
-                            )
-                            if self._context.ir.sdk_config.is_auth_mandatory
-                            else self._get_optional_getter_body_writer(
+                            self._get_optional_getter_body_writer(
                                 member_name=names.get_token_member_name(bearer_auth_scheme)
                             )
                         ),

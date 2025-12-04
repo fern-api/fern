@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.41.10
+  changelogEntry:
+    - summary: |
+        Fix OAuth flow regression where `SyncClientWrapper` and `AsyncClientWrapper` required a `token` parameter.
+        The token parameter is now always optional in the client wrapper to support OAuth flows where the
+        `OAuthTokenProvider` needs to create a wrapper before a token exists.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
 - version: 4.41.9
   changelogEntry:
     - summary: |
