@@ -43,18 +43,15 @@ class LightweightProblemInfoV2 extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->problemId = $values['problemId'];
-        $this->problemName = $values['problemName'];
-        $this->problemVersion = $values['problemVersion'];
-        $this->variableTypes = $values['variableTypes'];
+    )
+    {
+        $this->problemId = $values['problemId'];$this->problemName = $values['problemName'];$this->problemVersion = $values['problemVersion'];$this->variableTypes = $values['variableTypes'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

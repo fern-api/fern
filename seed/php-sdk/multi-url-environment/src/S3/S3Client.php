@@ -15,7 +15,7 @@ use JsonException;
 use GuzzleHttp\Exception\RequestException;
 use Psr\Http\Client\ClientExceptionInterface;
 
-class S3Client
+class S3Client 
 {
     /**
      * @var array{
@@ -41,10 +41,11 @@ class S3Client
      * @param RawClient $client
      * @param Environments $environment
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         Environments $environment,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->environment = $environment;
         $this->options = [];
@@ -63,8 +64,7 @@ class S3Client
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getPresignedUrl(GetPresignedUrlRequest $request, ?array $options = null): string
-    {
+    public function getPresignedUrl(GetPresignedUrlRequest $request, ?array $options = null): string {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -77,15 +77,15 @@ class S3Client
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeString($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

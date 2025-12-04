@@ -7,7 +7,7 @@ use Seed\Core\Json\JsonProperty;
 /**
  * @property string $docs
  */
-trait Docs
+trait Docs 
 {
     /**
      * @var string $docs
@@ -18,17 +18,12 @@ trait Docs
     /**
      * @return string
      */
-    public function getDocs(): string
-    {
-        return $this->docs;
-    }
+    public function getDocs(): string {
+        return $this->docs;}
 
     /**
      * @param string $value
      */
-    public function setDocs(string $value): self
-    {
-        $this->docs = $value;
-        return $this;
-    }
+    public function setDocs(string $value): self {
+        $this->docs = $value;return $this;}
 }

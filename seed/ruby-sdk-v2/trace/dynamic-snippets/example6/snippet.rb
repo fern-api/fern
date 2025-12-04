@@ -6,7 +6,6 @@ client = Seed::Client.new(
 );
 
 client.admin.store_traced_test_case_v_2(
-  'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
-  'testCaseId',
-
+  submission_id: 'd5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32',
+  test_case_id: 'testCaseId'
 );

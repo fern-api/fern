@@ -5,7 +5,7 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.service.create_user({
+client.service.create_user(
   email: 'email',
   email_verified: true,
   username: 'username',
@@ -15,4 +15,4 @@ client.service.create_user({
   user_metadata: {},
   app_metadata: {},
   connection: 'connection'
-});
+);

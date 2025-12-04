@@ -8,7 +8,12 @@ import type * as SeedBasicAuth from "../../../index";
 export class UnauthorizedRequest extends errors.SeedBasicAuthError {
     constructor(private readonly body: SeedBasicAuth.UnauthorizedRequestErrorBody) {
         super("UnauthorizedRequest");
-        Object.setPrototypeOf(this, UnauthorizedRequest.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 
     public async send(res: express.Response): Promise<void> {

@@ -84,7 +84,7 @@ type EventInfo struct {
 }
 
 type Data struct {
-	Type   string
-	String string
-	Base64 []byte
+	Type        string
+	FieldString string
+	Base64      []byte
 }

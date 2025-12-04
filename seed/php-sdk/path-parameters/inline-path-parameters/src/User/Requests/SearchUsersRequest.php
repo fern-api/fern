@@ -30,9 +30,8 @@ class SearchUsersRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->tenantId = $values['tenantId'];
-        $this->userId = $values['userId'];
-        $this->limit = $values['limit'] ?? null;
+    )
+    {
+        $this->tenantId = $values['tenantId'];$this->userId = $values['userId'];$this->limit = $values['limit'] ?? null;
     }
 }

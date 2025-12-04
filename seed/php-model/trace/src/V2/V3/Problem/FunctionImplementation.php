@@ -27,16 +27,15 @@ class FunctionImplementation extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->impl = $values['impl'];
-        $this->imports = $values['imports'] ?? null;
+    )
+    {
+        $this->impl = $values['impl'];$this->imports = $values['imports'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

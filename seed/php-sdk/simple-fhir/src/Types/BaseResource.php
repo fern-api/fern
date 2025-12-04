@@ -46,17 +46,15 @@ class BaseResource extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->relatedResources = $values['relatedResources'];
-        $this->memo = $values['memo'];
+    )
+    {
+        $this->id = $values['id'];$this->relatedResources = $values['relatedResources'];$this->memo = $values['memo'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

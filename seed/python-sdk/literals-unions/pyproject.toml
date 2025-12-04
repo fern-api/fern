@@ -1,5 +1,6 @@
 [project]
 name = "fern_literals-unions"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_literals-unions"

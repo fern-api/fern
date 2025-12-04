@@ -43,18 +43,15 @@ class WorkspaceSubmitRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->submissionId = $values['submissionId'];
-        $this->language = $values['language'];
-        $this->submissionFiles = $values['submissionFiles'];
-        $this->userId = $values['userId'] ?? null;
+    )
+    {
+        $this->submissionId = $values['submissionId'];$this->language = $values['language'];$this->submissionFiles = $values['submissionFiles'];$this->userId = $values['userId'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

@@ -6,6 +6,6 @@ client = Seed::Client.new(
 );
 
 client.playlist.delete_playlist(
-  1,
-  'playlist_id'
+  service_param: 1,
+  playlist_id: 'playlist_id'
 );

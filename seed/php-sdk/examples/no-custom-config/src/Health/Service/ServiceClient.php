@@ -13,7 +13,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Core\Json\JsonDecoder;
 use JsonException;
 
-class ServiceClient
+class ServiceClient 
 {
     /**
      * @var array{
@@ -22,7 +22,7 @@ class ServiceClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -41,10 +41,11 @@ class ServiceClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -64,8 +65,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function check(string $id, ?array $options = null): void
-    {
+    public function check(string $id, ?array $options = null): void {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -77,12 +77,12 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 return;
             }
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -115,8 +115,7 @@ class ServiceClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function ping(?array $options = null): bool
-    {
+    public function ping(?array $options = null): bool {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -128,15 +127,15 @@ class ServiceClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeBool($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

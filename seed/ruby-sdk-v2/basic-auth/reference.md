@@ -81,7 +81,7 @@ client.basic_auth.post_with_basic_auth();
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, Object]` 
+**request:** `Object` 
     
 </dd>
 </dl>

@@ -30,9 +30,8 @@ class ReqWithHeaders extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->xTestServiceHeader = $values['xTestServiceHeader'];
-        $this->xTestEndpointHeader = $values['xTestEndpointHeader'];
-        $this->body = $values['body'];
+    )
+    {
+        $this->xTestServiceHeader = $values['xTestServiceHeader'];$this->xTestEndpointHeader = $values['xTestEndpointHeader'];$this->body = $values['body'];
     }
 }

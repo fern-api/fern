@@ -7,7 +7,7 @@ use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Exception;
 
-class SeedClient
+class SeedClient 
 {
     /**
      * @var ServiceClient $service
@@ -21,7 +21,7 @@ class SeedClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -45,7 +45,8 @@ class SeedClient
         ?string $apiKey = null,
         ?string $version = null,
         ?array $options = null,
-    ) {
+    )
+    {
         $apiKey ??= $this->getFromEnvOrThrow('COURIER_API_KEY', 'Please pass in apiKey or set the environment variable COURIER_API_KEY.');
         $defaultHeaders = [
             'Authorization' => "Bearer $apiKey",
@@ -55,21 +56,21 @@ class SeedClient
             'X-Fern-SDK-Version' => '0.0.1',
             'User-Agent' => 'seed/seed/0.0.1',
         ];
-        if ($version != null) {
+        if ($version != null){
             $defaultHeaders['X-API-Version'] = $version;
         }
-
+        
         $this->options = $options ?? [];
+        
         $this->options['headers'] = array_merge(
             $defaultHeaders,
             $this->options['headers'] ?? [],
         );
-
-
+        
         $this->client = new RawClient(
             options: $this->options,
         );
-
+        
         $this->service = new ServiceClient($this->client, $this->options);
     }
 
@@ -78,8 +79,7 @@ class SeedClient
      * @param string $message
      * @return string
      */
-    private function getFromEnvOrThrow(string $env, string $message): string
-    {
+    private function getFromEnvOrThrow(string $env, string $message): string {
         $value = getenv($env);
         return $value ? (string) $value : throw new Exception($message);
     }

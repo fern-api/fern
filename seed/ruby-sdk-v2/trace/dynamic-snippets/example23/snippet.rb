@@ -6,11 +6,10 @@ client = Seed::Client.new(
 );
 
 client.problem.get_default_starter_files(
-  inputParams: [{
+  input_params: [{
     name: 'name'
   }, {
     name: 'name'
   }],
-  outputType: ,
-  methodName: 'methodName'
+  method_name: 'methodName'
 );

@@ -11,5 +11,4 @@ import * as FernDefinition from "../../../index";
  * Settings hierarchy (highest to lowest priority): generator > spec > api.
  */
 export interface ApiConfigurationV2SettingsSchema
-    extends FernDefinition.OpenApiSettingsSchema,
-        FernDefinition.AsyncApiSettingsSchema {}
+    extends FernDefinition.OpenApiSettingsSchema, FernDefinition.AsyncApiSettingsSchema {}

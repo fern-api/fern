@@ -84,16 +84,8 @@ class PatchComplexRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->name = $values['name'] ?? null;
-        $this->age = $values['age'] ?? null;
-        $this->active = $values['active'] ?? null;
-        $this->metadata = $values['metadata'] ?? null;
-        $this->tags = $values['tags'] ?? null;
-        $this->email = $values['email'] ?? null;
-        $this->nickname = $values['nickname'] ?? null;
-        $this->bio = $values['bio'] ?? null;
-        $this->profileImageUrl = $values['profileImageUrl'] ?? null;
-        $this->settings = $values['settings'] ?? null;
+    )
+    {
+        $this->name = $values['name'] ?? null;$this->age = $values['age'] ?? null;$this->active = $values['active'] ?? null;$this->metadata = $values['metadata'] ?? null;$this->tags = $values['tags'] ?? null;$this->email = $values['email'] ?? null;$this->nickname = $values['nickname'] ?? null;$this->bio = $values['bio'] ?? null;$this->profileImageUrl = $values['profileImageUrl'] ?? null;$this->settings = $values['settings'] ?? null;
     }
 }

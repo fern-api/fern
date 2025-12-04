@@ -12,9 +12,9 @@ public class Example24
             }
         );
 
-        await client.Users.ListWithGlobalConfigAsync(
-            new SeedPagination.ListWithGlobalConfigRequest {
-                Offset = 1
+        await client.Users.ListUsernamesWithOptionalResponseAsync(
+            new ListUsernamesWithOptionalResponseRequest {
+                StartingAfter = "starting_after"
             }
         );
     }

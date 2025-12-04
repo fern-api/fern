@@ -19,13 +19,13 @@ module Seed
         field :allowed_origins, -> { Internal::Types::Array[String] }, optional: true, nullable: false
         field :web_origins, -> { Internal::Types::Array[String] }, optional: true, nullable: false
         field :grant_types, -> { Internal::Types::Array[String] }, optional: true, nullable: false
-        field :jwt_configuration, lambda {
+        field :jwt_configuration, -> {
           Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
         }, optional: true, nullable: false
-        field :signing_keys, lambda {
+        field :signing_keys, -> {
           Internal::Types::Array[Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]]
         }, optional: true, nullable: false
-        field :encryption_key, lambda {
+        field :encryption_key, -> {
           Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
         }, optional: true, nullable: false
         field :sso, -> { Internal::Types::Boolean }, optional: true, nullable: false
@@ -37,14 +37,14 @@ module Seed
         field :custom_login_page_preview, -> { String }, optional: true, nullable: false
         field :form_template, -> { String }, optional: true, nullable: false
         field :is_heroku_app, -> { Internal::Types::Boolean }, optional: true, nullable: false
-        field :addons, lambda {
+        field :addons, -> {
           Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
         }, optional: true, nullable: false
         field :token_endpoint_auth_method, -> { String }, optional: true, nullable: false
-        field :client_metadata, lambda {
+        field :client_metadata, -> {
           Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
         }, optional: true, nullable: false
-        field :mobile, lambda {
+        field :mobile, -> {
           Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
         }, optional: true, nullable: false
       end

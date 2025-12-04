@@ -184,8 +184,9 @@ export class Generation {
         shouldInlinePathParameters: () => this.customConfig["inline-path-parameters"] ?? true,
         /** When true, includes exception handler infrastructure for custom error handling. Default: false. */
         includeExceptionHandler: () => this.customConfig["include-exception-handler"] ?? false,
-        /** When true, generates mock server tests for the SDK. Default: true. */
-        shouldGenerateMockServerTests: () => this.customConfig["generate-mock-server-tests"] ?? true,
+        /** When true, generates mock server tests for the SDK. Default: true. Also accepts enable-wire-tests as an alias. */
+        shouldGenerateMockServerTests: () =>
+            this.customConfig["generate-mock-server-tests"] ?? this.customConfig["enable-wire-tests"] ?? true,
         /** Access modifier for the root client class (Public or Internal). Default: Public. */
         rootClientAccess: () =>
             this.customConfig["root-client-class-access"] == "internal" ? ast.Access.Internal : ast.Access.Public,
@@ -194,7 +195,39 @@ export class Generation {
         /** When true, uses PascalCase for environment names (e.g., "Production" instead of "production"). Default: true. */
         pascalCaseEnvironments: () => this.customConfig["pascal-case-environments"] ?? true,
         /** When true, requires explicit namespace declarations instead of using file-scoped namespaces. Default: false. */
-        explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true
+        explicitNamespaces: () => this.customConfig["explicit-namespaces"] === true,
+        /**
+         * Output path configuration for generated files.
+         * Returns normalized paths for library, test, solution, and other files.
+         */
+        outputPath: () => {
+            const config = this.customConfig["output-path"];
+            if (config == null) {
+                // Default: all files go to "src" for library/test, "." for solution/other
+                return {
+                    library: "src",
+                    test: "src",
+                    solution: ".",
+                    other: "."
+                };
+            }
+            if (typeof config === "string") {
+                // Simple string: library and test go to that path, solution/other go to "."
+                return {
+                    library: config,
+                    test: config,
+                    solution: ".",
+                    other: "."
+                };
+            }
+            // Object: use specified paths with defaults
+            return {
+                library: config.library ?? "src",
+                test: config.test ?? "src",
+                solution: config.solution ?? ".",
+                other: config.other ?? "."
+            };
+        }
     });
 
     public readonly constants = {

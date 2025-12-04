@@ -16,11 +16,16 @@ export declare namespace ScriptRunner {
 
     interface ScriptSuccessResponse {
         type: "success";
+        buildTimeMs?: number;
+        testTimeMs?: number;
     }
 
     interface ScriptFailureResponse {
         type: "failure";
+        phase: "build" | "test";
         message: string;
+        buildTimeMs?: number;
+        testTimeMs?: number;
     }
 }
 

@@ -27,16 +27,15 @@ class InvalidRequestResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->request = $values['request'];
-        $this->cause = $values['cause'];
+    )
+    {
+        $this->request = $values['request'];$this->cause = $values['cause'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

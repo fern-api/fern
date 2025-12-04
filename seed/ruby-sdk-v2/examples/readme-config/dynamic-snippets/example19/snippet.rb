@@ -5,8 +5,8 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.service.create_big_entity({
-  extendedMovie: {
+client.service.create_big_entity(
+  extended_movie: {
     cast: ['cast', 'cast'],
     id: 'id',
     prequel: 'prequel',
@@ -22,12 +22,12 @@ client.service.create_big_entity({
   entity: {
     name: 'name'
   },
-  commonMetadata: {
+  common_metadata: {
     id: 'id',
     data: {
       data: 'data'
     },
-    jsonString: 'jsonString'
+    json_string: 'jsonString'
   },
   migration: {
     name: 'name'
@@ -141,4 +141,4 @@ client.service.create_big_entity({
     date: '2023-01-15',
     datetime: '2024-01-15T09:30:00Z'
   }
-});
+);

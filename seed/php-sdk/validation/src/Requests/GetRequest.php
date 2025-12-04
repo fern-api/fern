@@ -30,9 +30,8 @@ class GetRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->decimal = $values['decimal'];
-        $this->even = $values['even'];
-        $this->name = $values['name'];
+    )
+    {
+        $this->decimal = $values['decimal'];$this->even = $values['even'];$this->name = $values['name'];
     }
 }

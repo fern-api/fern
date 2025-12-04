@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="src/SeedExhaustive.Test/SeedExhaustive.Test.csproj" />
+  <Project Path="src/SeedExhaustive/SeedExhaustive.csproj" />
+</Solution>

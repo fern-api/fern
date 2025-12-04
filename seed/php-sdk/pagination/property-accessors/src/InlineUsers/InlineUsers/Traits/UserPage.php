@@ -9,7 +9,7 @@ use Seed\Core\Json\JsonProperty;
  * @property UserListContainer $data
  * @property ?string $next
  */
-trait UserPage
+trait UserPage 
 {
     /**
      * @var UserListContainer $data
@@ -26,34 +26,24 @@ trait UserPage
     /**
      * @return UserListContainer
      */
-    public function getData(): UserListContainer
-    {
-        return $this->data;
-    }
+    public function getData(): UserListContainer {
+        return $this->data;}
 
     /**
      * @param UserListContainer $value
      */
-    public function setData(UserListContainer $value): self
-    {
-        $this->data = $value;
-        return $this;
-    }
+    public function setData(UserListContainer $value): self {
+        $this->data = $value;return $this;}
 
     /**
      * @return ?string
      */
-    public function getNext(): ?string
-    {
-        return $this->next;
-    }
+    public function getNext(): ?string {
+        return $this->next;}
 
     /**
      * @param ?string $value
      */
-    public function setNext(?string $value = null): self
-    {
-        $this->next = $value;
-        return $this;
-    }
+    public function setNext(?string $value = null): self {
+        $this->next = $value;return $this;}
 }

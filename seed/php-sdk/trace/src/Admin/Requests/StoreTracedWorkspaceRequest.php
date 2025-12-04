@@ -30,8 +30,8 @@ class StoreTracedWorkspaceRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->workspaceRunDetails = $values['workspaceRunDetails'];
-        $this->traceResponses = $values['traceResponses'];
+    )
+    {
+        $this->workspaceRunDetails = $values['workspaceRunDetails'];$this->traceResponses = $values['traceResponses'];
     }
 }

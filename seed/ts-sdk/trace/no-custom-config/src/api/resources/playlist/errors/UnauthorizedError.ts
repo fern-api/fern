@@ -10,6 +10,11 @@ export class UnauthorizedError extends errors.SeedTraceError {
             statusCode: 401,
             rawResponse: rawResponse,
         });
-        Object.setPrototypeOf(this, UnauthorizedError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 }

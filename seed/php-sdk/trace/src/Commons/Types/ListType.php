@@ -27,16 +27,15 @@ class ListType extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->valueType = $values['valueType'];
-        $this->isFixedLength = $values['isFixedLength'] ?? null;
+    )
+    {
+        $this->valueType = $values['valueType'];$this->isFixedLength = $values['isFixedLength'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

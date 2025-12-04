@@ -12,7 +12,7 @@
 <dd>
 
 ```ruby
-client.create_user({
+client.create_user(
   id: 'id',
   email: 'email',
   password: 'password',
@@ -23,7 +23,7 @@ client.create_user({
     },
     ssn: 'ssn'
   }
-});
+);
 ```
 </dd>
 </dl>

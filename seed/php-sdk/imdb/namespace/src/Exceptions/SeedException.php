@@ -9,4 +9,5 @@ use Exception;
  */
 class SeedException extends Exception
 {
+
 }

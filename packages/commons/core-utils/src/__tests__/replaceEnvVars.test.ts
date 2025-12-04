@@ -57,4 +57,106 @@ describe("replaceEnvVariables", () => {
         expect(substituted.baz.qux.thud).toEqual("");
         expect(substituted.plugh).toEqual("");
     });
+
+    it("converts escaped env var pattern to literal without substitution", () => {
+        process.env.HOST = "example.com";
+        const content = {
+            escaped: "http://\\$\\{HOST\\}",
+            normal: "${HOST}"
+        };
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(content, { onError });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted.escaped).toEqual("http://${HOST}");
+        expect(substituted.normal).toEqual("example.com");
+    });
+
+    it("handles mixed escaped and non-escaped patterns in same string", () => {
+        process.env.API_KEY = "secret123";
+        const content = "Use \\$\\{API_KEY\\} syntax to reference ${API_KEY}";
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(content, { onError });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted).toEqual("Use ${API_KEY} syntax to reference secret123");
+    });
+
+    it("escaped patterns are not substituted even with substituteAsEmpty flag", () => {
+        const content = "http://\\$\\{HOST\\}";
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(content, { onError }, { substituteAsEmpty: true });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted).toEqual("http://${HOST}");
+    });
+
+    it("substitutes env vars in arrays of strings", () => {
+        process.env.ARRAY_VAR = "array-value";
+        const content = ["static", "${ARRAY_VAR}", "another-static"];
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(content, { onError });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted).toEqual(["static", "array-value", "another-static"]);
+    });
+
+    it("substitutes env vars in arrays of objects", () => {
+        process.env.TITLE_VAR = "My Title";
+        process.env.URL_VAR = "https://example.com";
+        const content = [
+            { title: "${TITLE_VAR}", url: "${URL_VAR}" },
+            { title: "Static Title", url: "https://static.com" }
+        ];
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(content, { onError });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted).toEqual([
+            { title: "My Title", url: "https://example.com" },
+            { title: "Static Title", url: "https://static.com" }
+        ]);
+    });
+
+    it("substitutes env vars in nested arrays within objects", () => {
+        process.env.NESTED_VAR = "nested-value";
+        const content = {
+            items: [{ name: "${NESTED_VAR}" }, { name: "static" }],
+            links: ["${NESTED_VAR}", "static-link"]
+        };
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(content, { onError });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted).toEqual({
+            items: [{ name: "nested-value" }, { name: "static" }],
+            links: ["nested-value", "static-link"]
+        });
+    });
+
+    it("substitutes env vars in deeply nested arrays", () => {
+        process.env.DEEP_VAR = "deep-value";
+        const content = {
+            level1: {
+                level2: [
+                    {
+                        level3: [{ value: "${DEEP_VAR}" }]
+                    }
+                ]
+            }
+        };
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(content, { onError });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted).toEqual({
+            level1: {
+                level2: [
+                    {
+                        level3: [{ value: "deep-value" }]
+                    }
+                ]
+            }
+        });
+    });
 });

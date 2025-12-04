@@ -13,7 +13,7 @@ export const makeRequest = async (
 ): Promise<Response> => {
     const signals: AbortSignal[] = [];
 
-    let timeoutAbortId: NodeJS.Timeout | undefined;
+    let timeoutAbortId: ReturnType<typeof setTimeout> | undefined;
     if (timeoutMs != null) {
         const { signal, abortId } = getTimeoutSignal(timeoutMs);
         timeoutAbortId = abortId;

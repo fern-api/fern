@@ -4,6 +4,7 @@ from typing import Dict, List, Optional, Set, Tuple, Union
 from ..core_utilities.client_wrapper_generator import ClientWrapperGenerator
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
+from fern_python.codegen.ast.nodes.docstring import escape_docstring
 from fern_python.external_dependencies import Contextlib, HttpX, Websockets
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
 from fern_python.generators.sdk.client_generator.endpoint_function_generator import EndpointFunctionGenerator
@@ -412,7 +413,7 @@ class WebsocketConnectMethodGenerator:
 
         def write(writer: AST.NodeWriter) -> None:
             if websocket.docs is not None:
-                writer.write_line(websocket.docs)
+                writer.write_line(escape_docstring(websocket.docs))
             if len(parameters) == 0:
                 return
             if websocket.docs is not None:
@@ -562,7 +563,7 @@ class WebsocketConnectMethodGenerator:
         split = docs.split("\n")
         with writer.indent():
             for i, line in enumerate(split):
-                writer.write(line)
+                writer.write(escape_docstring(line))
                 if i < len(split) - 1:
                     writer.write_line()
 

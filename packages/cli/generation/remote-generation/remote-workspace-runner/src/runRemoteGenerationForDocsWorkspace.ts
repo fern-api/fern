@@ -32,19 +32,21 @@ export async function runRemoteGenerationForDocsWorkspace({
     const instances = docsWorkspace.config.instances;
 
     // Substitute templated environment variables:
-    // If the run is a preview, we'll substitute ALL environment variables as empty strings
+    // If substitute-env-vars is enabled, we'll attempt to read and replace the templated
+    // environment variable even in preview mode. Will bubble up an error if the env var isn't found.
     //
-    // Otherwise, we'll attempt to read and replace the templated environment variable. Will
-    // bubble up an error if the env var isn't found.
+    // If substitute-env-vars is not enabled but the run is a preview, we'll substitute
+    // ALL environment variables as empty strings.
     //
     // Although this logic is separate from generating a remote, placing it here helps us
     // avoid making cascading changes to other workflows.
     // docsWorkspace = substituteEnvVariables(docsWorkspace, context, { substituteAsEmpty: preview });
+    const shouldSubstituteAsEmpty = preview && !docsWorkspace.config.settings?.substituteEnvVars;
     docsWorkspace.config = replaceEnvVariables(
         docsWorkspace.config,
         // Wrap in a closure for correct binding of `this` downstream
         { onError: (e) => context.failAndThrow(e) },
-        { substituteAsEmpty: preview }
+        { substituteAsEmpty: shouldSubstituteAsEmpty }
     );
 
     if (instances.length === 0) {

@@ -9,6 +9,7 @@ import { Endpoint } from "@fern-fern/generator-exec-sdk/api";
 import { HttpService, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentGenerator";
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
+import { InferredAuthProviderGenerator } from "./inferred-auth/InferredAuthProviderGenerator";
 import { buildReference } from "./reference/buildReference";
 import { RootClientGenerator } from "./root-client/RootClientGenerator";
 import { SdkCustomConfigSchema } from "./SdkCustomConfig";
@@ -16,6 +17,7 @@ import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
+import { WireTestGenerator } from "./wire-tests";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 
 export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -101,6 +103,8 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             _other: () => undefined
         });
 
+        this.generateInferredAuthProvider(context);
+
         await context.snippetGenerator.populateSnippetsCache();
 
         if (this.shouldGenerateReadme(context)) {
@@ -130,6 +134,8 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 context.logger.warn((error as Error)?.stack ?? "");
             }
         }
+
+        await this.generateWireTestFiles(context);
 
         await context.project.persist();
 
@@ -162,6 +168,18 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
             }
         });
     }
+
+    private generateInferredAuthProvider(context: SdkGeneratorContext): void {
+        const inferredAuth = context.getInferredAuth();
+        if (inferredAuth != null) {
+            const inferredAuthProvider = new InferredAuthProviderGenerator({
+                context,
+                scheme: inferredAuth
+            });
+            context.project.addRawFiles(inferredAuthProvider.generate());
+        }
+    }
+
     private shouldGenerateReadme(context: SdkGeneratorContext): boolean {
         const hasSnippetFilepath = context.config.output.snippetFilepath != null;
         const publishConfig = context.ir.publishConfig;
@@ -236,5 +254,24 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
         );
+    }
+
+    private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {
+        if (!context.customConfig.enableWireTests) {
+            return;
+        }
+
+        try {
+            context.logger.debug("Generating WireMock integration tests...");
+            const wireTestGenerator = new WireTestGenerator(context, context.ir);
+            await wireTestGenerator.generate();
+            context.logger.debug("WireMock test generation complete");
+        } catch (error) {
+            context.logger.error("Failed to generate WireMock tests");
+            if (error instanceof Error) {
+                context.logger.debug(error.message);
+                context.logger.debug(error.stack ?? "");
+            }
+        }
     }
 }

@@ -40,17 +40,15 @@ class Identifier extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->type = $values['type'];
-        $this->value = $values['value'];
-        $this->label = $values['label'];
+    )
+    {
+        $this->type = $values['type'];$this->value = $values['value'];$this->label = $values['label'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

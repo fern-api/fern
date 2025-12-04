@@ -7,11 +7,11 @@ client = Seed::Client.new(
 
 client.service.list_users(
   page: 1,
-  perPage: 1,
-  includeTotals: true,
+  per_page: 1,
+  include_totals: true,
   sort: 'sort',
   connection: 'connection',
   q: 'q',
-  searchEngine: 'search_engine',
+  search_engine: 'search_engine',
   fields: 'fields'
 );

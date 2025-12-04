@@ -13,7 +13,7 @@ use Seed\Core\Json\JsonProperty;
  * @property string $password
  * @property UserProfile $profile
  */
-trait User
+trait User 
 {
     /**
      * @var string $id The unique identifier for the user.

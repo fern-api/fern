@@ -38,8 +38,6 @@ export class WireTestGenerator {
     private dynamicIr: dynamic.DynamicIntermediateRepresentation;
     private wireMockConfigContent: Record<string, WireMockMapping>;
     private snippetGenerator: DynamicSnippetsGenerator;
-    private readonly packagePathPrefix: string;
-
     constructor(context: SdkGeneratorContext, ir: IntermediateRepresentation) {
         this.context = context;
         const dynamicIr = ir.dynamic;
@@ -48,8 +46,6 @@ export class WireTestGenerator {
         }
         this.dynamicIr = dynamicIr;
         this.wireMockConfigContent = this.getWireMockConfigContent();
-        // package_path is already normalized by the schema (leading/trailing slashes stripped)
-        this.packagePathPrefix = context.customConfig.package_path ?? "";
 
         // TODO(tjdbdc): Really need a migration framework for dynamic IR
         this.snippetGenerator = new DynamicSnippetsGenerator({
@@ -60,13 +56,6 @@ export class WireTestGenerator {
                 customConfig: context.customConfig
             } as FernGeneratorExec.GeneratorConfig
         });
-    }
-
-    /**
-     * Builds a path with the package path prefix if set.
-     */
-    private withPackagePrefix(relativePath: string): string {
-        return this.packagePathPrefix ? `${this.packagePathPrefix}/${relativePath}` : relativePath;
     }
 
     // =============================================================================
@@ -105,7 +94,7 @@ export class WireTestGenerator {
         this.context.logger.debug(`Wire tests: ${totalEndpointsWithExamples} endpoints with static IR examples`);
 
         // Generate docker-compose.test.yml and wiremock-mappings.json for WireMock
-        new WireTestSetupGenerator(this.context, this.context.ir, this.packagePathPrefix).generate();
+        new WireTestSetupGenerator(this.context, this.context.ir).generate();
     }
 
     /**
@@ -219,7 +208,7 @@ export class WireTestGenerator {
 
         return new WriteablePythonFile({
             filename: `test_${serviceName}`,
-            directory: RelativeFilePath.of(this.withPackagePrefix("tests/wire")),
+            directory: RelativeFilePath.of("tests/wire"),
             contents: pythonFile
         });
     }
@@ -261,7 +250,7 @@ export class WireTestGenerator {
             }
         }
 
-        const pathSegments = this.withPackagePrefix(`tests/wire/test_${serviceName}`).split("/");
+        const pathSegments = `tests/wire/test_${serviceName}`.split("/");
         return python.file({
             path: pathSegments,
             statements

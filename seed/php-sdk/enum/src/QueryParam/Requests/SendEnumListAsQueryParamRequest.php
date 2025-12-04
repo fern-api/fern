@@ -50,10 +50,8 @@ class SendEnumListAsQueryParamRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->operand = $values['operand'];
-        $this->maybeOperand = $values['maybeOperand'] ?? null;
-        $this->operandOrColor = $values['operandOrColor'];
-        $this->maybeOperandOrColor = $values['maybeOperandOrColor'] ?? null;
+    )
+    {
+        $this->operand = $values['operand'];$this->maybeOperand = $values['maybeOperand'] ?? null;$this->operandOrColor = $values['operandOrColor'];$this->maybeOperandOrColor = $values['maybeOperandOrColor'] ?? null;
     }
 }

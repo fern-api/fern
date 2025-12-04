@@ -6,7 +6,7 @@ client = Seed::Client.new(
 );
 
 client.service.get_user_by_id(
-  userId: 'userId',
+  user_id: 'userId',
   fields: 'fields',
-  includeFields: true
+  include_fields: true
 );
