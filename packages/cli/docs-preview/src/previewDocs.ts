@@ -305,11 +305,14 @@ export async function getPreviewDocsDefinition({
     };
 
     if (docsWorkspace.config.settings?.substituteEnvVars) {
-        docsDefinition = replaceEnvVariables(
-            docsDefinition,
+        // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
+        const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
+        const substitutedDocs = replaceEnvVariables(
+            docsWithoutJsFiles,
             { onError: (e) => context.logger.error(e ?? "Unknown error during environment variable substitution") },
             { substituteAsEmpty: true }
         );
+        docsDefinition = { ...substitutedDocs, jsFiles };
     }
 
     return docsDefinition;

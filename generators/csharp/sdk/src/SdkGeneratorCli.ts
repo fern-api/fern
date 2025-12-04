@@ -277,16 +277,18 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
             return;
         }
         const content = await context.generatorAgent.generateReadme({ context, endpointSnippets });
+        const otherPath = context.settings.outputPath.other;
         context.project.addRawFiles(
-            new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of("."), content)
+            new File(context.generatorAgent.README_FILENAME, RelativeFilePath.of(otherPath), content)
         );
     }
 
     private async generateReference({ context }: { context: SdkGeneratorContext }): Promise<void> {
         const builder = buildReference({ context });
         const content = await context.generatorAgent.generateReference(builder);
+        const otherPath = context.settings.outputPath.other;
         context.project.addRawFiles(
-            new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
+            new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of(otherPath), content)
         );
     }
 

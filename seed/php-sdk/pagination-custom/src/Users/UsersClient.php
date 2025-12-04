@@ -5,6 +5,8 @@ namespace Seed\Users;
 use GuzzleHttp\ClientInterface;
 use Seed\Core\Client\RawClient;
 use Seed\Users\Requests\ListUsernamesRequestCustom;
+use Seed\Core\Pagination\Pager;
+use Seed\Core\Pagination\CustomPager;
 use Seed\Types\UsernameCursor;
 use Seed\Exceptions\SeedException;
 use Seed\Exceptions\SeedApiException;
@@ -61,11 +63,28 @@ class UsersClient
      *   queryParameters?: array<string, mixed>,
      *   bodyProperties?: array<string, mixed>,
      * } $options
+     * @return Pager<string>
+     */
+    public function listUsernamesCustom(ListUsernamesRequestCustom $request = new ListUsernamesRequestCustom(), ?array $options = null): Pager {
+        $response = $this->_listUsernamesCustom($request, $options);
+        return new CustomPager(response: $response, client: $this);
+    }
+
+    /**
+     * @param ListUsernamesRequestCustom $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
      * @return UsernameCursor
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function listUsernamesCustom(ListUsernamesRequestCustom $request = new ListUsernamesRequestCustom(), ?array $options = null): UsernameCursor {
+    private function _listUsernamesCustom(ListUsernamesRequestCustom $request = new ListUsernamesRequestCustom(), ?array $options = null): UsernameCursor {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
         if ($request->startingAfter != null){

@@ -2,6 +2,14 @@
 
 - changelogEntry:
     - summary: |
+        Fix `substitute-env-vars` not applying to arrays in docs configuration. The `replaceEnvVariables` function now recursively processes array elements, enabling environment variable substitution in arrays of strings, arrays of objects, and deeply nested array structures (such as navigation items, navbar links, footer links, redirects, etc.).
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.1
+
+- changelogEntry:
+    - summary: |
         **Breaking Change**: Enable `smart-casing` by default for all generators.
 
         Smart-casing improves naming conventions in generated SDKs by:
