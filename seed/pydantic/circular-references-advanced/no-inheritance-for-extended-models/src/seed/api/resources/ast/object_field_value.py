@@ -25,6 +25,7 @@ class ObjectFieldValue(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .container_value import ContainerValue  # noqa: E402, I001
 from .field_value import FieldValue  # noqa: E402, I001
 
-update_forward_refs(ObjectFieldValue)
+update_forward_refs(ObjectFieldValue, ContainerValue=ContainerValue, FieldValue=FieldValue)
