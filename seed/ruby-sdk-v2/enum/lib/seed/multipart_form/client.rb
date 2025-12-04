@@ -51,7 +51,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "multipart",
-          body: body
+          body: body,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

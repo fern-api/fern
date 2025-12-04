@@ -17,6 +17,7 @@ import { SdkGeneratorContext } from "./SdkGeneratorContext";
 import { SubPackageClientGenerator } from "./subpackage-client/SubPackageClientGenerator";
 import { convertDynamicEndpointSnippetRequest } from "./utils/convertEndpointSnippetRequest";
 import { convertIr } from "./utils/convertIr";
+import { WireTestGenerator } from "./wire-tests";
 import { WrappedRequestGenerator } from "./wrapped-request/WrappedRequestGenerator";
 
 export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSchema, SdkGeneratorContext> {
@@ -133,6 +134,8 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
                 context.logger.warn((error as Error)?.stack ?? "");
             }
         }
+
+        await this.generateWireTestFiles(context);
 
         await context.project.persist();
 
@@ -251,5 +254,24 @@ export class SdkGeneratorCLI extends AbstractRubyGeneratorCli<SdkCustomConfigSch
         context.project.addRawFiles(
             new File(context.generatorAgent.REFERENCE_FILENAME, RelativeFilePath.of("."), content)
         );
+    }
+
+    private async generateWireTestFiles(context: SdkGeneratorContext): Promise<void> {
+        if (!context.customConfig.enableWireTests) {
+            return;
+        }
+
+        try {
+            context.logger.debug("Generating WireMock integration tests...");
+            const wireTestGenerator = new WireTestGenerator(context, context.ir);
+            await wireTestGenerator.generate();
+            context.logger.debug("WireMock test generation complete");
+        } catch (error) {
+            context.logger.error("Failed to generate WireMock tests");
+            if (error instanceof Error) {
+                context.logger.debug(error.message);
+                context.logger.debug(error.stack ?? "");
+            }
+        }
     }
 }

@@ -1,6 +1,6 @@
 # Reference
 ## TestGroup
-<details><summary><code>client.test_group.test_method_name(path_param, request) -> Internal::Types::Hash[String, Object]</code></summary>
+<details><summary><code>client.test_group.test_method_name(path_param, request) -> Object</code></summary>
 <dl>
 <dd>
 

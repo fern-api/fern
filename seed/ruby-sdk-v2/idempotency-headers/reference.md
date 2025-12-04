@@ -61,7 +61,7 @@ client.payment.create(amount: 1);
 <dd>
 
 ```ruby
-client.payment.delete('paymentId');
+client.payment.delete(payment_id: 'paymentId');
 ```
 </dd>
 </dl>

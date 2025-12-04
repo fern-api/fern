@@ -156,7 +156,7 @@ client.folder.service.unknown_request();
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, Object]` 
+**request:** `Object` 
     
 </dd>
 </dl>

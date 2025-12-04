@@ -118,7 +118,7 @@ client.union.update_metadata();
 <dd>
 
 ```ruby
-client.union.call({});
+client.union.call();
 ```
 </dd>
 </dl>

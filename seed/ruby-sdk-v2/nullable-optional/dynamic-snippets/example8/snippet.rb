@@ -2,7 +2,7 @@ require "seed"
 
 client = Seed::Client.new(base_url: 'https://api.fern.com');
 
-client.nullable_optional.test_deserialization({
+client.nullable_optional.test_deserialization(
   required_string: 'requiredString',
   nullable_string: 'nullableString',
   optional_string: 'optionalString',
@@ -26,4 +26,4 @@ client.nullable_optional.test_deserialization({
     domain: 'domain',
     employee_count: 1
   }
-});
+);

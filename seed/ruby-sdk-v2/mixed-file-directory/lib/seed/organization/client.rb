@@ -26,7 +26,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/organizations/",
-          body: Seed::Organization::Types::CreateOrganizationRequest.new(params).to_h
+          body: Seed::Organization::Types::CreateOrganizationRequest.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

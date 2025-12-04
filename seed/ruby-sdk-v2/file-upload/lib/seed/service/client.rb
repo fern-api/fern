@@ -97,7 +97,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "",
-          body: body
+          body: body,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -129,7 +130,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/just-file",
-          body: body
+          body: body,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -166,7 +168,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/just-file-with-query-params",
-          body: body
+          body: body,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -218,7 +221,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/with-content-type",
-          body: body
+          body: body,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -262,7 +266,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/with-form-encoding",
-          body: body
+          body: body,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -369,7 +374,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "",
-          body: body
+          body: body,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -408,7 +414,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/optional-args",
-          body: body
+          body: body,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -446,7 +453,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/inline-type",
-          body: body
+          body: body,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -473,7 +481,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/snippet"
+          path: "/snippet",
+          request_options: request_options
         )
         begin
           response = @client.send(request)

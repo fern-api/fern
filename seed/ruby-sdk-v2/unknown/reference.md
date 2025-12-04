@@ -1,6 +1,6 @@
 # Reference
 ## Unknown
-<details><summary><code>client.unknown.post(request) -> Internal::Types::Array[Internal::Types::Hash[String, Object]]</code></summary>
+<details><summary><code>client.unknown.post(request) -> Internal::Types::Array[Object]</code></summary>
 <dl>
 <dd>
 
@@ -28,7 +28,7 @@ client.unknown.post();
 <dl>
 <dd>
 
-**request:** `Internal::Types::Hash[String, Object]` 
+**request:** `Object` 
     
 </dd>
 </dl>
@@ -40,7 +40,7 @@ client.unknown.post();
 </dl>
 </details>
 
-<details><summary><code>client.unknown.post_object(request) -> Internal::Types::Array[Internal::Types::Hash[String, Object]]</code></summary>
+<details><summary><code>client.unknown.post_object(request) -> Internal::Types::Array[Object]</code></summary>
 <dl>
 <dd>
 
@@ -53,7 +53,7 @@ client.unknown.post();
 <dd>
 
 ```ruby
-client.unknown.post_object({});
+client.unknown.post_object();
 ```
 </dd>
 </dl>
