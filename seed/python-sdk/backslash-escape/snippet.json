@@ -1,0 +1,18 @@
+{
+    "types": {},
+    "endpoints": [
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/users/{id}",
+                "method": "GET",
+                "identifier_override": "endpoint_user.get"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedBackslashEscape\n\nclient = SeedBackslashEscape(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.get(\n    id=\"id\",\n    domain=\"domain\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedBackslashEscape\n\nclient = AsyncSeedBackslashEscape(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.get(\n        id=\"id\",\n        domain=\"domain\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
+        }
+    ]
+}
