@@ -57,17 +57,17 @@ class UniversalBaseModel(pydantic.BaseModel):
             protected_namespaces=(),
         )
 
-        @pydantic.model_serializer(mode="plain", when_used="json")  # type: ignore[attr-defined]
-        def serialize_model(self) -> Any:  # type: ignore[name-defined]
-            serialized = self.dict()  # type: ignore[attr-defined]
-            data = {k: serialize_datetime(v) if isinstance(v, dt.datetime) else v for k, v in serialized.items()}
-            return data
-
     else:
 
         class Config:
             smart_union = True
             json_encoders = {dt.datetime: serialize_datetime}
+
+        def model_dump(self, **kwargs: Any) -> Dict[str, Any]:
+            return self.dict(**kwargs)
+
+        def model_dump_json(self, **kwargs: Any) -> str:
+            return self.json(**kwargs)
 
     @classmethod
     def model_construct(cls: Type["Model"], _fields_set: Optional[Set[str]] = None, **values: Any) -> "Model":
@@ -88,7 +88,23 @@ class UniversalBaseModel(pydantic.BaseModel):
             **kwargs,
         }
         if IS_PYDANTIC_V2:
-            return super().model_dump_json(**kwargs_with_defaults)  # type: ignore[misc]
+            import json
+
+            def _convert_datetimes(obj: Any) -> Any:
+                if isinstance(obj, dt.datetime):
+                    return serialize_datetime(obj)
+                elif isinstance(obj, dict):
+                    return {k: _convert_datetimes(v) for k, v in obj.items()}
+                elif isinstance(obj, list):
+                    return [_convert_datetimes(item) for item in obj]
+                elif isinstance(obj, tuple):
+                    return tuple(_convert_datetimes(item) for item in obj)
+                return obj
+
+            dict_representation = self.dict(**kwargs_with_defaults)
+            datetime_converted = _convert_datetimes(dict_representation)
+            jsonable = to_jsonable_with_fallback(datetime_converted, fallback_serializer=encode_by_type)
+            return json.dumps(jsonable)
         return super().json(**kwargs_with_defaults)
 
     def dict(self, **kwargs: Any) -> Dict[str, Any]:
