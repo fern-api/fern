@@ -40,5 +40,5 @@ ContainerValue = typing_extensions.Annotated[
 ]
 from .field_value import FieldValue  # noqa: E402, I001
 
-update_forward_refs(ContainerValue_List)
-update_forward_refs(ContainerValue_Optional)
+update_forward_refs(ContainerValue_List, ContainerValue=ContainerValue, FieldValue=FieldValue)
+update_forward_refs(ContainerValue_Optional, ContainerValue=ContainerValue, FieldValue=FieldValue)

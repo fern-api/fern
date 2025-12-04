@@ -5,7 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
-from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
+from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 
 
 class BranchNode(UniversalBaseModel):
@@ -20,3 +20,5 @@ class BranchNode(UniversalBaseModel):
 
 
 from .node import Node  # noqa: E402, I001
+
+update_forward_refs(BranchNode, Node=Node)

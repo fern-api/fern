@@ -23,6 +23,8 @@ class TestCaseNonHiddenGrade(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from ..commons.key_value_pair import KeyValuePair  # noqa: E402, I001
+from ..commons.map_value import MapValue  # noqa: E402, I001
 from ..commons.variable_value import VariableValue  # noqa: E402, I001
 
-update_forward_refs(TestCaseNonHiddenGrade)
+update_forward_refs(TestCaseNonHiddenGrade, KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)

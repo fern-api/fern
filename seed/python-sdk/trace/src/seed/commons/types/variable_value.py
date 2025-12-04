@@ -181,6 +181,7 @@ VariableValue = typing_extensions.Annotated[
     pydantic.Field(discriminator="type"),
 ]
 from .key_value_pair import KeyValuePair  # noqa: E402, I001
+from .map_value import MapValue  # noqa: E402, I001
 
-update_forward_refs(VariableValue_MapValue)
-update_forward_refs(VariableValue_ListValue)
+update_forward_refs(VariableValue_MapValue, KeyValuePair=KeyValuePair, VariableValue=VariableValue)
+update_forward_refs(VariableValue_ListValue, KeyValuePair=KeyValuePair, MapValue=MapValue, VariableValue=VariableValue)
