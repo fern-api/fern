@@ -98,9 +98,6 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             generateSubpackageExports: parsed?.generateSubpackageExports ?? false,
             offsetSemantics: parsed?.offsetSemantics ?? "item-index",
 
-            // Internal serde implementation flag (default to zurg for backward compat)
-            _serdeImplementation: parsed?._serdeImplementation ?? undefined,
-
             // Customer-facing schema export config
             exportSchemas: parsed?.exportSchemas ?? undefined
         };

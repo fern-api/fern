@@ -60,11 +60,18 @@ export interface SdkCustomConfig {
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     generateSubpackageExports: boolean | undefined;
     offsetSemantics: "item-index" | "page-index";
-
-    // Internal feature flag for A/B testing serde implementations
-    // Not exposed in public docs - use underscore prefix
-    _serdeImplementation: "zurg" | "zod" | undefined;
-
-    // Customer-facing schema export config
     exportSchemas: "zod" | "yup" | false | undefined;
+}
+
+/**
+ * Get the serde implementation to use.
+ * Controlled via FERN_SERDE_IMPLEMENTATION environment variable.
+ * Valid values: "zurg" (default), "zod"
+ */
+export function getSerdeImplementation(): "zurg" | "zod" {
+    const envValue = process.env.FERN_SERDE_IMPLEMENTATION;
+    if (envValue === "zod") {
+        return "zod";
+    }
+    return "zurg";
 }
