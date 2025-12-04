@@ -181,6 +181,12 @@ export class WireTestSetupGenerator {
     volumes:
       - ./wiremock-mappings.json:/home/wiremock/mappings/wiremock-mappings.json
     command: ["--global-response-templating", "--verbose"]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/__admin/health"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+      start_period: 5s
 `;
     }
 }
