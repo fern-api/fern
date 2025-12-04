@@ -73,28 +73,20 @@ export interface SdkCustomConfig {
 
 /**
  * Resolve the effective serializer type from config.
- * - If noSerdeLayer is true, returns "none"
- * - If serializer is specified, returns that value
- * - Default is "zurg" for backward compatibility
- *
- * Throws if noSerdeLayer is false but serializer is "none" (invalid combo)
+ * Priority:
+ * 1. If serializer is explicitly set, use it (takes precedence over noSerdeLayer)
+ * 2. If noSerdeLayer is true (and serializer not set), returns "none"
+ * 3. Default is "zurg" for backward compatibility
  */
 export function resolveSerializer(config: SdkCustomConfig): SerializerType {
-    // noSerdeLayer: true means no serialization
-    if (config.noSerdeLayer) {
-        return "none";
+    // If serializer is explicitly set, it takes precedence
+    if (config.serializer != null) {
+        return config.serializer;
     }
 
-    // If serializer is explicitly set
-    if (config.serializer != null) {
-        // Validate: can't have noSerdeLayer=false with serializer="none"
-        if (config.serializer === "none") {
-            throw new Error(
-                'Invalid config: serializer is "none" but noSerdeLayer is not true. ' +
-                    "Either set noSerdeLayer: true or choose a serializer (zurg, zod, yup, ajv)."
-            );
-        }
-        return config.serializer;
+    // noSerdeLayer: true means no serialization (when serializer not explicitly set)
+    if (config.noSerdeLayer) {
+        return "none";
     }
 
     // Default to zurg for backward compatibility

@@ -16,7 +16,7 @@ import { SdkGenerator } from "@fern-typescript/sdk-generator";
 import { copyFile } from "fs/promises";
 import path from "path";
 
-import { resolveSerializer, SdkCustomConfig } from "./custom-config/SdkCustomConfig";
+import { isSerializationEnabled, resolveSerializer, SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
 
 export declare namespace SdkGeneratorCli {
@@ -35,7 +35,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected parseCustomConfig(customConfig: unknown, logger: Logger): SdkCustomConfig {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        const noSerdeLayer = parsed?.noSerdeLayer ?? true;
+        // Determine if serialization is enabled:
+        // - If serializer is explicitly set, use that (not "none" means enabled)
+        // - Otherwise fall back to noSerdeLayer (default true = disabled)
+        const noSerdeLayer = parsed?.serializer != null
+            ? parsed.serializer === "none"
+            : (parsed?.noSerdeLayer ?? true);
+        const serializationEnabled = !noSerdeLayer;
         const config = {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? true,
@@ -47,12 +53,12 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             shouldBundle: parsed?.bundle ?? false,
             allowCustomFetcher: parsed?.allowCustomFetcher ?? false,
             shouldGenerateWebsocketClients: parsed?.shouldGenerateWebsocketClients ?? false,
-            includeUtilsOnUnionMembers: !noSerdeLayer && (parsed?.includeUtilsOnUnionMembers ?? false),
+            includeUtilsOnUnionMembers: serializationEnabled && (parsed?.includeUtilsOnUnionMembers ?? false),
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             enableForwardCompatibleEnums: parsed?.enableForwardCompatibleEnums ?? false,
             requireDefaultEnvironment: parsed?.requireDefaultEnvironment ?? false,
             defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.timeoutInSeconds,
-            skipResponseValidation: noSerdeLayer || (parsed?.skipResponseValidation ?? true),
+            skipResponseValidation: !serializationEnabled || (parsed?.skipResponseValidation ?? true),
             extraDependencies: parsed?.extraDependencies ?? {},
             extraDevDependencies: parsed?.extraDevDependencies ?? {},
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
@@ -212,7 +218,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 extraPeerDependenciesMeta: customConfig.extraPeerDependenciesMeta ?? {},
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
-                includeSerdeLayer: !customConfig.noSerdeLayer,
+                includeSerdeLayer: isSerializationEnabled(customConfig),
                 retainOriginalCasing: customConfig.retainOriginalCasing ?? false,
                 parameterNaming: customConfig.parameterNaming ?? "default",
                 noOptionalProperties: customConfig.noOptionalProperties,
