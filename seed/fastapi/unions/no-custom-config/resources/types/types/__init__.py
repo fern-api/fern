@@ -3,13 +3,16 @@
 # isort: skip_file
 
 from .bar import Bar
+from .first_item_type import FirstItemType
 from .foo import Foo
 from .foo_extended import FooExtended
+from .second_item_type import SecondItemType
 from .union import Union
 from .union_with_base_properties import UnionWithBaseProperties
 from .union_with_discriminant import UnionWithDiscriminant
 from .union_with_duplicate_primitive import UnionWithDuplicatePrimitive
 from .union_with_duplicate_types import UnionWithDuplicateTypes
+from .union_with_duplicative_discriminants import UnionWithDuplicativeDiscriminants
 from .union_with_literal import UnionWithLiteral
 from .union_with_multiple_no_properties import UnionWithMultipleNoProperties
 from .union_with_no_properties import UnionWithNoProperties
@@ -24,13 +27,16 @@ from .union_without_key import UnionWithoutKey
 
 __all__ = [
     "Bar",
+    "FirstItemType",
     "Foo",
     "FooExtended",
+    "SecondItemType",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithDiscriminant",
     "UnionWithDuplicatePrimitive",
     "UnionWithDuplicateTypes",
+    "UnionWithDuplicativeDiscriminants",
     "UnionWithLiteral",
     "UnionWithMultipleNoProperties",
     "UnionWithNoProperties",

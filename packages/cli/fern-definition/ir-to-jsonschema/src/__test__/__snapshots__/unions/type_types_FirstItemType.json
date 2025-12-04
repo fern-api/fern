@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "properties": {
+    "type": {
+      "oneOf": [
+        {
+          "const": "firstItemType"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "name"
+  ],
+  "additionalProperties": false,
+  "definitions": {}
+}

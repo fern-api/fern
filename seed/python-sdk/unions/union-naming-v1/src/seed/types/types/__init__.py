@@ -7,8 +7,10 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from .bar import Bar
+    from .first_item_type import FirstItemType
     from .foo import Foo
     from .foo_extended import FooExtended
+    from .second_item_type import SecondItemType
     from .union import BarUnion, FooUnion, Union
     from .union_with_base_properties import (
         FooUnionWithBaseProperties,
@@ -28,6 +30,11 @@ if typing.TYPE_CHECKING:
         Foo1UnionWithDuplicateTypes,
         Foo2UnionWithDuplicateTypes,
         UnionWithDuplicateTypes,
+    )
+    from .union_with_duplicative_discriminants import (
+        FirstItemTypeUnionWithDuplicativeDiscriminants,
+        SecondItemTypeUnionWithDuplicativeDiscriminants,
+        UnionWithDuplicativeDiscriminants,
     )
     from .union_with_literal import FernUnionWithLiteral, UnionWithLiteral
     from .union_with_multiple_no_properties import (
@@ -74,6 +81,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "Empty2UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
     "EmptyUnionWithNoProperties": ".union_with_no_properties",
     "FernUnionWithLiteral": ".union_with_literal",
+    "FirstItemType": ".first_item_type",
+    "FirstItemTypeUnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
     "Foo": ".foo",
     "Foo1UnionWithDuplicateTypes": ".union_with_duplicate_types",
     "Foo2UnionWithDuplicateTypes": ".union_with_duplicate_types",
@@ -95,6 +104,8 @@ _dynamic_imports: typing.Dict[str, str] = {
     "PatternStringUnionWithSameStringTypes": ".union_with_same_string_types",
     "PositiveIntUnionWithSameNumberTypes": ".union_with_same_number_types",
     "RegularStringUnionWithSameStringTypes": ".union_with_same_string_types",
+    "SecondItemType": ".second_item_type",
+    "SecondItemTypeUnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
     "String1UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
     "String2UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
     "StringUnionWithBaseProperties": ".union_with_base_properties",
@@ -104,6 +115,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "UnionWithDiscriminant": ".union_with_discriminant",
     "UnionWithDuplicatePrimitive": ".union_with_duplicate_primitive",
     "UnionWithDuplicateTypes": ".union_with_duplicate_types",
+    "UnionWithDuplicativeDiscriminants": ".union_with_duplicative_discriminants",
     "UnionWithLiteral": ".union_with_literal",
     "UnionWithMultipleNoProperties": ".union_with_multiple_no_properties",
     "UnionWithNoProperties": ".union_with_no_properties",
@@ -155,6 +167,8 @@ __all__ = [
     "Empty2UnionWithMultipleNoProperties",
     "EmptyUnionWithNoProperties",
     "FernUnionWithLiteral",
+    "FirstItemType",
+    "FirstItemTypeUnionWithDuplicativeDiscriminants",
     "Foo",
     "Foo1UnionWithDuplicateTypes",
     "Foo2UnionWithDuplicateTypes",
@@ -176,6 +190,8 @@ __all__ = [
     "PatternStringUnionWithSameStringTypes",
     "PositiveIntUnionWithSameNumberTypes",
     "RegularStringUnionWithSameStringTypes",
+    "SecondItemType",
+    "SecondItemTypeUnionWithDuplicativeDiscriminants",
     "String1UnionWithDuplicatePrimitive",
     "String2UnionWithDuplicatePrimitive",
     "StringUnionWithBaseProperties",
@@ -185,6 +201,7 @@ __all__ = [
     "UnionWithDiscriminant",
     "UnionWithDuplicatePrimitive",
     "UnionWithDuplicateTypes",
+    "UnionWithDuplicativeDiscriminants",
     "UnionWithLiteral",
     "UnionWithMultipleNoProperties",
     "UnionWithNoProperties",
