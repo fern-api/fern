@@ -1,8 +1,9 @@
 [project]
-name = "fern_backslash-escape"
+name = "fern_python-backslash-escape"
+dynamic = ["version"]
 
 [tool.poetry]
-name = "fern_backslash-escape"
+name = "fern_python-backslash-escape"
 version = "0.0.1"
 description = ""
 readme = "README.md"
@@ -36,7 +37,7 @@ packages = [
 [tool.poetry.urls]
 Documentation = 'https://buildwithfern.com/learn'
 Homepage = 'https://buildwithfern.com/'
-Repository = 'https://github.com/backslash-escape/fern'
+Repository = 'https://github.com/python-backslash-escape/fern'
 
 [tool.poetry.dependencies]
 python = "^3.8"

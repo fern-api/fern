@@ -50,9 +50,9 @@ class UserClient:
 
         Examples
         --------
-        from seed import SeedBackslashEscape
+        from seed import SeedPythonBackslashEscape
 
-        client = SeedBackslashEscape(
+        client = SeedPythonBackslashEscape(
             base_url="https://yourhost.com/path/to/api",
         )
         client.user.get(
@@ -108,9 +108,9 @@ class AsyncUserClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedBackslashEscape
+        from seed import AsyncSeedPythonBackslashEscape
 
-        client = AsyncSeedBackslashEscape(
+        client = AsyncSeedPythonBackslashEscape(
             base_url="https://yourhost.com/path/to/api",
         )
 

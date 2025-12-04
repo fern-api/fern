@@ -7,12 +7,12 @@ from importlib import import_module
 
 if typing.TYPE_CHECKING:
     from . import user
-    from .client import AsyncSeedBackslashEscape, SeedBackslashEscape
+    from .client import AsyncSeedPythonBackslashEscape, SeedPythonBackslashEscape
     from .user import User
     from .version import __version__
 _dynamic_imports: typing.Dict[str, str] = {
-    "AsyncSeedBackslashEscape": ".client",
-    "SeedBackslashEscape": ".client",
+    "AsyncSeedPythonBackslashEscape": ".client",
+    "SeedPythonBackslashEscape": ".client",
     "User": ".user",
     "__version__": ".version",
     "user": ".user",
@@ -40,4 +40,4 @@ def __dir__():
     return sorted(lazy_attrs)
 
 
-__all__ = ["AsyncSeedBackslashEscape", "SeedBackslashEscape", "User", "__version__", "user"]
+__all__ = ["AsyncSeedPythonBackslashEscape", "SeedPythonBackslashEscape", "User", "__version__", "user"]

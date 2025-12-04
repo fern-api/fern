@@ -1,7 +1,7 @@
 # Seed Python Library
 
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=Seed%2FPython)
-[![pypi](https://img.shields.io/pypi/v/fern_backslash-escape)](https://pypi.python.org/pypi/fern_backslash-escape)
+[![pypi](https://img.shields.io/pypi/v/fern_python-backslash-escape)](https://pypi.python.org/pypi/fern_python-backslash-escape)
 
 The Seed Python library provides convenient access to the Seed APIs from Python.
 
@@ -22,7 +22,7 @@ The Seed Python library provides convenient access to the Seed APIs from Python.
 ## Installation
 
 ```sh
-pip install fern_backslash-escape
+pip install fern_python-backslash-escape
 ```
 
 ## Reference
@@ -34,9 +34,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedBackslashEscape
+from seed import SeedPythonBackslashEscape
 
-client = SeedBackslashEscape(
+client = SeedPythonBackslashEscape(
     base_url="https://yourhost.com/path/to/api",
 )
 client.user.get(
@@ -52,9 +52,9 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedBackslashEscape
+from seed import AsyncSeedPythonBackslashEscape
 
-client = AsyncSeedBackslashEscape(
+client = AsyncSeedPythonBackslashEscape(
     base_url="https://yourhost.com/path/to/api",
 )
 
@@ -92,9 +92,9 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedBackslashEscape
+from seed import SeedPythonBackslashEscape
 
-client = SeedBackslashEscape(
+client = SeedPythonBackslashEscape(
     ...,
 )
 response = client.user.with_raw_response.get()
@@ -128,9 +128,9 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed import SeedBackslashEscape
+from seed import SeedPythonBackslashEscape
 
-client = SeedBackslashEscape(
+client = SeedPythonBackslashEscape(
     ...,
     timeout=20.0,
 )
@@ -149,9 +149,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedBackslashEscape
+from seed import SeedPythonBackslashEscape
 
-client = SeedBackslashEscape(
+client = SeedPythonBackslashEscape(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",

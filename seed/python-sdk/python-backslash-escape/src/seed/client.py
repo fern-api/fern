@@ -11,7 +11,7 @@ if typing.TYPE_CHECKING:
     from .user.client import AsyncUserClient, UserClient
 
 
-class SeedBackslashEscape:
+class SeedPythonBackslashEscape:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -34,9 +34,9 @@ class SeedBackslashEscape:
 
     Examples
     --------
-    from seed import SeedBackslashEscape
+    from seed import SeedPythonBackslashEscape
 
-    client = SeedBackslashEscape(
+    client = SeedPythonBackslashEscape(
         base_url="https://yourhost.com/path/to/api",
     )
     """
@@ -74,7 +74,7 @@ class SeedBackslashEscape:
         return self._user
 
 
-class AsyncSeedBackslashEscape:
+class AsyncSeedPythonBackslashEscape:
     """
     Use this class to access the different functions within the SDK. You can instantiate any number of clients with different configuration that will propagate to these functions.
 
@@ -97,9 +97,9 @@ class AsyncSeedBackslashEscape:
 
     Examples
     --------
-    from seed import AsyncSeedBackslashEscape
+    from seed import AsyncSeedPythonBackslashEscape
 
-    client = AsyncSeedBackslashEscape(
+    client = AsyncSeedPythonBackslashEscape(
         base_url="https://yourhost.com/path/to/api",
     )
     """
