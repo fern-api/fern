@@ -62,7 +62,7 @@ export class SdkErrorSchemaContextImpl implements SdkErrorSchemaContext {
             })
             .getExpression();
 
-        return this.coreUtilities.zurg.lazy(this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema));
+        return this.coreUtilities.serializer.lazy(this.coreUtilities.serializer.Schema._fromExpression(referenceToSchema));
     }
 
     public getGeneratedSdkErrorSchema(errorName: DeclaredErrorName): GeneratedSdkErrorSchema | undefined {

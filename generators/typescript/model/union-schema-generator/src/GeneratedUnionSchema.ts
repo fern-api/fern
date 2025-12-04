@@ -106,7 +106,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
     }
 
     public buildSchema(context: Context): Zurg.Schema {
-        let schema: Zurg.Schema = context.coreUtilities.zurg.union({
+        let schema: Zurg.Schema = context.coreUtilities.serializer.union({
             parsedDiscriminant: this.getParsedDiscriminant(context),
             rawDiscriminant: this.discriminant.wireValue,
             singleUnionTypes: this.singleUnionTypes.map((singleUnionType) => {
@@ -114,7 +114,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                 if (this.hasBaseInterface()) {
                     singleUnionTypeSchema.nonDiscriminantProperties =
                         singleUnionTypeSchema.nonDiscriminantProperties.extend(
-                            context.coreUtilities.zurg.Schema._fromExpression(
+                            context.coreUtilities.serializer.Schema._fromExpression(
                                 ts.factory.createIdentifier(GeneratedUnionSchema.BASE_SCHEMA_NAME)
                             )
                         );
@@ -210,7 +210,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                     {
                         name: GeneratedUnionSchema.BASE_SCHEMA_NAME,
                         initializer: getTextOfTsNode(
-                            context.coreUtilities.zurg
+                            context.coreUtilities.serializer
                                 .object(
                                     this.baseProperties.map((baseProperty) => ({
                                         key: {

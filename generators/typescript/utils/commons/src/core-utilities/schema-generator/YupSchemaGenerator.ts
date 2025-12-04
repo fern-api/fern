@@ -764,6 +764,30 @@ export class YupSchemaGenerator implements SchemaGenerator {
                 return createObjectUtils(baseSchema, this);
             }
             return createSchemaUtils(baseSchema, this);
+        },
+
+        _visitMaybeValid: (
+            referenceToMaybeValid: ts.Expression,
+            visitor: {
+                valid: (referenceToValue: ts.Expression) => ts.Statement[];
+                invalid: (referenceToErrors: ts.Expression) => ts.Statement[];
+            }
+        ): ts.Statement[] => {
+            // For Yup validateSync results wrapped in try/catch
+            // Yup throws ValidationError on failure, returns value on success
+            return [
+                ts.factory.createIfStatement(
+                    ts.factory.createPropertyAccessExpression(referenceToMaybeValid, "success"),
+                    ts.factory.createBlock(
+                        visitor.valid(ts.factory.createPropertyAccessExpression(referenceToMaybeValid, "value")),
+                        true
+                    ),
+                    ts.factory.createBlock(
+                        visitor.invalid(ts.factory.createPropertyAccessExpression(referenceToMaybeValid, "error")),
+                        true
+                    )
+                )
+            ];
         }
     };
 
@@ -774,5 +798,21 @@ export class YupSchemaGenerator implements SchemaGenerator {
                 [args.rawShape]
             );
         }
+    };
+
+    // Yup validation result accessors
+    public MaybeValid = {
+        ok: "success" as const,
+        Valid: {
+            value: "value" as const
+        },
+        Invalid: {
+            errors: "error" as const
+        }
+    };
+
+    public ValidationError = {
+        path: "path" as const,
+        message: "message" as const
     };
 }

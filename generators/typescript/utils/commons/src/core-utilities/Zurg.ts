@@ -2,61 +2,36 @@ import { ts } from "ts-morph";
 
 import { Reference } from "../referencing";
 import { CoreUtility } from "./CoreUtility";
+import {
+    AdditionalProperty,
+    BaseSchema,
+    ObjectLikeSchema,
+    ObjectLikeUtils,
+    ObjectSchema,
+    ObjectUtils,
+    Property,
+    Schema,
+    SchemaGenerator,
+    SchemaOptions,
+    SchemaUtils,
+    SingleUnionType,
+    UnionArgs
+} from "./schema-generator/SchemaGenerator";
 
-export interface SchemaOptions {
-    unrecognizedObjectKeys?: "fail" | "passthrough" | "strip";
-    allowUnrecognizedUnionMembers?: boolean;
-    allowUnrecognizedEnumValues?: boolean;
-    skipValidation?: boolean;
-    omitUndefined?: boolean;
-    breadcrumbsPrefix?: string[];
-}
+// Re-export SchemaOptions for backward compatibility
+export type { SchemaOptions } from "./schema-generator/SchemaGenerator";
 
-export interface Zurg {
-    object: (properties: Zurg.Property[]) => Zurg.ObjectSchema;
-    objectWithoutOptionalProperties: (properties: Zurg.Property[]) => Zurg.ObjectSchema;
-    union: (args: Zurg.union.Args) => Zurg.ObjectLikeSchema;
-    undiscriminatedUnion: (schemas: Zurg.Schema[]) => Zurg.Schema;
-    list: (itemSchema: Zurg.Schema) => Zurg.Schema;
-    set: (itemSchema: Zurg.Schema) => Zurg.Schema;
-    record: (args: { keySchema: Zurg.Schema; valueSchema: Zurg.Schema }) => Zurg.Schema;
-    enum: (values: string[]) => Zurg.Schema;
-    string: () => Zurg.Schema;
-    stringLiteral: (literal: string) => Zurg.Schema;
-    booleanLiteral: (literal: boolean) => Zurg.Schema;
-    date: () => Zurg.Schema;
-    number: () => Zurg.Schema;
-    bigint: () => Zurg.Schema;
-    boolean: () => Zurg.Schema;
-    any: () => Zurg.Schema;
-    unknown: () => Zurg.Schema;
-    never: () => Zurg.Schema;
-    lazy: (schema: Zurg.Schema) => Zurg.Schema;
-    lazyObject: (schema: Zurg.Schema) => Zurg.ObjectSchema;
-
-    Schema: {
-        _getReferenceToType: (args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => ts.TypeNode;
-        _fromExpression: (expression: ts.Expression, opts?: { isObject: boolean }) => Zurg.Schema;
-        _visitMaybeValid: (
-            referenceToMaybeValid: ts.Expression,
-            visitor: {
-                valid: (referenceToValue: ts.Expression) => ts.Statement[];
-                invalid: (referenceToErrors: ts.Expression) => ts.Statement[];
-            }
-        ) => ts.Statement[];
-    };
-
-    ObjectSchema: {
-        _getReferenceToType: (args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => ts.TypeNode;
-    };
-
+/**
+ * Zurg interface extends SchemaGenerator with Zurg-specific literal types.
+ * This is for backward compatibility - new code should use SchemaGenerator directly.
+ */
+export interface Zurg extends SchemaGenerator {
+    // Zurg uses specific literal types for validation result accessors
     MaybeValid: {
         ok: "ok";
-
         Valid: {
             value: "value";
         };
-
         Invalid: {
             errors: "errors";
         };
@@ -68,67 +43,21 @@ export interface Zurg {
     };
 }
 
+// Re-export SchemaGenerator types as Zurg namespace for backward compatibility
 export declare namespace Zurg {
-    interface Schema extends BaseSchema, SchemaUtils {}
+    export type Schema = import("./schema-generator/SchemaGenerator").Schema;
+    export type BaseSchema = import("./schema-generator/SchemaGenerator").BaseSchema;
+    export type SchemaUtils = import("./schema-generator/SchemaGenerator").SchemaUtils;
+    export type ObjectLikeSchema = import("./schema-generator/SchemaGenerator").ObjectLikeSchema;
+    export type ObjectLikeUtils = import("./schema-generator/SchemaGenerator").ObjectLikeUtils;
+    export type AdditionalProperty = import("./schema-generator/SchemaGenerator").AdditionalProperty;
+    export type ObjectSchema = import("./schema-generator/SchemaGenerator").ObjectSchema;
+    export type ObjectUtils = import("./schema-generator/SchemaGenerator").ObjectUtils;
+    export type Property = import("./schema-generator/SchemaGenerator").Property;
 
-    interface BaseSchema {
-        toExpression: () => ts.Expression;
-        isOptional: boolean;
-        isNullable: boolean;
-    }
-
-    interface SchemaUtils {
-        parse: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
-        json: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
-        parseOrThrow: (raw: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
-        jsonOrThrow: (parsed: ts.Expression, opts: Required<SchemaOptions>) => ts.Expression;
-        nullable: () => Zurg.Schema;
-        optional: () => Zurg.Schema;
-        optionalNullable: () => Zurg.Schema;
-        transform: (args: {
-            newShape: ts.TypeNode | undefined;
-            transform: ts.Expression;
-            untransform: ts.Expression;
-        }) => Zurg.Schema;
-    }
-
-    interface ObjectLikeSchema extends Schema, ObjectLikeUtils {}
-
-    interface ObjectLikeUtils {
-        withParsedProperties: (properties: Zurg.AdditionalProperty[]) => Zurg.ObjectLikeSchema;
-    }
-
-    interface AdditionalProperty {
-        key: string;
-        getValue: (args: { getReferenceToParsed: () => ts.Expression }) => ts.Expression;
-    }
-
-    interface ObjectSchema extends Schema, ObjectLikeUtils, ObjectUtils {}
-
-    interface ObjectUtils {
-        extend: (extension: Zurg.Schema) => ObjectSchema;
-        passthrough: () => ObjectSchema;
-    }
-
-    interface Property {
-        key: {
-            parsed: string;
-            raw: string;
-        };
-        value: Schema;
-    }
-
-    namespace union {
-        interface Args {
-            parsedDiscriminant: string;
-            rawDiscriminant: string;
-            singleUnionTypes: Zurg.union.SingleUnionType[];
-        }
-
-        interface SingleUnionType {
-            discriminantValue: string;
-            nonDiscriminantProperties: Zurg.ObjectSchema;
-        }
+    export namespace union {
+        export type Args = import("./schema-generator/SchemaGenerator").UnionArgs;
+        export type SingleUnionType = import("./schema-generator/SchemaGenerator").SingleUnionType;
     }
 }
 

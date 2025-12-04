@@ -655,6 +655,29 @@ export class ZodSchemaGenerator implements SchemaGenerator {
                 return createObjectUtils(baseSchema, this);
             }
             return createSchemaUtils(baseSchema, this);
+        },
+
+        _visitMaybeValid: (
+            referenceToMaybeValid: ts.Expression,
+            visitor: {
+                valid: (referenceToValue: ts.Expression) => ts.Statement[];
+                invalid: (referenceToErrors: ts.Expression) => ts.Statement[];
+            }
+        ): ts.Statement[] => {
+            // For Zod safeParse results: { success: boolean, data?: T, error?: ZodError }
+            return [
+                ts.factory.createIfStatement(
+                    ts.factory.createPropertyAccessExpression(referenceToMaybeValid, "success"),
+                    ts.factory.createBlock(
+                        visitor.valid(ts.factory.createPropertyAccessExpression(referenceToMaybeValid, "data")),
+                        true
+                    ),
+                    ts.factory.createBlock(
+                        visitor.invalid(ts.factory.createPropertyAccessExpression(referenceToMaybeValid, "error")),
+                        true
+                    )
+                )
+            ];
         }
     };
 
@@ -665,5 +688,21 @@ export class ZodSchemaGenerator implements SchemaGenerator {
                 [args.rawShape]
             );
         }
+    };
+
+    // Zod uses different property names for validation results
+    public MaybeValid = {
+        ok: "success" as const,
+        Valid: {
+            value: "data" as const
+        },
+        Invalid: {
+            errors: "error" as const
+        }
+    };
+
+    public ValidationError = {
+        path: "path" as const,
+        message: "message" as const
     };
 }

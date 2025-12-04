@@ -100,7 +100,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
     }
 
     protected buildSchema(context: ExpressContext): Zurg.Schema {
-        let schema = context.coreUtilities.zurg.object(
+        let schema = context.coreUtilities.serializer.object(
             this.inlinedRequestBody.properties.map((property) => ({
                 key: {
                     parsed: context.expressInlinedRequestBody

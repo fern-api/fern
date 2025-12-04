@@ -62,7 +62,7 @@ export class ExpressErrorSchemaContextImpl implements ExpressErrorSchemaContext 
             })
             .getExpression();
 
-        return this.coreUtilities.zurg.lazy(this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema));
+        return this.coreUtilities.serializer.lazy(this.coreUtilities.serializer.Schema._fromExpression(referenceToSchema));
     }
 
     public getGeneratedExpressErrorSchema(errorName: DeclaredErrorName): GeneratedExpressErrorSchema | undefined {

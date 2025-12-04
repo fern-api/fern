@@ -18,11 +18,23 @@ import { FormDataUtilsImpl } from "./FormDataUtils";
 import { LoggingImpl } from "./Logging";
 import { PaginationImpl } from "./Pagination";
 import { RuntimeImpl } from "./Runtime";
+import { SchemaGenerator } from "./schema-generator/SchemaGenerator";
+import { YupSchemaGenerator } from "./schema-generator/YupSchemaGenerator";
+import { ZodSchemaGenerator } from "./schema-generator/ZodSchemaGenerator";
 import { StreamImpl } from "./Stream";
 import { UrlUtilsImpl } from "./UrlUtils";
 import { UtilsImpl } from "./Utils";
 import { WebsocketImpl } from "./Websocket";
 import { ZurgImpl } from "./Zurg";
+
+/**
+ * Serializer type options.
+ * - "zurg": Legacy custom serialization
+ * - "zod": Zod-based serialization
+ * - "yup": Yup-based serialization
+ * - "none": No serialization layer
+ */
+export type SerializerType = "zurg" | "zod" | "yup" | "none";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -51,6 +63,7 @@ export class CoreUtilitiesManager {
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
     private readonly generateEndpointMetadata: boolean;
+    private readonly serializer: SerializerType;
 
     constructor({
         streamType,
@@ -58,7 +71,8 @@ export class CoreUtilitiesManager {
         fetchSupport,
         relativePackagePath = DEFAULT_PACKAGE_PATH,
         relativeTestPath = DEFAULT_TEST_PATH,
-        generateEndpointMetadata
+        generateEndpointMetadata,
+        serializer = "zurg"
     }: {
         streamType: "wrapper" | "web";
         formDataSupport: "Node16" | "Node18";
@@ -66,6 +80,7 @@ export class CoreUtilitiesManager {
         relativePackagePath?: string;
         relativeTestPath?: string;
         generateEndpointMetadata: boolean;
+        serializer?: SerializerType;
     }) {
         this.streamType = streamType;
         this.formDataSupport = formDataSupport;
@@ -73,6 +88,48 @@ export class CoreUtilitiesManager {
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
         this.generateEndpointMetadata = generateEndpointMetadata;
+        this.serializer = serializer;
+    }
+
+    /**
+     * Returns the serializer type being used.
+     */
+    public getSerializerType(): SerializerType {
+        return this.serializer;
+    }
+
+    /**
+     * Returns true if serialization is enabled (not "none").
+     */
+    public isSerializationEnabled(): boolean {
+        return this.serializer !== "none";
+    }
+
+    /**
+     * Creates the appropriate serializer implementation based on configured type.
+     */
+    private createSerializer(
+        getReferenceToExport: CoreUtility.Init["getReferenceToExport"]
+    ): SchemaGenerator {
+        switch (this.serializer) {
+            case "zod":
+                return new ZodSchemaGenerator();
+            case "yup":
+                return new YupSchemaGenerator();
+            case "zurg":
+                return new ZurgImpl({
+                    getReferenceToExport,
+                    generateEndpointMetadata: this.generateEndpointMetadata
+                });
+            case "none":
+                // When serialization is disabled, we still need to return a serializer
+                // for type compatibility, but it should never be used.
+                // Default to Zurg as a placeholder.
+                return new ZurgImpl({
+                    getReferenceToExport,
+                    generateEndpointMetadata: this.generateEndpointMetadata
+                });
+        }
     }
 
     public getCoreUtilities({
@@ -90,8 +147,11 @@ export class CoreUtilitiesManager {
             relativeTestPath
         });
 
+        // Create serializer based on configured type
+        const serializer = this.createSerializer(getReferenceToExport);
+
         return {
-            zurg: new ZurgImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
+            serializer,
             fetcher: new FetcherImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
             stream: new StreamImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
             auth: new AuthImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
@@ -144,6 +204,17 @@ export class CoreUtilitiesManager {
                 formDataSupport: this.formDataSupport,
                 fetchSupport: this.fetchSupport
             });
+        }
+
+        // Add serializer dependencies based on configured type
+        switch (this.serializer) {
+            case "zod":
+                dependencyManager.addDependency("zod", "^3.23.8");
+                break;
+            case "yup":
+                dependencyManager.addDependency("yup", "^1.4.0");
+                break;
+            // "zurg" and "none" don't require additional dependencies
         }
     }
 

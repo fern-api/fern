@@ -45,7 +45,7 @@ export class RawSinglePropertySingleUnionType<
         if (unionBeingGenerated.type !== "union") {
             throw new Error("Type is not a union");
         }
-        return context.coreUtilities.zurg.object([
+        return context.coreUtilities.serializer.object([
             {
                 key: {
                     parsed: unionBeingGenerated.getSinglePropertyKey(this.singleProperty),

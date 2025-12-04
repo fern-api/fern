@@ -6,14 +6,14 @@ import { FormDataUtils } from "./FormDataUtils";
 import { Logging } from "./Logging";
 import { Pagination } from "./Pagination";
 import { Runtime } from "./Runtime";
+import { SchemaGenerator } from "./schema-generator/SchemaGenerator";
 import { Stream } from "./Stream";
 import { UrlUtils } from "./UrlUtils";
 import { Utils } from "./Utils";
 import { Websocket } from "./Websocket";
-import { Zurg } from "./Zurg";
 
 export interface CoreUtilities {
-    zurg: Zurg;
+    serializer: SchemaGenerator;
     fetcher: Fetcher;
     stream: Stream;
     callbackQueue: CallbackQueue;

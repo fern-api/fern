@@ -93,7 +93,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
         });
         this.typeReferenceToSchemaConverter = new TypeReferenceToSchemaConverter({
             getSchemaOfNamedType: (typeName) => this.getSchemaOfNamedType(typeName, { isGeneratingSchema: true }),
-            zurg: this.coreUtilities.zurg,
+            zurg: this.coreUtilities.serializer,
             context,
             treatUnknownAsAny,
             includeSerdeLayer,
@@ -228,7 +228,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
             })
             .getExpression();
 
-        const schema = this.coreUtilities.zurg.Schema._fromExpression(referenceToSchema, {
+        const schema = this.coreUtilities.serializer.Schema._fromExpression(referenceToSchema, {
             isObject: typeDeclaration.shape.type === "object"
         });
 
@@ -244,7 +244,7 @@ export class TypeSchemaContextImpl implements TypeSchemaContext {
     private wrapSchemaWithLazy(schema: Zurg.Schema, typeName: DeclaredTypeName): Zurg.Schema {
         const resolvedType = this.context.type.resolveTypeName(typeName);
         return resolvedType.type === "named" && resolvedType.shape === ShapeType.Object
-            ? this.coreUtilities.zurg.lazyObject(schema)
-            : this.coreUtilities.zurg.lazy(schema);
+            ? this.coreUtilities.serializer.lazyObject(schema)
+            : this.coreUtilities.serializer.lazy(schema);
     }
 }

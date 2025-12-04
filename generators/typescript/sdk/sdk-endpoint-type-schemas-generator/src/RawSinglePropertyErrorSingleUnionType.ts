@@ -54,7 +54,7 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
             );
         }
 
-        return context.coreUtilities.zurg.object([
+        return context.coreUtilities.serializer.object([
             {
                 key: {
                     parsed: this.discriminationStrategy.contentProperty.name.camelCase.unsafeName,

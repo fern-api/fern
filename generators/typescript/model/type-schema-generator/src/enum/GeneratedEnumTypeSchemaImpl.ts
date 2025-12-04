@@ -13,7 +13,7 @@ export class GeneratedEnumTypeSchemaImpl<Context extends BaseContext>
     public readonly type = "enum";
 
     protected override buildSchema(context: Context): Zurg.Schema {
-        return context.coreUtilities.zurg.enum(this.shape.values.map((value) => value.name.wireValue));
+        return context.coreUtilities.serializer.enum(this.shape.values.map((value) => value.name.wireValue));
     }
 
     protected override generateRawTypeDeclaration(_context: Context, module: ModuleDeclaration): void {

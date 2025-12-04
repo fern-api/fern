@@ -64,9 +64,9 @@ export class GeneratedAliasTypeSchemaImpl<Context extends ModelContext>
         parsedShape: ts.TypeNode;
     }): ts.TypeNode {
         if (this.shape.resolvedType.type === "named" && this.shape.resolvedType.shape === ShapeType.Object) {
-            return context.coreUtilities.zurg.ObjectSchema._getReferenceToType({ rawShape, parsedShape });
+            return context.coreUtilities.serializer.ObjectSchema._getReferenceToType({ rawShape, parsedShape });
         } else {
-            return context.coreUtilities.zurg.Schema._getReferenceToType({ rawShape, parsedShape });
+            return context.coreUtilities.serializer.Schema._getReferenceToType({ rawShape, parsedShape });
         }
     }
 }

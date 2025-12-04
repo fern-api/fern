@@ -1,5 +1,8 @@
 // this is the parsed config shape. to view the allowed options for generators.yml,
 // see SdkCustomConfigSchema.ts
+
+export type SerializerType = "zurg" | "zod" | "yup" | "none";
+
 export interface SdkCustomConfig {
     useBrandedStringAliases: boolean;
     isPackagePrivate: boolean;
@@ -61,18 +64,46 @@ export interface SdkCustomConfig {
     generateSubpackageExports: boolean | undefined;
     offsetSemantics: "item-index" | "page-index";
 
+    // Serializer configuration: "zurg" (legacy), "zod", "yup", or "none" (disabled)
+    serializer: SerializerType | undefined;
+
     // Customer-facing schema export config
     exportSchemas: "zod" | "yup" | false | undefined;
 }
 
 /**
- * Get the serde implementation to use.
- * Controlled via FERN_SERDE_IMPLEMENTATION env var. Defaults to "zurg".
+ * Resolve the effective serializer type from config.
+ * - If noSerdeLayer is true, returns "none"
+ * - If serializer is specified, returns that value
+ * - Default is "zurg" for backward compatibility
+ *
+ * Throws if noSerdeLayer is false but serializer is "none" (invalid combo)
  */
-export function getSerdeImplementation(): "zurg" | "zod" {
-    const envValue = process.env.FERN_SERDE_IMPLEMENTATION;
-    if (envValue === "zod") {
-        return "zod";
+export function resolveSerializer(config: SdkCustomConfig): SerializerType {
+    // noSerdeLayer: true means no serialization
+    if (config.noSerdeLayer) {
+        return "none";
     }
+
+    // If serializer is explicitly set
+    if (config.serializer != null) {
+        // Validate: can't have noSerdeLayer=false with serializer="none"
+        if (config.serializer === "none") {
+            throw new Error(
+                'Invalid config: serializer is "none" but noSerdeLayer is not true. ' +
+                    "Either set noSerdeLayer: true or choose a serializer (zurg, zod, yup)."
+            );
+        }
+        return config.serializer;
+    }
+
+    // Default to zurg for backward compatibility
     return "zurg";
+}
+
+/**
+ * Returns true if serialization is enabled (serializer is not "none")
+ */
+export function isSerializationEnabled(config: SdkCustomConfig): boolean {
+    return resolveSerializer(config) !== "none";
 }

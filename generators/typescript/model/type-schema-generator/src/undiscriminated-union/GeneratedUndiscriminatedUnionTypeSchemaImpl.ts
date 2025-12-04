@@ -13,7 +13,7 @@ export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelCo
     public readonly type = "undiscriminatedUnion";
 
     protected override buildSchema(context: Context): Zurg.Schema {
-        return context.coreUtilities.zurg.undiscriminatedUnion(
+        return context.coreUtilities.serializer.undiscriminatedUnion(
             this.shape.members.map((member) => context.typeSchema.getSchemaOfTypeReference(member.type))
         );
     }

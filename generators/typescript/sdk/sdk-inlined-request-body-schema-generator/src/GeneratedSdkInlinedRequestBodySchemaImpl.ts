@@ -122,7 +122,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
             context,
             inlinedRequestBody: this.inlinedRequestBody
         });
-        let schema = context.coreUtilities.zurg.object(
+        let schema = context.coreUtilities.serializer.object(
             nonLiteralProperties.map((property) => ({
                 key: {
                     parsed: context.requestWrapper

@@ -90,9 +90,9 @@ export class GeneratedWebsocketResponseSchemaImpl
             context.logger.warn(
                 `WebSocket channel ${this.channel.name} has no receive messages defined. Generating a never schema.`
             );
-            return context.coreUtilities.zurg.never();
+            return context.coreUtilities.serializer.never();
         }
-        return context.coreUtilities.zurg.undiscriminatedUnion(
+        return context.coreUtilities.serializer.undiscriminatedUnion(
             this.receiveMessages.map((message) => context.typeSchema.getSchemaOfTypeReference(message.bodyType))
         );
     }

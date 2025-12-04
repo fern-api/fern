@@ -136,10 +136,33 @@ export interface SchemaGenerator {
     Schema: {
         _getReferenceToType: (args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => ts.TypeNode;
         _fromExpression: (expression: ts.Expression, opts?: { isObject: boolean }) => Schema;
+        _visitMaybeValid: (
+            referenceToMaybeValid: ts.Expression,
+            visitor: {
+                valid: (referenceToValue: ts.Expression) => ts.Statement[];
+                invalid: (referenceToErrors: ts.Expression) => ts.Statement[];
+            }
+        ) => ts.Statement[];
     };
 
     ObjectSchema: {
         _getReferenceToType: (args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => ts.TypeNode;
+    };
+
+    // Validation result accessors
+    MaybeValid: {
+        ok: string;
+        Valid: {
+            value: string;
+        };
+        Invalid: {
+            errors: string;
+        };
+    };
+
+    ValidationError: {
+        path: string;
+        message: string;
     };
 }
 

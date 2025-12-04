@@ -40,7 +40,7 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
     }
 
     public getReferenceToZurgSchema(context: Context): Zurg.Schema {
-        return context.coreUtilities.zurg.Schema._fromExpression(this.getReferenceToSchema(context).getExpression());
+        return context.coreUtilities.serializer.Schema._fromExpression(this.getReferenceToSchema(context).getExpression());
     }
 
     public getReferenceToRawShape(context: Context): ts.TypeNode {
@@ -61,7 +61,7 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
         rawShape: ts.TypeNode;
         parsedShape: ts.TypeNode;
     }): ts.TypeNode {
-        return context.coreUtilities.zurg.Schema._getReferenceToType({ rawShape, parsedShape });
+        return context.coreUtilities.serializer.Schema._getReferenceToType({ rawShape, parsedShape });
     }
 
     protected generateModule(context: Context): void {

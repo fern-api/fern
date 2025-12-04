@@ -468,7 +468,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 )
             ),
 
-            ...context.coreUtilities.zurg.Schema._visitMaybeValid(
+            ...context.coreUtilities.serializer.Schema._visitMaybeValid(
                 ts.factory.createIdentifier(DESERIALIZED_REQUEST_VARIABLE_NAME),
                 {
                     valid: (validRequestBody) => [
@@ -533,7 +533,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                                                         ts.factory.createIdentifier(
                                                                                             ERROR_VARIABLE_NAME
                                                                                         ),
-                                                                                        context.coreUtilities.zurg
+                                                                                        context.coreUtilities.serializer
                                                                                             .ValidationError.path
                                                                                     )
                                                                                 )
@@ -551,7 +551,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                             ts.factory.createToken(ts.SyntaxKind.PlusToken),
                                                             ts.factory.createPropertyAccessExpression(
                                                                 ts.factory.createIdentifier(ERROR_VARIABLE_NAME),
-                                                                context.coreUtilities.zurg.ValidationError.message
+                                                                context.coreUtilities.serializer.ValidationError.message
                                                             )
                                                         )
                                                     )

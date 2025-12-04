@@ -1,18 +1,18 @@
 import { DeclaredTypeName, Literal, MapType, TypeReference } from "@fern-fern/ir-sdk/api";
-import { Zurg } from "@fern-typescript/commons";
+import { Schema, SchemaGenerator, Zurg } from "@fern-typescript/commons";
 
 import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 
 export declare namespace TypeReferenceToSchemaConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {
-        getSchemaOfNamedType: (typeName: DeclaredTypeName) => Zurg.Schema;
-        zurg: Zurg;
+        getSchemaOfNamedType: (typeName: DeclaredTypeName) => Schema;
+        zurg: Zurg | SchemaGenerator;
     }
 }
 
-export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConverter<Zurg.Schema> {
-    private getSchemaOfNamedType: (typeName: DeclaredTypeName) => Zurg.Schema;
-    private zurg: Zurg;
+export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConverter<Schema> {
+    private getSchemaOfNamedType: (typeName: DeclaredTypeName) => Schema;
+    private zurg: Zurg | SchemaGenerator;
 
     constructor({ getSchemaOfNamedType, zurg, ...superInit }: TypeReferenceToSchemaConverter.Init) {
         super(superInit);
@@ -20,67 +20,67 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         this.zurg = zurg;
     }
 
-    protected override named(typeName: DeclaredTypeName, params: ConvertTypeReferenceParams): Zurg.Schema {
+    protected override named(typeName: DeclaredTypeName, params: ConvertTypeReferenceParams): Schema {
         return this.getSchemaOfNamedType(typeName);
     }
 
-    protected override boolean(): Zurg.Schema {
+    protected override boolean(): Schema {
         return this.zurg.boolean();
     }
 
-    protected override string(): Zurg.Schema {
+    protected override string(): Schema {
         return this.zurg.string();
     }
 
-    protected long(): Zurg.Schema {
+    protected long(): Schema {
         if (this.useBigInt) {
             return this.zurg.bigint();
         }
         return this.zurg.number();
     }
 
-    protected bigInteger(): Zurg.Schema {
+    protected bigInteger(): Schema {
         if (this.useBigInt) {
             return this.zurg.bigint();
         }
         return this.zurg.string();
     }
 
-    protected override number(): Zurg.Schema {
+    protected override number(): Schema {
         return this.zurg.number();
     }
 
-    protected override dateTime(): Zurg.Schema {
+    protected override dateTime(): Schema {
         return this.zurg.date();
     }
 
-    protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
+    protected override nullable(itemType: TypeReference, params: ConvertTypeReferenceParams): Schema {
         if (itemType.type === "container" && itemType.container.type === "optional") {
             return this.convert({ ...params, typeReference: itemType.container.optional }).optionalNullable();
         }
         return this.convert({ ...params, typeReference: itemType }).nullable();
     }
 
-    protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
+    protected override optional(itemType: TypeReference, params: ConvertTypeReferenceParams): Schema {
         if (itemType.type === "container" && itemType.container.type === "nullable") {
             return this.convert({ ...params, typeReference: itemType.container.nullable }).optionalNullable();
         }
         return this.convert({ ...params, typeReference: itemType }).optional();
     }
 
-    protected override unknown(): Zurg.Schema {
+    protected override unknown(): Schema {
         return this.zurg.unknown();
     }
 
-    protected override any(): Zurg.Schema {
+    protected override any(): Schema {
         return this.zurg.any();
     }
 
-    protected override list(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
+    protected override list(itemType: TypeReference, params: ConvertTypeReferenceParams): Schema {
         return this.zurg.list(this.convert({ ...params, typeReference: itemType }));
     }
 
-    protected override literal(literal: Literal): Zurg.Schema {
+    protected override literal(literal: Literal): Schema {
         return Literal._visit(literal, {
             string: (value) => this.zurg.stringLiteral(value),
             boolean: (value) => this.zurg.booleanLiteral(value),
@@ -90,21 +90,21 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         });
     }
 
-    protected override mapWithEnumKeys(map: MapType, params: ConvertTypeReferenceParams): Zurg.Schema {
+    protected override mapWithEnumKeys(map: MapType, params: ConvertTypeReferenceParams): Schema {
         return this.mapWithOptionalValues(map, params);
     }
 
     protected override mapWithNonEnumKeys(
         { keyType, valueType }: MapType,
         params: ConvertTypeReferenceParams
-    ): Zurg.Schema {
+    ): Schema {
         return this.zurg.record({
             keySchema: this.convert({ ...params, typeReference: keyType }),
             valueSchema: this.convert({ ...params, typeReference: valueType })
         });
     }
 
-    protected mapWithOptionalValues({ keyType, valueType }: MapType, params: ConvertTypeReferenceParams): Zurg.Schema {
+    protected mapWithOptionalValues({ keyType, valueType }: MapType, params: ConvertTypeReferenceParams): Schema {
         const valueSchema = this.convert({ ...params, typeReference: valueType });
         return this.zurg.record({
             keySchema: this.convert({ ...params, typeReference: keyType }),
@@ -112,7 +112,7 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         });
     }
 
-    protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): Zurg.Schema {
+    protected override set(itemType: TypeReference, params: ConvertTypeReferenceParams): Schema {
         if (this.isTypeReferencePrimitive(itemType)) {
             return this.zurg.set(this.convert({ ...params, typeReference: itemType }));
         } else {

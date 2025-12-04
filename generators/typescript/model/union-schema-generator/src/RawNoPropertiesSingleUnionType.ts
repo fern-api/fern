@@ -16,6 +16,6 @@ export class RawNoPropertiesSingleUnionType<Context extends BaseContext> extends
     protected getNonDiscriminantPropertiesForSchema(
         context: Context
     ): Zurg.union.SingleUnionType["nonDiscriminantProperties"] {
-        return context.coreUtilities.zurg.object([]);
+        return context.coreUtilities.serializer.object([]);
     }
 }

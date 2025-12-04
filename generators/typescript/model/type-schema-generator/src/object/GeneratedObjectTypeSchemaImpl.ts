@@ -30,8 +30,8 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
 
         let schema = (
             this.noOptionalProperties
-                ? context.coreUtilities.zurg.objectWithoutOptionalProperties
-                : context.coreUtilities.zurg.object
+                ? context.coreUtilities.serializer.objectWithoutOptionalProperties
+                : context.coreUtilities.serializer.object
         )(properties);
 
         for (const extension of this.shape.extends) {
@@ -82,6 +82,6 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
         rawShape: ts.TypeNode;
         parsedShape: ts.TypeNode;
     }): ts.TypeNode {
-        return context.coreUtilities.zurg.ObjectSchema._getReferenceToType({ rawShape, parsedShape });
+        return context.coreUtilities.serializer.ObjectSchema._getReferenceToType({ rawShape, parsedShape });
     }
 }
