@@ -43,9 +43,9 @@ class HttpMethodsClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -73,9 +73,9 @@ class HttpMethodsClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -105,9 +105,9 @@ class HttpMethodsClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -182,9 +182,9 @@ class HttpMethodsClient:
         import datetime
         import uuid
 
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -245,9 +245,9 @@ class HttpMethodsClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -291,9 +291,9 @@ class AsyncHttpMethodsClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -329,9 +329,9 @@ class AsyncHttpMethodsClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -369,9 +369,9 @@ class AsyncHttpMethodsClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -453,9 +453,9 @@ class AsyncHttpMethodsClient:
         import datetime
         import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -524,9 +524,9 @@ class AsyncHttpMethodsClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

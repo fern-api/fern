@@ -43,10 +43,10 @@ class UnionClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
         from seed.types.union import Animal_Dog
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -95,10 +95,10 @@ class AsyncUnionClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
         from seed.types.union import Animal_Dog
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

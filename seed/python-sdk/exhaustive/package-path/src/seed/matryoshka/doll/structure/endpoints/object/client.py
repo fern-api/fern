@@ -92,9 +92,9 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -155,9 +155,9 @@ class ObjectClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -185,9 +185,9 @@ class ObjectClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -224,10 +224,10 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed import SeedExhaustive
+        from seed import Matryoshka
         from seed.types.object import ObjectWithOptionalField
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -290,10 +290,10 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed import SeedExhaustive
+        from seed import Matryoshka
         from seed.types.object import ObjectWithOptionalField
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -351,13 +351,13 @@ class ObjectClient:
         import datetime
         import uuid
 
-        from seed import SeedExhaustive
+        from seed import Matryoshka
         from seed.types.object import (
             NestedObjectWithRequiredField,
             ObjectWithOptionalField,
         )
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -496,9 +496,9 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -567,9 +567,9 @@ class AsyncObjectClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -607,9 +607,9 @@ class AsyncObjectClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -653,10 +653,10 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
         from seed.types.object import ObjectWithOptionalField
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -726,10 +726,10 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
         from seed.types.object import ObjectWithOptionalField
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -794,13 +794,13 @@ class AsyncObjectClient:
         import datetime
         import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
         from seed.types.object import (
             NestedObjectWithRequiredField,
             ObjectWithOptionalField,
         )
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

@@ -28,9 +28,18 @@ const relativePathSchema = z
     })
     .transform((pathStr) => pathStr.replace(/^\/+|\/+$/g, ""));
 
-export const SdkCustomConfigSchema = z.object({
-    enable_wire_tests: z.boolean().optional(),
-    package_path: relativePathSchema.optional()
-});
+const ClientConfigSchema = z
+    .object({
+        class_name: z.string().optional()
+    })
+    .passthrough();
+
+export const SdkCustomConfigSchema = z
+    .object({
+        enable_wire_tests: z.boolean().optional(),
+        package_path: relativePathSchema.optional(),
+        client: ClientConfigSchema.optional()
+    })
+    .passthrough();
 
 export type SdkCustomConfigSchema = z.infer<typeof SdkCustomConfigSchema>;

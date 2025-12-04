@@ -57,10 +57,10 @@ class InlinedRequestsClient:
         import datetime
         import uuid
 
-        from seed import SeedExhaustive
+        from seed import Matryoshka
         from seed.types.object import ObjectWithOptionalField
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -143,10 +143,10 @@ class AsyncInlinedRequestsClient:
         import datetime
         import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
         from seed.types.object import ObjectWithOptionalField
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

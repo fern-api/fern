@@ -38,9 +38,9 @@ class NoReqBodyClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -62,9 +62,9 @@ class NoReqBodyClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -106,9 +106,9 @@ class AsyncNoReqBodyClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -138,9 +138,9 @@ class AsyncNoReqBodyClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

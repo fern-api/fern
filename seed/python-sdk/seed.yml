@@ -255,6 +255,8 @@ fixtures:
     - customConfig:
         package_path: matryoshka/doll/structure
         enable_wire_tests: true
+        client:
+          class_name: Matryoshka
       outputFolder: package-path
   file-upload:
     - customConfig: null

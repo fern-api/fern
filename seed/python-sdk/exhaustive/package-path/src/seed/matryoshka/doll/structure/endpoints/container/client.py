@@ -43,9 +43,9 @@ class ContainerClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -76,10 +76,10 @@ class ContainerClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
         from seed.types.object import ObjectWithRequiredField
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -114,9 +114,9 @@ class ContainerClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -147,10 +147,10 @@ class ContainerClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
         from seed.types.object import ObjectWithRequiredField
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -182,9 +182,9 @@ class ContainerClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -215,10 +215,10 @@ class ContainerClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
         from seed.types.object import ObjectWithRequiredField
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -255,10 +255,10 @@ class ContainerClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
         from seed.types.object import ObjectWithRequiredField
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -306,9 +306,9 @@ class AsyncContainerClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -349,10 +349,10 @@ class AsyncContainerClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
         from seed.types.object import ObjectWithRequiredField
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -397,9 +397,9 @@ class AsyncContainerClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -440,10 +440,10 @@ class AsyncContainerClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
         from seed.types.object import ObjectWithRequiredField
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -485,9 +485,9 @@ class AsyncContainerClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -528,10 +528,10 @@ class AsyncContainerClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
         from seed.types.object import ObjectWithRequiredField
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -576,10 +576,10 @@ class AsyncContainerClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
         from seed.types.object import ObjectWithRequiredField
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )

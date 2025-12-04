@@ -42,9 +42,9 @@ class PrimitiveClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -70,9 +70,9 @@ class PrimitiveClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -98,9 +98,9 @@ class PrimitiveClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -128,9 +128,9 @@ class PrimitiveClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -156,9 +156,9 @@ class PrimitiveClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -188,9 +188,9 @@ class PrimitiveClient:
         --------
         import datetime
 
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -222,9 +222,9 @@ class PrimitiveClient:
         --------
         import datetime
 
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -256,9 +256,9 @@ class PrimitiveClient:
         --------
         import uuid
 
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -286,9 +286,9 @@ class PrimitiveClient:
 
         Examples
         --------
-        from seed import SeedExhaustive
+        from seed import Matryoshka
 
-        client = SeedExhaustive(
+        client = Matryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -334,9 +334,9 @@ class AsyncPrimitiveClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -370,9 +370,9 @@ class AsyncPrimitiveClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -408,9 +408,9 @@ class AsyncPrimitiveClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -446,9 +446,9 @@ class AsyncPrimitiveClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -484,9 +484,9 @@ class AsyncPrimitiveClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -523,9 +523,9 @@ class AsyncPrimitiveClient:
         import asyncio
         import datetime
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -564,9 +564,9 @@ class AsyncPrimitiveClient:
         import asyncio
         import datetime
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -605,9 +605,9 @@ class AsyncPrimitiveClient:
         import asyncio
         import uuid
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
@@ -645,9 +645,9 @@ class AsyncPrimitiveClient:
         --------
         import asyncio
 
-        from seed import AsyncSeedExhaustive
+        from seed import AsyncMatryoshka
 
-        client = AsyncSeedExhaustive(
+        client = AsyncMatryoshka(
             token="YOUR_TOKEN",
             base_url="https://yourhost.com/path/to/api",
         )
