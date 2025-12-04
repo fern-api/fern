@@ -60,4 +60,11 @@ export interface SdkCustomConfig {
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     generateSubpackageExports: boolean | undefined;
     offsetSemantics: "item-index" | "page-index";
+
+    // Internal feature flag for A/B testing serde implementations
+    // Not exposed in public docs - use underscore prefix
+    _serdeImplementation: "zurg" | "zod" | undefined;
+
+    // Customer-facing schema export config
+    exportSchemas: "zod" | "yup" | false | undefined;
 }

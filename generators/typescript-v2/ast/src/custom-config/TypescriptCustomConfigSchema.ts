@@ -72,7 +72,13 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     includeApiReference: z.optional(z.boolean()),
 
     // internal - license name extracted from custom license file
-    _fernLicenseName: z.optional(z.string())
+    _fernLicenseName: z.optional(z.string()),
+
+    // Internal feature flag for A/B testing serde implementations (not in docs)
+    _serdeImplementation: z.optional(z.enum(["zurg", "zod"])),
+
+    // Customer-facing schema export configuration
+    exportSchemas: z.optional(z.union([z.enum(["zod", "yup"]), z.literal(false)]))
 });
 
 export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;

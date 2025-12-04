@@ -96,7 +96,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             linter: parsed?.linter ?? "biome",
             formatter: parsed?.formatter ?? "biome",
             generateSubpackageExports: parsed?.generateSubpackageExports ?? false,
-            offsetSemantics: parsed?.offsetSemantics ?? "item-index"
+            offsetSemantics: parsed?.offsetSemantics ?? "item-index",
+
+            // Internal serde implementation flag (default to zurg for backward compat)
+            _serdeImplementation: parsed?._serdeImplementation ?? undefined,
+
+            // Customer-facing schema export config
+            exportSchemas: parsed?.exportSchemas ?? undefined
         };
 
         if (parsed?.noSerdeLayer === false && typeof parsed?.enableInlineTypes === "undefined") {
