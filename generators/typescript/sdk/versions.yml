@@ -2,10 +2,10 @@
 - version: 3.35.9
   changelogEntry:
     - summary: |
-        Improve error class generation for better stack trace capture and `instanceof` checks.
+        Fix generated error classes to correctly set the prototype chain, capture stack traces, and set the error name so `instanceof` checks behave as expected.
         Error classes now use `new.target.prototype` instead of the static class name for `Object.setPrototypeOf`,
         conditionally call `Error.captureStackTrace` for V8 environments, and set `this.name` dynamically.
-      type: feat
+      type: fix
   createdAt: "2025-12-04"
   irVersion: 62
 
