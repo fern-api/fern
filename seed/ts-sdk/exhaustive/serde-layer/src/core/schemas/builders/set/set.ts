@@ -1,4 +1,5 @@
 import { type BaseSchema, type Schema, SchemaType } from "../../Schema.js";
+import { addJsonSerializer } from "../../utils/addJsonSerializer.js";
 import { getErrorMessageForIncorrectType } from "../../utils/getErrorMessageForIncorrectType.js";
 import { maybeSkipValidation } from "../../utils/maybeSkipValidation.js";
 import { list } from "../list/index.js";
@@ -10,9 +11,13 @@ export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set
         parse: (raw, opts) => {
             const parsedList = listSchema.parse(raw, opts);
             if (parsedList.ok) {
+                const setInstance = new Set(parsedList.value);
+                addJsonSerializer(setInstance, function () {
+                    return [...this];
+                });
                 return {
                     ok: true,
-                    value: new Set(parsedList.value),
+                    value: setInstance,
                 };
             } else {
                 return parsedList;
