@@ -1,7 +1,7 @@
 // this is the parsed config shape. to view the allowed options for generators.yml,
 // see SdkCustomConfigSchema.ts
 
-export type SerializerType = "zurg" | "zod" | "yup" | "none";
+export type SerializerType = "zurg" | "zod" | "yup" | "ajv" | "none";
 
 export interface SdkCustomConfig {
     useBrandedStringAliases: boolean;
@@ -64,7 +64,7 @@ export interface SdkCustomConfig {
     generateSubpackageExports: boolean | undefined;
     offsetSemantics: "item-index" | "page-index";
 
-    // Serializer configuration: "zurg" (legacy), "zod", "yup", or "none" (disabled)
+    // Serializer configuration: "zurg" (legacy), "zod", "yup", "ajv", or "none" (disabled)
     serializer: SerializerType | undefined;
 
     // Customer-facing schema export config
@@ -91,7 +91,7 @@ export function resolveSerializer(config: SdkCustomConfig): SerializerType {
         if (config.serializer === "none") {
             throw new Error(
                 'Invalid config: serializer is "none" but noSerdeLayer is not true. ' +
-                    "Either set noSerdeLayer: true or choose a serializer (zurg, zod, yup)."
+                    "Either set noSerdeLayer: true or choose a serializer (zurg, zod, yup, ajv)."
             );
         }
         return config.serializer;

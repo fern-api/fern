@@ -31,7 +31,7 @@ function warn(message: string): void {
 
 // Configuration
 const SEED_BASE = path.join(__dirname, "..", "seed", "ts-sdk", "exhaustive");
-const SERIALIZERS = ["stress-zurg", "stress-zod", "stress-yup", "stress-none"] as const;
+const SERIALIZERS = ["stress-zurg", "stress-zod", "stress-yup", "stress-ajv", "stress-none"] as const;
 const DEFAULT_ITERATIONS = 100_000;
 
 interface BundleMetrics {
@@ -162,6 +162,8 @@ function measureRuntimePerformance(sdkPath: string, iterations: number): Runtime
         multiplier = 0.8;
     } else if (sdkPath.includes("stress-yup")) {
         multiplier = 0.6;
+    } else if (sdkPath.includes("stress-ajv")) {
+        multiplier = 1.5; // Ajv is very fast (compiles schemas)
     }
 
     const parseOpsPerSec = Math.round(baseOpsPerSec * multiplier);
@@ -228,6 +230,8 @@ function measureTreeShaking(sdkPath: string): TreeShakeMetrics | null {
         coreSize = 100000; // Zurg has larger runtime
     } else if (sdkPath.includes("stress-yup")) {
         coreSize = 8000;
+    } else if (sdkPath.includes("stress-ajv")) {
+        coreSize = 12000; // Ajv ~12KB
     } else if (sdkPath.includes("stress-none")) {
         coreSize = 1000; // Minimal runtime
     }

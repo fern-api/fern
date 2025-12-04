@@ -150,6 +150,9 @@ fixtures:
     - outputFolder: stress-yup
       customConfig:
         serializer: yup
+    - outputFolder: stress-ajv
+      customConfig:
+        serializer: ajv
     - outputFolder: stress-none
       customConfig:
         serializer: none

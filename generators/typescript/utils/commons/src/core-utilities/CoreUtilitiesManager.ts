@@ -18,6 +18,7 @@ import { FormDataUtilsImpl } from "./FormDataUtils";
 import { LoggingImpl } from "./Logging";
 import { PaginationImpl } from "./Pagination";
 import { RuntimeImpl } from "./Runtime";
+import { AjvSerializationCodeGenerator } from "./schema-generator/AjvSchemaGenerator";
 import { SerializationCodeGenerator } from "./schema-generator/SchemaGenerator";
 import { YupSerializationCodeGenerator } from "./schema-generator/YupSchemaGenerator";
 import { ZodSerializationCodeGenerator } from "./schema-generator/ZodSchemaGenerator";
@@ -32,9 +33,10 @@ import { ZurgImpl } from "./Zurg";
  * - "zurg": Legacy custom serialization
  * - "zod": Zod-based serialization
  * - "yup": Yup-based serialization
+ * - "ajv": Ajv (JSON Schema) based serialization
  * - "none": No serialization layer
  */
-export type SerializerType = "zurg" | "zod" | "yup" | "none";
+export type SerializerType = "zurg" | "zod" | "yup" | "ajv" | "none";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -116,6 +118,8 @@ export class CoreUtilitiesManager {
                 return new ZodSerializationCodeGenerator();
             case "yup":
                 return new YupSerializationCodeGenerator();
+            case "ajv":
+                return new AjvSerializationCodeGenerator();
             case "zurg":
                 return new ZurgImpl({
                     getReferenceToExport,
@@ -213,6 +217,9 @@ export class CoreUtilitiesManager {
                 break;
             case "yup":
                 dependencyManager.addDependency("yup", "^1.4.0");
+                break;
+            case "ajv":
+                dependencyManager.addDependency("ajv", "^8.17.1");
                 break;
             // "zurg" and "none" don't require additional dependencies
         }
