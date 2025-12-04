@@ -160,6 +160,7 @@ export declare namespace SdkGenerator {
         formatter: "prettier" | "biome" | "oxfmt";
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
+        oauthTokenOverridePropertyName: string | undefined;
     }
 }
 
@@ -377,7 +378,8 @@ export class SdkGenerator {
             requireDefaultEnvironment: config.requireDefaultEnvironment,
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
-            baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer
+            baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
+            oauthTokenOverridePropertyName: config.oauthTokenOverridePropertyName
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
@@ -1391,7 +1393,8 @@ export class SdkGenerator {
                     ir: this.intermediateRepresentation,
                     authScheme,
                     neverThrowErrors: this.config.neverThrowErrors,
-                    includeSerdeLayer: this.config.includeSerdeLayer
+                    includeSerdeLayer: this.config.includeSerdeLayer,
+                    oauthTokenOverridePropertyName: this.config.oauthTokenOverridePropertyName
                 });
                 if (!authProvidersGenerator.shouldWriteFile()) {
                     continue;
@@ -1410,7 +1413,8 @@ export class SdkGenerator {
                 ir: this.intermediateRepresentation,
                 authScheme: { type: "any" },
                 neverThrowErrors: this.config.neverThrowErrors,
-                includeSerdeLayer: this.config.includeSerdeLayer
+                includeSerdeLayer: this.config.includeSerdeLayer,
+                oauthTokenOverridePropertyName: this.config.oauthTokenOverridePropertyName
             });
             this.withSourceFile({
                 filepath: anyAuthProvidersGenerator.getFilePath(),
@@ -1426,7 +1430,8 @@ export class SdkGenerator {
                     ir: this.intermediateRepresentation,
                     authScheme,
                     neverThrowErrors: this.config.neverThrowErrors,
-                    includeSerdeLayer: this.config.includeSerdeLayer
+                    includeSerdeLayer: this.config.includeSerdeLayer,
+                    oauthTokenOverridePropertyName: this.config.oauthTokenOverridePropertyName
                 });
                 if (!authProvidersGenerator.shouldWriteFile()) {
                     continue;

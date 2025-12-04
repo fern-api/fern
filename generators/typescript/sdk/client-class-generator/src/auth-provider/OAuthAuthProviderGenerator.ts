@@ -11,6 +11,7 @@ export declare namespace OAuthAuthProviderGenerator {
         authScheme: FernIr.OAuthScheme;
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
+        tokenOverridePropertyName: string | undefined;
     }
 }
 
@@ -29,6 +30,8 @@ const AUTH_CLIENT_FIELD_NAME = "_authClient";
 const ACCESS_TOKEN_FIELD_NAME = "_accessToken";
 const EXPIRES_AT_FIELD_NAME = "_expiresAt";
 const REFRESH_PROMISE_FIELD_NAME = "_refreshPromise";
+const TOKEN_OVERRIDE_FIELD_NAME = "_tokenOverride";
+const DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME = "token";
 
 export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -37,12 +40,14 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     private readonly authScheme: FernIr.OAuthScheme;
     private readonly neverThrowErrors: boolean;
     private readonly includeSerdeLayer: boolean;
+    private readonly tokenOverridePropertyName: string | undefined;
 
     constructor(init: OAuthAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;
         this.includeSerdeLayer = init.includeSerdeLayer;
+        this.tokenOverridePropertyName = init.tokenOverridePropertyName;
     }
 
     public getFilePath(): ExportedFilePath {
@@ -143,7 +148,24 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
 
+        const tokenOverridePropertyName = this.tokenOverridePropertyName ?? DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME;
+        const hasTokenOverride = this.tokenOverridePropertyName !== undefined;
+
         let constructorStatements = "";
+
+        if (hasTokenOverride) {
+            // When token override is enabled, check if token is provided first
+            constructorStatements += `
+        if ("${tokenOverridePropertyName}" in ${OPTIONS_PARAM_NAME} && ${OPTIONS_PARAM_NAME}.${tokenOverridePropertyName} != null) {
+            this.${TOKEN_OVERRIDE_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${tokenOverridePropertyName};
+            this.${CLIENT_ID_FIELD_NAME} = undefined;
+            this.${CLIENT_SECRET_FIELD_NAME} = undefined;
+            this.${AUTH_CLIENT_FIELD_NAME} = new ${authClientType}(${OPTIONS_PARAM_NAME});
+            this.${EXPIRES_AT_FIELD_NAME} = new Date();
+            return;
+        }
+        this.${TOKEN_OVERRIDE_FIELD_NAME} = undefined;`;
+        }
 
         if (!clientIdIsOptional) {
             const envVarHint =
@@ -198,17 +220,21 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }> = [
             {
                 name: CLIENT_ID_FIELD_NAME,
-                type: clientIdIsOptional
+                type: hasTokenOverride
                     ? `${supplierType}<${clientIdType}> | undefined`
-                    : `${supplierType}<${clientIdType}>`,
+                    : clientIdIsOptional
+                      ? `${supplierType}<${clientIdType}> | undefined`
+                      : `${supplierType}<${clientIdType}>`,
                 isReadonly: true,
                 scope: Scope.Private
             },
             {
                 name: CLIENT_SECRET_FIELD_NAME,
-                type: clientSecretIsOptional
+                type: hasTokenOverride
                     ? `${supplierType}<${clientSecretType}> | undefined`
-                    : `${supplierType}<${clientSecretType}>`,
+                    : clientSecretIsOptional
+                      ? `${supplierType}<${clientSecretType}> | undefined`
+                      : `${supplierType}<${clientSecretType}>`,
                 isReadonly: true,
                 scope: Scope.Private
             },
@@ -238,6 +264,15 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             }
         ];
 
+        if (hasTokenOverride) {
+            properties.unshift({
+                name: TOKEN_OVERRIDE_FIELD_NAME,
+                type: `${supplierType}<string> | undefined`,
+                isReadonly: true,
+                scope: Scope.Private
+            });
+        }
+
         if (hasExpiration) {
             properties.unshift({
                 name: BUFFER_IN_MINUTES_FIELD_NAME,
@@ -248,8 +283,39 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             });
         }
 
-        const getTokenStatements = hasExpiration
+        const tokenOverrideSupplierCall = hasTokenOverride
+            ? getTextOfTsNode(
+                  context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
+                      ts.factory.createPropertyAccessExpression(ts.factory.createThis(), TOKEN_OVERRIDE_FIELD_NAME),
+                      ts.factory.createObjectLiteralExpression([
+                          ts.factory.createPropertyAssignment(
+                              "endpointMetadata",
+                              ts.factory.createBinaryExpression(
+                                  ts.factory.createPropertyAccessChain(
+                                      ts.factory.createIdentifier("arg"),
+                                      ts.factory.createToken(ts.SyntaxKind.QuestionDotToken),
+                                      "endpointMetadata"
+                                  ),
+                                  ts.factory.createToken(ts.SyntaxKind.QuestionQuestionToken),
+                                  ts.factory.createObjectLiteralExpression([])
+                              )
+                          )
+                      ])
+                  )
+              )
+            : "";
+
+        const tokenOverrideCheck = hasTokenOverride
             ? `
+        // If token override is provided, use it directly
+        if (this.${TOKEN_OVERRIDE_FIELD_NAME} != null) {
+            return ${tokenOverrideSupplierCall};
+        }
+        `
+            : "";
+
+        const getTokenStatements = hasExpiration
+            ? `${tokenOverrideCheck}
         if (this.${ACCESS_TOKEN_FIELD_NAME} && this.${EXPIRES_AT_FIELD_NAME} > new Date()) {
             return this.${ACCESS_TOKEN_FIELD_NAME};
         }
@@ -259,7 +325,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }
         return this.${REFRESH_METHOD_NAME}(${ENDPOINT_METADATA_ARG_NAME});
         `
-            : `
+            : `${tokenOverrideCheck}
         if (this.${ACCESS_TOKEN_FIELD_NAME}) {
             return this.${ACCESS_TOKEN_FIELD_NAME};
         }
@@ -371,7 +437,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const canCreateStatements = this.generatecanCreateStatements(
             oauthConfig.clientIdEnvVar,
-            oauthConfig.clientSecretEnvVar
+            oauthConfig.clientSecretEnvVar,
+            hasTokenOverride ? tokenOverridePropertyName : undefined
         );
 
         const methods: Array<{
@@ -540,7 +607,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
     private generatecanCreateStatements(
         clientIdEnvVar: string | undefined,
-        clientSecretEnvVar: string | undefined
+        clientSecretEnvVar: string | undefined,
+        tokenOverridePropertyName: string | undefined
     ): string {
         const clientIdCheck =
             clientIdEnvVar != null
@@ -552,7 +620,14 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 ? `(options.clientSecret != null || process.env?.["${clientSecretEnvVar}"] != null)`
                 : `options.clientSecret != null`;
 
-        return `return ${clientIdCheck} && ${clientSecretCheck};`;
+        const oauthCheck = `(${clientIdCheck} && ${clientSecretCheck})`;
+
+        if (tokenOverridePropertyName != null) {
+            const tokenCheck = `("${tokenOverridePropertyName}" in options && options.${tokenOverridePropertyName} != null)`;
+            return `return ${tokenCheck} || ${oauthCheck};`;
+        }
+
+        return `return ${oauthCheck};`;
     }
 
     private getName(name: FernIr.Name | FernIr.NameAndWireValue): string {
@@ -578,6 +653,31 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             return;
         }
 
+        const hasTokenOverride = this.tokenOverridePropertyName !== undefined;
+        const tokenOverridePropertyName = this.tokenOverridePropertyName ?? DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME;
+
+        const supplierType = getTextOfTsNode(
+            context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+            )
+        ).replace(/<any>/, "");
+
+        const optionsProperties: Array<{
+            kind: typeof StructureKind.PropertySignature;
+            name: string;
+            type: string;
+            hasQuestionToken: boolean;
+        }> = [];
+
+        if (hasTokenOverride) {
+            optionsProperties.push({
+                kind: StructureKind.PropertySignature,
+                name: tokenOverridePropertyName,
+                type: `${supplierType}<string>`,
+                hasQuestionToken: true
+            });
+        }
+
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
@@ -587,7 +687,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    extends: ["BaseClientOptions"]
+                    extends: ["BaseClientOptions"],
+                    properties: optionsProperties
                 }
             ]
         });

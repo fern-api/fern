@@ -22,6 +22,7 @@ export declare namespace BaseClientContextImpl {
         generateIdempotentRequestOptions: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+        oauthTokenOverridePropertyName: string | undefined;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -42,6 +43,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+    private readonly oauthTokenOverridePropertyName: string | undefined;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -66,7 +68,8 @@ export class BaseClientContextImpl implements BaseClientContext {
         retainOriginalCasing,
         generateIdempotentRequestOptions,
         parameterNaming,
-        baseClientTypeDeclarationReferencer
+        baseClientTypeDeclarationReferencer,
+        oauthTokenOverridePropertyName
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
@@ -75,6 +78,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.parameterNaming = parameterNaming;
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
+        this.oauthTokenOverridePropertyName = oauthTokenOverridePropertyName;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -273,6 +277,10 @@ export class BaseClientContextImpl implements BaseClientContext {
                 const clientIdProperty = oauthConfig.tokenEndpoint.requestProperties.clientId;
                 const clientSecretProperty = oauthConfig.tokenEndpoint.requestProperties.clientSecret;
 
+                // When token override is enabled, clientId and clientSecret become optional
+                // since users can provide a token instead
+                const hasTokenOverride = this.oauthTokenOverridePropertyName !== undefined;
+
                 properties.push({
                     kind: StructureKind.PropertySignature,
                     name: getPropertyKey("clientId"),
@@ -281,7 +289,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                             context.type.getReferenceToType(clientIdProperty.property.valueType).typeNode
                         )
                     ),
-                    hasQuestionToken: oauthConfig.clientIdEnvVar != null
+                    hasQuestionToken: hasTokenOverride || oauthConfig.clientIdEnvVar != null
                 });
 
                 properties.push({
@@ -292,8 +300,21 @@ export class BaseClientContextImpl implements BaseClientContext {
                             context.type.getReferenceToType(clientSecretProperty.property.valueType).typeNode
                         )
                     ),
-                    hasQuestionToken: oauthConfig.clientSecretEnvVar != null
+                    hasQuestionToken: hasTokenOverride || oauthConfig.clientSecretEnvVar != null
                 });
+
+                // Add token override property if configured
+                if (hasTokenOverride) {
+                    properties.push({
+                        kind: StructureKind.PropertySignature,
+                        name: getPropertyKey(this.oauthTokenOverridePropertyName),
+                        type: getTextOfTsNode(
+                            supplier._getReferenceToType(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword))
+                        ),
+                        hasQuestionToken: true,
+                        docs: ["Provide a pre-generated bearer token to skip the OAuth flow."]
+                    });
+                }
             }
         }
 
