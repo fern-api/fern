@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         Add `toJSON` serializer to Set instances created by the serde layer, enabling proper JSON.stringify support for Next.js server-to-client data passing.
-      type: feat
+      type: fix
   createdAt: "2025-12-04"
   irVersion: 62
 
