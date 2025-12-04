@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.41.11
+  changelogEntry:
+    - summary: |
+        Fix backslash escaping in endpoint and websocket docstrings. OpenAPI descriptions containing
+        backslash sequences like `DOMAIN\username` now properly escape backslashes to avoid Python
+        SyntaxError from invalid unicode escape sequences.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
 - version: 4.41.10
   changelogEntry:
     - summary: |
