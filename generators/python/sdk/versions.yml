@@ -1,5 +1,16 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.41.12
+  changelogEntry:
+    - summary: |
+        Fix exported client filename to match custom client filename when only `client.filename` is set.
+        Previously, setting `client.filename` to a custom value (e.g., `uipath_client.py`) without also
+        setting `client.exported_filename` would cause the generated `__init__.py` to import from `.client`
+        instead of the actual file, resulting in mypy import-not-found errors.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
 - version: 4.41.11
   changelogEntry:
     - summary: |
