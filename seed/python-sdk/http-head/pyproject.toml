@@ -1,5 +1,6 @@
 [project]
 name = "fern_http-head"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_http-head"

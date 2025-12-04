@@ -75,6 +75,7 @@ class PyProjectToml:
         ]
         content = f"""[project]
 name = "{self._name}"
+dynamic = ["version"]
 
 """
 
