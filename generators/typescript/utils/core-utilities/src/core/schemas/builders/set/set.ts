@@ -12,7 +12,7 @@ export function set<Raw, Parsed>(schema: Schema<Raw, Parsed>): Schema<Raw[], Set
             const parsedList = listSchema.parse(raw, opts);
             if (parsedList.ok) {
                 const setInstance = new Set(parsedList.value);
-                addJsonSerializer(setInstance, function () {
+                addJsonSerializer(setInstance, function (this: Set<Parsed>) {
                     return [...this];
                 });
                 return {
