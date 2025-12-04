@@ -55,8 +55,10 @@ export class LocalScriptRunner extends ScriptRunner {
 
             const buildCommands = getCommandsForPhase(script.commands, "build");
             if (buildCommands.length > 0) {
+                if (!anyBuildCommands) {
+                    taskContext.logger.info(`Running build scripts for ${id}...`);
+                }
                 anyBuildCommands = true;
-                taskContext.logger.info(`Running build scripts for ${id}...`);
                 const result = await this.runScript({
                     taskContext,
                     outputDir,
@@ -73,10 +75,12 @@ export class LocalScriptRunner extends ScriptRunner {
                         buildTimeMs
                     };
                 }
-                taskContext.logger.info(`Build scripts completed for ${id}`);
             }
         }
-        buildTimeMs = anyBuildCommands ? Date.now() - buildStartTime : undefined;
+        if (anyBuildCommands) {
+            buildTimeMs = Date.now() - buildStartTime;
+            taskContext.logger.info(`Build scripts completed for ${id}`);
+        }
 
         const testStartTime = Date.now();
         for (const script of scripts) {
@@ -86,8 +90,10 @@ export class LocalScriptRunner extends ScriptRunner {
 
             const testCommands = getCommandsForPhase(script.commands, "test");
             if (testCommands.length > 0) {
+                if (!anyTestCommands) {
+                    taskContext.logger.info(`Running test scripts for ${id}...`);
+                }
                 anyTestCommands = true;
-                taskContext.logger.info(`Running test scripts for ${id}...`);
                 const result = await this.runScript({
                     taskContext,
                     outputDir,
@@ -105,10 +111,12 @@ export class LocalScriptRunner extends ScriptRunner {
                         testTimeMs
                     };
                 }
-                taskContext.logger.info(`Test scripts completed for ${id}`);
             }
         }
-        testTimeMs = anyTestCommands ? Date.now() - testStartTime : undefined;
+        if (anyTestCommands) {
+            testTimeMs = Date.now() - testStartTime;
+            taskContext.logger.info(`Test scripts completed for ${id}`);
+        }
 
         return { type: "success", buildTimeMs, testTimeMs };
     }
