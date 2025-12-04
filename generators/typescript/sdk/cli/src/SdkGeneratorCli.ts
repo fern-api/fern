@@ -16,7 +16,7 @@ import { SdkGenerator } from "@fern-typescript/sdk-generator";
 import { copyFile } from "fs/promises";
 import path from "path";
 
-import { SdkCustomConfig } from "./custom-config/SdkCustomConfig";
+import { resolveSerializer, SdkCustomConfig } from "./custom-config/SdkCustomConfig";
 import { SdkCustomConfigSchema } from "./custom-config/schema/SdkCustomConfigSchema";
 
 export declare namespace SdkGeneratorCli {
@@ -248,7 +248,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 formatter: customConfig.formatter,
                 linter: customConfig.linter,
                 generateSubpackageExports: customConfig.generateSubpackageExports ?? false,
-                offsetSemantics: customConfig.offsetSemantics
+                offsetSemantics: customConfig.offsetSemantics,
+                serializer: resolveSerializer(customConfig)
             }
         });
         const typescriptProject = await sdkGenerator.generate();
