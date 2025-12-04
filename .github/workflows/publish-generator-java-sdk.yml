@@ -14,6 +14,10 @@ on:
         required: true
         type: string
 
+permissions: # Required for OIDC
+  id-token: write
+  contents: read
+
 jobs:
   publish:
     permissions:
