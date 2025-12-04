@@ -18,9 +18,9 @@ import { FormDataUtilsImpl } from "./FormDataUtils";
 import { LoggingImpl } from "./Logging";
 import { PaginationImpl } from "./Pagination";
 import { RuntimeImpl } from "./Runtime";
-import { SchemaGenerator } from "./schema-generator/SchemaGenerator";
-import { YupSchemaGenerator } from "./schema-generator/YupSchemaGenerator";
-import { ZodSchemaGenerator } from "./schema-generator/ZodSchemaGenerator";
+import { SerializationCodeGenerator } from "./schema-generator/SchemaGenerator";
+import { YupSerializationCodeGenerator } from "./schema-generator/YupSchemaGenerator";
+import { ZodSerializationCodeGenerator } from "./schema-generator/ZodSchemaGenerator";
 import { StreamImpl } from "./Stream";
 import { UrlUtilsImpl } from "./UrlUtils";
 import { UtilsImpl } from "./Utils";
@@ -110,12 +110,12 @@ export class CoreUtilitiesManager {
      */
     private createSerializer(
         getReferenceToExport: CoreUtility.Init["getReferenceToExport"]
-    ): SchemaGenerator {
+    ): SerializationCodeGenerator {
         switch (this.serializer) {
             case "zod":
-                return new ZodSchemaGenerator();
+                return new ZodSerializationCodeGenerator();
             case "yup":
-                return new YupSchemaGenerator();
+                return new YupSerializationCodeGenerator();
             case "zurg":
                 return new ZurgImpl({
                     getReferenceToExport,

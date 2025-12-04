@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { ZodSchemaGenerator } from "../ZodSchemaGenerator";
-import { YupSchemaGenerator } from "../YupSchemaGenerator";
+import { ZodSerializationCodeGenerator } from "../ZodSchemaGenerator";
+import { YupSerializationCodeGenerator } from "../YupSchemaGenerator";
 
 /**
  * Performance tests for schema generators.
@@ -9,9 +9,9 @@ import { YupSchemaGenerator } from "../YupSchemaGenerator";
  * Runtime performance (actual parsing) depends on the generated code running in the SDK.
  */
 describe("Performance Tests", () => {
-    describe("ZodSchemaGenerator - Build Time Performance", () => {
+    describe("ZodSerializationCodeGenerator - Build Time Performance", () => {
         it("should generate 1000 simple schemas in < 100ms", () => {
-            const generator = new ZodSchemaGenerator();
+            const generator = new ZodSerializationCodeGenerator();
             const iterations = 1000;
 
             const start = performance.now();
@@ -27,7 +27,7 @@ describe("Performance Tests", () => {
         });
 
         it("should generate 100 complex object schemas in < 200ms", () => {
-            const generator = new ZodSchemaGenerator();
+            const generator = new ZodSerializationCodeGenerator();
             const iterations = 100;
 
             const start = performance.now();
@@ -48,7 +48,7 @@ describe("Performance Tests", () => {
         });
 
         it("should generate nested schemas efficiently", () => {
-            const generator = new ZodSchemaGenerator();
+            const generator = new ZodSerializationCodeGenerator();
             const iterations = 50;
 
             const start = performance.now();
@@ -77,7 +77,7 @@ describe("Performance Tests", () => {
         });
 
         it("should generate union schemas efficiently", () => {
-            const generator = new ZodSchemaGenerator();
+            const generator = new ZodSerializationCodeGenerator();
             const iterations = 50;
 
             const start = performance.now();
@@ -108,9 +108,9 @@ describe("Performance Tests", () => {
         });
     });
 
-    describe("YupSchemaGenerator - Build Time Performance", () => {
+    describe("YupSerializationCodeGenerator - Build Time Performance", () => {
         it("should generate 1000 simple schemas in < 100ms", () => {
-            const generator = new YupSchemaGenerator();
+            const generator = new YupSerializationCodeGenerator();
             const iterations = 1000;
 
             const start = performance.now();
@@ -126,7 +126,7 @@ describe("Performance Tests", () => {
         });
 
         it("should generate 100 complex object schemas in < 200ms", () => {
-            const generator = new YupSchemaGenerator();
+            const generator = new YupSerializationCodeGenerator();
             const iterations = 100;
 
             const start = performance.now();
@@ -149,8 +149,8 @@ describe("Performance Tests", () => {
 
     describe("Comparative Performance", () => {
         it("Zod and Yup generators should have similar build-time performance", () => {
-            const zodGen = new ZodSchemaGenerator();
-            const yupGen = new YupSchemaGenerator();
+            const zodGen = new ZodSerializationCodeGenerator();
+            const yupGen = new YupSerializationCodeGenerator();
             const iterations = 100;
 
             // Zod

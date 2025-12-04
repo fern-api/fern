@@ -7,7 +7,7 @@ import {
     ObjectSchema,
     Property,
     Schema,
-    SchemaGenerator,
+    SerializationCodeGenerator,
     UnionArgs
 } from "./SchemaGenerator";
 
@@ -24,7 +24,7 @@ interface InternalSchema extends BaseSchema {
 /**
  * Helper to create schema utils for a base schema
  */
-function createSchemaUtils(baseSchema: InternalSchema, generator: ZodSchemaGenerator): Schema {
+function createSchemaUtils(baseSchema: InternalSchema, generator: ZodSerializationCodeGenerator): Schema {
     const schema: Schema = {
         ...baseSchema,
         parse: (raw, opts) =>
@@ -90,7 +90,7 @@ function generateReversePropertyMapping(
     );
 }
 
-function createNullable(schema: InternalSchema, generator: ZodSchemaGenerator): Schema {
+function createNullable(schema: InternalSchema, generator: ZodSerializationCodeGenerator): Schema {
     const baseSchema: InternalSchema = {
         isOptional: false,
         isNullable: true,
@@ -106,7 +106,7 @@ function createNullable(schema: InternalSchema, generator: ZodSchemaGenerator): 
     return createSchemaUtils(baseSchema, generator);
 }
 
-function createOptional(schema: InternalSchema, generator: ZodSchemaGenerator): Schema {
+function createOptional(schema: InternalSchema, generator: ZodSerializationCodeGenerator): Schema {
     const baseSchema: InternalSchema = {
         isOptional: true,
         isNullable: false,
@@ -122,7 +122,7 @@ function createOptional(schema: InternalSchema, generator: ZodSchemaGenerator): 
     return createSchemaUtils(baseSchema, generator);
 }
 
-function createOptionalNullable(schema: InternalSchema, generator: ZodSchemaGenerator): Schema {
+function createOptionalNullable(schema: InternalSchema, generator: ZodSerializationCodeGenerator): Schema {
     const baseSchema: InternalSchema = {
         isOptional: true,
         isNullable: true,
@@ -148,7 +148,7 @@ function createOptionalNullable(schema: InternalSchema, generator: ZodSchemaGene
 function createTransform(
     schema: InternalSchema,
     args: { newShape: ts.TypeNode | undefined; transform: ts.Expression; untransform: ts.Expression },
-    generator: ZodSchemaGenerator
+    generator: ZodSerializationCodeGenerator
 ): Schema {
     const baseSchema: InternalSchema = {
         isOptional: schema.isOptional,
@@ -164,7 +164,7 @@ function createTransform(
     return createSchemaUtils(baseSchema, generator);
 }
 
-function createObjectLikeUtils(baseSchema: InternalSchema, generator: ZodSchemaGenerator): ObjectLikeSchema {
+function createObjectLikeUtils(baseSchema: InternalSchema, generator: ZodSerializationCodeGenerator): ObjectLikeSchema {
     return {
         ...createSchemaUtils(baseSchema, generator),
         withParsedProperties: (properties: AdditionalProperty[]) => {
@@ -208,7 +208,7 @@ function createObjectLikeUtils(baseSchema: InternalSchema, generator: ZodSchemaG
     };
 }
 
-function createObjectUtils(baseSchema: InternalSchema, generator: ZodSchemaGenerator): ObjectSchema {
+function createObjectUtils(baseSchema: InternalSchema, generator: ZodSerializationCodeGenerator): ObjectSchema {
     const objectLike = createObjectLikeUtils(baseSchema, generator);
     return {
         ...objectLike,
@@ -246,7 +246,7 @@ function createObjectUtils(baseSchema: InternalSchema, generator: ZodSchemaGener
  * Zod-based schema generator.
  * Generates TypeScript AST that uses Zod for validation with bi-directional transforms.
  */
-export class ZodSchemaGenerator implements SchemaGenerator {
+export class ZodSerializationCodeGenerator implements SerializationCodeGenerator {
     private zImport: ts.Expression;
 
     constructor() {

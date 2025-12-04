@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
-import { ZodSchemaGenerator } from "../ZodSchemaGenerator";
-import { YupSchemaGenerator } from "../YupSchemaGenerator";
+import { ZodSerializationCodeGenerator } from "../ZodSchemaGenerator";
+import { YupSerializationCodeGenerator } from "../YupSchemaGenerator";
 
 /**
  * Bundle size verification tests.
@@ -10,9 +10,9 @@ import { YupSchemaGenerator } from "../YupSchemaGenerator";
  * so these tests focus on structural validation that impacts bundle size.
  */
 describe("Bundle Size Verification", () => {
-    describe("ZodSchemaGenerator", () => {
+    describe("ZodSerializationCodeGenerator", () => {
         it("should generate minimal AST for simple string schema", () => {
-            const generator = new ZodSchemaGenerator();
+            const generator = new ZodSerializationCodeGenerator();
             const schema = generator.string();
             const expression = schema.toExpression();
 
@@ -21,7 +21,7 @@ describe("Bundle Size Verification", () => {
         });
 
         it("should generate minimal AST for object without key transform", () => {
-            const generator = new ZodSchemaGenerator();
+            const generator = new ZodSerializationCodeGenerator();
             const schema = generator.object([
                 { key: { raw: "name", parsed: "name" }, value: generator.string() },
                 { key: { raw: "age", parsed: "age" }, value: generator.number() }
@@ -33,7 +33,7 @@ describe("Bundle Size Verification", () => {
         });
 
         it("should add transform only when keys differ", () => {
-            const generator = new ZodSchemaGenerator();
+            const generator = new ZodSerializationCodeGenerator();
             
             // Same keys - no transform needed
             const noTransform = generator.object([
@@ -54,7 +54,7 @@ describe("Bundle Size Verification", () => {
         });
 
         it("should generate compact enum schemas", () => {
-            const generator = new ZodSchemaGenerator();
+            const generator = new ZodSerializationCodeGenerator();
             const schema = generator.enum(["PENDING", "ACTIVE", "COMPLETED"]);
             const expression = schema.toExpression();
 
@@ -62,9 +62,9 @@ describe("Bundle Size Verification", () => {
         });
     });
 
-    describe("YupSchemaGenerator", () => {
+    describe("YupSerializationCodeGenerator", () => {
         it("should generate minimal AST for simple string schema", () => {
-            const generator = new YupSchemaGenerator();
+            const generator = new YupSerializationCodeGenerator();
             const schema = generator.string();
             const expression = schema.toExpression();
 
@@ -72,7 +72,7 @@ describe("Bundle Size Verification", () => {
         });
 
         it("should generate minimal AST for object without key transform", () => {
-            const generator = new YupSchemaGenerator();
+            const generator = new YupSerializationCodeGenerator();
             const schema = generator.object([
                 { key: { raw: "name", parsed: "name" }, value: generator.string() },
                 { key: { raw: "age", parsed: "age" }, value: generator.number() }
@@ -83,7 +83,7 @@ describe("Bundle Size Verification", () => {
         });
 
         it("should generate compact enum schemas", () => {
-            const generator = new YupSchemaGenerator();
+            const generator = new YupSerializationCodeGenerator();
             const schema = generator.enum(["PENDING", "ACTIVE", "COMPLETED"]);
             const expression = schema.toExpression();
 
@@ -93,8 +93,8 @@ describe("Bundle Size Verification", () => {
 
     describe("Comparative Analysis", () => {
         it("both generators should handle same property set", () => {
-            const zodGen = new ZodSchemaGenerator();
-            const yupGen = new YupSchemaGenerator();
+            const zodGen = new ZodSerializationCodeGenerator();
+            const yupGen = new YupSerializationCodeGenerator();
 
             const properties = [
                 { key: { raw: "user_id", parsed: "userId" }, value: zodGen.string() },

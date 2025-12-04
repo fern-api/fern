@@ -11,9 +11,9 @@ import {
     ObjectUtils,
     Property,
     Schema,
-    SchemaGenerator,
     SchemaOptions,
     SchemaUtils,
+    SerializationCodeGenerator,
     SingleUnionType,
     UnionArgs
 } from "./schema-generator/SchemaGenerator";
@@ -22,10 +22,10 @@ import {
 export type { SchemaOptions } from "./schema-generator/SchemaGenerator";
 
 /**
- * Zurg interface extends SchemaGenerator with Zurg-specific literal types.
- * This is for backward compatibility - new code should use SchemaGenerator directly.
+ * Zurg interface extends SerializationCodeGenerator with Zurg-specific literal types.
+ * This is for backward compatibility - new code should use SerializationCodeGenerator directly.
  */
-export interface Zurg extends SchemaGenerator {
+export interface Zurg extends SerializationCodeGenerator {
     // Zurg uses specific literal types for validation result accessors
     MaybeValid: {
         ok: "ok";
@@ -43,7 +43,7 @@ export interface Zurg extends SchemaGenerator {
     };
 }
 
-// Re-export SchemaGenerator types as Zurg namespace for backward compatibility
+// Re-export SerializationCodeGenerator types as Zurg namespace for backward compatibility
 export declare namespace Zurg {
     export type Schema = import("./schema-generator/SchemaGenerator").Schema;
     export type BaseSchema = import("./schema-generator/SchemaGenerator").BaseSchema;

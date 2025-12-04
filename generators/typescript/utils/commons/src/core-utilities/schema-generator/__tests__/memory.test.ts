@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeEach } from "vitest";
-import { ZodSchemaGenerator } from "../ZodSchemaGenerator";
-import { YupSchemaGenerator } from "../YupSchemaGenerator";
+import { ZodSerializationCodeGenerator } from "../ZodSchemaGenerator";
+import { YupSerializationCodeGenerator } from "../YupSchemaGenerator";
 
 /**
  * Memory usage tests for schema generators.
@@ -25,11 +25,11 @@ describe("Memory Usage Tests", () => {
         return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
     }
 
-    describe("ZodSchemaGenerator Memory", () => {
-        let generator: ZodSchemaGenerator;
+    describe("ZodSerializationCodeGenerator Memory", () => {
+        let generator: ZodSerializationCodeGenerator;
 
         beforeEach(() => {
-            generator = new ZodSchemaGenerator();
+            generator = new ZodSerializationCodeGenerator();
         });
 
         it("should not leak memory when generating many schemas", () => {
@@ -106,11 +106,11 @@ describe("Memory Usage Tests", () => {
         });
     });
 
-    describe("YupSchemaGenerator Memory", () => {
-        let generator: YupSchemaGenerator;
+    describe("YupSerializationCodeGenerator Memory", () => {
+        let generator: YupSerializationCodeGenerator;
 
         beforeEach(() => {
-            generator = new YupSchemaGenerator();
+            generator = new YupSerializationCodeGenerator();
         });
 
         it("should not leak memory when generating many schemas", () => {
@@ -143,7 +143,7 @@ describe("Memory Usage Tests", () => {
             const iterations = 500;
 
             // Zod
-            const zodGen = new ZodSchemaGenerator();
+            const zodGen = new ZodSerializationCodeGenerator();
             const zodMemBefore = getMemoryUsage();
             for (let i = 0; i < iterations; i++) {
                 zodGen
@@ -156,7 +156,7 @@ describe("Memory Usage Tests", () => {
             const zodMemUsed = getMemoryUsage() - zodMemBefore;
 
             // Yup
-            const yupGen = new YupSchemaGenerator();
+            const yupGen = new YupSerializationCodeGenerator();
             const yupMemBefore = getMemoryUsage();
             for (let i = 0; i < iterations; i++) {
                 yupGen

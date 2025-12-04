@@ -1,18 +1,18 @@
 import { DeclaredTypeName, Literal, MapType, TypeReference } from "@fern-fern/ir-sdk/api";
-import { Schema, SchemaGenerator, Zurg } from "@fern-typescript/commons";
+import { Schema, SerializationCodeGenerator, Zurg } from "@fern-typescript/commons";
 
 import { AbstractTypeReferenceConverter, ConvertTypeReferenceParams } from "./AbstractTypeReferenceConverter";
 
 export declare namespace TypeReferenceToSchemaConverter {
     export interface Init extends AbstractTypeReferenceConverter.Init {
         getSchemaOfNamedType: (typeName: DeclaredTypeName) => Schema;
-        zurg: Zurg | SchemaGenerator;
+        zurg: Zurg | SerializationCodeGenerator;
     }
 }
 
 export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConverter<Schema> {
     private getSchemaOfNamedType: (typeName: DeclaredTypeName) => Schema;
-    private zurg: Zurg | SchemaGenerator;
+    private zurg: Zurg | SerializationCodeGenerator;
 
     constructor({ getSchemaOfNamedType, zurg, ...superInit }: TypeReferenceToSchemaConverter.Init) {
         super(superInit);

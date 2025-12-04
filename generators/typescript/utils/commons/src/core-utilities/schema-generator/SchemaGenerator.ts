@@ -98,10 +98,10 @@ export interface SingleUnionType {
 }
 
 /**
- * Main interface for schema generators.
- * Implementations generate TypeScript AST for different validation libraries.
+ * Main interface for serialization code generators.
+ * Implementations generate TypeScript AST for different validation libraries (Zod, Yup, etc.).
  */
-export interface SchemaGenerator {
+export interface SerializationCodeGenerator {
     // Object schemas
     object: (properties: Property[]) => ObjectSchema;
     objectWithoutOptionalProperties: (properties: Property[]) => ObjectSchema;
@@ -167,6 +167,6 @@ export interface SchemaGenerator {
 }
 
 /**
- * Type of schema generator implementation
+ * Type of serialization code generator implementation
  */
-export type SchemaGeneratorType = "zurg" | "zod" | "yup";
+export type SerializationCodeGeneratorType = "zurg" | "zod" | "yup";

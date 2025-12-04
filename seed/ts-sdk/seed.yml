@@ -140,6 +140,19 @@ fixtures:
     - outputFolder: multiple-exports
       customConfig:
         generateSubpackageExports: true
+    # Stress test fixtures for serializer comparison
+    - outputFolder: stress-zurg
+      customConfig:
+        serializer: zurg
+    - outputFolder: stress-zod
+      customConfig:
+        serializer: zod
+    - outputFolder: stress-yup
+      customConfig:
+        serializer: yup
+    - outputFolder: stress-none
+      customConfig:
+        serializer: none
   error-property:
     - outputFolder: no-custom-config
       customConfig: null

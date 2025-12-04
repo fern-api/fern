@@ -7,7 +7,7 @@ import {
     ObjectSchema,
     Property,
     Schema,
-    SchemaGenerator,
+    SerializationCodeGenerator,
     UnionArgs
 } from "./SchemaGenerator";
 
@@ -42,7 +42,7 @@ function generateReversePropertyMapping(
 /**
  * Helper to create schema utils for a base schema
  */
-function createSchemaUtils(baseSchema: InternalSchema, generator: YupSchemaGenerator): Schema {
+function createSchemaUtils(baseSchema: InternalSchema, generator: YupSerializationCodeGenerator): Schema {
     return {
         ...baseSchema,
         parse: (raw, opts) =>
@@ -82,7 +82,7 @@ function createSchemaUtils(baseSchema: InternalSchema, generator: YupSchemaGener
     };
 }
 
-function createNullable(schema: InternalSchema, generator: YupSchemaGenerator): Schema {
+function createNullable(schema: InternalSchema, generator: YupSerializationCodeGenerator): Schema {
     const baseSchema: InternalSchema = {
         isOptional: false,
         isNullable: true,
@@ -98,7 +98,7 @@ function createNullable(schema: InternalSchema, generator: YupSchemaGenerator): 
     return createSchemaUtils(baseSchema, generator);
 }
 
-function createOptional(schema: InternalSchema, generator: YupSchemaGenerator): Schema {
+function createOptional(schema: InternalSchema, generator: YupSerializationCodeGenerator): Schema {
     const baseSchema: InternalSchema = {
         isOptional: true,
         isNullable: false,
@@ -114,7 +114,7 @@ function createOptional(schema: InternalSchema, generator: YupSchemaGenerator): 
     return createSchemaUtils(baseSchema, generator);
 }
 
-function createOptionalNullable(schema: InternalSchema, generator: YupSchemaGenerator): Schema {
+function createOptionalNullable(schema: InternalSchema, generator: YupSerializationCodeGenerator): Schema {
     const baseSchema: InternalSchema = {
         isOptional: true,
         isNullable: true,
@@ -140,7 +140,7 @@ function createOptionalNullable(schema: InternalSchema, generator: YupSchemaGene
 function createTransform(
     schema: InternalSchema,
     args: { newShape: ts.TypeNode | undefined; transform: ts.Expression; untransform: ts.Expression },
-    generator: YupSchemaGenerator
+    generator: YupSerializationCodeGenerator
 ): Schema {
     const baseSchema: InternalSchema = {
         isOptional: schema.isOptional,
@@ -156,7 +156,7 @@ function createTransform(
     return createSchemaUtils(baseSchema, generator);
 }
 
-function createObjectLikeUtils(baseSchema: InternalSchema, generator: YupSchemaGenerator): ObjectLikeSchema {
+function createObjectLikeUtils(baseSchema: InternalSchema, generator: YupSerializationCodeGenerator): ObjectLikeSchema {
     return {
         ...createSchemaUtils(baseSchema, generator),
         withParsedProperties: (properties: AdditionalProperty[]) => {
@@ -200,7 +200,7 @@ function createObjectLikeUtils(baseSchema: InternalSchema, generator: YupSchemaG
     };
 }
 
-function createObjectUtils(baseSchema: InternalSchema, generator: YupSchemaGenerator): ObjectSchema {
+function createObjectUtils(baseSchema: InternalSchema, generator: YupSerializationCodeGenerator): ObjectSchema {
     const objectLike = createObjectLikeUtils(baseSchema, generator);
     return {
         ...objectLike,
@@ -228,7 +228,7 @@ function createObjectUtils(baseSchema: InternalSchema, generator: YupSchemaGener
  * Yup-based schema generator.
  * Generates TypeScript AST that uses Yup for validation with bi-directional transforms.
  */
-export class YupSchemaGenerator implements SchemaGenerator {
+export class YupSerializationCodeGenerator implements SerializationCodeGenerator {
     private yupImport: ts.Expression;
 
     constructor() {
