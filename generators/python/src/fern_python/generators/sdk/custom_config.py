@@ -137,6 +137,14 @@ class SDKCustomConfig(pydantic.BaseModel):
             if "custom-pager-name" in obj and "custom_pager_name" not in obj:
                 obj["custom_pager_name"] = obj.pop("custom-pager-name")
 
+            # Propagate client.filename to client.exported_filename if user set filename but not exported_filename.
+            # This ensures that when a custom client filename is specified (e.g., "uipath_client.py"),
+            # the exported filename in __init__.py matches the actual generated file.
+            client_cfg = obj.get("client")
+            if isinstance(client_cfg, dict):
+                if "filename" in client_cfg and "exported_filename" not in client_cfg:
+                    client_cfg["exported_filename"] = client_cfg["filename"]
+
         obj = super().parse_obj(obj)
 
         use_typeddict_requests = obj.use_typeddict_requests or obj.pydantic_config.use_typeddict_requests
