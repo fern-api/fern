@@ -26,7 +26,8 @@ export function constructCasingsGenerator({
     smartCasing: boolean;
 }): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
-        generateName: (name, opts) => {
+        generateName: (inputName, opts) => {
+            const name = preprocessName(inputName);
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
                 unsafeName: unsafeString,
                 safeName: sanitizeName({
@@ -87,7 +88,7 @@ export function constructCasingsGenerator({
             }
 
             return {
-                originalName: name,
+                originalName: inputName,
                 camelCase: generateSafeAndUnsafeString(opts?.casingOverrides?.camel ?? camelCaseName),
                 snakeCase: generateSafeAndUnsafeString(opts?.casingOverrides?.snake ?? snakeCaseName),
                 screamingSnakeCase: generateSafeAndUnsafeString(
@@ -223,3 +224,16 @@ const PLURAL_COMMON_INITIALISMS = new Map<string, string>([
     ["URIS", "URIs"],
     ["URLS", "URLs"]
 ]);
+
+// Preprocessing replacements applied to names before casing transformations.
+// Maps regex patterns to their replacement strings.
+const NAME_PREPROCESSOR_REPLACEMENTS: ReadonlyArray<readonly [RegExp, string]> = [
+	[/\[\]/g, "Array"]  // e.g., Integer[] -> IntegerArray
+];
+
+function preprocessName(name: string): string {
+    return NAME_PREPROCESSOR_REPLACEMENTS.reduce(
+        (result, [pattern, replacement]) => result.replace(pattern, replacement),
+        name
+    );
+}
