@@ -1,4 +1,11 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Add basic preprocessing of names in the IR parser; for starters, `[]` -> `Array`.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-04"
+  version: 3.0.3
 
 - changelogEntry:
     - summary: |
@@ -75,7 +82,7 @@
 
 - changelogEntry:
     - summary: |
-        Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`, 
+        Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`,
         environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
         including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
         Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
