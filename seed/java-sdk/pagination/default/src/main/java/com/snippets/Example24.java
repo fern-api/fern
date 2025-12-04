@@ -1,7 +1,7 @@
 package com.snippets;
 
 import com.seed.pagination.SeedPaginationClient;
-import com.seed.pagination.resources.users.requests.ListWithGlobalConfigRequest;
+import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
 
 public class Example24 {
     public static void main(String[] args) {
@@ -11,7 +11,8 @@ public class Example24 {
                 .build();
 
         client.users()
-                .listWithGlobalConfig(
-                        ListWithGlobalConfigRequest.builder().offset(1).build());
+                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
+                        .startingAfter("starting_after")
+                        .build());
     }
 }

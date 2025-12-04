@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.41.7
+  changelogEntry:
+    - summary: |
+        Fix paginated response handling when response type is optional or nullable.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
 - version: 4.41.6
   changelogEntry:
     - summary: |

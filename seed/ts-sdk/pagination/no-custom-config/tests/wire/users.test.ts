@@ -568,6 +568,35 @@ describe("UsersClient", () => {
         expect(expected.cursor.data).toEqual(nextPage.data);
     });
 
+    test("listUsernamesWithOptionalResponse", async () => {
+        const server = mockServerPool.createServer();
+        const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
+
+        const rawResponseBody = { cursor: { after: "after", data: ["data", "data"] } };
+        server
+            .mockEndpoint({ once: false })
+            .get("/users")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const expected = {
+            cursor: {
+                after: "after",
+                data: ["data", "data"],
+            },
+        };
+        const page = await client.users.listUsernamesWithOptionalResponse({
+            starting_after: "starting_after",
+        });
+
+        expect(expected.cursor.data).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.cursor.data).toEqual(nextPage.data);
+    });
+
     test("listWithGlobalConfig", async () => {
         const server = mockServerPool.createServer();
         const client = new SeedPaginationClient({ maxRetries: 0, token: "test", environment: server.baseUrl });
