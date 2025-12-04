@@ -160,7 +160,7 @@ export declare namespace SdkGenerator {
         formatter: "prettier" | "biome" | "oxfmt";
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
-        serializer: "zurg" | "zod" | "yup" | "ajv" | "none";
+        serializer: "zurg" | "zod" | "none";
     }
 }
 
