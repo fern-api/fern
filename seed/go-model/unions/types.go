@@ -100,6 +100,130 @@ type UnionWithSubTypes struct {
 	FooExtended FooExtended
 }
 
+type UnionWithDuplicativeDiscriminants struct {
+	Type           string
+	FirstItemType  FirstItemType
+	SecondItemType SecondItemType
+}
+
+type FirstItemType struct {
+	Type *string `json:"type,omitempty" url:"type,omitempty"`
+	Name string  `json:"name" url:"name"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (f *FirstItemType) GetType() *string {
+	if f == nil {
+		return nil
+	}
+	return f.Type
+}
+
+func (f *FirstItemType) GetName() string {
+	if f == nil {
+		return ""
+	}
+	return f.Name
+}
+
+func (f *FirstItemType) GetExtraProperties() map[string]any {
+	if f == nil {
+		return nil
+	}
+	return f.extraProperties
+}
+
+func (f *FirstItemType) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler FirstItemType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*f = FirstItemType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *f)
+	if err != nil {
+		return err
+	}
+	f.extraProperties = extraProperties
+	f.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (f *FirstItemType) String() string {
+	if len(f.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(f.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(f); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", f)
+}
+
+type SecondItemType struct {
+	Type  *string `json:"type,omitempty" url:"type,omitempty"`
+	Title string  `json:"title" url:"title"`
+
+	extraProperties map[string]any
+	rawJSON         json.RawMessage
+}
+
+func (s *SecondItemType) GetType() *string {
+	if s == nil {
+		return nil
+	}
+	return s.Type
+}
+
+func (s *SecondItemType) GetTitle() string {
+	if s == nil {
+		return ""
+	}
+	return s.Title
+}
+
+func (s *SecondItemType) GetExtraProperties() map[string]any {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SecondItemType) UnmarshalJSON(
+	data []byte,
+) error {
+	type unmarshaler SecondItemType
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SecondItemType(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SecondItemType) String() string {
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
 type Foo struct {
 	Name string `json:"name" url:"name"`
 

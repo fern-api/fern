@@ -1,12 +1,19 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-
 - changelogEntry:
     - summary: |
-        Extend `--fernignore` CLI option to work with local generation (`--local` flag). Previously, the `--fernignore` option only worked with remote generation. Now users can provide a custom `.fernignore` file when running local generation, which will replace the existing one during generation.
+        Extend `--fernignore` CLI option to work with local generation (`--local` flag).
       type: feat
   irVersion: 62
   createdAt: "2025-12-03"
   version: 3.1.0
+
+- changelogEntry:
+    - summary: |
+        Fix `substitute-env-vars` not applying to arrays in docs configuration. The `replaceEnvVariables` function now recursively processes array elements, enabling environment variable substitution in arrays of strings, arrays of objects, and deeply nested array structures (such as navigation items, navbar links, footer links, redirects, etc.).
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.1
 
 - changelogEntry:
     - summary: |

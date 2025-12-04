@@ -5,7 +5,7 @@
 //!
 //! ## Type Categories
 //!
-//! - **Request/Response Types**: 40 types for API operations
+//! - **Request/Response Types**: 41 types for API operations
 //! - **Model Types**: 28 types for data representation
 
 pub mod username_cursor;
@@ -75,6 +75,7 @@ pub mod users_list_with_offset_pagination_has_next_page_query_request;
 pub mod users_list_with_extended_results_query_request;
 pub mod users_list_with_extended_results_and_optional_data_query_request;
 pub mod users_list_usernames_query_request;
+pub mod list_usernames_with_optional_response_query_request;
 pub mod users_list_with_global_config_query_request;
 
 pub use username_cursor::UsernameCursor;
@@ -144,5 +145,6 @@ pub use users_list_with_offset_pagination_has_next_page_query_request::UsersList
 pub use users_list_with_extended_results_query_request::UsersListWithExtendedResultsQueryRequest;
 pub use users_list_with_extended_results_and_optional_data_query_request::UsersListWithExtendedResultsAndOptionalDataQueryRequest;
 pub use users_list_usernames_query_request::UsersListUsernamesQueryRequest;
+pub use list_usernames_with_optional_response_query_request::ListUsernamesWithOptionalResponseQueryRequest;
 pub use users_list_with_global_config_query_request::UsersListWithGlobalConfigQueryRequest;
 

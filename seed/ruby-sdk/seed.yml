@@ -177,4 +177,8 @@ features:
 scripts:
   - image: ruby:3.3
     commands:
-      - bundle install && bundle exec rake test && bundle exec rubocop
+      build:
+        - bundle install
+        - bundle exec rubocop
+      test:
+        - bundle exec rake test

@@ -28,10 +28,10 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedErrorProperty
+        run: dotnet restore src/SeedErrorProperty/SeedErrorProperty.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedErrorProperty -c Release --no-restore
+        run: dotnet build src/SeedErrorProperty/SeedErrorProperty.csproj -c Release --no-restore
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -53,13 +53,13 @@ jobs:
           dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src
+        run: dotnet restore src/SeedErrorProperty.Test/SeedErrorProperty.Test.csproj
 
       - name: Build Release
-        run: dotnet build src -c Release --no-restore
+        run: dotnet build src/SeedErrorProperty.Test/SeedErrorProperty.Test.csproj -c Release --no-restore
 
       - name: Run Tests
-        run: dotnet test src -c Release --no-build --no-restore
+        run: dotnet test src/SeedErrorProperty.Test/SeedErrorProperty.Test.csproj -c Release --no-build --no-restore
 
 
   publish:
@@ -83,15 +83,15 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedErrorProperty
+        run: dotnet restore src/SeedErrorProperty/SeedErrorProperty.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedErrorProperty -c Release --no-restore
+        run: dotnet build src/SeedErrorProperty/SeedErrorProperty.csproj -c Release --no-restore
 
       - name: Publish
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
-          dotnet pack src/SeedErrorProperty -c Release --no-build --no-restore
+          dotnet pack src/SeedErrorProperty/SeedErrorProperty.csproj -c Release --no-build --no-restore
           dotnet nuget push src/SeedErrorProperty/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 

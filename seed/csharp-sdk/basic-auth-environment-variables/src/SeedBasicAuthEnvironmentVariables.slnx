@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="SeedBasicAuthEnvironmentVariables.Test/SeedBasicAuthEnvironmentVariables.Test.csproj" />
-  <Project Path="SeedBasicAuthEnvironmentVariables/SeedBasicAuthEnvironmentVariables.csproj" />
-</Solution>

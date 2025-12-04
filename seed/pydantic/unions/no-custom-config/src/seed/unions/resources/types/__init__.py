@@ -3,8 +3,10 @@
 # isort: skip_file
 
 from .bar import Bar
+from .first_item_type import FirstItemType
 from .foo import Foo
 from .foo_extended import FooExtended
+from .second_item_type import SecondItemType
 from .union import Union, Union_Bar, Union_Foo
 from .union_with_base_properties import (
     UnionWithBaseProperties,
@@ -24,6 +26,11 @@ from .union_with_duplicate_types import (
     UnionWithDuplicateTypes,
     UnionWithDuplicateTypes_Foo1,
     UnionWithDuplicateTypes_Foo2,
+)
+from .union_with_duplicative_discriminants import (
+    UnionWithDuplicativeDiscriminants,
+    UnionWithDuplicativeDiscriminants_FirstItemType,
+    UnionWithDuplicativeDiscriminants_SecondItemType,
 )
 from .union_with_literal import UnionWithLiteral, UnionWithLiteral_Fern
 from .union_with_multiple_no_properties import (
@@ -54,8 +61,10 @@ from .union_without_key import UnionWithoutKey, UnionWithoutKey_Bar, UnionWithou
 
 __all__ = [
     "Bar",
+    "FirstItemType",
     "Foo",
     "FooExtended",
+    "SecondItemType",
     "Union",
     "UnionWithBaseProperties",
     "UnionWithBaseProperties_Foo",
@@ -72,6 +81,9 @@ __all__ = [
     "UnionWithDuplicateTypes",
     "UnionWithDuplicateTypes_Foo1",
     "UnionWithDuplicateTypes_Foo2",
+    "UnionWithDuplicativeDiscriminants",
+    "UnionWithDuplicativeDiscriminants_FirstItemType",
+    "UnionWithDuplicativeDiscriminants_SecondItemType",
     "UnionWithLiteral",
     "UnionWithLiteral_Fern",
     "UnionWithMultipleNoProperties",

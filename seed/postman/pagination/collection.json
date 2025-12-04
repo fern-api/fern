@@ -2127,6 +2127,80 @@
         },
         {
           "_type": "endpoint",
+          "name": "List Usernames With Optional Response",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/users?starting_after=starting_after",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "starting_after",
+                  "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+                  "value": "starting_after"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/users?starting_after=starting_after",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "users"
+                  ],
+                  "query": [
+                    {
+                      "key": "starting_after",
+                      "description": "The cursor used for pagination in order to fetch\nthe next page of results.",
+                      "value": "starting_after"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"cursor\": {\n        \"after\": \"after\",\n        \"data\": [\n            \"data\",\n            \"data\"\n        ]\n    }\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
           "name": "List With Global Config",
           "request": {
             "description": null,
