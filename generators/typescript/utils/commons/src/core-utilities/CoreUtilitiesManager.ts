@@ -20,6 +20,7 @@ import { PaginationImpl } from "./Pagination";
 import { RuntimeImpl } from "./Runtime";
 import { AjvSerializationCodeGenerator } from "./schema-generator/AjvSchemaGenerator";
 import { SerializationCodeGenerator } from "./schema-generator/SchemaGenerator";
+import { YupSerializationCodeGenerator } from "./schema-generator/YupSchemaGenerator";
 import { ZodSerializationCodeGenerator } from "./schema-generator/ZodSchemaGenerator";
 import { StreamImpl } from "./Stream";
 import { UrlUtilsImpl } from "./UrlUtils";
@@ -31,10 +32,11 @@ import { ZurgImpl } from "./Zurg";
  * Serializer type options.
  * - "zurg": Legacy custom serialization
  * - "zod": Zod-based serialization
+ * - "yup": Yup-based serialization
  * - "ajv": Ajv (JSON Schema) based serialization
  * - "none": No serialization layer
  */
-export type SerializerType = "zurg" | "zod" | "ajv" | "none";
+export type SerializerType = "zurg" | "zod" | "yup" | "ajv" | "none";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -114,6 +116,8 @@ export class CoreUtilitiesManager {
         switch (this.serializer) {
             case "zod":
                 return new ZodSerializationCodeGenerator();
+            case "yup":
+                return new YupSerializationCodeGenerator();
             case "ajv":
                 return new AjvSerializationCodeGenerator();
             case "zurg":
@@ -210,6 +214,9 @@ export class CoreUtilitiesManager {
         switch (this.serializer) {
             case "zod":
                 dependencyManager.addDependency("zod", "^3.23.8");
+                break;
+            case "yup":
+                dependencyManager.addDependency("yup", "^1.4.0");
                 break;
             case "ajv":
                 dependencyManager.addDependency("ajv", "^8.17.1");
@@ -340,6 +347,8 @@ export class CoreUtilitiesManager {
         switch (this.serializer) {
             case "zod":
                 return this.getZodRuntimeFiles();
+            case "yup":
+                return this.getYupRuntimeFiles();
             case "ajv":
                 return this.getAjvRuntimeFiles();
             default:
@@ -609,6 +618,14 @@ export function getSchemaUtils<T extends z.ZodTypeAny>(schema: T): Schema<z.inpu
 `
             }
         ];
+    }
+
+    /**
+     * Generate Yup-based runtime files (placeholder - uses Zod for now).
+     */
+    private getYupRuntimeFiles(): Array<{ relativePath: string; content: string }> {
+        // TODO: Implement Yup-specific runtime
+        return this.getZodRuntimeFiles();
     }
 
     /**

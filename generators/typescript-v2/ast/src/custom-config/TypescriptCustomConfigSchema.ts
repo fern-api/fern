@@ -51,7 +51,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     inlinePathParameters: z.optional(z.boolean()),
     namespaceExport: z.optional(z.string()),
     noSerdeLayer: z.optional(z.boolean()),
-    serializer: z.optional(z.enum(["zurg", "zod", "ajv", "none"])),
+    serializer: z.optional(z.enum(["zurg", "zod", "yup", "ajv", "none"])),
     private: z.optional(z.boolean()),
     requireDefaultEnvironment: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),
@@ -76,7 +76,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     _fernLicenseName: z.optional(z.string()),
 
     // Customer-facing schema export configuration
-    exportSchemas: z.optional(z.union([z.enum(["zod"]), z.literal(false)]))
+    exportSchemas: z.optional(z.union([z.enum(["zod", "yup"]), z.literal(false)]))
 });
 
 export type TypescriptCustomConfigSchema = z.infer<typeof TypescriptCustomConfigSchema>;
