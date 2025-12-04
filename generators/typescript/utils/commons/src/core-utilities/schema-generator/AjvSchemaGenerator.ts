@@ -417,7 +417,7 @@ export class AjvSerializationCodeGenerator implements SerializationCodeGenerator
             untransformExpr: ts.factory.createArrowFunction(
                 undefined,
                 undefined,
-                [ts.factory.createParameterDeclaration(undefined, undefined, "s", undefined, undefined, undefined)],
+                [ts.factory.createParameterDeclaration(undefined, undefined, undefined, "s")],
                 undefined,
                 ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                 ts.factory.createCallExpression(
@@ -526,7 +526,7 @@ export class AjvSerializationCodeGenerator implements SerializationCodeGenerator
             untransformExpr: ts.factory.createArrowFunction(
                 undefined,
                 undefined,
-                [ts.factory.createParameterDeclaration(undefined, undefined, "d", undefined, undefined, undefined)],
+                [ts.factory.createParameterDeclaration(undefined, undefined, undefined, "d")],
                 undefined,
                 ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
                 ts.factory.createCallExpression(
