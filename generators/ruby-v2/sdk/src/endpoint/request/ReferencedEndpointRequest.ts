@@ -43,8 +43,8 @@ export class ReferencedEndpointRequest extends EndpointRequest {
             requestBodyReference: ruby.codeblock((writer) => {
                 if (this.requestBodyShape.type === "named") {
                     const typeDeclaration = this.context.getTypeDeclarationOrThrow(this.requestBodyShape.typeId);
-                    // Enums are modules, not classes, so they don't have a .new() method
-                    if (typeDeclaration.shape.type === "enum") {
+                    // Enums and aliases are modules, not classes, so they don't have a .new() method
+                    if (typeDeclaration.shape.type === "enum" || typeDeclaration.shape.type === "alias") {
                         writer.write(`params`);
                     } else {
                         writer.write(

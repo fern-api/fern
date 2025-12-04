@@ -161,14 +161,12 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             writer.writeLine(`.new(`);
             writer.indent();
             writer.writeLine(`auth_client: auth_client,`);
-            writer.write(`options: { `);
-            for (let i = 0; i < inferredParams.length; i++) {
-                const param = inferredParams[i];
+            writer.write(`options: { base_url: base_url`);
+            for (const param of inferredParams) {
                 if (param == null) {
                     continue;
                 }
-                const isLast = i === inferredParams.length - 1;
-                writer.write(`${param.snakeName}: ${param.snakeName}${isLast ? "" : ", "}`);
+                writer.write(`, ${param.snakeName}: ${param.snakeName}`);
             }
             writer.writeLine(` }`);
             writer.dedent();

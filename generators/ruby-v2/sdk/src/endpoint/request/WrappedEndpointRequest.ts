@@ -101,6 +101,11 @@ export class WrappedEndpointRequest extends EndpointRequest {
             const bodyTypeReference = this.context.getReferenceToTypeId(
                 this.endpoint.requestBody.requestBodyType.typeId
             );
+            const typeDeclaration = this.context.getTypeDeclarationOrThrow(
+                this.endpoint.requestBody.requestBodyType.typeId
+            );
+            // Enums and aliases are modules, not classes, so they don't have a .new() method
+            const isModule = typeDeclaration.shape.type === "enum" || typeDeclaration.shape.type === "alias";
 
             if (this.hasPathParameters()) {
                 return {
@@ -109,15 +114,23 @@ export class WrappedEndpointRequest extends EndpointRequest {
                         writer.writeLine(`${BODY_BAG_NAME} = params.except(*${PATH_PARAM_NAMES_VN})`);
                     }),
                     requestBodyReference: ruby.codeblock((writer) => {
-                        writer.writeNode(bodyTypeReference);
-                        writer.write(`.new(${bodyParamsVar}).to_h`);
+                        if (isModule) {
+                            writer.write(bodyParamsVar);
+                        } else {
+                            writer.writeNode(bodyTypeReference);
+                            writer.write(`.new(${bodyParamsVar}).to_h`);
+                        }
                     })
                 };
             }
             return {
                 requestBodyReference: ruby.codeblock((writer) => {
-                    writer.writeNode(bodyTypeReference);
-                    writer.write(`.new(${bodyParamsVar}).to_h`);
+                    if (isModule) {
+                        writer.write(bodyParamsVar);
+                    } else {
+                        writer.writeNode(bodyTypeReference);
+                        writer.write(`.new(${bodyParamsVar}).to_h`);
+                    }
                 })
             };
         }
