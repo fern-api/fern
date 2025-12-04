@@ -86,9 +86,6 @@ fixtures:
     - outputFolder: zod-export
       customConfig:
         exportSchemas: zod
-    - outputFolder: yup-export
-      customConfig:
-        exportSchemas: yup
     - outputFolder: retain-original-casing
       customConfig:
         retainOriginalCasing: true
@@ -147,12 +144,6 @@ fixtures:
     - outputFolder: stress-zod
       customConfig:
         serializer: zod
-    - outputFolder: stress-yup
-      customConfig:
-        serializer: yup
-    - outputFolder: stress-ajv
-      customConfig:
-        serializer: ajv
     - outputFolder: stress-none
       customConfig:
         serializer: none

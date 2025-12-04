@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
 import { ZodSerializationCodeGenerator } from "../ZodSchemaGenerator";
-import { YupSerializationCodeGenerator } from "../YupSchemaGenerator";
 
 /**
  * Bundle size verification tests.
@@ -61,69 +60,13 @@ describe("Bundle Size Verification", () => {
             expect(expression.kind).toBeDefined();
         });
     });
-
-    describe("YupSerializationCodeGenerator", () => {
-        it("should generate minimal AST for simple string schema", () => {
-            const generator = new YupSerializationCodeGenerator();
-            const schema = generator.string();
-            const expression = schema.toExpression();
-
-            expect(expression.kind).toBeDefined();
-        });
-
-        it("should generate minimal AST for object without key transform", () => {
-            const generator = new YupSerializationCodeGenerator();
-            const schema = generator.object([
-                { key: { raw: "name", parsed: "name" }, value: generator.string() },
-                { key: { raw: "age", parsed: "age" }, value: generator.number() }
-            ]);
-            const expression = schema.toExpression();
-
-            expect(expression.kind).toBeDefined();
-        });
-
-        it("should generate compact enum schemas", () => {
-            const generator = new YupSerializationCodeGenerator();
-            const schema = generator.enum(["PENDING", "ACTIVE", "COMPLETED"]);
-            const expression = schema.toExpression();
-
-            expect(expression.kind).toBeDefined();
-        });
-    });
-
-    describe("Comparative Analysis", () => {
-        it("both generators should handle same property set", () => {
-            const zodGen = new ZodSerializationCodeGenerator();
-            const yupGen = new YupSerializationCodeGenerator();
-
-            const properties = [
-                { key: { raw: "user_id", parsed: "userId" }, value: zodGen.string() },
-                { key: { raw: "display_name", parsed: "displayName" }, value: zodGen.string() },
-                { key: { raw: "is_active", parsed: "isActive" }, value: zodGen.boolean() }
-            ];
-
-            const yupProperties = [
-                { key: { raw: "user_id", parsed: "userId" }, value: yupGen.string() },
-                { key: { raw: "display_name", parsed: "displayName" }, value: yupGen.string() },
-                { key: { raw: "is_active", parsed: "isActive" }, value: yupGen.boolean() }
-            ];
-
-            const zodSchema = zodGen.object(properties);
-            const yupSchema = yupGen.object(yupProperties);
-
-            expect(zodSchema.toExpression()).toBeDefined();
-            expect(yupSchema.toExpression()).toBeDefined();
-        });
-    });
 });
 
 /**
  * Bundle size targets (for reference when measuring actual builds):
  * 
  * - Zod base: ~14KB minified+gzipped
- * - Yup base: ~12KB minified+gzipped  
  * - Custom zurg: ~100KB+ (60+ files)
  * 
  * Target: Generated SDK with validation should be <20KB total serde code
  */
-

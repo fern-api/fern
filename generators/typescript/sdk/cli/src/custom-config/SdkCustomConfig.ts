@@ -1,7 +1,7 @@
 // this is the parsed config shape. to view the allowed options for generators.yml,
 // see SdkCustomConfigSchema.ts
 
-export type SerializerType = "zurg" | "zod" | "yup" | "ajv" | "none";
+export type SerializerType = "zurg" | "zod" | "none";
 
 export interface SdkCustomConfig {
     useBrandedStringAliases: boolean;
@@ -64,11 +64,11 @@ export interface SdkCustomConfig {
     generateSubpackageExports: boolean | undefined;
     offsetSemantics: "item-index" | "page-index";
 
-    // Serializer configuration: "zurg" (legacy), "zod", "yup", "ajv", or "none" (disabled)
+    // Serializer configuration: "zurg" (legacy), "zod", or "none" (disabled)
     serializer: SerializerType | undefined;
 
     // Customer-facing schema export config
-    exportSchemas: "zod" | "yup" | false | undefined;
+    exportSchemas: "zod" | false | undefined;
 }
 
 /**
