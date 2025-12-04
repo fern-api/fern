@@ -56,6 +56,7 @@ export class LocalScriptRunner extends ScriptRunner {
             const buildCommands = getCommandsForPhase(script.commands, "build");
             if (buildCommands.length > 0) {
                 anyBuildCommands = true;
+                taskContext.logger.info(`Running build scripts for ${id}...`);
                 const result = await this.runScript({
                     taskContext,
                     outputDir,
@@ -64,6 +65,7 @@ export class LocalScriptRunner extends ScriptRunner {
                 });
                 if (result.type === "failure") {
                     buildTimeMs = Date.now() - buildStartTime;
+                    taskContext.logger.info(`Build scripts failed for ${id}`);
                     return {
                         type: "failure",
                         phase: "build",
@@ -71,6 +73,7 @@ export class LocalScriptRunner extends ScriptRunner {
                         buildTimeMs
                     };
                 }
+                taskContext.logger.info(`Build scripts completed for ${id}`);
             }
         }
         buildTimeMs = anyBuildCommands ? Date.now() - buildStartTime : undefined;
@@ -84,6 +87,7 @@ export class LocalScriptRunner extends ScriptRunner {
             const testCommands = getCommandsForPhase(script.commands, "test");
             if (testCommands.length > 0) {
                 anyTestCommands = true;
+                taskContext.logger.info(`Running test scripts for ${id}...`);
                 const result = await this.runScript({
                     taskContext,
                     outputDir,
@@ -92,6 +96,7 @@ export class LocalScriptRunner extends ScriptRunner {
                 });
                 if (result.type === "failure") {
                     testTimeMs = Date.now() - testStartTime;
+                    taskContext.logger.info(`Test scripts failed for ${id}`);
                     return {
                         type: "failure",
                         phase: "test",
@@ -100,6 +105,7 @@ export class LocalScriptRunner extends ScriptRunner {
                         testTimeMs
                     };
                 }
+                taskContext.logger.info(`Test scripts completed for ${id}`);
             }
         }
         testTimeMs = anyTestCommands ? Date.now() - testStartTime : undefined;
