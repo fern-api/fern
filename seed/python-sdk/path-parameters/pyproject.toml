@@ -1,5 +1,6 @@
 [project]
 name = "fern_path-parameters"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_path-parameters"

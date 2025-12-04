@@ -1,5 +1,6 @@
 [project]
 name = "fern_oauth-client-credentials-nested-root"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_oauth-client-credentials-nested-root"
