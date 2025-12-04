@@ -1,3 +1,11 @@
+- version: 3.21.1
+  changelogEntry:
+    - summary: |
+        Fix how the query string mapper handles `OptionalNullable` values.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
 - version: 3.21.0
   changelogEntry:
     - summary: |
