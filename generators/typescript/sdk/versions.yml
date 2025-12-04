@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.35.9
+  changelogEntry:
+    - summary: |
+        Fix generated error classes to correctly set the prototype chain, capture stack traces, and set the error name so `instanceof` checks behave as expected.
+        Error classes now use `new.target.prototype` instead of the static class name for `Object.setPrototypeOf`,
+        conditionally call `Error.captureStackTrace` for V8 environments, and set `this.name` dynamically.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 62
+
 - version: 3.35.8
   changelogEntry:
     - summary: |
