@@ -46,7 +46,6 @@ export class GeneratedUnionTypeImpl<Context extends BaseContext>
                 new ParsedSingleUnionTypeForUnion({
                     singleUnionType,
                     union: this.shape,
-                    unionTypeName: this.typeName,
                     includeUtilsOnUnionMembers,
                     includeSerdeLayer: this.includeSerdeLayer,
                     retainOriginalCasing: this.retainOriginalCasing,
