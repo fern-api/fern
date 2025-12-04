@@ -11,7 +11,7 @@ from typing import Any, Dict, Optional
 import pytest
 import requests
 
-from seed.matryoshka.doll.structure.client import SeedExhaustive
+from seed.matryoshka.doll.structure.client import Matryoshka
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -48,7 +48,7 @@ def wiremock_container():
     subprocess.run(["docker", "compose", "-f", compose_file, "down", "-v"], check=False, capture_output=True)
 
 
-def get_client(test_id: str) -> SeedExhaustive:
+def get_client(test_id: str) -> Matryoshka:
     """
     Creates a configured client instance for wire tests.
 
@@ -58,7 +58,7 @@ def get_client(test_id: str) -> SeedExhaustive:
     Returns:
         A configured client instance with all required auth parameters.
     """
-    return SeedExhaustive(
+    return Matryoshka(
         base_url="http://localhost:8080",
         headers={"X-Test-Id": test_id},
         token="test_token",

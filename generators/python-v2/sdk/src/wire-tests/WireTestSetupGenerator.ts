@@ -207,9 +207,15 @@ def verify_request_count(
     }
 
     /**
-     * Gets the client class name based on organization and workspace name.
+     * Gets the client class name based on custom config or organization and workspace name.
      */
     private getClientClassName(): string {
+        // Use custom client class name if specified
+        if (this.context.customConfig.client?.class_name) {
+            return this.context.customConfig.client.class_name;
+        }
+
+        // Otherwise, generate from organization and workspace name
         const orgName = this.context.config.organization;
         const workspaceName = this.context.config.workspaceName;
 

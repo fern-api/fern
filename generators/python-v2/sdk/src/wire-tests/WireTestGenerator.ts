@@ -446,6 +446,12 @@ export class WireTestGenerator {
     }
 
     private getClientClassName(): string {
+        // Use custom client class name if specified
+        if (this.context.customConfig.client?.class_name) {
+            return this.context.customConfig.client.class_name;
+        }
+
+        // Otherwise, generate from organization and workspace name
         // The client class name follows the pattern: OrganizationWorkspace
         // For seed_exhaustive, it would be SeedExhaustive
         const orgName = this.context.config.organization;

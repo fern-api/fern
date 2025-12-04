@@ -34,9 +34,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```python
-from seed import SeedExhaustive
+from seed import Matryoshka
 
-client = SeedExhaustive(
+client = Matryoshka(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
@@ -52,9 +52,9 @@ The SDK also exports an `async` client so that you can make non-blocking calls t
 ```python
 import asyncio
 
-from seed import AsyncSeedExhaustive
+from seed import AsyncMatryoshka
 
-client = AsyncSeedExhaustive(
+client = AsyncMatryoshka(
     token="YOUR_TOKEN",
     base_url="https://yourhost.com/path/to/api",
 )
@@ -92,9 +92,9 @@ The SDK provides access to raw response data, including headers, through the `.w
 The `.with_raw_response` property returns a "raw" client that can be used to access the `.headers` and `.data` attributes.
 
 ```python
-from seed import SeedExhaustive
+from seed import Matryoshka
 
-client = SeedExhaustive(
+client = Matryoshka(
     ...,
 )
 response = client.endpoints.container.with_raw_response.get_and_return_list_of_primitives(
@@ -130,9 +130,9 @@ The SDK defaults to a 60 second timeout. You can configure this with a timeout o
 
 ```python
 
-from seed import SeedExhaustive
+from seed import Matryoshka
 
-client = SeedExhaustive(
+client = Matryoshka(
     ...,
     timeout=20.0,
 )
@@ -151,9 +151,9 @@ and transports.
 
 ```python
 import httpx
-from seed import SeedExhaustive
+from seed import Matryoshka
 
-client = SeedExhaustive(
+client = Matryoshka(
     ...,
     httpx_client=httpx.Client(
         proxy="http://my.test.proxy.example.com",
