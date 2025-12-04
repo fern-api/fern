@@ -232,7 +232,7 @@ export class CoreUtilitiesManager {
         pathToSrc: AbsoluteFilePath;
         pathToRoot: AbsoluteFilePath;
     }): Promise<void> {
-        const files = new Set(
+        const allFiles = new Set(
             await Promise.all(
                 Object.entries(this.referencedCoreUtilities).map(async ([name, utility]) => {
                     const { patterns, ignore } = utility.getFilesPatterns({
@@ -251,9 +251,15 @@ export class CoreUtilitiesManager {
             ).then((results) => results.flat())
         );
 
+        // For non-Zurg serializers, filter out schema files - they'll be generated instead
+        const shouldGenerateSchemas = this.serializer !== "zurg" && this.serializer !== "none";
+        const files = shouldGenerateSchemas
+            ? Array.from(allFiles).filter((f) => !f.includes("/schemas/"))
+            : Array.from(allFiles);
+
         // Copy each file to the destination preserving the directory structure
         await Promise.all(
-            Array.from(files).map(async (file) => {
+            files.map(async (file) => {
                 // If the client specified a package path, we need to copy the file to the correct location
                 let destinationFile = file;
                 const isCustomPackagePath = this.relativePackagePath !== DEFAULT_PACKAGE_PATH;
@@ -300,6 +306,11 @@ export class CoreUtilitiesManager {
             })
         );
 
+        // Generate schema runtime files for non-Zurg serializers
+        if (shouldGenerateSchemas) {
+            await this.generateSchemaRuntimeFiles(pathToSrc);
+        }
+
         // Handle auth overrides
         if (this.referencedCoreUtilities["auth"] != null) {
             await Promise.all(
@@ -309,6 +320,320 @@ export class CoreUtilitiesManager {
                 })
             );
         }
+    }
+
+    /**
+     * Generate schema runtime files for non-Zurg serializers.
+     * These files provide the same API as Zurg but use the underlying validation library.
+     */
+    private async generateSchemaRuntimeFiles(pathToSrc: AbsoluteFilePath): Promise<void> {
+        const schemasDir = path.join(pathToSrc, "core", "schemas");
+        await mkdir(schemasDir, { recursive: true });
+
+        const runtimeFiles = this.getSchemaRuntimeFiles();
+        await Promise.all(
+            runtimeFiles.map(async ({ relativePath, content }) => {
+                const filePath = path.join(schemasDir, relativePath);
+                await mkdir(path.dirname(filePath), { recursive: true });
+                await writeFile(filePath, content);
+            })
+        );
+    }
+
+    /**
+     * Get the runtime files for the current serializer.
+     */
+    private getSchemaRuntimeFiles(): Array<{ relativePath: string; content: string }> {
+        switch (this.serializer) {
+            case "zod":
+                return this.getZodRuntimeFiles();
+            case "yup":
+                return this.getYupRuntimeFiles();
+            case "ajv":
+                return this.getAjvRuntimeFiles();
+            default:
+                return [];
+        }
+    }
+
+    /**
+     * Generate Zod-based runtime files.
+     */
+    private getZodRuntimeFiles(): Array<{ relativePath: string; content: string }> {
+        return [
+            {
+                relativePath: "index.ts",
+                content: `export * from "./Schema.js";
+export * from "./builders/index.js";
+`
+            },
+            {
+                relativePath: "Schema.ts",
+                content: `import { z } from "zod";
+
+export type Schema<Raw, Parsed> = {
+    parse: (raw: unknown) => Parsed;
+    json: (parsed: Parsed) => Raw;
+    parseOrThrow: (raw: unknown) => Parsed;
+    jsonOrThrow: (parsed: Parsed) => Raw;
+    optional: () => Schema<Raw | null | undefined, Parsed | undefined>;
+};
+
+export type ObjectSchema<Raw, Parsed> = Schema<Raw, Parsed> & {
+    extend: <R2, P2>(extension: ObjectSchema<R2, P2>) => ObjectSchema<Raw & R2, Parsed & P2>;
+    passthrough: () => ObjectSchema<Raw, Parsed>;
+};
+`
+            },
+            {
+                relativePath: "builders/index.ts",
+                content: `export * from "./object/index.js";
+export * from "./primitives/index.js";
+export * from "./enum/index.js";
+export * from "./list/index.js";
+export * from "./record/index.js";
+export * from "./date/index.js";
+export * from "./lazy/index.js";
+export * from "./literals/index.js";
+export * from "./set/index.js";
+export * from "./undiscriminated-union/index.js";
+export * from "./union/index.js";
+export * from "./schema-utils/index.js";
+`
+            },
+            {
+                relativePath: "builders/object/index.ts",
+                content: `export { object, objectWithoutOptionalProperties } from "./object.js";
+export { property } from "./property.js";
+`
+            },
+            {
+                relativePath: "builders/object/object.ts",
+                content: `import { z } from "zod";
+import type { ObjectSchema } from "../../Schema.js";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+
+export function object<T extends Record<string, z.ZodTypeAny>>(schema: T): ObjectSchema<z.input<z.ZodObject<T>>, z.output<z.ZodObject<T>>> {
+    const zodSchema = z.object(schema);
+    return {
+        ...getSchemaUtils(zodSchema),
+        extend: (extension) => object({ ...schema, ...(extension as any) }),
+        passthrough: () => {
+            const passSchema = zodSchema.passthrough();
+            return { ...getSchemaUtils(passSchema), extend: (ext) => object({ ...schema, ...(ext as any) }), passthrough: () => object(schema) as any };
+        }
+    } as any;
+}
+
+export const objectWithoutOptionalProperties = object;
+`
+            },
+            {
+                relativePath: "builders/object/property.ts",
+                content: `import { z } from "zod";
+
+export function property<T extends z.ZodTypeAny>(rawKey: string, schema: T): T {
+    // In Zod, we handle key mapping differently - return schema as-is
+    return schema;
+}
+`
+            },
+            {
+                relativePath: "builders/primitives/index.ts",
+                content: `export { string } from "./string.js";
+export { number } from "./number.js";
+export { boolean } from "./boolean.js";
+export { any } from "./any.js";
+export { unknown } from "./unknown.js";
+`
+            },
+            {
+                relativePath: "builders/primitives/string.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const string = () => getSchemaUtils(z.string());
+`
+            },
+            {
+                relativePath: "builders/primitives/number.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const number = () => getSchemaUtils(z.number());
+`
+            },
+            {
+                relativePath: "builders/primitives/boolean.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const boolean = () => getSchemaUtils(z.boolean());
+`
+            },
+            {
+                relativePath: "builders/primitives/any.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const any = () => getSchemaUtils(z.any());
+`
+            },
+            {
+                relativePath: "builders/primitives/unknown.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const unknown = () => getSchemaUtils(z.unknown());
+`
+            },
+            {
+                relativePath: "builders/enum/index.ts",
+                content: `export { enum_ } from "./enum.js";
+`
+            },
+            {
+                relativePath: "builders/enum/enum.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const enum_ = <T extends string>(values: T[]) => getSchemaUtils(z.enum(values as [T, ...T[]]));
+`
+            },
+            {
+                relativePath: "builders/list/index.ts",
+                content: `export { list } from "./list.js";
+`
+            },
+            {
+                relativePath: "builders/list/list.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const list = <T extends z.ZodTypeAny>(itemSchema: T) => getSchemaUtils(z.array(itemSchema));
+`
+            },
+            {
+                relativePath: "builders/record/index.ts",
+                content: `export { record } from "./record.js";
+`
+            },
+            {
+                relativePath: "builders/record/record.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const record = <K extends z.ZodTypeAny, V extends z.ZodTypeAny>(keySchema: K, valueSchema: V) => getSchemaUtils(z.record(keySchema, valueSchema));
+`
+            },
+            {
+                relativePath: "builders/date/index.ts",
+                content: `export { date } from "./date.js";
+`
+            },
+            {
+                relativePath: "builders/date/date.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const date = () => getSchemaUtils(z.string().transform((s) => new Date(s)));
+`
+            },
+            {
+                relativePath: "builders/lazy/index.ts",
+                content: `export { lazy, lazyObject } from "./lazy.js";
+`
+            },
+            {
+                relativePath: "builders/lazy/lazy.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const lazy = <T extends z.ZodTypeAny>(getter: () => T) => getSchemaUtils(z.lazy(getter));
+export const lazyObject = lazy;
+`
+            },
+            {
+                relativePath: "builders/literals/index.ts",
+                content: `export { stringLiteral, booleanLiteral } from "./literals.js";
+`
+            },
+            {
+                relativePath: "builders/literals/literals.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const stringLiteral = <T extends string>(value: T) => getSchemaUtils(z.literal(value));
+export const booleanLiteral = <T extends boolean>(value: T) => getSchemaUtils(z.literal(value));
+`
+            },
+            {
+                relativePath: "builders/set/index.ts",
+                content: `export { set } from "./set.js";
+`
+            },
+            {
+                relativePath: "builders/set/set.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const set = <T extends z.ZodTypeAny>(itemSchema: T) => getSchemaUtils(z.array(itemSchema).transform((arr) => new Set(arr)));
+`
+            },
+            {
+                relativePath: "builders/undiscriminated-union/index.ts",
+                content: `export { undiscriminatedUnion } from "./undiscriminatedUnion.js";
+`
+            },
+            {
+                relativePath: "builders/undiscriminated-union/undiscriminatedUnion.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const undiscriminatedUnion = <T extends z.ZodTypeAny[]>(schemas: T) => getSchemaUtils(z.union(schemas as [z.ZodTypeAny, z.ZodTypeAny, ...z.ZodTypeAny[]]));
+`
+            },
+            {
+                relativePath: "builders/union/index.ts",
+                content: `export { union, discriminant } from "./union.js";
+`
+            },
+            {
+                relativePath: "builders/union/union.ts",
+                content: `import { z } from "zod";
+import { getSchemaUtils } from "../schema-utils/getSchemaUtils.js";
+export const discriminant = <T extends string>(rawKey: string, parsedKey: string) => ({ rawKey, parsedKey });
+export const union = <T extends z.ZodTypeAny[]>(discriminator: string, schemas: T) => getSchemaUtils(z.discriminatedUnion(discriminator, schemas as any));
+`
+            },
+            {
+                relativePath: "builders/schema-utils/index.ts",
+                content: `export { getSchemaUtils } from "./getSchemaUtils.js";
+`
+            },
+            {
+                relativePath: "builders/schema-utils/getSchemaUtils.ts",
+                content: `import { z } from "zod";
+import type { Schema } from "../../Schema.js";
+
+export function getSchemaUtils<T extends z.ZodTypeAny>(schema: T): Schema<z.input<T>, z.output<T>> {
+    return {
+        parse: (raw) => {
+            const result = schema.safeParse(raw);
+            return result.success ? result.data : raw;
+        },
+        json: (parsed) => parsed as any,
+        parseOrThrow: (raw) => schema.parse(raw),
+        jsonOrThrow: (parsed) => parsed as any,
+        optional: () => getSchemaUtils(schema.optional()) as any
+    };
+}
+`
+            }
+        ];
+    }
+
+    /**
+     * Generate Yup-based runtime files (placeholder - uses Zod for now).
+     */
+    private getYupRuntimeFiles(): Array<{ relativePath: string; content: string }> {
+        // TODO: Implement Yup-specific runtime
+        return this.getZodRuntimeFiles();
+    }
+
+    /**
+     * Generate Ajv-based runtime files (placeholder - uses Zod for now).
+     */
+    private getAjvRuntimeFiles(): Array<{ relativePath: string; content: string }> {
+        // TODO: Implement Ajv-specific runtime
+        return this.getZodRuntimeFiles();
     }
 
     // Helper to update import paths in a file

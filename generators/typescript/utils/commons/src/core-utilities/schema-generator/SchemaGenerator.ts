@@ -169,4 +169,4 @@ export interface SerializationCodeGenerator {
 /**
  * Type of serialization code generator implementation
  */
-export type SerializationCodeGeneratorType = "zurg" | "zod" | "yup";
+export type SerializationCodeGeneratorType = "zurg" | "zod" | "yup" | "ajv" | "none";
