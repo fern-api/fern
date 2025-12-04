@@ -3,7 +3,7 @@
 - version: 4.41.9
   changelogEntry:
     - summary: |
-        Adds `dynamic = ["version"]` to `pyproject.toml`, allowing for `uv` commands to work out-of-the-box.
+        Adds `dynamic = ["version"]` to `pyproject.toml`, allowing for `uv` commands such as `uv sync` to work out-of-the-box.
       type: fix
   createdAt: "2025-12-04"
   irVersion: 61
