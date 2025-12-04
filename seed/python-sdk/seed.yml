@@ -254,7 +254,6 @@ fixtures:
       outputFolder: eager-imports
     - customConfig:
         package_path: matryoshka/doll/structure
-        enable_wire_tests: true
       outputFolder: package-path
   file-upload:
     - customConfig: null
