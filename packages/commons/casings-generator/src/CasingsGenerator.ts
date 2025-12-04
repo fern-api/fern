@@ -228,7 +228,7 @@ const PLURAL_COMMON_INITIALISMS = new Map<string, string>([
 // Preprocessing replacements applied to names before casing transformations.
 // Maps regex patterns to their replacement strings.
 const NAME_PREPROCESSOR_REPLACEMENTS: ReadonlyArray<readonly [RegExp, string]> = [
-	[/\[\]/g, "Array"]  // e.g., Integer[] -> IntegerArray
+    [/\[\]/g, "Array"] // e.g., Integer[] -> IntegerArray
 ];
 
 function preprocessName(name: string): string {
