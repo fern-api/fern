@@ -202,7 +202,7 @@ runs:
         cd $SNIPPET_DIR
         pnpm --filter=$SNIPPET_PACKAGE dist $VERSION
         cd dist
-        npm publish --access public --tag latest
+        npx -y npm@latest publish --access public --tag latest
 
     - name: Publish snippet package (manual)
       if: inputs.manual-trigger == 'true' && steps.snippet-info.outputs.snippet_package != ''
@@ -216,4 +216,4 @@ runs:
         cd $SNIPPET_DIR
         pnpm --filter=$SNIPPET_PACKAGE dist $VERSION
         cd dist
-        npm publish --access public --tag latest
+        npx -y npm@latest publish --access public --tag latest

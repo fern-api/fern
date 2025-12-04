@@ -101,7 +101,7 @@ jobs:
           version_replace="s/0.0.0/${NEW_VERSION}/"
           cat package.json.tmp| sed "${version_replace}" > package.json
           rm -rf package.json.tmp
-          npm publish --access public --tag latest
+          npx -y npm@latest publish --access public --tag latest
 
   publish-sdks:
     needs: check-version
