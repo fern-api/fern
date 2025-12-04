@@ -1,4 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.35.9
+  changelogEntry:
+    - summary: |
+        Add `toJSON` serializer to Set instances created by the serde layer, enabling proper JSON.stringify support for Next.js server-to-client data passing.
+      type: feat
+  createdAt: "2025-12-04"
+  irVersion: 62
+
 - version: 3.35.8
   changelogEntry:
     - summary: |
