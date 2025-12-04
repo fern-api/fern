@@ -1,5 +1,12 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.41.9
+  changelogEntry:
+    - summary: |
+        Adds `dynamic = ["version"]` to `pyproject.toml`, allowing for `uv` commands to work out-of-the-box.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
 
 - version: 4.41.8
   changelogEntry:
