@@ -1,3 +1,11 @@
+- version: 3.21.1
+  changelogEntry:
+    - summary: |
+        Fix header parameters with `x-fern-parameter-name` to use the correct HTTP header name (wire value) instead of the SDK parameter name.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
 - version: 3.21.0
   changelogEntry:
     - summary: |
