@@ -1,4 +1,4 @@
-- version: 3.20.4
+- version: 3.21.0
   changelogEntry:
     - summary: |
         Remove unused kotlin-stdlib from Gradle base image to address CVE-2020-29582 in container.
