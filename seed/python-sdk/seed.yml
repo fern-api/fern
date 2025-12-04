@@ -354,6 +354,8 @@ scripts:
         - poetry install
         - poetry run mypy ./src ./tests
       test:
+        - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+        - export HOME="$(pwd)/"
         - poetry run pytest -rP .
   # Test Pydantic V1
   - name: test-pydantic-v1
@@ -368,6 +370,8 @@ scripts:
         - poetry install
         - poetry run mypy ./src ./tests
       test:
+        - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+        - export HOME="$(pwd)/"
         - poetry run pytest -rP .
 allowedFailures:
   - any-auth
