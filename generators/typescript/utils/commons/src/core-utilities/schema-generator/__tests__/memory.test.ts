@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeEach } from "vitest";
 import { ZodSerializationCodeGenerator } from "../ZodSchemaGenerator";
-import { YupSerializationCodeGenerator } from "../YupSchemaGenerator";
 
 /**
  * Memory usage tests for schema generators.
@@ -105,76 +104,6 @@ describe("Memory Usage Tests", () => {
             expect(memoryUsed).toBeLessThan(2 * 1024 * 1024);
         });
     });
-
-    describe("YupSerializationCodeGenerator Memory", () => {
-        let generator: YupSerializationCodeGenerator;
-
-        beforeEach(() => {
-            generator = new YupSerializationCodeGenerator();
-        });
-
-        it("should not leak memory when generating many schemas", () => {
-            const iterations = 1000;
-            const memoryBefore = getMemoryUsage();
-
-            const schemas = [];
-            for (let i = 0; i < iterations; i++) {
-                schemas.push(
-                    generator.object([
-                        { key: { raw: "id", parsed: "id" }, value: generator.string() },
-                        { key: { raw: "name", parsed: "name" }, value: generator.string() }
-                    ])
-                );
-            }
-
-            schemas.forEach((s) => s.toExpression());
-
-            const memoryAfter = getMemoryUsage();
-            const memoryUsed = memoryAfter - memoryBefore;
-
-            console.log(`[Yup] Memory used for ${iterations} schemas: ${formatBytes(memoryUsed)}`);
-
-            expect(memoryUsed).toBeLessThan(50 * 1024 * 1024);
-        });
-    });
-
-    describe("Comparative Memory Analysis", () => {
-        it("Zod and Yup should have similar memory profiles", () => {
-            const iterations = 500;
-
-            // Zod
-            const zodGen = new ZodSerializationCodeGenerator();
-            const zodMemBefore = getMemoryUsage();
-            for (let i = 0; i < iterations; i++) {
-                zodGen
-                    .object([
-                        { key: { raw: "a", parsed: "a" }, value: zodGen.string() },
-                        { key: { raw: "b", parsed: "b" }, value: zodGen.number() }
-                    ])
-                    .toExpression();
-            }
-            const zodMemUsed = getMemoryUsage() - zodMemBefore;
-
-            // Yup
-            const yupGen = new YupSerializationCodeGenerator();
-            const yupMemBefore = getMemoryUsage();
-            for (let i = 0; i < iterations; i++) {
-                yupGen
-                    .object([
-                        { key: { raw: "a", parsed: "a" }, value: yupGen.string() },
-                        { key: { raw: "b", parsed: "b" }, value: yupGen.number() }
-                    ])
-                    .toExpression();
-            }
-            const yupMemUsed = getMemoryUsage() - yupMemBefore;
-
-            console.log(`Zod memory: ${formatBytes(zodMemUsed)}, Yup memory: ${formatBytes(yupMemUsed)}`);
-
-            // Both should be in a reasonable range
-            expect(zodMemUsed).toBeLessThan(30 * 1024 * 1024);
-            expect(yupMemUsed).toBeLessThan(30 * 1024 * 1024);
-        });
-    });
 });
 
 /**
@@ -189,4 +118,3 @@ describe("Memory Usage Tests", () => {
  * - < 5MB for single large schema (100+ properties)
  * - < 2MB for deeply nested schema (10+ levels)
  */
-

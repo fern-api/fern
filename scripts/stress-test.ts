@@ -2,7 +2,7 @@
 /**
  * Serializer Stress Test Suite
  *
- * Compares zurg vs zod vs yup vs none across:
+ * Compares zurg vs zod vs ajv vs none across:
  * - Bundle size (raw, minified, gzipped)
  * - Runtime performance (parse/serialize ops/sec)
  * - Memory usage (heap growth during stress)
@@ -31,7 +31,7 @@ function warn(message: string): void {
 
 // Configuration
 const SEED_BASE = path.join(__dirname, "..", "seed", "ts-sdk", "exhaustive");
-const SERIALIZERS = ["stress-zurg", "stress-zod", "stress-yup", "stress-ajv", "stress-none"] as const;
+const SERIALIZERS = ["stress-zurg", "stress-zod", "stress-ajv", "stress-none"] as const;
 const DEFAULT_ITERATIONS = 100_000;
 
 interface BundleMetrics {
@@ -153,15 +153,13 @@ function measureRuntimePerformance(sdkPath: string, iterations: number): Runtime
     // Typical benchmark ratios (zod is baseline):
     // - zurg: ~0.8x zod speed (custom, more overhead)
     // - zod: 1.0x (baseline)
-    // - yup: ~0.6x zod speed (slower validation)
+    // - ajv: ~1.5x zod speed (compiles schemas)
 
     const baseOpsPerSec = 50_000; // Typical zod ops/sec for medium objects
 
     let multiplier = 1.0;
     if (sdkPath.includes("stress-zurg")) {
         multiplier = 0.8;
-    } else if (sdkPath.includes("stress-yup")) {
-        multiplier = 0.6;
     } else if (sdkPath.includes("stress-ajv")) {
         multiplier = 1.5; // Ajv is very fast (compiles schemas)
     }
@@ -222,14 +220,12 @@ function measureTreeShaking(sdkPath: string): TreeShakeMetrics | null {
     // Estimate single-type bundle size
     // In a well-tree-shaken bundle, importing one type should only bring:
     // - The type itself (~500 bytes)
-    // - Core runtime (~5KB for zod, ~100KB for zurg, ~8KB for yup)
+    // - Core runtime (~5KB for zod, ~100KB for zurg, ~12KB for ajv)
     // - Direct dependencies
 
     let coreSize = 5000; // Default (zod)
     if (sdkPath.includes("stress-zurg")) {
         coreSize = 100000; // Zurg has larger runtime
-    } else if (sdkPath.includes("stress-yup")) {
-        coreSize = 8000;
     } else if (sdkPath.includes("stress-ajv")) {
         coreSize = 12000; // Ajv ~12KB
     } else if (sdkPath.includes("stress-none")) {

@@ -1,6 +1,5 @@
 import { describe, it, expect } from "vitest";
 import { ZodSerializationCodeGenerator } from "../ZodSchemaGenerator";
-import { YupSerializationCodeGenerator } from "../YupSchemaGenerator";
 
 /**
  * Performance tests for schema generators.
@@ -107,78 +106,6 @@ describe("Performance Tests", () => {
             console.log(`Generated ${iterations} union schemas in ${elapsed.toFixed(2)}ms`);
         });
     });
-
-    describe("YupSerializationCodeGenerator - Build Time Performance", () => {
-        it("should generate 1000 simple schemas in < 100ms", () => {
-            const generator = new YupSerializationCodeGenerator();
-            const iterations = 1000;
-
-            const start = performance.now();
-            for (let i = 0; i < iterations; i++) {
-                generator.string();
-                generator.number();
-                generator.boolean();
-            }
-            const elapsed = performance.now() - start;
-
-            expect(elapsed).toBeLessThan(100);
-            console.log(`[Yup] Generated ${iterations * 3} primitive schemas in ${elapsed.toFixed(2)}ms`);
-        });
-
-        it("should generate 100 complex object schemas in < 200ms", () => {
-            const generator = new YupSerializationCodeGenerator();
-            const iterations = 100;
-
-            const start = performance.now();
-            for (let i = 0; i < iterations; i++) {
-                generator.object([
-                    { key: { raw: "user_id", parsed: "userId" }, value: generator.string() },
-                    { key: { raw: "display_name", parsed: "displayName" }, value: generator.string() },
-                    { key: { raw: "email_address", parsed: "emailAddress" }, value: generator.string() },
-                    { key: { raw: "is_active", parsed: "isActive" }, value: generator.boolean() },
-                    { key: { raw: "created_at", parsed: "createdAt" }, value: generator.date() },
-                    { key: { raw: "updated_at", parsed: "updatedAt" }, value: generator.date() }
-                ]);
-            }
-            const elapsed = performance.now() - start;
-
-            expect(elapsed).toBeLessThan(200);
-            console.log(`[Yup] Generated ${iterations} complex object schemas in ${elapsed.toFixed(2)}ms`);
-        });
-    });
-
-    describe("Comparative Performance", () => {
-        it("Zod and Yup generators should have similar build-time performance", () => {
-            const zodGen = new ZodSerializationCodeGenerator();
-            const yupGen = new YupSerializationCodeGenerator();
-            const iterations = 100;
-
-            // Zod
-            const zodStart = performance.now();
-            for (let i = 0; i < iterations; i++) {
-                zodGen.object([
-                    { key: { raw: "field_1", parsed: "field1" }, value: zodGen.string() },
-                    { key: { raw: "field_2", parsed: "field2" }, value: zodGen.number() }
-                ]).toExpression();
-            }
-            const zodElapsed = performance.now() - zodStart;
-
-            // Yup
-            const yupStart = performance.now();
-            for (let i = 0; i < iterations; i++) {
-                yupGen.object([
-                    { key: { raw: "field_1", parsed: "field1" }, value: yupGen.string() },
-                    { key: { raw: "field_2", parsed: "field2" }, value: yupGen.number() }
-                ]).toExpression();
-            }
-            const yupElapsed = performance.now() - yupStart;
-
-            console.log(`Zod: ${zodElapsed.toFixed(2)}ms, Yup: ${yupElapsed.toFixed(2)}ms`);
-
-            // Both should be reasonably fast (within 3x of each other)
-            expect(Math.abs(zodElapsed - yupElapsed)).toBeLessThan(Math.max(zodElapsed, yupElapsed) * 2);
-        });
-    });
 });
 
 /**
@@ -190,4 +117,3 @@ describe("Performance Tests", () => {
  * 
  * Note: These would be tested in the generated SDK, not in the generator.
  */
-
