@@ -473,7 +473,8 @@ export class SdkGenerator {
             useDefaultRequestParameterValues: config.useDefaultRequestParameterValues,
             generateEndpointMetadata: config.generateEndpointMetadata,
             parameterNaming: config.parameterNaming,
-            offsetSemantics: config.offsetSemantics
+            offsetSemantics: config.offsetSemantics,
+            oauthTokenOverridePropertyName: config.oauthTokenOverridePropertyName
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,

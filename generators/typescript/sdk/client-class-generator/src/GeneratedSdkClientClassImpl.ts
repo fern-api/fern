@@ -41,6 +41,7 @@ import {
     PropertySignatureStructure,
     Scope,
     StructureKind,
+    TypeAliasDeclarationStructure,
     ts
 } from "ts-morph";
 import { Code, code } from "ts-poet";
@@ -94,6 +95,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
+        oauthTokenOverridePropertyName: string | undefined;
     }
 }
 
@@ -137,6 +139,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
+    private readonly oauthTokenOverridePropertyName: string | undefined;
 
     constructor({
         isRoot,
@@ -163,7 +166,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         formDataSupport,
         generateEndpointMetadata,
         parameterNaming,
-        offsetSemantics
+        offsetSemantics,
+        oauthTokenOverridePropertyName
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -183,6 +187,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
+        this.oauthTokenOverridePropertyName = oauthTokenOverridePropertyName;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -593,9 +598,17 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             hasDeclareKeyword: true
         };
 
-        const optionsInterface = this.generateOptionsInterface(context);
+        const optionsDeclaration = this.generateOptionsInterface(context);
+        const optionsStatements = Array.isArray(optionsDeclaration) ? optionsDeclaration : [optionsDeclaration];
+        // When we have an array (type aliases for OAuth union), the Options type is always the last one
+        // When we have a single interface, it's the interface itself
+        const optionsTypeName = GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME;
+        // Check if options are all optional (only applicable for interface, not type alias union)
+        const allOptionsOptional = Array.isArray(optionsDeclaration)
+            ? false // Type alias union requires either clientId+clientSecret OR token, so not all optional
+            : (optionsDeclaration.properties?.every((property) => property.hasQuestionToken) ?? true);
         serviceModule.statements = [
-            optionsInterface,
+            ...optionsStatements,
             ...(this.generatedEndpointImplementations.length > 0 || this.isRoot
                 ? [this.generateRequestOptionsInterface(context)]
                 : []),
@@ -635,7 +648,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                               ts.factory.createTypeReferenceNode(
                                   ts.factory.createQualifiedName(
                                       ts.factory.createIdentifier(serviceModule.name),
-                                      ts.factory.createIdentifier(optionsInterface.name)
+                                      ts.factory.createIdentifier(optionsTypeName)
                                   )
                               )
                           ]
@@ -652,7 +665,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                               ts.factory.createTypeReferenceNode(
                                   ts.factory.createQualifiedName(
                                       ts.factory.createIdentifier(serviceModule.name),
-                                      ts.factory.createIdentifier(optionsInterface.name)
+                                      ts.factory.createIdentifier(optionsTypeName)
                                   )
                               )
                           ]
@@ -675,13 +688,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createQualifiedName(
                                 ts.factory.createIdentifier(serviceModule.name),
-                                ts.factory.createIdentifier(optionsInterface.name)
+                                ts.factory.createIdentifier(optionsTypeName)
                             )
                         )
                     ),
                     initializer:
-                        optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
-                        !context.baseClient.anyRequiredBaseClientOptions(context)
+                        allOptionsOptional && !context.baseClient.anyRequiredBaseClientOptions(context)
                             ? "{}"
                             : undefined
                 }
@@ -703,13 +715,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             ts.factory.createTypeReferenceNode(
                                 ts.factory.createQualifiedName(
                                     ts.factory.createIdentifier(serviceModule.name),
-                                    ts.factory.createIdentifier(optionsInterface.name)
+                                    ts.factory.createIdentifier(optionsTypeName)
                                 )
                             )
                         ),
                         initializer:
-                            optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
-                            !context.baseClient.anyRequiredBaseClientOptions(context)
+                            allOptionsOptional && !context.baseClient.anyRequiredBaseClientOptions(context)
                                 ? "{}"
                                 : undefined
                     }
@@ -996,8 +1007,44 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return properties;
     }
 
-    private generateOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
+    private generateOptionsInterface(
+        context: SdkContext
+    ): InterfaceDeclarationStructure | TypeAliasDeclarationStructure[] {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
+
+        // Check if OAuth token override is enabled
+        const hasOAuthTokenOverride =
+            this.oauthTokenOverridePropertyName !== undefined && this.authProvider instanceof OAuthAuthProviderInstance;
+
+        if (hasOAuthTokenOverride) {
+            // Generate undiscriminated union type for OAuth with token override
+            const baseClientOptionsType = getTextOfTsNode(
+                context.sdkClientClass.getReferenceToBaseClientOptions().getTypeNode()
+            );
+            const supplierType = getTextOfTsNode(
+                context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                )
+            );
+
+            // Generate the union type alias
+            const oauthAuthOptionsType: TypeAliasDeclarationStructure = {
+                kind: StructureKind.TypeAlias,
+                name: "OAuthAuthOptions",
+                isExported: true,
+                type: `{ clientId: ${supplierType}; clientSecret: ${supplierType}; } | { ${this.oauthTokenOverridePropertyName}: ${supplierType}; }`
+            };
+
+            // Generate the Options type alias that intersects BaseClientOptions with the union
+            const optionsType: TypeAliasDeclarationStructure = {
+                kind: StructureKind.TypeAlias,
+                name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
+                isExported: true,
+                type: `${baseClientOptionsType} & OAuthAuthOptions`
+            };
+
+            return [oauthAuthOptionsType, optionsType];
+        }
 
         return {
             kind: StructureKind.Interface,
