@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
+import * as serializers from "../../../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export declare namespace ContainerClient {
@@ -56,7 +57,10 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.container.getAndReturnListOfPrimitives.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -64,7 +68,19 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string[], rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parseOrThrow(
+                    _response.body,
+                    {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    },
+                ),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -122,7 +138,10 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.container.getAndReturnListOfObjects.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -131,7 +150,13 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                data: serializers.endpoints.container.getAndReturnListOfObjects.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -148,23 +173,23 @@ export class ContainerClient {
     }
 
     /**
-     * @param {string[]} request
+     * @param {Set<string>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnSetOfPrimitives(["string"])
+     *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
      */
     public getAndReturnSetOfPrimitives(
-        request: string[],
+        request: Set<string>,
         requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<string[]> {
+    ): core.HttpResponsePromise<Set<string>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfPrimitives(request, requestOptions));
     }
 
     private async __getAndReturnSetOfPrimitives(
-        request: string[],
+        request: Set<string>,
         requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string[]>> {
+    ): Promise<core.WithRawResponse<Set<string>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -182,7 +207,10 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -190,7 +218,19 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string[], rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parseOrThrow(
+                    _response.body,
+                    {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    },
+                ),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -241,7 +281,10 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.container.getAndReturnSetOfObjects.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -250,7 +293,13 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                data: serializers.endpoints.container.getAndReturnSetOfObjects.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -303,7 +352,10 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -311,7 +363,16 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as Record<string, string>, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -364,7 +425,10 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -373,7 +437,16 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+                data: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parseOrThrow(
+                    _response.body,
+                    {
+                        unrecognizedObjectKeys: "passthrough",
+                        allowUnrecognizedUnionMembers: true,
+                        allowUnrecognizedEnumValues: true,
+                        skipValidation: true,
+                        breadcrumbsPrefix: ["response"],
+                    },
+                ),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -431,7 +504,13 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request != null ? request : undefined,
+            body:
+                request != null
+                    ? serializers.endpoints.container.getAndReturnOptional.Request.jsonOrThrow(request, {
+                          unrecognizedObjectKeys: "strip",
+                          omitUndefined: true,
+                      })
+                    : undefined,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -440,7 +519,13 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined,
+                data: serializers.endpoints.container.getAndReturnOptional.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
                 rawResponse: _response.rawResponse,
             };
         }

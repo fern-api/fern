@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
+import * as serializers from "../../../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export declare namespace ObjectClient {
@@ -32,12 +33,12 @@ export class ObjectClient {
      *         long: 1000000,
      *         double: 1.1,
      *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
+     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
      *         date: "2023-01-15",
      *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         base64: "SGVsbG8gd29ybGQh",
      *         list: ["list", "list"],
-     *         set: ["set"],
+     *         set: new Set(["set"]),
      *         map: {
      *             1: "map"
      *         },
@@ -72,7 +73,10 @@ export class ObjectClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -81,7 +85,13 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -139,7 +149,10 @@ export class ObjectClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.ObjectWithRequiredField.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -148,7 +161,13 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField,
+                data: serializers.types.ObjectWithRequiredField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -210,7 +229,10 @@ export class ObjectClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.ObjectWithMapOfMap.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -219,7 +241,13 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithMapOfMap,
+                data: serializers.types.ObjectWithMapOfMap.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -247,18 +275,18 @@ export class ObjectClient {
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
      *         string: "string",
-     *         NestedObject: {
+     *         nestedObject: {
      *             string: "string",
      *             integer: 1,
      *             long: 1000000,
      *             double: 1.1,
      *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
+     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
      *             date: "2023-01-15",
      *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             base64: "SGVsbG8gd29ybGQh",
      *             list: ["list", "list"],
-     *             set: ["set"],
+     *             set: new Set(["set"]),
      *             map: {
      *                 1: "map"
      *             },
@@ -296,7 +324,10 @@ export class ObjectClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.NestedObjectWithOptionalField.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -305,7 +336,13 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.NestedObjectWithOptionalField,
+                data: serializers.types.NestedObjectWithOptionalField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -334,18 +371,18 @@ export class ObjectClient {
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
      *         string: "string",
-     *         NestedObject: {
+     *         nestedObject: {
      *             string: "string",
      *             integer: 1,
      *             long: 1000000,
      *             double: 1.1,
      *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
+     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
      *             date: "2023-01-15",
      *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             base64: "SGVsbG8gd29ybGQh",
      *             list: ["list", "list"],
-     *             set: ["set"],
+     *             set: new Set(["set"]),
      *             map: {
      *                 1: "map"
      *             },
@@ -385,7 +422,10 @@ export class ObjectClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.NestedObjectWithRequiredField.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -394,7 +434,13 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.NestedObjectWithRequiredField,
+                data: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -422,18 +468,18 @@ export class ObjectClient {
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
      *             string: "string",
-     *             NestedObject: {
+     *             nestedObject: {
      *                 string: "string",
      *                 integer: 1,
      *                 long: 1000000,
      *                 double: 1.1,
      *                 bool: true,
-     *                 datetime: "2024-01-15T09:30:00Z",
+     *                 datetime: new Date("2024-01-15T09:30:00.000Z"),
      *                 date: "2023-01-15",
      *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *                 base64: "SGVsbG8gd29ybGQh",
      *                 list: ["list", "list"],
-     *                 set: ["set"],
+     *                 set: new Set(["set"]),
      *                 map: {
      *                     1: "map"
      *                 },
@@ -441,18 +487,18 @@ export class ObjectClient {
      *             }
      *         }, {
      *             string: "string",
-     *             NestedObject: {
+     *             nestedObject: {
      *                 string: "string",
      *                 integer: 1,
      *                 long: 1000000,
      *                 double: 1.1,
      *                 bool: true,
-     *                 datetime: "2024-01-15T09:30:00Z",
+     *                 datetime: new Date("2024-01-15T09:30:00.000Z"),
      *                 date: "2023-01-15",
      *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *                 base64: "SGVsbG8gd29ybGQh",
      *                 list: ["list", "list"],
-     *                 set: ["set"],
+     *                 set: new Set(["set"]),
      *                 map: {
      *                     1: "map"
      *                 },
@@ -490,7 +536,10 @@ export class ObjectClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -499,7 +548,13 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.NestedObjectWithRequiredField,
+                data: serializers.types.NestedObjectWithRequiredField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
                 rawResponse: _response.rawResponse,
             };
         }

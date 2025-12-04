@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
+import * as serializers from "../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../index.js";
 
 export declare namespace NoReqBodyClient {
@@ -59,7 +60,7 @@ export class NoReqBodyClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                data: serializers.types.ObjectWithOptionalField.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -110,7 +111,10 @@ export class NoReqBodyClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.noReqBody.postWithNoRequestBody.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

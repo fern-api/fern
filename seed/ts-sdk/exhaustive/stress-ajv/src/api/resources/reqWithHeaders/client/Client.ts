@@ -27,8 +27,8 @@ export class ReqWithHeadersClient {
      *
      * @example
      *     await client.reqWithHeaders.getWithCustomHeader({
-     *         "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
-     *         "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
+     *         xTestServiceHeader: "X-TEST-SERVICE-HEADER",
+     *         xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
      *         body: "string"
      *     })
      */
@@ -43,11 +43,7 @@ export class ReqWithHeadersClient {
         request: SeedExhaustive.ReqWithHeaders,
         requestOptions?: ReqWithHeadersClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const {
-            "X-TEST-SERVICE-HEADER": xTestServiceHeader,
-            "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
-            body: _body,
-        } = request;
+        const { xTestServiceHeader, xTestEndpointHeader, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,

@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
+import * as serializers from "../../../../../../serialization/index.js";
 
 export declare namespace PrimitiveClient {
     export interface Options extends BaseClientOptions {}
@@ -63,7 +64,10 @@ export class PrimitiveClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.primitive.getAndReturnString.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -120,7 +124,10 @@ export class PrimitiveClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as number, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.primitive.getAndReturnInt.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -177,7 +184,10 @@ export class PrimitiveClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as number, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.primitive.getAndReturnLong.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -234,7 +244,10 @@ export class PrimitiveClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as number, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.primitive.getAndReturnDouble.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -291,7 +304,10 @@ export class PrimitiveClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as boolean, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.primitive.getAndReturnBool.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -306,23 +322,23 @@ export class PrimitiveClient {
     }
 
     /**
-     * @param {string} request
+     * @param {Date} request
      * @param {PrimitiveClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z")
+     *     await client.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"))
      */
     public getAndReturnDatetime(
-        request: string,
+        request: Date,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): core.HttpResponsePromise<string> {
+    ): core.HttpResponsePromise<Date> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnDatetime(request, requestOptions));
     }
 
     private async __getAndReturnDatetime(
-        request: string,
+        request: Date,
         requestOptions?: PrimitiveClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string>> {
+    ): Promise<core.WithRawResponse<Date>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -348,7 +364,10 @@ export class PrimitiveClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.primitive.getAndReturnDatetime.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -405,7 +424,10 @@ export class PrimitiveClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.primitive.getAndReturnDate.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -462,7 +484,10 @@ export class PrimitiveClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.primitive.getAndReturnUuid.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -519,7 +544,10 @@ export class PrimitiveClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.primitive.getAndReturnBase64.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

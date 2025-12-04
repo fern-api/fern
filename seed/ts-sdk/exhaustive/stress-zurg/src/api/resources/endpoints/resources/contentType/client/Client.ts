@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
+import * as serializers from "../../../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export declare namespace ContentTypeClient {
@@ -32,12 +33,12 @@ export class ContentTypeClient {
      *         long: 1000000,
      *         double: 1.1,
      *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
+     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
      *         date: "2023-01-15",
      *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         base64: "SGVsbG8gd29ybGQh",
      *         list: ["list", "list"],
-     *         set: ["set"],
+     *         set: new Set(["set"]),
      *         map: {
      *             1: "map"
      *         },
@@ -72,7 +73,10 @@ export class ContentTypeClient {
             contentType: "application/json-patch+json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -105,12 +109,12 @@ export class ContentTypeClient {
      *         long: 1000000,
      *         double: 1.1,
      *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
+     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
      *         date: "2023-01-15",
      *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         base64: "SGVsbG8gd29ybGQh",
      *         list: ["list", "list"],
-     *         set: ["set"],
+     *         set: new Set(["set"]),
      *         map: {
      *             1: "map"
      *         },
@@ -147,7 +151,10 @@ export class ContentTypeClient {
             contentType: "application/json-patch+json; charset=utf-8",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.ObjectWithOptionalField.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

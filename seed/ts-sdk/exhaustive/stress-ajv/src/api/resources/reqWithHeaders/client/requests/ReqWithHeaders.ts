@@ -3,13 +3,13 @@
 /**
  * @example
  *     {
- *         "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
- *         "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
+ *         xTestServiceHeader: "X-TEST-SERVICE-HEADER",
+ *         xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
  *         body: "string"
  *     }
  */
 export interface ReqWithHeaders {
-    "X-TEST-SERVICE-HEADER": string;
-    "X-TEST-ENDPOINT-HEADER": string;
+    xTestServiceHeader: string;
+    xTestEndpointHeader: string;
     body: string;
 }

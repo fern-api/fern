@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
+import * as serializers from "../../../../serialization/index.js";
 import * as SeedExhaustive from "../../../index.js";
 
 export declare namespace NoAuthClient {
@@ -65,14 +66,29 @@ export class NoAuthClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as boolean, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.noAuth.postWithNoAuth.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new SeedExhaustive.BadRequestBody(
-                        _response.error.body as SeedExhaustive.BadObjectRequestInfo,
+                        serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:

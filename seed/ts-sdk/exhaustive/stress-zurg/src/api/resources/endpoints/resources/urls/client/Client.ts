@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
+import * as serializers from "../../../../../../serialization/index.js";
 
 export declare namespace UrlsClient {
     export interface Options extends BaseClientOptions {}
@@ -53,7 +54,16 @@ export class UrlsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.urls.withMixedCase.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -100,7 +110,16 @@ export class UrlsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.urls.noEndingSlash.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -147,7 +166,16 @@ export class UrlsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.urls.withEndingSlash.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -194,7 +222,16 @@ export class UrlsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.urls.withUnderscores.Response.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

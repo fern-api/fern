@@ -108,8 +108,8 @@ describe("PrimitiveClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
-        expect(response).toEqual("2024-01-15T09:30:00Z");
+        const response = await client.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"));
+        expect(response).toEqual(new Date("2024-01-15T09:30:00.000Z"));
     });
 
     test("getAndReturnDate", async () => {

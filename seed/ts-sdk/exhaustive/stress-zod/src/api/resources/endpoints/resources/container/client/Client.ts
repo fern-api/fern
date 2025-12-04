@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
+import * as serializers from "../../../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export declare namespace ContainerClient {
@@ -64,7 +65,10 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string[], rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -131,7 +135,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                data: serializers.endpoints.container.getAndReturnListOfObjects.Response.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -148,23 +152,23 @@ export class ContainerClient {
     }
 
     /**
-     * @param {string[]} request
+     * @param {Set<string>} request
      * @param {ContainerClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.endpoints.container.getAndReturnSetOfPrimitives(["string"])
+     *     await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]))
      */
     public getAndReturnSetOfPrimitives(
-        request: string[],
+        request: Set<string>,
         requestOptions?: ContainerClient.RequestOptions,
-    ): core.HttpResponsePromise<string[]> {
+    ): core.HttpResponsePromise<Set<string>> {
         return core.HttpResponsePromise.fromPromise(this.__getAndReturnSetOfPrimitives(request, requestOptions));
     }
 
     private async __getAndReturnSetOfPrimitives(
-        request: string[],
+        request: Set<string>,
         requestOptions?: ContainerClient.RequestOptions,
-    ): Promise<core.WithRawResponse<string[]>> {
+    ): Promise<core.WithRawResponse<Set<string>>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -190,7 +194,10 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string[], rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -250,7 +257,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField[],
+                data: serializers.endpoints.container.getAndReturnSetOfObjects.Response.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -311,7 +318,10 @@ export class ContainerClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as Record<string, string>, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -373,7 +383,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as Record<string, SeedExhaustive.types.ObjectWithRequiredField>,
+                data: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -440,7 +450,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField | undefined,
+                data: serializers.endpoints.container.getAndReturnOptional.Response.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }

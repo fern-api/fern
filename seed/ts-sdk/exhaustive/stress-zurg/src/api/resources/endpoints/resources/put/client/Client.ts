@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
+import * as serializers from "../../../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export declare namespace PutClient {
@@ -64,7 +65,16 @@ export class PutClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as SeedExhaustive.endpoints.PutResponse, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.PutResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

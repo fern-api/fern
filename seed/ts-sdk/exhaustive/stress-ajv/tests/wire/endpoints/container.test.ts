@@ -68,8 +68,8 @@ describe("ContainerClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
-        expect(response).toEqual(["string"]);
+        const response = await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]));
+        expect(response).toEqual(new Set(["string"]));
     });
 
     test("getAndReturnSetOfObjects", async () => {

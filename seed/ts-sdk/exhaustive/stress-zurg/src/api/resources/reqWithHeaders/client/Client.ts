@@ -6,6 +6,7 @@ import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
+import * as serializers from "../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../index.js";
 
 export declare namespace ReqWithHeadersClient {
@@ -27,8 +28,8 @@ export class ReqWithHeadersClient {
      *
      * @example
      *     await client.reqWithHeaders.getWithCustomHeader({
-     *         "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
-     *         "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
+     *         xTestServiceHeader: "X-TEST-SERVICE-HEADER",
+     *         xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
      *         body: "string"
      *     })
      */
@@ -43,11 +44,7 @@ export class ReqWithHeadersClient {
         request: SeedExhaustive.ReqWithHeaders,
         requestOptions?: ReqWithHeadersClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
-        const {
-            "X-TEST-SERVICE-HEADER": xTestServiceHeader,
-            "X-TEST-ENDPOINT-HEADER": xTestEndpointHeader,
-            body: _body,
-        } = request;
+        const { xTestServiceHeader, xTestEndpointHeader, body: _body } = request;
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -69,7 +66,10 @@ export class ReqWithHeadersClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: serializers.reqWithHeaders.getWithCustomHeader.Request.jsonOrThrow(_body, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

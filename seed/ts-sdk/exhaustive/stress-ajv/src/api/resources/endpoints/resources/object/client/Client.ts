@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
+import * as serializers from "../../../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export declare namespace ObjectClient {
@@ -32,12 +33,12 @@ export class ObjectClient {
      *         long: 1000000,
      *         double: 1.1,
      *         bool: true,
-     *         datetime: "2024-01-15T09:30:00Z",
+     *         datetime: new Date("2024-01-15T09:30:00.000Z"),
      *         date: "2023-01-15",
      *         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *         base64: "SGVsbG8gd29ybGQh",
      *         list: ["list", "list"],
-     *         set: ["set"],
+     *         set: new Set(["set"]),
      *         map: {
      *             1: "map"
      *         },
@@ -81,7 +82,12 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                data: (() => {
+                    if (!ajv.validate(serializers.types.ObjectWithOptionalField, _response.body)) {
+                        throw new Error("Validation failed");
+                    }
+                    return _response.body;
+                })(),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -148,7 +154,12 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithRequiredField,
+                data: (() => {
+                    if (!ajv.validate(serializers.types.ObjectWithRequiredField, _response.body)) {
+                        throw new Error("Validation failed");
+                    }
+                    return _response.body;
+                })(),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -219,7 +230,12 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithMapOfMap,
+                data: (() => {
+                    if (!ajv.validate(serializers.types.ObjectWithMapOfMap, _response.body)) {
+                        throw new Error("Validation failed");
+                    }
+                    return _response.body;
+                })(),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -247,18 +263,18 @@ export class ObjectClient {
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithOptionalField({
      *         string: "string",
-     *         NestedObject: {
+     *         nestedObject: {
      *             string: "string",
      *             integer: 1,
      *             long: 1000000,
      *             double: 1.1,
      *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
+     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
      *             date: "2023-01-15",
      *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             base64: "SGVsbG8gd29ybGQh",
      *             list: ["list", "list"],
-     *             set: ["set"],
+     *             set: new Set(["set"]),
      *             map: {
      *                 1: "map"
      *             },
@@ -305,7 +321,12 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.NestedObjectWithOptionalField,
+                data: (() => {
+                    if (!ajv.validate(serializers.types.NestedObjectWithOptionalField, _response.body)) {
+                        throw new Error("Validation failed");
+                    }
+                    return _response.body;
+                })(),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -334,18 +355,18 @@ export class ObjectClient {
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
      *         string: "string",
-     *         NestedObject: {
+     *         nestedObject: {
      *             string: "string",
      *             integer: 1,
      *             long: 1000000,
      *             double: 1.1,
      *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
+     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
      *             date: "2023-01-15",
      *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             base64: "SGVsbG8gd29ybGQh",
      *             list: ["list", "list"],
-     *             set: ["set"],
+     *             set: new Set(["set"]),
      *             map: {
      *                 1: "map"
      *             },
@@ -394,7 +415,12 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.NestedObjectWithRequiredField,
+                data: (() => {
+                    if (!ajv.validate(serializers.types.NestedObjectWithRequiredField, _response.body)) {
+                        throw new Error("Validation failed");
+                    }
+                    return _response.body;
+                })(),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -422,18 +448,18 @@ export class ObjectClient {
      * @example
      *     await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
      *             string: "string",
-     *             NestedObject: {
+     *             nestedObject: {
      *                 string: "string",
      *                 integer: 1,
      *                 long: 1000000,
      *                 double: 1.1,
      *                 bool: true,
-     *                 datetime: "2024-01-15T09:30:00Z",
+     *                 datetime: new Date("2024-01-15T09:30:00.000Z"),
      *                 date: "2023-01-15",
      *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *                 base64: "SGVsbG8gd29ybGQh",
      *                 list: ["list", "list"],
-     *                 set: ["set"],
+     *                 set: new Set(["set"]),
      *                 map: {
      *                     1: "map"
      *                 },
@@ -441,18 +467,18 @@ export class ObjectClient {
      *             }
      *         }, {
      *             string: "string",
-     *             NestedObject: {
+     *             nestedObject: {
      *                 string: "string",
      *                 integer: 1,
      *                 long: 1000000,
      *                 double: 1.1,
      *                 bool: true,
-     *                 datetime: "2024-01-15T09:30:00Z",
+     *                 datetime: new Date("2024-01-15T09:30:00.000Z"),
      *                 date: "2023-01-15",
      *                 uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *                 base64: "SGVsbG8gd29ybGQh",
      *                 list: ["list", "list"],
-     *                 set: ["set"],
+     *                 set: new Set(["set"]),
      *                 map: {
      *                     1: "map"
      *                 },
@@ -499,7 +525,12 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.NestedObjectWithRequiredField,
+                data: (() => {
+                    if (!ajv.validate(serializers.types.NestedObjectWithRequiredField, _response.body)) {
+                        throw new Error("Validation failed");
+                    }
+                    return _response.body;
+                })(),
                 rawResponse: _response.rawResponse,
             };
         }

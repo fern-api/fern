@@ -20,8 +20,8 @@ describe("ReqWithHeadersClient", () => {
             .build();
 
         const response = await client.reqWithHeaders.getWithCustomHeader({
-            "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
-            "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
+            xTestServiceHeader: "X-TEST-SERVICE-HEADER",
+            xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
             body: "string",
         });
         expect(response).toEqual(undefined);

@@ -7,12 +7,12 @@ export interface ObjectWithOptionalField {
     long?: number;
     double?: number;
     bool?: boolean;
-    datetime?: string;
+    datetime?: Date;
     date?: string;
     uuid?: string;
     base64?: string;
     list?: string[];
-    set?: string[];
+    set?: Set<string>;
     map?: Record<number, string>;
     bigint?: string;
 }

@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
+import * as serializers from "../../../../../../serialization/index.js";
 import type * as SeedExhaustive from "../../../../../index.js";
 
 export declare namespace ParamsClient {
@@ -60,7 +61,10 @@ export class ParamsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.params.getWithPath.Response.validateSync(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -119,7 +123,10 @@ export class ParamsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.params.getWithInlinePath.Response.validateSync(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -443,7 +450,10 @@ export class ParamsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.params.modifyWithPath.Response.validateSync(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -506,7 +516,10 @@ export class ParamsClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body as string, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.endpoints.params.modifyWithInlinePath.Response.validateSync(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

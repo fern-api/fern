@@ -6,6 +6,7 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
+import * as serializers from "../../../../serialization/index.js";
 import * as SeedExhaustive from "../../../index.js";
 
 export declare namespace InlinedRequestsClient {
@@ -33,18 +34,18 @@ export class InlinedRequestsClient {
      *     await client.inlinedRequests.postWithObjectBodyandResponse({
      *         string: "string",
      *         integer: 1,
-     *         NestedObject: {
+     *         nestedObject: {
      *             string: "string",
      *             integer: 1,
      *             long: 1000000,
      *             double: 1.1,
      *             bool: true,
-     *             datetime: "2024-01-15T09:30:00Z",
+     *             datetime: new Date("2024-01-15T09:30:00.000Z"),
      *             date: "2023-01-15",
      *             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
      *             base64: "SGVsbG8gd29ybGQh",
      *             list: ["list", "list"],
-     *             set: ["set"],
+     *             set: new Set(["set"]),
      *             map: {
      *                 1: "map"
      *             },
@@ -75,7 +76,10 @@ export class InlinedRequestsClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.PostWithObjectBody.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -84,7 +88,13 @@ export class InlinedRequestsClient {
         });
         if (_response.ok) {
             return {
-                data: _response.body as SeedExhaustive.types.ObjectWithOptionalField,
+                data: serializers.types.ObjectWithOptionalField.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -93,7 +103,13 @@ export class InlinedRequestsClient {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new SeedExhaustive.BadRequestBody(
-                        _response.error.body as SeedExhaustive.BadObjectRequestInfo,
+                        serializers.BadObjectRequestInfo.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:

@@ -20,6 +20,18 @@
             },
             "default": "./dist/cjs/index.js"
         },
+        "./serialization": {
+            "types": "./dist/cjs/serialization/index.d.ts",
+            "import": {
+                "types": "./dist/esm/serialization/index.d.mts",
+                "default": "./dist/esm/serialization/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/serialization/index.d.ts",
+                "default": "./dist/cjs/serialization/index.js"
+            },
+            "default": "./dist/cjs/serialization/index.js"
+        },
         "./package.json": "./package.json"
     },
     "files": [
@@ -42,7 +54,9 @@
         "test:unit": "vitest --project unit",
         "test:wire": "vitest --project wire"
     },
-    "dependencies": {},
+    "dependencies": {
+        "ajv": "^8.17.1"
+    },
     "devDependencies": {
         "webpack": "^5.97.1",
         "ts-loader": "^9.5.1",

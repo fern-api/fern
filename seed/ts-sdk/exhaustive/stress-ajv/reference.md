@@ -102,7 +102,7 @@ await client.endpoints.container.getAndReturnListOfObjects([{
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> string[]</code></summary>
+<details><summary><code>client.endpoints.container.<a href="/src/api/resources/endpoints/resources/container/client/Client.ts">getAndReturnSetOfPrimitives</a>({ ...params }) -> Set<string></code></summary>
 <dl>
 <dd>
 
@@ -115,7 +115,7 @@ await client.endpoints.container.getAndReturnListOfObjects([{
 <dd>
 
 ```typescript
-await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
+await client.endpoints.container.getAndReturnSetOfPrimitives(new Set(["string"]));
 
 ```
 </dd>
@@ -131,7 +131,7 @@ await client.endpoints.container.getAndReturnSetOfPrimitives(["string"]);
 <dl>
 <dd>
 
-**request:** `string[]` 
+**request:** `Set<string>` 
     
 </dd>
 </dl>
@@ -377,12 +377,12 @@ await client.endpoints.contentType.postJsonPatchContentType({
     long: 1000000,
     double: 1.1,
     bool: true,
-    datetime: "2024-01-15T09:30:00Z",
+    datetime: new Date("2024-01-15T09:30:00.000Z"),
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
     list: ["list", "list"],
-    set: ["set"],
+    set: new Set(["set"]),
     map: {
         1: "map"
     },
@@ -442,12 +442,12 @@ await client.endpoints.contentType.postJsonPatchContentWithCharsetType({
     long: 1000000,
     double: 1.1,
     bool: true,
-    datetime: "2024-01-15T09:30:00Z",
+    datetime: new Date("2024-01-15T09:30:00.000Z"),
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
     list: ["list", "list"],
-    set: ["set"],
+    set: new Set(["set"]),
     map: {
         1: "map"
     },
@@ -717,12 +717,12 @@ await client.endpoints.httpMethods.testPatch("id", {
     long: 1000000,
     double: 1.1,
     bool: true,
-    datetime: "2024-01-15T09:30:00Z",
+    datetime: new Date("2024-01-15T09:30:00.000Z"),
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
     list: ["list", "list"],
-    set: ["set"],
+    set: new Set(["set"]),
     map: {
         1: "map"
     },
@@ -840,12 +840,12 @@ await client.endpoints.object.getAndReturnWithOptionalField({
     long: 1000000,
     double: 1.1,
     bool: true,
-    datetime: "2024-01-15T09:30:00Z",
+    datetime: new Date("2024-01-15T09:30:00.000Z"),
     date: "2023-01-15",
     uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
     base64: "SGVsbG8gd29ybGQh",
     list: ["list", "list"],
-    set: ["set"],
+    set: new Set(["set"]),
     map: {
         1: "map"
     },
@@ -1007,18 +1007,18 @@ await client.endpoints.object.getAndReturnWithMapOfMap({
 ```typescript
 await client.endpoints.object.getAndReturnNestedWithOptionalField({
     string: "string",
-    NestedObject: {
+    nestedObject: {
         string: "string",
         integer: 1,
         long: 1000000,
         double: 1.1,
         bool: true,
-        datetime: "2024-01-15T09:30:00Z",
+        datetime: new Date("2024-01-15T09:30:00.000Z"),
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",
         list: ["list", "list"],
-        set: ["set"],
+        set: new Set(["set"]),
         map: {
             1: "map"
         },
@@ -1075,18 +1075,18 @@ await client.endpoints.object.getAndReturnNestedWithOptionalField({
 ```typescript
 await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
     string: "string",
-    NestedObject: {
+    nestedObject: {
         string: "string",
         integer: 1,
         long: 1000000,
         double: 1.1,
         bool: true,
-        datetime: "2024-01-15T09:30:00Z",
+        datetime: new Date("2024-01-15T09:30:00.000Z"),
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",
         list: ["list", "list"],
-        set: ["set"],
+        set: new Set(["set"]),
         map: {
             1: "map"
         },
@@ -1151,18 +1151,18 @@ await client.endpoints.object.getAndReturnNestedWithRequiredField("string", {
 ```typescript
 await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
         string: "string",
-        NestedObject: {
+        nestedObject: {
             string: "string",
             integer: 1,
             long: 1000000,
             double: 1.1,
             bool: true,
-            datetime: "2024-01-15T09:30:00Z",
+            datetime: new Date("2024-01-15T09:30:00.000Z"),
             date: "2023-01-15",
             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             base64: "SGVsbG8gd29ybGQh",
             list: ["list", "list"],
-            set: ["set"],
+            set: new Set(["set"]),
             map: {
                 1: "map"
             },
@@ -1170,18 +1170,18 @@ await client.endpoints.object.getAndReturnNestedWithRequiredFieldAsList([{
         }
     }, {
         string: "string",
-        NestedObject: {
+        nestedObject: {
             string: "string",
             integer: 1,
             long: 1000000,
             double: 1.1,
             bool: true,
-            datetime: "2024-01-15T09:30:00Z",
+            datetime: new Date("2024-01-15T09:30:00.000Z"),
             date: "2023-01-15",
             uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             base64: "SGVsbG8gd29ybGQh",
             list: ["list", "list"],
-            set: ["set"],
+            set: new Set(["set"]),
             map: {
                 1: "map"
             },
@@ -2006,7 +2006,7 @@ await client.endpoints.primitive.getAndReturnBool(true);
 </dl>
 </details>
 
-<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> string</code></summary>
+<details><summary><code>client.endpoints.primitive.<a href="/src/api/resources/endpoints/resources/primitive/client/Client.ts">getAndReturnDatetime</a>({ ...params }) -> Date</code></summary>
 <dl>
 <dd>
 
@@ -2019,7 +2019,7 @@ await client.endpoints.primitive.getAndReturnBool(true);
 <dd>
 
 ```typescript
-await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
+await client.endpoints.primitive.getAndReturnDatetime(new Date("2024-01-15T09:30:00.000Z"));
 
 ```
 </dd>
@@ -2035,7 +2035,7 @@ await client.endpoints.primitive.getAndReturnDatetime("2024-01-15T09:30:00Z");
 <dl>
 <dd>
 
-**request:** `string` 
+**request:** `Date` 
     
 </dd>
 </dl>
@@ -2504,18 +2504,18 @@ POST with custom object in request body, response is an object
 await client.inlinedRequests.postWithObjectBodyandResponse({
     string: "string",
     integer: 1,
-    NestedObject: {
+    nestedObject: {
         string: "string",
         integer: 1,
         long: 1000000,
         double: 1.1,
         bool: true,
-        datetime: "2024-01-15T09:30:00Z",
+        datetime: new Date("2024-01-15T09:30:00.000Z"),
         date: "2023-01-15",
         uuid: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
         base64: "SGVsbG8gd29ybGQh",
         list: ["list", "list"],
-        set: ["set"],
+        set: new Set(["set"]),
         map: {
             1: "map"
         },
@@ -2721,8 +2721,8 @@ await client.noReqBody.postWithNoRequestBody();
 
 ```typescript
 await client.reqWithHeaders.getWithCustomHeader({
-    "X-TEST-SERVICE-HEADER": "X-TEST-SERVICE-HEADER",
-    "X-TEST-ENDPOINT-HEADER": "X-TEST-ENDPOINT-HEADER",
+    xTestServiceHeader: "X-TEST-SERVICE-HEADER",
+    xTestEndpointHeader: "X-TEST-ENDPOINT-HEADER",
     body: "string"
 });
 
