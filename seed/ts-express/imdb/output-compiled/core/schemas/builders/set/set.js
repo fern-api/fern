@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.set = set;
 const Schema_1 = require("../../Schema");
+const addJsonSerializer_1 = require("../../utils/addJsonSerializer");
 const getErrorMessageForIncorrectType_1 = require("../../utils/getErrorMessageForIncorrectType");
 const maybeSkipValidation_1 = require("../../utils/maybeSkipValidation");
 const index_1 = require("../list/index");
@@ -12,9 +13,13 @@ function set(schema) {
         parse: (raw, opts) => {
             const parsedList = listSchema.parse(raw, opts);
             if (parsedList.ok) {
+                const setInstance = new Set(parsedList.value);
+                (0, addJsonSerializer_1.addJsonSerializer)(setInstance, function () {
+                    return [...this];
+                });
                 return {
                     ok: true,
-                    value: new Set(parsedList.value),
+                    value: setInstance,
                 };
             }
             else {
