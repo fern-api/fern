@@ -78,10 +78,11 @@ fixtures:
     - outputFolder: serde-layer
       customConfig:
         noSerdeLayer: false
-    - outputFolder: zod-serde
+    - outputFolder: serde-zod
       customConfig:
         noSerdeLayer: false
-        _serdeImplementation: zod
+      env:
+        FERN_SERDE_IMPLEMENTATION: zod
     - outputFolder: zod-export
       customConfig:
         exportSchemas: zod
