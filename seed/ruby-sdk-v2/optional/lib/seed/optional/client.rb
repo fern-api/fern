@@ -24,7 +24,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "send-optional-body",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -52,7 +53,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "send-optional-typed-body",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -85,7 +87,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "deploy/#{params[:action_id]}/versions/#{params[:id]}",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

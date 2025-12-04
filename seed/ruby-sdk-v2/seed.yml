@@ -39,6 +39,10 @@ scripts:
         - bundle exec rake test
 
 fixtures:
+  exhaustive:
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
   pagination-custom:
     - customConfig:
         customPagerName: FooPager
@@ -46,6 +50,9 @@ fixtures:
   examples:
     - outputFolder: no-custom-config
       customConfig: null
+    - outputFolder: wire-tests
+      customConfig:
+        enableWireTests: true
     - outputFolder: readme-config
       customConfig:
         customReadmeSections:
@@ -72,9 +79,6 @@ fixtures:
             - GET /movie/{movieId}
             - method: POST
               path: /movie
-
-allowedFailures:
-  - nullable-request-body
 
 features:
   requestOptions: true

@@ -18,13 +18,14 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Array[Hash[String, Object]]]
+      # @return [Array[Object]]
       def post(request_options: {}, **params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -46,13 +47,14 @@ module Seed
       # @option request_options [Hash{String => Object}] :additional_body_parameters
       # @option request_options [Integer] :timeout_in_seconds
       #
-      # @return [Array[Hash[String, Object]]]
+      # @return [Array[Object]]
       def post_object(request_options: {}, **params)
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "/with-object",
-          body: Seed::Unknown::Types::MyObject.new(params).to_h
+          body: Seed::Unknown::Types::MyObject.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

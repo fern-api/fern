@@ -2,7 +2,7 @@ require "seed"
 
 client = Seed::Client.new(base_url: 'https://api.fern.com');
 
-client.create_user({
+client.create_user(
   id: 'id',
   email: 'email',
   password: 'password',
@@ -13,4 +13,4 @@ client.create_user({
     },
     ssn: 'ssn'
   }
-});
+);

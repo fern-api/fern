@@ -9,8 +9,8 @@ module Seed
       @raw_client = Seed::Internal::Http::RawClient.new(
         base_url: base_url,
         headers: {
-          "User-Agent": "fern_errors/0.0.1",
-          "X-Fern-Language": "Ruby"
+          "User-Agent" => "fern_errors/0.0.1",
+          "X-Fern-Language" => "Ruby"
         }
       )
     end

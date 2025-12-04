@@ -27,7 +27,8 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/check/#{params[:id]}"
+            path: "/check/#{params[:id]}",
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -56,7 +57,8 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/ping"
+            path: "/ping",
+            request_options: request_options
           )
           begin
             response = @client.send(request)

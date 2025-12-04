@@ -26,7 +26,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/movies/create-movie",
-          body: Seed::Imdb::Types::CreateMovieRequest.new(params).to_h
+          body: Seed::Imdb::Types::CreateMovieRequest.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -56,7 +57,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/movies/#{params[:movie_id]}"
+          path: "/movies/#{params[:movie_id]}",
+          request_options: request_options
         )
         begin
           response = @client.send(request)

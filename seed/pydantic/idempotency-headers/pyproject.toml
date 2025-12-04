@@ -1,5 +1,6 @@
 [project]
 name = "fern_idempotency-headers"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_idempotency-headers"

@@ -2,4 +2,4 @@ require "seed"
 
 client = Seed::Client.new(base_url: 'https://api.fern.com');
 
-client.types.get('datetime-example');
+client.types.get(id: 'datetime-example');
