@@ -2,6 +2,7 @@ import { docsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, getDirectoryContents } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 import grayMatter from "gray-matter";
+import path from "path";
 
 export function nameToSlug({ name }: { name: string }): string {
     return name
@@ -102,16 +103,36 @@ export async function buildNavigationForDirectory({
                 readFileFn
             });
 
+            const folderSlug = nameToSlug({ name: dir.name });
+            const matchingPageIndex = subContents.findIndex((item) => {
+                if (item.type === "page") {
+                    const pageSlug = nameToSlug({ name: path.basename(item.absolutePath) });
+                    return pageSlug === folderSlug;
+                }
+                return false;
+            });
+
+            let overviewAbsolutePath: AbsoluteFilePath | undefined = undefined;
+            let filteredContents = subContents;
+
+            if (matchingPageIndex !== -1) {
+                const matchingPage = subContents[matchingPageIndex];
+                if (matchingPage != null && matchingPage.type === "page") {
+                    overviewAbsolutePath = matchingPage.absolutePath;
+                    filteredContents = subContents.filter((_, index) => index !== matchingPageIndex);
+                }
+            }
+
             return {
                 type: "section" as const,
                 title: nameToTitle({ name: dir.name }),
                 slug: nameToSlug({ name: dir.name }),
                 icon: undefined,
-                contents: subContents,
+                contents: filteredContents,
                 collapsed: undefined,
                 hidden: undefined,
                 skipUrlSlug: false,
-                overviewAbsolutePath: undefined,
+                overviewAbsolutePath,
                 viewers: undefined,
                 orphaned: undefined,
                 featureFlags: undefined,
