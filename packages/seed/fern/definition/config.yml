@@ -125,12 +125,31 @@ types:
       - string
       - list<string>
 
+  ScriptCommands:
+    docs: |
+      Commands can be either a simple list of strings (legacy format, treated as build commands),
+      or an object with separate build and test command arrays.
+    discriminated: false
+    union:
+      - list<string>
+      - ScriptCommandsByPhase
+
+  ScriptCommandsByPhase:
+    docs: Commands separated by phase (build vs test)
+    properties:
+      build:
+        docs: Commands to run during the build phase
+        type: optional<list<string>>
+      test:
+        docs: Commands to run during the test phase
+        type: optional<list<string>>
+
   Script:
     properties:
       name:
         docs: The name of the script. If provided, this enables fixtures to skip certain scripts.
         type: optional<string>
-      commands: list<string>
+      commands: ScriptCommands
 
   ContainerScriptConfig:
     extends: Script

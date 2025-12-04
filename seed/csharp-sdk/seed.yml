@@ -53,22 +53,32 @@ defaultCustomConfig: {}
 scripts:
   - image: fernapi/csharp-seed
     commands:
-      - |
-        # Check for .NET 10
-        # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`
-        # otherwise install .NET 10 
-        command -v dotnet >/dev/null 2>&1 && ver=$(dotnet --version) && major=$(echo "$ver" | cut -d. -f1) && [ "$major" -ge 10 ] || { echo "ERROR: .NET SDK 10+ required (found ${ver:-not found})"; false; }
-        
-        # Find the solution file
-        solution_file="$(find . -maxdepth 4 -name '*.slnx' | head -n 1)"
-        if [ -z "$solution_file" ]; then
-          echo "ERROR: No .slnx file found"
-          exit 1
-        fi
-        
-        dotnet build "$solution_file" -c Release
-        dotnet test "$solution_file" --no-restore --no-build -c Release
-        dotnet build src/*DynamicSnippets/*.csproj -c Release
+      build:
+        - |
+          # Check for .NET 10
+          # if you are getting an error from this and using docker, run `docker pull fernapi/csharp-seed:latest`
+          # otherwise install .NET 10 
+          command -v dotnet >/dev/null 2>&1 && ver=$(dotnet --version) && major=$(echo "$ver" | cut -d. -f1) && [ "$major" -ge 10 ] || { echo "ERROR: .NET SDK 10+ required (found ${ver:-not found})"; false; }
+          
+          # Find the solution file
+          solution_file="$(find . -maxdepth 4 -name '*.slnx' | head -n 1)"
+          if [ -z "$solution_file" ]; then
+            echo "ERROR: No .slnx file found"
+            exit 1
+          fi
+          
+          dotnet build "$solution_file" -c Release
+          dotnet build src/*DynamicSnippets/*.csproj -c Release
+      test:
+        - |
+          # Find the solution file
+          solution_file="$(find . -maxdepth 4 -name '*.slnx' | head -n 1)"
+          if [ -z "$solution_file" ]; then
+            echo "ERROR: No .slnx file found"
+            exit 1
+          fi
+          
+          dotnet test "$solution_file" --no-restore --no-build -c Release
 
 fixtures:
   simple-api:

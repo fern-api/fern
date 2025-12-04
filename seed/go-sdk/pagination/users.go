@@ -38,6 +38,33 @@ func (l *ListUsernamesRequest) SetStartingAfter(startingAfter *string) {
 }
 
 var (
+	listUsernamesWithOptionalResponseRequestFieldStartingAfter = big.NewInt(1 << 0)
+)
+
+type ListUsernamesWithOptionalResponseRequest struct {
+	// The cursor used for pagination in order to fetch
+	// the next page of results.
+	StartingAfter *string `json:"-" url:"starting_after,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUsernamesWithOptionalResponseRequest) require(field *big.Int) {
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
+	}
+	l.explicitFields.Or(l.explicitFields, field)
+}
+
+// SetStartingAfter sets the StartingAfter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUsernamesWithOptionalResponseRequest) SetStartingAfter(startingAfter *string) {
+	l.StartingAfter = startingAfter
+	l.require(listUsernamesWithOptionalResponseRequestFieldStartingAfter)
+}
+
+var (
 	listUsersBodyCursorPaginationRequestFieldPagination = big.NewInt(1 << 0)
 )
 
