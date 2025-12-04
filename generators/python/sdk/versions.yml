@@ -1,6 +1,17 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
 
+- version: 4.41.9
+  changelogEntry:
+    - summary: |
+        Fix wire test generation to properly handle path parameters that conflict with body parameters.
+        When a path parameter has the same name as a body parameter, the generated client uses a
+        deconflicted name (e.g., `user_id_`), and the wire test generator now correctly uses this
+        deconflicted name in generated test code.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
 - version: 4.41.8
   changelogEntry:
     - summary: |

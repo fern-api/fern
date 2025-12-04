@@ -263,6 +263,53 @@ class UserClient:
         )
         return _response.data
 
+    def update_user_with_conflicting_param(
+        self,
+        tenant_id: str,
+        user_id_: str,
+        *,
+        user_id: str,
+        body: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> User:
+        """
+        Test endpoint with path parameter that has the same name as a body property
+
+        Parameters
+        ----------
+        tenant_id : str
+
+        user_id_ : str
+
+        user_id : str
+
+        body : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        User
+
+        Examples
+        --------
+        from seed import SeedPathParameters
+
+        client = SeedPathParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+        client.user.update_user_with_conflicting_param(
+            user_id_="user_id",
+            user_id="user_id",
+            body="body",
+        )
+        """
+        _response = self._raw_client.update_user_with_conflicting_param(
+            tenant_id, user_id_, user_id=user_id, body=body, request_options=request_options
+        )
+        return _response.data
+
 
 class AsyncUserClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
@@ -565,5 +612,60 @@ class AsyncUserClient:
         """
         _response = await self._raw_client.get_user_specifics(
             tenant_id, user_id, version, thought, request_options=request_options
+        )
+        return _response.data
+
+    async def update_user_with_conflicting_param(
+        self,
+        tenant_id: str,
+        user_id_: str,
+        *,
+        user_id: str,
+        body: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> User:
+        """
+        Test endpoint with path parameter that has the same name as a body property
+
+        Parameters
+        ----------
+        tenant_id : str
+
+        user_id_ : str
+
+        user_id : str
+
+        body : str
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        User
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedPathParameters
+
+        client = AsyncSeedPathParameters(
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            await client.user.update_user_with_conflicting_param(
+                user_id_="user_id",
+                user_id="user_id",
+                body="body",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.update_user_with_conflicting_param(
+            tenant_id, user_id_, user_id=user_id, body=body, request_options=request_options
         )
         return _response.data

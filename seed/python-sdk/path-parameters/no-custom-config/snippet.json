@@ -117,6 +117,19 @@
                 "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.get_user_specifics(\n        user_id=\"user_id\",\n        version=1,\n        thought=\"thought\",\n    )\n\n\nasyncio.run(main())\n",
                 "type": "python"
             }
+        },
+        {
+            "example_identifier": "default",
+            "id": {
+                "path": "/{tenant_id}/user/{user_id}",
+                "method": "PUT",
+                "identifier_override": "endpoint_user.updateUserWithConflictingParam"
+            },
+            "snippet": {
+                "sync_client": "from seed import SeedPathParameters\n\nclient = SeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\nclient.user.update_user_with_conflicting_param(\n    user_id_=\"user_id\",\n    user_id=\"user_id\",\n    body=\"body\",\n)\n",
+                "async_client": "import asyncio\n\nfrom seed import AsyncSeedPathParameters\n\nclient = AsyncSeedPathParameters(\n    base_url=\"https://yourhost.com/path/to/api\",\n)\n\n\nasync def main() -> None:\n    await client.user.update_user_with_conflicting_param(\n        user_id_=\"user_id\",\n        user_id=\"user_id\",\n        body=\"body\",\n    )\n\n\nasyncio.run(main())\n",
+                "type": "python"
+            }
         }
     ]
 }
