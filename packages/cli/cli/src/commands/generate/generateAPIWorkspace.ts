@@ -122,7 +122,8 @@ export async function generateWorkspace({
                     runner,
                     absolutePathToPreview,
                     inspect,
-                    ai
+                    ai,
+                    fernignorePath
                 });
             } else if (token != null) {
                 await runRemoteGenerationForAPIWorkspace({

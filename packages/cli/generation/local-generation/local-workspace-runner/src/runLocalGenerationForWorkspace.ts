@@ -35,7 +35,8 @@ export async function runLocalGenerationForWorkspace({
     context,
     absolutePathToPreview,
     runner,
-    ai
+    ai,
+    fernignorePath
 }: {
     token: FernToken | undefined;
     projectConfig: fernConfigJson.ProjectConfig;
@@ -48,7 +49,18 @@ export async function runLocalGenerationForWorkspace({
     runner: ContainerRunner | undefined;
     inspect: boolean;
     ai: generatorsYml.AiServicesSchema | undefined;
+    fernignorePath: string | undefined;
 }): Promise<void> {
+    // Read fernignore file contents if path is provided
+    let customFernignoreContents: string | undefined;
+    if (fernignorePath != null) {
+        try {
+            customFernignoreContents = await fs.readFile(fernignorePath, "utf-8");
+        } catch (error) {
+            context.failAndThrow(`Failed to read fernignore file at ${fernignorePath}: ${error}`);
+        }
+    }
+
     const results = await Promise.all(
         generatorGroup.generators.map(async (generatorInvocation) => {
             return context.runInteractiveTask({ name: generatorInvocation.name }, async (interactiveTaskContext) => {
@@ -241,7 +253,8 @@ export async function runLocalGenerationForWorkspace({
                     ir: intermediateRepresentation,
                     whiteLabel: organization.ok ? organization.body.isWhitelabled : false,
                     runner,
-                    ai
+                    ai,
+                    customFernignoreContents
                 });
 
                 interactiveTaskContext.logger.info(chalk.green("Wrote files to " + absolutePathToLocalOutput));
@@ -251,7 +264,8 @@ export async function runLocalGenerationForWorkspace({
                         interactiveTaskContext,
                         selfhostedGithubConfig,
                         absolutePathToLocalOutput,
-                        autoVersioningCommitMessage
+                        autoVersioningCommitMessage,
+                        customFernignoreContents
                     );
                 }
             });
@@ -311,7 +325,8 @@ async function postProcessGithubSelfHosted(
     context: TaskContext,
     selfhostedGithubConfig: SelhostedGithubConfig,
     absolutePathToLocalOutput: AbsoluteFilePath,
-    commitMessage?: string
+    commitMessage?: string,
+    customFernignoreContents?: string
 ): Promise<void> {
     try {
         context.logger.debug("Starting GitHub self-hosted flow in directory: " + absolutePathToLocalOutput);
@@ -338,12 +353,22 @@ async function postProcessGithubSelfHosted(
 
                 context.logger.debug("Checking for .fernignore file...");
                 const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
-                try {
-                    await fs.access(fernignorePath);
-                    context.logger.debug(".fernignore already exists");
-                } catch {
-                    context.logger.debug("Creating .fernignore file...");
-                    await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
+                // Write custom fernignore if provided (replaces the one from main branch)
+                if (customFernignoreContents != null) {
+                    context.logger.debug("Writing custom .fernignore file...");
+                    await fs.writeFile(fernignorePath, customFernignoreContents, "utf-8");
+                } else {
+                    try {
+                        await fs.access(fernignorePath);
+                        context.logger.debug(".fernignore already exists");
+                    } catch {
+                        context.logger.debug("Creating default .fernignore file...");
+                        await fs.writeFile(
+                            fernignorePath,
+                            "# Specify files that shouldn't be modified by Fern\n",
+                            "utf-8"
+                        );
+                    }
                 }
 
                 context.logger.debug("Committing changes...");
@@ -400,12 +425,22 @@ async function postProcessGithubSelfHosted(
 
                 context.logger.debug("Checking for .fernignore file...");
                 const fernignorePath = join(absolutePathToLocalOutput, RelativeFilePath.of(".fernignore"));
-                try {
-                    await fs.access(fernignorePath);
-                    context.logger.debug(".fernignore already exists");
-                } catch {
-                    context.logger.debug("Creating .fernignore file...");
-                    await fs.writeFile(fernignorePath, "# Specify files that shouldn't be modified by Fern\n", "utf-8");
+                // Write custom fernignore if provided (replaces the one from main branch)
+                if (customFernignoreContents != null) {
+                    context.logger.debug("Writing custom .fernignore file...");
+                    await fs.writeFile(fernignorePath, customFernignoreContents, "utf-8");
+                } else {
+                    try {
+                        await fs.access(fernignorePath);
+                        context.logger.debug(".fernignore already exists");
+                    } catch {
+                        context.logger.debug("Creating default .fernignore file...");
+                        await fs.writeFile(
+                            fernignorePath,
+                            "# Specify files that shouldn't be modified by Fern\n",
+                            "utf-8"
+                        );
+                    }
                 }
 
                 context.logger.debug("Committing changes...");
