@@ -68,3 +68,17 @@ service:
           user_id: string
           version: integer
       response: User
+
+    updateUserWithConflictingParam:
+      path: "/{user_id}"
+      method: PUT
+      docs: Test endpoint with path parameter that has the same name as a body property
+      request:
+        name: UpdateUserWithConflictingParamRequest
+        path-parameters:
+          user_id: string
+        body:
+          properties:
+            user_id: string
+            body: string
+      response: User

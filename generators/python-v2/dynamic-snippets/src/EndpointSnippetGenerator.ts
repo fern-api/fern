@@ -663,9 +663,11 @@ export class EndpointSnippetGenerator {
         const inlinePathParameters = this.context.shouldInlinePathParameters();
 
         this.context.errors.scope(Scope.PathParameters);
-        const pathParameterFields: python.NamedValue[] = [];
+        const rawPathParameterFields: python.NamedValue[] = [];
         if (request.pathParameters != null) {
-            pathParameterFields.push(...this.getPathParameters({ namedParameters: request.pathParameters, snippet }));
+            rawPathParameterFields.push(
+                ...this.getPathParameters({ namedParameters: request.pathParameters, snippet })
+            );
         }
         this.context.errors.unscope();
 
@@ -673,12 +675,24 @@ export class EndpointSnippetGenerator {
         const filePropertyInfo = this.getFilePropertyInfo({ request, snippet });
         this.context.errors.unscope();
 
-        if (
-            !this.context.includePathParametersInWrappedRequest({
-                request,
-                inlinePathParameters
-            })
-        ) {
+        // Get body property names to check for collisions with path parameters
+        const bodyPropertyNames = this.getInlinedRequestBodyPropertyNames({ request });
+
+        // Disambiguate path parameters that collide with body properties by adding underscore suffix
+        // This must be done before using pathParameterFields anywhere
+        const pathParameterFields = rawPathParameterFields.map((arg) => {
+            if (bodyPropertyNames.has(arg.name)) {
+                return { ...arg, name: arg.name + "_" };
+            }
+            return arg;
+        });
+
+        const includeInWrappedRequest = this.context.includePathParametersInWrappedRequest({
+            request,
+            inlinePathParameters
+        });
+
+        if (!includeInWrappedRequest) {
             args.push(...pathParameterFields);
         }
 
@@ -693,12 +707,7 @@ export class EndpointSnippetGenerator {
                 ...this.getInlinedRequestArgs({
                     request,
                     snippet,
-                    pathParameterFields: this.context.includePathParametersInWrappedRequest({
-                        request,
-                        inlinePathParameters
-                    })
-                        ? pathParameterFields
-                        : [],
+                    pathParameterFields: includeInWrappedRequest ? pathParameterFields : [],
                     filePropertyInfo
                 })
             );
@@ -790,6 +799,34 @@ export class EndpointSnippetGenerator {
                 return this.getFileUploadRequestBodyObjectFields({ filePropertyInfo });
             default:
                 assertNever(body);
+        }
+    }
+
+    /**
+     * Gets the set of body property names for an inlined request.
+     * This is used to detect collisions with path parameter names.
+     * We get property names directly from the request definition, not from snippet values,
+     * because we need to know all possible body property names for deconfliction.
+     */
+    private getInlinedRequestBodyPropertyNames({ request }: { request: FernIr.dynamic.InlinedRequest }): Set<string> {
+        if (request.body == null) {
+            return new Set();
+        }
+        const body = request.body;
+        switch (body.type) {
+            case "properties":
+                // Get property names directly from the request body definition
+                return new Set(
+                    body.value
+                        .filter((param) => !this.resolvesToLiteralType(param.typeReference))
+                        .map((param) => this.context.getPropertyName(param.name.name))
+                );
+            case "referenced":
+            case "fileUpload":
+                // For referenced and file upload bodies, there are no inline properties to conflict with
+                return new Set();
+            default:
+                return new Set();
         }
     }
 
