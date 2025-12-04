@@ -25,33 +25,34 @@ module Seed
       #
       # @return [Object]
       def test_method_name(request_options: {}, **params)
-        _path_param_names = %i[path_param]
-        _body = params.except(*_path_param_names)
+        path_param_names = %i[path_param]
+        body_params = params.except(*path_param_names)
 
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[query_param_object query_param_integer]
-        _query = {}
-        _query["query_param_object"] = params[:query_param_object] if params.key?(:query_param_object)
-        _query["query_param_integer"] = params[:query_param_integer] if params.key?(:query_param_integer)
-        params = params.except(*_query_param_names)
+        query_param_names = %i[query_param_object query_param_integer]
+        query_params = {}
+        query_params["query_param_object"] = params[:query_param_object] if params.key?(:query_param_object)
+        query_params["query_param_integer"] = params[:query_param_integer] if params.key?(:query_param_integer)
+        params = params.except(*query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
           path: "optional-request-body/#{params[:path_param]}",
-          query: _query,
-          body: _body
+          query: query_params,
+          body: body_params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         return if code.between?(200, 299)
 
         error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-        raise error_class.new(_response.body, code: code)
+        raise error_class.new(response.body, code: code)
       end
     end
   end

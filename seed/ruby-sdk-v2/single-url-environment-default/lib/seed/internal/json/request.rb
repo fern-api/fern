@@ -22,10 +22,11 @@ module Seed
 
         # @return [Hash] The encoded HTTP request headers.
         def encode_headers
+          additional_headers = @request_options&.dig(:additional_headers) || @request_options&.dig("additional_headers") || {}
           {
             "Content-Type" => "application/json",
             "Accept" => "application/json"
-          }.merge(@headers)
+          }.merge(@headers).merge(additional_headers)
         end
 
         # @return [String, nil] The encoded HTTP request body.

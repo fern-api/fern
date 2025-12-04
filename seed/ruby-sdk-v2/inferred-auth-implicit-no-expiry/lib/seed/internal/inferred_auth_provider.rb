@@ -47,7 +47,8 @@ module Seed
           scope: @options[:scope]
         }
 
-        token_response = @auth_client.get_token_with_client_credentials(**request_params)
+        token_response = @auth_client.get_token_with_client_credentials(**request_params,
+request_options: { base_url: @options[:base_url] })
 
         @access_token = token_response.access_token
 

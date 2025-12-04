@@ -22,32 +22,33 @@ module Seed
       # @return [Seed::Types::UsernameCursor]
       def list_usernames_custom(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        _query_param_names = %i[starting_after]
-        _query = {}
-        _query["starting_after"] = params[:starting_after] if params.key?(:starting_after)
-        params.except(*_query_param_names)
+        query_param_names = %i[starting_after]
+        query_params = {}
+        query_params["starting_after"] = params[:starting_after] if params.key?(:starting_after)
+        params.except(*query_param_names)
 
-        _request = Seed::Internal::JSON::Request.new(
+        request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
           path: "/users",
-          query: _query
+          query: query_params,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          _parsed_response = Seed::Types::UsernameCursor.load(_response.body)
+          parsed_response = Seed::Types::UsernameCursor.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
 
         Seed::Internal::FooPager.new(
-          _parsed_response,
+          parsed_response,
           item_field: :data,
           raw_client: @client
         )

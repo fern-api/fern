@@ -17,19 +17,13 @@ class EndpointsPutWireTest < Minitest::Test
     skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."
   end
 
-  def reset_wiremock_requests
-    uri = URI("#{WIREMOCK_ADMIN_URL}/requests")
-    http = Net::HTTP.new(uri.host, uri.port)
-    request = Net::HTTP::Delete.new(uri.path, { "Content-Type" => "application/json" })
-    http.request(request)
-  end
-
-  def verify_request_count(method:, url_path:, expected:, query_params: nil)
+  def verify_request_count(test_id:, method:, url_path:, expected:, query_params: nil)
     uri = URI("#{WIREMOCK_ADMIN_URL}/requests/find")
     http = Net::HTTP.new(uri.host, uri.port)
     post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
 
     request_body = { "method" => method, "urlPath" => url_path }
+    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
     request_body["queryParameters"] = query_params.transform_values { |v| { "equalTo" => v } } if query_params
 
     post_request.body = request_body.to_json
@@ -41,13 +35,20 @@ class EndpointsPutWireTest < Minitest::Test
   end
 
   def test_endpoints_put_add_with_wiremock
-    reset_wiremock_requests
+    test_id = "endpoints.put.add.0"
 
     require "seed"
     client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.put.add(id: "id")
+    client.endpoints.put.add(
+      id: "id",
+      request_options: { base_url: WIREMOCK_BASE_URL,
+                         additional_headers: {
+                           "X-Test-Id" => "endpoints.put.add.0"
+                         } }
+    )
 
     verify_request_count(
+      test_id: test_id,
       method: "PUT",
       url_path: "/id",
       query_params: nil,
