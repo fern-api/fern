@@ -412,7 +412,7 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                             arguments_: []
                         })
                     );
-                    writer.writeLine("interceptor.CaptureException(ex);");
+                    writer.writeLine("interceptor.Intercept(ex);");
                     writer.writeLine("throw;");
                     writer.endControlFlow();
                 } else {

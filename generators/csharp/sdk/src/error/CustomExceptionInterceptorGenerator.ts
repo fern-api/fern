@@ -8,7 +8,7 @@ export class CustomExceptionInterceptorGenerator extends FileGenerator<CSharpFil
             reference: this.Types.CustomExceptionInterceptor,
             access: ast.Access.Public,
             interfaceReferences: [this.Types.ExceptionInterceptor],
-            summary: `Custom exception interceptor for the SDK. Implement the CaptureException method to capture exceptions for observability (e.g., application monitoring platform, logging, etc.).`
+            summary: `Custom exception interceptor for the SDK. Implement the Intercept method to capture exceptions for observability (e.g., application monitoring platform, logging, etc.).`
         });
 
         class_.addMethod({
@@ -17,25 +17,14 @@ export class CustomExceptionInterceptorGenerator extends FileGenerator<CSharpFil
             parameters: [this.csharp.parameter({ name: "exception", type: this.System.Exception })],
             return_: this.System.Exception,
             body: this.csharp.codeblock((writer) => {
-                writer.writeLine("CaptureException(exception);");
-                writer.writeLine("return exception;");
-            }),
-            summary: "Intercepts an exception and returns it after capturing."
-        });
-
-        class_.addMethod({
-            name: "CaptureException",
-            access: ast.Access.Public,
-            parameters: [this.csharp.parameter({ name: "exception", type: this.System.Exception })],
-            body: this.csharp.codeblock((writer) => {
                 writer.writeLine("// TODO: Implement your exception capturing logic here.");
                 writer.writeLine("// Examples:");
                 writer.writeLine("// - Send to application monitoring platform");
                 writer.writeLine("// - Log to console: Console.Error.WriteLine(exception);");
                 writer.writeLine("// - Send to custom logging service");
+                writer.writeLine("return exception;");
             }),
-            summary:
-                "Captures an exception for observability without re-throwing. SDK authors should implement their exception capturing logic here."
+            summary: "Intercepts an exception and returns it after capturing."
         });
 
         return new CSharpFile({

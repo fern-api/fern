@@ -1,18 +1,27 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 2.11.1
+  changelogEntry:
+    - summary: |
+        When `include-exception-handler: true` is configured:
+        * Remove unneeded `CaptureException` method from `Interceptor` class, since there's already an `Intercept` method.
+      type: fix
+  createdAt: "2025-12-05"
+  irVersion: 61
+
 - version: 2.11.0
   changelogEntry:
     - summary: |
         Add constructor exception handling infrastructure for SDK authors to capture initialization errors.
-        
+
         When `include-exception-handler: true` is configured:
         * Adds `CaptureException` method to `ExceptionHandler` class for capturing exceptions without re-throwing
         * Wraps all client constructors (root and sub-clients) with try-catch blocks
         * Initializes `clientOptions.ExceptionHandler` with a custom interceptor in the root client constructor
         * Generates a `{PackageName}ExceptionInterceptor` stub class that SDK authors can customize
-        
+
         New configuration option:
         * `exception-interceptor-class-name`: Custom name for the exception interceptor class (optional)
-        
+
         Example generators.yml configuration:
         ```yml
         groups:
@@ -24,7 +33,7 @@
                   include-exception-handler: true
                   exception-interceptor-class-name: MyCustomExceptionInterceptor
         ```
-        
+
         SDK authors can implement their exception capturing logic (e.g., application monitoring platform, logging) in the generated interceptor class.
       type: feat
   createdAt: "2025-12-05"
