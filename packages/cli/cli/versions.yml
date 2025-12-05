@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Upgrade `@fern-api/fdr-sdk` to version `0.142.1-b1f6b6363` which adds support for error response headers.
+      type: chore
+  irVersion: 63
+  createdAt: "2025-12-05"
+  version: 3.4.0
+
+- changelogEntry:
+    - summary: |
         Extend `substitute-env-vars` to apply to API specs (OpenAPI and Fern definitions) when generating docs. Environment variables using `${VAR_NAME}` syntax in API spec descriptions, examples, and other string fields are now substituted when `substitute-env-vars: true` is set in `docs.yml`.
       type: feat
   irVersion: 63

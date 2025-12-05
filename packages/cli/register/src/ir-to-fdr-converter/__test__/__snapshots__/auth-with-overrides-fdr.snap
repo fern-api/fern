@@ -61,6 +61,7 @@
               "availability": undefined,
               "description": "Unauthorized",
               "examples": [],
+              "headers": undefined,
               "isWildcard": undefined,
               "name": "UnauthorizedError",
               "statusCode": 401,
