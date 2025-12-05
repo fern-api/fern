@@ -305,6 +305,36 @@ export class ZodFormat implements SerializationFormat {
     // ==================== Object Schema Builders ====================
 
     public object = (properties: Property[]): ObjectSchema => {
+        // Check if any property has toJsonExpression (needs serialization transform)
+        const propsWithJsonTransform = properties.filter(
+            (p) => (p.value as ZodBaseSchema).toJsonExpression != null
+        );
+
+        // Create toJsonExpression for objects that recursively transforms properties
+        const createObjectJsonExpression = (parsed: ts.Expression): ts.Expression => {
+            if (propsWithJsonTransform.length === 0) {
+                return parsed; // No transform needed
+            }
+            // Generate: { ...parsed, propName: Array.from(parsed.propName), ... }
+            const propAssignments: ts.ObjectLiteralElementLike[] = [
+                ts.factory.createSpreadAssignment(parsed)
+            ];
+            for (const prop of propsWithJsonTransform) {
+                const propSchema = prop.value as ZodBaseSchema;
+                if (propSchema.toJsonExpression) {
+                    propAssignments.push(
+                        ts.factory.createPropertyAssignment(
+                            prop.key.raw, // Use raw key for wire format
+                            propSchema.toJsonExpression(
+                                ts.factory.createPropertyAccessExpression(parsed, prop.key.parsed)
+                            )
+                        )
+                    );
+                }
+            }
+            return ts.factory.createObjectLiteralExpression(propAssignments, true);
+        };
+
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -320,7 +350,9 @@ export class ZodFormat implements SerializationFormat {
                 });
 
                 return this.zodCall("object", [ts.factory.createObjectLiteralExpression(propAssignments, true)]);
-            }
+            },
+            toJsonExpression:
+                propsWithJsonTransform.length > 0 ? createObjectJsonExpression : undefined
         };
 
         // If any properties have different raw/parsed keys, wrap with transform
@@ -351,7 +383,9 @@ export class ZodFormat implements SerializationFormat {
                         )
                     );
                     return chainMethod(inner, "transform", [transformExpr]);
-                }
+                },
+                toJsonExpression:
+                    propsWithJsonTransform.length > 0 ? createObjectJsonExpression : undefined
             };
             return {
                 ...transformedBase,
