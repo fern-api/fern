@@ -12,7 +12,6 @@ export type SerializationFormatType = "default" | "zod" | "none";
  * Configuration for creating a SerializationPipeline
  */
 export interface SerializationPipelineConfig extends SerializationFormatConfig {
-    
     /**
      * The serialization format to use.
      * - "default": Use Zurg (legacy implementation)
