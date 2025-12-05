@@ -54,4 +54,4 @@ jobs:
           cd packages/snippets/core
           pnpm --filter=${{ env.PACKAGE_NAME }} dist ${{ inputs.version }}
           cd dist
-          npm publish --access public --tag latest
+          npx -y npm@latest publish --access public --tag latest

@@ -631,6 +631,14 @@ export abstract class AbstractPhpGeneratorContext<
     public abstract getCoreTestAsIsFiles(): string[];
     public abstract getUtilsAsIsFiles(): string[];
 
+    /**
+     * Returns extra template variables for a given filename.
+     * Override this method to provide custom template variables for specific files.
+     */
+    public getExtraTemplateVarsForFile(_filename: string): Record<string, string> | undefined {
+        return undefined;
+    }
+
     public getCoreSerializationAsIsFiles(): string[] {
         return [
             AsIsFiles.ArrayType,

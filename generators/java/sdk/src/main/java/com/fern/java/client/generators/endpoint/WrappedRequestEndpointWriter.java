@@ -191,7 +191,14 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         requestBodyCodeBlock.add(";\n");
         requestBodyCodeBlock.unindent();
         for (EnrichedObjectProperty header : generatedWrappedRequest.headerParams()) {
-            String headerName = header.objectProperty().getName().getName().getOriginalName();
+            String sdkName = header.camelCaseKey();
+            String headerName = generatedWrappedRequest.headerWireValues().get(sdkName);
+            if (headerName == null) {
+                String wireValue = header.objectProperty().getName().getWireValue();
+                headerName = (wireValue != null && !wireValue.isEmpty())
+                        ? wireValue
+                        : header.objectProperty().getName().getName().getOriginalName();
+            }
             if (typeNameIsOptional(header.poetTypeName())) {
                 requestBodyCodeBlock
                         .beginControlFlow("if ($L.$N().isPresent())", requestParameterName, header.getterProperty())

@@ -24,7 +24,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "reference",
-          body: Seed::Reference::Types::SendRequest.new(params).to_h
+          body: Seed::Reference::Types::SendRequest.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

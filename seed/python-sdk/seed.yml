@@ -254,7 +254,6 @@ fixtures:
       outputFolder: eager-imports
     - customConfig:
         package_path: matryoshka/doll/structure
-        enable_wire_tests: true
       outputFolder: package-path
   file-upload:
     - customConfig: null
@@ -344,27 +343,35 @@ scripts:
   - name: test-pydantic-v2
     image: fernapi/python-seed
     commands:
-      # Tests now run a mock server, you can always run seed with --skip-scripts to save time
-      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
-      - export HOME="$(pwd)/"
-      - poetry config virtualenvs.path .
-      - poetry add pydantic=^2.8
-      - poetry lock
-      - poetry install
-      - poetry run mypy ./src ./tests
-      - poetry run pytest -rP .
+      build:
+        # Tests now run a mock server, you can always run seed with --skip-scripts to save time
+        - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+        - export HOME="$(pwd)/"
+        - poetry config virtualenvs.path .
+        - poetry add pydantic=^2.8
+        - poetry lock
+        - poetry install
+        - poetry run mypy ./src ./tests
+      test:
+        - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+        - export HOME="$(pwd)/"
+        - poetry run pytest -rP .
   # Test Pydantic V1
   - name: test-pydantic-v1
     image: fernapi/python-seed
     commands:
-      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
-      - export HOME="$(pwd)/"
-      - poetry config virtualenvs.path .
-      - poetry add pydantic=^1.10
-      - poetry lock
-      - poetry install
-      - poetry run mypy ./src ./tests
-      - poetry run pytest -rP .
+      build:
+        - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+        - export HOME="$(pwd)/"
+        - poetry config virtualenvs.path .
+        - poetry add pydantic=^1.10
+        - poetry lock
+        - poetry install
+        - poetry run mypy ./src ./tests
+      test:
+        - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+        - export HOME="$(pwd)/"
+        - poetry run pytest -rP .
 allowedFailures:
   - any-auth
   - examples:client-filename

@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.bigunion.get('id');
+client.bigunion.get(id: 'id');
 ```
 </dd>
 </dl>
@@ -134,7 +134,7 @@ client.bigunion.update_many();
 <dd>
 
 ```ruby
-client.types.get('date-example');
+client.types.get(id: 'date-example');
 ```
 </dd>
 </dl>
@@ -215,7 +215,7 @@ client.types.update();
 <dd>
 
 ```ruby
-client.bigunion.get('id');
+client.bigunion.get(id: 'id');
 ```
 </dd>
 </dl>

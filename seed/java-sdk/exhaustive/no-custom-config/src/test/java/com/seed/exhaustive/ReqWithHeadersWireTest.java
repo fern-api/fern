@@ -48,12 +48,12 @@ public class ReqWithHeadersWireTest {
         // Validate headers
         Assertions.assertEquals(
                 "X-TEST-SERVICE-HEADER",
-                request.getHeader("xTestServiceHeader"),
-                "Header 'xTestServiceHeader' should match expected value");
+                request.getHeader("X-TEST-SERVICE-HEADER"),
+                "Header 'X-TEST-SERVICE-HEADER' should match expected value");
         Assertions.assertEquals(
                 "X-TEST-ENDPOINT-HEADER",
-                request.getHeader("xTestEndpointHeader"),
-                "Header 'xTestEndpointHeader' should match expected value");
+                request.getHeader("X-TEST-ENDPOINT-HEADER"),
+                "Header 'X-TEST-ENDPOINT-HEADER' should match expected value");
         // Validate request body
         String actualRequestBody = request.getBody().readUtf8();
         String expectedRequestBody = "" + "\"string\"";

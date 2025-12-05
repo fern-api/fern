@@ -27,7 +27,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "/test/#{params[:path_param]}/#{params[:service_param]}/#{params[:endpoint_param]}/#{params[:resource_param]}"
+          path: "/test/#{params[:path_param]}/#{params[:service_param]}/#{params[:endpoint_param]}/#{params[:resource_param]}",
+          request_options: request_options
         )
         begin
           response = @client.send(request)

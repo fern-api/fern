@@ -1,4 +1,43 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Add basic preprocessing of names in the IR parser; for starters, `[]` -> `Array`.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-04"
+  version: 3.0.3
+
+- changelogEntry:
+    - summary: |
+        Fix OpenAPI parsing to properly handle `allOf` with `$ref` references inside `oneOf`/`anyOf` schemas. Previously, inline objects with `allOf` references but no direct properties were incorrectly converted to `map<string, any>`. Now they are properly preserved as named types with inheritance.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-04"
+  version: 3.0.2
+
+- changelogEntry:
+    - summary: |
+        Fix `substitute-env-vars` not applying to arrays in docs configuration. The `replaceEnvVariables` function now recursively processes array elements, enabling environment variable substitution in arrays of strings, arrays of objects, and deeply nested array structures (such as navigation items, navbar links, footer links, redirects, etc.).
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.1
+
+- changelogEntry:
+    - summary: |
+        **Breaking Change**: Enable `smart-casing` by default for all generators.
+
+        Smart-casing improves naming conventions in generated SDKs by:
+        - Capitalizing common initialisms like API, HTTP, ID, UUID, URL, HTML, JSON, XML, etc. in camelCase and PascalCase identifiers
+        - Better handling of number-letter combinations (e.g., `v2` stays as `v2` instead of becoming `v_2`, `md5` stays as `md5` instead of `md_5`)
+
+        **Migration Behavior**: The CLI will automatically upgrade your `generators.yml` to explicitly set `smart-casing: false` for all existing generators that don't have it configured. This preserves backwards compatibility for existing projects while enabling the improved naming for new projects.
+
+        **Opting In**: To enable smart-casing for existing generators, remove the `smart-casing: false` line that the migration adds, or explicitly set `smart-casing: true`.
+      type: break
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.0
 
 - changelogEntry:
     - summary: |
@@ -43,7 +82,7 @@
 
 - changelogEntry:
     - summary: |
-        Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`, 
+        Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`,
         environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
         including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
         Use \$\{VAR\} to escape and output literal ${VAR} without substitution.

@@ -27,7 +27,8 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/file/#{params[:filename]}"
+            path: "/file/#{params[:filename]}",
+            request_options: request_options
           )
           begin
             response = @client.send(request)

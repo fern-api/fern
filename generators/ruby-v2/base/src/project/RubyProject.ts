@@ -593,7 +593,12 @@ class ModuleFile {
         });
 
         rubyFilePaths.forEach((filePath) => {
-            relativeImportPaths.add(relative(this.filePath, filePath));
+            // Filter out test files from requires - they should not be loaded in the main lib file
+            const relativePath = relative(this.filePath, filePath);
+            if (relativePath.includes("/test/") || relativePath.startsWith("test/")) {
+                return;
+            }
+            relativeImportPaths.add(relativePath);
         });
 
         const contents =

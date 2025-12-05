@@ -4,7 +4,7 @@ module Seed
   module LangServer
     module Types
       class LangServerResponse < Internal::Types::Model
-        field :response, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: false
+        field :response, -> { Object }, optional: false, nullable: false
       end
     end
   end

@@ -90,4 +90,73 @@ describe("replaceEnvVariables", () => {
         expect(onError).toHaveBeenCalledTimes(0);
         expect(substituted).toEqual("http://${HOST}");
     });
+
+    it("substitutes env vars in arrays of strings", () => {
+        process.env.ARRAY_VAR = "array-value";
+        const content = ["static", "${ARRAY_VAR}", "another-static"];
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(content, { onError });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted).toEqual(["static", "array-value", "another-static"]);
+    });
+
+    it("substitutes env vars in arrays of objects", () => {
+        process.env.TITLE_VAR = "My Title";
+        process.env.URL_VAR = "https://example.com";
+        const content = [
+            { title: "${TITLE_VAR}", url: "${URL_VAR}" },
+            { title: "Static Title", url: "https://static.com" }
+        ];
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(content, { onError });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted).toEqual([
+            { title: "My Title", url: "https://example.com" },
+            { title: "Static Title", url: "https://static.com" }
+        ]);
+    });
+
+    it("substitutes env vars in nested arrays within objects", () => {
+        process.env.NESTED_VAR = "nested-value";
+        const content = {
+            items: [{ name: "${NESTED_VAR}" }, { name: "static" }],
+            links: ["${NESTED_VAR}", "static-link"]
+        };
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(content, { onError });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted).toEqual({
+            items: [{ name: "nested-value" }, { name: "static" }],
+            links: ["nested-value", "static-link"]
+        });
+    });
+
+    it("substitutes env vars in deeply nested arrays", () => {
+        process.env.DEEP_VAR = "deep-value";
+        const content = {
+            level1: {
+                level2: [
+                    {
+                        level3: [{ value: "${DEEP_VAR}" }]
+                    }
+                ]
+            }
+        };
+        const onError = vi.fn();
+        const substituted = replaceEnvVariables(content, { onError });
+
+        expect(onError).toHaveBeenCalledTimes(0);
+        expect(substituted).toEqual({
+            level1: {
+                level2: [
+                    {
+                        level3: [{ value: "deep-value" }]
+                    }
+                ]
+            }
+        });
+    });
 });

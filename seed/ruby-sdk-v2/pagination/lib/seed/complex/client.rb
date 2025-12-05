@@ -31,7 +31,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "#{params[:index]}/conversations/search",
-            body: Seed::Complex::Types::SearchRequest.new(params).to_h
+            body: Seed::Complex::Types::SearchRequest.new(params).to_h,
+            request_options: request_options
           )
           begin
             response = @client.send(request)

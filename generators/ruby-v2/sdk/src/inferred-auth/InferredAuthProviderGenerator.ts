@@ -196,9 +196,11 @@ export class InferredAuthProviderGenerator extends FileGenerator<RubyFile, SdkCu
                 writer.writeLine("}");
                 writer.newLine();
 
-                // Call the token endpoint
+                // Call the token endpoint with request_options containing base_url
                 const endpointMethodName = this.getEndpointMethodName();
-                writer.writeLine(`token_response = @auth_client.${endpointMethodName}(**request_params)`);
+                writer.writeLine(
+                    `token_response = @auth_client.${endpointMethodName}(**request_params, request_options: { base_url: @options[:base_url] })`
+                );
                 writer.newLine();
 
                 // Get the access token from the response

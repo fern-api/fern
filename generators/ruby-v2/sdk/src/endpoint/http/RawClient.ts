@@ -71,6 +71,7 @@ export class RawClient {
                     if (bodyReference != null) {
                         writer.writeLine(`body: ${bodyReference},`);
                     }
+                    writer.writeLine(`request_options: request_options`);
                     writer.dedent();
                     writer.write(`)`);
                 });
@@ -97,6 +98,7 @@ export class RawClient {
                     if (bodyReference != null) {
                         writer.writeLine(`body: ${bodyReference},`);
                     }
+                    writer.writeLine(`request_options: request_options`);
                     writer.dedent();
                     writer.write(`)`);
                 });
@@ -111,7 +113,8 @@ export class RawClient {
             writer.writeLine(`method: "${endpoint.method.toUpperCase()}",`);
             writer.write(`path: `);
             this.writePathString({ writer, endpoint, pathParameterReferences });
-            writer.newLine();
+            writer.writeLine(",");
+            writer.writeLine(`request_options: request_options`);
             writer.dedent();
             writer.write(`)`);
         });

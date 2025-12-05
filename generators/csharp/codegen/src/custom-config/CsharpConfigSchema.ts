@@ -1,6 +1,32 @@
 import { z } from "zod";
 import { CustomReadmeSectionSchema } from "./CustomReadmeSectionSchema";
 
+/**
+ * Schema for configuring output paths for generated C# SDK files.
+ *
+ * Supports either a simple string (all files go to that path) or an object
+ * with specific paths for library, test, solution, and other files.
+ *
+ * Examples:
+ * - Simple: `outputPath: src`
+ * - Object: `outputPath: { library: path/to/src/ApiLib, test: path/to/test/ApiLib.Test }`
+ */
+export const OutputPathSchema = z.union([
+    z.string(),
+    z.object({
+        /** Path for the library project (e.g., "src" or "path/to/src/ApiLib") */
+        library: z.string().optional(),
+        /** Path for the test project (e.g., "src" or "path/to/test/ApiLib.Test") */
+        test: z.string().optional(),
+        /** Path for the solution file (e.g., "." or "path/to") */
+        solution: z.string().optional(),
+        /** Path for other files like README.md and reference.md (e.g., "." or "path/to/src/ApiLib") */
+        other: z.string().optional()
+    })
+]);
+
+export type OutputPathSchema = z.infer<typeof OutputPathSchema>;
+
 export const CsharpConfigSchema = z.object({
     // Influence dynamic snippets.
     namespace: z.string().optional(),
@@ -47,6 +73,11 @@ export const CsharpConfigSchema = z.object({
             })
         )
         .optional(),
+
+    // Output path configuration.
+    // Supports either a simple string (all files go to that path) or an object
+    // with specific paths for library, test, solution, and other files.
+    "output-path": OutputPathSchema.optional(),
 
     // General options.
     "root-client-class-access": z.enum(["public", "internal"]).optional(),

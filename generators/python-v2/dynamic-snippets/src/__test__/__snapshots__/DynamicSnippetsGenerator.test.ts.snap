@@ -119,7 +119,6 @@ client.service.create_movie(
     title="The Boy and the Heron",
     from="Hayao Miyazaki",
     rating=8,
-    type="movie",
     tag="development",
     metadata={
         "actors": [
@@ -272,7 +271,8 @@ client = Acme()
 
 client.service.post(
     file="Hello, world!",
-    file_list=["First", "Second"]
+    file_list=["First", "Second"],
+    maybe_file="example_maybe_file"
 )
 "
 `;

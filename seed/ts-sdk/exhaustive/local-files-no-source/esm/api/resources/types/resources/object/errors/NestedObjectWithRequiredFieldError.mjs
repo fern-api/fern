@@ -8,6 +8,10 @@ export class NestedObjectWithRequiredFieldError extends errors.SeedExhaustiveErr
             body: body,
             rawResponse: rawResponse,
         });
-        Object.setPrototypeOf(this, NestedObjectWithRequiredFieldError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+        this.name = this.constructor.name;
     }
 }
