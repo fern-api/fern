@@ -187,7 +187,7 @@ describe("ZodFormat AST Generation", () => {
             expect(ast).toMatchSnapshot();
         });
 
-        it("set() generates z.array().transform()", () => {
+        it("set() generates z.array()", () => {
             const schema = zod.set(zod.number());
             const ast = printNode(schema.toExpression());
             expect(ast).toMatchSnapshot();
