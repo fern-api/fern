@@ -72,10 +72,7 @@ module Seed
                   # Validate that all required (non-optional) fields are present
                   # This ensures undiscriminated unions properly distinguish between member types
                   member_type.fields.each do |field_name, field|
-                    if candidate.instance_variable_get(:@data)[field_name].nil? && !field.optional
-                      raise Errors::TypeError,
-                            "Required field `#{field_name}` missing for union member #{member_type.name}"
-                    end
+                    raise Errors::TypeError, "Required field `#{field_name}` missing for union member #{member_type.name}" if candidate.instance_variable_get(:@data)[field_name].nil? && !field.optional
                   end
 
                   true

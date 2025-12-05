@@ -21,7 +21,7 @@ module Seed
       # @return [Array[String]]
       def get_homepage_problems(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/homepage-problems",
           request_options: request_options
@@ -49,7 +49,7 @@ module Seed
       # @return [untyped]
       def set_homepage_problems(request_options: {}, **params)
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/homepage-problems",
           body: params,

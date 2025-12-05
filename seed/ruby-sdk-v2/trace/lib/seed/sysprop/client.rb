@@ -23,7 +23,7 @@ module Seed
       # @return [untyped]
       def set_num_warm_instances(request_options: {}, **params)
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          base_url: request_options[:base_url],
           method: "PUT",
           path: "/sysprop/num-warm-instances/#{params[:language]}/#{params[:num_warm_instances]}",
           request_options: request_options
@@ -51,7 +51,7 @@ module Seed
       # @return [Hash[Seed::Commons::Types::Language, Integer]]
       def get_num_warm_instances(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PROD,
+          base_url: request_options[:base_url],
           method: "GET",
           path: "/sysprop/num-warm-instances",
           request_options: request_options

@@ -6,12 +6,8 @@ module Seed
       module Problem
         module Types
           class NonVoidFunctionDefinition < Internal::Types::Model
-            field :signature, -> {
-              Seed::V2::V3::Problem::Types::NonVoidFunctionSignature
-            }, optional: false, nullable: false
-            field :code, -> {
-              Seed::V2::V3::Problem::Types::FunctionImplementationForMultipleLanguages
-            }, optional: false, nullable: false
+            field :signature, -> { Seed::V2::V3::Problem::Types::NonVoidFunctionSignature }, optional: false, nullable: false
+            field :code, -> { Seed::V2::V3::Problem::Types::FunctionImplementationForMultipleLanguages }, optional: false, nullable: false
           end
         end
       end

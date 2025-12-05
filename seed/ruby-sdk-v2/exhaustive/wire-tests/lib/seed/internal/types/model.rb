@@ -112,7 +112,7 @@ module Seed
             end
           end
 
-          def coerce(value, strict: (respond_to?(:strict?) ? strict? : false))
+          def coerce(value, strict: (respond_to?(:strict?) ? strict? : false)) # rubocop:disable Lint/UnusedMethodArgument
             return value if value.is_a?(self)
 
             return value unless value.is_a?(::Hash)

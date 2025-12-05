@@ -4,9 +4,7 @@ module Seed
   module Submission
     module Types
       class WorkspaceSubmissionStatusV2 < Internal::Types::Model
-        field :updates, -> {
-          Internal::Types::Array[Seed::Submission::Types::WorkspaceSubmissionUpdate]
-        }, optional: false, nullable: false
+        field :updates, -> { Internal::Types::Array[Seed::Submission::Types::WorkspaceSubmissionUpdate] }, optional: false, nullable: false
       end
     end
   end

@@ -4,9 +4,9 @@ require "minitest/autorun"
 require "stringio"
 require "json"
 require "test_helper"
-require "ostruct"
 
 NUMBERS = (1..65).to_a
+PageResponse = Struct.new(:cards, :next_cursor, keyword_init: true)
 
 class CursorItemIteratorTest < Minitest::Test
   def make_iterator(initial_cursor:)
@@ -16,7 +16,7 @@ class CursorItemIteratorTest < Minitest::Test
       @times_called += 1
       cursor ||= 0
       next_cursor = cursor + 10
-      OpenStruct.new(
+      PageResponse.new(
         cards: NUMBERS[cursor...next_cursor],
         next_cursor: next_cursor < NUMBERS.length ? next_cursor : nil
       )

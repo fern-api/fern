@@ -39,6 +39,14 @@ module Seed
           value
         end
 
+        # Parse JSON string and coerce to the enum value
+        #
+        # @param str [String] JSON string to parse
+        # @return [String] The enum value
+        def load(str)
+          coerce(::JSON.parse(str))
+        end
+
         def inspect
           "#{name}[#{values.join(", ")}]"
         end

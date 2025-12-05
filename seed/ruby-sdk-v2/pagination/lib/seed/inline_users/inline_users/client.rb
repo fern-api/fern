@@ -44,7 +44,8 @@ module Seed
               base_url: request_options[:base_url],
               method: "GET",
               path: "/inline-users",
-              query: query_params
+              query: query_params,
+              request_options: request_options
             )
             begin
               response = @client.send(request)
@@ -88,7 +89,8 @@ module Seed
               base_url: request_options[:base_url],
               method: "POST",
               path: "/inline-users",
-              query: query_params
+              query: query_params,
+              request_options: request_options
             )
             begin
               response = @client.send(request)
@@ -128,7 +130,8 @@ module Seed
               base_url: request_options[:base_url],
               method: "POST",
               path: "/inline-users",
-              body: Seed::InlineUsers::InlineUsers::Types::ListUsersBodyCursorPaginationRequest.new(body_bag).to_h
+              body: Seed::InlineUsers::InlineUsers::Types::ListUsersBodyCursorPaginationRequest.new(body_bag).to_h,
+              request_options: request_options
             )
             begin
               response = @client.send(request)
@@ -179,7 +182,8 @@ module Seed
               base_url: request_options[:base_url],
               method: "GET",
               path: "/inline-users",
-              query: query_params
+              query: query_params,
+              request_options: request_options
             )
             begin
               response = @client.send(request)
@@ -230,7 +234,8 @@ module Seed
               base_url: request_options[:base_url],
               method: "GET",
               path: "/inline-users",
-              query: query_params
+              query: query_params,
+              request_options: request_options
             )
             begin
               response = @client.send(request)
@@ -271,7 +276,8 @@ module Seed
               base_url: request_options[:base_url],
               method: "POST",
               path: "/inline-users",
-              body: Seed::InlineUsers::InlineUsers::Types::ListUsersBodyOffsetPaginationRequest.new(body_bag).to_h
+              body: Seed::InlineUsers::InlineUsers::Types::ListUsersBodyOffsetPaginationRequest.new(body_bag).to_h,
+              request_options: request_options
             )
             begin
               response = @client.send(request)
@@ -320,7 +326,8 @@ module Seed
               base_url: request_options[:base_url],
               method: "GET",
               path: "/inline-users",
-              query: query_params
+              query: query_params,
+              request_options: request_options
             )
             begin
               response = @client.send(request)
@@ -369,7 +376,8 @@ module Seed
               base_url: request_options[:base_url],
               method: "GET",
               path: "/inline-users",
-              query: query_params
+              query: query_params,
+              request_options: request_options
             )
             begin
               response = @client.send(request)
@@ -413,7 +421,8 @@ module Seed
               base_url: request_options[:base_url],
               method: "GET",
               path: "/inline-users",
-              query: query_params
+              query: query_params,
+              request_options: request_options
             )
             begin
               response = @client.send(request)
@@ -457,7 +466,8 @@ module Seed
               base_url: request_options[:base_url],
               method: "GET",
               path: "/inline-users",
-              query: query_params
+              query: query_params,
+              request_options: request_options
             )
             begin
               response = @client.send(request)
@@ -501,7 +511,8 @@ module Seed
               base_url: request_options[:base_url],
               method: "GET",
               path: "/inline-users",
-              query: query_params
+              query: query_params,
+              request_options: request_options
             )
             begin
               response = @client.send(request)
@@ -546,7 +557,8 @@ module Seed
               base_url: request_options[:base_url],
               method: "GET",
               path: "/inline-users",
-              query: query_params
+              query: query_params,
+              request_options: request_options
             )
             begin
               response = @client.send(request)

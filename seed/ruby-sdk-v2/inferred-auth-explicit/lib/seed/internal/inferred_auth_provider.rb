@@ -20,7 +20,7 @@ module Seed
       # Refreshes the token if it's nil, or if we're within the buffer period before expiration.
       #
       # @return [String]
-      def get_token
+      def token
         return refresh if @access_token.nil? || token_needs_refresh?
 
         @access_token
@@ -29,10 +29,10 @@ module Seed
       # Returns the authentication headers to be included in requests.
       #
       # @return [Hash[String, String]]
-      def get_auth_headers
-        token = get_token
+      def auth_headers
+        access_token = token
         {
-          "Authorization" => "Bearer #{token}"
+          "Authorization" => "Bearer #{access_token}"
         }
       end
       # Checks if the token needs to be refreshed.
@@ -57,8 +57,7 @@ module Seed
           scope: @options[:scope]
         }
 
-        token_response = @auth_client.get_token_with_client_credentials(**request_params,
-request_options: { base_url: @options[:base_url] })
+        token_response = @auth_client.get_token_with_client_credentials(**request_params, request_options: { base_url: @options[:base_url] })
 
         @access_token = token_response.access_token
         @expires_at = Time.now + token_response.expires_in

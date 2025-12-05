@@ -6,9 +6,7 @@ module Seed
       module Problem
         module Types
           class TestCaseImplementation < Internal::Types::Model
-            field :description, -> {
-              Seed::V2::V3::Problem::Types::TestCaseImplementationDescription
-            }, optional: false, nullable: false
+            field :description, -> { Seed::V2::V3::Problem::Types::TestCaseImplementationDescription }, optional: false, nullable: false
             field :function, -> { Seed::V2::V3::Problem::Types::TestCaseFunction }, optional: false, nullable: false
           end
         end

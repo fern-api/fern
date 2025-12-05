@@ -30,8 +30,7 @@ module Seed
       # @return [Seed::Types::SendResponse]
       def send_(request_options: {}, **params)
         params = Seed::Internal::Types::Utils.symbolize_keys(params)
-        query_param_names = %i[prompt optional_prompt alias_prompt alias_optional_prompt query stream optional_stream
-                               alias_stream alias_optional_stream]
+        query_param_names = %i[prompt optional_prompt alias_prompt alias_optional_prompt query stream optional_stream alias_stream alias_optional_stream]
         query_params = {}
         query_params["prompt"] = params[:prompt] if params.key?(:prompt)
         query_params["optional_prompt"] = params[:optional_prompt] if params.key?(:optional_prompt)
@@ -48,7 +47,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "query",
-          query: query_params
+          query: query_params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

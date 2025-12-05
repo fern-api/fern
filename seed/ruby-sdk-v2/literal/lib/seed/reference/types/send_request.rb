@@ -10,9 +10,7 @@ module Seed
         field :ending, -> { String }, optional: false, nullable: false
         field :context, -> { String }, optional: false, nullable: false
         field :maybe_context, -> { String }, optional: true, nullable: false, api_name: "maybeContext"
-        field :container_object, -> {
-          Seed::Reference::Types::ContainerObject
-        }, optional: false, nullable: false, api_name: "containerObject"
+        field :container_object, -> { Seed::Reference::Types::ContainerObject }, optional: false, nullable: false, api_name: "containerObject"
       end
     end
   end

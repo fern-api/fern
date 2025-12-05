@@ -10,12 +10,8 @@ module Seed
         field :password, -> { String }, optional: true, nullable: false
         field :phone_number, -> { String }, optional: true, nullable: false
         field :phone_verified, -> { Internal::Types::Boolean }, optional: true, nullable: false
-        field :user_metadata, -> {
-          Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
-        }, optional: true, nullable: false
-        field :app_metadata, -> {
-          Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
-        }, optional: true, nullable: false
+        field :user_metadata, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
+        field :app_metadata, -> { Internal::Types::Hash[String, Object] }, optional: true, nullable: false
         field :connection, -> { String }, optional: false, nullable: false
       end
     end
