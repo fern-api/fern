@@ -366,7 +366,8 @@ describe("ZodFormat AST Generation", () => {
                 allowUnrecognizedUnionMembers: false,
                 allowUnrecognizedEnumValues: false,
                 skipValidation: false,
-                omitUndefined: false
+                omitUndefined: false,
+                breadcrumbsPrefix: []
             });
             const ast = printNode(jsonExpr);
             // Should generate Array.from(value)
@@ -382,7 +383,8 @@ describe("ZodFormat AST Generation", () => {
                 allowUnrecognizedUnionMembers: false,
                 allowUnrecognizedEnumValues: false,
                 skipValidation: false,
-                omitUndefined: false
+                omitUndefined: false,
+                breadcrumbsPrefix: []
             });
             const ast = printNode(jsonExpr);
             // Should generate: value !== null ? Array.from(value) : value
@@ -426,7 +428,8 @@ describe("ZodFormat AST Generation", () => {
                 allowUnrecognizedUnionMembers: false,
                 allowUnrecognizedEnumValues: false,
                 skipValidation: false,
-                omitUndefined: false
+                omitUndefined: false,
+                breadcrumbsPrefix: []
             });
             // Should just return the value as-is
             expect(printNode(jsonExpr)).toBe("value");
