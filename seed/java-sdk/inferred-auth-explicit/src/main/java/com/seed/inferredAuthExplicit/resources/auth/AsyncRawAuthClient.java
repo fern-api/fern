@@ -14,8 +14,6 @@ import com.seed.inferredAuthExplicit.resources.auth.requests.GetTokenRequest;
 import com.seed.inferredAuthExplicit.resources.auth.requests.RefreshTokenRequest;
 import com.seed.inferredAuthExplicit.resources.auth.types.TokenResponse;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -46,18 +44,10 @@ public class AsyncRawAuthClient {
                 .newBuilder()
                 .addPathSegments("token")
                 .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("client_id", request.getClientId());
-        properties.put("client_secret", request.getClientSecret());
-        properties.put("audience", request.getAudience());
-        properties.put("grant_type", request.getGrantType());
-        if (request.getScope().isPresent()) {
-            properties.put("scope", request.getScope());
-        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -78,18 +68,16 @@ public class AsyncRawAuthClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedInferredAuthExplicitHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), TokenResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TokenResponse.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedInferredAuthExplicitApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
@@ -117,19 +105,10 @@ public class AsyncRawAuthClient {
                 .newBuilder()
                 .addPathSegments("token/refresh")
                 .build();
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("client_id", request.getClientId());
-        properties.put("client_secret", request.getClientSecret());
-        properties.put("refresh_token", request.getRefreshToken());
-        properties.put("audience", request.getAudience());
-        properties.put("grant_type", request.getGrantType());
-        if (request.getScope().isPresent()) {
-            properties.put("scope", request.getScope());
-        }
         RequestBody body;
         try {
             body = RequestBody.create(
-                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(request), MediaTypes.APPLICATION_JSON);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -150,18 +129,16 @@ public class AsyncRawAuthClient {
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 try (ResponseBody responseBody = response.body()) {
+                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
                     if (response.isSuccessful()) {
                         future.complete(new SeedInferredAuthExplicitHttpResponse<>(
-                                ObjectMappers.JSON_MAPPER.readValue(responseBody.string(), TokenResponse.class),
+                                ObjectMappers.JSON_MAPPER.readValue(responseBodyString, TokenResponse.class),
                                 response));
                         return;
                     }
-                    String responseBodyString = responseBody != null ? responseBody.string() : "{}";
+                    Object errorBody = ObjectMappers.parseErrorBody(responseBodyString);
                     future.completeExceptionally(new SeedInferredAuthExplicitApiException(
-                            "Error with status code " + response.code(),
-                            response.code(),
-                            ObjectMappers.JSON_MAPPER.readValue(responseBodyString, Object.class),
-                            response));
+                            "Error with status code " + response.code(), response.code(), errorBody, response));
                     return;
                 } catch (IOException e) {
                     future.completeExceptionally(
