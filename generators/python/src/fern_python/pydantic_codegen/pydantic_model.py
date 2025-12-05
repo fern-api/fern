@@ -6,7 +6,7 @@ from typing import Callable, List, Literal, Optional, Sequence, Tuple, Type, Uni
 
 from .pydantic_field import PydanticField
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
-from fern_python.codegen.ast.nodes.docstring import escape_docstring
+from fern_python.codegen.ast.nodes.docstring import Docstring, escape_docstring
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
 from pydantic import BaseModel
@@ -118,14 +118,6 @@ class PydanticModel:
             else field.default_value
         )
 
-        initializer = get_field_name_initializer(
-            alias=field.json_field_name if (is_aliased and self._use_pydantic_field_aliases) else None,
-            default_factory=field.default_factory,
-            description=field.description,
-            default=default_value,
-            version=self._version,
-        )
-
         if is_aliased and not self._use_pydantic_field_aliases:
             field_metadata = self._field_metadata_getter().get_instance()
             field_metadata.add_alias(field.json_field_name)
@@ -135,15 +127,56 @@ class PydanticModel:
                 annotation=field_metadata.get_as_node(),
             )
 
-            prev_fields = field.__dict__
-            del prev_fields["type_hint"]
-            field = PydanticField(
-                **(field.__dict__),
-                type_hint=aliased_type_hint,
+            field = dataclasses.replace(field, type_hint=aliased_type_hint)
+
+            initializer = get_field_name_initializer(
+                alias=None,
+                default_factory=field.default_factory,
+                description=None,
+                default=default_value,
+                version=self._version,
+            )
+
+        elif is_aliased and self._use_pydantic_field_aliases:
+            field_metadata_expr = get_field_metadata_expression(
+                alias=field.json_field_name,
+                default_factory=field.default_factory,
+                version=self._version,
+            )
+
+            if field_metadata_expr is not None:
+                field = dataclasses.replace(
+                    field,
+                    type_hint=AST.TypeHint.annotated(
+                        type=field.type_hint,
+                        annotation=field_metadata_expr,
+                    ),
+                )
+
+            # For aliased fields, rely on the Field metadata for default_factory.
+            # If there is an explicit default value, keep it as the Python initializer.
+            if default_value is not None and field.default_factory is None:
+                initializer = default_value
+            else:
+                initializer = None
+
+        # Non-aliased fields continue to use the existing initializer behavior.
+        else:
+            initializer = get_field_name_initializer(
+                alias=None,
+                default_factory=field.default_factory,
+                description=None,
+                default=default_value,
+                version=self._version,
             )
 
         self._class_declaration.add_class_var(
-            AST.VariableDeclaration(name=field.name, type_hint=field.type_hint, initializer=initializer)
+            AST.VariableDeclaration(
+                name=field.name,
+                type_hint=field.type_hint,
+                initializer=initializer,
+                docstring=Docstring(escape_docstring(field.description)) if field.description is not None else None,
+            )
         )
 
         self._fields.append(field)
@@ -606,11 +639,32 @@ def get_field_name_initializer(
             writer.write("default_factory=")
             writer.write_node(default_factory)
         writer.write(")")
-        if description is not None:
-            writer.write_newline_if_last_line_not()
-            writer.write_line('"""')
-            writer.write_line(escape_docstring(description))
-            writer.write_line('"""')
+
+    return AST.Expression(AST.CodeWriter(write))
+
+
+def get_field_metadata_expression(
+    *,
+    alias: Optional[str],
+    default_factory: Optional[AST.Expression],
+    version: PydanticVersionCompatibility,
+) -> Optional[AST.Expression]:
+    if alias is None and default_factory is None:
+        return None
+
+    def write(writer: AST.NodeWriter) -> None:
+        writer.write_reference(Pydantic(version).Field())
+        writer.write("(")
+        arg_present = False
+        if alias is not None:
+            arg_present = True
+            writer.write(f'alias="{alias}"')
+        if default_factory is not None:
+            if arg_present:
+                writer.write(", ")
+            writer.write("default_factory=")
+            writer.write_node(default_factory)
+        writer.write(")")
 
     return AST.Expression(AST.CodeWriter(write))
 
