@@ -187,6 +187,17 @@ export class DynamicSnippetsGeneratorContext extends AbstractDynamicSnippetsGene
         return true;
     }
 
+    public hasMultipleBaseUrlEnvironments(): boolean {
+        if (this.ir.environments == null) {
+            return false;
+        }
+        return this.ir.environments.environments.type === "multipleBaseUrls";
+    }
+
+    public getDefaultEnvironmentId(): string | undefined {
+        return this.ir.environments?.defaultEnvironment;
+    }
+
     private cleanOrganizationName(): string {
         return this.config.organization.replace(/[^a-zA-Z0-9]/g, "_");
     }
