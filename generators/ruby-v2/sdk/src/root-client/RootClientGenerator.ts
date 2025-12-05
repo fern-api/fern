@@ -79,13 +79,20 @@ export class RootClientGenerator extends FileGenerator<RubyFile, SdkCustomConfig
             method.addStatement(this.getInferredAuthInitializationStatement(inferredAuth));
         }
 
+        const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
+
         method.addStatement(
             ruby.codeblock((writer) => {
                 writer.write(`@raw_client = `);
                 writer.writeNode(this.context.getRawClientClassReference());
                 writer.writeLine(`.new(`);
                 writer.indent();
-                writer.writeLine(`base_url: base_url,`);
+                writer.write(`base_url: base_url`);
+                if (defaultEnvironmentReference != null) {
+                    writer.write(" || ");
+                    writer.writeNode(defaultEnvironmentReference);
+                }
+                writer.writeLine(`,`);
                 writer.write(`headers: `);
                 writer.writeNode(this.getRawClientHeaders());
                 if (inferredAuth != null) {
