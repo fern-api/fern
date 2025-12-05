@@ -162,18 +162,24 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             this.${TOKEN_OVERRIDE_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${tokenOverridePropertyName};
             this.${CLIENT_ID_FIELD_NAME} = undefined;
             this.${CLIENT_SECRET_FIELD_NAME} = undefined;
+            this.${AUTH_CLIENT_FIELD_NAME} = undefined;
+        } else {
+            this.${TOKEN_OVERRIDE_FIELD_NAME} = undefined;
+            if (${OPTIONS_PARAM_NAME}.${CLIENT_ID_VAR_NAME} == null) {
+                throw new ${errorConstructor}({
+                    message: "${CLIENT_ID_VAR_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}."
+                });
+            }
+            this.${CLIENT_ID_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_ID_VAR_NAME};
+            if (${OPTIONS_PARAM_NAME}.${CLIENT_SECRET_VAR_NAME} == null) {
+                throw new ${errorConstructor}({
+                    message: "${CLIENT_SECRET_VAR_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}."
+                });
+            }
+            this.${CLIENT_SECRET_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_SECRET_VAR_NAME};
             this.${AUTH_CLIENT_FIELD_NAME} = new ${authClientType}(${OPTIONS_PARAM_NAME});
-            this.${EXPIRES_AT_FIELD_NAME} = new Date();
-            return;
         }
-        this.${TOKEN_OVERRIDE_FIELD_NAME} = undefined;
-        if (!${CLASS_NAME}.hasClientCredentials(${OPTIONS_PARAM_NAME})) {
-            throw new ${errorConstructor}({
-                message: "${CLIENT_ID_VAR_NAME} and ${CLIENT_SECRET_VAR_NAME} are required. Please provide them in ${OPTIONS_PARAM_NAME}."
-            });
-        }
-        this.${CLIENT_ID_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_ID_VAR_NAME};
-        this.${CLIENT_SECRET_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_SECRET_VAR_NAME};`;
+        this.${EXPIRES_AT_FIELD_NAME} = new Date();`;
         } else {
             // Without token override, we can access clientId and clientSecret directly
             if (!clientIdIsOptional) {
@@ -207,12 +213,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
             constructorStatements += `
         this.${CLIENT_SECRET_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_SECRET_VAR_NAME};`;
-        }
 
-        constructorStatements += `
+            constructorStatements += `
         this.${AUTH_CLIENT_FIELD_NAME} = new ${authClientType}(${OPTIONS_PARAM_NAME});
         this.${EXPIRES_AT_FIELD_NAME} = new Date();
         `;
+        }
 
         const supplierType = getTextOfTsNode(
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(
@@ -250,7 +256,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             },
             {
                 name: AUTH_CLIENT_FIELD_NAME,
-                type: authClientType,
+                type: hasTokenOverride ? `${authClientType} | undefined` : authClientType,
                 isReadonly: true,
                 scope: Scope.Private
             },
@@ -411,10 +417,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             : `
         const clientSecret = ${clientSecretSupplierCall};`;
 
-        // When token override is enabled, add a guard to narrow the types for _clientId and _clientSecret
+        // When token override is enabled, add a guard to narrow the types for _clientId, _clientSecret, and _authClient
         const tokenOverrideGuard = hasTokenOverride
             ? `
-                if (this._clientId == null || this._clientSecret == null) {
+                if (this._clientId == null || this._clientSecret == null || this._authClient == null) {
                     throw new Error("OAuthAuthProvider is misconfigured: clientId and clientSecret are required when token override is not used.");
                 }`
             : "";

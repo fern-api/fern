@@ -10,7 +10,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
     private readonly _tokenOverride: core.Supplier<string> | undefined;
     private readonly _clientId: core.Supplier<string> | undefined;
     private readonly _clientSecret: core.Supplier<string> | undefined;
-    private readonly _authClient: AuthClient;
+    private readonly _authClient: AuthClient | undefined;
     private _accessToken: string | undefined;
     private _expiresAt: Date;
     private _refreshPromise: Promise<string> | undefined;
@@ -20,19 +20,23 @@ export class OAuthAuthProvider implements core.AuthProvider {
             this._tokenOverride = options.token;
             this._clientId = undefined;
             this._clientSecret = undefined;
+            this._authClient = undefined;
+        } else {
+            this._tokenOverride = undefined;
+            if (options.clientId == null) {
+                throw new errors.SeedOauthClientCredentialsError({
+                    message: "clientId is required. Please provide it in options.",
+                });
+            }
+            this._clientId = options.clientId;
+            if (options.clientSecret == null) {
+                throw new errors.SeedOauthClientCredentialsError({
+                    message: "clientSecret is required. Please provide it in options.",
+                });
+            }
+            this._clientSecret = options.clientSecret;
             this._authClient = new AuthClient(options);
-            this._expiresAt = new Date();
-            return;
         }
-        this._tokenOverride = undefined;
-        if (!OAuthAuthProvider.hasClientCredentials(options)) {
-            throw new errors.SeedOauthClientCredentialsError({
-                message: "clientId and clientSecret are required. Please provide them in options.",
-            });
-        }
-        this._clientId = options.clientId;
-        this._clientSecret = options.clientSecret;
-        this._authClient = new AuthClient(options);
         this._expiresAt = new Date();
     }
 
@@ -69,7 +73,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
     private async refresh(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<string> {
         this._refreshPromise = (async () => {
             try {
-                if (this._clientId == null || this._clientSecret == null) {
+                if (this._clientId == null || this._clientSecret == null || this._authClient == null) {
                     throw new Error(
                         "OAuthAuthProvider is misconfigured: clientId and clientSecret are required when token override is not used.",
                     );
