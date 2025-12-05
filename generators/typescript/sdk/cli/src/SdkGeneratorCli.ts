@@ -40,12 +40,8 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
         // Resolve serialization format from new option or legacy noSerdeLayer
         // Note: SDK defaults to noSerdeLayer: true (no serialization) for backward compatibility
-        // TODO: Add serializationFormat to TypescriptCustomConfigSchema in @fern-api/typescript-ast
-        const parsedWithFormat = parsed as
-            | (typeof parsed & { serializationFormat?: SerializationFormatType })
-            | undefined;
         const serializationFormat = SerializationPipeline.resolveFormatType({
-            serializationFormat: parsedWithFormat?.serializationFormat,
+            serializationFormat: parsed?.serializationFormat,
             noSerdeLayer: parsed?.noSerdeLayer ?? true
         });
         const noSerdeLayer = serializationFormat === "none";
