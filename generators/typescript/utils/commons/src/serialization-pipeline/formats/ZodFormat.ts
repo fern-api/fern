@@ -440,25 +440,14 @@ export class ZodFormat implements SerializationFormat {
     };
 
     public set = (itemSchema: Schema): SchemaWithUtils => {
-        // JSON wire format uses arrays for sets, so we parse array and transform to Set
+        // JSON wire format uses arrays for sets
+        // We keep as array (not transform to Set) because:
+        // 1. JSON.stringify(Set) produces "{}" which breaks serialization
+        // 2. Arrays are JSON-compatible and work bidirectionally
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => {
-                // z.array(itemSchema).transform(arr => new Set(arr))
-                const arraySchema = this.zodCall("array", [itemSchema.toExpression()]);
-                const transformFn = ts.factory.createArrowFunction(
-                    undefined,
-                    undefined,
-                    [ts.factory.createParameterDeclaration(undefined, undefined, undefined, "arr")],
-                    undefined,
-                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                    ts.factory.createNewExpression(ts.factory.createIdentifier("Set"), undefined, [
-                        ts.factory.createIdentifier("arr")
-                    ])
-                );
-                return chainMethod(arraySchema, "transform", [transformFn]);
-            }
+            toExpression: () => this.zodCall("array", [itemSchema.toExpression()])
         };
 
         return {
@@ -467,11 +456,13 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public record = ({ keySchema, valueSchema }: { keySchema: Schema; valueSchema: Schema }): SchemaWithUtils => {
+    public record = ({ keySchema: _keySchema, valueSchema }: { keySchema: Schema; valueSchema: Schema }): SchemaWithUtils => {
+        // JSON object keys are always strings, so we use z.string() for the key
+        // regardless of the declared key type (e.g., even if Fern declares map<integer, string>)
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => this.zodCall("record", [keySchema.toExpression(), valueSchema.toExpression()])
+            toExpression: () => this.zodCall("record", [this.zodCall("string"), valueSchema.toExpression()])
         };
 
         return {
