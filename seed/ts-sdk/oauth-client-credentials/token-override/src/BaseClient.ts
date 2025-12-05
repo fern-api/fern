@@ -42,7 +42,9 @@ export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
     authProvider?: core.AuthProvider;
 };
 
-export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
+export type OAuthBaseClientOptions = BaseClientOptions & OAuthAuthProvider.OAuthAuthOptions;
+
+export type NormalizedClientOptionsWithAuth<T extends OAuthBaseClientOptions> = NormalizedClientOptions<T> & {
     authProvider: core.AuthProvider;
 };
 
@@ -66,16 +68,16 @@ export function normalizeClientOptions<T extends BaseClientOptions>(options: T):
     } as NormalizedClientOptions<T>;
 }
 
-export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
+export function normalizeClientOptionsWithAuth<T extends OAuthBaseClientOptions>(
     options: T,
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
-    normalized.authProvider ??= new OAuthAuthProvider(normalizedWithNoOpAuthProvider as OAuthAuthProvider.Options);
+    normalized.authProvider ??= new OAuthAuthProvider(normalizedWithNoOpAuthProvider);
     return normalized;
 }
 
-function withNoOpAuthProvider<T extends BaseClientOptions>(
+function withNoOpAuthProvider<T extends OAuthBaseClientOptions>(
     options: NormalizedClientOptions<T>,
 ): NormalizedClientOptionsWithAuth<T> {
     return {

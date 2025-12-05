@@ -149,6 +149,7 @@ export function normalizeClientOptions<T extends BaseClientOptions>(
 
     private generateNormalizedClientOptionsTypes(context: SdkContext): void {
         const shouldGenerateAuthCode = this.shouldGenerateAuthCode();
+        const hasOAuthWithTokenOverride = this.hasOAuthScheme() && this.oauthTokenOverridePropertyName !== undefined;
 
         // Generate NormalizedClientOptions with optional authProvider only if auth is configured
         const authProviderProperty = shouldGenerateAuthCode
@@ -162,14 +163,35 @@ export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
 
         // Only generate NormalizedClientOptionsWithAuth if there are auth schemes
         if (shouldGenerateAuthCode) {
-            typesCode += `
+            // When OAuth with token override is enabled, use OAuthAuthProvider.OAuthAuthOptions
+            // to properly capture the union type in the generic bounds
+            if (hasOAuthWithTokenOverride) {
+                context.sourceFile.addImportDeclaration({
+                    moduleSpecifier: "./auth/OAuthAuthProvider.js",
+                    namedImports: ["OAuthAuthProvider"]
+                });
+
+                typesCode += `
+
+export type OAuthBaseClientOptions = BaseClientOptions & OAuthAuthProvider.OAuthAuthOptions;
+
+export type NormalizedClientOptionsWithAuth<T extends OAuthBaseClientOptions> = NormalizedClientOptions<T> & {
+    authProvider: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};
+}`;
+            } else {
+                typesCode += `
 
 export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
     authProvider: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};
 }`;
+            }
         }
 
         context.sourceFile.addStatements(typesCode);
+    }
+
+    private hasOAuthScheme(): boolean {
+        return this.ir.auth.schemes.some((scheme) => scheme.type === "oauth");
     }
 
     private generateNormalizeClientOptionsWithAuthFunction(context: SdkContext): void {
@@ -263,14 +285,7 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                         moduleSpecifier: "./auth/OAuthAuthProvider.js",
                         namedImports: ["OAuthAuthProvider"]
                     });
-                    // When token override is enabled, we need to cast to OAuthAuthProvider.Options
-                    // because the generic T extends BaseClientOptions doesn't capture the union type
-                    if (this.oauthTokenOverridePropertyName !== undefined) {
-                        authProviderCreation =
-                            "new OAuthAuthProvider(normalizedWithNoOpAuthProvider as OAuthAuthProvider.Options)";
-                    } else {
-                        authProviderCreation = "new OAuthAuthProvider(normalizedWithNoOpAuthProvider)";
-                    }
+                    authProviderCreation = "new OAuthAuthProvider(normalizedWithNoOpAuthProvider)";
                     break;
                 } else if (authScheme.type === "inferred") {
                     context.sourceFile.addImportDeclaration({
@@ -288,8 +303,13 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
             return;
         }
 
+        // When OAuth with token override is enabled, use OAuthBaseClientOptions in the generic bounds
+        // to properly capture the union type
+        const hasOAuthWithTokenOverride = this.hasOAuthScheme() && this.oauthTokenOverridePropertyName !== undefined;
+        const baseOptionsType = hasOAuthWithTokenOverride ? "OAuthBaseClientOptions" : "BaseClientOptions";
+
         const functionCode = `
-export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
+export function normalizeClientOptionsWithAuth<T extends ${baseOptionsType}>(
     ${OPTIONS_PARAMETER_NAME}: T
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(${OPTIONS_PARAMETER_NAME}) as NormalizedClientOptionsWithAuth<T>;
@@ -298,7 +318,7 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
     return normalized;
 }
 
-function withNoOpAuthProvider<T extends BaseClientOptions>(
+function withNoOpAuthProvider<T extends ${baseOptionsType}>(
     options: NormalizedClientOptions<T>
 ): NormalizedClientOptionsWithAuth<T> {
     return {
