@@ -600,6 +600,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         }
     },
