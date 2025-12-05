@@ -502,7 +502,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 returnType: "Promise<string>",
                 parameters: [
                     {
-                        name: "_arg?",
+                        name: "arg?",
                         type: getTextOfTsNode(
                             ts.factory.createTypeLiteralNode([
                                 ts.factory.createPropertySignature(
