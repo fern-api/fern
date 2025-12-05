@@ -145,6 +145,7 @@
       "displayName": "UnauthorizedError",
       "docs": "Unauthorized",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "GetProtectedApiKeyRequestUnauthorizedError",
@@ -237,6 +238,7 @@
       "displayName": "UnauthorizedError",
       "docs": "Unauthorized",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "GetProtectedTokenRequestUnauthorizedError",
