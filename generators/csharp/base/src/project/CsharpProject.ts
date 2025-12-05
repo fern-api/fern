@@ -219,13 +219,9 @@ export class CsharpProject extends AbstractProject<GeneratorContext> {
             absolutePathToProjectDirectory
         });
 
-        for (const file of this.sourceFiles) {
-            await file.write(absolutePathToProjectDirectory);
-        }
+        await Promise.all(this.sourceFiles.map((file) => file.write(absolutePathToProjectDirectory)));
 
-        for (const file of this.testFiles) {
-            await file.write(absolutePathToTestProjectDirectory);
-        }
+        await Promise.all(this.testFiles.map((file) => file.write(absolutePathToTestProjectDirectory)));
 
         await this.createRawFiles();
 
@@ -479,9 +475,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToCoreDirectory}`);
         await mkdir(absolutePathToCoreDirectory, { recursive: true });
 
-        for (const file of this.coreFiles) {
-            await file.write(absolutePathToCoreDirectory);
-        }
+        await Promise.all(this.coreFiles.map((file) => file.write(absolutePathToCoreDirectory)));
 
         return absolutePathToCoreDirectory;
     }
@@ -498,9 +492,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToCoreTestDirectory}`);
         await mkdir(absolutePathToCoreTestDirectory, { recursive: true });
 
-        for (const file of this.coreTestFiles) {
-            await file.write(absolutePathToCoreTestDirectory);
-        }
+        await Promise.all(this.coreTestFiles.map((file) => file.write(absolutePathToCoreTestDirectory)));
 
         return absolutePathToCoreTestDirectory;
     }
@@ -521,9 +513,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToPublicCoreTestDirectory}`);
         await mkdir(absolutePathToPublicCoreTestDirectory, { recursive: true });
 
-        for (const file of this.publicCoreTestFiles) {
-            await file.write(absolutePathToPublicCoreTestDirectory);
-        }
+        await Promise.all(this.publicCoreTestFiles.map((file) => file.write(absolutePathToPublicCoreTestDirectory)));
 
         return absolutePathToPublicCoreTestDirectory;
     }
@@ -540,9 +530,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToTestUtilsDirectory}`);
         await mkdir(absolutePathToTestUtilsDirectory, { recursive: true });
 
-        for (const file of this.testUtilFiles) {
-            await file.write(absolutePathToTestUtilsDirectory);
-        }
+        await Promise.all(this.testUtilFiles.map((file) => file.write(absolutePathToTestUtilsDirectory)));
 
         return absolutePathToTestUtilsDirectory;
     }
@@ -560,9 +548,7 @@ dotnet_diagnostic.IDE0005.severity = error
         this.context.logger.debug(`mkdir ${absolutePathToPublicCoreDirectory}`);
         await mkdir(absolutePathToPublicCoreDirectory, { recursive: true });
 
-        for (const file of this.publicCoreFiles) {
-            await file.write(absolutePathToPublicCoreDirectory);
-        }
+        await Promise.all(this.publicCoreFiles.map((file) => file.write(absolutePathToPublicCoreDirectory)));
 
         return absolutePathToPublicCoreDirectory;
     }
