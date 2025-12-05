@@ -103,10 +103,10 @@ exports[`ZodFormat AST Generation > Union Schemas > discriminated union generate
 "z.discriminatedUnion("type", [
     z.object({ "type": z.literal("dog") }).merge(z.object({
         "breed": z.string()
-    })),
+    }) as z.AnyZodObject),
     z.object({ "type": z.literal("cat") }).merge(z.object({
         "indoor": z.boolean()
-    }))
+    }) as z.AnyZodObject)
 ])"
 `;
 

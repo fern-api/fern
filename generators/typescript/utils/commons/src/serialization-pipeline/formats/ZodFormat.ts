@@ -327,6 +327,7 @@ export class ZodFormat implements SerializationFormat {
             isOptional: false,
             isNullable: false,
             toExpression: () => {
+                this.ensureZodImport();
                 // Use z.discriminatedUnion for better performance
                 const variants = singleUnionTypes.map((variant) => {
                     // Create an object schema with the discriminant + non-discriminant properties
@@ -337,10 +338,19 @@ export class ZodFormat implements SerializationFormat {
 
                     // Get the properties from the non-discriminant schema
                     // We need to merge them with the discriminant
+                    // Cast to z.AnyZodObject because the imported schema is typed as z.ZodType
+                    // but .merge() requires ZodObject
+                    const schemaWithCast = ts.factory.createAsExpression(
+                        variant.nonDiscriminantProperties.toExpression(),
+                        ts.factory.createTypeReferenceNode(
+                            ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "AnyZodObject"),
+                            undefined
+                        )
+                    );
                     return chainMethod(
                         this.zodCall("object", [ts.factory.createObjectLiteralExpression([discriminantProp], false)]),
                         "merge",
-                        [variant.nonDiscriminantProperties.toExpression()]
+                        [schemaWithCast]
                     );
                 });
 
