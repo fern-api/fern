@@ -660,14 +660,19 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     client_wrapper_generator=client_wrapper_generator,
                     environments_config=self._environments_config,
                     timeout_local_variable=timeout_local_variable,
-                    is_async=False,
+                    is_async=is_async,
                     ignore_httpx_constructor_parameter=True,
                     exclude_auth=True,
                 )
                 writer.write("oauth_token_provider = ")
+                oauth_token_provider_class = (
+                    self._context.core_utilities.get_async_oauth_token_provider()
+                    if is_async
+                    else self._context.core_utilities.get_oauth_token_provider()
+                )
                 writer.write_node(
                     AST.ClassInstantiation(
-                        class_=self._context.core_utilities.get_oauth_token_provider(),
+                        class_=oauth_token_provider_class,
                         kwargs=[
                             (
                                 "client_id",
@@ -682,7 +687,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                                 AST.Expression(
                                     AST.ClassInstantiation(
                                         class_=self._context.core_utilities.get_reference_to_client_wrapper(
-                                            is_async=False
+                                            is_async=is_async
                                         ),
                                         kwargs=client_wrapper_constructor_kwargs,
                                     ),
@@ -787,14 +792,30 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             )
 
         if use_oauth_token_provider:
-            client_wrapper_constructor_kwargs.append(
-                (
-                    "token",
-                    AST.Expression(
-                        f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else oauth_token_provider.get_token"
-                    ),
+            if is_async:
+                # For async clients, pass the sync token_getter_override to token (if provided)
+                # and the async oauth_token_provider.get_token to async_token
+                client_wrapper_constructor_kwargs.append(
+                    (
+                        "token",
+                        AST.Expression(f"{self.TOKEN_GETTER_PARAM_NAME}"),
+                    )
                 )
-            )
+                client_wrapper_constructor_kwargs.append(
+                    (
+                        "async_token",
+                        AST.Expression("oauth_token_provider.get_token"),
+                    )
+                )
+            else:
+                client_wrapper_constructor_kwargs.append(
+                    (
+                        "token",
+                        AST.Expression(
+                            f"{self.TOKEN_GETTER_PARAM_NAME} if {self.TOKEN_GETTER_PARAM_NAME} is not None else oauth_token_provider.get_token"
+                        ),
+                    )
+                )
 
         if ignore_httpx_constructor_parameter:
             client_wrapper_constructor_kwargs.append(

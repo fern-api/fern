@@ -8,7 +8,12 @@ import type * as SeedErrorProperty from "../../../index";
 export class PropertyBasedErrorTest extends errors.SeedErrorPropertyError {
     constructor(private readonly body: SeedErrorProperty.PropertyBasedErrorTestBody) {
         super("PropertyBasedErrorTest");
-        Object.setPrototypeOf(this, PropertyBasedErrorTest.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 
     public async send(res: express.Response): Promise<void> {

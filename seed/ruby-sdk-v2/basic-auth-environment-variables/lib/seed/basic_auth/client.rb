@@ -25,7 +25,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "basic-auth"
+          path: "basic-auth",
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -55,7 +56,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "basic-auth",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

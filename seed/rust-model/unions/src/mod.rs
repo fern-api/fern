@@ -6,7 +6,7 @@
 //! ## Type Categories
 //!
 //! - **Request/Response Types**: 1 types for API operations
-//! - **Model Types**: 53 types for data representation
+//! - **Model Types**: 56 types for data representation
 
 pub mod bigunion_big_union;
 pub mod bigunion_normal_sweet;
@@ -52,6 +52,9 @@ pub mod types_union_with_optional_time;
 pub mod types_union_with_single_element;
 pub mod types_union_with_duplicate_types;
 pub mod types_union_with_sub_types;
+pub mod types_union_with_duplicative_discriminants;
+pub mod types_first_item_type;
+pub mod types_second_item_type;
 pub mod types_foo;
 pub mod types_foo_extended;
 pub mod types_bar;
@@ -107,6 +110,9 @@ pub use types_union_with_optional_time::UnionWithOptionalTime;
 pub use types_union_with_single_element::UnionWithSingleElement;
 pub use types_union_with_duplicate_types::UnionWithDuplicateTypes;
 pub use types_union_with_sub_types::UnionWithSubTypes;
+pub use types_union_with_duplicative_discriminants::UnionWithDuplicativeDiscriminants;
+pub use types_first_item_type::FirstItemType;
+pub use types_second_item_type::SecondItemType;
 pub use types_foo::Foo;
 pub use types_foo_extended::FooExtended;
 pub use types_bar::Bar;

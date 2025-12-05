@@ -345,6 +345,25 @@ public class UsersWireTest {
     }
 
     @Test
+    public void testListUsernamesWithOptionalResponse() throws Exception {
+        server.enqueue(new MockResponse()
+                .setResponseCode(200)
+                .setBody("{\"cursor\":{\"after\":\"after\",\"data\":[\"data\",\"data\"]}}"));
+        SyncPagingIterable<String> response = client.users()
+                .listWithCursorPagination(ListUsersCursorPaginationRequest.builder()
+                        .startingAfter("starting_after")
+                        .build());
+        RecordedRequest request = server.takeRequest();
+        Assertions.assertNotNull(request);
+        Assertions.assertEquals("GET", request.getMethod());
+
+        // Validate response body
+        Assertions.assertNotNull(response, "Response should not be null");
+        // Pagination response validated via MockWebServer
+        // The SDK correctly parses the response into a SyncPagingIterable
+    }
+
+    @Test
     public void testListWithGlobalConfig() throws Exception {
         server.enqueue(new MockResponse().setResponseCode(200).setBody("{\"results\":[\"results\",\"results\"]}"));
         SyncPagingIterable<String> response = client.users()

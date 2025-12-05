@@ -154,6 +154,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": "Admin not found"
         }
     },

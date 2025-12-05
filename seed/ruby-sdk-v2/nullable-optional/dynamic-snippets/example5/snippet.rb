@@ -2,7 +2,7 @@ require "seed"
 
 client = Seed::Client.new(base_url: 'https://api.fern.com');
 
-client.nullable_optional.create_complex_profile({
+client.nullable_optional.create_complex_profile(
   id: 'id',
   nullable_array: ['nullableArray', 'nullableArray'],
   optional_array: ['optionalArray', 'optionalArray'],
@@ -21,4 +21,4 @@ client.nullable_optional.create_complex_profile({
   },
   nullable_list_of_unions: [],
   optional_map_of_enums: {}
-});
+);

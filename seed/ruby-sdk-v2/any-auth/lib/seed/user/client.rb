@@ -23,7 +23,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "POST",
-          path: "users"
+          path: "users",
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -50,7 +51,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "admins"
+          path: "admins",
+          request_options: request_options
         )
         begin
           response = @client.send(request)

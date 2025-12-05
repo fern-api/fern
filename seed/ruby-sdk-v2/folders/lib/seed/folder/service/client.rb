@@ -24,7 +24,8 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url],
             method: "GET",
-            path: "/service"
+            path: "/service",
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -52,7 +53,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "POST",
             path: "/service",
-            body: params
+            body: params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)

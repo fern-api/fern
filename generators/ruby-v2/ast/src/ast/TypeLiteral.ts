@@ -159,7 +159,7 @@ export class TypeLiteral extends AstNode {
                     }
                     if (!wroteSymbol) {
                         entry.key.write(writer);
-                        writer.write(":");
+                        writer.write(" =>"); // Use => for non-symbol keys (e.g., integers)
                     }
                     writer.write(" ");
                     entry.value.write(writer);

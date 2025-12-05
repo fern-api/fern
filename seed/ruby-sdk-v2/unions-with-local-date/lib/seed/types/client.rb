@@ -24,7 +24,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/time/#{params[:id]}"
+          path: "/time/#{params[:id]}",
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -54,7 +55,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/time",
-          body: Seed::Types::Types::UnionWithTime.new(params).to_h
+          body: Seed::Types::Types::UnionWithTime.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

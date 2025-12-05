@@ -67,7 +67,19 @@
           {
             "availability": undefined,
             "description": "Unauthorized",
-            "examples": [],
+            "examples": [
+              {
+                "description": undefined,
+                "name": undefined,
+                "responseBody": {
+                  "type": "json",
+                  "value": {
+                    "code": "UNAUTHORIZED",
+                    "message": "Authentication required",
+                  },
+                },
+              },
+            ],
             "isWildcard": undefined,
             "name": "UnauthorizedError",
             "statusCode": 401,

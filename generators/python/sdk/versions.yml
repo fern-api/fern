@@ -1,5 +1,58 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.42.0
+  changelogEntry:
+    - summary: |
+        Add async support for OAuth token provider. The generated SDK now includes an AsyncOAuthTokenProvider
+        class that uses asyncio.Lock for async-safe token refresh, alongside the existing sync OAuthTokenProvider
+        that uses threading.Lock. The async client now uses the async token provider for proper async token management.
+      type: feat
+  createdAt: "2025-11-28"
+  irVersion: 61
+
+- version: 4.41.11
+  changelogEntry:
+    - summary: |
+        Fix backslash escaping in endpoint and websocket docstrings. OpenAPI descriptions containing
+        backslash sequences like `DOMAIN\username` now properly escape backslashes to avoid Python
+        SyntaxError from invalid unicode escape sequences.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
+- version: 4.41.10
+  changelogEntry:
+    - summary: |
+        Adds `dynamic = ["version"]` to `pyproject.toml`, allowing for `uv` commands such as `uv sync` to work out-of-the-box.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
+- version: 4.41.9
+  changelogEntry:
+    - summary: |
+        Fix wire test WireMock container lifecycle to be compatible with pytest-xdist parallelization.
+        The container is now started/stopped using pytest_configure/pytest_unconfigure hooks instead of
+        a session-scoped fixture, ensuring only the controller process manages the container.
+      type: fix
+  createdAt: "2025-12-04"
+  irVersion: 61
+
+- version: 4.41.8
+  changelogEntry:
+    - summary: |
+        Fix duplicate field names in discriminated union types.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
+
+- version: 4.41.7
+  changelogEntry:
+    - summary: |
+        Fix paginated response handling when response type is optional or nullable.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 61
 
 - version: 4.41.6
   changelogEntry:

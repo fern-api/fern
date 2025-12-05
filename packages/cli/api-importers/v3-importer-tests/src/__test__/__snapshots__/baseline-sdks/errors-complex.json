@@ -401,7 +401,8 @@
             }
           }
         }
-      ]
+      ],
+      "headers": []
     },
     "error_:NotFoundError": {
       "name": {
@@ -588,7 +589,8 @@
             }
           }
         }
-      ]
+      ],
+      "headers": []
     },
     "error_:InternalServerError": {
       "name": {
@@ -775,7 +777,8 @@
             }
           }
         }
-      ]
+      ],
+      "headers": []
     }
   },
   "services": {

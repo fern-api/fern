@@ -12,6 +12,7 @@ from .request_body_parameters import (
 )
 from fern_python.codegen import AST
 from fern_python.codegen.ast.ast_node.node_writer import NodeWriter
+from fern_python.codegen.ast.nodes.docstring import escape_docstring
 from fern_python.external_dependencies import HttpX
 from fern_python.external_dependencies.asyncio import Asyncio
 from fern_python.generators.pydantic_model.model_utilities import can_tr_be_fern_model
@@ -780,7 +781,7 @@ class EndpointFunctionGenerator:
 
         def write(writer: AST.NodeWriter) -> None:
             if endpoint.docs is not None:
-                writer.write_line(endpoint.docs)
+                writer.write_line(escape_docstring(endpoint.docs))
             if len(parameters) == 0 and snippet is None:
                 return
             if endpoint.docs is not None:
@@ -1222,7 +1223,7 @@ class EndpointFunctionGenerator:
         split = docs.split("\n")
         with writer.indent():
             for i, line in enumerate(split):
-                writer.write(line)
+                writer.write(escape_docstring(line))
                 if i < len(split) - 1:
                     writer.write_line()
 

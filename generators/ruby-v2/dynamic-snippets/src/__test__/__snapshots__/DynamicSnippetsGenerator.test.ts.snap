@@ -30,7 +30,7 @@ exports[`snippets (default) > examples > 'POST /big-entity (simple)' 1`] = `
 
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.service.create_big_entity({
+client.service.create_big_entity(
   extended_movie: {
     cast: ['John Travolta', 'Samuel L. Jackson', 'Uma Thurman', 'Bruce Willis'],
     id: 'movie-sda231x',
@@ -45,7 +45,7 @@ client.service.create_big_entity({
   migration: {
     name: 'Migration 31 Aug'
   }
-});
+);
 "
 `;
 
@@ -66,7 +66,7 @@ exports[`snippets (default) > examples > 'POST /movie (simple)' 1`] = `
 
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.service.create_movie({
+client.service.create_movie(
   id: 'movie-c06a4ad7',
   prequel: 'movie-cv9b914f',
   title: 'The Boy and the Heron',
@@ -76,7 +76,7 @@ client.service.create_movie({
   tag: 'development',
   metadata: {},
   revenue: 1000000
-});
+);
 "
 `;
 
@@ -85,7 +85,7 @@ exports[`snippets (default) > exhaustive > 'GET /object/get-and-return-with-opti
 
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.endpoints.object.get_and_return_with_optional_field({
+client.endpoints.object.get_and_return_with_optional_field(
   string: 'string',
   integer: 1,
   long: 1000000,
@@ -98,10 +98,10 @@ client.endpoints.object.get_and_return_with_optional_field({
   list: ['list', 'list'],
   set: Set.new(['set']),
   map: {
-    1: 'map'
+    1 => 'map'
   },
   bigint: '1000000'
-});
+);
 "
 `;
 
@@ -170,7 +170,7 @@ exports[`snippets (default) > imdb > 'GET /movies/{movieId} (simple)' 1`] = `
 
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.imdb.get_movie('movie_xyz');
+client.imdb.get_movie(movie_id: 'movie_xyz');
 "
 `;
 
@@ -179,10 +179,10 @@ exports[`snippets (default) > imdb > 'POST /movies/create-movie (simple)' 1`] = 
 
 client = Acme::Client.new(token: '<YOUR_API_KEY>');
 
-client.imdb.create_movie({
+client.imdb.create_movie(
   title: 'The Matrix',
   rating: 8.2
-});
+);
 "
 `;
 
@@ -287,14 +287,14 @@ exports[`snippets (default) > read-write-only > 'Body properties' 1`] = `
 
 client = Acme::Client.new(base_url: 'https://api.example.com');
 
-client.create_user({
+client.create_user(
   password: 'password',
   profile: {
     name: 'name',
     verification: {},
     ssn: 'ssn'
   }
-});
+);
 "
 `;
 
@@ -303,7 +303,7 @@ exports[`snippets (default) > read-write-only > 'Readonly value in request' 1`] 
 
 client = Acme::Client.new(base_url: 'https://api.example.com');
 
-client.create_user({
+client.create_user(
   id: 'id',
   password: 'password',
   profile: {
@@ -311,7 +311,7 @@ client.create_user({
     verification: {},
     ssn: 'ssn'
   }
-});
+);
 "
 `;
 

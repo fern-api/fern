@@ -12,10 +12,10 @@
 <dd>
 
 ```ruby
-client.echo({
+client.echo(
   name: 'Hello world!',
   size: 20
-});
+);
 ```
 </dd>
 </dl>
@@ -64,7 +64,7 @@ client.echo({
 <dd>
 
 ```ruby
-client.service.nop('id-219xca8');
+client.service.nop(nested_id: 'id-219xca8');
 ```
 </dd>
 </dl>

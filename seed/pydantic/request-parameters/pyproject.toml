@@ -1,5 +1,6 @@
 [project]
 name = "fern_request-parameters"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_request-parameters"

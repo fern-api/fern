@@ -7,6 +7,7 @@ import com.seed.pagination.core.ClientOptions;
 import com.seed.pagination.core.RequestOptions;
 import com.seed.pagination.core.pagination.SyncPagingIterable;
 import com.seed.pagination.resources.users.requests.ListUsernamesRequest;
+import com.seed.pagination.resources.users.requests.ListUsernamesWithOptionalResponseRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyCursorPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersBodyOffsetPaginationRequest;
 import com.seed.pagination.resources.users.requests.ListUsersCursorPaginationRequest;
@@ -194,6 +195,22 @@ public class UsersClient {
 
     public SyncPagingIterable<String> listUsernames(ListUsernamesRequest request, RequestOptions requestOptions) {
         return this.rawClient.listUsernames(request, requestOptions).body();
+    }
+
+    public SyncPagingIterable<String> listUsernamesWithOptionalResponse() {
+        return this.rawClient.listUsernamesWithOptionalResponse().body();
+    }
+
+    public SyncPagingIterable<String> listUsernamesWithOptionalResponse(
+            ListUsernamesWithOptionalResponseRequest request) {
+        return this.rawClient.listUsernamesWithOptionalResponse(request).body();
+    }
+
+    public SyncPagingIterable<String> listUsernamesWithOptionalResponse(
+            ListUsernamesWithOptionalResponseRequest request, RequestOptions requestOptions) {
+        return this.rawClient
+                .listUsernamesWithOptionalResponse(request, requestOptions)
+                .body();
     }
 
     public SyncPagingIterable<String> listWithGlobalConfig() {

@@ -93,7 +93,7 @@ client.create_type();
 <dd>
 
 ```ruby
-client.file.notification.service.get_exception('notification-hsy129x');
+client.file.notification.service.get_exception(notification_id: 'notification-hsy129x');
 ```
 </dd>
 </dl>
@@ -206,7 +206,7 @@ This endpoint checks the health of a resource.
 <dd>
 
 ```ruby
-client.health.service.check('id-2sdx82h');
+client.health.service.check(id: 'id-2sdx82h');
 ```
 </dd>
 </dl>
@@ -286,7 +286,7 @@ client.health.service.ping();
 <dd>
 
 ```ruby
-client.service.get_movie('movie-c06a4ad7');
+client.service.get_movie(movie_id: 'movie-c06a4ad7');
 ```
 </dd>
 </dl>
@@ -326,7 +326,7 @@ client.service.get_movie('movie-c06a4ad7');
 <dd>
 
 ```ruby
-client.service.create_movie({
+client.service.create_movie(
   id: 'movie-c06a4ad7',
   prequel: 'movie-cv9b914f',
   title: 'The Boy and the Heron',
@@ -336,7 +336,7 @@ client.service.create_movie({
   tag: 'tag-wf9as23d',
   metadata: {},
   revenue: 1000000
-});
+);
 ```
 </dd>
 </dl>
@@ -435,7 +435,7 @@ client.service.get_metadata(
 <dd>
 
 ```ruby
-client.service.create_big_entity({
+client.service.create_big_entity(
   extended_movie: {
     cast: ['cast', 'cast'],
     id: 'id',
@@ -571,7 +571,7 @@ client.service.create_big_entity({
     date: '2023-01-15',
     datetime: '2024-01-15T09:30:00Z'
   }
-});
+);
 ```
 </dd>
 </dl>

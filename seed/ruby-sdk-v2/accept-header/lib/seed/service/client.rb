@@ -23,7 +23,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "DELETE",
-          path: "/container/"
+          path: "/container/",
+          request_options: request_options
         )
         begin
           response = @client.send(request)

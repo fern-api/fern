@@ -1,4 +1,59 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Extend `substitute-env-vars` to apply to API specs (OpenAPI and Fern definitions) when generating docs. Environment variables using `${VAR_NAME}` syntax in API spec descriptions, examples, and other string fields are now substituted when `substitute-env-vars: true` is set in `docs.yml`.
+      type: feat
+  irVersion: 63
+  createdAt: "2025-12-05"
+  version: 3.3.0
+
+- changelogEntry:
+    - summary: |
+        Add recursive markdown snippet resolution for docs. Markdown snippets can now reference other markdown snippets, with automatic detection and warning for circular references to prevent infinite loops.
+      type: feat
+  irVersion: 63
+  createdAt: "2025-12-05"
+  version: 3.2.0
+
+- changelogEntry:
+    - summary: |
+        Preserve error response headers (e.g., Retry-After for 429 errors) from OpenAPI specs in the IR.
+      type: feat
+  irVersion: 63
+  createdAt: "2025-12-05"
+  version: 3.1.0
+
+- changelogEntry:
+    - summary: |
+        Fix AsyncAPI validation: exclude AsyncAPI files from OpenAPI-specific validation rules
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.0.5
+
+- changelogEntry:
+    - summary: |
+        Fix error response examples not displaying in docs when examples are defined at the property level in OpenAPI specs.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.0.4
+
+- changelogEntry:
+    - summary: |
+        Add basic preprocessing of names in the IR parser; for starters, `[]` -> `Array`.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-04"
+  version: 3.0.3
+
+- changelogEntry:
+    - summary: |
+        Fix OpenAPI parsing to properly handle `allOf` with `$ref` references inside `oneOf`/`anyOf` schemas. Previously, inline objects with `allOf` references but no direct properties were incorrectly converted to `map<string, any>`. Now they are properly preserved as named types with inheritance.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-04"
+  version: 3.0.2
 
 - changelogEntry:
     - summary: |
@@ -67,7 +122,7 @@
 
 - changelogEntry:
     - summary: |
-        Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`, 
+        Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`,
         environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
         including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
         Use \$\{VAR\} to escape and output literal ${VAR} without substitution.

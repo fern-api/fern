@@ -1670,6 +1670,9 @@ importers:
       '@fern-api/logging-execa':
         specifier: workspace:*
         version: link:../../../packages/commons/logging-execa
+      '@fern-api/mock-utils':
+        specifier: workspace:^
+        version: link:../../../packages/commons/mock-utils
       '@fern-api/path-utils':
         specifier: workspace:*
         version: link:../../../packages/commons/path-utils
@@ -6483,7 +6486,7 @@ importers:
         version: 4.2.1
       form-data:
         specifier: ^4.0.4
-        version: 4.0.4
+        version: 4.0.5
       image-size:
         specifier: ^1.2.1
         version: 1.2.1
@@ -12589,10 +12592,6 @@ packages:
     resolution: {integrity: sha512-gIXjKqtFuWEgzFRJA9WCQeSJLZDjgJUOMCMzxtvFq/37KojM1BFGufqsCy0r4qSQmYLsZYMeyRqzIWOMup03sw==}
     engines: {node: '>=14'}
 
-  form-data@4.0.4:
-    resolution: {integrity: sha512-KrGhL9Q4zjj0kiUt5OO4Mr/A/jlI2jDYs5eHBpYHPcBEVSiipAvn2Ko2HnPe20rmcuuvMHNdZFp+4IlGTMF0Ow==}
-    engines: {node: '>= 6'}
-
   form-data@4.0.5:
     resolution: {integrity: sha512-8RipRLol37bNs2bhoV67fiTEvdTrbMUYcFTiy3+wuuOnUog2QBHCZWXDRijWQfAkhBj2Uf5UnVaiWwA5vdd82w==}
     engines: {node: '>= 6'}
@@ -13445,8 +13444,8 @@ packages:
     resolution: {integrity: sha512-PwchfHcQK/5PSydeKCs1ylNym0w/SSv8a62DgHJ//7x2ZclCoinlsjAfDxAAbpoTPybOum/Jgy+vkvMmKz89Ww==}
     engines: {node: '>=14'}
 
-  jws@3.2.2:
-    resolution: {integrity: sha512-YHlZCB6lMTllWDtSPHz/ZXTsi8S00usEV6v1tjq8tOUZzw7DpSDWVXjXDre6ed1w/pd495ODpHZYSdkRTsa0HA==}
+  jws@3.2.3:
+    resolution: {integrity: sha512-byiJ0FLRdLdSVSReO/U4E7RoEyOCKnEnEPMjq3HxWtvzLsV08/i5RQKsFVNkCldrCaPr2vDNAOMsfs8T/Hze7g==}
 
   katex@0.16.21:
     resolution: {integrity: sha512-XvqR7FgOHtWupfMiigNzmh+MgUVmDGU2kXZm899ZkPfcuoPuFxyHmXsgATDpFZDAXCI8tvinaVcDo8PIIJSo4A==}
@@ -13576,10 +13575,6 @@ packages:
 
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
-
-  lru-cache@11.2.2:
-    resolution: {integrity: sha512-F9ODfyqML2coTIsQpSkRHnLSZMtkU8Q+mSfcaIyKwy58u+8k5nvAYeiNhsyMARvzNcXJ9QfWVrcPsC9e9rAxtg==}
-    engines: {node: 20 || >=22}
 
   lru-cache@11.2.4:
     resolution: {integrity: sha512-B5Y16Jr9LB9dHVkh6ZevG+vAbOsNOYCX+sXvFWFu7B3Iz5mijW3zdbMyhsh8ANd2mSWBYdJgnqi+mL7/LrOPYg==}
@@ -17368,7 +17363,7 @@ snapshots:
       es-toolkit: 1.41.0
       escape-string-regexp: 5.0.0
       fast-deep-equal: 3.1.3
-      form-data: 4.0.4
+      form-data: 4.0.5
       httpsnippet-lite: 3.0.5
       js-base64: 3.7.7
       node-fetch: 2.7.0
@@ -17419,7 +17414,7 @@ snapshots:
 
   '@fern-fern/fdr-test-sdk@0.0.5297':
     dependencies:
-      form-data: 4.0.4
+      form-data: 4.0.5
       js-base64: 3.7.2
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -17439,7 +17434,7 @@ snapshots:
 
   '@fern-fern/generator-cli-sdk@0.1.8':
     dependencies:
-      form-data: 4.0.4
+      form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -17449,7 +17444,7 @@ snapshots:
 
   '@fern-fern/generator-exec-sdk@0.0.1167':
     dependencies:
-      form-data: 4.0.4
+      form-data: 4.0.5
       node-fetch: 2.7.0
       qs: 6.13.0
       url-join: 4.0.1
@@ -17458,7 +17453,7 @@ snapshots:
 
   '@fern-fern/generators-sdk@0.114.0-5745f9e74':
     dependencies:
-      form-data: 4.0.4
+      form-data: 4.0.5
       formdata-node: 6.0.3
       js-base64: 3.7.2
       node-fetch: 2.7.0
@@ -17474,7 +17469,7 @@ snapshots:
 
   '@fern-fern/ir-sdk@58.3.0':
     dependencies:
-      form-data: 4.0.4
+      form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -17484,7 +17479,7 @@ snapshots:
 
   '@fern-fern/ir-sdk@61.7.0':
     dependencies:
-      form-data: 4.0.4
+      form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -17494,7 +17489,7 @@ snapshots:
 
   '@fern-fern/ir-sdk@62.1.0':
     dependencies:
-      form-data: 4.0.4
+      form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -17608,7 +17603,7 @@ snapshots:
 
   '@fern-fern/ir-v57-sdk@0.0.2':
     dependencies:
-      form-data: 4.0.4
+      form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -17618,7 +17613,7 @@ snapshots:
 
   '@fern-fern/ir-v58-sdk@0.0.2':
     dependencies:
-      form-data: 4.0.4
+      form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -17628,7 +17623,7 @@ snapshots:
 
   '@fern-fern/ir-v59-sdk@0.0.8':
     dependencies:
-      form-data: 4.0.4
+      form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -17640,7 +17635,7 @@ snapshots:
 
   '@fern-fern/ir-v60-sdk@0.0.5':
     dependencies:
-      form-data: 4.0.4
+      form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -17658,7 +17653,7 @@ snapshots:
 
   '@fern-fern/postman-sdk@0.1.1':
     dependencies:
-      form-data: 4.0.4
+      form-data: 4.0.5
       formdata-node: 6.0.3
       node-fetch: 2.7.0
       qs: 6.13.0
@@ -19103,7 +19098,7 @@ snapshots:
   '@types/node-fetch@2.6.9':
     dependencies:
       '@types/node': 18.19.130
-      form-data: 4.0.4
+      form-data: 4.0.5
 
   '@types/node@18.15.3': {}
 
@@ -19536,7 +19531,7 @@ snapshots:
   axios@1.12.2:
     dependencies:
       follow-redirects: 1.15.11
-      form-data: 4.0.4
+      form-data: 4.0.5
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
       - debug
@@ -21038,14 +21033,6 @@ snapshots:
       cross-spawn: 7.0.5
       signal-exit: 4.1.0
 
-  form-data@4.0.4:
-    dependencies:
-      asynckit: 0.4.0
-      combined-stream: 1.0.8
-      es-set-tostringtag: 2.1.0
-      hasown: 2.0.2
-      mime-types: 2.1.35
-
   form-data@4.0.5:
     dependencies:
       asynckit: 0.4.0
@@ -22172,7 +22159,7 @@ snapshots:
 
   jsonwebtoken@9.0.2:
     dependencies:
-      jws: 3.2.2
+      jws: 3.2.3
       lodash.includes: 4.3.0
       lodash.isboolean: 3.0.3
       lodash.isinteger: 4.0.4
@@ -22200,7 +22187,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  jws@3.2.2:
+  jws@3.2.3:
     dependencies:
       jwa: 1.4.2
       safe-buffer: 5.2.1
@@ -22304,10 +22291,7 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lru-cache@11.2.2: {}
-
-  lru-cache@11.2.4:
-    optional: true
+  lru-cache@11.2.4: {}
 
   lru-cache@5.1.1:
     dependencies:
@@ -23458,7 +23442,7 @@ snapshots:
 
   path-scurry@2.0.0:
     dependencies:
-      lru-cache: 11.2.2
+      lru-cache: 11.2.4
       minipass: 7.1.2
 
   path-to-regexp@0.1.12: {}

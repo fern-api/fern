@@ -26,7 +26,8 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url] || Seed::Environment::PROD,
             method: "GET",
-            path: "/problems-v2/lightweight-problem-info"
+            path: "/problems-v2/lightweight-problem-info",
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -55,7 +56,8 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url] || Seed::Environment::PROD,
             method: "GET",
-            path: "/problems-v2/problem-info"
+            path: "/problems-v2/problem-info",
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -85,7 +87,8 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url] || Seed::Environment::PROD,
             method: "GET",
-            path: "/problems-v2/problem-info/#{params[:problem_id]}"
+            path: "/problems-v2/problem-info/#{params[:problem_id]}",
+            request_options: request_options
           )
           begin
             response = @client.send(request)
@@ -118,7 +121,8 @@ module Seed
           request = Seed::Internal::JSON::Request.new(
             base_url: request_options[:base_url] || Seed::Environment::PROD,
             method: "GET",
-            path: "/problems-v2/problem-info/#{params[:problem_id]}/version/#{params[:problem_version]}"
+            path: "/problems-v2/problem-info/#{params[:problem_id]}/version/#{params[:problem_version]}",
+            request_options: request_options
           )
           begin
             response = @client.send(request)

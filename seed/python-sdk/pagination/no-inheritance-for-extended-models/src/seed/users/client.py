@@ -530,6 +530,44 @@ class UsersClient:
         """
         return self._raw_client.list_usernames(starting_after=starting_after, request_options=request_options)
 
+    def list_usernames_with_optional_response(
+        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> SyncPager[str, typing.Optional[UsernameCursor]]:
+        """
+        Parameters
+        ----------
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        SyncPager[str, typing.Optional[UsernameCursor]]
+
+        Examples
+        --------
+        from seed import SeedPagination
+
+        client = SeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+        response = client.users.list_usernames_with_optional_response(
+            starting_after="starting_after",
+        )
+        for item in response:
+            yield item
+        # alternatively, you can paginate page-by-page
+        for page in response.iter_pages():
+            yield page
+        """
+        return self._raw_client.list_usernames_with_optional_response(
+            starting_after=starting_after, request_options=request_options
+        )
+
     def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None
     ) -> SyncPager[str, UsernameContainer]:
@@ -1175,6 +1213,53 @@ class AsyncUsersClient:
         asyncio.run(main())
         """
         return await self._raw_client.list_usernames(starting_after=starting_after, request_options=request_options)
+
+    async def list_usernames_with_optional_response(
+        self, *, starting_after: typing.Optional[str] = None, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncPager[str, typing.Optional[UsernameCursor]]:
+        """
+        Parameters
+        ----------
+        starting_after : typing.Optional[str]
+            The cursor used for pagination in order to fetch
+            the next page of results.
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncPager[str, typing.Optional[UsernameCursor]]
+
+        Examples
+        --------
+        import asyncio
+
+        from seed import AsyncSeedPagination
+
+        client = AsyncSeedPagination(
+            token="YOUR_TOKEN",
+            base_url="https://yourhost.com/path/to/api",
+        )
+
+
+        async def main() -> None:
+            response = await client.users.list_usernames_with_optional_response(
+                starting_after="starting_after",
+            )
+            async for item in response:
+                yield item
+
+            # alternatively, you can paginate page-by-page
+            async for page in response.iter_pages():
+                yield page
+
+
+        asyncio.run(main())
+        """
+        return await self._raw_client.list_usernames_with_optional_response(
+            starting_after=starting_after, request_options=request_options
+        )
 
     async def list_with_global_config(
         self, *, offset: typing.Optional[int] = None, request_options: typing.Optional[RequestOptions] = None

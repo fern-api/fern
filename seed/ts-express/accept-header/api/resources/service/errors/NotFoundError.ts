@@ -6,7 +6,12 @@ import * as errors from "../../../../errors/index";
 export class NotFoundError extends errors.SeedAcceptError {
     constructor(private readonly body?: unknown) {
         super("NotFoundError");
-        Object.setPrototypeOf(this, NotFoundError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 
     public async send(res: express.Response): Promise<void> {

@@ -3,7 +3,6 @@
   "generatorName": "fernapi/fern-python-sdk",
   "generatorVersion": "latest",
   "generatorConfig": {
-    "package_path": "matryoshka/doll/structure",
-    "enable_wire_tests": true
+    "package_path": "matryoshka/doll/structure"
   }
 }
