@@ -77,6 +77,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
     protected final GeneratedClientOptions generatedClientOptions;
     protected final Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces;
     private final Optional<GeneratedJavaFile> generatedOAuthTokenSupplier;
+    private final Optional<GeneratedJavaFile> generatedInferredAuthTokenSupplier;
     protected final GeneratedJavaFile generatedSuppliersFile;
     protected final GeneratedEnvironmentsClass generatedEnvironmentsClass;
     private final ClassName builderName;
@@ -93,6 +94,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
             GeneratedJavaFile requestOptionsFile,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             Optional<GeneratedJavaFile> generatedOAuthTokenSupplier,
+            Optional<GeneratedJavaFile> generatedInferredAuthTokenSupplier,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 generatorContext
@@ -109,6 +111,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         this.generatedEnvironmentsClass = generatedEnvironmentsClass;
         this.allGeneratedInterfaces = allGeneratedInterfaces;
         this.generatedOAuthTokenSupplier = generatedOAuthTokenSupplier;
+        this.generatedInferredAuthTokenSupplier = generatedInferredAuthTokenSupplier;
         this.generatedErrors = generatedErrors;
         this.builderName = builderName();
         this.requestOptionsFile = requestOptionsFile;
@@ -874,7 +877,158 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         @Override
         public Void visitInferred(InferredAuthScheme inferred) {
-            throw new UnsupportedOperationException("Inferred auth schemes are not supported");
+            EndpointReference tokenEndpointReference = inferred.getTokenEndpoint().getEndpoint();
+
+            // Get the HTTP endpoint details for extracting credential properties
+            HttpService httpService =
+                    clientGeneratorContext.getIr().getServices().get(tokenEndpointReference.getServiceId());
+            HttpEndpoint httpEndpoint = httpService.getEndpoints().stream()
+                    .filter(it -> it.getId().equals(tokenEndpointReference.getEndpointId()))
+                    .findFirst()
+                    .orElseThrow();
+
+            List<String> credentialPropertyNames = new ArrayList<>();
+            List<String> requiredCredentialPropertyNames = new ArrayList<>();
+
+            for (var header : httpEndpoint.getHeaders()) {
+                String headerName = header.getName().getName().getCamelCase().getSafeName();
+                if (!isLiteralType(header.getValueType())) {
+                    credentialPropertyNames.add(headerName);
+                    if (!isOptionalType(header.getValueType())) {
+                        requiredCredentialPropertyNames.add(headerName);
+                    }
+                    createSetter(headerName, Optional.empty(), Optional.empty());
+                }
+            }
+
+            // Add body properties (excluding literals which are hardcoded)
+            if (httpEndpoint.getRequestBody().isPresent()) {
+                httpEndpoint.getRequestBody().get().visit(new com.fern.ir.model.http.HttpRequestBody.Visitor<Void>() {
+                    @Override
+                    public Void visitInlinedRequestBody(com.fern.ir.model.http.InlinedRequestBody inlinedRequestBody) {
+                        for (var prop : inlinedRequestBody.getProperties()) {
+                            String propName = prop.getName().getName().getCamelCase().getSafeName();
+                            if (!isLiteralType(prop.getValueType())) {
+                                credentialPropertyNames.add(propName);
+                                if (!isOptionalType(prop.getValueType())) {
+                                    requiredCredentialPropertyNames.add(propName);
+                                }
+                                createSetter(propName, Optional.empty(), Optional.empty());
+                            }
+                        }
+                        return null;
+                    }
+
+                    @Override
+                    public Void visitReference(com.fern.ir.model.http.HttpRequestBodyReference reference) {
+                        return null;
+                    }
+
+                    @Override
+                    public Void visitFileUpload(com.fern.ir.model.http.FileUploadRequest fileUpload) {
+                        return null;
+                    }
+
+                    @Override
+                    public Void visitBytes(com.fern.ir.model.http.BytesRequest bytes) {
+                        return null;
+                    }
+
+                    @Override
+                    public Void _visitUnknown(Object unknownType) {
+                        return null;
+                    }
+                });
+            }
+
+            // Get the auth client class name from the subpackage
+            Subpackage subpackage = clientGeneratorContext
+                    .getIr()
+                    .getSubpackages()
+                    .get(tokenEndpointReference.getSubpackageId().get());
+            ClassName authClientClassName =
+                    clientGeneratorContext.getPoetClassNameFactory().getClientClassName(subpackage);
+            ClassName inferredAuthTokenSupplierClassName =
+                    generatedInferredAuthTokenSupplier.get().getClassName();
+
+            if (configureAuthMethod != null) {
+                String condition = requiredCredentialPropertyNames.stream()
+                        .map(name -> "this." + name + " != null")
+                        .reduce((a, b) -> a + " && " + b)
+                        .orElse("true");
+
+                configureAuthMethod.beginControlFlow("if ($L)", condition);
+
+                configureAuthMethod.addStatement(
+                        "$T.Builder authClientOptionsBuilder = $T.builder().environment(this.$L)",
+                        generatedClientOptions.getClassName(),
+                        generatedClientOptions.getClassName(),
+                        ENVIRONMENT_FIELD_NAME);
+
+                generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
+                    String variableName =
+                            variableDeclaration.getName().getCamelCase().getSafeName();
+                    MethodSpec variableMethod =
+                            generatedClientOptions.variableGetters().get(variableDeclaration.getId());
+                    configureAuthMethod
+                            .beginControlFlow("if (this.$L != null)", variableName)
+                            .addStatement("authClientOptionsBuilder.$N(this.$L)", variableMethod, variableName)
+                            .endControlFlow();
+                });
+
+                configureAuthMethod.addStatement(
+                        "$T authClient = new $T(authClientOptionsBuilder.build())",
+                        authClientClassName,
+                        authClientClassName);
+
+                CodeBlock.Builder constructorArgs = CodeBlock.builder();
+                boolean first = true;
+                for (String propName : credentialPropertyNames) {
+                    if (!first) {
+                        constructorArgs.add(", ");
+                    }
+                    constructorArgs.add("this.$L", propName);
+                    first = false;
+                }
+                if (!first) {
+                    constructorArgs.add(", ");
+                }
+                constructorArgs.add("authClient");
+
+                configureAuthMethod.addStatement(
+                        "$T inferredAuthTokenSupplier = new $T($L)",
+                        inferredAuthTokenSupplierClassName,
+                        inferredAuthTokenSupplierClassName,
+                        constructorArgs.build());
+
+                // Add headers from the supplier - the supplier returns a Map<String, String>
+                // For each authenticated header, we add a header supplier that gets the value from the map
+                for (var authHeader : inferred.getTokenEndpoint().getAuthenticatedRequestHeaders()) {
+                    configureAuthMethod.addStatement(
+                            "builder.addHeader($S, () -> inferredAuthTokenSupplier.get().get($S))",
+                            authHeader.getHeaderName(),
+                            authHeader.getHeaderName());
+                }
+
+                configureAuthMethod.endControlFlow();
+            }
+            return null;
+        }
+
+        private boolean isLiteralType(com.fern.ir.model.types.TypeReference typeReference) {
+            if (typeReference.isContainer()) {
+                var container = typeReference.getContainer().get();
+                return container.isLiteral();
+            }
+            return false;
+        }
+
+        private boolean isOptionalType(com.fern.ir.model.types.TypeReference typeReference) {
+            if (typeReference.isContainer()) {
+                var container = typeReference.getContainer().get();
+                return container.isOptional();
+            }
+            return false;
         }
 
         public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {

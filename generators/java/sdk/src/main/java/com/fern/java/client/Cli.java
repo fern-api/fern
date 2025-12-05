@@ -8,6 +8,7 @@ import com.fern.generator.exec.model.config.GeneratorPublishConfig;
 import com.fern.generator.exec.model.config.GithubOutputMode;
 import com.fern.ir.core.ObjectMappers;
 import com.fern.ir.model.auth.AuthScheme;
+import com.fern.ir.model.auth.InferredAuthScheme;
 import com.fern.ir.model.auth.OAuthScheme;
 import com.fern.ir.model.commons.ErrorId;
 import com.fern.ir.model.ir.HeaderApiVersionScheme;
@@ -36,6 +37,7 @@ import com.fern.java.client.generators.ErrorGenerator;
 import com.fern.java.client.generators.FileStreamGenerator;
 import com.fern.java.client.generators.HttpResponseGenerator;
 import com.fern.java.client.generators.InputStreamRequestBodyGenerator;
+import com.fern.java.client.generators.InferredAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.OAuthTokenSupplierGenerator;
 import com.fern.java.client.generators.RequestOptionsGenerator;
 import com.fern.java.client.generators.ResponseBodyInputStreamGenerator;
@@ -419,6 +421,16 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
 
         generatedOAuthTokenSupplier.ifPresent(this::addGeneratedFile);
 
+        // Generate InferredAuthTokenSupplier if inferred auth is present
+        Optional<InferredAuthScheme> maybeInferredAuthScheme = context.getResolvedAuthSchemes().stream()
+                .map(AuthScheme::getInferred)
+                .flatMap(Optional::stream)
+                .findFirst();
+        Optional<GeneratedJavaFile> generatedInferredAuthTokenSupplier =
+                maybeInferredAuthScheme.map(it -> new InferredAuthTokenSupplierGenerator(context, it).generateFile());
+
+        generatedInferredAuthTokenSupplier.ifPresent(this::addGeneratedFile);
+
         // subpackage clients and their WebSocket channels
         log(generatorExecClient, "Generating API client classes");
         ir.getSubpackages().values().forEach(subpackage -> {
@@ -543,6 +555,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 generatedRequestOptions,
                 generatedTypes.getInterfaces(),
                 generatedOAuthTokenSupplier,
+                generatedInferredAuthTokenSupplier,
                 generatedErrors);
         GeneratedRootClient generatedSyncRootClient = syncRootClientGenerator.generateFile();
         this.addGeneratedFile(generatedSyncRootClient);
@@ -560,6 +573,7 @@ public final class Cli extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdk
                 generatedRequestOptions,
                 generatedTypes.getInterfaces(),
                 generatedOAuthTokenSupplier,
+                generatedInferredAuthTokenSupplier,
                 generatedErrors);
         GeneratedRootClient generatedAsyncRootClient = asyncRootClientGenerator.generateFile();
         this.addGeneratedFile(generatedAsyncRootClient);

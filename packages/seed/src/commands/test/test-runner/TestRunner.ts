@@ -1,7 +1,8 @@
 import { FernWorkspace } from "@fern-api/api-workspace-commons";
-import { APIS_DIRECTORY, FERN_DIRECTORY, generatorsYml } from "@fern-api/configuration";
+import { APIS_DIRECTORY, FERN_DIRECTORY, GeneratorInvocation, generatorsYml } from "@fern-api/configuration";
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { TaskContext, TaskResult } from "@fern-api/task-context";
+import { getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
 import path from "path";
 import { FixtureConfigurations, OutputMode } from "../../../config/api";
 import { GeneratorWorkspace } from "../../../loadGeneratorWorkspaces";
@@ -32,6 +33,8 @@ export declare namespace TestRunner {
         inspect: boolean;
         absolutePathToApiDefinition?: AbsoluteFilePath;
         outputDir?: AbsoluteFilePath;
+        /** Generator invocation with per-generator API overrides **/
+        generatorInvocation?: GeneratorInvocation;
     }
 
     interface DoRunArgs {
@@ -126,7 +129,8 @@ export abstract class TestRunner {
         configuration,
         inspect,
         absolutePathToApiDefinition,
-        outputDir
+        outputDir,
+        generatorInvocation
     }: TestRunner.RunArgs): Promise<TestRunner.TestResult> {
         try {
             if (this.buildInvocation == null) {
@@ -171,13 +175,19 @@ export abstract class TestRunner {
             const readme = configuration?.readmeConfig ?? undefined;
             const license = extractLicenseInfo(configuration?.license, absolutePathToApiDefinition);
 
-            const fernWorkspace = await (
-                await convertGeneratorWorkspaceToFernWorkspace({
-                    absolutePathToAPIDefinition: absolutePathToApiDefinition,
-                    taskContext,
-                    fixture
-                })
-            )?.toFernWorkspace({ context: taskContext });
+            const apiWorkspace = await convertGeneratorWorkspaceToFernWorkspace({
+                absolutePathToAPIDefinition: absolutePathToApiDefinition,
+                taskContext,
+                fixture
+            });
+            const workspaceSettings = generatorInvocation != null
+                ? getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                : undefined;
+            const fernWorkspace = await apiWorkspace?.toFernWorkspace(
+                { context: taskContext },
+                workspaceSettings,
+                generatorInvocation?.apiOverride?.specs
+            );
             if (fernWorkspace == null) {
                 return {
                     type: "failure",
