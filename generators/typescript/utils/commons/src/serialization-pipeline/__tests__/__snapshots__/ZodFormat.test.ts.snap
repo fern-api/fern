@@ -6,7 +6,7 @@ exports[`ZodFormat AST Generation > Collection Schemas > nested list generates z
 
 exports[`ZodFormat AST Generation > Collection Schemas > record() generates z.record() 1`] = `"z.record(z.string(), z.number())"`;
 
-exports[`ZodFormat AST Generation > Collection Schemas > set() generates z.array() 1`] = `"z.array(z.number())"`;
+exports[`ZodFormat AST Generation > Collection Schemas > set() generates z.array().transform() 1`] = `"z.array(z.number()).transform(arr => new Set(arr))"`;
 
 exports[`ZodFormat AST Generation > Enum Schemas > enum generates z.enum() 1`] = `"z.enum(["ACTIVE", "INACTIVE", "PENDING"])"`;
 

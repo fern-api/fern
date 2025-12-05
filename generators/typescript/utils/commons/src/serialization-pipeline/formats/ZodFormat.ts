@@ -497,12 +497,26 @@ export class ZodFormat implements SerializationFormat {
 
     public set = (itemSchema: Schema): SchemaWithUtils => {
         // JSON wire format uses arrays for sets
-        // Parsing: z.array() validates the input
-        // Serialization: Array.from() converts Set → Array (handles both Set and Array input)
+        // Parsing: z.array().transform(arr => new Set(arr)) converts array → Set
+        // Serialization: Array.from() converts Set → Array
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => this.zodCall("array", [itemSchema.toExpression()]),
+            toExpression: () => {
+                // z.array(itemSchema).transform(arr => new Set(arr))
+                const arraySchema = this.zodCall("array", [itemSchema.toExpression()]);
+                const transformFn = ts.factory.createArrowFunction(
+                    undefined,
+                    undefined,
+                    [ts.factory.createParameterDeclaration(undefined, undefined, undefined, "arr")],
+                    undefined,
+                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                    ts.factory.createNewExpression(ts.factory.createIdentifier("Set"), undefined, [
+                        ts.factory.createIdentifier("arr")
+                    ])
+                );
+                return chainMethod(arraySchema, "transform", [transformFn]);
+            },
             // For JSON serialization, convert Set to Array: Array.from(value)
             toJsonExpression: (parsed) =>
                 ts.factory.createCallExpression(

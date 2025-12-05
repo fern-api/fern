@@ -187,7 +187,7 @@ describe("ZodFormat AST Generation", () => {
             expect(ast).toMatchSnapshot();
         });
 
-        it("set() generates z.array()", () => {
+        it("set() generates z.array().transform()", () => {
             const schema = zod.set(zod.number());
             const ast = printNode(schema.toExpression());
             expect(ast).toMatchSnapshot();
@@ -346,15 +346,14 @@ describe("ZodFormat AST Generation", () => {
     });
 
     describe("JSON Serialization Compatibility", () => {
-        it("set() generates plain z.array() for JSON compatibility", () => {
-            // Sets must be arrays for JSON serialization to work correctly
-            // JSON.stringify(Set) produces "{}" which is wrong
+        it("set() generates z.array().transform() for parsing and toJsonExpression for serialization", () => {
+            // Parsing: array → Set via transform
+            // Serialization: Set → Array via toJsonExpression
             const schema = zod.set(zod.string());
             const ast = printNode(schema.toExpression());
-            // Should NOT contain .transform() - just a plain array
-            expect(ast).toBe("z.array(z.string())");
-            expect(ast).not.toContain("transform");
-            expect(ast).not.toContain("Set");
+            // Should contain transform to create Set from array
+            expect(ast).toContain("transform");
+            expect(ast).toContain("new Set");
         });
 
         it("set().json() generates Array.from() for Set serialization", () => {
