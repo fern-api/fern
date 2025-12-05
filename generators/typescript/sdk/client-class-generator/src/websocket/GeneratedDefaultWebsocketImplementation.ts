@@ -176,7 +176,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     const typeNode = queryParameter.allowMultiple
                         ? ts.factory.createUnionTypeNode([
                               type.typeNodeWithoutUndefined,
-                              ts.factory.createArrayTypeNode(type.typeNodeWithoutUndefined)
+                              ts.factory.createArrayTypeNode(type.typeNodeWithoutUndefined),
+                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
                           ])
                         : type.typeNodeWithoutUndefined;
                     return {
