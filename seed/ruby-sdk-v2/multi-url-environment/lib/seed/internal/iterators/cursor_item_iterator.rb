@@ -11,7 +11,6 @@ module Seed
       # @param block [Proc] A block which is responsible for receiving a cursor to use and returning the given page from the API.
       # @return [Seed::Internal::CursorItemIterator]
       def initialize(initial_cursor:, cursor_field:, item_field:, &)
-        super()
         @item_field = item_field
         @page_iterator = CursorPageIterator.new(initial_cursor:, cursor_field:, &)
         @page = nil

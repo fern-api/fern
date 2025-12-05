@@ -17,4 +17,6 @@ export interface ErrorDeclaration extends FernIr.WithDocs {
     isWildcardStatusCode: boolean | undefined;
     examples: FernIr.ExampleError[];
     v2Examples: FernIr.V2SchemaExamples | undefined;
+    /** Response headers associated with this error (e.g., Retry-After for 429 errors). */
+    headers: FernIr.HttpHeader[] | undefined;
 }

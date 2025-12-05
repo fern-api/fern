@@ -6,7 +6,11 @@ class SeedApiError extends Error {
     constructor(errorName) {
         super();
         this.errorName = errorName;
-        Object.setPrototypeOf(this, SeedApiError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+        this.name = this.constructor.name;
     }
 }
 exports.SeedApiError = SeedApiError;

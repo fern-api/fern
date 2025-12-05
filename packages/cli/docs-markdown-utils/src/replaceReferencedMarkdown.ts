@@ -55,20 +55,22 @@ function substituteVariables(content: string, variables: Record<string, string>)
     return result;
 }
 
-// TODO: recursively replace referenced markdown files
 export async function replaceReferencedMarkdown({
     markdown,
     absolutePathToFernFolder,
     absolutePathToMarkdownFile,
     context,
     // allow for custom markdown loader for testing
-    markdownLoader = defaultMarkdownLoader
+    markdownLoader = defaultMarkdownLoader,
+    // track ancestor files to detect circular references
+    ancestorFiles = new Set<string>()
 }: {
     markdown: string;
     absolutePathToFernFolder: AbsoluteFilePath;
     absolutePathToMarkdownFile: AbsoluteFilePath;
     context: TaskContext;
     markdownLoader?: (filepath: AbsoluteFilePath) => Promise<string>;
+    ancestorFiles?: Set<string>;
 }): Promise<string> {
     if (!markdown.includes("<Markdown")) {
         return markdown;
@@ -101,6 +103,16 @@ export async function replaceReferencedMarkdown({
             RelativeFilePath.of(src.replace(/^\//, ""))
         );
 
+        // Check for circular reference
+        if (ancestorFiles.has(filepath)) {
+            const idx = match.index ?? markdown.indexOf(matchString);
+            const line = getLineNumber(markdown, idx);
+            context.logger.warn(
+                `[${absolutePathToMarkdownFile}:${line}] Circular reference detected: "${src}" is already being processed in the current chain`
+            );
+            continue;
+        }
+
         try {
             let replaceString = await markdownLoader(filepath);
 
@@ -113,8 +125,6 @@ export async function replaceReferencedMarkdown({
             if (missingVariables.length > 0) {
                 const idx = match.index ?? markdown.indexOf(matchString);
                 const line = getLineNumber(markdown, idx);
-                const pageName =
-                    String(absolutePathToMarkdownFile).split("/").pop() ?? String(absolutePathToMarkdownFile);
 
                 for (const variable of missingVariables) {
                     context.logger.warn(
@@ -124,6 +134,18 @@ export async function replaceReferencedMarkdown({
             }
 
             replaceString = substituteVariables(replaceString, variables);
+
+            // Recursively replace referenced markdown in the loaded content
+            const newAncestorFiles = new Set(ancestorFiles);
+            newAncestorFiles.add(filepath);
+            replaceString = await replaceReferencedMarkdown({
+                markdown: replaceString,
+                absolutePathToFernFolder,
+                absolutePathToMarkdownFile: filepath,
+                context,
+                markdownLoader,
+                ancestorFiles: newAncestorFiles
+            });
 
             replaceString = replaceString
                 .split("\n")

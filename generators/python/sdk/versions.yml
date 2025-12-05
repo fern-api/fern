@@ -1,11 +1,31 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
-- version: 4.41.11
+- version: 4.42.1
   changelogEntry:
     - summary: |
         Fix OAuth flow regression where `SyncClientWrapper` and `AsyncClientWrapper` required a `token` parameter.
         The token parameter is now optional only for OAuth flows (matching TypeScript's behavior), while plain
         bearer auth continues to require a token when `isAuthMandatory` is true.
+      type: fix
+  createdAt: "2025-12-05"
+  irVersion: 61
+
+- version: 4.42.0
+  changelogEntry:
+    - summary: |
+        Add async support for OAuth token provider. The generated SDK now includes an AsyncOAuthTokenProvider
+        class that uses asyncio.Lock for async-safe token refresh, alongside the existing sync OAuthTokenProvider
+        that uses threading.Lock. The async client now uses the async token provider for proper async token management.
+      type: feat
+  createdAt: "2025-11-28"
+  irVersion: 61
+
+- version: 4.41.11
+  changelogEntry:
+    - summary: |
+        Fix backslash escaping in endpoint and websocket docstrings. OpenAPI descriptions containing
+        backslash sequences like `DOMAIN\username` now properly escape backslashes to avoid Python
+        SyntaxError from invalid unicode escape sequences.
       type: fix
   createdAt: "2025-12-04"
   irVersion: 61

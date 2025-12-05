@@ -61,6 +61,7 @@ export function convertErrorDeclaration({
         type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined,
         examples,
         v2Examples: undefined,
-        displayName: undefined
+        displayName: undefined,
+        headers: []
     };
 }

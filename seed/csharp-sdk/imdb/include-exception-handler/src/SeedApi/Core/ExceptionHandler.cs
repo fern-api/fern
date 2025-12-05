@@ -86,5 +86,10 @@ internal class ExceptionHandler
         }
     }
 
+    internal void CaptureException(Exception exception)
+    {
+        _interceptor?.Intercept(exception);
+    }
+
     internal ExceptionHandler Clone() => new ExceptionHandler(_interceptor);
 }

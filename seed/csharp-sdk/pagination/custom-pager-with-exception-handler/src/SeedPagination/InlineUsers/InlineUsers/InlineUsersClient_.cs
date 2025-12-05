@@ -10,7 +10,15 @@ public partial class InlineUsersClient_
 
     internal InlineUsersClient_(RawClient client)
     {
-        _client = client;
+        try
+        {
+            _client = client;
+        }
+        catch (Exception ex)
+        {
+            client.Options.ExceptionHandler?.CaptureException(ex);
+            throw;
+        }
     }
 
     private async Task<ListUsersPaginationResponse> ListWithCursorPaginationInternalAsync(

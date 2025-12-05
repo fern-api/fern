@@ -10,7 +10,7 @@ module Seed
       # @param block [Proc] The block which each retrieved item is yielded to.
       # @return [NilClass]
       def each(&block)
-        while (item = next_element)
+        while (item = get_next)
           block.call(item)
         end
       end
@@ -18,18 +18,18 @@ module Seed
       # Whether another item will be available from the API.
       #
       # @return [Boolean]
-      def next?
+      def has_next?
         load_next_page if @page.nil?
         return false if @page.nil?
 
-        return true if any_items_in_cached_page?
+        return true if any_items_in_cached_page
 
         load_next_page
-        any_items_in_cached_page?
+        any_items_in_cached_page
       end
 
       # Retrieves the next item from the API.
-      def next_element
+      def get_next
         item = next_item_from_cached_page
         return item if item
 
@@ -45,14 +45,14 @@ module Seed
         @page.send(@item_field).shift
       end
 
-      def any_items_in_cached_page?
+      def any_items_in_cached_page
         return false unless @page
 
         !@page.send(@item_field).empty?
       end
 
       def load_next_page
-        @page = @page_iterator.next_page
+        @page = @page_iterator.get_next
       end
     end
   end

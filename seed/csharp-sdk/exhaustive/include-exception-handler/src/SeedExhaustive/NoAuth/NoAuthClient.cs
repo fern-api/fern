@@ -9,7 +9,15 @@ public partial class NoAuthClient
 
     internal NoAuthClient(RawClient client)
     {
-        _client = client;
+        try
+        {
+            _client = client;
+        }
+        catch (Exception ex)
+        {
+            client.Options.ExceptionHandler?.CaptureException(ex);
+            throw;
+        }
     }
 
     /// <summary>

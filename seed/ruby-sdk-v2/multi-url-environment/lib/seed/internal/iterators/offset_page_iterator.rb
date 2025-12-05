@@ -31,7 +31,7 @@ module Seed
       # @param block [Proc] The block which each retrieved page is yielded to.
       # @return [NilClass]
       def each(&block)
-        while (page = next_page)
+        while (page = get_next)
           block.call(page)
         end
       end
@@ -39,22 +39,22 @@ module Seed
       # Whether another page will be available from the API.
       #
       # @return [Boolean]
-      def next?
+      def has_next?
         return @has_next_page unless @has_next_page.nil?
         return true if @next_page
 
-        fetched_page = @get_next_page.call(@page_number)
-        fetched_page_items = fetched_page&.send(@item_field)
-        if fetched_page_items.nil? || fetched_page_items.empty?
+        next_page = @get_next_page.call(@page_number)
+        next_page_items = next_page&.send(@item_field)
+        if next_page_items.nil? || next_page_items.empty?
           @has_next_page = false
         else
-          @next_page = fetched_page
+          @next_page = next_page
           true
         end
       end
 
       # Returns the next page from the API.
-      def next_page
+      def get_next
         return nil if @page_number.nil?
 
         if @next_page
