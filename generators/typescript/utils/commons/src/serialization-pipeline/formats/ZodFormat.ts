@@ -456,7 +456,13 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public record = ({ keySchema: _keySchema, valueSchema }: { keySchema: Schema; valueSchema: Schema }): SchemaWithUtils => {
+    public record = ({
+        keySchema: _keySchema,
+        valueSchema
+    }: {
+        keySchema: Schema;
+        valueSchema: Schema;
+    }): SchemaWithUtils => {
         // JSON object keys are always strings, so we use z.string() for the key
         // regardless of the declared key type (e.g., even if Fern declares map<integer, string>)
         const baseSchema: ZodBaseSchema = {
