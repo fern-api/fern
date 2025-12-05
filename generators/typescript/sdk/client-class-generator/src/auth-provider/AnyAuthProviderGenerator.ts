@@ -3,6 +3,11 @@ import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 import { AuthProviderGenerator } from "./AuthProviderGenerator";
+import { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator";
+import { BearerAuthProviderGenerator } from "./BearerAuthProviderGenerator";
+import { HeaderAuthProviderGenerator } from "./HeaderAuthProviderGenerator";
+import { InferredAuthProviderGenerator } from "./InferredAuthProviderGenerator";
+import { OAuthAuthProviderGenerator } from "./OAuthAuthProviderGenerator";
 
 export declare namespace AnyAuthProviderGenerator {
     export interface Init {
@@ -12,6 +17,7 @@ export declare namespace AnyAuthProviderGenerator {
 
 const CLASS_NAME = "AnyAuthProvider";
 const AUTH_PROVIDERS_FIELD_NAME = "authProviders";
+const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 
 export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -41,11 +47,43 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public getAuthOptionsType(): ts.TypeNode {
-        throw new Error("AnyAuthProvider does not have an AuthOptions type");
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
     }
 
     public getAuthOptionsProperties(_context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        // AnyAuthProvider's AuthOptions extends all child auth providers' AuthOptions,
+        // so we don't need to return individual properties here
         return undefined;
+    }
+
+    /**
+     * Gets the list of auth provider class names that this AnyAuthProvider combines.
+     * Used to generate the AuthOptions interface that extends all child auth providers' AuthOptions.
+     */
+    private getChildAuthProviderClassNames(context: SdkContext): string[] {
+        const classNames: string[] = [];
+        for (const authScheme of this.ir.auth.schemes) {
+            switch (authScheme.type) {
+                case "bearer":
+                    classNames.push(BearerAuthProviderGenerator.CLASS_NAME);
+                    break;
+                case "basic":
+                    classNames.push(BasicAuthProviderGenerator.CLASS_NAME);
+                    break;
+                case "header":
+                    classNames.push(HeaderAuthProviderGenerator.CLASS_NAME);
+                    break;
+                case "oauth":
+                    if (context.generateOAuthClients) {
+                        classNames.push(OAuthAuthProviderGenerator.CLASS_NAME);
+                    }
+                    break;
+                case "inferred":
+                    classNames.push(InferredAuthProviderGenerator.CLASS_NAME);
+                    break;
+            }
+        }
+        return classNames;
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
@@ -53,7 +91,38 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public writeToFile(context: SdkContext): void {
+        this.writeOptions(context);
         this.writeClass(context);
+    }
+
+    private writeOptions(context: SdkContext): void {
+        const childClassNames = this.getChildAuthProviderClassNames(context);
+
+        // Add imports for child auth providers
+        for (const className of childClassNames) {
+            context.sourceFile.addImportDeclaration({
+                moduleSpecifier: `./${className}.js`,
+                namedImports: [className],
+                isTypeOnly: true
+            });
+        }
+
+        // Generate AuthOptions interface that extends all child auth providers' AuthOptions
+        const extendsTypes = childClassNames.map((className) => `${className}.AuthOptions`);
+
+        context.sourceFile.addModule({
+            name: CLASS_NAME,
+            isExported: true,
+            kind: StructureKind.Module,
+            statements: [
+                {
+                    kind: StructureKind.Interface,
+                    name: AUTH_OPTIONS_TYPE_NAME,
+                    isExported: true,
+                    extends: extendsTypes
+                }
+            ]
+        });
     }
 
     private writeClass(context: SdkContext): void {

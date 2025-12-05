@@ -81,15 +81,11 @@ export type BaseClientOptions = {
         const isAnyAuth = this.ir.auth.requirement === "ANY";
 
         if (isAnyAuth) {
-            // For ANY auth, include all auth provider options
-            for (const authScheme of this.ir.auth.schemes) {
-                const authOptionsType = this.getAuthOptionsTypeForScheme(authScheme, context);
-                if (authOptionsType != null) {
-                    authOptionsTypes.push(authOptionsType);
-                }
-            }
+            // For ANY auth, use AnyAuthProvider.AuthOptions which combines all child auth providers' options
+            // Note: The import for AnyAuthProvider is added in generateNormalizeClientOptionsWithAuthFunction()
+            authOptionsTypes.push("AnyAuthProvider.AuthOptions");
         } else {
-            // For single auth, use the first auth scheme
+            // For single auth, use the first auth scheme's AuthOptions
             for (const authScheme of this.ir.auth.schemes) {
                 const authOptionsType = this.getAuthOptionsTypeForScheme(authScheme, context);
                 if (authOptionsType != null) {
@@ -103,43 +99,20 @@ export type BaseClientOptions = {
     }
 
     private getAuthOptionsTypeForScheme(authScheme: FernIr.AuthScheme, context: SdkContext): string | undefined {
+        // Note: Imports for auth providers are added in generateNormalizeClientOptionsWithAuthFunction()
+        // We only return the type string here to avoid duplicate imports
         if (authScheme.type === "bearer") {
-            context.sourceFile.addImportDeclaration({
-                moduleSpecifier: "./auth/BearerAuthProvider.js",
-                namedImports: ["BearerAuthProvider"],
-                isTypeOnly: true
-            });
             return "BearerAuthProvider.AuthOptions";
         } else if (authScheme.type === "basic") {
-            context.sourceFile.addImportDeclaration({
-                moduleSpecifier: "./auth/BasicAuthProvider.js",
-                namedImports: ["BasicAuthProvider"],
-                isTypeOnly: true
-            });
             return "BasicAuthProvider.AuthOptions";
         } else if (authScheme.type === "header") {
-            context.sourceFile.addImportDeclaration({
-                moduleSpecifier: "./auth/HeaderAuthProvider.js",
-                namedImports: ["HeaderAuthProvider"],
-                isTypeOnly: true
-            });
             return "HeaderAuthProvider.AuthOptions";
         } else if (authScheme.type === "oauth") {
             if (!context.generateOAuthClients) {
                 return undefined;
             }
-            context.sourceFile.addImportDeclaration({
-                moduleSpecifier: "./auth/OAuthAuthProvider.js",
-                namedImports: ["OAuthAuthProvider"],
-                isTypeOnly: true
-            });
             return "OAuthAuthProvider.AuthOptions";
         } else if (authScheme.type === "inferred") {
-            context.sourceFile.addImportDeclaration({
-                moduleSpecifier: "./auth/InferredAuthProvider.js",
-                namedImports: ["InferredAuthProvider"],
-                isTypeOnly: true
-            });
             return "InferredAuthProvider.AuthOptions";
         }
         return undefined;
