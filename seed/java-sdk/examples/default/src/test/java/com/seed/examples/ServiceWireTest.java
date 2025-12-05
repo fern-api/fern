@@ -267,7 +267,7 @@ public class ServiceWireTest {
 
         // Validate headers
         Assertions.assertEquals(
-                "0.0.1", request.getHeader("xApiVersion"), "Header 'xApiVersion' should match expected value");
+                "0.0.1", request.getHeader("X-API-Version"), "Header 'X-API-Version' should match expected value");
 
         // Validate response body
         Assertions.assertNotNull(response, "Response should not be null");

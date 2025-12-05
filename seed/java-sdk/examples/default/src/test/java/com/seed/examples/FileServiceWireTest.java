@@ -47,7 +47,9 @@ public class FileServiceWireTest {
 
         // Validate headers
         Assertions.assertEquals(
-                "0.0.2", request.getHeader("xFileApiVersion"), "Header 'xFileApiVersion' should match expected value");
+                "0.0.2",
+                request.getHeader("X-File-API-Version"),
+                "Header 'X-File-API-Version' should match expected value");
 
         // Validate response deserialization
         Assertions.assertNotNull(response, "Response should not be null");
