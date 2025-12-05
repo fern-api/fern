@@ -1006,9 +1006,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return properties;
     }
 
-    private generateOptionsInterface(
-        context: SdkContext
-    ): InterfaceDeclarationStructure {
+    private generateOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
 
         // When OAuth token override is enabled, BaseClientOptions already includes the union type
