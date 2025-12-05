@@ -1,19 +1,18 @@
 import { ts } from "ts-morph";
-
-import { Reference } from "../../referencing";
 import { CoreUtility } from "../../core-utilities/CoreUtility";
+import { Reference } from "../../referencing";
 import {
     AdditionalProperty,
     ObjectLikeSchema,
     ObjectSchema,
     Property,
+    Schema,
     SchemaOptions,
     SchemaWithUtils,
     SerializationFormat,
     SerializationFormatConfig,
     SingleUnionType,
-    UnionArgs,
-    Schema
+    UnionArgs
 } from "../SerializationFormat";
 
 /**
@@ -762,34 +761,23 @@ export class ZurgFormat implements SerializationFormat {
         };
     });
 
-    public lazyObject = this.withExportedName(
-        "lazyObject",
-        (lazyObject) =>
-            (schema: Schema): ObjectSchema => {
-                const baseSchema: ZurgBaseSchema = {
-                    isOptional: false,
-                    isNullable: schema.isNullable,
-                    toExpression: () =>
-                        ts.factory.createCallExpression(lazyObject.getExpression(), undefined, [
-                            ts.factory.createArrowFunction(
-                                [],
-                                undefined,
-                                [],
-                                undefined,
-                                undefined,
-                                schema.toExpression()
-                            )
-                        ])
-                };
+    public lazyObject = this.withExportedName("lazyObject", (lazyObject) => (schema: Schema): ObjectSchema => {
+        const baseSchema: ZurgBaseSchema = {
+            isOptional: false,
+            isNullable: schema.isNullable,
+            toExpression: () =>
+                ts.factory.createCallExpression(lazyObject.getExpression(), undefined, [
+                    ts.factory.createArrowFunction([], undefined, [], undefined, undefined, schema.toExpression())
+                ])
+        };
 
-                return {
-                    ...baseSchema,
-                    ...this.getSchemaUtils(baseSchema),
-                    ...this.getObjectLikeUtils(baseSchema),
-                    ...this.getObjectUtils(baseSchema)
-                };
-            }
-    );
+        return {
+            ...baseSchema,
+            ...this.getSchemaUtils(baseSchema),
+            ...this.getObjectLikeUtils(baseSchema),
+            ...this.getObjectUtils(baseSchema)
+        };
+    });
 
     // ==================== Type Utilities ====================
 
@@ -911,4 +899,3 @@ export class ZurgFormat implements SerializationFormat {
         return { patterns: ["src/core/schemas/**", "tests/unit/schemas/**"] };
     }
 }
-

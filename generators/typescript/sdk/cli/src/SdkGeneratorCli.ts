@@ -9,6 +9,7 @@ import {
     fixImportsForEsm,
     NpmPackage,
     PersistedTypescriptProject,
+    SerializationFormatType,
     SerializationPipeline,
     writeTemplateFiles
 } from "@fern-typescript/commons";
@@ -36,15 +37,19 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected parseCustomConfig(customConfig: unknown, logger: Logger): SdkCustomConfig {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        
+
         // Resolve serialization format from new option or legacy noSerdeLayer
         // Note: SDK defaults to noSerdeLayer: true (no serialization) for backward compatibility
+        // TODO: Add serializationFormat to TypescriptCustomConfigSchema in @fern-api/typescript-ast
+        const parsedWithFormat = parsed as
+            | (typeof parsed & { serializationFormat?: SerializationFormatType })
+            | undefined;
         const serializationFormat = SerializationPipeline.resolveFormatType({
-            serializationFormat: (parsed as any)?.serializationFormat, // TODO: Add to TypescriptCustomConfigSchema
+            serializationFormat: parsedWithFormat?.serializationFormat,
             noSerdeLayer: parsed?.noSerdeLayer ?? true
         });
         const noSerdeLayer = serializationFormat === "none";
-        
+
         const config = {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? true,

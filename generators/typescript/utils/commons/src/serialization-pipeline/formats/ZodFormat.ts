@@ -5,11 +5,11 @@ import {
     ObjectLikeSchema,
     ObjectSchema,
     Property,
+    Schema,
     SchemaOptions,
     SchemaWithUtils,
     SerializationFormat,
     SerializationFormatConfig,
-    Schema,
     UnionArgs
 } from "../SerializationFormat";
 
@@ -316,9 +316,7 @@ export class ZodFormat implements SerializationFormat {
                     // Get the properties from the non-discriminant schema
                     // We need to merge them with the discriminant
                     return chainMethod(
-                        zodCall("object", [
-                            ts.factory.createObjectLiteralExpression([discriminantProp], false)
-                        ]),
+                        zodCall("object", [ts.factory.createObjectLiteralExpression([discriminantProp], false)]),
                         "merge",
                         [variant.nonDiscriminantProperties.toExpression()]
                     );
@@ -489,8 +487,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () =>
-                zodCall("literal", [literal ? ts.factory.createTrue() : ts.factory.createFalse()])
+            toExpression: () => zodCall("literal", [literal ? ts.factory.createTrue() : ts.factory.createFalse()])
         };
 
         return {
@@ -546,24 +543,18 @@ export class ZodFormat implements SerializationFormat {
             isNullable: false,
             toExpression: () => {
                 // Use z.string() with transform to parse ISO strings to Date
-                return chainMethod(
-                    zodCall("string"),
-                    "transform",
-                    [
-                        ts.factory.createArrowFunction(
-                            undefined,
-                            undefined,
-                            [ts.factory.createParameterDeclaration(undefined, undefined, undefined, "s")],
-                            undefined,
-                            ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
-                            ts.factory.createNewExpression(
-                                ts.factory.createIdentifier("Date"),
-                                undefined,
-                                [ts.factory.createIdentifier("s")]
-                            )
-                        )
-                    ]
-                );
+                return chainMethod(zodCall("string"), "transform", [
+                    ts.factory.createArrowFunction(
+                        undefined,
+                        undefined,
+                        [ts.factory.createParameterDeclaration(undefined, undefined, undefined, "s")],
+                        undefined,
+                        ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                        ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [
+                            ts.factory.createIdentifier("s")
+                        ])
+                    )
+                ]);
             }
         };
 
@@ -706,15 +697,11 @@ export class ZodFormat implements SerializationFormat {
                 ts.factory.createIfStatement(
                     ts.factory.createPropertyAccessExpression(referenceToMaybeValid, "success"),
                     ts.factory.createBlock(
-                        visitor.valid(
-                            ts.factory.createPropertyAccessExpression(referenceToMaybeValid, "data")
-                        ),
+                        visitor.valid(ts.factory.createPropertyAccessExpression(referenceToMaybeValid, "data")),
                         true
                     ),
                     ts.factory.createBlock(
-                        visitor.invalid(
-                            ts.factory.createPropertyAccessExpression(referenceToMaybeValid, "error")
-                        ),
+                        visitor.invalid(ts.factory.createPropertyAccessExpression(referenceToMaybeValid, "error")),
                         true
                     )
                 )
@@ -768,4 +755,3 @@ export class ZodFormat implements SerializationFormat {
         return null;
     }
 }
-

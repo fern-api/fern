@@ -5,11 +5,11 @@ import {
     ObjectLikeSchema,
     ObjectSchema,
     Property,
+    Schema,
     SchemaOptions,
     SchemaWithUtils,
     SerializationFormat,
     SerializationFormatConfig,
-    Schema,
     UnionArgs
 } from "../SerializationFormat";
 
@@ -120,4 +120,3 @@ export class NoneFormat implements SerializationFormat {
         return null; // No runtime files needed
     }
 }
-

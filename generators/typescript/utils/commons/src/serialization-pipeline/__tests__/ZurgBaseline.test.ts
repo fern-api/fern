@@ -1,9 +1,8 @@
-import { describe, expect, it } from "vitest";
 import { ts } from "ts-morph";
-
-import { Reference } from "../../referencing";
-import { ZurgFormat, ZURG_MANIFEST } from "../formats/ZurgFormat";
+import { describe, expect, it } from "vitest";
 import { CoreUtility } from "../../core-utilities/CoreUtility";
+import { Reference } from "../../referencing";
+import { ZURG_MANIFEST, ZurgFormat } from "../formats/ZurgFormat";
 
 /**
  * Helper to print TypeScript AST to string for snapshot comparison
@@ -49,7 +48,8 @@ function createMockReference(exportedName: string): Reference {
  */
 function createZurg(): ZurgFormat {
     return new ZurgFormat({
-        getReferenceToExport: ({ exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => createMockReference(exportedName),
+        getReferenceToExport: ({ exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) =>
+            createMockReference(exportedName),
         generateEndpointMetadata: false
     });
 }
@@ -162,9 +162,7 @@ describe("ZurgFormat AST Generation Baseline", () => {
         });
 
         it("object with nullable property generates correct AST", () => {
-            const schema = zurg.object([
-                { key: { parsed: "name", raw: "name" }, value: zurg.string().nullable() }
-            ]);
+            const schema = zurg.object([{ key: { parsed: "name", raw: "name" }, value: zurg.string().nullable() }]);
             const ast = printNode(schema.toExpression());
             expect(ast).toMatchSnapshot();
         });
@@ -178,9 +176,7 @@ describe("ZurgFormat AST Generation Baseline", () => {
         });
 
         it("object.extend() generates correct AST", () => {
-            const baseSchema = zurg.object([
-                { key: { parsed: "id", raw: "id" }, value: zurg.string() }
-            ]);
+            const baseSchema = zurg.object([{ key: { parsed: "id", raw: "id" }, value: zurg.string() }]);
             const extendedSchema = baseSchema.extend(
                 zurg.object([{ key: { parsed: "name", raw: "name" }, value: zurg.string() }])
             );
@@ -189,9 +185,7 @@ describe("ZurgFormat AST Generation Baseline", () => {
         });
 
         it("object.passthrough() generates correct AST", () => {
-            const schema = zurg.object([
-                { key: { parsed: "id", raw: "id" }, value: zurg.string() }
-            ]).passthrough();
+            const schema = zurg.object([{ key: { parsed: "id", raw: "id" }, value: zurg.string() }]).passthrough();
             const ast = printNode(schema.toExpression());
             expect(ast).toMatchSnapshot();
         });
@@ -294,9 +288,7 @@ describe("ZurgFormat AST Generation Baseline", () => {
         });
 
         it("lazyObject() generates correct AST", () => {
-            const schema = zurg.lazyObject(
-                zurg.object([{ key: { parsed: "id", raw: "id" }, value: zurg.string() }])
-            );
+            const schema = zurg.lazyObject(zurg.object([{ key: { parsed: "id", raw: "id" }, value: zurg.string() }]));
             const ast = printNode(schema.toExpression());
             expect(ast).toMatchSnapshot();
         });
@@ -384,9 +376,7 @@ describe("ZurgFormat AST Generation Baseline", () => {
         });
 
         it("parse() with skipValidation generates correct AST", () => {
-            const schema = zurg.object([
-                { key: { parsed: "name", raw: "name" }, value: zurg.string() }
-            ]);
+            const schema = zurg.object([{ key: { parsed: "name", raw: "name" }, value: zurg.string() }]);
             const rawExpr = ts.factory.createIdentifier("rawValue");
             const parseExpr = schema.parse(rawExpr, {
                 unrecognizedObjectKeys: "passthrough",
@@ -439,20 +429,14 @@ describe("ZurgFormat AST Generation Baseline", () => {
             const statements = zurg.Schema._visitMaybeValid(maybeValidRef, {
                 valid: (valueRef: ts.Expression) => [
                     ts.factory.createExpressionStatement(
-                        ts.factory.createCallExpression(
-                            ts.factory.createIdentifier("console.log"),
-                            undefined,
-                            [valueRef]
-                        )
+                        ts.factory.createCallExpression(ts.factory.createIdentifier("console.log"), undefined, [
+                            valueRef
+                        ])
                     )
                 ],
                 invalid: (errorsRef: ts.Expression) => [
                     ts.factory.createThrowStatement(
-                        ts.factory.createNewExpression(
-                            ts.factory.createIdentifier("Error"),
-                            undefined,
-                            [errorsRef]
-                        )
+                        ts.factory.createNewExpression(ts.factory.createIdentifier("Error"), undefined, [errorsRef])
                     )
                 ]
             });
@@ -468,10 +452,13 @@ describe("ZurgFormat AST Generation Baseline", () => {
                 {
                     key: { parsed: "user", raw: "user" },
                     value: zurg.object([
-                        { key: { parsed: "profile", raw: "profile" }, value: zurg.object([
-                            { key: { parsed: "name", raw: "name" }, value: zurg.string() },
-                            { key: { parsed: "age", raw: "age" }, value: zurg.number().optional() }
-                        ])}
+                        {
+                            key: { parsed: "profile", raw: "profile" },
+                            value: zurg.object([
+                                { key: { parsed: "name", raw: "name" }, value: zurg.string() },
+                                { key: { parsed: "age", raw: "age" }, value: zurg.number().optional() }
+                            ])
+                        }
                     ])
                 },
                 {
@@ -488,4 +475,3 @@ describe("ZurgFormat AST Generation Baseline", () => {
         });
     });
 });
-

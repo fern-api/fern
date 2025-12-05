@@ -1,5 +1,5 @@
-import { describe, expect, it } from "vitest";
 import { ts } from "ts-morph";
+import { describe, expect, it } from "vitest";
 
 import { Reference } from "../../referencing";
 import { ZodFormat } from "../formats/ZodFormat";
@@ -160,17 +160,13 @@ describe("ZodFormat AST Generation", () => {
         });
 
         it("object with nullable property", () => {
-            const schema = zod.object([
-                { key: { parsed: "name", raw: "name" }, value: zod.string().nullable() }
-            ]);
+            const schema = zod.object([{ key: { parsed: "name", raw: "name" }, value: zod.string().nullable() }]);
             const ast = printNode(schema.toExpression());
             expect(ast).toMatchSnapshot();
         });
 
         it("object.passthrough()", () => {
-            const schema = zod.object([
-                { key: { parsed: "id", raw: "id" }, value: zod.string() }
-            ]).passthrough();
+            const schema = zod.object([{ key: { parsed: "id", raw: "id" }, value: zod.string() }]).passthrough();
             const ast = printNode(schema.toExpression());
             expect(ast).toMatchSnapshot();
         });
@@ -252,9 +248,7 @@ describe("ZodFormat AST Generation", () => {
         });
 
         it("lazyObject() generates z.lazy()", () => {
-            const schema = zod.lazyObject(
-                zod.object([{ key: { parsed: "id", raw: "id" }, value: zod.string() }])
-            );
+            const schema = zod.lazyObject(zod.object([{ key: { parsed: "id", raw: "id" }, value: zod.string() }]));
             const ast = printNode(schema.toExpression());
             expect(ast).toMatchSnapshot();
         });
@@ -313,20 +307,14 @@ describe("ZodFormat AST Generation", () => {
             const statements = zod.Schema._visitMaybeValid(maybeValidRef, {
                 valid: (valueRef) => [
                     ts.factory.createExpressionStatement(
-                        ts.factory.createCallExpression(
-                            ts.factory.createIdentifier("console.log"),
-                            undefined,
-                            [valueRef]
-                        )
+                        ts.factory.createCallExpression(ts.factory.createIdentifier("console.log"), undefined, [
+                            valueRef
+                        ])
                     )
                 ],
                 invalid: (errorsRef) => [
                     ts.factory.createThrowStatement(
-                        ts.factory.createNewExpression(
-                            ts.factory.createIdentifier("Error"),
-                            undefined,
-                            [errorsRef]
-                        )
+                        ts.factory.createNewExpression(ts.factory.createIdentifier("Error"), undefined, [errorsRef])
                     )
                 ]
             });
@@ -357,4 +345,3 @@ describe("ZodFormat AST Generation", () => {
         });
     });
 });
-

@@ -1,9 +1,8 @@
-import { describe, expect, it } from "vitest";
 import { ts } from "ts-morph";
-
+import { describe, expect, it } from "vitest";
+import { CoreUtility } from "../../core-utilities/CoreUtility";
 import { Reference } from "../../referencing";
 import { ZurgFormat } from "../formats/ZurgFormat";
-import { CoreUtility } from "../../core-utilities/CoreUtility";
 
 /**
  * Helper to print TypeScript AST to string for comparison
@@ -48,7 +47,8 @@ function createMockReference(exportedName: string): Reference {
  */
 function createZurgFormat(): ZurgFormat {
     return new ZurgFormat({
-        getReferenceToExport: ({ exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => createMockReference(exportedName),
+        getReferenceToExport: ({ exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) =>
+            createMockReference(exportedName),
         generateEndpointMetadata: false
     });
 }
@@ -165,9 +165,7 @@ describe("ZurgFormat AST Generation", () => {
         });
 
         it("record(string, any) generates correct AST", () => {
-            const ast = printNode(
-                zurg.record({ keySchema: zurg.string(), valueSchema: zurg.any() }).toExpression()
-            );
+            const ast = printNode(zurg.record({ keySchema: zurg.string(), valueSchema: zurg.any() }).toExpression());
             expect(ast).toMatchSnapshot();
         });
     });

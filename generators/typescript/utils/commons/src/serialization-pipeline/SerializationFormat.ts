@@ -364,4 +364,3 @@ export interface SerializationFormatConfig {
      */
     generateEndpointMetadata: boolean;
 }
-

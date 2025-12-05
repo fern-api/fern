@@ -1,11 +1,11 @@
-import { describe, expect, it } from "vitest";
 import { ts } from "ts-morph";
+import { describe, expect, it } from "vitest";
 
 import { Reference } from "../../referencing";
-import { SerializationPipeline } from "../SerializationPipeline";
-import { ZurgFormat } from "../formats/ZurgFormat";
-import { ZodFormat } from "../formats/ZodFormat";
 import { NoneFormat } from "../formats/NoneFormat";
+import { ZodFormat } from "../formats/ZodFormat";
+import { ZurgFormat } from "../formats/ZurgFormat";
+import { SerializationPipeline } from "../SerializationPipeline";
 
 /**
  * Create a mock reference for testing
@@ -189,9 +189,7 @@ describe("SerializationPipeline", () => {
             });
 
             const format = pipeline.getFormat();
-            const schema = format.object([
-                { key: { parsed: "name", raw: "name" }, value: format.string() }
-            ]);
+            const schema = format.object([{ key: { parsed: "name", raw: "name" }, value: format.string() }]);
 
             const expr = schema.toExpression();
             expect(expr).toBeDefined();
@@ -207,9 +205,7 @@ describe("SerializationPipeline", () => {
             });
 
             const format = pipeline.getFormat();
-            const schema = format.object([
-                { key: { parsed: "name", raw: "name" }, value: format.string() }
-            ]);
+            const schema = format.object([{ key: { parsed: "name", raw: "name" }, value: format.string() }]);
 
             const expr = schema.toExpression();
             expect(expr).toBeDefined();

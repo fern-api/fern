@@ -13,8 +13,8 @@ import {
     SerializationFormatType,
     SerializationPipeline,
     ZodFormat,
-    ZurgFormat,
-    ZURG_MANIFEST
+    ZURG_MANIFEST,
+    ZurgFormat
 } from "../serialization-pipeline";
 import { AuthImpl } from "./Auth";
 import { CallbackQueueImpl } from "./CallbackQueue";
@@ -143,7 +143,10 @@ export class CoreUtilitiesManager {
     }
 
     private createSerializationFormat(
-        getReferenceToExport: (args: { manifest: CoreUtility.Manifest; exportedName: string }) => ReturnType<typeof getReferenceToExportViaNamespaceImport>
+        getReferenceToExport: (args: {
+            manifest: CoreUtility.Manifest;
+            exportedName: string;
+        }) => ReturnType<typeof getReferenceToExportViaNamespaceImport>
     ) {
         const config = {
             getReferenceToExport,

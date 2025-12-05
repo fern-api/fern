@@ -1,7 +1,7 @@
-import { SerializationFormat, SerializationFormatConfig } from "./SerializationFormat";
-import { ZurgFormat } from "./formats/ZurgFormat";
-import { ZodFormat } from "./formats/ZodFormat";
 import { NoneFormat } from "./formats/NoneFormat";
+import { ZodFormat } from "./formats/ZodFormat";
+import { ZurgFormat } from "./formats/ZurgFormat";
+import { SerializationFormat, SerializationFormatConfig } from "./SerializationFormat";
 
 /**
  * Supported serialization format types
@@ -111,4 +111,3 @@ export class SerializationPipeline {
         return "default";
     }
 }
-

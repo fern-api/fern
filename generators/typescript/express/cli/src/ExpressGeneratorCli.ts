@@ -12,14 +12,14 @@ import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomC
 export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfig> {
     protected parseCustomConfig(customConfig: unknown, logger: Logger): ExpressCustomConfig {
         const parsed = customConfig != null ? ExpressCustomConfigSchema.parse(customConfig) : undefined;
-        
+
         // Resolve serialization format from new option or legacy noSerdeLayer
         const serializationFormat = SerializationPipeline.resolveFormatType({
             serializationFormat: parsed?.serializationFormat,
             noSerdeLayer: parsed?.noSerdeLayer
         });
         const noSerdeLayer = serializationFormat === "none";
-        
+
         const enableInlineTypes = false; // hardcode, not supported in Express
         const config = {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
