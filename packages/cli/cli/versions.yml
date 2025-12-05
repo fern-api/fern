@@ -2,10 +2,10 @@
 - changelogEntry:
     - summary: |
         Map error response headers from IR to FDR for docs display.
-      type: feat
+      type: fix
   irVersion: 63
   createdAt: "2025-12-05"
-  version: 3.5.0
+  version: 3.4.1
 
 - changelogEntry:
     - summary: |
