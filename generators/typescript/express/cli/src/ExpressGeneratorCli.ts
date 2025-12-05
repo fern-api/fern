@@ -2,7 +2,7 @@ import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { AbstractGeneratorCli } from "@fern-typescript/abstract-generator-cli";
-import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
+import { NpmPackage, PersistedTypescriptProject, SerializationPipeline } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { ExpressGenerator } from "@fern-typescript/express-generator";
 import { camelCase, upperFirst } from "lodash-es";
@@ -12,7 +12,14 @@ import { ExpressCustomConfigSchema } from "./custom-config/schema/ExpressCustomC
 export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfig> {
     protected parseCustomConfig(customConfig: unknown, logger: Logger): ExpressCustomConfig {
         const parsed = customConfig != null ? ExpressCustomConfigSchema.parse(customConfig) : undefined;
-        const noSerdeLayer = parsed?.noSerdeLayer ?? false;
+        
+        // Resolve serialization format from new option or legacy noSerdeLayer
+        const serializationFormat = SerializationPipeline.resolveFormatType({
+            serializationFormat: parsed?.serializationFormat,
+            noSerdeLayer: parsed?.noSerdeLayer
+        });
+        const noSerdeLayer = serializationFormat === "none";
+        
         const enableInlineTypes = false; // hardcode, not supported in Express
         const config = {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
@@ -22,6 +29,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             includeOtherInUnionTypes: parsed?.includeOtherInUnionTypes ?? false,
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             noSerdeLayer,
+            serializationFormat,
             requestValidationStatusCode: parsed?.requestValidationStatusCode ?? 422,
             outputEsm: parsed?.outputEsm ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? true,
