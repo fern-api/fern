@@ -336,9 +336,13 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this.${GET_TOKEN_INTERNAL_METHOD_NAME}(${ENDPOINT_METADATA_ARG_NAME});
         `;
 
+        const clientIdPropertyAccess = ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientId");
+        const clientIdExpression = hasTokenOverride
+            ? ts.factory.createNonNullExpression(clientIdPropertyAccess)
+            : clientIdPropertyAccess;
         const clientIdSupplierCall = getTextOfTsNode(
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientId"),
+                clientIdExpression,
                 ts.factory.createObjectLiteralExpression([
                     ts.factory.createPropertyAssignment(
                         "endpointMetadata",
@@ -366,9 +370,16 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             : `
         const clientId = ${clientIdSupplierCall};`;
 
+        const clientSecretPropertyAccess = ts.factory.createPropertyAccessExpression(
+            ts.factory.createThis(),
+            "_clientSecret"
+        );
+        const clientSecretExpression = hasTokenOverride
+            ? ts.factory.createNonNullExpression(clientSecretPropertyAccess)
+            : clientSecretPropertyAccess;
         const clientSecretSupplierCall = getTextOfTsNode(
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientSecret"),
+                clientSecretExpression,
                 ts.factory.createObjectLiteralExpression([
                     ts.factory.createPropertyAssignment(
                         "endpointMetadata",

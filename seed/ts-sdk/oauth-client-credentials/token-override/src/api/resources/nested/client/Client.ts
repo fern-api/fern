@@ -2,14 +2,10 @@
 
 import type { BaseClientOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import type * as core from "../../../../core/index.js";
 import { ApiClient } from "../resources/api/client/Client.js";
 
 export declare namespace NestedClient {
-    export type OAuthAuthOptions =
-        | { clientId: core.Supplier<string>; clientSecret: core.Supplier<string> }
-        | { token: core.Supplier<string> };
-    export type Options = BaseClientOptions & OAuthAuthOptions;
+    export interface Options extends BaseClientOptions {}
 }
 
 export class NestedClient {
