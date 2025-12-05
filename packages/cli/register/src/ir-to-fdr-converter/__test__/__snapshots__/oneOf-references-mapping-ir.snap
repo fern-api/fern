@@ -118,6 +118,7 @@
       "displayName": "BadRequestError",
       "docs": "Bad request",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "CreateEventRequestBadRequestError",

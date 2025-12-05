@@ -4,6 +4,7 @@ imports:
   commons: commons.yml
   types: types.yml
   examples: examples.yml
+  http: http.yml
 
 types:
   ErrorDeclaration:
@@ -21,6 +22,10 @@ types:
           The statusCode field will contain the base value (400 for 4XX, 500 for 5XX).
       examples: list<ExampleError>
       v2Examples: optional<examples.V2SchemaExamples>
+      headers:
+        type: optional<list<http.HttpHeader>>
+        docs: |
+          Response headers associated with this error (e.g., Retry-After for 429 errors).
   ErrorDeclarationDiscriminantValue:
     union:
       property: commons.NameAndWireValue

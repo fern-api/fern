@@ -86,6 +86,7 @@
       "displayName": "BadRequestError",
       "docs": "Specific bad request error",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "TestOperationRequestBadRequestError",
@@ -178,6 +179,7 @@
       "displayName": "ClientRequestError",
       "docs": "Generic client error (wildcard pattern)",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": true,
       "name": {
         "errorId": "TestOperationRequestClientRequestError",
@@ -270,6 +272,7 @@
       "displayName": "InternalServerError",
       "docs": "Specific server error",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": undefined,
       "name": {
         "errorId": "TestOperationRequestInternalServerError",
@@ -362,6 +365,7 @@
       "displayName": "ServerError",
       "docs": "Generic server error (wildcard pattern)",
       "examples": [],
+      "headers": [],
       "isWildcardStatusCode": true,
       "name": {
         "errorId": "TestOperationRequestServerError",
