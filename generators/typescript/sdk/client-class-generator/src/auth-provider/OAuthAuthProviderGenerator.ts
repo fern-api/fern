@@ -167,37 +167,65 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         this.${TOKEN_OVERRIDE_FIELD_NAME} = undefined;`;
         }
 
-        if (!clientIdIsOptional) {
-            const envVarHint =
+        if (hasTokenOverride) {
+            // When token override is enabled, we need to use "in" checks for proper type narrowing
+            // with the union type (BaseClientCoreOptions & OAuthAuthOptions)
+            const clientIdEnvVarHint =
                 oauthConfig.clientIdEnvVar != null
                     ? ` or set the ${oauthConfig.clientIdEnvVar} environment variable`
                     : "";
+            const clientSecretEnvVarHint =
+                oauthConfig.clientSecretEnvVar != null
+                    ? ` or set the ${oauthConfig.clientSecretEnvVar} environment variable`
+                    : "";
+
             constructorStatements += `
+        if (!("${CLIENT_ID_VAR_NAME}" in ${OPTIONS_PARAM_NAME}) || ${OPTIONS_PARAM_NAME}.${CLIENT_ID_VAR_NAME} == null) {
+            throw new ${errorConstructor}({
+                message: "${CLIENT_ID_VAR_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}${clientIdEnvVarHint}."
+            });
+        }
+        this.${CLIENT_ID_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_ID_VAR_NAME};
+        if (!("${CLIENT_SECRET_VAR_NAME}" in ${OPTIONS_PARAM_NAME}) || ${OPTIONS_PARAM_NAME}.${CLIENT_SECRET_VAR_NAME} == null) {
+            throw new ${errorConstructor}({
+                message: "${CLIENT_SECRET_VAR_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}${clientSecretEnvVarHint}."
+            });
+        }
+        this.${CLIENT_SECRET_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_SECRET_VAR_NAME};`;
+        } else {
+            // Without token override, we can access clientId and clientSecret directly
+            if (!clientIdIsOptional) {
+                const envVarHint =
+                    oauthConfig.clientIdEnvVar != null
+                        ? ` or set the ${oauthConfig.clientIdEnvVar} environment variable`
+                        : "";
+                constructorStatements += `
         if (${OPTIONS_PARAM_NAME}.${CLIENT_ID_VAR_NAME} == null) {
             throw new ${errorConstructor}({
                 message: "${CLIENT_ID_VAR_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}${envVarHint}."
             });
         }`;
-        }
+            }
 
-        constructorStatements += `
+            constructorStatements += `
         this.${CLIENT_ID_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_ID_VAR_NAME};`;
 
-        if (!clientSecretIsOptional) {
-            const envVarHint =
-                oauthConfig.clientSecretEnvVar != null
-                    ? ` or set the ${oauthConfig.clientSecretEnvVar} environment variable`
-                    : "";
-            constructorStatements += `
+            if (!clientSecretIsOptional) {
+                const envVarHint =
+                    oauthConfig.clientSecretEnvVar != null
+                        ? ` or set the ${oauthConfig.clientSecretEnvVar} environment variable`
+                        : "";
+                constructorStatements += `
         if (${OPTIONS_PARAM_NAME}.${CLIENT_SECRET_VAR_NAME} == null) {
             throw new ${errorConstructor}({
                 message: "${CLIENT_SECRET_VAR_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}${envVarHint}."
             });
         }`;
-        }
+            }
 
-        constructorStatements += `
+            constructorStatements += `
         this.${CLIENT_SECRET_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_SECRET_VAR_NAME};`;
+        }
 
         constructorStatements += `
         this.${AUTH_CLIENT_FIELD_NAME} = new ${authClientType}(${OPTIONS_PARAM_NAME});
@@ -623,6 +651,28 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         clientSecretEnvVar: string | undefined,
         tokenOverridePropertyName: string | undefined
     ): string {
+        if (tokenOverridePropertyName != null) {
+            // When token override is enabled, we need to use "in" checks for proper type narrowing
+            // with the union type (BaseClientCoreOptions & OAuthAuthOptions)
+            const tokenCheck = `("${tokenOverridePropertyName}" in options && options.${tokenOverridePropertyName} != null)`;
+
+            // Use "in" checks for clientId and clientSecret to properly narrow the union type
+            const clientIdInCheck = `"clientId" in options`;
+            const clientSecretInCheck = `"clientSecret" in options`;
+            const clientIdValueCheck =
+                clientIdEnvVar != null
+                    ? `(options.clientId != null || process.env?.["${clientIdEnvVar}"] != null)`
+                    : `options.clientId != null`;
+            const clientSecretValueCheck =
+                clientSecretEnvVar != null
+                    ? `(options.clientSecret != null || process.env?.["${clientSecretEnvVar}"] != null)`
+                    : `options.clientSecret != null`;
+
+            const oauthCheck = `(${clientIdInCheck} && ${clientSecretInCheck} && ${clientIdValueCheck} && ${clientSecretValueCheck})`;
+            return `return ${tokenCheck} || ${oauthCheck};`;
+        }
+
+        // Without token override, we can access clientId and clientSecret directly
         const clientIdCheck =
             clientIdEnvVar != null
                 ? `(options.clientId != null || process.env?.["${clientIdEnvVar}"] != null)`
@@ -634,12 +684,6 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 : `options.clientSecret != null`;
 
         const oauthCheck = `(${clientIdCheck} && ${clientSecretCheck})`;
-
-        if (tokenOverridePropertyName != null) {
-            const tokenCheck = `("${tokenOverridePropertyName}" in options && options.${tokenOverridePropertyName} != null)`;
-            return `return ${tokenCheck} || ${oauthCheck};`;
-        }
-
         return `return ${oauthCheck};`;
     }
 
@@ -676,7 +720,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         );
 
         if (hasTokenOverride) {
-            // Generate the same union type as the clients for consistency
+            // When token override is enabled, BaseClientOptions already includes the union type
+            // (BaseClientCoreOptions & OAuthAuthOptions), so we just export the OAuthAuthOptions
+            // type for reference and use BaseClientOptions directly as Options
             context.sourceFile.addModule({
                 name: CLASS_NAME,
                 isExported: true,
@@ -692,7 +738,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                         kind: StructureKind.TypeAlias,
                         name: OPTIONS_TYPE_NAME,
                         isExported: true,
-                        type: `BaseClientOptions & OAuthAuthOptions`
+                        type: `BaseClientOptions`
                     }
                 ]
             });

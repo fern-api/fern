@@ -9,7 +9,7 @@ export namespace OAuthAuthProvider {
     export type OAuthAuthOptions =
         | { clientId: core.Supplier<string>; clientSecret: core.Supplier<string> }
         | { token: core.Supplier<string> };
-    export type Options = BaseClientOptions & OAuthAuthOptions;
+    export type Options = BaseClientOptions;
 }
 
 export class OAuthAuthProvider implements core.AuthProvider {
@@ -32,13 +32,13 @@ export class OAuthAuthProvider implements core.AuthProvider {
             return;
         }
         this._tokenOverride = undefined;
-        if (options.clientId == null) {
+        if (!("clientId" in options) || options.clientId == null) {
             throw new errors.SeedOauthClientCredentialsError({
                 message: "clientId is required. Please provide it in options.",
             });
         }
         this._clientId = options.clientId;
-        if (options.clientSecret == null) {
+        if (!("clientSecret" in options) || options.clientSecret == null) {
             throw new errors.SeedOauthClientCredentialsError({
                 message: "clientSecret is required. Please provide it in options.",
             });
@@ -50,7 +50,11 @@ export class OAuthAuthProvider implements core.AuthProvider {
 
     public static canCreate(options: OAuthAuthProvider.Options): boolean {
         return (
-            ("token" in options && options.token != null) || (options.clientId != null && options.clientSecret != null)
+            ("token" in options && options.token != null) ||
+            ("clientId" in options &&
+                "clientSecret" in options &&
+                options.clientId != null &&
+                options.clientSecret != null)
         );
     }
 

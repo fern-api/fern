@@ -270,16 +270,15 @@ export class BaseClientContextImpl implements BaseClientContext {
         }
 
         // Add OAuth clientId and clientSecret to BaseClientOptions if OAuth is used
+        // When token override is enabled, we skip adding these properties here because
+        // BaseClientOptions will be generated as a type alias with the union type instead
         const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
-        if (oauthScheme != null && oauthScheme.type === "oauth" && context.generateOAuthClients) {
+        const hasTokenOverride = this.oauthTokenOverridePropertyName !== undefined;
+        if (oauthScheme != null && oauthScheme.type === "oauth" && context.generateOAuthClients && !hasTokenOverride) {
             const oauthConfig = oauthScheme.configuration;
             if (oauthConfig.type === "clientCredentials") {
                 const clientIdProperty = oauthConfig.tokenEndpoint.requestProperties.clientId;
                 const clientSecretProperty = oauthConfig.tokenEndpoint.requestProperties.clientSecret;
-
-                // When token override is enabled, clientId and clientSecret become optional
-                // since users can provide a token instead
-                const hasTokenOverride = this.oauthTokenOverridePropertyName !== undefined;
 
                 properties.push({
                     kind: StructureKind.PropertySignature,
@@ -289,7 +288,7 @@ export class BaseClientContextImpl implements BaseClientContext {
                             context.type.getReferenceToType(clientIdProperty.property.valueType).typeNode
                         )
                     ),
-                    hasQuestionToken: hasTokenOverride || oauthConfig.clientIdEnvVar != null
+                    hasQuestionToken: oauthConfig.clientIdEnvVar != null
                 });
 
                 properties.push({
@@ -300,21 +299,8 @@ export class BaseClientContextImpl implements BaseClientContext {
                             context.type.getReferenceToType(clientSecretProperty.property.valueType).typeNode
                         )
                     ),
-                    hasQuestionToken: hasTokenOverride || oauthConfig.clientSecretEnvVar != null
+                    hasQuestionToken: oauthConfig.clientSecretEnvVar != null
                 });
-
-                // Add token override property if configured
-                if (hasTokenOverride) {
-                    properties.push({
-                        kind: StructureKind.PropertySignature,
-                        name: getPropertyKey(this.oauthTokenOverridePropertyName),
-                        type: getTextOfTsNode(
-                            supplier._getReferenceToType(ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword))
-                        ),
-                        hasQuestionToken: true,
-                        docs: ["Provide a pre-generated bearer token to skip the OAuth flow."]
-                    });
-                }
             }
         }
 

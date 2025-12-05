@@ -4,14 +4,10 @@ import { OAuthAuthProvider } from "./auth/OAuthAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
-export interface BaseClientOptions {
+export interface BaseClientCoreOptions {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    clientId?: core.Supplier<string>;
-    clientSecret?: core.Supplier<string>;
-    /** Provide a pre-generated bearer token to skip the OAuth flow. */
-    token?: core.Supplier<string>;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -23,6 +19,8 @@ export interface BaseClientOptions {
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
 }
+
+export type BaseClientOptions = BaseClientCoreOptions & OAuthAuthProvider.OAuthAuthOptions;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */
@@ -42,9 +40,7 @@ export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
     authProvider?: core.AuthProvider;
 };
 
-export type OAuthBaseClientOptions = BaseClientOptions & OAuthAuthProvider.OAuthAuthOptions;
-
-export type NormalizedClientOptionsWithAuth<T extends OAuthBaseClientOptions> = NormalizedClientOptions<T> & {
+export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = NormalizedClientOptions<T> & {
     authProvider: core.AuthProvider;
 };
 
@@ -68,7 +64,7 @@ export function normalizeClientOptions<T extends BaseClientOptions>(options: T):
     } as NormalizedClientOptions<T>;
 }
 
-export function normalizeClientOptionsWithAuth<T extends OAuthBaseClientOptions>(
+export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
     options: T,
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
@@ -77,7 +73,7 @@ export function normalizeClientOptionsWithAuth<T extends OAuthBaseClientOptions>
     return normalized;
 }
 
-function withNoOpAuthProvider<T extends OAuthBaseClientOptions>(
+function withNoOpAuthProvider<T extends BaseClientOptions>(
     options: NormalizedClientOptions<T>,
 ): NormalizedClientOptionsWithAuth<T> {
     return {
