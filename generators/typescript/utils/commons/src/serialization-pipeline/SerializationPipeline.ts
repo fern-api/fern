@@ -6,7 +6,7 @@ import { NoneFormat } from "./formats/NoneFormat";
 /**
  * Supported serialization format types
  */
-export type SerializationFormatType = "default" | "zurg" | "zod" | "none";
+export type SerializationFormatType = "default" | "zod" | "none";
 
 /**
  * Configuration for creating a SerializationPipeline
@@ -14,8 +14,8 @@ export type SerializationFormatType = "default" | "zurg" | "zod" | "none";
 export interface SerializationPipelineConfig extends SerializationFormatConfig {
     /**
      * The serialization format to use.
-     * - "default" or "zurg": Use Zurg (bundled runtime)
-     * - "zod": Use Zod (npm dependency) - NOT YET IMPLEMENTED
+     * - "default": Use Zurg (bundled runtime)
+     * - "zod": Use Zod (npm dependency)
      * - "none": No serialization
      */
     format: SerializationFormatType;
@@ -41,7 +41,6 @@ export class SerializationPipeline {
     private createFormat(config: SerializationPipelineConfig): SerializationFormat {
         switch (config.format) {
             case "default":
-            case "zurg":
                 return new ZurgFormat(config);
 
             case "zod":

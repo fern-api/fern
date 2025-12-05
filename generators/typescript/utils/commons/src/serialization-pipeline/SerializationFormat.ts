@@ -168,7 +168,7 @@ export interface SerializationFormat {
     /**
      * Unique identifier for this format
      */
-    readonly name: "zurg" | "zod" | "none";
+    readonly name: "default" | "zod" | "none";
 
     // ==================== Schema Builders ====================
 
