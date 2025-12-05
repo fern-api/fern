@@ -3,13 +3,13 @@ from __future__ import annotations
 import dataclasses
 from types import TracebackType
 from typing import Callable, List, Literal, Optional, Sequence, Tuple, Type, Union
+from pydantic import BaseModel
 
-from .pydantic_field import PydanticField
 from fern_python.codegen import AST, ClassParent, LocalClassReference, SourceFile
-from fern_python.codegen.ast.nodes.docstring import Docstring, escape_docstring
+from fern_python.codegen.ast.nodes.docstring import Docstring
 from fern_python.external_dependencies import Pydantic, PydanticVersionCompatibility
 from fern_python.generators.pydantic_model.field_metadata import FieldMetadata
-from pydantic import BaseModel
+from .pydantic_field import PydanticField
 
 # these are the properties that BaseModel already has
 BASE_MODEL_PROPERTIES = set(dir(BaseModel))
@@ -175,7 +175,7 @@ class PydanticModel:
                 name=field.name,
                 type_hint=field.type_hint,
                 initializer=initializer,
-                docstring=Docstring(escape_docstring(field.description)) if field.description is not None else None,
+                docstring=Docstring(field.description) if field.description is not None else None,
             )
         )
 
