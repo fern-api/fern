@@ -83,9 +83,15 @@ export class OAuthAuthProvider implements core.AuthProvider {
     private async refresh(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<string> {
         this._refreshPromise = (async () => {
             try {
-                const clientId = await core.Supplier.get(this._clientId!);
+                if (this._clientId == null || this._clientSecret == null) {
+                    throw new Error(
+                        "OAuthAuthProvider is misconfigured: clientId and clientSecret are required when token override is not used.",
+                    );
+                }
 
-                const clientSecret = await core.Supplier.get(this._clientSecret!);
+                const clientId = await core.Supplier.get(this._clientId);
+
+                const clientSecret = await core.Supplier.get(this._clientSecret);
                 const tokenResponse = await this._authClient.getTokenWithClientCredentials({
                     client_id: clientId,
                     client_secret: clientSecret,

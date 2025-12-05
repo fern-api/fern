@@ -337,12 +337,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         `;
 
         const clientIdPropertyAccess = ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientId");
-        const clientIdExpression = hasTokenOverride
-            ? ts.factory.createNonNullExpression(clientIdPropertyAccess)
-            : clientIdPropertyAccess;
         const clientIdSupplierCall = getTextOfTsNode(
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                clientIdExpression,
+                clientIdPropertyAccess,
                 ts.factory.createObjectLiteralExpression([
                     ts.factory.createPropertyAssignment(
                         "endpointMetadata",
@@ -374,12 +371,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             ts.factory.createThis(),
             "_clientSecret"
         );
-        const clientSecretExpression = hasTokenOverride
-            ? ts.factory.createNonNullExpression(clientSecretPropertyAccess)
-            : clientSecretPropertyAccess;
         const clientSecretSupplierCall = getTextOfTsNode(
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                clientSecretExpression,
+                clientSecretPropertyAccess,
                 ts.factory.createObjectLiteralExpression([
                     ts.factory.createPropertyAssignment(
                         "endpointMetadata",
@@ -407,10 +401,18 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             : `
         const clientSecret = ${clientSecretSupplierCall};`;
 
+        // When token override is enabled, add a guard to narrow the types for _clientId and _clientSecret
+        const tokenOverrideGuard = hasTokenOverride
+            ? `
+                if (this._clientId == null || this._clientSecret == null) {
+                    throw new Error("OAuthAuthProvider is misconfigured: clientId and clientSecret are required when token override is not used.");
+                }`
+            : "";
+
         const refreshMethodStatements = hasExpiration
             ? `
         this._refreshPromise = (async () => {
-            try {
+            try {${tokenOverrideGuard}
                 ${clientIdValidation}
                 ${clientSecretValidation}
                 const tokenResponse = await this._authClient.${endpointName}({
@@ -429,7 +431,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         `
             : `
         this._refreshPromise = (async () => {
-            try {
+            try {${tokenOverrideGuard}
                 ${clientIdValidation}
                 ${clientSecretValidation}
                 const tokenResponse = await this._authClient.${endpointName}({
