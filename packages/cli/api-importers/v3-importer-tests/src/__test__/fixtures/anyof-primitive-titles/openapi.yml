@@ -1,0 +1,49 @@
+openapi: 3.1.0
+info:
+  title: AnyOf Primitive Titles Test
+  description: Tests for anyOf/oneOf with primitive types that have and don't have 'title' specified
+  version: 0.0.0
+paths:
+  "/test-anyof-primitives":
+    post:
+      operationId: testAnyOfPrimitives
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                # anyOf with primitives - some with titles, some without
+                valueWithTitles:
+                  anyOf:
+                    - type: string
+                      title: Custom String Type
+                    - type: integer
+                      title: Custom Integer Type
+                    - type: boolean
+                      title: Custom Boolean Type
+                # anyOf with primitives - no titles
+                valueWithoutTitles:
+                  anyOf:
+                    - type: string
+                    - type: integer
+                    - type: boolean
+                # oneOf with primitives - mixed (some with titles, some without)
+                valueMixed:
+                  oneOf:
+                    - type: string
+                      title: Named String
+                    - type: integer
+                    - type: boolean
+                      title: Named Boolean
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string

@@ -113,7 +113,7 @@ export function convertTypeShape(irType: Ir.types.Type): FdrCjsSdk.api.v1.regist
                         description: variant.docs ?? undefined,
                         type: convertTypeReference(variant.type),
                         availability: undefined,
-                        displayName: variant.type.type === "named" ? variant.type.displayName : undefined
+                        displayName: getDisplayNameForTypeReference(variant.type)
                     };
                 })
             };
@@ -336,4 +336,14 @@ function convertExtraProperties(
     } else {
         return convertTypeReference(extraProperties);
     }
+}
+
+function getDisplayNameForTypeReference(typeReference: Ir.types.TypeReference): string | undefined {
+    return typeReference._visit<string | undefined>({
+        named: (namedType) => namedType.displayName,
+        primitive: () => undefined,
+        container: () => undefined,
+        unknown: () => undefined,
+        _other: () => undefined
+    });
 }
