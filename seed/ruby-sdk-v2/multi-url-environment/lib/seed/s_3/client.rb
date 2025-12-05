@@ -27,7 +27,8 @@ module Seed
           base_url: request_options[:base_url] || Seed::Environment::PRODUCTION,
           method: "POST",
           path: "/s3/presigned-url",
-          body: Seed::S3::Types::GetPresignedUrlRequest.new(body_bag).to_h
+          body: Seed::S3::Types::GetPresignedUrlRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
