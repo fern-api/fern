@@ -33,7 +33,6 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,9 +42,8 @@ import java.util.function.Supplier;
 import javax.lang.model.element.Modifier;
 
 /**
- * Generates the InferredAuthTokenSupplier class that handles token retrieval
- * for inferred authentication schemes. Similar to OAuthTokenSupplierGenerator
- * but more flexible - supports custom token endpoints with arbitrary properties.
+ * Generates the InferredAuthTokenSupplier class that handles token retrieval for inferred authentication schemes.
+ * Similar to OAuthTokenSupplierGenerator but more flexible - supports custom token endpoints with arbitrary properties.
  */
 public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
@@ -111,10 +109,9 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
         Optional<ResponseProperty> expiryProperty = tokenEndpoint.getExpiryProperty();
         boolean refreshRequired = expiryProperty.isPresent();
 
-        ParameterizedTypeName mapStringString =
-                ParameterizedTypeName.get(ClassName.get(Map.class), ClassName.get(String.class), ClassName.get(String.class));
-        ParameterizedTypeName supplierOfMap =
-                ParameterizedTypeName.get(ClassName.get(Supplier.class), mapStringString);
+        ParameterizedTypeName mapStringString = ParameterizedTypeName.get(
+                ClassName.get(Map.class), ClassName.get(String.class), ClassName.get(String.class));
+        ParameterizedTypeName supplierOfMap = ParameterizedTypeName.get(ClassName.get(Supplier.class), mapStringString);
 
         MethodSpec.Builder getMethodSpecBuilder = MethodSpec.methodBuilder(GET_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
@@ -137,22 +134,15 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
         getMethodSpecBuilder.addStatement("$T headers = new $T<>()", mapStringString, HashMap.class);
         for (InferredAuthenticatedRequestHeader authHeader : authenticatedHeaders) {
             String headerName = authHeader.getHeaderName();
-            String valuePrefix = authHeader.getValuePrefix().orElse(
-                    headerName.equalsIgnoreCase("Authorization") ? "Bearer " : "");
+            String valuePrefix =
+                    authHeader.getValuePrefix().orElse(headerName.equalsIgnoreCase("Authorization") ? "Bearer " : "");
 
             String accessorChain = buildResponsePropertyAccessor("tokenResponse", authHeader.getResponseProperty());
 
             if (!valuePrefix.isEmpty()) {
-                getMethodSpecBuilder.addStatement(
-                        "headers.put($S, $S + $L)",
-                        headerName,
-                        valuePrefix,
-                        accessorChain);
+                getMethodSpecBuilder.addStatement("headers.put($S, $S + $L)", headerName, valuePrefix, accessorChain);
             } else {
-                getMethodSpecBuilder.addStatement(
-                        "headers.put($S, $L)",
-                        headerName,
-                        accessorChain);
+                getMethodSpecBuilder.addStatement("headers.put($S, $L)", headerName, accessorChain);
             }
         }
         getMethodSpecBuilder.addStatement("this.$L = headers", CACHED_HEADERS_FIELD_NAME);
@@ -160,18 +150,12 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
         if (refreshRequired) {
             String expiryAccessor = buildResponsePropertyAccessor("tokenResponse", expiryProperty.get());
             getMethodSpecBuilder.addStatement(
-                    "this.$L = $L($L)",
-                    EXPIRES_AT_FIELD_NAME,
-                    GET_EXPIRES_AT_METHOD_NAME,
-                    expiryAccessor);
+                    "this.$L = $L($L)", EXPIRES_AT_FIELD_NAME, GET_EXPIRES_AT_METHOD_NAME, expiryAccessor);
         }
 
-        getMethodSpecBuilder
-                .endControlFlow()
-                .addStatement("return $L", CACHED_HEADERS_FIELD_NAME);
+        getMethodSpecBuilder.endControlFlow().addStatement("return $L", CACHED_HEADERS_FIELD_NAME);
 
-        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PUBLIC);
+        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
 
         for (CredentialProperty prop : credentialProperties) {
             if (!prop.isLiteral()) {
@@ -211,10 +195,7 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         .build())
                 .addMethod(constructorBuilder.build())
                 .addMethod(buildFetchTokenMethod(
-                        fetchTokenReturnType,
-                        fetchTokenRequestType,
-                        credentialProperties,
-                        httpEndpoint))
+                        fetchTokenReturnType, fetchTokenRequestType, credentialProperties, httpEndpoint))
                 .addMethod(getMethodSpecBuilder.build());
 
         if (refreshRequired) {
@@ -253,8 +234,8 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
     }
 
     /**
-     * Collects all credential properties from the token endpoint.
-     * This includes headers and body properties (both literals and user-provided).
+     * Collects all credential properties from the token endpoint. This includes headers and body properties (both
+     * literals and user-provided).
      */
     private List<CredentialProperty> collectCredentialProperties(HttpEndpoint httpEndpoint) {
         List<CredentialProperty> properties = new ArrayList<>();
@@ -271,7 +252,8 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 @Override
                 public Void visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
                     for (InlinedRequestBodyProperty prop : inlinedRequestBody.getProperties()) {
-                        String fieldName = prop.getName().getName().getCamelCase().getUnsafeName();
+                        String fieldName =
+                                prop.getName().getName().getCamelCase().getUnsafeName();
                         Optional<Literal> literal = extractLiteral(prop.getValueType());
                         boolean isOptional = isOptionalType(prop.getValueType());
                         properties.add(new CredentialProperty(fieldName, fieldName, literal, isOptional));
@@ -306,9 +288,7 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
         return properties;
     }
 
-    /**
-     * Extracts a literal value from a TypeReference if present.
-     */
+    /** Extracts a literal value from a TypeReference if present. */
     private Optional<Literal> extractLiteral(TypeReference typeReference) {
         if (typeReference.isContainer()) {
             ContainerType container = typeReference.getContainer().get();
@@ -319,9 +299,7 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
         return Optional.empty();
     }
 
-    /**
-     * Checks if a TypeReference is an optional type.
-     */
+    /** Checks if a TypeReference is an optional type. */
     private boolean isOptionalType(TypeReference typeReference) {
         if (typeReference.isContainer()) {
             ContainerType container = typeReference.getContainer().get();
@@ -331,8 +309,8 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
     }
 
     /**
-     * Builds the accessor chain to get a property from a response object.
-     * For example: tokenResponse.getAccessToken() or tokenResponse.getData().getToken()
+     * Builds the accessor chain to get a property from a response object. For example: tokenResponse.getAccessToken()
+     * or tokenResponse.getData().getToken()
      */
     private String buildResponsePropertyAccessor(String responseVar, ResponseProperty responseProperty) {
         StringBuilder accessor = new StringBuilder(responseVar);
@@ -344,7 +322,12 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
             }
         }
 
-        String finalPropertyName = responseProperty.getProperty().getName().getName().getPascalCase().getUnsafeName();
+        String finalPropertyName = responseProperty
+                .getProperty()
+                .getName()
+                .getName()
+                .getPascalCase()
+                .getUnsafeName();
         accessor.append(".get").append(finalPropertyName).append("()");
 
         return accessor.toString();
@@ -360,25 +343,9 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .add("$T $L = $T.builder()", fetchTokenRequestType, GET_TOKEN_REQUEST_NAME, fetchTokenRequestType);
 
         for (CredentialProperty prop : credentialProperties) {
-            if (prop.isLiteral()) {
-                String literalValue = prop.literalValue().get().visit(new Literal.Visitor<String>() {
-                    @Override
-                    public String visitString(String value) {
-                        return "\"" + value + "\"";
-                    }
-
-                    @Override
-                    public String visitBoolean(boolean value) {
-                        return String.valueOf(value);
-                    }
-
-                    @Override
-                    public String _visitUnknown(Object unknownType) {
-                        return "null";
-                    }
-                });
-                requestBuilderCode.add(".$L($L)", prop.builderMethodName(), literalValue);
-            } else {
+            // Skip literal properties - they don't have builder methods because
+            // the Java model generator hardcodes literal values in the build() method
+            if (!prop.isLiteral()) {
                 requestBuilderCode.add(".$L($L)", prop.builderMethodName(), prop.fieldName());
             }
         }
@@ -420,16 +387,15 @@ public class InferredAuthTokenSupplierGenerator extends AbstractFileGenerator {
         });
     }
 
-    /**
-     * Represents a credential property for the token endpoint.
-     */
+    /** Represents a credential property for the token endpoint. */
     private static class CredentialProperty {
         private final String fieldName;
         private final String builderMethodName;
         private final Optional<Literal> literalValue;
         private final boolean isOptional;
 
-        CredentialProperty(String fieldName, String builderMethodName, Optional<Literal> literalValue, boolean isOptional) {
+        CredentialProperty(
+                String fieldName, String builderMethodName, Optional<Literal> literalValue, boolean isOptional) {
             this.fieldName = fieldName;
             this.builderMethodName = builderMethodName;
             this.literalValue = literalValue;

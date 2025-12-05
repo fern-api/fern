@@ -37,8 +37,6 @@ public final class InferredAuthTokenSupplier implements Supplier<Map<String, Str
                 .xApiKey(xApiKey)
                 .clientId(clientId)
                 .clientSecret(clientSecret)
-                .audience("https://api.example.com")
-                .grantType("client_credentials")
                 .scope(scope)
                 .build();
         return authClient.getTokenWithClientCredentials(getTokenRequest);

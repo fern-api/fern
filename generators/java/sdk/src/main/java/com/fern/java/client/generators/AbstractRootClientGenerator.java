@@ -877,7 +877,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         @Override
         public Void visitInferred(InferredAuthScheme inferred) {
-            EndpointReference tokenEndpointReference = inferred.getTokenEndpoint().getEndpoint();
+            EndpointReference tokenEndpointReference =
+                    inferred.getTokenEndpoint().getEndpoint();
 
             // Get the HTTP endpoint details for extracting credential properties
             HttpService httpService =
@@ -907,7 +908,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     @Override
                     public Void visitInlinedRequestBody(com.fern.ir.model.http.InlinedRequestBody inlinedRequestBody) {
                         for (var prop : inlinedRequestBody.getProperties()) {
-                            String propName = prop.getName().getName().getCamelCase().getSafeName();
+                            String propName =
+                                    prop.getName().getName().getCamelCase().getSafeName();
                             if (!isLiteralType(prop.getValueType())) {
                                 credentialPropertyNames.add(propName);
                                 if (!isOptionalType(prop.getValueType())) {

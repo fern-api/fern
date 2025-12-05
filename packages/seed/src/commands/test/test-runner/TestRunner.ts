@@ -180,9 +180,10 @@ export abstract class TestRunner {
                 taskContext,
                 fixture
             });
-            const workspaceSettings = generatorInvocation != null
-                ? getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
-                : undefined;
+            const workspaceSettings =
+                generatorInvocation != null
+                    ? getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation(generatorInvocation)
+                    : undefined;
             const fernWorkspace = await apiWorkspace?.toFernWorkspace(
                 { context: taskContext },
                 workspaceSettings,

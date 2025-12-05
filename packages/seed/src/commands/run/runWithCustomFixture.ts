@@ -1,7 +1,10 @@
 import { GeneratorGroup, GeneratorInvocation } from "@fern-api/configuration";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { LogLevel } from "@fern-api/logger";
-import { AbstractAPIWorkspace, getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation } from "@fern-api/workspace-loader";
+import {
+    AbstractAPIWorkspace,
+    getBaseOpenAPIWorkspaceSettingsFromGeneratorInvocation
+} from "@fern-api/workspace-loader";
 import tmp from "tmp-promise";
 import { FixtureConfigurations } from "../../config/api";
 import { GeneratorWorkspace } from "../../loadGeneratorWorkspaces";
