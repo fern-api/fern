@@ -124,6 +124,7 @@ export declare namespace SdkGenerator {
         treatUnknownAsAny: boolean;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
+        serializationFormat: "default" | "zod" | "none";
         noOptionalProperties: boolean;
         tolerateRepublish: boolean;
         retainOriginalCasing: boolean;
@@ -289,7 +290,8 @@ export class SdkGenerator {
             fetchSupport: this.config.fetchSupport,
             relativePackagePath: this.relativePackagePath,
             relativeTestPath: this.relativeTestPath,
-            generateEndpointMetadata: this.config.generateEndpointMetadata
+            generateEndpointMetadata: this.config.generateEndpointMetadata,
+            serializationFormat: this.config.serializationFormat
         });
 
         const apiDirectory: ExportedDirectory[] = [

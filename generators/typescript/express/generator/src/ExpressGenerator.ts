@@ -59,6 +59,7 @@ export declare namespace ExpressGenerator {
         includeOtherInUnionTypes: boolean;
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
+        serializationFormat: "default" | "zod" | "none";
         outputEsm: boolean;
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;
@@ -134,7 +135,8 @@ export class ExpressGenerator {
             fetchSupport: "node-fetch",
             relativePackagePath: this.getRelativePackagePath(),
             relativeTestPath: this.getRelativeTestPath(),
-            generateEndpointMetadata: false
+            generateEndpointMetadata: false,
+            serializationFormat: config.serializationFormat
         });
         this.asIsManager = new AsIsManager({
             useBigInt: config.useBigInt,
