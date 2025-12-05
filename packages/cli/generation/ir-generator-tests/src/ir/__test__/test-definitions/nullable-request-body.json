@@ -310,6 +310,7 @@
             ],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": "Validation Error"
         }
     },
