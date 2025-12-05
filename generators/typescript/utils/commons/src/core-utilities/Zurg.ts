@@ -30,7 +30,7 @@ export declare namespace Zurg {
     export { AdditionalProperty };
     export { Property };
 
-    namespace union {
+    export namespace union {
         export { UnionArgs as Args };
         export { SingleUnionType };
     }
