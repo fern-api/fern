@@ -102,7 +102,64 @@ export class BaseClientContextImpl implements BaseClientContext {
     }
 
     public anyRequiredBaseClientOptions(context: SdkContext): boolean {
-        return this.generateBaseClientOptionsInterface(context).properties.some(isPropertyRequired);
+        // Check base properties
+        if (this.generateBaseClientOptionsInterface(context).properties.some(isPropertyRequired)) {
+            return true;
+        }
+
+        // Check auth options from the intersection type
+        // Auth options are required when auth is mandatory and there's no environment variable fallback
+        const isAuthMandatory = this.intermediateRepresentation.sdkConfig.isAuthMandatory;
+
+        if (this.bearerAuthScheme != null) {
+            const hasTokenEnv = this.bearerAuthScheme.tokenEnvVar != null;
+            if (isAuthMandatory && !hasTokenEnv) {
+                return true;
+            }
+        }
+
+        if (this.basicAuthScheme != null) {
+            const hasUsernameEnv = this.basicAuthScheme.usernameEnvVar != null;
+            const hasPasswordEnv = this.basicAuthScheme.passwordEnvVar != null;
+            if (isAuthMandatory && !(hasUsernameEnv && hasPasswordEnv)) {
+                return true;
+            }
+        }
+
+        for (const header of this.authHeaders) {
+            const hasHeaderEnv = header.headerEnvVar != null;
+            const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
+            if (isAuthMandatory && !hasHeaderEnv && !referenceToHeaderType.isOptional) {
+                return true;
+            }
+        }
+
+        // Check OAuth client credentials
+        const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
+        if (oauthScheme != null && oauthScheme.type === "oauth" && context.generateOAuthClients) {
+            const oauthConfig = oauthScheme.configuration;
+            if (oauthConfig.type === "clientCredentials") {
+                const hasClientIdEnv = oauthConfig.clientIdEnvVar != null;
+                const hasClientSecretEnv = oauthConfig.clientSecretEnvVar != null;
+                if (!hasClientIdEnv || !hasClientSecretEnv) {
+                    return true;
+                }
+            }
+        }
+
+        // Check inferred auth
+        if (this.inferredAuthScheme != null) {
+            const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
+                FernIr.AuthScheme.inferred(this.inferredAuthScheme)
+            );
+            for (const param of authTokenParams) {
+                if (!param.isOptional) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public generateBaseClientOptionsInterface(
