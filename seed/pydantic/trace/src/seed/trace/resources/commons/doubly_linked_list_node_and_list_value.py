@@ -3,14 +3,15 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .doubly_linked_list_value import DoublyLinkedListValue
 from .node_id import NodeId
 
 
 class DoublyLinkedListNodeAndListValue(UniversalBaseModel):
-    node_id: NodeId = pydantic.Field(alias="nodeId")
-    full_list: DoublyLinkedListValue = pydantic.Field(alias="fullList")
+    node_id: typing_extensions.Annotated[NodeId, pydantic.Field(alias="nodeId")]
+    full_list: typing_extensions.Annotated[DoublyLinkedListValue, pydantic.Field(alias="fullList")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

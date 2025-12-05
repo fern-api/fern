@@ -3,14 +3,15 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .submission_id import SubmissionId
 
 
 class RecordedResponseNotification(UniversalBaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
-    test_case_id: typing.Optional[str] = pydantic.Field(alias="testCaseId", default=None)
+    submission_id: typing_extensions.Annotated[SubmissionId, pydantic.Field(alias="submissionId")]
+    trace_responses_size: typing_extensions.Annotated[int, pydantic.Field(alias="traceResponsesSize")]
+    test_case_id: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="testCaseId")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

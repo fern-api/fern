@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Cat(UniversalBaseModel):
     name: str
-    likes_to_meow: bool = pydantic.Field(alias="likesToMeow")
+    likes_to_meow: typing_extensions.Annotated[bool, pydantic.Field(alias="likesToMeow")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid", frozen=True)  # type: ignore # Pydantic v2

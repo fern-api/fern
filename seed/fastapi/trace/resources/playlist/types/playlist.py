@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2
 from ...commons.types.user_id import UserId
 from .playlist_create_request import PlaylistCreateRequest
@@ -11,7 +12,7 @@ from .playlist_id import PlaylistId
 
 class Playlist(PlaylistCreateRequest):
     playlist_id: PlaylistId
-    owner_id: UserId = pydantic.Field(alias="owner-id")
+    owner_id: typing_extensions.Annotated[UserId, pydantic.Field(alias="owner-id")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

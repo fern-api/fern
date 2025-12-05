@@ -5,11 +5,12 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 
 
 class VariableTypeAndName(UniversalBaseModel):
-    variable_type: "VariableType" = pydantic.Field(alias="variableType")
+    variable_type: typing_extensions.Annotated["VariableType", pydantic.Field(alias="variableType")]
     name: str
 
     if IS_PYDANTIC_V2:

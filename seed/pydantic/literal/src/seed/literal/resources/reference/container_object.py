@@ -3,12 +3,15 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .nested_object_with_literals import NestedObjectWithLiterals
 
 
 class ContainerObject(UniversalBaseModel):
-    nested_objects: typing.List[NestedObjectWithLiterals] = pydantic.Field(alias="nestedObjects")
+    nested_objects: typing_extensions.Annotated[
+        typing.List[NestedObjectWithLiterals], pydantic.Field(alias="nestedObjects")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

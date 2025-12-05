@@ -13,12 +13,12 @@ from .foo import Foo
 
 class UnionWithDiscriminant_Foo(UniversalBaseModel):
     foo: Foo
-    type: typing.Literal["foo"] = pydantic.Field(alias="_type", default="foo")
+    type: typing_extensions.Annotated[typing.Literal["foo"], pydantic.Field(alias="_type")] = "foo"
 
 
 class UnionWithDiscriminant_Bar(UniversalBaseModel):
     bar: Bar
-    type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
+    type: typing_extensions.Annotated[typing.Literal["bar"], pydantic.Field(alias="_type")] = "bar"
 
 
 UnionWithDiscriminant = typing_extensions.Annotated[

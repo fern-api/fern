@@ -11,7 +11,7 @@ class UserProfileVerification(UniversalBaseModel):
     User profile verification object
     """
 
-    verified: str = pydantic.Field()
+    verified: str
     """
     User profile verification status
     """

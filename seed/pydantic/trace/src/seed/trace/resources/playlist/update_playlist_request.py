@@ -9,7 +9,7 @@ from ..commons.problem_id import ProblemId
 
 class UpdatePlaylistRequest(UniversalBaseModel):
     name: str
-    problems: typing.List[ProblemId] = pydantic.Field()
+    problems: typing.List[ProblemId]
     """
     The problems that make up the playlist.
     """

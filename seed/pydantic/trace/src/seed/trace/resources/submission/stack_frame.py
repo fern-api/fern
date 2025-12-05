@@ -5,13 +5,14 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .scope import Scope
 
 
 class StackFrame(UniversalBaseModel):
-    method_name: str = pydantic.Field(alias="methodName")
-    line_number: int = pydantic.Field(alias="lineNumber")
+    method_name: typing_extensions.Annotated[str, pydantic.Field(alias="methodName")]
+    line_number: typing_extensions.Annotated[int, pydantic.Field(alias="lineNumber")]
     scopes: typing.List[Scope]
 
     if IS_PYDANTIC_V2:

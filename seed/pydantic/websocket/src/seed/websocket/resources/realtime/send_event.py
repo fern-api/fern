@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SendEvent(UniversalBaseModel):
-    send_text: str = pydantic.Field(alias="sendText")
-    send_param: int = pydantic.Field(alias="sendParam")
+    send_text: typing_extensions.Annotated[str, pydantic.Field(alias="sendText")]
+    send_param: typing_extensions.Annotated[int, pydantic.Field(alias="sendParam")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

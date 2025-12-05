@@ -13,7 +13,7 @@ from .user import User
 class ListUsersPaginationResponse(UniversalBaseModel):
     has_next_page: typing_extensions.Annotated[typing.Optional[bool], FieldMetadata(alias="hasNextPage")] = None
     page: typing.Optional[Page] = None
-    total_count: int = pydantic.Field()
+    total_count: int
     """
     The totall number of /users
     """

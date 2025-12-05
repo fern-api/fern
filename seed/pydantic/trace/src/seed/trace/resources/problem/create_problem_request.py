@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ..commons.language import Language
 from ..commons.test_case_with_expected_result import TestCaseWithExpectedResult
@@ -14,13 +15,13 @@ from .variable_type_and_name import VariableTypeAndName
 
 
 class CreateProblemRequest(UniversalBaseModel):
-    problem_name: str = pydantic.Field(alias="problemName")
-    problem_description: ProblemDescription = pydantic.Field(alias="problemDescription")
+    problem_name: typing_extensions.Annotated[str, pydantic.Field(alias="problemName")]
+    problem_description: typing_extensions.Annotated[ProblemDescription, pydantic.Field(alias="problemDescription")]
     files: typing.Dict[Language, ProblemFiles]
-    input_params: typing.List[VariableTypeAndName] = pydantic.Field(alias="inputParams")
-    output_type: "VariableType" = pydantic.Field(alias="outputType")
+    input_params: typing_extensions.Annotated[typing.List[VariableTypeAndName], pydantic.Field(alias="inputParams")]
+    output_type: typing_extensions.Annotated["VariableType", pydantic.Field(alias="outputType")]
     testcases: typing.List[TestCaseWithExpectedResult]
-    method_name: str = pydantic.Field(alias="methodName")
+    method_name: typing_extensions.Annotated[str, pydantic.Field(alias="methodName")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

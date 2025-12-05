@@ -3,12 +3,15 @@
 import typing
 
 import pydantic
+import typing_extensions
 from .......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ......commons.language import Language
 
 
 class GetFunctionSignatureResponse(UniversalBaseModel):
-    function_by_language: typing.Dict[Language, str] = pydantic.Field(alias="functionByLanguage")
+    function_by_language: typing_extensions.Annotated[
+        typing.Dict[Language, str], pydantic.Field(alias="functionByLanguage")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

@@ -40,7 +40,7 @@ class VariableValue_CharValue(UniversalBaseModel):
 
 class VariableValue_MapValue(UniversalBaseModel):
     type: typing.Literal["mapValue"] = "mapValue"
-    key_value_pairs: typing.List["KeyValuePair"] = pydantic.Field(alias="keyValuePairs")
+    key_value_pairs: typing_extensions.Annotated[typing.List["KeyValuePair"], pydantic.Field(alias="keyValuePairs")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

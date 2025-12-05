@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
@@ -15,7 +16,7 @@ class PatchComplexRequest(UniversalBaseModel):
     email: typing.Optional[str] = None
     nickname: typing.Optional[str] = None
     bio: typing.Optional[str] = None
-    profile_image_url: typing.Optional[str] = pydantic.Field(alias="profileImageUrl", default=None)
+    profile_image_url: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="profileImageUrl")] = None
     settings: typing.Optional[typing.Dict[str, typing.Any]] = None
 
     if IS_PYDANTIC_V2:

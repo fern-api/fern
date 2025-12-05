@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .node_id import NodeId
 
 
 class SinglyLinkedListNodeValue(UniversalBaseModel):
-    node_id: NodeId = pydantic.Field(alias="nodeId")
+    node_id: typing_extensions.Annotated[NodeId, pydantic.Field(alias="nodeId")]
     val: float
     next: typing.Optional[NodeId] = None
 

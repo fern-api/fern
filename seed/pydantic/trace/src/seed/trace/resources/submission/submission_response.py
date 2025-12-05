@@ -40,9 +40,9 @@ class SubmissionResponse_WorkspaceInitialized(UniversalBaseModel):
 
 class SubmissionResponse_ServerErrored(UniversalBaseModel):
     type: typing.Literal["serverErrored"] = "serverErrored"
-    exception_type: str = pydantic.Field(alias="exceptionType")
-    exception_message: str = pydantic.Field(alias="exceptionMessage")
-    exception_stacktrace: str = pydantic.Field(alias="exceptionStacktrace")
+    exception_type: typing_extensions.Annotated[str, pydantic.Field(alias="exceptionType")]
+    exception_message: typing_extensions.Annotated[str, pydantic.Field(alias="exceptionMessage")]
+    exception_stacktrace: typing_extensions.Annotated[str, pydantic.Field(alias="exceptionStacktrace")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

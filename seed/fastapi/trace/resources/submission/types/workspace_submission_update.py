@@ -4,13 +4,14 @@ import datetime as dt
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .workspace_submission_update_info import WorkspaceSubmissionUpdateInfo
 
 
 class WorkspaceSubmissionUpdate(UniversalBaseModel):
-    update_time: dt.datetime = pydantic.Field(alias="updateTime")
-    update_info: WorkspaceSubmissionUpdateInfo = pydantic.Field(alias="updateInfo")
+    update_time: typing_extensions.Annotated[dt.datetime, pydantic.Field(alias="updateTime")]
+    update_info: typing_extensions.Annotated[WorkspaceSubmissionUpdateInfo, pydantic.Field(alias="updateInfo")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

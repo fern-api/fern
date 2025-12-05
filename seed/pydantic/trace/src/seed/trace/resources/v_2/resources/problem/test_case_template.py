@@ -5,13 +5,14 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .test_case_implementation import TestCaseImplementation
 from .test_case_template_id import TestCaseTemplateId
 
 
 class TestCaseTemplate(UniversalBaseModel):
-    template_id: TestCaseTemplateId = pydantic.Field(alias="templateId")
+    template_id: typing_extensions.Annotated[TestCaseTemplateId, pydantic.Field(alias="templateId")]
     name: str
     implementation: TestCaseImplementation
 

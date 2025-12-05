@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .a_nested_literal import ANestedLiteral
 
 
 class ATopLevelLiteral(UniversalBaseModel):
-    nested_literal: ANestedLiteral = pydantic.Field(alias="nestedLiteral")
+    nested_literal: typing_extensions.Annotated[ANestedLiteral, pydantic.Field(alias="nestedLiteral")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

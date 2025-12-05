@@ -4,6 +4,7 @@ import datetime as dt
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .address import Address
 
@@ -13,8 +14,8 @@ class UserResponse(UniversalBaseModel):
     username: str
     email: typing.Optional[str] = None
     phone: typing.Optional[str] = None
-    created_at: dt.datetime = pydantic.Field(alias="createdAt")
-    updated_at: typing.Optional[dt.datetime] = pydantic.Field(alias="updatedAt", default=None)
+    created_at: typing_extensions.Annotated[dt.datetime, pydantic.Field(alias="createdAt")]
+    updated_at: typing_extensions.Annotated[typing.Optional[dt.datetime], pydantic.Field(alias="updatedAt")] = None
     address: typing.Optional[Address] = None
 
     if IS_PYDANTIC_V2:

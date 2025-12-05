@@ -8,7 +8,7 @@ from .next_page import NextPage
 
 
 class Page(UniversalBaseModel):
-    page: int = pydantic.Field()
+    page: int
     """
     The current page
     """

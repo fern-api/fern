@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..types.notification_method import NotificationMethod
 from ..types.search_result import SearchResult
@@ -11,13 +12,19 @@ from ..types.user_status import UserStatus
 
 
 class UpdateComplexProfileRequest(UniversalBaseModel):
-    nullable_role: typing.Optional[UserRole] = pydantic.Field(alias="nullableRole", default=None)
-    nullable_status: typing.Optional[UserStatus] = pydantic.Field(alias="nullableStatus", default=None)
-    nullable_notification: typing.Optional[NotificationMethod] = pydantic.Field(
-        alias="nullableNotification", default=None
-    )
-    nullable_search_result: typing.Optional[SearchResult] = pydantic.Field(alias="nullableSearchResult", default=None)
-    nullable_array: typing.Optional[typing.List[str]] = pydantic.Field(alias="nullableArray", default=None)
+    nullable_role: typing_extensions.Annotated[typing.Optional[UserRole], pydantic.Field(alias="nullableRole")] = None
+    nullable_status: typing_extensions.Annotated[
+        typing.Optional[UserStatus], pydantic.Field(alias="nullableStatus")
+    ] = None
+    nullable_notification: typing_extensions.Annotated[
+        typing.Optional[NotificationMethod], pydantic.Field(alias="nullableNotification")
+    ] = None
+    nullable_search_result: typing_extensions.Annotated[
+        typing.Optional[SearchResult], pydantic.Field(alias="nullableSearchResult")
+    ] = None
+    nullable_array: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], pydantic.Field(alias="nullableArray")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

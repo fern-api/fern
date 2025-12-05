@@ -5,26 +5,27 @@ import typing
 import uuid
 
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import UniversalBaseModel
 
 
 class ObjectWithOptionalField(UniversalBaseModel):
-    string: typing.Optional[str] = pydantic.Field(default=None)
+    string: typing.Optional[str] = None
     """
     This is a rather long descriptor of this single field in a more complex type. If you ask me I think this is a pretty good description for this field all things considered.
     """
 
     integer: typing.Optional[int] = None
-    long_: typing.Optional[int] = pydantic.Field(alias="long", default=None)
+    long_: typing_extensions.Annotated[typing.Optional[int], pydantic.Field(alias="long")] = None
     double: typing.Optional[float] = None
-    bool_: typing.Optional[bool] = pydantic.Field(alias="bool", default=None)
+    bool_: typing_extensions.Annotated[typing.Optional[bool], pydantic.Field(alias="bool")] = None
     datetime: typing.Optional[dt.datetime] = None
     date: typing.Optional[dt.date] = None
-    uuid_: typing.Optional[uuid.UUID] = pydantic.Field(alias="uuid", default=None)
-    base_64: typing.Optional[str] = pydantic.Field(alias="base64", default=None)
-    list_: typing.Optional[typing.List[str]] = pydantic.Field(alias="list", default=None)
-    set_: typing.Optional[typing.Set[str]] = pydantic.Field(alias="set", default=None)
-    map_: typing.Optional[typing.Dict[int, str]] = pydantic.Field(alias="map", default=None)
+    uuid_: typing_extensions.Annotated[typing.Optional[uuid.UUID], pydantic.Field(alias="uuid")] = None
+    base_64: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="base64")] = None
+    list_: typing_extensions.Annotated[typing.Optional[typing.List[str]], pydantic.Field(alias="list")] = None
+    set_: typing_extensions.Annotated[typing.Optional[typing.Set[str]], pydantic.Field(alias="set")] = None
+    map_: typing_extensions.Annotated[typing.Optional[typing.Dict[int, str]], pydantic.Field(alias="map")] = None
     bigint: typing.Optional[str] = None
 
     class Config:

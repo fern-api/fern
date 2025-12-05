@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ...commons.resources.types.types.data import Data
 from ...commons.resources.types.types.event_info import EventInfo
@@ -22,14 +23,17 @@ from .test import Test
 
 
 class BigEntity(UniversalBaseModel):
-    cast_member: typing.Optional[CastMember] = pydantic.Field(alias="castMember", default=None)
-    extended_movie: typing.Optional[ExtendedMovie] = pydantic.Field(alias="extendedMovie", default=None)
+    cast_member: typing_extensions.Annotated[typing.Optional[CastMember], pydantic.Field(alias="castMember")] = None
+    extended_movie: typing_extensions.Annotated[
+        typing.Optional[ExtendedMovie], pydantic.Field(alias="extendedMovie")
+    ] = None
     entity: typing.Optional[Entity] = None
     metadata: typing.Optional[resources_types_types_metadata_Metadata] = None
-    common_metadata: typing.Optional[resources_commons_resources_types_types_metadata_Metadata] = pydantic.Field(
-        alias="commonMetadata", default=None
-    )
-    event_info: typing.Optional[EventInfo] = pydantic.Field(alias="eventInfo", default=None)
+    common_metadata: typing_extensions.Annotated[
+        typing.Optional[resources_commons_resources_types_types_metadata_Metadata],
+        pydantic.Field(alias="commonMetadata"),
+    ] = None
+    event_info: typing_extensions.Annotated[typing.Optional[EventInfo], pydantic.Field(alias="eventInfo")] = None
     data: typing.Optional[Data] = None
     migration: typing.Optional[Migration] = None
     exception: typing.Optional[Exception] = None

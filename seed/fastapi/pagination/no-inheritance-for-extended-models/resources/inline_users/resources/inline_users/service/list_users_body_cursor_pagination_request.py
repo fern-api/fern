@@ -8,7 +8,7 @@ from ..types.with_cursor import WithCursor
 
 
 class ListUsersBodyCursorPaginationRequest(UniversalBaseModel):
-    pagination: typing.Optional[WithCursor] = pydantic.Field(default=None)
+    pagination: typing.Optional[WithCursor] = None
     """
     The object that contains the cursor used for pagination
     in order to fetch the next page of results.

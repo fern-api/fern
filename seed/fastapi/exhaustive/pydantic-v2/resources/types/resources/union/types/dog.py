@@ -11,11 +11,13 @@ from ......core.pydantic_utilities import UniversalBaseModel, universal_field_va
 
 class Dog(UniversalBaseModel):
     name: str
-    likes_to_woof: bool = pydantic.Field(alias="likesToWoof")
+    likes_to_woof: typing_extensions.Annotated[bool, pydantic.Field(alias="likesToWoof")]
 
     class Partial(typing.TypedDict):
         name: typing_extensions.NotRequired[str]
-        likes_to_woof: typing_extensions.NotRequired[bool]
+        likes_to_woof: typing_extensions.NotRequired[
+            typing_extensions.Annotated[bool, pydantic.Field(alias="likesToWoof")]
+        ]
 
     class Validators:
         """
@@ -30,7 +32,7 @@ class Dog(UniversalBaseModel):
                 ...
 
             @Dog.Validators.field("likes_to_woof")
-            def validate_likes_to_woof(likes_to_woof: bool, values: Dog.Partial) -> bool:
+            def validate_likes_to_woof(likes_to_woof: typing_extensions.Annotated[bool, pydantic.Field(alias="likesToWoof")], values: Dog.Partial) -> typing_extensions.Annotated[bool, pydantic.Field(alias="likesToWoof")]:
                 ...
         """
 
@@ -109,7 +111,9 @@ class Dog(UniversalBaseModel):
             def __call__(self, __v: typing.Any, __values: Dog.Partial) -> typing.Any: ...
 
         class LikesToWoofValidator(typing.Protocol):
-            def __call__(self, __v: bool, __values: Dog.Partial) -> bool: ...
+            def __call__(
+                self, __v: typing_extensions.Annotated[bool, pydantic.Field(alias="likesToWoof")], __values: Dog.Partial
+            ) -> typing_extensions.Annotated[bool, pydantic.Field(alias="likesToWoof")]: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
@@ -142,13 +146,17 @@ class Dog(UniversalBaseModel):
         return v
 
     @universal_field_validator("likes_to_woof", pre=True)
-    def _pre_validate_likes_to_woof(cls, v: bool, values: Dog.Partial) -> bool:
+    def _pre_validate_likes_to_woof(
+        cls, v: typing_extensions.Annotated[bool, pydantic.Field(alias="likesToWoof")], values: Dog.Partial
+    ) -> typing_extensions.Annotated[bool, pydantic.Field(alias="likesToWoof")]:
         for validator in Dog.Validators._likes_to_woof_pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("likes_to_woof", pre=False)
-    def _post_validate_likes_to_woof(cls, v: bool, values: Dog.Partial) -> bool:
+    def _post_validate_likes_to_woof(
+        cls, v: typing_extensions.Annotated[bool, pydantic.Field(alias="likesToWoof")], values: Dog.Partial
+    ) -> typing_extensions.Annotated[bool, pydantic.Field(alias="likesToWoof")]:
         for validator in Dog.Validators._likes_to_woof_post_validators:
             v = validator(v, values)
         return v

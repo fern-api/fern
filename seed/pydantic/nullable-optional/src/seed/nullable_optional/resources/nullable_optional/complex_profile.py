@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .address import Address
 from .notification_method import NotificationMethod
@@ -17,40 +18,56 @@ class ComplexProfile(UniversalBaseModel):
     """
 
     id: str
-    nullable_role: typing.Optional[UserRole] = pydantic.Field(alias="nullableRole", default=None)
-    optional_role: typing.Optional[UserRole] = pydantic.Field(alias="optionalRole", default=None)
-    optional_nullable_role: typing.Optional[UserRole] = pydantic.Field(alias="optionalNullableRole", default=None)
-    nullable_status: typing.Optional[UserStatus] = pydantic.Field(alias="nullableStatus", default=None)
-    optional_status: typing.Optional[UserStatus] = pydantic.Field(alias="optionalStatus", default=None)
-    optional_nullable_status: typing.Optional[UserStatus] = pydantic.Field(alias="optionalNullableStatus", default=None)
-    nullable_notification: typing.Optional[NotificationMethod] = pydantic.Field(
-        alias="nullableNotification", default=None
-    )
-    optional_notification: typing.Optional[NotificationMethod] = pydantic.Field(
-        alias="optionalNotification", default=None
-    )
-    optional_nullable_notification: typing.Optional[NotificationMethod] = pydantic.Field(
-        alias="optionalNullableNotification", default=None
-    )
-    nullable_search_result: typing.Optional[SearchResult] = pydantic.Field(alias="nullableSearchResult", default=None)
-    optional_search_result: typing.Optional[SearchResult] = pydantic.Field(alias="optionalSearchResult", default=None)
-    nullable_array: typing.Optional[typing.List[str]] = pydantic.Field(alias="nullableArray", default=None)
-    optional_array: typing.Optional[typing.List[str]] = pydantic.Field(alias="optionalArray", default=None)
-    optional_nullable_array: typing.Optional[typing.List[str]] = pydantic.Field(
-        alias="optionalNullableArray", default=None
-    )
-    nullable_list_of_nullables: typing.Optional[typing.List[typing.Optional[str]]] = pydantic.Field(
-        alias="nullableListOfNullables", default=None
-    )
-    nullable_map_of_nullables: typing.Optional[typing.Dict[str, typing.Optional[Address]]] = pydantic.Field(
-        alias="nullableMapOfNullables", default=None
-    )
-    nullable_list_of_unions: typing.Optional[typing.List[NotificationMethod]] = pydantic.Field(
-        alias="nullableListOfUnions", default=None
-    )
-    optional_map_of_enums: typing.Optional[typing.Dict[str, UserRole]] = pydantic.Field(
-        alias="optionalMapOfEnums", default=None
-    )
+    nullable_role: typing_extensions.Annotated[typing.Optional[UserRole], pydantic.Field(alias="nullableRole")] = None
+    optional_role: typing_extensions.Annotated[typing.Optional[UserRole], pydantic.Field(alias="optionalRole")] = None
+    optional_nullable_role: typing_extensions.Annotated[
+        typing.Optional[UserRole], pydantic.Field(alias="optionalNullableRole")
+    ] = None
+    nullable_status: typing_extensions.Annotated[
+        typing.Optional[UserStatus], pydantic.Field(alias="nullableStatus")
+    ] = None
+    optional_status: typing_extensions.Annotated[
+        typing.Optional[UserStatus], pydantic.Field(alias="optionalStatus")
+    ] = None
+    optional_nullable_status: typing_extensions.Annotated[
+        typing.Optional[UserStatus], pydantic.Field(alias="optionalNullableStatus")
+    ] = None
+    nullable_notification: typing_extensions.Annotated[
+        typing.Optional[NotificationMethod], pydantic.Field(alias="nullableNotification")
+    ] = None
+    optional_notification: typing_extensions.Annotated[
+        typing.Optional[NotificationMethod], pydantic.Field(alias="optionalNotification")
+    ] = None
+    optional_nullable_notification: typing_extensions.Annotated[
+        typing.Optional[NotificationMethod], pydantic.Field(alias="optionalNullableNotification")
+    ] = None
+    nullable_search_result: typing_extensions.Annotated[
+        typing.Optional[SearchResult], pydantic.Field(alias="nullableSearchResult")
+    ] = None
+    optional_search_result: typing_extensions.Annotated[
+        typing.Optional[SearchResult], pydantic.Field(alias="optionalSearchResult")
+    ] = None
+    nullable_array: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], pydantic.Field(alias="nullableArray")
+    ] = None
+    optional_array: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], pydantic.Field(alias="optionalArray")
+    ] = None
+    optional_nullable_array: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], pydantic.Field(alias="optionalNullableArray")
+    ] = None
+    nullable_list_of_nullables: typing_extensions.Annotated[
+        typing.Optional[typing.List[typing.Optional[str]]], pydantic.Field(alias="nullableListOfNullables")
+    ] = None
+    nullable_map_of_nullables: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, typing.Optional[Address]]], pydantic.Field(alias="nullableMapOfNullables")
+    ] = None
+    nullable_list_of_unions: typing_extensions.Annotated[
+        typing.Optional[typing.List[NotificationMethod]], pydantic.Field(alias="nullableListOfUnions")
+    ] = None
+    optional_map_of_enums: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, UserRole]], pydantic.Field(alias="optionalMapOfEnums")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

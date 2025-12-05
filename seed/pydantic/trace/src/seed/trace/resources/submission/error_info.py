@@ -36,7 +36,7 @@ class ErrorInfo_RuntimeError(UniversalBaseModel):
 
 class ErrorInfo_InternalError(UniversalBaseModel):
     type: typing.Literal["internalError"] = "internalError"
-    exception_info: ExceptionInfo = pydantic.Field(alias="exceptionInfo")
+    exception_info: typing_extensions.Annotated[ExceptionInfo, pydantic.Field(alias="exceptionInfo")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

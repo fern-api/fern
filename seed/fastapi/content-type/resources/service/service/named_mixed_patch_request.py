@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class NamedMixedPatchRequest(UniversalBaseModel):
-    app_id: typing.Optional[str] = pydantic.Field(alias="appId", default=None)
+    app_id: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="appId")] = None
     instructions: typing.Optional[str] = None
     active: typing.Optional[bool] = None
 

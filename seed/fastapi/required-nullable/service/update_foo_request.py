@@ -7,17 +7,17 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class UpdateFooRequest(UniversalBaseModel):
-    nullable_text: typing.Optional[str] = pydantic.Field(default=None)
+    nullable_text: typing.Optional[str] = None
     """
     Can be explicitly set to null to clear the value
     """
 
-    nullable_number: typing.Optional[float] = pydantic.Field(default=None)
+    nullable_number: typing.Optional[float] = None
     """
     Can be explicitly set to null to clear the value
     """
 
-    non_nullable_text: typing.Optional[str] = pydantic.Field(default=None)
+    non_nullable_text: typing.Optional[str] = None
     """
     Regular non-nullable field
     """

@@ -22,6 +22,7 @@ class MultipleFilterSearchRequest(UniversalBaseModel):
             extra = pydantic.Extra.allow
 
 
+from .multiple_filter_search_request_operator import MultipleFilterSearchRequestOperator  # noqa: E402, I001
 from .multiple_filter_search_request_value import MultipleFilterSearchRequestValue  # noqa: E402, I001
 from .multiple_filter_search_request_operator import MultipleFilterSearchRequestOperator  # noqa: E402, I001
 from .single_filter_search_request import SingleFilterSearchRequest  # noqa: E402, I001

@@ -12,27 +12,27 @@ class PaginatedClientResponse(UniversalBaseModel):
     Paginated response for clients listing
     """
 
-    start: int = pydantic.Field()
+    start: int
     """
     Starting index (zero-based)
     """
 
-    limit: int = pydantic.Field()
+    limit: int
     """
     Number of items requested
     """
 
-    length: int = pydantic.Field()
+    length: int
     """
     Number of items returned
     """
 
-    total: typing.Optional[int] = pydantic.Field(default=None)
+    total: typing.Optional[int] = None
     """
     Total number of items (when include_totals=true)
     """
 
-    clients: typing.List[Client] = pydantic.Field()
+    clients: typing.List[Client]
     """
     List of clients
     """

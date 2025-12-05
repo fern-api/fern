@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class Address(UniversalBaseModel):
-    line_1: str = pydantic.Field(alias="line1")
-    line_2: typing.Optional[str] = pydantic.Field(alias="line2", default=None)
+    line_1: typing_extensions.Annotated[str, pydantic.Field(alias="line1")]
+    line_2: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="line2")] = None
     city: str
     state: str
     zip: str

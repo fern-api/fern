@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class TestCaseExpects(UniversalBaseModel):
-    expected_stdout: typing.Optional[str] = pydantic.Field(alias="expectedStdout", default=None)
+    expected_stdout: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="expectedStdout")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

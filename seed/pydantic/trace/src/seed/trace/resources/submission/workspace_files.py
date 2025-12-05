@@ -3,13 +3,14 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..commons.file_info import FileInfo
 
 
 class WorkspaceFiles(UniversalBaseModel):
-    main_file: FileInfo = pydantic.Field(alias="mainFile")
-    read_only_files: typing.List[FileInfo] = pydantic.Field(alias="readOnlyFiles")
+    main_file: typing_extensions.Annotated[FileInfo, pydantic.Field(alias="mainFile")]
+    read_only_files: typing_extensions.Annotated[typing.List[FileInfo], pydantic.Field(alias="readOnlyFiles")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

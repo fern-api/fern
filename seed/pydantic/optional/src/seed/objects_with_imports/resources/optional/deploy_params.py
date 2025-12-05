@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class DeployParams(UniversalBaseModel):
-    update_draft: typing.Optional[bool] = pydantic.Field(alias="updateDraft", default=None)
+    update_draft: typing_extensions.Annotated[typing.Optional[bool], pydantic.Field(alias="updateDraft")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

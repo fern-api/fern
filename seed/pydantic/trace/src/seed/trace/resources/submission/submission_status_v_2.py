@@ -16,9 +16,9 @@ from .workspace_submission_update import WorkspaceSubmissionUpdate
 class SubmissionStatusV2_Test(UniversalBaseModel):
     type: typing.Literal["test"] = "test"
     updates: typing.List[TestSubmissionUpdate]
-    problem_id: ProblemId = pydantic.Field(alias="problemId")
-    problem_version: int = pydantic.Field(alias="problemVersion")
-    problem_info: ProblemInfoV2 = pydantic.Field(alias="problemInfo")
+    problem_id: typing_extensions.Annotated[ProblemId, pydantic.Field(alias="problemId")]
+    problem_version: typing_extensions.Annotated[int, pydantic.Field(alias="problemVersion")]
+    problem_info: typing_extensions.Annotated[ProblemInfoV2, pydantic.Field(alias="problemInfo")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

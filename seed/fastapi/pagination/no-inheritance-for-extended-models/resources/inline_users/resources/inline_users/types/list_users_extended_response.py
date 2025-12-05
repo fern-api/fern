@@ -9,7 +9,7 @@ from .user_list_container import UserListContainer
 
 
 class ListUsersExtendedResponse(UniversalBaseModel):
-    total_count: int = pydantic.Field()
+    total_count: int
     """
     The totall number of /users
     """

@@ -3,14 +3,15 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...submission.types.trace_response import TraceResponse
 from ...submission.types.workspace_run_details import WorkspaceRunDetails
 
 
 class StoreTracedWorkspaceRequest(UniversalBaseModel):
-    workspace_run_details: WorkspaceRunDetails = pydantic.Field(alias="workspaceRunDetails")
-    trace_responses: typing.List[TraceResponse] = pydantic.Field(alias="traceResponses")
+    workspace_run_details: typing_extensions.Annotated[WorkspaceRunDetails, pydantic.Field(alias="workspaceRunDetails")]
+    trace_responses: typing_extensions.Annotated[typing.List[TraceResponse], pydantic.Field(alias="traceResponses")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

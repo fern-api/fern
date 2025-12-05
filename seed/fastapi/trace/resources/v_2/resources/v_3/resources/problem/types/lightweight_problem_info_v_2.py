@@ -5,15 +5,16 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ........core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .......commons.types.problem_id import ProblemId
 
 
 class LightweightProblemInfoV2(UniversalBaseModel):
-    problem_id: ProblemId = pydantic.Field(alias="problemId")
-    problem_name: str = pydantic.Field(alias="problemName")
-    problem_version: int = pydantic.Field(alias="problemVersion")
-    variable_types: typing.List["VariableType"] = pydantic.Field(alias="variableTypes")
+    problem_id: typing_extensions.Annotated[ProblemId, pydantic.Field(alias="problemId")]
+    problem_name: typing_extensions.Annotated[str, pydantic.Field(alias="problemName")]
+    problem_version: typing_extensions.Annotated[int, pydantic.Field(alias="problemVersion")]
+    variable_types: typing_extensions.Annotated[typing.List["VariableType"], pydantic.Field(alias="variableTypes")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

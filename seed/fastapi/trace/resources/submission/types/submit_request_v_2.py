@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...commons.types.language import Language
 from ...commons.types.problem_id import ProblemId
@@ -11,12 +12,14 @@ from .submission_id import SubmissionId
 
 
 class SubmitRequestV2(UniversalBaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
+    submission_id: typing_extensions.Annotated[SubmissionId, pydantic.Field(alias="submissionId")]
     language: Language
-    submission_files: typing.List[SubmissionFileInfo] = pydantic.Field(alias="submissionFiles")
-    problem_id: ProblemId = pydantic.Field(alias="problemId")
-    problem_version: typing.Optional[int] = pydantic.Field(alias="problemVersion", default=None)
-    user_id: typing.Optional[str] = pydantic.Field(alias="userId", default=None)
+    submission_files: typing_extensions.Annotated[
+        typing.List[SubmissionFileInfo], pydantic.Field(alias="submissionFiles")
+    ]
+    problem_id: typing_extensions.Annotated[ProblemId, pydantic.Field(alias="problemId")]
+    problem_version: typing_extensions.Annotated[typing.Optional[int], pydantic.Field(alias="problemVersion")] = None
+    user_id: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="userId")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

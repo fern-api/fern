@@ -8,7 +8,7 @@ from .user_optional_list_page import UserOptionalListPage
 
 
 class ListUsersExtendedOptionalListResponse(UserOptionalListPage):
-    total_count: int = pydantic.Field()
+    total_count: int
     """
     The totall number of /users
     """

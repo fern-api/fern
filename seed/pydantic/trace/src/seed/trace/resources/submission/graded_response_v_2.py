@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ..v_2.resources.problem.test_case_id import TestCaseId
 from .submission_id import SubmissionId
@@ -12,8 +13,8 @@ from .test_case_grade import TestCaseGrade
 
 
 class GradedResponseV2(UniversalBaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    test_cases: typing.Dict[TestCaseId, TestCaseGrade] = pydantic.Field(alias="testCases")
+    submission_id: typing_extensions.Annotated[SubmissionId, pydantic.Field(alias="submissionId")]
+    test_cases: typing_extensions.Annotated[typing.Dict[TestCaseId, TestCaseGrade], pydantic.Field(alias="testCases")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

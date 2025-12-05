@@ -3,13 +3,14 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..v_2.resources.problem.test_case_id import TestCaseId
 
 
 class RecordedTestCaseUpdate(UniversalBaseModel):
-    test_case_id: TestCaseId = pydantic.Field(alias="testCaseId")
-    trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
+    test_case_id: typing_extensions.Annotated[TestCaseId, pydantic.Field(alias="testCaseId")]
+    trace_responses_size: typing_extensions.Annotated[int, pydantic.Field(alias="traceResponsesSize")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

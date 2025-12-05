@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .address import Address
 from .notification_method import NotificationMethod
@@ -17,18 +18,32 @@ class DeserializationTestRequest(UniversalBaseModel):
     Request body for testing deserialization of null values
     """
 
-    required_string: str = pydantic.Field(alias="requiredString")
-    nullable_string: typing.Optional[str] = pydantic.Field(alias="nullableString", default=None)
-    optional_string: typing.Optional[str] = pydantic.Field(alias="optionalString", default=None)
-    optional_nullable_string: typing.Optional[str] = pydantic.Field(alias="optionalNullableString", default=None)
-    nullable_enum: typing.Optional[UserRole] = pydantic.Field(alias="nullableEnum", default=None)
-    optional_enum: typing.Optional[UserStatus] = pydantic.Field(alias="optionalEnum", default=None)
-    nullable_union: typing.Optional[NotificationMethod] = pydantic.Field(alias="nullableUnion", default=None)
-    optional_union: typing.Optional[SearchResult] = pydantic.Field(alias="optionalUnion", default=None)
-    nullable_list: typing.Optional[typing.List[str]] = pydantic.Field(alias="nullableList", default=None)
-    nullable_map: typing.Optional[typing.Dict[str, int]] = pydantic.Field(alias="nullableMap", default=None)
-    nullable_object: typing.Optional[Address] = pydantic.Field(alias="nullableObject", default=None)
-    optional_object: typing.Optional[Organization] = pydantic.Field(alias="optionalObject", default=None)
+    required_string: typing_extensions.Annotated[str, pydantic.Field(alias="requiredString")]
+    nullable_string: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="nullableString")] = None
+    optional_string: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="optionalString")] = None
+    optional_nullable_string: typing_extensions.Annotated[
+        typing.Optional[str], pydantic.Field(alias="optionalNullableString")
+    ] = None
+    nullable_enum: typing_extensions.Annotated[typing.Optional[UserRole], pydantic.Field(alias="nullableEnum")] = None
+    optional_enum: typing_extensions.Annotated[typing.Optional[UserStatus], pydantic.Field(alias="optionalEnum")] = None
+    nullable_union: typing_extensions.Annotated[
+        typing.Optional[NotificationMethod], pydantic.Field(alias="nullableUnion")
+    ] = None
+    optional_union: typing_extensions.Annotated[
+        typing.Optional[SearchResult], pydantic.Field(alias="optionalUnion")
+    ] = None
+    nullable_list: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], pydantic.Field(alias="nullableList")
+    ] = None
+    nullable_map: typing_extensions.Annotated[
+        typing.Optional[typing.Dict[str, int]], pydantic.Field(alias="nullableMap")
+    ] = None
+    nullable_object: typing_extensions.Annotated[typing.Optional[Address], pydantic.Field(alias="nullableObject")] = (
+        None
+    )
+    optional_object: typing_extensions.Annotated[
+        typing.Optional[Organization], pydantic.Field(alias="optionalObject")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

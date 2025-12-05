@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import (
     IS_PYDANTIC_V2,
     UniversalBaseModel,
@@ -15,7 +16,9 @@ from .optional_alias import OptionalAlias
 
 
 class DoubleOptional(UniversalBaseModel):
-    optional_alias: typing.Optional[OptionalAlias] = pydantic.Field(alias="optionalAlias", default=None)
+    optional_alias: typing_extensions.Annotated[
+        typing.Optional[OptionalAlias], pydantic.Field(alias="optionalAlias")
+    ] = None
 
     class Validators:
         """
@@ -26,7 +29,7 @@ class DoubleOptional(UniversalBaseModel):
                 ...
 
             @DoubleOptional.Validators.field("optional_alias")
-            def validate_optional_alias(optional_alias: typing.Optional[OptionalAlias], values: DoubleOptional.Partial) -> typing.Optional[OptionalAlias]:
+            def validate_optional_alias(optional_alias: typing_extensions.Annotated[typing.Optional[OptionalAlias], pydantic.Field(alias="optionalAlias")], values: DoubleOptional.Partial) -> typing_extensions.Annotated[typing.Optional[OptionalAlias], pydantic.Field(alias="optionalAlias")]:
                 ...
         """
 
@@ -93,8 +96,10 @@ class DoubleOptional(UniversalBaseModel):
 
         class OptionalAliasValidator(typing.Protocol):
             def __call__(
-                self, __v: typing.Optional[OptionalAlias], __values: DoubleOptional.Partial
-            ) -> typing.Optional[OptionalAlias]: ...
+                self,
+                __v: typing_extensions.Annotated[typing.Optional[OptionalAlias], pydantic.Field(alias="optionalAlias")],
+                __values: DoubleOptional.Partial,
+            ) -> typing_extensions.Annotated[typing.Optional[OptionalAlias], pydantic.Field(alias="optionalAlias")]: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
@@ -116,16 +121,20 @@ class DoubleOptional(UniversalBaseModel):
 
     @universal_field_validator("optional_alias", pre=True)
     def _pre_validate_optional_alias(
-        cls, v: typing.Optional[OptionalAlias], values: DoubleOptional.Partial
-    ) -> typing.Optional[OptionalAlias]:
+        cls,
+        v: typing_extensions.Annotated[typing.Optional[OptionalAlias], pydantic.Field(alias="optionalAlias")],
+        values: DoubleOptional.Partial,
+    ) -> typing_extensions.Annotated[typing.Optional[OptionalAlias], pydantic.Field(alias="optionalAlias")]:
         for validator in DoubleOptional.Validators._optional_alias_pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("optional_alias", pre=False)
     def _post_validate_optional_alias(
-        cls, v: typing.Optional[OptionalAlias], values: DoubleOptional.Partial
-    ) -> typing.Optional[OptionalAlias]:
+        cls,
+        v: typing_extensions.Annotated[typing.Optional[OptionalAlias], pydantic.Field(alias="optionalAlias")],
+        values: DoubleOptional.Partial,
+    ) -> typing_extensions.Annotated[typing.Optional[OptionalAlias], pydantic.Field(alias="optionalAlias")]:
         for validator in DoubleOptional.Validators._optional_alias_post_validators:
             v = validator(v, values)
         return v

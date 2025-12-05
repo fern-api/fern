@@ -14,7 +14,7 @@ class ExecutionSessionState(UniversalBaseModel):
     last_time_contacted: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="lastTimeContacted")] = (
         None
     )
-    session_id: typing_extensions.Annotated[str, FieldMetadata(alias="sessionId")] = pydantic.Field()
+    session_id: typing_extensions.Annotated[str, FieldMetadata(alias="sessionId")]
     """
     The auto-generated session id. Formatted as a uuid.
     """

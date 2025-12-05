@@ -11,47 +11,47 @@ class Connection(UniversalBaseModel):
     Represents an identity provider connection
     """
 
-    id: str = pydantic.Field()
+    id: str
     """
     Connection identifier
     """
 
-    name: str = pydantic.Field()
+    name: str
     """
     Connection name
     """
 
-    display_name: typing.Optional[str] = pydantic.Field(default=None)
+    display_name: typing.Optional[str] = None
     """
     Display name for the connection
     """
 
-    strategy: str = pydantic.Field()
+    strategy: str
     """
     The identity provider identifier (auth0, google-oauth2, facebook, etc.)
     """
 
-    options: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    options: typing.Optional[typing.Dict[str, typing.Any]] = None
     """
     Connection-specific configuration options
     """
 
-    enabled_clients: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    enabled_clients: typing.Optional[typing.List[str]] = None
     """
     List of client IDs that can use this connection
     """
 
-    realms: typing.Optional[typing.List[str]] = pydantic.Field(default=None)
+    realms: typing.Optional[typing.List[str]] = None
     """
     Applicable realms for enterprise connections
     """
 
-    is_domain_connection: typing.Optional[bool] = pydantic.Field(default=None)
+    is_domain_connection: typing.Optional[bool] = None
     """
     Whether this is a domain connection
     """
 
-    metadata: typing.Optional[typing.Dict[str, typing.Any]] = pydantic.Field(default=None)
+    metadata: typing.Optional[typing.Dict[str, typing.Any]] = None
     """
     Additional metadata
     """

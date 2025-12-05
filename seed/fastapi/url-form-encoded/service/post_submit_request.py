@@ -7,12 +7,12 @@ from ..core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class PostSubmitRequest(UniversalBaseModel):
-    username: str = pydantic.Field()
+    username: str
     """
     The user's username
     """
 
-    email: str = pydantic.Field()
+    email: str
     """
     The user's email address
     """
