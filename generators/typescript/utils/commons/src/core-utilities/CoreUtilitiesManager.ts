@@ -8,6 +8,14 @@ import { DependencyManager } from "../dependency-manager/DependencyManager";
 import { ExportsManager } from "../exports-manager";
 import { ImportsManager } from "../imports-manager";
 import { getReferenceToExportViaNamespaceImport } from "../referencing";
+import {
+    NoneFormat,
+    SerializationFormatType,
+    SerializationPipeline,
+    ZodFormat,
+    ZurgFormat,
+    ZURG_MANIFEST
+} from "../serialization-pipeline";
 import { AuthImpl } from "./Auth";
 import { CallbackQueueImpl } from "./CallbackQueue";
 import { CoreUtilities } from "./CoreUtilities";
@@ -22,7 +30,6 @@ import { StreamImpl } from "./Stream";
 import { UrlUtilsImpl } from "./UrlUtils";
 import { UtilsImpl } from "./Utils";
 import { WebsocketImpl } from "./Websocket";
-import { ZurgImpl } from "./Zurg";
 
 export declare namespace CoreUtilitiesManager {
     namespace getCoreUtilities {
@@ -51,6 +58,7 @@ export class CoreUtilitiesManager {
     private readonly relativePackagePath: string;
     private readonly relativeTestPath: string;
     private readonly generateEndpointMetadata: boolean;
+    private readonly serializationFormat: SerializationFormatType;
 
     constructor({
         streamType,
@@ -58,7 +66,8 @@ export class CoreUtilitiesManager {
         fetchSupport,
         relativePackagePath = DEFAULT_PACKAGE_PATH,
         relativeTestPath = DEFAULT_TEST_PATH,
-        generateEndpointMetadata
+        generateEndpointMetadata,
+        serializationFormat = "default"
     }: {
         streamType: "wrapper" | "web";
         formDataSupport: "Node16" | "Node18";
@@ -66,6 +75,7 @@ export class CoreUtilitiesManager {
         relativePackagePath?: string;
         relativeTestPath?: string;
         generateEndpointMetadata: boolean;
+        serializationFormat?: SerializationFormatType;
     }) {
         this.streamType = streamType;
         this.formDataSupport = formDataSupport;
@@ -73,6 +83,7 @@ export class CoreUtilitiesManager {
         this.relativePackagePath = relativePackagePath;
         this.relativeTestPath = relativeTestPath;
         this.generateEndpointMetadata = generateEndpointMetadata;
+        this.serializationFormat = serializationFormat;
     }
 
     public getCoreUtilities({
@@ -90,8 +101,11 @@ export class CoreUtilitiesManager {
             relativeTestPath
         });
 
+        // Create the serialization format based on configuration
+        const serializationFormat = this.createSerializationFormat(getReferenceToExport);
+
         return {
-            zurg: new ZurgImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
+            zurg: serializationFormat,
             fetcher: new FetcherImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
             stream: new StreamImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
             auth: new AuthImpl({ getReferenceToExport, generateEndpointMetadata: this.generateEndpointMetadata }),
@@ -128,6 +142,31 @@ export class CoreUtilitiesManager {
         };
     }
 
+    private createSerializationFormat(
+        getReferenceToExport: (args: { manifest: CoreUtility.Manifest; exportedName: string }) => ReturnType<typeof getReferenceToExportViaNamespaceImport>
+    ) {
+        const config = {
+            getReferenceToExport,
+            generateEndpointMetadata: this.generateEndpointMetadata
+        };
+
+        switch (this.serializationFormat) {
+            case "default":
+                // Add Zurg manifest to referenced utilities so it gets copied
+                this.addManifestAndDependencies(ZURG_MANIFEST);
+                return new ZurgFormat(config);
+
+            case "zod":
+                return new ZodFormat(config);
+
+            case "none":
+                return new NoneFormat(config);
+
+            default:
+                throw new Error(`Unknown serialization format: ${this.serializationFormat}`);
+        }
+    }
+
     public finalize(exportsManager: ExportsManager, dependencyManager: DependencyManager): void {
         for (const utility of Object.values(this.referencedCoreUtilities)) {
             exportsManager.addExportsForDirectories(
@@ -145,6 +184,20 @@ export class CoreUtilitiesManager {
                 fetchSupport: this.fetchSupport
             });
         }
+
+        // Add runtime dependencies for serialization format
+        this.addSerializationDependencies(dependencyManager);
+    }
+
+    /**
+     * Add npm dependencies required by the active serialization format
+     */
+    private addSerializationDependencies(dependencyManager: DependencyManager): void {
+        if (this.serializationFormat === "zod") {
+            // Zod uses an npm dependency instead of bundled runtime files
+            dependencyManager.addDependency("zod", "^3.23.0");
+        }
+        // Zurg and None formats don't require external npm dependencies
     }
 
     public async copyCoreUtilities({
