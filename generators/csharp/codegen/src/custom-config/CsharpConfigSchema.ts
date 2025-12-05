@@ -89,6 +89,7 @@ export const CsharpConfigSchema = z.object({
     "generate-mock-server-tests": z.boolean().optional(),
     "enable-wire-tests": z.boolean().optional(),
     "include-exception-handler": z.boolean().optional(),
+    "exception-interceptor-class-name": z.string().optional(),
     "custom-readme-sections": z.array(CustomReadmeSectionSchema).optional(),
 
     // Deprecated.

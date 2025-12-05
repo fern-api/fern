@@ -14,36 +14,48 @@ public partial class SeedOauthClientCredentialsClient
         ClientOptions? clientOptions = null
     )
     {
-        var defaultHeaders = new Headers(
-            new Dictionary<string, string>()
-            {
-                { "X-Fern-Language", "C#" },
-                { "X-Fern-SDK-Name", "SeedOauthClientCredentials" },
-                { "X-Fern-SDK-Version", Version.Current },
-                { "User-Agent", "Fernoauth-client-credentials/0.0.1" },
-            }
-        );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        try
         {
-            if (!clientOptions.Headers.ContainsKey(header.Key))
+            var defaultHeaders = new Headers(
+                new Dictionary<string, string>()
+                {
+                    { "X-Fern-Language", "C#" },
+                    { "X-Fern-SDK-Name", "SeedOauthClientCredentials" },
+                    { "X-Fern-SDK-Version", Version.Current },
+                    { "User-Agent", "Fernoauth-client-credentials/0.0.1" },
+                }
+            );
+            clientOptions ??= new ClientOptions();
+            clientOptions.ExceptionHandler = new ExceptionHandler(
+                new SeedOauthClientCredentialsExceptionInterceptor()
+            );
+            foreach (var header in defaultHeaders)
             {
-                clientOptions.Headers[header.Key] = header.Value;
+                if (!clientOptions.Headers.ContainsKey(header.Key))
+                {
+                    clientOptions.Headers[header.Key] = header.Value;
+                }
             }
+            var tokenProvider = new OAuthTokenProvider(
+                clientId,
+                clientSecret,
+                new AuthClient(new RawClient(clientOptions.Clone()))
+            );
+            clientOptions.Headers["Authorization"] = new Func<string>(() =>
+                tokenProvider.GetAccessTokenAsync().Result
+            );
+            _client = new RawClient(clientOptions);
+            Auth = new AuthClient(_client);
+            NestedNoAuth = new NestedNoAuthClient(_client);
+            Nested = new NestedClient(_client);
+            Simple = new SimpleClient(_client);
         }
-        var tokenProvider = new OAuthTokenProvider(
-            clientId,
-            clientSecret,
-            new AuthClient(new RawClient(clientOptions.Clone()))
-        );
-        clientOptions.Headers["Authorization"] = new Func<string>(() =>
-            tokenProvider.GetAccessTokenAsync().Result
-        );
-        _client = new RawClient(clientOptions);
-        Auth = new AuthClient(_client);
-        NestedNoAuth = new NestedNoAuthClient(_client);
-        Nested = new NestedClient(_client);
-        Simple = new SimpleClient(_client);
+        catch (Exception ex)
+        {
+            var interceptor = new SeedOauthClientCredentialsExceptionInterceptor();
+            interceptor.CaptureException(ex);
+            throw;
+        }
     }
 
     public AuthClient Auth { get; }
