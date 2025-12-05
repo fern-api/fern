@@ -33,7 +33,7 @@ export function generateContainerExample({
         case "list": {
             const example = generateTypeReferenceExample({
                 fieldName,
-                typeReference: containerType.list,
+                typeReference: containerType.itemType,
                 maxDepth,
                 currentDepth: currentDepth + 1,
                 typeDeclarations,
@@ -46,7 +46,7 @@ export function generateContainerExample({
                 type: "success",
                 example: ExampleContainer.list({
                     list: [example.example, example.example],
-                    itemType: containerType.list
+                    itemType: containerType.itemType
                 }),
                 jsonExample: [example.jsonExample, example.jsonExample]
             };
@@ -195,7 +195,7 @@ export function generateEmptyContainerExample({
                 type: "success",
                 example: ExampleContainer.list({
                     list: [],
-                    itemType: containerType.list
+                    itemType: containerType.itemType
                 }),
                 jsonExample: []
             };

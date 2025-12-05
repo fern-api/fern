@@ -373,7 +373,7 @@ function convertPrimitiveTypeV2(
 
 function convertContainerType(container: IrVersions.V52.types.ContainerType): IrVersions.V51.types.ContainerType {
     return IrVersions.V52.types.ContainerType._visit<IrVersions.V51.types.ContainerType>(container, {
-        list: (itemType) => IrVersions.V51.types.ContainerType.list(convertTypeReference(itemType)),
+        list: (listType) => IrVersions.V51.types.ContainerType.list(convertTypeReference(listType.itemType)),
         optional: (itemType) => IrVersions.V51.types.ContainerType.optional(convertTypeReference(itemType)),
         set: (itemType) => IrVersions.V51.types.ContainerType.set(convertTypeReference(itemType)),
         map: ({ keyType, valueType }) =>
