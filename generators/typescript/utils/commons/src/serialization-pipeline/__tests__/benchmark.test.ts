@@ -3,7 +3,8 @@ import { ts } from "ts-morph";
 import { performance } from "perf_hooks";
 
 import { Reference } from "../../referencing";
-import { ZurgImpl } from "../../core-utilities/Zurg";
+import { ZurgFormat } from "../formats/ZurgFormat";
+import { CoreUtility } from "../../core-utilities/CoreUtility";
 
 /**
  * Create a mock reference for testing
@@ -35,11 +36,11 @@ function createMockReference(exportedName: string): Reference {
 }
 
 /**
- * Create a ZurgImpl instance for testing
+ * Create a ZurgFormat instance for testing
  */
-function createZurg(): ZurgImpl {
-    return new ZurgImpl({
-        getReferenceToExport: ({ exportedName }) => createMockReference(exportedName),
+function createZurg(): ZurgFormat {
+    return new ZurgFormat({
+        getReferenceToExport: ({ exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => createMockReference(exportedName),
         generateEndpointMetadata: false
     });
 }
@@ -103,7 +104,7 @@ function formatResult(result: BenchmarkResult): string {
 }
 
 describe("Zurg Performance Benchmarks", () => {
-    let zurg: ZurgImpl;
+    let zurg: ZurgFormat;
 
     beforeAll(() => {
         zurg = createZurg();

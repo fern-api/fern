@@ -2,7 +2,8 @@ import { describe, expect, it } from "vitest";
 import { ts } from "ts-morph";
 
 import { Reference } from "../../referencing";
-import { ZurgImpl, MANIFEST as ZURG_MANIFEST } from "../../core-utilities/Zurg";
+import { ZurgFormat, ZURG_MANIFEST } from "../formats/ZurgFormat";
+import { CoreUtility } from "../../core-utilities/CoreUtility";
 
 /**
  * Helper to print TypeScript AST to string for snapshot comparison
@@ -44,16 +45,16 @@ function createMockReference(exportedName: string): Reference {
 }
 
 /**
- * Create a ZurgImpl instance for testing
+ * Create a ZurgFormat instance for testing
  */
-function createZurg(): ZurgImpl {
-    return new ZurgImpl({
-        getReferenceToExport: ({ exportedName }) => createMockReference(exportedName),
+function createZurg(): ZurgFormat {
+    return new ZurgFormat({
+        getReferenceToExport: ({ exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) => createMockReference(exportedName),
         generateEndpointMetadata: false
     });
 }
 
-describe("ZurgImpl AST Generation Baseline", () => {
+describe("ZurgFormat AST Generation Baseline", () => {
     const zurg = createZurg();
 
     describe("Primitive Schemas", () => {
@@ -436,7 +437,7 @@ describe("ZurgImpl AST Generation Baseline", () => {
         it("_visitMaybeValid generates correct AST", () => {
             const maybeValidRef = ts.factory.createIdentifier("result");
             const statements = zurg.Schema._visitMaybeValid(maybeValidRef, {
-                valid: (valueRef) => [
+                valid: (valueRef: ts.Expression) => [
                     ts.factory.createExpressionStatement(
                         ts.factory.createCallExpression(
                             ts.factory.createIdentifier("console.log"),
@@ -445,7 +446,7 @@ describe("ZurgImpl AST Generation Baseline", () => {
                         )
                     )
                 ],
-                invalid: (errorsRef) => [
+                invalid: (errorsRef: ts.Expression) => [
                     ts.factory.createThrowStatement(
                         ts.factory.createNewExpression(
                             ts.factory.createIdentifier("Error"),
