@@ -99,6 +99,10 @@ class UniversalBaseModel(pydantic.BaseModel):
         import json
 
         data = self.dict(**kwargs)
+        if IS_PYDANTIC_V2:
+            from pydantic_core import to_jsonable_python
+
+            return json.dumps(to_jsonable_python(data, fallback=encode_by_type))
         return json.dumps(data, default=encode_by_type)
 
     def dict(self, **kwargs: Any) -> Dict[str, Any]:
