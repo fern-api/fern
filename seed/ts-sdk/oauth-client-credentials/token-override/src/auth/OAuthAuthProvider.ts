@@ -100,18 +100,16 @@ export class OAuthAuthProvider implements core.AuthProvider {
 }
 
 export namespace OAuthAuthProvider {
-    export type AuthOptions =
-        | { clientId: core.Supplier<string>; clientSecret: core.Supplier<string> }
-        | { token: core.Supplier<string> };
+    export type ClientCredentialsAuthOptions = { clientId: core.Supplier<string>; clientSecret: core.Supplier<string> };
+    export type TokenAuthOptions = { token: core.Supplier<string> };
+    export type AuthOptions = ClientCredentialsAuthOptions | TokenAuthOptions;
     export type Options = BaseClientOptions;
 
-    export function hasToken(options: Options): options is Options & { token: core.Supplier<string> } {
+    export function hasToken(options: Options): options is Options & TokenAuthOptions {
         return "token" in options && options.token != null;
     }
 
-    export function hasClientCredentials(
-        options: Options,
-    ): options is Options & { clientId: core.Supplier<string>; clientSecret: core.Supplier<string> } {
+    export function hasClientCredentials(options: Options): options is Options & ClientCredentialsAuthOptions {
         return (
             "clientId" in options &&
             options.clientId != null &&

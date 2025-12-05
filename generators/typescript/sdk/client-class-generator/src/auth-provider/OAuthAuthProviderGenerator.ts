@@ -697,9 +697,21 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 statements: [
                     {
                         kind: StructureKind.TypeAlias,
+                        name: "ClientCredentialsAuthOptions",
+                        isExported: true,
+                        type: `{ clientId: ${supplierType}; clientSecret: ${supplierType}; }`
+                    },
+                    {
+                        kind: StructureKind.TypeAlias,
+                        name: "TokenAuthOptions",
+                        isExported: true,
+                        type: `{ ${tokenOverridePropertyName}: ${supplierType}; }`
+                    },
+                    {
+                        kind: StructureKind.TypeAlias,
                         name: "AuthOptions",
                         isExported: true,
-                        type: `{ clientId: ${supplierType}; clientSecret: ${supplierType}; } | { ${tokenOverridePropertyName}: ${supplierType}; }`
+                        type: `ClientCredentialsAuthOptions | TokenAuthOptions`
                     },
                     {
                         kind: StructureKind.TypeAlias,
@@ -712,7 +724,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                         name: "hasToken",
                         isExported: true,
                         parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
-                        returnType: `options is ${OPTIONS_TYPE_NAME} & { ${tokenOverridePropertyName}: ${supplierType} }`,
+                        returnType: `options is ${OPTIONS_TYPE_NAME} & TokenAuthOptions`,
                         statements: `return "${tokenOverridePropertyName}" in options && options.${tokenOverridePropertyName} != null;`
                     },
                     {
@@ -720,7 +732,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                         name: "hasClientCredentials",
                         isExported: true,
                         parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
-                        returnType: `options is ${OPTIONS_TYPE_NAME} & { clientId: ${supplierType}; clientSecret: ${supplierType} }`,
+                        returnType: `options is ${OPTIONS_TYPE_NAME} & ClientCredentialsAuthOptions`,
                         statements: `return "clientId" in options && options.clientId != null && "clientSecret" in options && options.clientSecret != null;`
                     }
                 ]
