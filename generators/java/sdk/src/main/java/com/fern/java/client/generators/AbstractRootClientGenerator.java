@@ -1110,8 +1110,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         configureAuthMethod.nextControlFlow(
                                 "else if (this.clientId != null && this.clientSecret != null)");
                     } else {
-                        configureAuthMethod.beginControlFlow(
-                                "if (this.clientId != null && this.clientSecret != null)");
+                        configureAuthMethod.beginControlFlow("if (this.clientId != null && this.clientSecret != null)");
                     }
 
                     configureAuthMethod.addStatement(
