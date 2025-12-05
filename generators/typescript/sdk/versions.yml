@@ -5,14 +5,14 @@
         Add support for OAuth token override, allowing users to skip the OAuth flow by providing a pre-generated bearer token directly.
         This is useful when users already have a valid token and don't need to go through the OAuth client credentials flow.
 
-        To enable this feature, add the `oauthTokenOverridePropertyName` configuration to your _generators.yml_ file:
+        To enable this feature, add the `oauthTokenOverride` configuration to your _generators.yml_ file:
         ```yaml
         # In generators.yml
         groups:
           generators:
             - name: fernapi/fern-typescript-sdk
               config:
-                oauthTokenOverridePropertyName: token
+                oauthTokenOverride: true
         ```
 
         Users can then instantiate the client with either OAuth credentials or a pre-generated token:

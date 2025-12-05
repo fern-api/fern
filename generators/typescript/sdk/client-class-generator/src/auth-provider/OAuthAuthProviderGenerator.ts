@@ -629,7 +629,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 isAsync: true,
                 parameters: [
                     {
-                        name: "_arg?",
+                        name: "arg?",
                         type: getTextOfTsNode(
                             ts.factory.createTypeLiteralNode([
                                 ts.factory.createPropertySignature(
