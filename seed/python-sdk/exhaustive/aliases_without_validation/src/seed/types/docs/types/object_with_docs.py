@@ -13,8 +13,8 @@ class ObjectWithDocs(UncheckedBaseModel):
     Characters that could lead to broken generated SDKs:
     
     Markdown Escapes:
-    - \\\\_: Escaped underscore (e.g., FOO\\\\_BAR)
-    - \\\\*: Escaped asterisk
+    - \\_: Escaped underscore (e.g., FOO\\_BAR)
+    - \\*: Escaped asterisk
     
     JSDoc (JavaScript/TypeScript):
     - @: Used for JSDoc tags
@@ -42,7 +42,7 @@ class ObjectWithDocs(UncheckedBaseModel):
     - ** /: Javadoc comment end
     
     Doxygen (C++):
-    - \\\\: Used for Doxygen commands
+    - \\: Used for Doxygen commands
     - @: Alternative command prefix
     - <: >: XML/HTML tags
     - &: HTML entities

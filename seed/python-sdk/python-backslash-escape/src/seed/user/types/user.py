@@ -20,7 +20,7 @@ class User(UniversalBaseModel):
     name: str
     """
     The user's name.
-    For Windows: DOMAIN\\\\username
+    For Windows: DOMAIN\\username
     """
 
     email: str
