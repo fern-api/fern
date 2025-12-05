@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Add recursive markdown snippet resolution for docs. Markdown snippets can now reference other markdown snippets, with automatic detection and warning for circular references to prevent infinite loops.
+      type: feat
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.1.0
+
+- changelogEntry:
+    - summary: |
         Add basic preprocessing of names in the IR parser; for starters, `[]` -> `Array`.
       type: fix
   irVersion: 62
