@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Map error response headers from IR to FDR for docs display.
+      type: feat
+  irVersion: 63
+  createdAt: "2025-12-05"
+  version: 3.5.0
+
+- changelogEntry:
+    - summary: |
         Upgrade `@fern-api/fdr-sdk` to version `0.142.1-b1f6b6363` which adds support for error response headers.
       type: chore
   irVersion: 63
