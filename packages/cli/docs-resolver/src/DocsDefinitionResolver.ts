@@ -1247,6 +1247,19 @@ export class DocsDefinitionResolver {
             });
         }
 
+        // Apply environment variable substitution to the IR if enabled in docs.yml settings
+        // This allows ${VAR} patterns in OpenAPI specs and Fern definitions to be replaced
+        if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+            ir = replaceEnvVariables(
+                ir,
+                {
+                    onError: (e) =>
+                        this.taskContext.failAndThrow(`Error substituting environment variables in API spec: ${e}`)
+                },
+                { substituteAsEmpty: false }
+            );
+        }
+
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
