@@ -1015,4 +1015,79 @@ describe("OpenAPI v3 Parser Pipeline (--from-openapi flag)", () => {
         await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/auth-with-overrides-fdr.snap");
         await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/auth-with-overrides-ir.snap");
     });
+
+    it("should handle 429 throttled error response with headers and detail property", async () => {
+        // Test OpenAPI spec with 429 response that has headers (Retry-After) and detail property
+        const context = createMockTaskContext();
+        const workspace = await loadAPIWorkspace({
+            absolutePathToWorkspace: join(
+                AbsoluteFilePath.of(__dirname),
+                RelativeFilePath.of("fixtures/throttled-error-response")
+            ),
+            context,
+            cliVersion: "0.0.0",
+            workspaceName: "throttled-error-response"
+        });
+
+        expect(workspace.didSucceed).toBe(true);
+        assert(workspace.didSucceed);
+
+        if (!(workspace.workspace instanceof OSSWorkspace)) {
+            throw new Error(
+                `Expected OSSWorkspace for OpenAPI processing, got ${workspace.workspace.constructor.name}`
+            );
+        }
+
+        const intermediateRepresentation = await workspace.workspace.getIntermediateRepresentation({
+            context,
+            audiences: { type: "all" },
+            enableUniqueErrorsPerEndpoint: true,
+            generateV1Examples: false,
+            logWarnings: false
+        });
+
+        // Convert to FDR format (complete pipeline)
+        const fdrApiDefinition = await convertIrToFdrApi({
+            ir: intermediateRepresentation,
+            snippetsConfig: {
+                typescriptSdk: undefined,
+                pythonSdk: undefined,
+                javaSdk: undefined,
+                rubySdk: undefined,
+                goSdk: undefined,
+                csharpSdk: undefined,
+                phpSdk: undefined,
+                swiftSdk: undefined,
+                rustSdk: undefined
+            },
+            playgroundConfig: {
+                oauth: true
+            },
+            context
+        });
+
+        // Validate IR contains error declarations for 429
+        expect(intermediateRepresentation.errors).toBeDefined();
+        const errorDeclarations = Object.values(intermediateRepresentation.errors);
+        expect(errorDeclarations.length).toBeGreaterThan(0);
+
+        // Find the 429 error
+        const throttledError = errorDeclarations.find((error) => error.statusCode === 429);
+        expect(throttledError).toBeDefined();
+
+        // Validate FDR structure
+        expect(fdrApiDefinition.rootPackage).toBeDefined();
+        expect(fdrApiDefinition.rootPackage.endpoints).toBeDefined();
+        expect(fdrApiDefinition.rootPackage.endpoints.length).toBeGreaterThan(0);
+
+        const fdrEndpoint = fdrApiDefinition.rootPackage.endpoints[0];
+        if (fdrEndpoint && fdrEndpoint.errorsV2) {
+            const fdr429Error = fdrEndpoint.errorsV2.find((error) => error.statusCode === 429);
+            expect(fdr429Error).toBeDefined();
+        }
+
+        // Snapshot the complete output for regression testing
+        await expect(fdrApiDefinition).toMatchFileSnapshot("__snapshots__/throttled-error-response-fdr.snap");
+        await expect(intermediateRepresentation).toMatchFileSnapshot("__snapshots__/throttled-error-response-ir.snap");
+    });
 });
