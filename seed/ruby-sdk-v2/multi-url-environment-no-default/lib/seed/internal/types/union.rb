@@ -72,10 +72,7 @@ module Seed
                   # Validate that all required (non-optional) fields are present
                   # This ensures undiscriminated unions properly distinguish between member types
                   member_type.fields.each do |field_name, field|
-                    if candidate.instance_variable_get(:@data)[field_name].nil? && !field.optional
-                      raise Errors::TypeError,
-                            "Required field `#{field_name}` missing for union member #{member_type.name}"
-                    end
+                    raise Errors::TypeError, "Required field `#{field_name}` missing for union member #{member_type.name}" if candidate.instance_variable_get(:@data)[field_name].nil? && !field.optional
                   end
 
                   true
@@ -102,14 +99,6 @@ module Seed
           end
 
           Utils.coerce(type, value, strict: strict)
-        end
-
-        # Parse JSON string and coerce to the correct union member type
-        #
-        # @param str [String] JSON string to parse
-        # @return [Object] Coerced value matching a union member
-        def load(str)
-          coerce(::JSON.parse(str, symbolize_names: true))
         end
       end
     end

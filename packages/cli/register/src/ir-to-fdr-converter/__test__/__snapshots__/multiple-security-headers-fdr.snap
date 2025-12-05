@@ -80,6 +80,7 @@
                 },
               },
             ],
+            "headers": undefined,
             "isWildcard": undefined,
             "name": "UnauthorizedError",
             "statusCode": 401,

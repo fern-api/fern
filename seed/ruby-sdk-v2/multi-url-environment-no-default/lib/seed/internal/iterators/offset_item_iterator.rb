@@ -13,7 +13,6 @@ module Seed
       #
       # @return [Seed::Internal::OffsetItemIterator]
       def initialize(initial_page:, item_field:, has_next_field:, step:, &)
-        super()
         @item_field = item_field
         @page_iterator = OffsetPageIterator.new(initial_page:, item_field:, has_next_field:, step:, &)
         @page = nil
