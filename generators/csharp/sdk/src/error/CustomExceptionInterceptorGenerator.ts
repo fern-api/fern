@@ -8,7 +8,7 @@ export class CustomExceptionInterceptorGenerator extends FileGenerator<CSharpFil
             reference: this.Types.CustomExceptionInterceptor,
             access: ast.Access.Public,
             interfaceReferences: [this.Types.ExceptionInterceptor],
-            summary: `Custom exception interceptor for the SDK. Implement the CaptureException method to capture exceptions for observability (e.g., Sentry, logging, etc.).`
+            summary: `Custom exception interceptor for the SDK. Implement the CaptureException method to capture exceptions for observability (e.g., application monitoring platform, logging, etc.).`
         });
 
         class_.addMethod({
@@ -30,7 +30,7 @@ export class CustomExceptionInterceptorGenerator extends FileGenerator<CSharpFil
             body: this.csharp.codeblock((writer) => {
                 writer.writeLine("// TODO: Implement your exception capturing logic here.");
                 writer.writeLine("// Examples:");
-                writer.writeLine("// - Send to Sentry: SentrySdk.CaptureException(exception);");
+                writer.writeLine("// - Send to application monitoring platform");
                 writer.writeLine("// - Log to console: Console.Error.WriteLine(exception);");
                 writer.writeLine("// - Send to custom logging service");
             }),

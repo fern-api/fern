@@ -25,7 +25,7 @@
                   exception-interceptor-class-name: MyCustomExceptionInterceptor
         ```
         
-        SDK authors can implement their exception capturing logic (e.g., Sentry, logging) in the generated interceptor class.
+        SDK authors can implement their exception capturing logic (e.g., application monitoring platform, logging) in the generated interceptor class.
       type: feat
   createdAt: "2025-12-05"
   irVersion: 61

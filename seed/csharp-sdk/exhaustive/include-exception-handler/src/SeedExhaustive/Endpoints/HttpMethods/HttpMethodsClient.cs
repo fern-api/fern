@@ -1,6 +1,6 @@
-using SeedExhaustive.Core;
-using SeedExhaustive;
 using System.Text.Json;
+using SeedExhaustive;
+using SeedExhaustive.Core;
 using SeedExhaustive.Types;
 
 namespace SeedExhaustive.Endpoints;
@@ -8,11 +8,15 @@ namespace SeedExhaustive.Endpoints;
 public partial class HttpMethodsClient
 {
     private RawClient _client;
-    internal HttpMethodsClient (RawClient client){
-        try (){
+
+    internal HttpMethodsClient(RawClient client)
+    {
+        try
+        {
             _client = client;
         }
-        catch ((Exception ex)){
+        catch (Exception ex)
+        {
             client.Options.ExceptionHandler?.CaptureException(ex);
             throw;
         }
@@ -21,57 +25,103 @@ public partial class HttpMethodsClient
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestGetAsync("id");
     /// </code></example>
-    public async Task<string> TestGetAsync(string id, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Get, Path = string.Format("/http-methods/{0}", ValueConvert.ToPathParameterString(id)), Options = options}, cancellationToken).ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+    public async Task<string> TestGetAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Get,
+                            Path = string.Format(
+                                "/http-methods/{0}",
+                                ValueConvert.ToPathParameterString(id)
+                            ),
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
                 {
-                    return JsonUtils.Deserialize<string>(responseBody)!;
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<string>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
+
                 {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
                 }
-            }
-            
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
-            }
-        }
-        ).ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestPostAsync(new ObjectWithRequiredField { String = "string" });
     /// </code></example>
-    public async Task<ObjectWithOptionalField> TestPostAsync(ObjectWithRequiredField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/http-methods", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+    public async Task<ObjectWithOptionalField> TestPostAsync(
+        ObjectWithRequiredField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Post,
+                            Path = "/http-methods",
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
                 {
-                    return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
+
                 {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
                 }
-            }
-            
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
-            }
-        }
-        ).ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example><code>
@@ -80,29 +130,55 @@ public partial class HttpMethodsClient
     ///     new ObjectWithRequiredField { String = "string" }
     /// );
     /// </code></example>
-    public async Task<ObjectWithOptionalField> TestPutAsync(string id, ObjectWithRequiredField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Put, Path = string.Format("/http-methods/{0}", ValueConvert.ToPathParameterString(id)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+    public async Task<ObjectWithOptionalField> TestPutAsync(
+        string id,
+        ObjectWithRequiredField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Put,
+                            Path = string.Format(
+                                "/http-methods/{0}",
+                                ValueConvert.ToPathParameterString(id)
+                            ),
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
                 {
-                    return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
+
                 {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
                 }
-            }
-            
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
-            }
-        }
-        ).ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example><code>
@@ -126,57 +202,106 @@ public partial class HttpMethodsClient
     ///     }
     /// );
     /// </code></example>
-    public async Task<ObjectWithOptionalField> TestPatchAsync(string id, ObjectWithOptionalField request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethodExtensions.Patch, Path = string.Format("/http-methods/{0}", ValueConvert.ToPathParameterString(id)), Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+    public async Task<ObjectWithOptionalField> TestPatchAsync(
+        string id,
+        ObjectWithOptionalField request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethodExtensions.Patch,
+                            Path = string.Format(
+                                "/http-methods/{0}",
+                                ValueConvert.ToPathParameterString(id)
+                            ),
+                            Body = request,
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
                 {
-                    return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<ObjectWithOptionalField>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
+
                 {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
                 }
-            }
-            
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
-            }
-        }
-        ).ConfigureAwait(false);
+            })
+            .ConfigureAwait(false);
     }
 
     /// <example><code>
     /// await client.Endpoints.HttpMethods.TestDeleteAsync("id");
     /// </code></example>
-    public async Task<bool> TestDeleteAsync(string id, RequestOptions? options = null, CancellationToken cancellationToken = default) {
-        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
-        {
-            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Delete, Path = string.Format("/http-methods/{0}", ValueConvert.ToPathParameterString(id)), Options = options}, cancellationToken).ConfigureAwait(false);
-            if (response.StatusCode is >= 200 and < 400)
+    public async Task<bool> TestDeleteAsync(
+        string id,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        return await _client
+            .Options.ExceptionHandler.TryCatchAsync(async () =>
             {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                try
+                var response = await _client
+                    .SendRequestAsync(
+                        new JsonRequest
+                        {
+                            BaseUrl = _client.Options.BaseUrl,
+                            Method = HttpMethod.Delete,
+                            Path = string.Format(
+                                "/http-methods/{0}",
+                                ValueConvert.ToPathParameterString(id)
+                            ),
+                            Options = options,
+                        },
+                        cancellationToken
+                    )
+                    .ConfigureAwait(false);
+                if (response.StatusCode is >= 200 and < 400)
                 {
-                    return JsonUtils.Deserialize<bool>(responseBody)!;
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    try
+                    {
+                        return JsonUtils.Deserialize<bool>(responseBody)!;
+                    }
+                    catch (JsonException e)
+                    {
+                        throw new SeedExhaustiveException("Failed to deserialize response", e);
+                    }
                 }
-                catch (JsonException e)
-                {
-                    throw new SeedExhaustiveException("Failed to deserialize response", e);
-                }
-            }
-            
-            {
-                var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
-            }
-        }
-        ).ConfigureAwait(false);
-    }
 
+                {
+                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                    throw new SeedExhaustiveApiException(
+                        $"Error with status code {response.StatusCode}",
+                        response.StatusCode,
+                        responseBody
+                    );
+                }
+            })
+            .ConfigureAwait(false);
+    }
 }

@@ -1,9 +1,9 @@
-namespace SeedApi.Core;
+namespace SeedOauthClientCredentials.Core;
 
 /// <summary>
 /// Custom exception interceptor for the SDK. Implement the CaptureException method to capture exceptions for observability (e.g., application monitoring platform, logging, etc.).
 /// </summary>
-public class SeedApiExceptionInterceptor : IExceptionInterceptor
+public class SeedOauthClientCredentialsExceptionInterceptor : IExceptionInterceptor
 {
     /// <summary>
     /// Intercepts an exception and returns it after capturing.

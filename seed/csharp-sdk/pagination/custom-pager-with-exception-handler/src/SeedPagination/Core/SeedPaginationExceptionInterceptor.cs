@@ -1,7 +1,7 @@
 namespace SeedPagination.Core;
 
 /// <summary>
-/// Custom exception interceptor for the SDK. Implement the CaptureException method to capture exceptions for observability (e.g., Sentry, logging, etc.).
+/// Custom exception interceptor for the SDK. Implement the CaptureException method to capture exceptions for observability (e.g., application monitoring platform, logging, etc.).
 /// </summary>
 public class SeedPaginationExceptionInterceptor : IExceptionInterceptor
 {
@@ -21,7 +21,7 @@ public class SeedPaginationExceptionInterceptor : IExceptionInterceptor
     {
         // TODO: Implement your exception capturing logic here.
         // Examples:
-        // - Send to Sentry: SentrySdk.CaptureException(exception);
+        // - Send to application monitoring platform
         // - Log to console: Console.Error.WriteLine(exception);
         // - Send to custom logging service
     }

@@ -6,31 +6,24 @@ public partial class EndpointsClient
 {
     private RawClient _client;
 
-    internal EndpointsClient (RawClient client){
-        try (){
+    internal EndpointsClient(RawClient client)
+    {
+        try
+        {
             _client = client;
-            Container = 
-            new ContainerClient(_client);
-            ContentType = 
-            new ContentTypeClient(_client);
-            Enum = 
-            new EnumClient(_client);
-            HttpMethods = 
-            new HttpMethodsClient(_client);
-            Object = 
-            new ObjectClient(_client);
-            Params = 
-            new ParamsClient(_client);
-            Primitive = 
-            new PrimitiveClient(_client);
-            Put = 
-            new PutClient(_client);
-            Union = 
-            new UnionClient(_client);
-            Urls = 
-            new UrlsClient(_client);
+            Container = new ContainerClient(_client);
+            ContentType = new ContentTypeClient(_client);
+            Enum = new EnumClient(_client);
+            HttpMethods = new HttpMethodsClient(_client);
+            Object = new ObjectClient(_client);
+            Params = new ParamsClient(_client);
+            Primitive = new PrimitiveClient(_client);
+            Put = new PutClient(_client);
+            Union = new UnionClient(_client);
+            Urls = new UrlsClient(_client);
         }
-        catch ((Exception ex)){
+        catch (Exception ex)
+        {
             client.Options.ExceptionHandler?.CaptureException(ex);
             throw;
         }
@@ -55,5 +48,4 @@ public partial class EndpointsClient
     public UnionClient Union { get; }
 
     public UrlsClient Urls { get; }
-
 }
