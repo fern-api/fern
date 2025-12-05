@@ -18,6 +18,7 @@ export declare namespace AnyAuthProviderGenerator {
 const CLASS_NAME = "AnyAuthProvider";
 const AUTH_PROVIDERS_FIELD_NAME = "authProviders";
 const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
+const ALL_AUTH_OPTIONS_TYPE_NAME = "AllAuthOptions";
 
 export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -47,7 +48,9 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public getAuthOptionsType(): ts.TypeNode {
-        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+        // For BaseClientOptions intersection, use AllAuthOptions (intersection type)
+        // This ensures BaseClientOptions is an object type with statically known members
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${ALL_AUTH_OPTIONS_TYPE_NAME}`);
     }
 
     public getAuthOptionsProperties(_context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
@@ -107,8 +110,12 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
             });
         }
 
-        // Generate AuthOptions interface that extends all child auth providers' AuthOptions
-        const extendsTypes = childClassNames.map((className) => `${className}.AuthOptions`);
+        // Generate two types:
+        // 1. AuthOptions - union type for user-facing semantics (user only needs ONE auth method)
+        // 2. AllAuthOptions - intersection type for BaseClientOptions (needs all properties for type safety)
+        const authOptionsTypes = childClassNames.map((className) => `${className}.AuthOptions`);
+        const unionTypeStr = authOptionsTypes.join(" | ");
+        const intersectionTypeStr = authOptionsTypes.join(" & ");
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
@@ -116,10 +123,16 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
             kind: StructureKind.Module,
             statements: [
                 {
-                    kind: StructureKind.Interface,
+                    kind: StructureKind.TypeAlias,
                     name: AUTH_OPTIONS_TYPE_NAME,
                     isExported: true,
-                    extends: extendsTypes
+                    type: unionTypeStr
+                },
+                {
+                    kind: StructureKind.TypeAlias,
+                    name: ALL_AUTH_OPTIONS_TYPE_NAME,
+                    isExported: true,
+                    type: intersectionTypeStr
                 }
             ]
         });

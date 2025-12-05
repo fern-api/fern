@@ -62,11 +62,14 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         const hasTokenEnv = this.authScheme.tokenEnvVar != null;
         const isTokenOptional = !this.isAuthMandatory || hasTokenEnv;
-        // Note: Optionality is expressed via hasQuestionToken, not by adding | undefined inside the Supplier generic.
-        // This matches the original BaseClientOptions pattern where optional properties are typed as:
-        // token?: Supplier<BearerToken> (equivalent to token: Supplier<BearerToken> | undefined)
-        // NOT token: Supplier<BearerToken | undefined>
-        const tokenType = context.coreUtilities.auth.BearerToken._getReferenceToType();
+        // When there's an env var fallback, use Supplier<T | undefined> because the value can be undefined
+        // when falling back to env vars. When there's no env var fallback, use Supplier<T> directly.
+        const tokenType = hasTokenEnv
+            ? ts.factory.createUnionTypeNode([
+                  context.coreUtilities.auth.BearerToken._getReferenceToType(),
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : context.coreUtilities.auth.BearerToken._getReferenceToType();
 
         return [
             {
@@ -292,7 +295,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
                     kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    properties: authOptionsProperties
+                    extends: [AUTH_OPTIONS_TYPE_NAME]
                 }
             ]
         });

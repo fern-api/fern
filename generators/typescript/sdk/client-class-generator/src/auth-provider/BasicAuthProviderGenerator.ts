@@ -57,31 +57,35 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
         const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
 
-        // Note: Optionality is expressed via hasQuestionToken, not by adding | undefined inside the Supplier generic.
-        // This matches the original BaseClientOptions pattern where optional properties are typed as:
-        // username?: Supplier<string> (equivalent to username: Supplier<string> | undefined)
-        // NOT username: Supplier<string | undefined>
+        // When there's an env var fallback, use Supplier<T | undefined> because the value can be undefined
+        // when falling back to env vars. When there's no env var fallback, use Supplier<T> directly.
+        const usernameType = hasUsernameEnv
+            ? ts.factory.createUnionTypeNode([
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+
+        const passwordType = hasPasswordEnv
+            ? ts.factory.createUnionTypeNode([
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+
         return [
             {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(this.authScheme.username.camelCase.safeName),
                 hasQuestionToken: hasUsernameEnv,
-                type: getTextOfTsNode(
-                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                    )
-                ),
+                type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(usernameType)),
                 docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
             },
             {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(this.authScheme.password.camelCase.safeName),
                 hasQuestionToken: hasPasswordEnv,
-                type: getTextOfTsNode(
-                    context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                    )
-                ),
+                type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(passwordType)),
                 docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
             }
         ];
@@ -283,7 +287,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                     kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    properties: authOptionsProperties
+                    extends: [AUTH_OPTIONS_TYPE_NAME]
                 }
             ]
         });

@@ -91,22 +91,34 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType;
 
-        // Note: Optionality is expressed via hasQuestionToken, not by adding | undefined inside the Supplier generic.
-        // This matches the original BaseClientOptions pattern where optional properties are typed as:
-        // clientId?: Supplier<string> (equivalent to clientId: Supplier<string> | undefined)
-        // NOT clientId: Supplier<string | undefined>
+        // When there's an env var fallback, use Supplier<T | undefined> because the value can be undefined
+        // when falling back to env vars. When there's no env var fallback, use Supplier<T> directly.
+        const clientIdTypeWithUndefined = clientIdIsOptional
+            ? ts.factory.createUnionTypeNode([
+                  clientIdType,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : clientIdType;
+
+        const clientSecretTypeWithUndefined = clientSecretIsOptional
+            ? ts.factory.createUnionTypeNode([
+                  clientSecretType,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : clientSecretType;
+
         return [
             {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(CLIENT_ID_VAR_NAME),
                 hasQuestionToken: clientIdIsOptional,
-                type: getTextOfTsNode(supplierType(clientIdType))
+                type: getTextOfTsNode(supplierType(clientIdTypeWithUndefined))
             },
             {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(CLIENT_SECRET_VAR_NAME),
                 hasQuestionToken: clientSecretIsOptional,
-                type: getTextOfTsNode(supplierType(clientSecretType))
+                type: getTextOfTsNode(supplierType(clientSecretTypeWithUndefined))
             }
         ];
     }
@@ -240,16 +252,18 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }> = [
             {
                 name: CLIENT_ID_FIELD_NAME,
+                // When env var fallback exists, use Supplier<T | undefined> | undefined to match AuthOptions
                 type: clientIdIsOptional
-                    ? `${supplierType}<${clientIdType}> | undefined`
+                    ? `${supplierType}<${clientIdType} | undefined> | undefined`
                     : `${supplierType}<${clientIdType}>`,
                 isReadonly: true,
                 scope: Scope.Private
             },
             {
                 name: CLIENT_SECRET_FIELD_NAME,
+                // When env var fallback exists, use Supplier<T | undefined> | undefined to match AuthOptions
                 type: clientSecretIsOptional
-                    ? `${supplierType}<${clientSecretType}> | undefined`
+                    ? `${supplierType}<${clientSecretType} | undefined> | undefined`
                     : `${supplierType}<${clientSecretType}>`,
                 isReadonly: true,
                 scope: Scope.Private
@@ -611,16 +625,20 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeOptions(context: SdkContext): void {
-        context.importsManager.addImportFromRoot("BaseClient", {
-            namedImports: [{ name: "BaseClientOptions", type: "type" }]
-        });
-
         const oauthConfig = this.authScheme.configuration;
         if (oauthConfig.type !== "clientCredentials") {
             return;
         }
 
         const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
+
+        // Import BaseClientOptions for Options to extend
+        // OAuthAuthProvider.Options needs to extend BaseClientOptions because it creates an AuthClient
+        context.sourceFile.addImportDeclaration({
+            moduleSpecifier: "../BaseClient.js",
+            namedImports: ["BaseClientOptions"],
+            isTypeOnly: true
+        });
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
@@ -637,6 +655,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
+                    // Options extends BaseClientOptions because OAuthAuthProvider creates an AuthClient
+                    // which requires the full BaseClientOptions (environment, baseUrl, etc.)
                     extends: ["BaseClientOptions"]
                 }
             ]

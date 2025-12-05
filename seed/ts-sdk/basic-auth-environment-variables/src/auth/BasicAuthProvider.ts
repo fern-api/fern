@@ -4,10 +4,12 @@ import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
 export namespace BasicAuthProvider {
-    export interface Options {
+    export interface AuthOptions {
         username?: core.Supplier<string | undefined>;
         accessToken?: core.Supplier<string | undefined>;
     }
+
+    export interface Options extends AuthOptions {}
 }
 
 export class BasicAuthProvider implements core.AuthProvider {

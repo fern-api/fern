@@ -6,13 +6,18 @@ import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
 export namespace OAuthAuthProvider {
+    export interface AuthOptions {
+        clientId?: core.Supplier<string | undefined>;
+        clientSecret?: core.Supplier<string | undefined>;
+    }
+
     export interface Options extends BaseClientOptions {}
 }
 
 export class OAuthAuthProvider implements core.AuthProvider {
     private readonly BUFFER_IN_MINUTES: number = 2;
-    private readonly _clientId: core.Supplier<string> | undefined;
-    private readonly _clientSecret: core.Supplier<string> | undefined;
+    private readonly _clientId: core.Supplier<string | undefined> | undefined;
+    private readonly _clientSecret: core.Supplier<string | undefined> | undefined;
     private readonly _authClient: AuthClient;
     private _accessToken: string | undefined;
     private _expiresAt: Date;

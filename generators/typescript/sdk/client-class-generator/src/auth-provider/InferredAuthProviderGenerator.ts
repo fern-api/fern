@@ -450,10 +450,6 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeOptions(context: SdkContext): void {
-        context.importsManager.addImportFromRoot("BaseClient", {
-            namedImports: [{ name: "BaseClientOptions", type: "type" }]
-        });
-
         const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
 
         context.sourceFile.addModule({
@@ -471,7 +467,7 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    extends: ["BaseClientOptions"]
+                    extends: [AUTH_OPTIONS_TYPE_NAME]
                 }
             ]
         });
