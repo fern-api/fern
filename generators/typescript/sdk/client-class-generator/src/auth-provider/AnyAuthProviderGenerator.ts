@@ -1,7 +1,7 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
-import { Scope, StructureKind, ts } from "ts-morph";
+import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 import { AuthProviderGenerator } from "./AuthProviderGenerator";
 
 export declare namespace AnyAuthProviderGenerator {
@@ -38,6 +38,14 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
 
     public getOptionsType(): ts.TypeNode {
         throw new Error("AnyAuthProvider does not have an Options type");
+    }
+
+    public getAuthOptionsType(): ts.TypeNode {
+        throw new Error("AnyAuthProvider does not have an AuthOptions type");
+    }
+
+    public getAuthOptionsProperties(_context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        return undefined;
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {

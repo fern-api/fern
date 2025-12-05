@@ -1,8 +1,16 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { ExportedFilePath, getTextOfTsNode, maybeAddDocsStructure, PackageId } from "@fern-typescript/commons";
+import {
+    ExportedFilePath,
+    getPropertyKey,
+    getTextOfTsNode,
+    maybeAddDocsStructure,
+    PackageId
+} from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
 import {
     MethodDeclarationStructure,
+    OptionalKind,
+    PropertySignatureStructure,
     Scope,
     StatementStructures,
     StructureKind,
@@ -21,6 +29,7 @@ export declare namespace InferredAuthProviderGenerator {
 }
 const CLASS_NAME = "InferredAuthProvider";
 const OPTIONS_TYPE_NAME = "Options";
+const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 const BUFFER_IN_MINUTES_VAR_NAME = "BUFFER_IN_MINUTES";
 const GET_EXPIRES_AT_FN_NAME = "getExpiresAt";
 const GET_AUTH_REQUEST_METHOD_NAME = "getAuthRequest";
@@ -88,6 +97,27 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
 
     public getOptionsType(): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsType(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
+            FernIr.AuthScheme.inferred(this.authScheme)
+        );
+        const properties: OptionalKind<PropertySignatureStructure>[] = [];
+        for (const param of authTokenParams) {
+            properties.push({
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(param.name),
+                type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(param.type)),
+                hasQuestionToken: param.isOptional,
+                docs: param.docs
+            });
+        }
+        return properties.length > 0 ? properties : undefined;
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
@@ -421,8 +451,10 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
 
     private writeOptions(context: SdkContext): void {
         context.importsManager.addImportFromRoot("BaseClient", {
-            namedImports: ["BaseClientOptions"]
+            namedImports: [{ name: "BaseClientOptions", type: "type" }]
         });
+
+        const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
@@ -431,10 +463,15 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
             statements: [
                 {
                     kind: StructureKind.Interface,
+                    name: AUTH_OPTIONS_TYPE_NAME,
+                    isExported: true,
+                    properties: authOptionsProperties
+                },
+                {
+                    kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    extends: ["BaseClientOptions"],
-                    properties: []
+                    extends: ["BaseClientOptions"]
                 }
             ]
         });

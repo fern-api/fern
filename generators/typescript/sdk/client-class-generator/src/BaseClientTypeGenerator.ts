@@ -34,7 +34,9 @@ export class BaseClientTypeGenerator {
             });
         }
 
-        context.sourceFile.addInterface(context.baseClient.generateBaseClientOptionsInterface(context));
+        // Generate BaseClientOptions as a type alias with intersection of auth options
+        this.generateBaseClientOptionsType(context);
+
         context.sourceFile.addInterface(context.baseClient.generateBaseRequestOptionsInterface(context));
         if (this.generateIdempotentRequestOptions) {
             context.sourceFile.addInterface(context.baseClient.generateBaseIdempotentRequestOptionsInterface(context));
@@ -43,6 +45,99 @@ export class BaseClientTypeGenerator {
         this.generateNormalizedClientOptionsTypes(context);
         this.generateNormalizeClientOptionsFunction(context);
         this.generateNormalizeClientOptionsWithAuthFunction(context);
+    }
+
+    private generateBaseClientOptionsType(context: SdkContext): void {
+        const baseInterface = context.baseClient.generateBaseClientOptionsInterface(context);
+        const authOptionsTypes = this.getAuthOptionsTypes(context);
+
+        if (authOptionsTypes.length === 0) {
+            // No auth schemes, just generate the interface as before
+            context.sourceFile.addInterface(baseInterface);
+            return;
+        }
+
+        // Generate the base properties as a type literal
+        const basePropertiesStr = baseInterface.properties
+            .map((prop) => {
+                const docs = prop.docs ? `/** ${prop.docs.join(" ")} */\n    ` : "";
+                const questionMark = prop.hasQuestionToken ? "?" : "";
+                return `${docs}${prop.name}${questionMark}: ${prop.type};`;
+            })
+            .join("\n    ");
+
+        // Generate the type alias with intersection
+        const authOptionsIntersection = authOptionsTypes.join(" & ");
+        const typeCode = `
+export type BaseClientOptions = {
+    ${basePropertiesStr}
+} & ${authOptionsIntersection};`;
+
+        context.sourceFile.addStatements(typeCode);
+    }
+
+    private getAuthOptionsTypes(context: SdkContext): string[] {
+        const authOptionsTypes: string[] = [];
+        const isAnyAuth = this.ir.auth.requirement === "ANY";
+
+        if (isAnyAuth) {
+            // For ANY auth, include all auth provider options
+            for (const authScheme of this.ir.auth.schemes) {
+                const authOptionsType = this.getAuthOptionsTypeForScheme(authScheme, context);
+                if (authOptionsType != null) {
+                    authOptionsTypes.push(authOptionsType);
+                }
+            }
+        } else {
+            // For single auth, use the first auth scheme
+            for (const authScheme of this.ir.auth.schemes) {
+                const authOptionsType = this.getAuthOptionsTypeForScheme(authScheme, context);
+                if (authOptionsType != null) {
+                    authOptionsTypes.push(authOptionsType);
+                    break;
+                }
+            }
+        }
+
+        return authOptionsTypes;
+    }
+
+    private getAuthOptionsTypeForScheme(authScheme: FernIr.AuthScheme, context: SdkContext): string | undefined {
+        if (authScheme.type === "bearer") {
+            context.sourceFile.addImportDeclaration({
+                moduleSpecifier: "./auth/BearerAuthProvider.js",
+                namedImports: [{ name: "BearerAuthProvider", isTypeOnly: true }]
+            });
+            return "BearerAuthProvider.AuthOptions";
+        } else if (authScheme.type === "basic") {
+            context.sourceFile.addImportDeclaration({
+                moduleSpecifier: "./auth/BasicAuthProvider.js",
+                namedImports: [{ name: "BasicAuthProvider", isTypeOnly: true }]
+            });
+            return "BasicAuthProvider.AuthOptions";
+        } else if (authScheme.type === "header") {
+            context.sourceFile.addImportDeclaration({
+                moduleSpecifier: "./auth/HeaderAuthProvider.js",
+                namedImports: [{ name: "HeaderAuthProvider", isTypeOnly: true }]
+            });
+            return "HeaderAuthProvider.AuthOptions";
+        } else if (authScheme.type === "oauth") {
+            if (!context.generateOAuthClients) {
+                return undefined;
+            }
+            context.sourceFile.addImportDeclaration({
+                moduleSpecifier: "./auth/OAuthAuthProvider.js",
+                namedImports: [{ name: "OAuthAuthProvider", isTypeOnly: true }]
+            });
+            return "OAuthAuthProvider.AuthOptions";
+        } else if (authScheme.type === "inferred") {
+            context.sourceFile.addImportDeclaration({
+                moduleSpecifier: "./auth/InferredAuthProvider.js",
+                namedImports: [{ name: "InferredAuthProvider", isTypeOnly: true }]
+            });
+            return "InferredAuthProvider.AuthOptions";
+        }
+        return undefined;
     }
 
     private generateNormalizeClientOptionsFunction(context: SdkContext): void {

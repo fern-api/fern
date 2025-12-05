@@ -1,7 +1,7 @@
 import type { FernIr } from "@fern-fern/ir-sdk";
-import { type ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
+import { type ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
-import { Scope, StructureKind, ts } from "ts-morph";
+import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator";
 
@@ -16,6 +16,7 @@ export declare namespace OAuthAuthProviderGenerator {
 
 const CLASS_NAME = "OAuthAuthProvider";
 const OPTIONS_TYPE_NAME = "Options";
+const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 const OPTIONS_PARAM_NAME = "options";
 const CLIENT_ID_VAR_NAME = "clientId";
 const CLIENT_SECRET_VAR_NAME = "clientSecret";
@@ -67,6 +68,61 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
     public getOptionsType(): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsType(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        const oauthConfig = this.authScheme.configuration;
+        if (oauthConfig.type !== "clientCredentials") {
+            return undefined;
+        }
+
+        const requestProperties = oauthConfig.tokenEndpoint.requestProperties;
+        const clientIdType = context.type.getReferenceToType(requestProperties.clientId.property.valueType).typeNode;
+        const clientSecretType = context.type.getReferenceToType(
+            requestProperties.clientSecret.property.valueType
+        ).typeNode;
+
+        const clientIdIsOptional = oauthConfig.clientIdEnvVar != null;
+        const clientSecretIsOptional = oauthConfig.clientSecretEnvVar != null;
+
+        const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType;
+
+        return [
+            {
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(CLIENT_ID_VAR_NAME),
+                hasQuestionToken: clientIdIsOptional,
+                type: getTextOfTsNode(
+                    supplierType(
+                        clientIdIsOptional
+                            ? ts.factory.createUnionTypeNode([
+                                  clientIdType,
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                              ])
+                            : clientIdType
+                    )
+                )
+            },
+            {
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(CLIENT_SECRET_VAR_NAME),
+                hasQuestionToken: clientSecretIsOptional,
+                type: getTextOfTsNode(
+                    supplierType(
+                        clientSecretIsOptional
+                            ? ts.factory.createUnionTypeNode([
+                                  clientSecretType,
+                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                              ])
+                            : clientSecretType
+                    )
+                )
+            }
+        ];
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
@@ -570,7 +626,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
     private writeOptions(context: SdkContext): void {
         context.importsManager.addImportFromRoot("BaseClient", {
-            namedImports: ["BaseClientOptions"]
+            namedImports: [{ name: "BaseClientOptions", type: "type" }]
         });
 
         const oauthConfig = this.authScheme.configuration;
@@ -578,11 +634,19 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             return;
         }
 
+        const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
+
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
             kind: StructureKind.Module,
             statements: [
+                {
+                    kind: StructureKind.Interface,
+                    name: AUTH_OPTIONS_TYPE_NAME,
+                    isExported: true,
+                    properties: authOptionsProperties
+                },
                 {
                     kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,

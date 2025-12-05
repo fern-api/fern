@@ -1,7 +1,7 @@
 import type { FernIr } from "@fern-fern/ir-sdk";
 import { type ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
-import { type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
+import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator";
 
@@ -16,6 +16,7 @@ export declare namespace BearerAuthProviderGenerator {
 const CLASS_NAME = "BearerAuthProvider";
 const TOKEN_FIELD_NAME = "token";
 const OPTIONS_TYPE_NAME = "Options";
+const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 
 export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -52,6 +53,34 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
 
     public getOptionsType(): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsType(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        const hasTokenEnv = this.authScheme.tokenEnvVar != null;
+        const isTokenOptional = !this.isAuthMandatory || hasTokenEnv;
+        const tokenType =
+            this.isAuthMandatory && !hasTokenEnv
+                ? context.coreUtilities.auth.BearerToken._getReferenceToType()
+                : ts.factory.createUnionTypeNode([
+                      context.coreUtilities.auth.BearerToken._getReferenceToType(),
+                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                  ]);
+
+        return [
+            {
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(this.authScheme.token.camelCase.safeName),
+                hasQuestionToken: isTokenOptional,
+                type: getTextOfTsNode(
+                    context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(tokenType)
+                ),
+                docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
+            }
+        ];
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
@@ -248,26 +277,7 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeOptions(context: SdkContext): void {
-        const hasTokenEnv = this.authScheme.tokenEnvVar != null;
-
-        const isTokenOptional = !this.isAuthMandatory || hasTokenEnv;
-        const tokenType =
-            this.isAuthMandatory && !hasTokenEnv
-                ? context.coreUtilities.auth.BearerToken._getReferenceToType()
-                : ts.factory.createUnionTypeNode([
-                      context.coreUtilities.auth.BearerToken._getReferenceToType(),
-                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                  ]);
-
-        const tokenProperty: PropertySignatureStructure = {
-            kind: StructureKind.PropertySignature,
-            name: getPropertyKey(this.authScheme.token.camelCase.safeName),
-            hasQuestionToken: isTokenOptional,
-            type: getTextOfTsNode(
-                context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(tokenType)
-            ),
-            docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
-        };
+        const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
@@ -276,9 +286,15 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
             statements: [
                 {
                     kind: StructureKind.Interface,
+                    name: AUTH_OPTIONS_TYPE_NAME,
+                    isExported: true,
+                    properties: authOptionsProperties
+                },
+                {
+                    kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    properties: [tokenProperty]
+                    properties: authOptionsProperties
                 }
             ]
         });
