@@ -173,17 +173,18 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 }),
                 ...(this.channel.queryParameters ?? []).map((queryParameter) => {
                     const type = context.type.getReferenceToType(queryParameter.valueType);
+                    const isOptional = context.type.isOptional(queryParameter.valueType);
                     const typeNode = queryParameter.allowMultiple
                         ? ts.factory.createUnionTypeNode([
                               type.typeNodeWithoutUndefined,
                               ts.factory.createArrayTypeNode(type.typeNodeWithoutUndefined),
-                              ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+                              ...(isOptional ? [ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)] : [])
                           ])
                         : type.typeNodeWithoutUndefined;
                     return {
                         name: getPropertyKey(this.getPropertyNameOfQueryParameter(queryParameter).propertyName),
                         type: getTextOfTsNode(typeNode),
-                        hasQuestionToken: context.type.isOptional(queryParameter.valueType)
+                        hasQuestionToken: isOptional
                     };
                 }),
                 ...(this.channel.headers ?? []).map((header) => {
