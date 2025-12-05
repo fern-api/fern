@@ -1,0 +1,113 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ZodFormat AST Generation > Collection Schemas > list() generates z.array() 1`] = `"z.array(z.string())"`;
+
+exports[`ZodFormat AST Generation > Collection Schemas > nested list generates z.array(z.array()) 1`] = `"z.array(z.array(z.string()))"`;
+
+exports[`ZodFormat AST Generation > Collection Schemas > record() generates z.record() 1`] = `"z.record(z.string(), z.number())"`;
+
+exports[`ZodFormat AST Generation > Collection Schemas > set() generates z.set() 1`] = `"z.set(z.number())"`;
+
+exports[`ZodFormat AST Generation > Enum Schemas > enum generates z.enum() 1`] = `"z.enum(["ACTIVE", "INACTIVE", "PENDING"])"`;
+
+exports[`ZodFormat AST Generation > Lazy Schemas > lazy() generates z.lazy() 1`] = `"z.lazy(() => z.string())"`;
+
+exports[`ZodFormat AST Generation > Lazy Schemas > lazyObject() generates z.lazy() 1`] = `
+"z.lazy(() => z.object({
+    "id": z.string()
+}))"
+`;
+
+exports[`ZodFormat AST Generation > Literal Schemas > booleanLiteral(false) generates z.literal(false) 1`] = `"z.literal(false)"`;
+
+exports[`ZodFormat AST Generation > Literal Schemas > booleanLiteral(true) generates z.literal(true) 1`] = `"z.literal(true)"`;
+
+exports[`ZodFormat AST Generation > Literal Schemas > stringLiteral() generates z.literal() 1`] = `"z.literal("hello")"`;
+
+exports[`ZodFormat AST Generation > MaybeValid Visitor > _visitMaybeValid generates if/else with success/data/error 1`] = `
+"{
+    if (result.success) {
+        console.log(result.data);
+    }
+    else {
+        throw new Error(result.error);
+    }
+}"
+`;
+
+exports[`ZodFormat AST Generation > Object Schemas > empty object generates z.object({}) 1`] = `"z.object({})"`;
+
+exports[`ZodFormat AST Generation > Object Schemas > object with different raw/parsed keys generates transform 1`] = `
+"z.object({
+    "first_name": z.string(),
+    "last_name": z.string()
+}).transform(data => ({
+    firstName: data.first_name,
+    lastName: data.last_name
+}))"
+`;
+
+exports[`ZodFormat AST Generation > Object Schemas > object with nullable property 1`] = `
+"z.object({
+    "name": z.string().nullable()
+})"
+`;
+
+exports[`ZodFormat AST Generation > Object Schemas > object with optional property 1`] = `
+"z.object({
+    "name": z.string(),
+    "nickname": z.string().optional()
+})"
+`;
+
+exports[`ZodFormat AST Generation > Object Schemas > object with same raw/parsed keys generates z.object() 1`] = `
+"z.object({
+    "name": z.string(),
+    "age": z.number()
+})"
+`;
+
+exports[`ZodFormat AST Generation > Object Schemas > object.passthrough() 1`] = `
+"z.object({
+    "id": z.string()
+}).passthrough()"
+`;
+
+exports[`ZodFormat AST Generation > Primitive Schemas > any() generates z.any() 1`] = `"z.any()"`;
+
+exports[`ZodFormat AST Generation > Primitive Schemas > bigint() generates z.bigint() 1`] = `"z.bigint()"`;
+
+exports[`ZodFormat AST Generation > Primitive Schemas > boolean() generates z.boolean() 1`] = `"z.boolean()"`;
+
+exports[`ZodFormat AST Generation > Primitive Schemas > date() generates z.string().transform() 1`] = `"z.string().transform(s => new Date(s))"`;
+
+exports[`ZodFormat AST Generation > Primitive Schemas > never() generates z.never() 1`] = `"z.never()"`;
+
+exports[`ZodFormat AST Generation > Primitive Schemas > number() generates z.number() 1`] = `"z.number()"`;
+
+exports[`ZodFormat AST Generation > Primitive Schemas > string() generates z.string() 1`] = `"z.string()"`;
+
+exports[`ZodFormat AST Generation > Primitive Schemas > unknown() generates z.unknown() 1`] = `"z.unknown()"`;
+
+exports[`ZodFormat AST Generation > Schema Modifiers > nullable() generates .nullable() 1`] = `"z.string().nullable()"`;
+
+exports[`ZodFormat AST Generation > Schema Modifiers > optional() generates .optional() 1`] = `"z.string().optional()"`;
+
+exports[`ZodFormat AST Generation > Schema Modifiers > optionalNullable() generates .optional().nullable() 1`] = `"z.string().optional().nullable()"`;
+
+exports[`ZodFormat AST Generation > Schema Operations > parse() generates .parse() 1`] = `"z.string().parse(rawValue)"`;
+
+exports[`ZodFormat AST Generation > Type References > Schema._getReferenceToType generates z.ZodType 1`] = `"z.ZodType<string, any, string>"`;
+
+exports[`ZodFormat AST Generation > Union Schemas > discriminated union generates z.discriminatedUnion() 1`] = `
+"z.discriminatedUnion("type", [
+    z.object({ "type": z.literal("dog") }).merge(z.object({
+        "breed": z.string()
+    })),
+    z.object({ "type": z.literal("cat") }).merge(z.object({
+        "indoor": z.boolean()
+    }))
+])"
+`;
+
+exports[`ZodFormat AST Generation > Union Schemas > undiscriminatedUnion generates z.union() 1`] = `"z.union([z.string(), z.number(), z.boolean()])"`;

@@ -1,0 +1,165 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ZurgImpl AST Generation Baseline > Collection Schemas > list() generates correct AST 1`] = `"serialization.list(serialization.string())"`;
+
+exports[`ZurgImpl AST Generation Baseline > Collection Schemas > nested list generates correct AST 1`] = `"serialization.list(serialization.list(serialization.string()))"`;
+
+exports[`ZurgImpl AST Generation Baseline > Collection Schemas > record() generates correct AST 1`] = `"serialization.record(serialization.string(), serialization.number())"`;
+
+exports[`ZurgImpl AST Generation Baseline > Collection Schemas > set() generates correct AST 1`] = `"serialization.set(serialization.number())"`;
+
+exports[`ZurgImpl AST Generation Baseline > Complex Nested Schemas > deeply nested object generates correct AST 1`] = `
+"serialization.object({
+    "user": serialization.object({
+        "profile": serialization.object({
+            "name": serialization.string(),
+            "age": serialization.number().optional()
+        })
+    }),
+    "tags": serialization.list(serialization.string()),
+    "metadata": serialization.record(serialization.string(), serialization.any())
+})"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Enum Schemas > enum with multiple values generates correct AST 1`] = `"serialization.enum_(["ACTIVE", "INACTIVE", "PENDING"])"`;
+
+exports[`ZurgImpl AST Generation Baseline > Enum Schemas > enum with single value generates correct AST 1`] = `"serialization.enum_(["ACTIVE"])"`;
+
+exports[`ZurgImpl AST Generation Baseline > Lazy Schemas (for recursion) > lazy() generates correct AST 1`] = `"serialization.lazy(() => serialization.string())"`;
+
+exports[`ZurgImpl AST Generation Baseline > Lazy Schemas (for recursion) > lazyObject() generates correct AST 1`] = `
+"serialization.lazyObject(() => serialization.object({
+    "id": serialization.string()
+}))"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Literal Schemas > booleanLiteral(false) generates correct AST 1`] = `"serialization.booleanLiteral(false)"`;
+
+exports[`ZurgImpl AST Generation Baseline > Literal Schemas > booleanLiteral(true) generates correct AST 1`] = `"serialization.booleanLiteral(true)"`;
+
+exports[`ZurgImpl AST Generation Baseline > Literal Schemas > stringLiteral() generates correct AST 1`] = `"serialization.stringLiteral("hello")"`;
+
+exports[`ZurgImpl AST Generation Baseline > MaybeValid Visitor > _visitMaybeValid generates correct AST 1`] = `
+"{
+    if (result.ok) {
+        console.log(result.value);
+    }
+    else {
+        throw new Error(result.errors);
+    }
+}"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Object Schemas > empty object generates correct AST 1`] = `"serialization.object({})"`;
+
+exports[`ZurgImpl AST Generation Baseline > Object Schemas > object with different raw/parsed keys generates correct AST 1`] = `
+"serialization.object({
+    "firstName": serialization.property("first_name", serialization.string()),
+    "lastName": serialization.property("last_name", serialization.string())
+})"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Object Schemas > object with nullable property generates correct AST 1`] = `
+"serialization.object({
+    "name": serialization.string().nullable()
+})"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Object Schemas > object with optional property generates correct AST 1`] = `
+"serialization.object({
+    "name": serialization.string(),
+    "nickname": serialization.string().optional()
+})"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Object Schemas > object with same raw/parsed keys generates correct AST 1`] = `
+"serialization.object({
+    "name": serialization.string(),
+    "age": serialization.number()
+})"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Object Schemas > object.extend() generates correct AST 1`] = `
+"serialization.object({
+    "id": serialization.string()
+}).extend(serialization.object({
+    "name": serialization.string()
+}))"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Object Schemas > object.passthrough() generates correct AST 1`] = `
+"serialization.object({
+    "id": serialization.string()
+}).passthrough()"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Object Schemas > objectWithoutOptionalProperties generates correct AST 1`] = `
+"serialization.objectWithoutOptionalProperties({
+    "id": serialization.string()
+})"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Primitive Schemas > any() generates correct AST 1`] = `"serialization.any()"`;
+
+exports[`ZurgImpl AST Generation Baseline > Primitive Schemas > bigint() generates correct AST 1`] = `"serialization.bigint()"`;
+
+exports[`ZurgImpl AST Generation Baseline > Primitive Schemas > boolean() generates correct AST 1`] = `"serialization.boolean()"`;
+
+exports[`ZurgImpl AST Generation Baseline > Primitive Schemas > date() generates correct AST 1`] = `"serialization.date()"`;
+
+exports[`ZurgImpl AST Generation Baseline > Primitive Schemas > never() generates correct AST 1`] = `"serialization.never()"`;
+
+exports[`ZurgImpl AST Generation Baseline > Primitive Schemas > number() generates correct AST 1`] = `"serialization.number()"`;
+
+exports[`ZurgImpl AST Generation Baseline > Primitive Schemas > string() generates correct AST 1`] = `"serialization.string()"`;
+
+exports[`ZurgImpl AST Generation Baseline > Primitive Schemas > unknown() generates correct AST 1`] = `"serialization.unknown()"`;
+
+exports[`ZurgImpl AST Generation Baseline > Schema Modifiers > nullable() generates correct AST 1`] = `"serialization.string().nullable()"`;
+
+exports[`ZurgImpl AST Generation Baseline > Schema Modifiers > optional() generates correct AST 1`] = `"serialization.string().optional()"`;
+
+exports[`ZurgImpl AST Generation Baseline > Schema Modifiers > optionalNullable() generates correct AST 1`] = `"serialization.string().optionalNullable()"`;
+
+exports[`ZurgImpl AST Generation Baseline > Schema Operations > json() generates correct AST 1`] = `"serialization.string().json(parsedValue)"`;
+
+exports[`ZurgImpl AST Generation Baseline > Schema Operations > jsonOrThrow() generates correct AST 1`] = `"serialization.string().jsonOrThrow(parsedValue)"`;
+
+exports[`ZurgImpl AST Generation Baseline > Schema Operations > parse() generates correct AST 1`] = `"serialization.string().parse(rawValue)"`;
+
+exports[`ZurgImpl AST Generation Baseline > Schema Operations > parse() with skipValidation generates correct AST 1`] = `
+"serialization.object({
+    "name": serialization.string()
+}).parse(rawValue, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, omitUndefined: true, breadcrumbsPrefix: ["request"] })"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Schema Operations > parseOrThrow() generates correct AST 1`] = `"serialization.string().parseOrThrow(rawValue)"`;
+
+exports[`ZurgImpl AST Generation Baseline > Type References > ObjectSchema._getReferenceToType generates correct AST 1`] = `"serialization.ObjectSchema<{}, {}>"`;
+
+exports[`ZurgImpl AST Generation Baseline > Type References > Schema._getReferenceToType generates correct AST 1`] = `
+"serialization.Schema<{
+    name: string;
+}, {
+    name: string;
+}>"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Union Schemas > discriminated union generates correct AST 1`] = `
+"serialization.union("type", {
+    "dog": serialization.object({
+        "breed": serialization.string()
+    }),
+    "cat": serialization.object({
+        "indoor": serialization.boolean()
+    })
+})"
+`;
+
+exports[`ZurgImpl AST Generation Baseline > Union Schemas > undiscriminatedUnion generates correct AST 1`] = `"serialization.undiscriminatedUnion([serialization.string(), serialization.number(), serialization.boolean()])"`;
+
+exports[`ZurgImpl AST Generation Baseline > Union Schemas > union with different raw/parsed discriminant generates correct AST 1`] = `
+"serialization.union(serialization.discriminant("animalType", "animal_type"), {
+    "dog": serialization.object({})
+})"
+`;
