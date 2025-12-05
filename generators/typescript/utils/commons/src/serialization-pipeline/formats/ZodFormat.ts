@@ -310,12 +310,28 @@ export class ZodFormat implements SerializationFormat {
             (p) => (p.value as ZodBaseSchema).toJsonExpression != null
         );
 
-        // Create toJsonExpression for objects that recursively transforms properties
+        /**
+         * Creates a toJsonExpression for objects that recursively transforms properties needing serialization.
+         *
+         * COMPLEXITY: O(n) where n = number of properties at each level with transforms.
+         * The spread operator copies all properties, even unchanged ones, at each level on the path
+         * to a property requiring transformation (e.g., Set → Array).
+         *
+         * POTENTIAL IMPROVEMENTS (follow-up work):
+         * 1. Persistent data structures (HAMT/Immutable.js): O(log n) updates with structural sharing,
+         *    but requires changing the entire data model and adds ~50KB bundle size.
+         * 2. Lazy/Proxy-based transforms: Defer transformation until JSON.stringify, achieving O(k)
+         *    where k = properties actually serialized. Adds runtime complexity.
+         * 3. Surgical Object.assign: Minor constant-factor improvement, same O(n) complexity.
+         *
+         * For typical API payloads (< 100 properties), current O(n) is acceptable.
+         */
         const createObjectJsonExpression = (parsed: ts.Expression): ts.Expression => {
             if (propsWithJsonTransform.length === 0) {
-                return parsed; // No transform needed
+                return parsed; // No transform needed - O(1)
             }
             // Generate: { ...parsed, propName: Array.from(parsed.propName), ... }
+            // This spreads all properties (O(n)) then overwrites transformed ones
             const propAssignments: ts.ObjectLiteralElementLike[] = [
                 ts.factory.createSpreadAssignment(parsed)
             ];
