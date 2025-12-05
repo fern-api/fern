@@ -131,7 +131,7 @@ export function getExamples(
 ): NamedFullExample[] {
     const fullExamples: NamedFullExample[] = [];
     if (mediaObject.example != null) {
-        fullExamples.push({ name: undefined, value: mediaObject.example, description: undefined });
+        fullExamples.push({ name: "default", value: mediaObject.example, description: undefined });
     }
     const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(mediaObject, OpenAPIExtension.EXAMPLES);
     if (examples != null && Object.keys(examples).length > 0) {
