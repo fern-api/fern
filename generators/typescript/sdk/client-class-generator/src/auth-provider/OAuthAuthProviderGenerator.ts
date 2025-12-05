@@ -91,36 +91,22 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType;
 
+        // Note: Optionality is expressed via hasQuestionToken, not by adding | undefined inside the Supplier generic.
+        // This matches the original BaseClientOptions pattern where optional properties are typed as:
+        // clientId?: Supplier<string> (equivalent to clientId: Supplier<string> | undefined)
+        // NOT clientId: Supplier<string | undefined>
         return [
             {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(CLIENT_ID_VAR_NAME),
                 hasQuestionToken: clientIdIsOptional,
-                type: getTextOfTsNode(
-                    supplierType(
-                        clientIdIsOptional
-                            ? ts.factory.createUnionTypeNode([
-                                  clientIdType,
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                              ])
-                            : clientIdType
-                    )
-                )
+                type: getTextOfTsNode(supplierType(clientIdType))
             },
             {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(CLIENT_SECRET_VAR_NAME),
                 hasQuestionToken: clientSecretIsOptional,
-                type: getTextOfTsNode(
-                    supplierType(
-                        clientSecretIsOptional
-                            ? ts.factory.createUnionTypeNode([
-                                  clientSecretType,
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                              ])
-                            : clientSecretType
-                    )
-                )
+                type: getTextOfTsNode(supplierType(clientSecretType))
             }
         ];
     }

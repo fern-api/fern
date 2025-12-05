@@ -57,6 +57,10 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
         const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
 
+        // Note: Optionality is expressed via hasQuestionToken, not by adding | undefined inside the Supplier generic.
+        // This matches the original BaseClientOptions pattern where optional properties are typed as:
+        // username?: Supplier<string> (equivalent to username: Supplier<string> | undefined)
+        // NOT username: Supplier<string | undefined>
         return [
             {
                 kind: StructureKind.PropertySignature,
@@ -64,12 +68,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                 hasQuestionToken: hasUsernameEnv,
                 type: getTextOfTsNode(
                     context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        hasUsernameEnv
-                            ? ts.factory.createUnionTypeNode([
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                              ])
-                            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                     )
                 ),
                 docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
@@ -80,12 +79,7 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
                 hasQuestionToken: hasPasswordEnv,
                 type: getTextOfTsNode(
                     context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                        hasPasswordEnv
-                            ? ts.factory.createUnionTypeNode([
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                              ])
-                            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                     )
                 ),
                 docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined

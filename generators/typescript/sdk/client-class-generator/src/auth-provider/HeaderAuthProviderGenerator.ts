@@ -63,13 +63,11 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         const hasHeaderEnv = this.authScheme.headerEnvVar != null;
         const isHeaderOptional = !this.isAuthMandatory || hasHeaderEnv;
-        const headerType =
-            this.isAuthMandatory && !hasHeaderEnv
-                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                : ts.factory.createUnionTypeNode([
-                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                  ]);
+        // Note: Optionality is expressed via hasQuestionToken, not by adding | undefined inside the Supplier generic.
+        // This matches the original BaseClientOptions pattern where optional properties are typed as:
+        // header?: Supplier<string> (equivalent to header: Supplier<string> | undefined)
+        // NOT header: Supplier<string | undefined>
+        const headerType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
 
         return [
             {
