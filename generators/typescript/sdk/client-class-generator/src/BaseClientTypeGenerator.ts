@@ -106,19 +106,22 @@ export type BaseClientOptions = {
         if (authScheme.type === "bearer") {
             context.sourceFile.addImportDeclaration({
                 moduleSpecifier: "./auth/BearerAuthProvider.js",
-                namedImports: [{ name: "BearerAuthProvider", isTypeOnly: true }]
+                namedImports: ["BearerAuthProvider"],
+                isTypeOnly: true
             });
             return "BearerAuthProvider.AuthOptions";
         } else if (authScheme.type === "basic") {
             context.sourceFile.addImportDeclaration({
                 moduleSpecifier: "./auth/BasicAuthProvider.js",
-                namedImports: [{ name: "BasicAuthProvider", isTypeOnly: true }]
+                namedImports: ["BasicAuthProvider"],
+                isTypeOnly: true
             });
             return "BasicAuthProvider.AuthOptions";
         } else if (authScheme.type === "header") {
             context.sourceFile.addImportDeclaration({
                 moduleSpecifier: "./auth/HeaderAuthProvider.js",
-                namedImports: [{ name: "HeaderAuthProvider", isTypeOnly: true }]
+                namedImports: ["HeaderAuthProvider"],
+                isTypeOnly: true
             });
             return "HeaderAuthProvider.AuthOptions";
         } else if (authScheme.type === "oauth") {
@@ -127,13 +130,15 @@ export type BaseClientOptions = {
             }
             context.sourceFile.addImportDeclaration({
                 moduleSpecifier: "./auth/OAuthAuthProvider.js",
-                namedImports: [{ name: "OAuthAuthProvider", isTypeOnly: true }]
+                namedImports: ["OAuthAuthProvider"],
+                isTypeOnly: true
             });
             return "OAuthAuthProvider.AuthOptions";
         } else if (authScheme.type === "inferred") {
             context.sourceFile.addImportDeclaration({
                 moduleSpecifier: "./auth/InferredAuthProvider.js",
-                namedImports: [{ name: "InferredAuthProvider", isTypeOnly: true }]
+                namedImports: ["InferredAuthProvider"],
+                isTypeOnly: true
             });
             return "InferredAuthProvider.AuthOptions";
         }
