@@ -680,6 +680,7 @@ export class ZodFormat implements SerializationFormat {
     public Schema = {
         _getReferenceToType: ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
             // For Zod, we use z.ZodType<Parsed, ZodTypeDef, Raw>
+            this.ensureZodImport();
             return ts.factory.createTypeReferenceNode(
                 ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "ZodType"),
                 [parsedShape, ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword), rawShape]
@@ -734,6 +735,7 @@ export class ZodFormat implements SerializationFormat {
     public ObjectSchema = {
         _getReferenceToType: ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
             // For Zod object schemas
+            this.ensureZodImport();
             return ts.factory.createTypeReferenceNode(
                 ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "ZodObject"),
                 [
