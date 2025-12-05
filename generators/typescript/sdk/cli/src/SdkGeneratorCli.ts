@@ -9,7 +9,6 @@ import {
     fixImportsForEsm,
     NpmPackage,
     PersistedTypescriptProject,
-    SerializationFormatType,
     SerializationPipeline,
     writeTemplateFiles
 } from "@fern-typescript/commons";
