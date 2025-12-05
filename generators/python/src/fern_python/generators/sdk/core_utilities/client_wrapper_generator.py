@@ -565,14 +565,19 @@ class ClientWrapperGenerator:
         bearer_auth_scheme = self._get_bearer_auth_scheme()
         if bearer_auth_scheme is not None:
             constructor_parameter_name = names.get_token_constructor_parameter_name(bearer_auth_scheme)
+            # For OAuth flows, the OAuthTokenProvider needs to create a SyncClientWrapper without a token
+            # to fetch the initial token. For plain bearer auth, use the is_auth_mandatory flag.
+            # This matches TypeScript's behavior where the auth client doesn't require a token.
+            is_token_optional = self._has_oauth() or not self._context.ir.sdk_config.is_auth_mandatory
             parameters.append(
                 ConstructorParameter(
                     constructor_parameter_name=constructor_parameter_name,
                     private_member_name=names.get_token_member_name(bearer_auth_scheme),
-                    # Always use optional type hint for the client wrapper to support OAuth flows
-                    # where the OAuthTokenProvider needs to create a SyncClientWrapper without a token
-                    # to fetch the initial token. The root client can still enforce auth requirements.
-                    type_hint=AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT),
+                    type_hint=(
+                        AST.TypeHint.optional(ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT)
+                        if is_token_optional
+                        else ClientWrapperGenerator.STRING_OR_SUPPLIER_TYPE_HINT
+                    ),
                     initializer=AST.Expression(
                         f'{constructor_parameter_name}="YOUR_{bearer_auth_scheme.token.screaming_snake_case.safe_name}"',
                     ),
@@ -580,11 +585,16 @@ class ClientWrapperGenerator:
                         name=names.get_token_getter_name(bearer_auth_scheme),
                         signature=AST.FunctionSignature(
                             parameters=[],
-                            # Always use optional return type to match the optional type hint
-                            return_type=AST.TypeHint.optional(AST.TypeHint.str_()),
+                            return_type=(
+                                AST.TypeHint.optional(AST.TypeHint.str_()) if is_token_optional else AST.TypeHint.str_()
+                            ),
                         ),
                         body=AST.CodeWriter(
                             self._get_optional_getter_body_writer(
+                                member_name=names.get_token_member_name(bearer_auth_scheme)
+                            )
+                            if is_token_optional
+                            else self._get_required_getter_body_writer(
                                 member_name=names.get_token_member_name(bearer_auth_scheme)
                             )
                         ),
@@ -798,6 +808,14 @@ class ClientWrapperGenerator:
                     ),
                 )
         return None
+
+    def _has_oauth(self) -> bool:
+        """Check if the API uses OAuth authentication."""
+        for scheme in self._context.ir.auth.schemes:
+            scheme_as_union = scheme.get_as_union()
+            if scheme_as_union.type == "oauth":
+                return True
+        return False
 
     def _has_basic_auth(self) -> bool:
         return self._get_basic_auth_scheme() is not None

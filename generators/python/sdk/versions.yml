@@ -4,8 +4,8 @@
   changelogEntry:
     - summary: |
         Fix OAuth flow regression where `SyncClientWrapper` and `AsyncClientWrapper` required a `token` parameter.
-        The token parameter is now always optional in the client wrapper to support OAuth flows where the
-        `OAuthTokenProvider` needs to create a wrapper before a token exists.
+        The token parameter is now optional only for OAuth flows (matching TypeScript's behavior), while plain
+        bearer auth continues to require a token when `isAuthMandatory` is true.
       type: fix
   createdAt: "2025-12-04"
   irVersion: 61
