@@ -777,7 +777,8 @@ function convertResponseErrorsV2(
                     description: errorDeclaration.docs ?? undefined,
                     name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,
                     availability: undefined,
-                    examples: getErrorExamplesFromDeclaration(errorDeclaration, ir)
+                    examples: getErrorExamplesFromDeclaration(errorDeclaration, ir),
+                    headers: undefined
                 });
             }
         }
@@ -832,7 +833,8 @@ function convertResponseErrorsV2(
                             responseBody: { type: "json", value: irExample.jsonExample },
                             description: irExample.docs
                         };
-                    })
+                    }),
+                    headers: undefined
                 });
             }
         }
