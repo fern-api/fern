@@ -266,6 +266,9 @@ fixtures:
     - outputFolder: serde
       customConfig:
         noSerdeLayer: false
+    - outputFolder: token-override
+      customConfig:
+        oauthTokenOverridePropertyName: token
   oauth-client-credentials-nested-root:
     - outputFolder: no-custom-config
       customConfig: null
