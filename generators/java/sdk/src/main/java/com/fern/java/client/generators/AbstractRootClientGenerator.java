@@ -1035,10 +1035,24 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {
 
+            private static final String DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME = "token";
+
             @Override
             public Void visitClientCredentials(OAuthClientCredentials clientCredentials) {
                 EndpointReference tokenEndpointReference =
                         clientCredentials.getTokenEndpoint().getEndpointReference();
+
+                // Get the token override property name from config (default: "token")
+                Optional<String> tokenOverridePropertyNameOpt =
+                        clientGeneratorContext.getCustomConfig().oauthTokenOverridePropertyName();
+                String tokenOverridePropertyName =
+                        tokenOverridePropertyNameOpt.orElse(DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME);
+                boolean hasTokenOverride = tokenOverridePropertyNameOpt.isPresent();
+
+                // Create setter for token override if enabled
+                if (hasTokenOverride) {
+                    createSetter(tokenOverridePropertyName, Optional.empty(), Optional.empty());
+                }
 
                 createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
                 createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
@@ -1084,7 +1098,21 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 ClassName oauthTokenSupplierClassName =
                         generatedOAuthTokenSupplier.get().getClassName();
                 if (configureAuthMethod != null) {
-                    configureAuthMethod.beginControlFlow("if (this.clientId != null && this.clientSecret != null)");
+                    // If token override is enabled, check for token first
+                    if (hasTokenOverride) {
+                        String tokenPrefix = clientCredentials.getTokenPrefix().orElse("Bearer");
+                        configureAuthMethod.beginControlFlow("if (this.$L != null)", tokenOverridePropertyName);
+                        configureAuthMethod.addStatement(
+                                "builder.addHeader($S, $S + this.$L)",
+                                "Authorization",
+                                tokenPrefix + " ",
+                                tokenOverridePropertyName);
+                        configureAuthMethod.nextControlFlow(
+                                "else if (this.clientId != null && this.clientSecret != null)");
+                    } else {
+                        configureAuthMethod.beginControlFlow(
+                                "if (this.clientId != null && this.clientSecret != null)");
+                    }
 
                     configureAuthMethod.addStatement(
                             "$T.Builder authClientOptionsBuilder = $T.builder().environment(this.$L)",
