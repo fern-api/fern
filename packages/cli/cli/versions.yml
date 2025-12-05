@@ -3,9 +3,33 @@
     - summary: |
         Add recursive markdown snippet resolution for docs. Markdown snippets can now reference other markdown snippets, with automatic detection and warning for circular references to prevent infinite loops.
       type: feat
-  irVersion: 62
+  irVersion: 63
+  createdAt: "2025-12-05"
+  version: 3.2.0
+
+- changelogEntry:
+    - summary: |
+        Preserve error response headers (e.g., Retry-After for 429 errors) from OpenAPI specs in the IR.
+      type: feat
+  irVersion: 63
   createdAt: "2025-12-05"
   version: 3.1.0
+
+- changelogEntry:
+    - summary: |
+        Fix AsyncAPI validation: exclude AsyncAPI files from OpenAPI-specific validation rules
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.0.5
+
+- changelogEntry:
+    - summary: |
+        Fix error response examples not displaying in docs when examples are defined at the property level in OpenAPI specs.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.0.4
 
 - changelogEntry:
     - summary: |
