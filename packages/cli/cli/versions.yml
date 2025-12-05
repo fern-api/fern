@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix AsyncAPI validation: exclude AsyncAPI files from OpenAPI-specific validation rules
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.0.5
+
+- changelogEntry:
+    - summary: |
         Fix error response examples not displaying in docs when examples are defined at the property level in OpenAPI specs.
       type: fix
   irVersion: 62
