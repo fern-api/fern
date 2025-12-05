@@ -103,6 +103,50 @@ describe("Custom icon functionality", () => {
             expect(svgFiles.length).toBeGreaterThan(0);
             expect(nonSvgFiles.length).toBe(0); // Font awesome icons shouldn't be uploaded
         });
+
+        it("should collect custom icons from MDX components (Card and Icon)", async () => {
+            const uploadedFiles: FilePathPair[] = [];
+
+            const resolver = new DocsDefinitionResolver({
+                domain: "test.domain.com",
+                docsWorkspace,
+                ossWorkspaces: [],
+                apiWorkspaces: [],
+                taskContext: context,
+                editThisPage: undefined,
+                uploadFiles: async (files: FilePathPair[]): Promise<UploadedFile[]> => {
+                    uploadedFiles.push(...files);
+                    return files.map(
+                        (file, index): UploadedFile => ({
+                            ...file,
+                            fileId: `test-file-id-${index}`
+                        })
+                    );
+                },
+                registerApi: async (_opts) => "",
+                targetAudiences: undefined
+            });
+
+            const resolved = await resolver.resolve();
+
+            // Verify the resolver completed successfully
+            expect(resolved).toBeDefined();
+            expect(resolved.config).toBeDefined();
+            expect(resolved.pages).toBeDefined();
+
+            const svgFiles = uploadedFiles.filter((file) => file.relativeFilePath.endsWith(".svg"));
+            const iconFileNames = svgFiles.map((file) => file.relativeFilePath);
+
+            // These should be collected for upload
+            expect(iconFileNames).toContain("virus.svg");
+            expect(iconFileNames).toContain("atom.svg");
+            expect(iconFileNames).toContain("fern.svg");
+
+            const fontAwesomeFiles = uploadedFiles.filter(
+                (file) => file.relativeFilePath === "home" || file.relativeFilePath.includes("fa-solid")
+            );
+            expect(fontAwesomeFiles.length).toBe(0);
+        });
     });
 });
 
