@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.43.0
+  changelogEntry:
+    - summary: |
+        Add `model_dump_json()` override to `UniversalBaseModel` that properly handles `FieldMetadata` aliases.
+        When using the default `FieldMetadata` aliasing (not native Pydantic aliases), calling `model_dump_json()`
+        now correctly serializes field names to their camelCase aliases, matching the behavior of `dict()`.
+      type: feat
+  createdAt: "2025-12-05"
+  irVersion: 61
+
 - version: 4.42.0
   changelogEntry:
     - summary: |
