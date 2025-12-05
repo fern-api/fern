@@ -20,7 +20,7 @@ export interface BaseClientCoreOptions {
     logging?: core.logging.LogConfig | core.logging.Logger;
 }
 
-export type BaseClientOptions = BaseClientCoreOptions & OAuthAuthProvider.OAuthAuthOptions;
+export type BaseClientOptions = BaseClientCoreOptions & OAuthAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */

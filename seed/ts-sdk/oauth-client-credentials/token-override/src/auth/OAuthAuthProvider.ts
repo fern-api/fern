@@ -5,13 +5,6 @@ import type { BaseClientOptions } from "../BaseClient.js";
 import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
-export namespace OAuthAuthProvider {
-    export type OAuthAuthOptions =
-        | { clientId: core.Supplier<string>; clientSecret: core.Supplier<string> }
-        | { token: core.Supplier<string> };
-    export type Options = BaseClientOptions;
-}
-
 export class OAuthAuthProvider implements core.AuthProvider {
     private readonly BUFFER_IN_MINUTES: number = 2;
     private readonly _tokenOverride: core.Supplier<string> | undefined;
@@ -23,7 +16,7 @@ export class OAuthAuthProvider implements core.AuthProvider {
     private _refreshPromise: Promise<string> | undefined;
 
     constructor(options: OAuthAuthProvider.Options) {
-        if ("token" in options && options.token != null) {
+        if (OAuthAuthProvider.hasToken(options)) {
             this._tokenOverride = options.token;
             this._clientId = undefined;
             this._clientSecret = undefined;
@@ -32,30 +25,19 @@ export class OAuthAuthProvider implements core.AuthProvider {
             return;
         }
         this._tokenOverride = undefined;
-        if (!("clientId" in options) || options.clientId == null) {
+        if (!OAuthAuthProvider.hasClientCredentials(options)) {
             throw new errors.SeedOauthClientCredentialsError({
-                message: "clientId is required. Please provide it in options.",
+                message: "clientId and clientSecret are required. Please provide them in options.",
             });
         }
         this._clientId = options.clientId;
-        if (!("clientSecret" in options) || options.clientSecret == null) {
-            throw new errors.SeedOauthClientCredentialsError({
-                message: "clientSecret is required. Please provide it in options.",
-            });
-        }
         this._clientSecret = options.clientSecret;
         this._authClient = new AuthClient(options);
         this._expiresAt = new Date();
     }
 
     public static canCreate(options: OAuthAuthProvider.Options): boolean {
-        return (
-            ("token" in options && options.token != null) ||
-            ("clientId" in options &&
-                "clientSecret" in options &&
-                options.clientId != null &&
-                options.clientSecret != null)
-        );
+        return OAuthAuthProvider.hasToken(options) || OAuthAuthProvider.hasClientCredentials(options);
     }
 
     public async getAuthRequest(arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
@@ -114,5 +96,27 @@ export class OAuthAuthProvider implements core.AuthProvider {
     private getExpiresAt(expiresInSeconds: number, bufferInMinutes: number): Date {
         const now = new Date();
         return new Date(now.getTime() + expiresInSeconds * 1000 - bufferInMinutes * 60 * 1000);
+    }
+}
+
+export namespace OAuthAuthProvider {
+    export type AuthOptions =
+        | { clientId: core.Supplier<string>; clientSecret: core.Supplier<string> }
+        | { token: core.Supplier<string> };
+    export type Options = BaseClientOptions;
+
+    export function hasToken(options: Options): options is Options & { token: core.Supplier<string> } {
+        return "token" in options && options.token != null;
+    }
+
+    export function hasClientCredentials(
+        options: Options,
+    ): options is Options & { clientId: core.Supplier<string>; clientSecret: core.Supplier<string> } {
+        return (
+            "clientId" in options &&
+            options.clientId != null &&
+            "clientSecret" in options &&
+            options.clientSecret != null
+        );
     }
 }

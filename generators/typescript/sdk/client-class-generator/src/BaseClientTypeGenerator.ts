@@ -51,7 +51,7 @@ export class BaseClientTypeGenerator {
             coreInterface.name = "BaseClientCoreOptions";
             context.sourceFile.addInterface(coreInterface);
 
-            // Import OAuthAuthProvider to access the OAuthAuthOptions union type
+            // Import OAuthAuthProvider to access the AuthOptions union type
             context.sourceFile.addImportDeclaration({
                 moduleSpecifier: "./auth/OAuthAuthProvider.js",
                 namedImports: ["OAuthAuthProvider"]
@@ -61,7 +61,7 @@ export class BaseClientTypeGenerator {
             context.sourceFile.addTypeAlias({
                 name: "BaseClientOptions",
                 isExported: true,
-                type: "BaseClientCoreOptions & OAuthAuthProvider.OAuthAuthOptions"
+                type: "BaseClientCoreOptions & OAuthAuthProvider.AuthOptions"
             });
         } else {
             context.sourceFile.addInterface(context.baseClient.generateBaseClientOptionsInterface(context));

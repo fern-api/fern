@@ -79,8 +79,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public writeToFile(context: SdkContext): void {
-        this.writeOptions(context);
+        // Write class first, then namespace - TypeScript requires namespace to come after
+        // the class when they share the same name (declaration merging)
         this.writeClass(context);
+        this.writeOptions(context);
     }
 
     private writeClass(context: SdkContext): void {
@@ -154,9 +156,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         let constructorStatements = "";
 
         if (hasTokenOverride) {
-            // When token override is enabled, check if token is provided first
+            // When token override is enabled, use type guard functions for cleaner type narrowing
             constructorStatements += `
-        if ("${tokenOverridePropertyName}" in ${OPTIONS_PARAM_NAME} && ${OPTIONS_PARAM_NAME}.${tokenOverridePropertyName} != null) {
+        if (${CLASS_NAME}.hasToken(${OPTIONS_PARAM_NAME})) {
             this.${TOKEN_OVERRIDE_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${tokenOverridePropertyName};
             this.${CLIENT_ID_FIELD_NAME} = undefined;
             this.${CLIENT_SECRET_FIELD_NAME} = undefined;
@@ -164,33 +166,13 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             this.${EXPIRES_AT_FIELD_NAME} = new Date();
             return;
         }
-        this.${TOKEN_OVERRIDE_FIELD_NAME} = undefined;`;
-        }
-
-        if (hasTokenOverride) {
-            // When token override is enabled, we need to use "in" checks for proper type narrowing
-            // with the union type (BaseClientCoreOptions & OAuthAuthOptions)
-            const clientIdEnvVarHint =
-                oauthConfig.clientIdEnvVar != null
-                    ? ` or set the ${oauthConfig.clientIdEnvVar} environment variable`
-                    : "";
-            const clientSecretEnvVarHint =
-                oauthConfig.clientSecretEnvVar != null
-                    ? ` or set the ${oauthConfig.clientSecretEnvVar} environment variable`
-                    : "";
-
-            constructorStatements += `
-        if (!("${CLIENT_ID_VAR_NAME}" in ${OPTIONS_PARAM_NAME}) || ${OPTIONS_PARAM_NAME}.${CLIENT_ID_VAR_NAME} == null) {
+        this.${TOKEN_OVERRIDE_FIELD_NAME} = undefined;
+        if (!${CLASS_NAME}.hasClientCredentials(${OPTIONS_PARAM_NAME})) {
             throw new ${errorConstructor}({
-                message: "${CLIENT_ID_VAR_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}${clientIdEnvVarHint}."
+                message: "${CLIENT_ID_VAR_NAME} and ${CLIENT_SECRET_VAR_NAME} are required. Please provide them in ${OPTIONS_PARAM_NAME}."
             });
         }
         this.${CLIENT_ID_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_ID_VAR_NAME};
-        if (!("${CLIENT_SECRET_VAR_NAME}" in ${OPTIONS_PARAM_NAME}) || ${OPTIONS_PARAM_NAME}.${CLIENT_SECRET_VAR_NAME} == null) {
-            throw new ${errorConstructor}({
-                message: "${CLIENT_SECRET_VAR_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}${clientSecretEnvVarHint}."
-            });
-        }
         this.${CLIENT_SECRET_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${CLIENT_SECRET_VAR_NAME};`;
         } else {
             // Without token override, we can access clientId and clientSecret directly
@@ -652,24 +634,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         tokenOverridePropertyName: string | undefined
     ): string {
         if (tokenOverridePropertyName != null) {
-            // When token override is enabled, we need to use "in" checks for proper type narrowing
-            // with the union type (BaseClientCoreOptions & OAuthAuthOptions)
-            const tokenCheck = `("${tokenOverridePropertyName}" in options && options.${tokenOverridePropertyName} != null)`;
-
-            // Use "in" checks for clientId and clientSecret to properly narrow the union type
-            const clientIdInCheck = `"clientId" in options`;
-            const clientSecretInCheck = `"clientSecret" in options`;
-            const clientIdValueCheck =
-                clientIdEnvVar != null
-                    ? `(options.clientId != null || process.env?.["${clientIdEnvVar}"] != null)`
-                    : `options.clientId != null`;
-            const clientSecretValueCheck =
-                clientSecretEnvVar != null
-                    ? `(options.clientSecret != null || process.env?.["${clientSecretEnvVar}"] != null)`
-                    : `options.clientSecret != null`;
-
-            const oauthCheck = `(${clientIdInCheck} && ${clientSecretInCheck} && ${clientIdValueCheck} && ${clientSecretValueCheck})`;
-            return `return ${tokenCheck} || ${oauthCheck};`;
+            // When token override is enabled, use the type guard functions for cleaner code
+            return `return ${CLASS_NAME}.hasToken(options) || ${CLASS_NAME}.hasClientCredentials(options);`;
         }
 
         // Without token override, we can access clientId and clientSecret directly
@@ -721,8 +687,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         if (hasTokenOverride) {
             // When token override is enabled, BaseClientOptions already includes the union type
-            // (BaseClientCoreOptions & OAuthAuthOptions), so we just export the OAuthAuthOptions
+            // (BaseClientCoreOptions & AuthOptions), so we just export the AuthOptions
             // type for reference and use BaseClientOptions directly as Options
+            // Also generate type guard functions for cleaner type narrowing
             context.sourceFile.addModule({
                 name: CLASS_NAME,
                 isExported: true,
@@ -730,7 +697,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 statements: [
                     {
                         kind: StructureKind.TypeAlias,
-                        name: "OAuthAuthOptions",
+                        name: "AuthOptions",
                         isExported: true,
                         type: `{ clientId: ${supplierType}; clientSecret: ${supplierType}; } | { ${tokenOverridePropertyName}: ${supplierType}; }`
                     },
@@ -739,6 +706,22 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                         name: OPTIONS_TYPE_NAME,
                         isExported: true,
                         type: `BaseClientOptions`
+                    },
+                    {
+                        kind: StructureKind.Function,
+                        name: "hasToken",
+                        isExported: true,
+                        parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
+                        returnType: `options is ${OPTIONS_TYPE_NAME} & { ${tokenOverridePropertyName}: ${supplierType} }`,
+                        statements: `return "${tokenOverridePropertyName}" in options && options.${tokenOverridePropertyName} != null;`
+                    },
+                    {
+                        kind: StructureKind.Function,
+                        name: "hasClientCredentials",
+                        isExported: true,
+                        parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
+                        returnType: `options is ${OPTIONS_TYPE_NAME} & { clientId: ${supplierType}; clientSecret: ${supplierType} }`,
+                        statements: `return "clientId" in options && options.clientId != null && "clientSecret" in options && options.clientSecret != null;`
                     }
                 ]
             });
