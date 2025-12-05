@@ -42,9 +42,34 @@ export class BaseClientTypeGenerator {
             });
         }
 
-        // Always generate BaseClientOptions as a simple interface
-        // The auth union is handled separately in OAuthAuthProvider.Options
-        context.sourceFile.addInterface(context.baseClient.generateBaseClientOptionsInterface(context));
+        // When OAuth token override is enabled, generate BaseClientOptions as a type alias
+        // that intersects with OAuthAuthProvider.AuthOptions
+        const baseOptionsInterface = context.baseClient.generateBaseClientOptionsInterface(context);
+        if (this.oauthTokenOverride && this.hasOAuthScheme() && context.generateOAuthClients) {
+            // Emit a core interface with the base properties (non-exported to keep public surface clean)
+            context.sourceFile.addInterface({
+                ...baseOptionsInterface,
+                name: "BaseClientCoreOptions",
+                isExported: false
+            });
+
+            // Import OAuthAuthProvider as type-only to avoid runtime circular dependency
+            context.sourceFile.addImportDeclaration({
+                moduleSpecifier: "./auth/OAuthAuthProvider.js",
+                namedImports: ["OAuthAuthProvider"],
+                isTypeOnly: true
+            });
+
+            // Emit the intersection alias that includes the OAuth auth options union
+            context.sourceFile.addTypeAlias({
+                isExported: true,
+                name: "BaseClientOptions",
+                type: "BaseClientCoreOptions & OAuthAuthProvider.AuthOptions"
+            });
+        } else {
+            // Non-OAuth or no token-override: keep the existing, simple interface
+            context.sourceFile.addInterface(baseOptionsInterface);
+        }
 
         context.sourceFile.addInterface(context.baseClient.generateBaseRequestOptionsInterface(context));
         if (this.generateIdempotentRequestOptions) {

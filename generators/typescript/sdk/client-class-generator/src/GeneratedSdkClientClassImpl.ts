@@ -41,7 +41,6 @@ import {
     PropertySignatureStructure,
     Scope,
     StructureKind,
-    TypeAliasDeclarationStructure,
     ts
 } from "ts-morph";
 import { Code, code } from "ts-poet";
@@ -1009,42 +1008,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
     private generateOptionsInterface(
         context: SdkContext
-    ): InterfaceDeclarationStructure | TypeAliasDeclarationStructure[] {
+    ): InterfaceDeclarationStructure {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
 
-        // Check if OAuth token override is enabled - apply union type to all clients
-        const hasOAuthTokenOverride = this.oauthTokenOverride && this.authProvider instanceof OAuthAuthProviderInstance;
-
-        if (hasOAuthTokenOverride) {
-            // Generate undiscriminated union type for OAuth with token override
-            const baseClientOptionsType = getTextOfTsNode(
-                context.sdkClientClass.getReferenceToBaseClientOptions().getTypeNode()
-            );
-            const supplierType = getTextOfTsNode(
-                context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                )
-            );
-
-            // Generate the union type alias
-            const oauthAuthOptionsType: TypeAliasDeclarationStructure = {
-                kind: StructureKind.TypeAlias,
-                name: "OAuthAuthOptions",
-                isExported: true,
-                type: `{ clientId: ${supplierType}; clientSecret: ${supplierType}; } | { token: ${supplierType}; }`
-            };
-
-            // Generate the Options type alias that intersects BaseClientOptions with the union
-            const optionsType: TypeAliasDeclarationStructure = {
-                kind: StructureKind.TypeAlias,
-                name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
-                isExported: true,
-                type: `${baseClientOptionsType} & OAuthAuthOptions`
-            };
-
-            return [oauthAuthOptionsType, optionsType];
-        }
-
+        // When OAuth token override is enabled, BaseClientOptions already includes the union type
+        // via intersection with OAuthAuthProvider.AuthOptions, so we don't need a separate
+        // OAuthAuthOptions type here. Options just extends BaseClientOptions.
         return {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
