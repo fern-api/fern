@@ -19,7 +19,7 @@ export declare namespace AuthProvidersGenerator {
         authScheme: AuthScheme | { type: "any" };
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
-        oauthTokenOverridePropertyName: string | undefined;
+        oauthTokenOverride: boolean;
     }
 }
 
@@ -30,7 +30,7 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
         authScheme,
         neverThrowErrors,
         includeSerdeLayer,
-        oauthTokenOverridePropertyName
+        oauthTokenOverride
     }: AuthProvidersGenerator.Init) {
         this.authProviderGenerator = (() => {
             switch (authScheme.type) {
@@ -65,7 +65,7 @@ export class AuthProvidersGenerator implements GeneratedFile<SdkContext> {
                         authScheme,
                         neverThrowErrors,
                         includeSerdeLayer,
-                        tokenOverridePropertyName: oauthTokenOverridePropertyName
+                        oauthTokenOverride
                     });
                 default:
                     assertNever(authScheme);

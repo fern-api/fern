@@ -60,5 +60,5 @@ export interface SdkCustomConfig {
     parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     generateSubpackageExports: boolean | undefined;
     offsetSemantics: "item-index" | "page-index";
-    oauthTokenOverridePropertyName: string | undefined;
+    oauthTokenOverride: boolean | undefined;
 }

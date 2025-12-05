@@ -160,7 +160,7 @@ export declare namespace SdkGenerator {
         formatter: "prettier" | "biome" | "oxfmt";
         generateSubpackageExports: boolean;
         offsetSemantics: "item-index" | "page-index";
-        oauthTokenOverridePropertyName: string | undefined;
+        oauthTokenOverride: boolean;
     }
 }
 
@@ -379,7 +379,7 @@ export class SdkGenerator {
             retainOriginalCasing: config.retainOriginalCasing,
             parameterNaming: config.parameterNaming,
             baseClientTypeDeclarationReferencer: this.baseClientTypeDeclarationReferencer,
-            oauthTokenOverridePropertyName: config.oauthTokenOverridePropertyName
+            oauthTokenOverride: config.oauthTokenOverride
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
@@ -474,13 +474,13 @@ export class SdkGenerator {
             generateEndpointMetadata: config.generateEndpointMetadata,
             parameterNaming: config.parameterNaming,
             offsetSemantics: config.offsetSemantics,
-            oauthTokenOverridePropertyName: config.oauthTokenOverridePropertyName
+            oauthTokenOverride: config.oauthTokenOverride
         });
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
             omitFernHeaders: config.omitFernHeaders,
-            oauthTokenOverridePropertyName: config.oauthTokenOverridePropertyName
+            oauthTokenOverride: config.oauthTokenOverride
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,
@@ -1396,7 +1396,7 @@ export class SdkGenerator {
                     authScheme,
                     neverThrowErrors: this.config.neverThrowErrors,
                     includeSerdeLayer: this.config.includeSerdeLayer,
-                    oauthTokenOverridePropertyName: this.config.oauthTokenOverridePropertyName
+                    oauthTokenOverride: this.config.oauthTokenOverride
                 });
                 if (!authProvidersGenerator.shouldWriteFile()) {
                     continue;
@@ -1416,7 +1416,7 @@ export class SdkGenerator {
                 authScheme: { type: "any" },
                 neverThrowErrors: this.config.neverThrowErrors,
                 includeSerdeLayer: this.config.includeSerdeLayer,
-                oauthTokenOverridePropertyName: this.config.oauthTokenOverridePropertyName
+                oauthTokenOverride: this.config.oauthTokenOverride
             });
             this.withSourceFile({
                 filepath: anyAuthProvidersGenerator.getFilePath(),
@@ -1433,7 +1433,7 @@ export class SdkGenerator {
                     authScheme,
                     neverThrowErrors: this.config.neverThrowErrors,
                     includeSerdeLayer: this.config.includeSerdeLayer,
-                    oauthTokenOverridePropertyName: this.config.oauthTokenOverridePropertyName
+                    oauthTokenOverride: this.config.oauthTokenOverride
                 });
                 if (!authProvidersGenerator.shouldWriteFile()) {
                     continue;

@@ -10,7 +10,7 @@ export declare namespace BaseClientTypeGenerator {
         generateIdempotentRequestOptions: boolean;
         ir: FernIr.IntermediateRepresentation;
         omitFernHeaders: boolean;
-        oauthTokenOverridePropertyName: string | undefined;
+        oauthTokenOverride: boolean;
     }
 }
 
@@ -21,18 +21,18 @@ export class BaseClientTypeGenerator {
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
-    private readonly oauthTokenOverridePropertyName: string | undefined;
+    private readonly oauthTokenOverride: boolean;
 
     constructor({
         generateIdempotentRequestOptions,
         ir,
         omitFernHeaders,
-        oauthTokenOverridePropertyName
+        oauthTokenOverride
     }: BaseClientTypeGenerator.Init) {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.ir = ir;
         this.omitFernHeaders = omitFernHeaders;
-        this.oauthTokenOverridePropertyName = oauthTokenOverridePropertyName;
+        this.oauthTokenOverride = oauthTokenOverride;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -232,10 +232,9 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                     });
                     providerImports.push("OAuthAuthProvider");
                     // Use createInstance when token override is enabled, otherwise use new OAuthAuthProvider
-                    const oauthCreation =
-                        this.oauthTokenOverridePropertyName !== undefined
-                            ? "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)); }"
-                            : "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider)); }";
+                    const oauthCreation = this.oauthTokenOverride
+                        ? "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)); }"
+                        : "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider)); }";
                     providerInstantiations.push(oauthCreation);
                 }
             }
@@ -276,10 +275,9 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                         namedImports: ["OAuthAuthProvider"]
                     });
                     // Use createInstance when token override is enabled, otherwise use new OAuthAuthProvider
-                    authProviderCreation =
-                        this.oauthTokenOverridePropertyName !== undefined
-                            ? "OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)"
-                            : "new OAuthAuthProvider(normalizedWithNoOpAuthProvider)";
+                    authProviderCreation = this.oauthTokenOverride
+                        ? "OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)"
+                        : "new OAuthAuthProvider(normalizedWithNoOpAuthProvider)";
                     break;
                 } else if (authScheme.type === "inferred") {
                     context.sourceFile.addImportDeclaration({

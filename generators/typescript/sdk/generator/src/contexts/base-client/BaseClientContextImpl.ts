@@ -22,7 +22,7 @@ export declare namespace BaseClientContextImpl {
         generateIdempotentRequestOptions: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
-        oauthTokenOverridePropertyName: string | undefined;
+        oauthTokenOverride: boolean;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -43,7 +43,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
-    private readonly oauthTokenOverridePropertyName: string | undefined;
+    private readonly oauthTokenOverride: boolean;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -69,7 +69,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         generateIdempotentRequestOptions,
         parameterNaming,
         baseClientTypeDeclarationReferencer,
-        oauthTokenOverridePropertyName
+        oauthTokenOverride
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
@@ -78,7 +78,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.parameterNaming = parameterNaming;
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
-        this.oauthTokenOverridePropertyName = oauthTokenOverridePropertyName;
+        this.oauthTokenOverride = oauthTokenOverride;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -273,7 +273,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         // When token override is enabled, we skip adding these properties here because
         // BaseClientOptions will be generated as a type alias with the union type instead
         const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
-        const hasTokenOverride = this.oauthTokenOverridePropertyName !== undefined;
+        const hasTokenOverride = this.oauthTokenOverride;
         if (oauthScheme != null && oauthScheme.type === "oauth" && context.generateOAuthClients && !hasTokenOverride) {
             const oauthConfig = oauthScheme.configuration;
             if (oauthConfig.type === "clientCredentials") {

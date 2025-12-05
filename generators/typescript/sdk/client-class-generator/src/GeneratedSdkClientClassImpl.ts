@@ -95,7 +95,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
-        oauthTokenOverridePropertyName: string | undefined;
+        oauthTokenOverride: boolean;
     }
 }
 
@@ -139,7 +139,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
-    private readonly oauthTokenOverridePropertyName: string | undefined;
+    private readonly oauthTokenOverride: boolean;
 
     constructor({
         isRoot,
@@ -167,7 +167,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         generateEndpointMetadata,
         parameterNaming,
         offsetSemantics,
-        oauthTokenOverridePropertyName
+        oauthTokenOverride
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -187,7 +187,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
-        this.oauthTokenOverridePropertyName = oauthTokenOverridePropertyName;
+        this.oauthTokenOverride = oauthTokenOverride;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;
@@ -1014,7 +1014,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         // Check if OAuth token override is enabled - apply union type to all clients
         const hasOAuthTokenOverride =
-            this.oauthTokenOverridePropertyName !== undefined && this.authProvider instanceof OAuthAuthProviderInstance;
+            this.oauthTokenOverride && this.authProvider instanceof OAuthAuthProviderInstance;
 
         if (hasOAuthTokenOverride) {
             // Generate undiscriminated union type for OAuth with token override
@@ -1032,7 +1032,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                 kind: StructureKind.TypeAlias,
                 name: "OAuthAuthOptions",
                 isExported: true,
-                type: `{ clientId: ${supplierType}; clientSecret: ${supplierType}; } | { ${this.oauthTokenOverridePropertyName}: ${supplierType}; }`
+                type: `{ clientId: ${supplierType}; clientSecret: ${supplierType}; } | { token: ${supplierType}; }`
             };
 
             // Generate the Options type alias that intersects BaseClientOptions with the union

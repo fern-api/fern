@@ -31,7 +31,7 @@ export declare namespace SdkClientClassGenerator {
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
-        oauthTokenOverridePropertyName: string | undefined;
+        oauthTokenOverride: boolean;
     }
 
     export namespace generateService {
@@ -69,7 +69,7 @@ export class SdkClientClassGenerator {
     private readonly generateEndpointMetadata: boolean;
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly offsetSemantics: "item-index" | "page-index";
-    private readonly oauthTokenOverridePropertyName: string | undefined;
+    private readonly oauthTokenOverride: boolean;
 
     constructor({
         intermediateRepresentation,
@@ -96,7 +96,7 @@ export class SdkClientClassGenerator {
         generateEndpointMetadata,
         parameterNaming,
         offsetSemantics,
-        oauthTokenOverridePropertyName
+        oauthTokenOverride
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -122,7 +122,7 @@ export class SdkClientClassGenerator {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
-        this.oauthTokenOverridePropertyName = oauthTokenOverridePropertyName;
+        this.oauthTokenOverride = oauthTokenOverride;
     }
 
     public generateService({
@@ -159,7 +159,7 @@ export class SdkClientClassGenerator {
             generateEndpointMetadata: this.generateEndpointMetadata,
             parameterNaming: this.parameterNaming,
             offsetSemantics: this.offsetSemantics,
-            oauthTokenOverridePropertyName: this.oauthTokenOverridePropertyName
+            oauthTokenOverride: this.oauthTokenOverride
         });
     }
 }

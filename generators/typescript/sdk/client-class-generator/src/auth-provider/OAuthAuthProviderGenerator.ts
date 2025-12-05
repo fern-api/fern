@@ -11,7 +11,7 @@ export declare namespace OAuthAuthProviderGenerator {
         authScheme: FernIr.OAuthScheme;
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
-        tokenOverridePropertyName: string | undefined;
+        oauthTokenOverride: boolean;
     }
 }
 
@@ -41,14 +41,14 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     private readonly authScheme: FernIr.OAuthScheme;
     private readonly neverThrowErrors: boolean;
     private readonly includeSerdeLayer: boolean;
-    private readonly tokenOverridePropertyName: string | undefined;
+    private readonly oauthTokenOverride: boolean;
 
     constructor(init: OAuthAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;
         this.includeSerdeLayer = init.includeSerdeLayer;
-        this.tokenOverridePropertyName = init.tokenOverridePropertyName;
+        this.oauthTokenOverride = init.oauthTokenOverride;
     }
 
     public getFilePath(): ExportedFilePath {
@@ -76,7 +76,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
-        const hasTokenOverride = this.tokenOverridePropertyName !== undefined;
+        const hasTokenOverride = this.oauthTokenOverride;
         if (hasTokenOverride) {
             // When token override is enabled, use the factory function
             return ts.factory.createCallExpression(
@@ -89,7 +89,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public writeToFile(context: SdkContext): void {
-        const hasTokenOverride = this.tokenOverridePropertyName !== undefined;
+        const hasTokenOverride = this.oauthTokenOverride;
         // Write classes first, then namespace - TypeScript requires namespace to come after
         // the class when they share the same name (declaration merging)
         this.writeClass(context);
@@ -164,7 +164,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
 
-        const hasTokenOverride = this.tokenOverridePropertyName !== undefined;
+        const hasTokenOverride = this.oauthTokenOverride;
 
         // Constructor type depends on whether token override is enabled
         const constructorOptionsType = hasTokenOverride
@@ -405,7 +405,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const canCreateStatements = hasTokenOverride
             ? `return "clientId" in options && options.clientId != null && "clientSecret" in options && options.clientSecret != null;`
-            : this.generatecanCreateStatements(oauthConfig.clientIdEnvVar, oauthConfig.clientSecretEnvVar, undefined);
+            : this.generatecanCreateStatements(oauthConfig.clientIdEnvVar, oauthConfig.clientSecretEnvVar);
 
         const canCreateReturnType = hasTokenOverride
             ? `options is ${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.ClientCredentials`
@@ -570,8 +570,6 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             return;
         }
 
-        const tokenOverridePropertyName = this.tokenOverridePropertyName ?? DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME;
-
         const errorConstructor = getTextOfTsNode(
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
@@ -583,12 +581,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         );
 
         const constructorStatements = `
-        if (${OPTIONS_PARAM_NAME}.${tokenOverridePropertyName} == null) {
+        if (${OPTIONS_PARAM_NAME}.${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME} == null) {
             throw new ${errorConstructor}({
-                message: "${tokenOverridePropertyName} is required. Please provide it in ${OPTIONS_PARAM_NAME}."
+                message: "${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}."
             });
         }
-        this.${TOKEN_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${tokenOverridePropertyName};
+        this.${TOKEN_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME};
         `;
 
         const tokenPropertyAccess = ts.factory.createPropertyAccessExpression(
@@ -614,7 +612,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 name: "canCreate",
                 isAsync: false,
                 returnType: `options is ${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.TokenOverride`,
-                statements: `return "${tokenOverridePropertyName}" in options && options.${tokenOverridePropertyName} != null;`,
+                statements: `return "${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME}" in options && options.${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME} != null;`,
                 parameters: [
                     {
                         name: "options",
@@ -691,14 +689,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
     private generatecanCreateStatements(
         clientIdEnvVar: string | undefined,
-        clientSecretEnvVar: string | undefined,
-        tokenOverridePropertyName: string | undefined
+        clientSecretEnvVar: string | undefined
     ): string {
-        if (tokenOverridePropertyName != null) {
-            // When token override is enabled, use the type guard functions for cleaner code
-            return `return ${CLASS_NAME}.hasToken(options) || ${CLASS_NAME}.hasClientCredentials(options);`;
-        }
-
         // Without token override, we can access clientId and clientSecret directly
         const clientIdCheck =
             clientIdEnvVar != null
@@ -737,8 +729,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             return;
         }
 
-        const hasTokenOverride = this.tokenOverridePropertyName !== undefined;
-        const tokenOverridePropertyName = this.tokenOverridePropertyName ?? DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME;
+        const hasTokenOverride = this.oauthTokenOverride;
 
         const supplierType = getTextOfTsNode(
             context.coreUtilities.fetcher.Supplier._getReferenceToType(
@@ -781,7 +772,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                                 kind: StructureKind.Interface,
                                 name: "TokenOverride",
                                 isExported: true,
-                                properties: [{ name: tokenOverridePropertyName, type: supplierType }]
+                                properties: [{ name: DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME, type: supplierType }]
                             }
                         ]
                     },
@@ -805,7 +796,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             return new ${TOKEN_OVERRIDE_CLASS_NAME}(options);
         }
         throw new ${errorConstructor}({
-            message: "Insufficient options to create OAuthAuthProvider. Please provide either clientId and clientSecret, or ${tokenOverridePropertyName}."
+            message: "Insufficient options to create OAuthAuthProvider. Please provide either clientId and clientSecret, or ${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME}."
         });
         `
                     }

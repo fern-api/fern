@@ -59,7 +59,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     offsetSemantics: z.optional(z.enum(["item-index", "page-index"])),
 
     // OAuth token override configuration
-    oauthTokenOverridePropertyName: z.optional(z.string()),
+    oauthTokenOverride: z.optional(z.boolean()),
 
     // beta (not in docs)
     includeContentHeadersOnFileDownloadResponse: z.optional(z.boolean()),
