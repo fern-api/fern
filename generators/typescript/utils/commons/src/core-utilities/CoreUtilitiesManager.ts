@@ -67,7 +67,7 @@ export class CoreUtilitiesManager {
         relativePackagePath = DEFAULT_PACKAGE_PATH,
         relativeTestPath = DEFAULT_TEST_PATH,
         generateEndpointMetadata,
-        serializationFormat = "default"
+        serializationFormat = "zurg"
     }: {
         streamType: "wrapper" | "web";
         formDataSupport: "Node16" | "Node18";
@@ -154,7 +154,7 @@ export class CoreUtilitiesManager {
         };
 
         switch (this.serializationFormat) {
-            case "default":
+            case "zurg":
                 // Add Zurg manifest to referenced utilities so it gets copied
                 this.addManifestAndDependencies(ZURG_MANIFEST);
                 return new ZurgFormat(config);

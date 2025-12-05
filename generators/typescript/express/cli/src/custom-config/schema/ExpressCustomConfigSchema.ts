@@ -6,7 +6,7 @@ import { z } from "zod";
  * - "zod": Use Zod as npm dependency
  * - "none": No serialization layer - same as noSerdeLayer: true
  */
-const SerializationFormatSchema = z.enum(["default", "zod", "none"]);
+const SerializationFormatSchema = z.enum(["zurg", "zod", "none"]);
 
 export const ExpressCustomConfigSchema = z.strictObject({
     useBrandedStringAliases: z.optional(z.boolean()),
