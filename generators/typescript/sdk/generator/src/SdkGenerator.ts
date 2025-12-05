@@ -124,7 +124,7 @@ export declare namespace SdkGenerator {
         treatUnknownAsAny: boolean;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
-        serializationFormat: "default" | "zod" | "none";
+        serializationFormat: "zurg" | "zod" | "none";
         noOptionalProperties: boolean;
         tolerateRepublish: boolean;
         retainOriginalCasing: boolean;

@@ -40,7 +40,7 @@ interface ZurgBaseSchema extends Schema {
  * This generates TypeScript AST that uses Zurg's runtime schema library.
  */
 export class ZurgFormat implements SerializationFormat {
-    public readonly name = "default" as const;
+    public readonly name = "zurg" as const;
 
     private getReferenceToExport: (args: { manifest: CoreUtility.Manifest; exportedName: string }) => Reference;
     private generateEndpointMetadata: boolean;

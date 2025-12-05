@@ -51,7 +51,7 @@ export const TypescriptCustomConfigSchema = z.strictObject({
     inlinePathParameters: z.optional(z.boolean()),
     namespaceExport: z.optional(z.string()),
     noSerdeLayer: z.optional(z.boolean()),
-    serializationFormat: z.optional(z.enum(["default", "zod", "none"])),
+    serializationFormat: z.optional(z.enum(["zurg", "zod", "none"])),
     private: z.optional(z.boolean()),
     requireDefaultEnvironment: z.optional(z.boolean()),
     retainOriginalCasing: z.optional(z.boolean()),

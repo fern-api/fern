@@ -249,7 +249,7 @@ describe("ZurgFormat AST Generation", () => {
 
     describe("Format Identity", () => {
         it("has name 'default'", () => {
-            expect(zurg.name).toBe("default");
+            expect(zurg.name).toBe("zurg");
         });
     });
 });

@@ -59,7 +59,7 @@ export declare namespace ExpressGenerator {
         includeOtherInUnionTypes: boolean;
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
-        serializationFormat: "default" | "zod" | "none";
+        serializationFormat: "zurg" | "zod" | "none";
         outputEsm: boolean;
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;

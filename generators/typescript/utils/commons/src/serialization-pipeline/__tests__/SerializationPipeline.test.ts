@@ -47,11 +47,11 @@ describe("SerializationPipeline", () => {
         it("creates ZurgFormat for 'default'", () => {
             const pipeline = new SerializationPipeline({
                 ...baseConfig,
-                format: "default"
+                format: "zurg"
             });
 
             expect(pipeline.getFormat()).toBeInstanceOf(ZurgFormat);
-            expect(pipeline.getFormatType()).toBe("default");
+            expect(pipeline.getFormatType()).toBe("zurg");
             expect(pipeline.isEnabled()).toBe(true);
         });
 
@@ -82,9 +82,9 @@ describe("SerializationPipeline", () => {
         it("returns explicit serializationFormat when provided", () => {
             expect(
                 SerializationPipeline.resolveFormatType({
-                    serializationFormat: "default"
+                    serializationFormat: "zurg"
                 })
-            ).toBe("default");
+            ).toBe("zurg");
 
             expect(
                 SerializationPipeline.resolveFormatType({
@@ -112,21 +112,21 @@ describe("SerializationPipeline", () => {
                 SerializationPipeline.resolveFormatType({
                     noSerdeLayer: false
                 })
-            ).toBe("default");
+            ).toBe("zurg");
         });
 
         it("returns 'default' when nothing is specified", () => {
-            expect(SerializationPipeline.resolveFormatType({})).toBe("default");
+            expect(SerializationPipeline.resolveFormatType({})).toBe("zurg");
         });
 
         it("serializationFormat takes precedence over noSerdeLayer", () => {
             // Even with noSerdeLayer: true, explicit format wins
             expect(
                 SerializationPipeline.resolveFormatType({
-                    serializationFormat: "default",
+                    serializationFormat: "zurg",
                     noSerdeLayer: true
                 })
-            ).toBe("default");
+            ).toBe("zurg");
 
             // And vice versa
             expect(
@@ -142,7 +142,7 @@ describe("SerializationPipeline", () => {
         it("ZurgFormat returns no npm dependencies", () => {
             const pipeline = new SerializationPipeline({
                 ...baseConfig,
-                format: "default"
+                format: "zurg"
             });
 
             expect(pipeline.getRuntimeDependencies()).toEqual({});
@@ -151,7 +151,7 @@ describe("SerializationPipeline", () => {
         it("ZurgFormat returns file patterns for bundled runtime", () => {
             const pipeline = new SerializationPipeline({
                 ...baseConfig,
-                format: "default"
+                format: "zurg"
             });
 
             const patterns = pipeline.getRuntimeFilePatterns();
@@ -185,7 +185,7 @@ describe("SerializationPipeline", () => {
         it("ZurgFormat generates valid schema expressions", () => {
             const pipeline = new SerializationPipeline({
                 ...baseConfig,
-                format: "default"
+                format: "zurg"
             });
 
             const format = pipeline.getFormat();
