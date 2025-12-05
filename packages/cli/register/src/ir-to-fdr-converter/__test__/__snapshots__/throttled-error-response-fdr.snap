@@ -29,7 +29,22 @@
                 },
               },
             ],
-            "headers": undefined,
+            "headers": [
+              {
+                "availability": undefined,
+                "description": "Number of seconds to wait before the next request.",
+                "key": "Retry-After",
+                "type": {
+                  "type": "primitive",
+                  "value": {
+                    "default": undefined,
+                    "maximum": undefined,
+                    "minimum": undefined,
+                    "type": "double",
+                  },
+                },
+              },
+            ],
             "isWildcard": undefined,
             "name": "TooManyRequestsError",
             "statusCode": 429,
