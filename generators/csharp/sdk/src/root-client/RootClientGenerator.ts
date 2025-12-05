@@ -400,10 +400,10 @@ export class RootClientGenerator extends FileGenerator<CSharpFile, SdkGeneratorC
                 };
 
                 if (this.settings.includeExceptionHandler) {
-                    writer.controlFlow("try", this.csharp.codeblock(""));
+                    writer.controlFlowWithoutStatement("try");
                     writeConstructorBody(writer);
                     writer.endControlFlow();
-                    writer.controlFlow("catch", this.csharp.codeblock("(Exception ex)"));
+                    writer.controlFlow("catch", this.csharp.codeblock("Exception ex"));
                     // Create a temporary interceptor to capture the exception since clientOptions may not be initialized
                     writer.write("var interceptor = ");
                     writer.writeNodeStatement(

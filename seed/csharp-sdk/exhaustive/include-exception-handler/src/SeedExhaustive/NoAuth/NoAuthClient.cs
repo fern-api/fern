@@ -1,15 +1,19 @@
-using System.Text.Json;
 using SeedExhaustive.Core;
+using System.Text.Json;
 
 namespace SeedExhaustive;
 
 public partial class NoAuthClient
 {
     private RawClient _client;
-
-    internal NoAuthClient(RawClient client)
-    {
-        _client = client;
+    internal NoAuthClient (RawClient client){
+        try (){
+            _client = client;
+        }
+        catch ((Exception ex)){
+            client.Options.ExceptionHandler?.CaptureException(ex);
+            throw;
+        }
     }
 
     /// <summary>
@@ -18,64 +22,39 @@ public partial class NoAuthClient
     /// <example><code>
     /// await client.NoAuth.PostWithNoAuthAsync(new Dictionary&lt;object, object?&gt;() { { "key", "value" } });
     /// </code></example>
-    public async Task<bool> PostWithNoAuthAsync(
-        object request,
-        RequestOptions? options = null,
-        CancellationToken cancellationToken = default
-    )
-    {
-        return await _client
-            .Options.ExceptionHandler.TryCatchAsync(async () =>
+    public async Task<bool> PostWithNoAuthAsync(object request, RequestOptions? options = null, CancellationToken cancellationToken = default) {
+        return await _client.Options.ExceptionHandler.TryCatchAsync(async () =>
+        {
+            var response = await _client.SendRequestAsync(new JsonRequest {BaseUrl = _client.Options.BaseUrl, Method = HttpMethod.Post, Path = "/no-auth", Body = request, Options = options}, cancellationToken).ConfigureAwait(false);
+            if (response.StatusCode is >= 200 and < 400)
             {
-                var response = await _client
-                    .SendRequestAsync(
-                        new JsonRequest
-                        {
-                            BaseUrl = _client.Options.BaseUrl,
-                            Method = HttpMethod.Post,
-                            Path = "/no-auth",
-                            Body = request,
-                            Options = options,
-                        },
-                        cancellationToken
-                    )
-                    .ConfigureAwait(false);
-                if (response.StatusCode is >= 200 and < 400)
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        return JsonUtils.Deserialize<bool>(responseBody)!;
-                    }
-                    catch (JsonException e)
-                    {
-                        throw new SeedExhaustiveException("Failed to deserialize response", e);
-                    }
+                    return JsonUtils.Deserialize<bool>(responseBody)!;
                 }
-
+                catch (JsonException e)
                 {
-                    var responseBody = await response.Raw.Content.ReadAsStringAsync();
-                    try
-                    {
-                        switch (response.StatusCode)
-                        {
-                            case 400:
-                                throw new BadRequestBody(
-                                    JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody)
-                                );
+                    throw new SeedExhaustiveException("Failed to deserialize response", e);
+                }
+            }
+            
+            {
+                var responseBody = await response.Raw.Content.ReadAsStringAsync();
+                try
+                {
+                    switch (response.StatusCode){
+                        case 400:
+                            throw new BadRequestBody(JsonUtils.Deserialize<BadObjectRequestInfo>(responseBody));
                         }
                     }
-                    catch (JsonException)
-                    {
+                    catch (JsonException){
                         // unable to map error response, throwing generic error
                     }
-                    throw new SeedExhaustiveApiException(
-                        $"Error with status code {response.StatusCode}",
-                        response.StatusCode,
-                        responseBody
-                    );
+                    throw new SeedExhaustiveApiException($"Error with status code {response.StatusCode}", response.StatusCode, responseBody);
                 }
-            })
-            .ConfigureAwait(false);
+            }
+            ).ConfigureAwait(false);
+        }
+
     }
-}

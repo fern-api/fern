@@ -187,10 +187,10 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
                 };
 
                 if (this.settings.includeExceptionHandler) {
-                    writer.controlFlow("try", this.csharp.codeblock(""));
+                    writer.controlFlowWithoutStatement("try");
                     writeConstructorBody(writer);
                     writer.endControlFlow();
-                    writer.controlFlow("catch", this.csharp.codeblock("(Exception ex)"));
+                    writer.controlFlow("catch", this.csharp.codeblock("Exception ex"));
                     writer.writeLine("client.Options.ExceptionHandler?.CaptureException(ex);");
                     writer.writeLine("throw;");
                     writer.endControlFlow();
