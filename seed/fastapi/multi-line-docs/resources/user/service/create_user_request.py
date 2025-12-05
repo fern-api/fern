@@ -7,13 +7,13 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class CreateUserRequest(UniversalBaseModel):
-    name: str = pydantic.Field()
+    name: str
     """
     The name of the user to create.
     This name is unique to each user.
     """
 
-    age: typing.Optional[int] = pydantic.Field(default=None)
+    age: typing.Optional[int] = None
     """
     The age of the user.
     This property is not required.

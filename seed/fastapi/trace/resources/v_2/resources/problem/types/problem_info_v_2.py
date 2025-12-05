@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .....commons.types.language import Language
 from .....commons.types.problem_id import ProblemId
@@ -14,16 +15,18 @@ from .test_case_v_2 import TestCaseV2
 
 
 class ProblemInfoV2(UniversalBaseModel):
-    problem_id: ProblemId = pydantic.Field(alias="problemId")
-    problem_description: ProblemDescription = pydantic.Field(alias="problemDescription")
-    problem_name: str = pydantic.Field(alias="problemName")
-    problem_version: int = pydantic.Field(alias="problemVersion")
-    supported_languages: typing.Set[Language] = pydantic.Field(alias="supportedLanguages")
-    custom_files: CustomFiles = pydantic.Field(alias="customFiles")
-    generated_files: GeneratedFiles = pydantic.Field(alias="generatedFiles")
-    custom_test_case_templates: typing.List[TestCaseTemplate] = pydantic.Field(alias="customTestCaseTemplates")
+    problem_id: typing_extensions.Annotated[ProblemId, pydantic.Field(alias="problemId")]
+    problem_description: typing_extensions.Annotated[ProblemDescription, pydantic.Field(alias="problemDescription")]
+    problem_name: typing_extensions.Annotated[str, pydantic.Field(alias="problemName")]
+    problem_version: typing_extensions.Annotated[int, pydantic.Field(alias="problemVersion")]
+    supported_languages: typing_extensions.Annotated[typing.Set[Language], pydantic.Field(alias="supportedLanguages")]
+    custom_files: typing_extensions.Annotated[CustomFiles, pydantic.Field(alias="customFiles")]
+    generated_files: typing_extensions.Annotated[GeneratedFiles, pydantic.Field(alias="generatedFiles")]
+    custom_test_case_templates: typing_extensions.Annotated[
+        typing.List[TestCaseTemplate], pydantic.Field(alias="customTestCaseTemplates")
+    ]
     testcases: typing.List[TestCaseV2]
-    is_public: bool = pydantic.Field(alias="isPublic")
+    is_public: typing_extensions.Annotated[bool, pydantic.Field(alias="isPublic")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

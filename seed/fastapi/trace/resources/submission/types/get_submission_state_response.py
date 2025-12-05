@@ -4,16 +4,19 @@ import datetime as dt
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...commons.types.language import Language
 from .submission_type_state import SubmissionTypeState
 
 
 class GetSubmissionStateResponse(UniversalBaseModel):
-    time_submitted: typing.Optional[dt.datetime] = pydantic.Field(alias="timeSubmitted", default=None)
+    time_submitted: typing_extensions.Annotated[typing.Optional[dt.datetime], pydantic.Field(alias="timeSubmitted")] = (
+        None
+    )
     submission: str
     language: Language
-    submission_type_state: SubmissionTypeState = pydantic.Field(alias="submissionTypeState")
+    submission_type_state: typing_extensions.Annotated[SubmissionTypeState, pydantic.Field(alias="submissionTypeState")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

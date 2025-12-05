@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .lightweight_stackframe_information import LightweightStackframeInformation
 from .submission_id import SubmissionId
@@ -10,11 +11,13 @@ from .traced_file import TracedFile
 
 
 class RecordingResponseNotification(UniversalBaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    test_case_id: typing.Optional[str] = pydantic.Field(alias="testCaseId", default=None)
-    line_number: int = pydantic.Field(alias="lineNumber")
-    lightweight_stack_info: LightweightStackframeInformation = pydantic.Field(alias="lightweightStackInfo")
-    traced_file: typing.Optional[TracedFile] = pydantic.Field(alias="tracedFile", default=None)
+    submission_id: typing_extensions.Annotated[SubmissionId, pydantic.Field(alias="submissionId")]
+    test_case_id: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="testCaseId")] = None
+    line_number: typing_extensions.Annotated[int, pydantic.Field(alias="lineNumber")]
+    lightweight_stack_info: typing_extensions.Annotated[
+        LightweightStackframeInformation, pydantic.Field(alias="lightweightStackInfo")
+    ]
+    traced_file: typing_extensions.Annotated[typing.Optional[TracedFile], pydantic.Field(alias="tracedFile")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

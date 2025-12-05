@@ -12,7 +12,7 @@ from .trace_response_v_2 import TraceResponseV2
 
 
 class TraceResponsesPageV2(UniversalBaseModel):
-    offset: typing.Optional[int] = pydantic.Field(default=None)
+    offset: typing.Optional[int] = None
     """
     If present, use this to load subsequent pages.
     The offset is the id of the next trace response to load.

@@ -3,13 +3,14 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SmsNotification(UniversalBaseModel):
-    phone_number: str = pydantic.Field(alias="phoneNumber")
+    phone_number: typing_extensions.Annotated[str, pydantic.Field(alias="phoneNumber")]
     message: str
-    short_code: typing.Optional[str] = pydantic.Field(alias="shortCode", default=None)
+    short_code: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="shortCode")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

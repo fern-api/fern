@@ -12,22 +12,22 @@ class User(UniversalBaseModel):
     User object
     """
 
-    id: str = pydantic.Field()
+    id: str
     """
     The unique identifier for the user.
     """
 
-    email: str = pydantic.Field()
+    email: str
     """
     The email address of the user.
     """
 
-    password: str = pydantic.Field()
+    password: str
     """
     The password for the user.
     """
 
-    profile: UserProfile = pydantic.Field()
+    profile: UserProfile
     """
     User profile object
     """

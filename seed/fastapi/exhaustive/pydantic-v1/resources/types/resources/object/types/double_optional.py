@@ -3,12 +3,15 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import UniversalBaseModel
 from .optional_alias import OptionalAlias
 
 
 class DoubleOptional(UniversalBaseModel):
-    optional_alias: typing.Optional[OptionalAlias] = pydantic.Field(alias="optionalAlias", default=None)
+    optional_alias: typing_extensions.Annotated[
+        typing.Optional[OptionalAlias], pydantic.Field(alias="optionalAlias")
+    ] = None
 
     class Config:
         extra = pydantic.Extra.forbid

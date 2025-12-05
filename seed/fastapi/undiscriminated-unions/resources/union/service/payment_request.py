@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..types.payment_method_union import PaymentMethodUnion
 
 
 class PaymentRequest(UniversalBaseModel):
-    payment_method: PaymentMethodUnion = pydantic.Field(alias="paymentMethod")
+    payment_method: typing_extensions.Annotated[PaymentMethodUnion, pydantic.Field(alias="paymentMethod")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

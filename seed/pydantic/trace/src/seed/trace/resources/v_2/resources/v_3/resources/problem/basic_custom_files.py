@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from .......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ......commons.language import Language
 from .basic_test_case_template import BasicTestCaseTemplate
@@ -13,10 +14,12 @@ from .non_void_function_signature import NonVoidFunctionSignature
 
 
 class BasicCustomFiles(UniversalBaseModel):
-    method_name: str = pydantic.Field(alias="methodName")
+    method_name: typing_extensions.Annotated[str, pydantic.Field(alias="methodName")]
     signature: NonVoidFunctionSignature
-    additional_files: typing.Dict[Language, Files] = pydantic.Field(alias="additionalFiles")
-    basic_test_case_template: BasicTestCaseTemplate = pydantic.Field(alias="basicTestCaseTemplate")
+    additional_files: typing_extensions.Annotated[typing.Dict[Language, Files], pydantic.Field(alias="additionalFiles")]
+    basic_test_case_template: typing_extensions.Annotated[
+        BasicTestCaseTemplate, pydantic.Field(alias="basicTestCaseTemplate")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

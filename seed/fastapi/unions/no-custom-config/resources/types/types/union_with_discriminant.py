@@ -65,11 +65,11 @@ class UnionWithDiscriminant(UniversalRootModel):
 
 class _UnionWithDiscriminant:
     class Foo(UniversalBaseModel):
-        type: typing.Literal["foo"] = pydantic.Field(alias="_type", default="foo")
+        type: typing_extensions.Annotated[typing.Literal["foo"], pydantic.Field(alias="_type")] = "foo"
         foo: resources_types_types_foo_Foo
 
     class Bar(UniversalBaseModel):
-        type: typing.Literal["bar"] = pydantic.Field(alias="_type", default="bar")
+        type: typing_extensions.Annotated[typing.Literal["bar"], pydantic.Field(alias="_type")] = "bar"
         bar: resources_types_types_bar_Bar
 
 

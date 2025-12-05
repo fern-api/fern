@@ -13,12 +13,14 @@ from ...types.resources.object.types.object_with_optional_field import ObjectWit
 class PostWithObjectBody(UniversalBaseModel):
     string: str
     integer: int
-    nested_object: ObjectWithOptionalField = pydantic.Field(alias="NestedObject")
+    nested_object: typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")]
 
     class Partial(typing.TypedDict):
         string: typing_extensions.NotRequired[str]
         integer: typing_extensions.NotRequired[int]
-        nested_object: typing_extensions.NotRequired[ObjectWithOptionalField]
+        nested_object: typing_extensions.NotRequired[
+            typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")]
+        ]
 
     class Validators:
         """
@@ -37,7 +39,7 @@ class PostWithObjectBody(UniversalBaseModel):
                 ...
 
             @PostWithObjectBody.Validators.field("nested_object")
-            def validate_nested_object(nested_object: ObjectWithOptionalField, values: PostWithObjectBody.Partial) -> ObjectWithOptionalField:
+            def validate_nested_object(nested_object: typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")], values: PostWithObjectBody.Partial) -> typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")]:
                 ...
         """
 
@@ -161,8 +163,10 @@ class PostWithObjectBody(UniversalBaseModel):
 
         class NestedObjectValidator(typing.Protocol):
             def __call__(
-                self, __v: ObjectWithOptionalField, __values: PostWithObjectBody.Partial
-            ) -> ObjectWithOptionalField: ...
+                self,
+                __v: typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")],
+                __values: PostWithObjectBody.Partial,
+            ) -> typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")]: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
@@ -208,16 +212,20 @@ class PostWithObjectBody(UniversalBaseModel):
 
     @universal_field_validator("nested_object", pre=True)
     def _pre_validate_nested_object(
-        cls, v: ObjectWithOptionalField, values: PostWithObjectBody.Partial
-    ) -> ObjectWithOptionalField:
+        cls,
+        v: typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")],
+        values: PostWithObjectBody.Partial,
+    ) -> typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")]:
         for validator in PostWithObjectBody.Validators._nested_object_pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("nested_object", pre=False)
     def _post_validate_nested_object(
-        cls, v: ObjectWithOptionalField, values: PostWithObjectBody.Partial
-    ) -> ObjectWithOptionalField:
+        cls,
+        v: typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")],
+        values: PostWithObjectBody.Partial,
+    ) -> typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")]:
         for validator in PostWithObjectBody.Validators._nested_object_post_validators:
             v = validator(v, values)
         return v

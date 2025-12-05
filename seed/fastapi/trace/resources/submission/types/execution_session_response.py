@@ -3,14 +3,17 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...commons.types.language import Language
 from .execution_session_status import ExecutionSessionStatus
 
 
 class ExecutionSessionResponse(UniversalBaseModel):
-    session_id: str = pydantic.Field(alias="sessionId")
-    execution_session_url: typing.Optional[str] = pydantic.Field(alias="executionSessionUrl", default=None)
+    session_id: typing_extensions.Annotated[str, pydantic.Field(alias="sessionId")]
+    execution_session_url: typing_extensions.Annotated[
+        typing.Optional[str], pydantic.Field(alias="executionSessionUrl")
+    ] = None
     language: Language
     status: ExecutionSessionStatus
 

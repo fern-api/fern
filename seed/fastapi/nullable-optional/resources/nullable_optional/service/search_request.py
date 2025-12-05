@@ -3,13 +3,16 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class SearchRequest(UniversalBaseModel):
     query: str
     filters: typing.Optional[typing.Dict[str, typing.Optional[str]]] = None
-    include_types: typing.Optional[typing.List[str]] = pydantic.Field(alias="includeTypes", default=None)
+    include_types: typing_extensions.Annotated[
+        typing.Optional[typing.List[str]], pydantic.Field(alias="includeTypes")
+    ] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

@@ -10,7 +10,7 @@ from .movie_id import MovieId
 class Movie(UniversalBaseModel):
     id: MovieId
     title: str
-    rating: float = pydantic.Field()
+    rating: float
     """
     The rating scale is one to five stars
     """

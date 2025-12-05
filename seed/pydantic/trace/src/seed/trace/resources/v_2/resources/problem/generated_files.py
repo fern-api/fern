@@ -3,14 +3,19 @@
 import typing
 
 import pydantic
+import typing_extensions
 from .....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ....commons.language import Language
 from .files import Files
 
 
 class GeneratedFiles(UniversalBaseModel):
-    generated_test_case_files: typing.Dict[Language, Files] = pydantic.Field(alias="generatedTestCaseFiles")
-    generated_template_files: typing.Dict[Language, Files] = pydantic.Field(alias="generatedTemplateFiles")
+    generated_test_case_files: typing_extensions.Annotated[
+        typing.Dict[Language, Files], pydantic.Field(alias="generatedTestCaseFiles")
+    ]
+    generated_template_files: typing_extensions.Annotated[
+        typing.Dict[Language, Files], pydantic.Field(alias="generatedTemplateFiles")
+    ]
     other: typing.Dict[Language, Files]
 
     if IS_PYDANTIC_V2:

@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .email import Email
 from .metadata import Metadata
@@ -16,7 +17,7 @@ class User(UniversalBaseModel):
     tags: typing.Optional[typing.List[str]] = None
     metadata: typing.Optional[Metadata] = None
     email: Email
-    favorite_number: WeirdNumber = pydantic.Field(alias="favorite-number")
+    favorite_number: typing_extensions.Annotated[WeirdNumber, pydantic.Field(alias="favorite-number")]
     numbers: typing.Optional[typing.List[int]] = None
     strings: typing.Optional[typing.Dict[str, typing.Any]] = None
 

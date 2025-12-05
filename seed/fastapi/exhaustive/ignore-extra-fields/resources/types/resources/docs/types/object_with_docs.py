@@ -14,7 +14,7 @@ from ......core.pydantic_utilities import (
 
 
 class ObjectWithDocs(UniversalBaseModel):
-    string: str = pydantic.Field()
+    string: str
     """
     Characters that could lead to broken generated SDKs:
     

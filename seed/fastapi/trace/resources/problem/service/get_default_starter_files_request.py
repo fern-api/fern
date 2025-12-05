@@ -3,15 +3,16 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...commons.types.variable_type import VariableType
 from ..types.variable_type_and_name import VariableTypeAndName
 
 
 class GetDefaultStarterFilesRequest(UniversalBaseModel):
-    input_params: typing.List[VariableTypeAndName] = pydantic.Field(alias="inputParams")
-    output_type: VariableType = pydantic.Field(alias="outputType")
-    method_name: str = pydantic.Field(alias="methodName")
+    input_params: typing_extensions.Annotated[typing.List[VariableTypeAndName], pydantic.Field(alias="inputParams")]
+    output_type: typing_extensions.Annotated[VariableType, pydantic.Field(alias="outputType")]
+    method_name: typing_extensions.Annotated[str, pydantic.Field(alias="methodName")]
     """
     The name of the `method` that the student has to complete.
     The method name cannot include the following characters:

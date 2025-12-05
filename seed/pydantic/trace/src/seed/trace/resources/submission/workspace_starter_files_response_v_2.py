@@ -3,13 +3,16 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ..commons.language import Language
 from ..v_2.resources.problem.files import Files
 
 
 class WorkspaceStarterFilesResponseV2(UniversalBaseModel):
-    files_by_language: typing.Dict[Language, Files] = pydantic.Field(alias="filesByLanguage")
+    files_by_language: typing_extensions.Annotated[
+        typing.Dict[Language, Files], pydantic.Field(alias="filesByLanguage")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

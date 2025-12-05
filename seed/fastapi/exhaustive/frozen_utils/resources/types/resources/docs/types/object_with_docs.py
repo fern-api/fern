@@ -7,7 +7,7 @@ from ......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class ObjectWithDocs(UniversalBaseModel):
-    string: str = pydantic.Field()
+    string: str
     """
     Characters that could lead to broken generated SDKs:
     

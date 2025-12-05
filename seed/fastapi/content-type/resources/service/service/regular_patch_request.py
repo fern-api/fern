@@ -3,12 +3,13 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class RegularPatchRequest(UniversalBaseModel):
-    field_1: typing.Optional[str] = pydantic.Field(alias="field1", default=None)
-    field_2: typing.Optional[int] = pydantic.Field(alias="field2", default=None)
+    field_1: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="field1")] = None
+    field_2: typing_extensions.Annotated[typing.Optional[int], pydantic.Field(alias="field2")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

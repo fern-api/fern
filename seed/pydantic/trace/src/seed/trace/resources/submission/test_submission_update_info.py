@@ -36,7 +36,7 @@ class TestSubmissionUpdateInfo_Errored(UniversalBaseModel):
 
 class TestSubmissionUpdateInfo_GradedTestCase(UniversalBaseModel):
     type: typing.Literal["gradedTestCase"] = "gradedTestCase"
-    test_case_id: TestCaseId = pydantic.Field(alias="testCaseId")
+    test_case_id: typing_extensions.Annotated[TestCaseId, pydantic.Field(alias="testCaseId")]
     grade: TestCaseGrade
 
     if IS_PYDANTIC_V2:
@@ -49,8 +49,8 @@ class TestSubmissionUpdateInfo_GradedTestCase(UniversalBaseModel):
 
 class TestSubmissionUpdateInfo_RecordedTestCase(UniversalBaseModel):
     type: typing.Literal["recordedTestCase"] = "recordedTestCase"
-    test_case_id: TestCaseId = pydantic.Field(alias="testCaseId")
-    trace_responses_size: int = pydantic.Field(alias="traceResponsesSize")
+    test_case_id: typing_extensions.Annotated[TestCaseId, pydantic.Field(alias="testCaseId")]
+    trace_responses_size: typing_extensions.Annotated[int, pydantic.Field(alias="traceResponsesSize")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

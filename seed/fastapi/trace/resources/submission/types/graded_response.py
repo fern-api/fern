@@ -3,14 +3,17 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .submission_id import SubmissionId
 from .test_case_result_with_stdout import TestCaseResultWithStdout
 
 
 class GradedResponse(UniversalBaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    test_cases: typing.Dict[str, TestCaseResultWithStdout] = pydantic.Field(alias="testCases")
+    submission_id: typing_extensions.Annotated[SubmissionId, pydantic.Field(alias="submissionId")]
+    test_cases: typing_extensions.Annotated[
+        typing.Dict[str, TestCaseResultWithStdout], pydantic.Field(alias="testCases")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2
