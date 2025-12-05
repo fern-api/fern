@@ -97,7 +97,7 @@ exports[`ZodFormat AST Generation > Schema Modifiers > optionalNullable() genera
 
 exports[`ZodFormat AST Generation > Schema Operations > parse() generates .parse() 1`] = `"z.string().parse(rawValue)"`;
 
-exports[`ZodFormat AST Generation > Type References > Schema._getReferenceToType generates z.ZodType 1`] = `"z.ZodType<string, any, string>"`;
+exports[`ZodFormat AST Generation > Type References > Schema._getReferenceToType generates z.ZodTypeAny 1`] = `"z.ZodTypeAny"`;
 
 exports[`ZodFormat AST Generation > Union Schemas > discriminated union generates z.discriminatedUnion() 1`] = `
 "z.discriminatedUnion("type", [

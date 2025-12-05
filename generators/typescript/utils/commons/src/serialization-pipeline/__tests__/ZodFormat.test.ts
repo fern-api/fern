@@ -292,7 +292,7 @@ describe("ZodFormat AST Generation", () => {
     });
 
     describe("Type References", () => {
-        it("Schema._getReferenceToType generates z.ZodType", () => {
+        it("Schema._getReferenceToType generates z.ZodTypeAny", () => {
             const rawShape = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
             const parsedShape = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
             const typeNode = zod.Schema._getReferenceToType({ rawShape, parsedShape });

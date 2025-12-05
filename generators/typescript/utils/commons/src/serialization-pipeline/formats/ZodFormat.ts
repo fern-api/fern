@@ -702,12 +702,14 @@ export class ZodFormat implements SerializationFormat {
     // ==================== Type Utilities ====================
 
     public Schema = {
-        _getReferenceToType: ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
-            // For Zod, we use z.ZodType<Parsed, ZodTypeDef, Raw>
+        _getReferenceToType: (_args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
+            // Use z.ZodTypeAny to avoid type inference issues with transforms (ZodEffects)
+            // The parsed/raw shapes are not used because Zod's strict inference doesn't work
+            // well with discriminated unions and transforms that rename properties
             this.ensureZodImport();
             return ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "ZodType"),
-                [parsedShape, ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword), rawShape]
+                ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "ZodTypeAny"),
+                undefined
             );
         },
 
@@ -757,12 +759,12 @@ export class ZodFormat implements SerializationFormat {
     };
 
     public ObjectSchema = {
-        _getReferenceToType: ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
-            // Use ZodType instead of ZodObject since transforms return ZodEffects
+        _getReferenceToType: (_args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
+            // Use z.ZodTypeAny to avoid type inference issues with transforms (ZodEffects)
             this.ensureZodImport();
             return ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "ZodType"),
-                [parsedShape, ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword), rawShape]
+                ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "ZodTypeAny"),
+                undefined
             );
         }
     };
