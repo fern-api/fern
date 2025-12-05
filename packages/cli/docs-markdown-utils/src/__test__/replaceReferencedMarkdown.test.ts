@@ -31,7 +31,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="test2.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -60,7 +60,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="test2" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -101,7 +101,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="feature.mdx" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -124,7 +124,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="pricing.md" tier="enterprise" price="$999" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -145,7 +145,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="feature.md" name="authentication" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -169,7 +169,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="feature.md" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -196,7 +196,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="test.md" prop1="value1" prop2='value2' prop3={"value3"} />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -219,7 +219,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="test.md" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -242,7 +242,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="feature.md" name="API Keys" level="enterprise" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -271,7 +271,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="plan-tier.mdx" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -300,7 +300,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="details.md" name="API" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -334,7 +334,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="plan-tier.mdx" plan="pro" tier="enterprise" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -358,7 +358,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="static.md" plan="pro" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -380,7 +380,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="outer.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -404,7 +404,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="level1.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -435,7 +435,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="snippetA.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -465,7 +465,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="self-ref.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -489,7 +489,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="outer.md" name="Fern" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -516,7 +516,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="parent.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -550,7 +550,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="snippetA.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
@@ -584,7 +584,7 @@ describe("replaceReferencedMarkdown", () => {
             <Markdown src="snippetA.md" />
         `;
 
-        const result = await replaceReferencedMarkdown({
+        const { markdown: result } = await replaceReferencedMarkdown({
             markdown,
             absolutePathToFernFolder,
             absolutePathToMarkdownFile,
