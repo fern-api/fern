@@ -121,4 +121,3 @@ export class PassthroughFormat implements SerializationFormat {
         return null; // No runtime files needed
     }
 }
-
