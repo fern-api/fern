@@ -34,7 +34,8 @@ module Seed
             base_url: request_options[:base_url],
             method: "GET",
             path: "/users/events/",
-            query: query_params
+            query: query_params,
+            request_options: request_options
           )
           begin
             response = @client.send(request)

@@ -4,9 +4,7 @@ module Seed
   module Submission
     module Types
       class Scope < Internal::Types::Model
-        field :variables, -> {
-          Internal::Types::Hash[String, Seed::Commons::Types::DebugVariableValue]
-        }, optional: false, nullable: false
+        field :variables, -> { Internal::Types::Hash[String, Seed::Commons::Types::DebugVariableValue] }, optional: false, nullable: false
       end
     end
   end

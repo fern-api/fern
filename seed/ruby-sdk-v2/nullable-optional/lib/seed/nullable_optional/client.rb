@@ -26,7 +26,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{params[:user_id]}"
+          path: "/api/users/#{params[:user_id]}",
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -58,7 +59,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/api/users",
-          body: Seed::NullableOptional::Types::CreateUserRequest.new(params).to_h
+          body: Seed::NullableOptional::Types::CreateUserRequest.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -91,7 +93,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/api/users/#{params[:user_id]}",
-          body: Seed::NullableOptional::Types::UpdateUserRequest.new(params).to_h
+          body: Seed::NullableOptional::Types::UpdateUserRequest.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -136,7 +139,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users",
-          query: query_params
+          query: query_params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -179,7 +183,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users/search",
-          query: query_params
+          query: query_params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -209,7 +214,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/api/profiles/complex",
-          body: Seed::NullableOptional::Types::ComplexProfile.new(params).to_h
+          body: Seed::NullableOptional::Types::ComplexProfile.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -241,7 +247,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/profiles/complex/#{params[:profile_id]}"
+          path: "/api/profiles/complex/#{params[:profile_id]}",
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -279,7 +286,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/api/profiles/complex/#{params[:profile_id]}",
-          body: Seed::NullableOptional::Types::UpdateComplexProfileRequest.new(body_bag).to_h
+          body: Seed::NullableOptional::Types::UpdateComplexProfileRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -311,7 +319,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/api/test/deserialization",
-          body: Seed::NullableOptional::Types::DeserializationTestRequest.new(params).to_h
+          body: Seed::NullableOptional::Types::DeserializationTestRequest.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -354,7 +363,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "GET",
           path: "/api/users/filter",
-          query: query_params
+          query: query_params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -384,7 +394,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/api/users/#{params[:user_id]}/notifications"
+          path: "/api/users/#{params[:user_id]}/notifications",
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -420,7 +431,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "PUT",
           path: "/api/users/#{params[:user_id]}/tags",
-          body: Seed::NullableOptional::Types::UpdateTagsRequest.new(body_bag).to_h
+          body: Seed::NullableOptional::Types::UpdateTagsRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -453,7 +465,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "/api/search",
-          body: Seed::NullableOptional::Types::SearchRequest.new(body_bag).to_h
+          body: Seed::NullableOptional::Types::SearchRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

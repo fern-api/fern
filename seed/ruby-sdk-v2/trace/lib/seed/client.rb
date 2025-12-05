@@ -8,7 +8,7 @@ module Seed
     # @return [void]
     def initialize(base_url:, token:)
       @raw_client = Seed::Internal::Http::RawClient.new(
-        base_url: base_url,
+        base_url: base_url || Seed::Environment::PROD,
         headers: {
           "User-Agent" => "fern_trace/0.0.1",
           "X-Fern-Language" => "Ruby",

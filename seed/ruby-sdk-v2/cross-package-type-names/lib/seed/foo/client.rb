@@ -35,7 +35,8 @@ module Seed
           method: "POST",
           path: "",
           query: query_params,
-          body: Seed::Foo::Types::FindRequest.new(body_bag).to_h
+          body: Seed::Foo::Types::FindRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

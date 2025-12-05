@@ -8,9 +8,7 @@ module Seed
         field :integer, -> { Integer }, optional: false, nullable: false
         field :maybe_integer, -> { Integer }, optional: true, nullable: false, api_name: "maybeInteger"
         field :list_of_strings, -> { String }, optional: false, nullable: false, api_name: "listOfStrings"
-        field :optional_list_of_strings, -> {
-          String
-        }, optional: true, nullable: false, api_name: "optionalListOfStrings"
+        field :optional_list_of_strings, -> { String }, optional: true, nullable: false, api_name: "optionalListOfStrings"
       end
     end
   end

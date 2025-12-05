@@ -4,12 +4,8 @@ module Seed
   module Commons
     module Types
       class MapType < Internal::Types::Model
-        field :key_type, -> {
-          Seed::Commons::Types::VariableType
-        }, optional: false, nullable: false, api_name: "keyType"
-        field :value_type, -> {
-          Seed::Commons::Types::VariableType
-        }, optional: false, nullable: false, api_name: "valueType"
+        field :key_type, -> { Seed::Commons::Types::VariableType }, optional: false, nullable: false, api_name: "keyType"
+        field :value_type, -> { Seed::Commons::Types::VariableType }, optional: false, nullable: false, api_name: "valueType"
       end
     end
   end
