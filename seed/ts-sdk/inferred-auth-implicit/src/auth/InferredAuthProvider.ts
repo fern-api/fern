@@ -5,6 +5,13 @@ import type { BaseClientOptions } from "../BaseClient.js";
 import * as core from "../core/index.js";
 
 export namespace InferredAuthProvider {
+    export interface AuthOptions {
+        xApiKey: core.Supplier<string>;
+        clientId: core.Supplier<string>;
+        clientSecret: core.Supplier<string>;
+        scope?: core.Supplier<string>;
+    }
+
     export interface Options extends BaseClientOptions {}
 }
 
