@@ -156,32 +156,46 @@ export class SubPackageClientGenerator extends FileGenerator<CSharpFile, SdkGene
             access: ast.Access.Internal,
             parameters,
             body: this.csharp.codeblock((writer) => {
-                writer.writeLine(`${this.members.clientName} = client;`);
+                const writeConstructorBody = (innerWriter: typeof writer) => {
+                    innerWriter.writeLine(`${this.members.clientName} = client;`);
 
-                if (this.grpcClientInfo != null) {
-                    writer.writeLine(`${this.members.grpcClient} = ${this.members.clientName}.Grpc;`);
-                    writer.write(this.grpcClientInfo.privatePropertyName);
-                    writer.write(" = ");
-                    writer.writeNodeStatement(
-                        this.csharp.instantiateClass({
-                            classReference: this.grpcClientInfo.classReference,
-                            arguments_: [this.csharp.codeblock(`${this.members.grpcClient}.Channel`)]
-                        })
-                    );
-                }
-
-                const arguments_ = [this.csharp.codeblock(this.members.clientName)];
-                for (const subpackage of this.getSubpackages()) {
-                    // skip subpackages that are completely empty (recursively)
-                    if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
-                        writer.writeLine(`${subpackage.name.pascalCase.safeName} = `);
-                        writer.writeNodeStatement(
+                    if (this.grpcClientInfo != null) {
+                        innerWriter.writeLine(`${this.members.grpcClient} = ${this.members.clientName}.Grpc;`);
+                        innerWriter.write(this.grpcClientInfo.privatePropertyName);
+                        innerWriter.write(" = ");
+                        innerWriter.writeNodeStatement(
                             this.csharp.instantiateClass({
-                                classReference: this.context.getSubpackageClassReference(subpackage),
-                                arguments_
+                                classReference: this.grpcClientInfo.classReference,
+                                arguments_: [this.csharp.codeblock(`${this.members.grpcClient}.Channel`)]
                             })
                         );
                     }
+
+                    const arguments_ = [this.csharp.codeblock(this.members.clientName)];
+                    for (const subpackage of this.getSubpackages()) {
+                        // skip subpackages that are completely empty (recursively)
+                        if (this.context.subPackageHasEndpointsRecursively(subpackage)) {
+                            innerWriter.writeLine(`${subpackage.name.pascalCase.safeName} = `);
+                            innerWriter.writeNodeStatement(
+                                this.csharp.instantiateClass({
+                                    classReference: this.context.getSubpackageClassReference(subpackage),
+                                    arguments_
+                                })
+                            );
+                        }
+                    }
+                };
+
+                if (this.settings.includeExceptionHandler) {
+                    writer.controlFlow("try", this.csharp.codeblock(""));
+                    writeConstructorBody(writer);
+                    writer.endControlFlow();
+                    writer.controlFlow("catch", this.csharp.codeblock("(Exception ex)"));
+                    writer.writeLine("client.Options.ExceptionHandler?.CaptureException(ex);");
+                    writer.writeLine("throw;");
+                    writer.endControlFlow();
+                } else {
+                    writeConstructorBody(writer);
                 }
             })
         };
