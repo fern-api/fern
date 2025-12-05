@@ -430,11 +430,25 @@ export class ZodFormat implements SerializationFormat {
     };
 
     public set = (itemSchema: Schema): SchemaWithUtils => {
-        // Zod uses z.set() for Set types
+        // JSON wire format uses arrays for sets, so we parse array and transform to Set
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => this.zodCall("set", [itemSchema.toExpression()])
+            toExpression: () => {
+                // z.array(itemSchema).transform(arr => new Set(arr))
+                const arraySchema = this.zodCall("array", [itemSchema.toExpression()]);
+                const transformFn = ts.factory.createArrowFunction(
+                    undefined,
+                    undefined,
+                    [ts.factory.createParameterDeclaration(undefined, undefined, undefined, "arr")],
+                    undefined,
+                    ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                    ts.factory.createNewExpression(ts.factory.createIdentifier("Set"), undefined, [
+                        ts.factory.createIdentifier("arr")
+                    ])
+                );
+                return chainMethod(arraySchema, "transform", [transformFn]);
+            }
         };
 
         return {
@@ -734,17 +748,11 @@ export class ZodFormat implements SerializationFormat {
 
     public ObjectSchema = {
         _getReferenceToType: ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
-            // For Zod object schemas
+            // Use ZodType instead of ZodObject since transforms return ZodEffects
             this.ensureZodImport();
             return ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "ZodObject"),
-                [
-                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword), // shape
-                    ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral("strip")), // unknownKeys
-                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword), // catchall
-                    parsedShape,
-                    rawShape
-                ]
+                ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "ZodType"),
+                [parsedShape, ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword), rawShape]
             );
         }
     };
