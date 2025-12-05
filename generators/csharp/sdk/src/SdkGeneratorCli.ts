@@ -17,6 +17,7 @@ import { MultiUrlEnvironmentGenerator } from "./environment/MultiUrlEnvironmentG
 import { SingleUrlEnvironmentGenerator } from "./environment/SingleUrlEnvironmentGenerator";
 import { BaseApiExceptionGenerator } from "./error/BaseApiExceptionGenerator";
 import { BaseExceptionGenerator } from "./error/BaseExceptionGenerator";
+import { CustomExceptionInterceptorGenerator } from "./error/CustomExceptionInterceptorGenerator";
 import { ErrorGenerator } from "./error/ErrorGenerator";
 import { generateSdkTests } from "./generateSdkTests";
 import { OauthTokenProviderGenerator } from "./oauth/OauthTokenProviderGenerator";
@@ -188,6 +189,11 @@ export class SdkGeneratorCLI extends AbstractCsharpGeneratorCli {
                 const errorGenerator = new ErrorGenerator(context, _error);
                 context.project.addSourceFiles(errorGenerator.generate());
             }
+        }
+
+        if (context.settings.includeExceptionHandler) {
+            const customExceptionInterceptor = new CustomExceptionInterceptorGenerator(context);
+            context.project.addSourceFiles(customExceptionInterceptor.generate());
         }
 
         const rootClient = new RootClientGenerator(context);
