@@ -6,6 +6,11 @@ import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
 export namespace OAuthAuthProvider {
+    export interface AuthOptions {
+        clientId: core.Supplier<string>;
+        clientSecret: core.Supplier<string>;
+    }
+
     export interface Options extends BaseClientOptions {}
 }
 

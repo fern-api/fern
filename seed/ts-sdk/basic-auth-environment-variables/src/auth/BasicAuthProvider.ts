@@ -4,9 +4,14 @@ import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
 export namespace BasicAuthProvider {
+    export interface AuthOptions {
+        username?: core.Supplier<string>;
+        accessToken?: core.Supplier<string>;
+    }
+
     export interface Options {
-        username?: core.Supplier<string | undefined>;
-        accessToken?: core.Supplier<string | undefined>;
+        username?: core.Supplier<string>;
+        accessToken?: core.Supplier<string>;
     }
 }
 

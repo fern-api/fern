@@ -4,8 +4,12 @@ import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
 export namespace BearerAuthProvider {
+    export interface AuthOptions {
+        token?: core.Supplier<core.BearerToken>;
+    }
+
     export interface Options {
-        token?: core.Supplier<core.BearerToken | undefined>;
+        token?: core.Supplier<core.BearerToken>;
     }
 }
 

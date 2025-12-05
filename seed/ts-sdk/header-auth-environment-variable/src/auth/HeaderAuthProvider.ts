@@ -4,8 +4,12 @@ import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
 export namespace HeaderAuthProvider {
+    export interface AuthOptions {
+        headerTokenAuth?: core.Supplier<string>;
+    }
+
     export interface Options {
-        headerTokenAuth?: core.Supplier<string | undefined>;
+        headerTokenAuth?: core.Supplier<string>;
     }
 }
 
