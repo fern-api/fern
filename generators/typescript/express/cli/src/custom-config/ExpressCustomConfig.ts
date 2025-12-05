@@ -1,3 +1,5 @@
+import { SerializationFormatType } from "@fern-typescript/commons";
+
 // this is the parsed config shape. to view the allowed options for generators.yml,
 // see ExpressCustomConfigSchema.ts
 export interface ExpressCustomConfig {
@@ -8,6 +10,7 @@ export interface ExpressCustomConfig {
     includeOtherInUnionTypes: boolean;
     treatUnknownAsAny: boolean;
     noSerdeLayer: boolean;
+    serializationFormat: SerializationFormatType;
     skipRequestValidation: boolean;
     skipResponseValidation: boolean;
     requestValidationStatusCode: number;

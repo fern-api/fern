@@ -1,11 +1,20 @@
 import { z } from "zod";
 
+/**
+ * Serialization format options:
+ * - "default": Use Zurg (bundled runtime) - same as legacy behavior
+ * - "zod": Use Zod as npm dependency
+ * - "none": No serialization layer - same as noSerdeLayer: true
+ */
+const SerializationFormatSchema = z.enum(["default", "zod", "none"]);
+
 export const ExpressCustomConfigSchema = z.strictObject({
     useBrandedStringAliases: z.optional(z.boolean()),
     optionalImplementations: z.optional(z.boolean()),
     doNotHandleUnrecognizedErrors: z.optional(z.boolean()),
     treatUnknownAsAny: z.optional(z.boolean()),
     noSerdeLayer: z.optional(z.boolean()),
+    serializationFormat: z.optional(SerializationFormatSchema),
     skipRequestValidation: z.optional(z.boolean()),
     skipResponseValidation: z.optional(z.boolean()),
     outputEsm: z.optional(z.boolean()),
