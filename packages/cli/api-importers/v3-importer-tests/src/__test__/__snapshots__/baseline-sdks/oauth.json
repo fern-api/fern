@@ -513,7 +513,8 @@
       "type": {
         "type": "unknown"
       },
-      "examples": []
+      "examples": [],
+      "headers": []
     },
     "error_:UnauthorizedError": {
       "name": {
@@ -569,7 +570,8 @@
       "type": {
         "type": "unknown"
       },
-      "examples": []
+      "examples": [],
+      "headers": []
     }
   },
   "services": {
