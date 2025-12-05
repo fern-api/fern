@@ -7,9 +7,9 @@
       summary: |
         Add extraDependencies and extraDevDependencies config flags to Ruby v2 SDK generator.
         These options allow users to specify additional gem dependencies to include in the
-        generated gemspec (extraDependencies) and Gemfile (extraDevDependencies). Supports
-        both simple version strings (e.g., "1.0") and complex dependency objects with
-        upper/lower bounds and custom specifiers.
+        generated gemspec (extraDependencies) and Gemfile (extraDevDependencies). Values are
+        written directly as version constraints (e.g., { "my-gem": "~> 6.0" } produces
+        spec.add_dependency "my-gem", "~> 6.0").
   irVersion: 61
 
 - version: 1.0.0-rc59

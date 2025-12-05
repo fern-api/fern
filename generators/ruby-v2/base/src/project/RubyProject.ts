@@ -10,45 +10,6 @@ import { topologicalCompareAsIsFiles } from "../AsIs";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
 import { RubocopFile } from "./RubocopFile";
 
-/**
- * Formats a dependency entry for use in gemspec or Gemfile.
- * Supports both simple string versions (e.g., "1.0") and complex dependency objects
- * with upper/lower bounds.
- *
- * @param packageName - The name of the gem package
- * @param value - Either a version string or a dependency object with bounds
- * @param forGemspec - If true, formats for gemspec (spec.add_dependency), otherwise for Gemfile (gem)
- * @returns Formatted dependency string
- */
-function formatDependency(
-    packageName: string,
-    value:
-        | string
-        | {
-              upperBound?: { version: string; specifier?: string };
-              lowerBound?: { version: string; specifier?: string };
-          },
-    forGemspec: boolean
-): string {
-    const prefix = forGemspec ? `spec.add_dependency "${packageName}"` : `gem "${packageName}"`;
-
-    if (typeof value === "string") {
-        return `${prefix}, "~> ${value}"`;
-    }
-
-    const parts: string[] = [prefix];
-    if (value.lowerBound != null) {
-        const specifier = value.lowerBound.specifier ?? ">=";
-        parts.push(`"${specifier} ${value.lowerBound.version}"`);
-    }
-    if (value.upperBound != null) {
-        const specifier = value.upperBound.specifier ?? "<=";
-        parts.push(`"${specifier} ${value.upperBound.version}"`);
-    }
-
-    return parts.join(", ");
-}
-
 const GEMFILE_FILENAME = "Gemfile";
 const CUSTOM_GEMFILE_FILENAME = "Gemfile.custom";
 const RAKEFILE_FILENAME = "Rakefile";
@@ -271,8 +232,8 @@ class GemspecFile {
             return "";
         }
 
-        const dependencyLines = Object.entries(extraDependencies).map(([packageName, value]) =>
-            formatDependency(packageName, value, true)
+        const dependencyLines = Object.entries(extraDependencies).map(
+            ([packageName, versionConstraint]) => `spec.add_dependency "${packageName}", "${versionConstraint}"`
         );
 
         return "\n" + dependencyLines.join("\n");
@@ -381,8 +342,8 @@ class Gemfile {
             return "";
         }
 
-        const dependencyLines = Object.entries(extraDevDependencies).map(([packageName, value]) =>
-            formatDependency(packageName, value, false)
+        const dependencyLines = Object.entries(extraDevDependencies).map(
+            ([packageName, versionConstraint]) => `gem "${packageName}", "${versionConstraint}"`
         );
 
         return "\n" + dependencyLines.join("\n");
