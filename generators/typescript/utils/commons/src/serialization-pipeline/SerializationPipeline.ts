@@ -12,11 +12,12 @@ export type SerializationFormatType = "default" | "zod" | "none";
  * Configuration for creating a SerializationPipeline
  */
 export interface SerializationPipelineConfig extends SerializationFormatConfig {
+    
     /**
      * The serialization format to use.
-     * - "default": Use Zurg (bundled runtime)
-     * - "zod": Use Zod (npm dependency)
-     * - "none": No serialization
+     * - "default": Use Zurg (legacy implementation)
+     * - "zod": Use Zod.
+     * - "none": No serialization, equivalent to noSerdeLayer: true.
      */
     format: SerializationFormatType;
 }
