@@ -450,6 +450,15 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeOptions(context: SdkContext): void {
+        // Import BaseClientOptions for Options to extend
+        // InferredAuthProvider.Options needs to extend BaseClientOptions because it creates an AuthClient
+        // which requires the full BaseClientOptions (environment, baseUrl, etc.)
+        context.sourceFile.addImportDeclaration({
+            moduleSpecifier: "../BaseClient.js",
+            namedImports: ["BaseClientOptions"],
+            isTypeOnly: true
+        });
+
         const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
 
         context.sourceFile.addModule({
@@ -467,7 +476,9 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    extends: [AUTH_OPTIONS_TYPE_NAME]
+                    // Options extends BaseClientOptions because InferredAuthProvider creates an AuthClient
+                    // which requires the full BaseClientOptions (environment, baseUrl, etc.)
+                    extends: ["BaseClientOptions"]
                 }
             ]
         });
