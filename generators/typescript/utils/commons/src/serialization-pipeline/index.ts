@@ -1,4 +1,4 @@
-export { NoneFormat, ZodFormat, ZURG_MANIFEST, ZurgFormat } from "./formats";
+export { PassthroughFormat, ZodFormat, ZURG_MANIFEST, ZurgFormat } from "./formats";
 export {
     type AdditionalProperty,
     type ObjectLikeSchema,

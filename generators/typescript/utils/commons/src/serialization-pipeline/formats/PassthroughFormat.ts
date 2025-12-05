@@ -41,14 +41,15 @@ const NO_OP_OBJECT_SCHEMA: ObjectSchema = {
 };
 
 /**
- * NoneFormat - used when serialization is completely disabled.
+ * PassthroughFormat - used when serialization is completely disabled.
  * All schema builders return no-op schemas that don't generate any code.
+ * Data passes through without transformation.
  */
-export class NoneFormat implements SerializationFormat {
+export class PassthroughFormat implements SerializationFormat {
     public readonly name = "none" as const;
 
     constructor(_config: SerializationFormatConfig) {
-        // No configuration needed for none format
+        // No configuration needed for passthrough format
     }
 
     // All schema builders return no-op schemas
@@ -120,3 +121,4 @@ export class NoneFormat implements SerializationFormat {
         return null; // No runtime files needed
     }
 }
+

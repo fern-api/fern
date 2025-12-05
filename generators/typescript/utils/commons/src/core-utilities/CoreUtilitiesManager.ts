@@ -9,7 +9,7 @@ import { ExportsManager } from "../exports-manager";
 import { ImportsManager } from "../imports-manager";
 import { getReferenceToExportViaNamespaceImport } from "../referencing";
 import {
-    NoneFormat,
+    PassthroughFormat,
     SerializationFormatType,
     SerializationPipeline,
     ZodFormat,
@@ -163,7 +163,7 @@ export class CoreUtilitiesManager {
                 return new ZodFormat(config);
 
             case "none":
-                return new NoneFormat(config);
+                return new PassthroughFormat(config);
 
             default:
                 throw new Error(`Unknown serialization format: ${this.serializationFormat}`);
@@ -200,7 +200,7 @@ export class CoreUtilitiesManager {
             // Zod uses an npm dependency instead of bundled runtime files
             dependencyManager.addDependency("zod", "^3.23.0");
         }
-        // Zurg and None formats don't require external npm dependencies
+        // Zurg and Passthrough formats don't require external npm dependencies
     }
 
     public async copyCoreUtilities({

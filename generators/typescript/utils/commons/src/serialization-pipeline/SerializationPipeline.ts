@@ -1,4 +1,4 @@
-import { NoneFormat } from "./formats/NoneFormat";
+import { PassthroughFormat } from "./formats/PassthroughFormat";
 import { ZodFormat } from "./formats/ZodFormat";
 import { ZurgFormat } from "./formats/ZurgFormat";
 import { SerializationFormat, SerializationFormatConfig } from "./SerializationFormat";
@@ -16,7 +16,7 @@ export interface SerializationPipelineConfig extends SerializationFormatConfig {
      * The serialization format to use.
      * - "zurg": Use Zurg (bundled runtime)
      * - "zod": Use Zod (npm dependency)
-     * - "none": No serialization
+     * - "none": No serialization, data passes through unchanged
      */
     format: SerializationFormatType;
 }
@@ -47,7 +47,7 @@ export class SerializationPipeline {
                 return new ZodFormat(config);
 
             case "none":
-                return new NoneFormat(config);
+                return new PassthroughFormat(config);
 
             default:
                 throw new Error(`Unknown serialization format: ${config.format}`);

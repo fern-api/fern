@@ -2,7 +2,7 @@ import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
 
 import { Reference } from "../../referencing";
-import { NoneFormat } from "../formats/NoneFormat";
+import { PassthroughFormat } from "../formats/PassthroughFormat";
 import { ZodFormat } from "../formats/ZodFormat";
 import { ZurgFormat } from "../formats/ZurgFormat";
 import { SerializationPipeline } from "../SerializationPipeline";
@@ -55,13 +55,13 @@ describe("SerializationPipeline", () => {
             expect(pipeline.isEnabled()).toBe(true);
         });
 
-        it("creates NoneFormat for 'none'", () => {
+        it("creates PassthroughFormat for 'none'", () => {
             const pipeline = new SerializationPipeline({
                 ...baseConfig,
                 format: "none"
             });
 
-            expect(pipeline.getFormat()).toBeInstanceOf(NoneFormat);
+            expect(pipeline.getFormat()).toBeInstanceOf(PassthroughFormat);
             expect(pipeline.getFormatType()).toBe("none");
             expect(pipeline.isEnabled()).toBe(false);
         });
@@ -159,7 +159,7 @@ describe("SerializationPipeline", () => {
             expect(patterns?.patterns).toContain("src/core/schemas/**");
         });
 
-        it("NoneFormat returns no dependencies and no files", () => {
+        it("PassthroughFormat returns no dependencies and no files", () => {
             const pipeline = new SerializationPipeline({
                 ...baseConfig,
                 format: "none"
@@ -198,7 +198,7 @@ describe("SerializationPipeline", () => {
             expect(ts.isCallExpression(expr)).toBe(true);
         });
 
-        it("NoneFormat generates no-op expressions", () => {
+        it("PassthroughFormat generates no-op expressions", () => {
             const pipeline = new SerializationPipeline({
                 ...baseConfig,
                 format: "none"
@@ -209,7 +209,7 @@ describe("SerializationPipeline", () => {
 
             const expr = schema.toExpression();
             expect(expr).toBeDefined();
-            // NoneFormat returns identifier "undefined"
+            // PassthroughFormat returns identifier "undefined"
             expect(ts.isIdentifier(expr)).toBe(true);
         });
     });
