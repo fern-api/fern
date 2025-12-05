@@ -10,10 +10,12 @@ from ......core.pydantic_utilities import UniversalBaseModel, universal_field_va
 
 
 class ObjectWithMapOfMap(UniversalBaseModel):
-    map_: typing.Dict[str, typing.Dict[str, str]] = pydantic.Field(alias="map")
+    map_: typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], pydantic.Field(alias="map")]
 
     class Partial(typing.TypedDict):
-        map_: typing_extensions.NotRequired[typing.Dict[str, typing.Dict[str, str]]]
+        map_: typing_extensions.NotRequired[
+            typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], pydantic.Field(alias="map")]
+        ]
 
     class Validators:
         """
@@ -24,7 +26,7 @@ class ObjectWithMapOfMap(UniversalBaseModel):
                 ...
 
             @ObjectWithMapOfMap.Validators.field("map_")
-            def validate_map_(map_: typing.Dict[str, typing.Dict[str, str]], values: ObjectWithMapOfMap.Partial) -> typing.Dict[str, typing.Dict[str, str]]:
+            def validate_map_(map_: typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], pydantic.Field(alias="map")], values: ObjectWithMapOfMap.Partial) -> typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], pydantic.Field(alias="map")]:
                 ...
         """
 
@@ -89,8 +91,10 @@ class ObjectWithMapOfMap(UniversalBaseModel):
 
         class MapValidator(typing.Protocol):
             def __call__(
-                self, __v: typing.Dict[str, typing.Dict[str, str]], __values: ObjectWithMapOfMap.Partial
-            ) -> typing.Dict[str, typing.Dict[str, str]]: ...
+                self,
+                __v: typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], pydantic.Field(alias="map")],
+                __values: ObjectWithMapOfMap.Partial,
+            ) -> typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], pydantic.Field(alias="map")]: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
@@ -114,16 +118,20 @@ class ObjectWithMapOfMap(UniversalBaseModel):
 
     @universal_field_validator("map_", pre=True)
     def _pre_validate_map_(
-        cls, v: typing.Dict[str, typing.Dict[str, str]], values: ObjectWithMapOfMap.Partial
-    ) -> typing.Dict[str, typing.Dict[str, str]]:
+        cls,
+        v: typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], pydantic.Field(alias="map")],
+        values: ObjectWithMapOfMap.Partial,
+    ) -> typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], pydantic.Field(alias="map")]:
         for validator in ObjectWithMapOfMap.Validators._map__pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("map_", pre=False)
     def _post_validate_map_(
-        cls, v: typing.Dict[str, typing.Dict[str, str]], values: ObjectWithMapOfMap.Partial
-    ) -> typing.Dict[str, typing.Dict[str, str]]:
+        cls,
+        v: typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], pydantic.Field(alias="map")],
+        values: ObjectWithMapOfMap.Partial,
+    ) -> typing_extensions.Annotated[typing.Dict[str, typing.Dict[str, str]], pydantic.Field(alias="map")]:
         for validator in ObjectWithMapOfMap.Validators._map__post_validators:
             v = validator(v, values)
         return v

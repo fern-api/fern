@@ -5,13 +5,14 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ..v_2.resources.problem.test_case_id import TestCaseId
 from .test_case_grade import TestCaseGrade
 
 
 class GradedTestCaseUpdate(UniversalBaseModel):
-    test_case_id: TestCaseId = pydantic.Field(alias="testCaseId")
+    test_case_id: typing_extensions.Annotated[TestCaseId, pydantic.Field(alias="testCaseId")]
     grade: TestCaseGrade
 
     if IS_PYDANTIC_V2:

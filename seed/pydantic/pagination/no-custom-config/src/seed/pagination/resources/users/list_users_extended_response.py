@@ -8,7 +8,7 @@ from .user_page import UserPage
 
 
 class ListUsersExtendedResponse(UserPage):
-    total_count: int = pydantic.Field()
+    total_count: int
     """
     The totall number of /users
     """

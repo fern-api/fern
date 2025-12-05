@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ...submission.types.test_case_result_with_stdout import TestCaseResultWithStdout
 from ...submission.types.trace_response import TraceResponse
@@ -10,7 +11,7 @@ from ...submission.types.trace_response import TraceResponse
 
 class StoreTracedTestCaseRequest(UniversalBaseModel):
     result: TestCaseResultWithStdout
-    trace_responses: typing.List[TraceResponse] = pydantic.Field(alias="traceResponses")
+    trace_responses: typing_extensions.Annotated[typing.List[TraceResponse], pydantic.Field(alias="traceResponses")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

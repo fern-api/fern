@@ -5,12 +5,13 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from .......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .non_void_function_signature import NonVoidFunctionSignature
 
 
 class GetBasicSolutionFileRequest(UniversalBaseModel):
-    method_name: str = pydantic.Field(alias="methodName")
+    method_name: typing_extensions.Annotated[str, pydantic.Field(alias="methodName")]
     signature: NonVoidFunctionSignature
 
     if IS_PYDANTIC_V2:

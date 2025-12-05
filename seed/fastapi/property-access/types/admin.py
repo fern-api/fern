@@ -3,6 +3,7 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ..core.pydantic_utilities import IS_PYDANTIC_V2
 from .user import User
 
@@ -12,7 +13,7 @@ class Admin(User):
     Admin user object
     """
 
-    admin_level: str = pydantic.Field(alias="adminLevel")
+    admin_level: typing_extensions.Annotated[str, pydantic.Field(alias="adminLevel")]
     """
     The level of admin privileges.
     """

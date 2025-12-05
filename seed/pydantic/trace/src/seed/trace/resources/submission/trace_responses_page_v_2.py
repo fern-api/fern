@@ -5,18 +5,19 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .trace_response_v_2 import TraceResponseV2
 
 
 class TraceResponsesPageV2(UniversalBaseModel):
-    offset: typing.Optional[int] = pydantic.Field(default=None)
+    offset: typing.Optional[int] = None
     """
     If present, use this to load subsequent pages.
     The offset is the id of the next trace response to load.
     """
 
-    trace_responses: typing.List[TraceResponseV2] = pydantic.Field(alias="traceResponses")
+    trace_responses: typing_extensions.Annotated[typing.List[TraceResponseV2], pydantic.Field(alias="traceResponses")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

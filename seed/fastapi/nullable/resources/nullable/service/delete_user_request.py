@@ -7,7 +7,7 @@ from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class DeleteUserRequest(UniversalBaseModel):
-    username: typing.Optional[str] = pydantic.Field(default=None)
+    username: typing.Optional[str] = None
     """
     The user to delete.
     """

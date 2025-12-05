@@ -3,13 +3,16 @@
 import typing
 
 import pydantic
+import typing_extensions
 from .......core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from ......commons.language import Language
 from .file_info_v_2 import FileInfoV2
 
 
 class GetBasicSolutionFileResponse(UniversalBaseModel):
-    solution_file_by_language: typing.Dict[Language, FileInfoV2] = pydantic.Field(alias="solutionFileByLanguage")
+    solution_file_by_language: typing_extensions.Annotated[
+        typing.Dict[Language, FileInfoV2], pydantic.Field(alias="solutionFileByLanguage")
+    ]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow")  # type: ignore # Pydantic v2

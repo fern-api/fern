@@ -3,13 +3,14 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class EmailNotification(UniversalBaseModel):
-    email_address: str = pydantic.Field(alias="emailAddress")
+    email_address: typing_extensions.Annotated[str, pydantic.Field(alias="emailAddress")]
     subject: str
-    html_content: typing.Optional[str] = pydantic.Field(alias="htmlContent", default=None)
+    html_content: typing_extensions.Annotated[typing.Optional[str], pydantic.Field(alias="htmlContent")] = None
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

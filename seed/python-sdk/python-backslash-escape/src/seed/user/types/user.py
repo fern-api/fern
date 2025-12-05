@@ -12,18 +12,18 @@ class User(UniversalBaseModel):
     Windows users should use DOMAIN\\username format.
     """
 
-    id: str = pydantic.Field()
+    id: str
     """
     The unique identifier
     """
 
-    name: str = pydantic.Field()
+    name: str
     """
     The user's name.
-    For Windows: DOMAIN\\username
+    For Windows: DOMAIN\\\\username
     """
 
-    email: str = pydantic.Field()
+    email: str
     """
     The user's email address
     """

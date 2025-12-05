@@ -4,6 +4,7 @@ import datetime as dt
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 from .deserialization_test_request import DeserializationTestRequest
 
@@ -14,9 +15,9 @@ class DeserializationTestResponse(UniversalBaseModel):
     """
 
     echo: DeserializationTestRequest
-    processed_at: dt.datetime = pydantic.Field(alias="processedAt")
-    null_count: int = pydantic.Field(alias="nullCount")
-    present_fields_count: int = pydantic.Field(alias="presentFieldsCount")
+    processed_at: typing_extensions.Annotated[dt.datetime, pydantic.Field(alias="processedAt")]
+    null_count: typing_extensions.Annotated[int, pydantic.Field(alias="nullCount")]
+    present_fields_count: typing_extensions.Annotated[int, pydantic.Field(alias="presentFieldsCount")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

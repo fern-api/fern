@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .expression_location import ExpressionLocation
 from .stack_information import StackInformation
@@ -13,11 +14,15 @@ from .traced_file import TracedFile
 
 
 class TraceResponseV2(UniversalBaseModel):
-    submission_id: SubmissionId = pydantic.Field(alias="submissionId")
-    line_number: int = pydantic.Field(alias="lineNumber")
+    submission_id: typing_extensions.Annotated[SubmissionId, pydantic.Field(alias="submissionId")]
+    line_number: typing_extensions.Annotated[int, pydantic.Field(alias="lineNumber")]
     file: TracedFile
-    return_value: typing.Optional["DebugVariableValue"] = pydantic.Field(alias="returnValue", default=None)
-    expression_location: typing.Optional[ExpressionLocation] = pydantic.Field(alias="expressionLocation", default=None)
+    return_value: typing_extensions.Annotated[
+        typing.Optional["DebugVariableValue"], pydantic.Field(alias="returnValue")
+    ] = None
+    expression_location: typing_extensions.Annotated[
+        typing.Optional[ExpressionLocation], pydantic.Field(alias="expressionLocation")
+    ] = None
     stack: StackInformation
     stdout: typing.Optional[str] = None
 

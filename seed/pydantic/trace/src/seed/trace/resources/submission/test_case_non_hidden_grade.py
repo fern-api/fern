@@ -5,13 +5,16 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from .exception_v_2 import ExceptionV2
 
 
 class TestCaseNonHiddenGrade(UniversalBaseModel):
     passed: bool
-    actual_result: typing.Optional["VariableValue"] = pydantic.Field(alias="actualResult", default=None)
+    actual_result: typing_extensions.Annotated[
+        typing.Optional["VariableValue"], pydantic.Field(alias="actualResult")
+    ] = None
     exception: typing.Optional[ExceptionV2] = None
     stdout: str
 

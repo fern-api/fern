@@ -12,17 +12,17 @@ class UserProfile(UniversalBaseModel):
     User profile object
     """
 
-    name: str = pydantic.Field()
+    name: str
     """
     The name of the user.
     """
 
-    verification: UserProfileVerification = pydantic.Field()
+    verification: UserProfileVerification
     """
     User profile verification object
     """
 
-    ssn: str = pydantic.Field()
+    ssn: str
     """
     The social security number of the user.
     """

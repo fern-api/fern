@@ -3,11 +3,12 @@
 import typing
 
 import pydantic
+import typing_extensions
 from ....core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel
 
 
 class UpdateProblemResponse(UniversalBaseModel):
-    problem_version: int = pydantic.Field(alias="problemVersion")
+    problem_version: typing_extensions.Annotated[int, pydantic.Field(alias="problemVersion")]
 
     if IS_PYDANTIC_V2:
         model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="forbid")  # type: ignore # Pydantic v2

@@ -25,7 +25,9 @@ class TestCaseGrade_Hidden(UniversalBaseModel):
 class TestCaseGrade_NonHidden(UniversalBaseModel):
     type: typing.Literal["nonHidden"] = "nonHidden"
     passed: bool
-    actual_result: typing.Optional["VariableValue"] = pydantic.Field(alias="actualResult", default=None)
+    actual_result: typing_extensions.Annotated[
+        typing.Optional["VariableValue"], pydantic.Field(alias="actualResult")
+    ] = None
     exception: typing.Optional[ExceptionV2] = None
     stdout: str
 

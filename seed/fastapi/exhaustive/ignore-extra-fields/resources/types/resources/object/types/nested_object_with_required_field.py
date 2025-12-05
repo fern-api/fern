@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ......core.pydantic_utilities import (
     IS_PYDANTIC_V2,
     UniversalBaseModel,
@@ -16,7 +17,7 @@ from .object_with_optional_field import ObjectWithOptionalField
 
 class NestedObjectWithRequiredField(UniversalBaseModel):
     string: str
-    nested_object: ObjectWithOptionalField = pydantic.Field(alias="NestedObject")
+    nested_object: typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")]
 
     class Validators:
         """
@@ -31,7 +32,7 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
                 ...
 
             @NestedObjectWithRequiredField.Validators.field("nested_object")
-            def validate_nested_object(nested_object: ObjectWithOptionalField, values: NestedObjectWithRequiredField.Partial) -> ObjectWithOptionalField:
+            def validate_nested_object(nested_object: typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")], values: NestedObjectWithRequiredField.Partial) -> typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")]:
                 ...
         """
 
@@ -137,8 +138,10 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
 
         class NestedObjectValidator(typing.Protocol):
             def __call__(
-                self, __v: ObjectWithOptionalField, __values: NestedObjectWithRequiredField.Partial
-            ) -> ObjectWithOptionalField: ...
+                self,
+                __v: typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")],
+                __values: NestedObjectWithRequiredField.Partial,
+            ) -> typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")]: ...
 
         class _PreRootValidator(typing.Protocol):
             def __call__(self, __values: typing.Any) -> typing.Any: ...
@@ -178,16 +181,20 @@ class NestedObjectWithRequiredField(UniversalBaseModel):
 
     @universal_field_validator("nested_object", pre=True)
     def _pre_validate_nested_object(
-        cls, v: ObjectWithOptionalField, values: NestedObjectWithRequiredField.Partial
-    ) -> ObjectWithOptionalField:
+        cls,
+        v: typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")],
+        values: NestedObjectWithRequiredField.Partial,
+    ) -> typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")]:
         for validator in NestedObjectWithRequiredField.Validators._nested_object_pre_validators:
             v = validator(v, values)
         return v
 
     @universal_field_validator("nested_object", pre=False)
     def _post_validate_nested_object(
-        cls, v: ObjectWithOptionalField, values: NestedObjectWithRequiredField.Partial
-    ) -> ObjectWithOptionalField:
+        cls,
+        v: typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")],
+        values: NestedObjectWithRequiredField.Partial,
+    ) -> typing_extensions.Annotated[ObjectWithOptionalField, pydantic.Field(alias="NestedObject")]:
         for validator in NestedObjectWithRequiredField.Validators._nested_object_post_validators:
             v = validator(v, values)
         return v

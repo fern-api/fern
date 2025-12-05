@@ -5,12 +5,13 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 
 
 class ListType(UniversalBaseModel):
-    value_type: "VariableType" = pydantic.Field(alias="valueType")
-    is_fixed_length: typing.Optional[bool] = pydantic.Field(alias="isFixedLength", default=None)
+    value_type: typing_extensions.Annotated["VariableType", pydantic.Field(alias="valueType")]
+    is_fixed_length: typing_extensions.Annotated[typing.Optional[bool], pydantic.Field(alias="isFixedLength")] = None
     """
     Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
     """

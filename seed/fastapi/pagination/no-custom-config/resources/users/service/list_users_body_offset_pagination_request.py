@@ -8,7 +8,7 @@ from ..types.with_page import WithPage
 
 
 class ListUsersBodyOffsetPaginationRequest(UniversalBaseModel):
-    pagination: typing.Optional[WithPage] = pydantic.Field(default=None)
+    pagination: typing.Optional[WithPage] = None
     """
     The object that contains the offset used for pagination
     in order to fetch the next page of results.

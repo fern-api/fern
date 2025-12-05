@@ -5,6 +5,7 @@ from __future__ import annotations
 import typing
 
 import pydantic
+import typing_extensions
 from ...core.pydantic_utilities import IS_PYDANTIC_V2, UniversalBaseModel, update_forward_refs
 from ..commons.problem_id import ProblemId
 from ..commons.test_case import TestCase
@@ -12,9 +13,9 @@ from .test_submission_status import TestSubmissionStatus
 
 
 class TestSubmissionState(UniversalBaseModel):
-    problem_id: ProblemId = pydantic.Field(alias="problemId")
-    default_test_cases: typing.List[TestCase] = pydantic.Field(alias="defaultTestCases")
-    custom_test_cases: typing.List[TestCase] = pydantic.Field(alias="customTestCases")
+    problem_id: typing_extensions.Annotated[ProblemId, pydantic.Field(alias="problemId")]
+    default_test_cases: typing_extensions.Annotated[typing.List[TestCase], pydantic.Field(alias="defaultTestCases")]
+    custom_test_cases: typing_extensions.Annotated[typing.List[TestCase], pydantic.Field(alias="customTestCases")]
     status: TestSubmissionStatus
 
     if IS_PYDANTIC_V2:
