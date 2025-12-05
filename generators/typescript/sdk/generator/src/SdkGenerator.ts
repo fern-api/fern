@@ -479,7 +479,8 @@ export class SdkGenerator {
         this.baseClientTypeGenerator = new BaseClientTypeGenerator({
             ir: intermediateRepresentation,
             generateIdempotentRequestOptions: this.hasIdempotentEndpoints(),
-            omitFernHeaders: config.omitFernHeaders
+            omitFernHeaders: config.omitFernHeaders,
+            oauthTokenOverridePropertyName: config.oauthTokenOverridePropertyName
         });
         this.websocketGenerator = new WebsocketClassGenerator({
             intermediateRepresentation,

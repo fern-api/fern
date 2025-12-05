@@ -9,7 +9,10 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedOauthClientCredentials from "../../../index.js";
 
 export declare namespace AuthClient {
-    export interface Options extends BaseClientOptions {}
+    export type OAuthAuthOptions =
+        | { clientId: core.Supplier<string>; clientSecret: core.Supplier<string> }
+        | { token: core.Supplier<string> };
+    export type Options = BaseClientOptions & OAuthAuthOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

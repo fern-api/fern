@@ -668,40 +668,48 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const tokenOverridePropertyName = this.tokenOverridePropertyName ?? DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME;
 
         const supplierType = getTextOfTsNode(
-            context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
+            context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
             )
-        ).replace(/<any>/, "");
-
-        const optionsProperties: Array<{
-            kind: typeof StructureKind.PropertySignature;
-            name: string;
-            type: string;
-            hasQuestionToken: boolean;
-        }> = [];
+        );
 
         if (hasTokenOverride) {
-            optionsProperties.push({
-                kind: StructureKind.PropertySignature,
-                name: tokenOverridePropertyName,
-                type: `${supplierType}<string>`,
-                hasQuestionToken: true
+            // Generate the same union type as the clients for consistency
+            context.sourceFile.addModule({
+                name: CLASS_NAME,
+                isExported: true,
+                kind: StructureKind.Module,
+                statements: [
+                    {
+                        kind: StructureKind.TypeAlias,
+                        name: "OAuthAuthOptions",
+                        isExported: true,
+                        type: `{ clientId: ${supplierType}; clientSecret: ${supplierType}; } | { ${tokenOverridePropertyName}: ${supplierType}; }`
+                    },
+                    {
+                        kind: StructureKind.TypeAlias,
+                        name: OPTIONS_TYPE_NAME,
+                        isExported: true,
+                        type: `BaseClientOptions & OAuthAuthOptions`
+                    }
+                ]
+            });
+        } else {
+            // No token override - use simple interface extending BaseClientOptions
+            context.sourceFile.addModule({
+                name: CLASS_NAME,
+                isExported: true,
+                kind: StructureKind.Module,
+                statements: [
+                    {
+                        kind: StructureKind.Interface,
+                        name: OPTIONS_TYPE_NAME,
+                        isExported: true,
+                        extends: ["BaseClientOptions"],
+                        properties: []
+                    }
+                ]
             });
         }
-
-        context.sourceFile.addModule({
-            name: CLASS_NAME,
-            isExported: true,
-            kind: StructureKind.Module,
-            statements: [
-                {
-                    kind: StructureKind.Interface,
-                    name: OPTIONS_TYPE_NAME,
-                    isExported: true,
-                    extends: ["BaseClientOptions"],
-                    properties: optionsProperties
-                }
-            ]
-        });
     }
 }

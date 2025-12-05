@@ -6,9 +6,10 @@ import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
 export namespace OAuthAuthProvider {
-    export interface Options extends BaseClientOptions {
-        token?: core.Supplier<string>;
-    }
+    export type OAuthAuthOptions =
+        | { clientId: core.Supplier<string>; clientSecret: core.Supplier<string> }
+        | { token: core.Supplier<string> };
+    export type Options = BaseClientOptions & OAuthAuthOptions;
 }
 
 export class OAuthAuthProvider implements core.AuthProvider {

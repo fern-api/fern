@@ -10,6 +10,7 @@ export declare namespace BaseClientTypeGenerator {
         generateIdempotentRequestOptions: boolean;
         ir: FernIr.IntermediateRepresentation;
         omitFernHeaders: boolean;
+        oauthTokenOverridePropertyName: string | undefined;
     }
 }
 
@@ -20,11 +21,18 @@ export class BaseClientTypeGenerator {
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly ir: FernIr.IntermediateRepresentation;
     private readonly omitFernHeaders: boolean;
+    private readonly oauthTokenOverridePropertyName: string | undefined;
 
-    constructor({ generateIdempotentRequestOptions, ir, omitFernHeaders }: BaseClientTypeGenerator.Init) {
+    constructor({
+        generateIdempotentRequestOptions,
+        ir,
+        omitFernHeaders,
+        oauthTokenOverridePropertyName
+    }: BaseClientTypeGenerator.Init) {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.ir = ir;
         this.omitFernHeaders = omitFernHeaders;
+        this.oauthTokenOverridePropertyName = oauthTokenOverridePropertyName;
     }
 
     public writeToFile(context: SdkContext): void {
@@ -255,7 +263,14 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                         moduleSpecifier: "./auth/OAuthAuthProvider.js",
                         namedImports: ["OAuthAuthProvider"]
                     });
-                    authProviderCreation = "new OAuthAuthProvider(normalizedWithNoOpAuthProvider)";
+                    // When token override is enabled, we need to cast to OAuthAuthProvider.Options
+                    // because the generic T extends BaseClientOptions doesn't capture the union type
+                    if (this.oauthTokenOverridePropertyName !== undefined) {
+                        authProviderCreation =
+                            "new OAuthAuthProvider(normalizedWithNoOpAuthProvider as OAuthAuthProvider.Options)";
+                    } else {
+                        authProviderCreation = "new OAuthAuthProvider(normalizedWithNoOpAuthProvider)";
+                    }
                     break;
                 } else if (authScheme.type === "inferred") {
                     context.sourceFile.addImportDeclaration({

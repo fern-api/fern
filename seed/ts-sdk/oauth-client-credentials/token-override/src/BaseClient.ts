@@ -71,7 +71,7 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
-    normalized.authProvider ??= new OAuthAuthProvider(normalizedWithNoOpAuthProvider);
+    normalized.authProvider ??= new OAuthAuthProvider(normalizedWithNoOpAuthProvider as OAuthAuthProvider.Options);
     return normalized;
 }
 

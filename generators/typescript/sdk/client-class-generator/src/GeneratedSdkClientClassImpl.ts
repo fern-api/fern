@@ -1012,12 +1012,11 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     ): InterfaceDeclarationStructure | TypeAliasDeclarationStructure[] {
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
 
-        // Check if OAuth token override is enabled - only apply union type to root client
+        // Check if OAuth token override is enabled - apply union type to all clients
         const hasOAuthTokenOverride =
             this.oauthTokenOverridePropertyName !== undefined && this.authProvider instanceof OAuthAuthProviderInstance;
-        const shouldUseOAuthUnion = this.isRoot && hasOAuthTokenOverride;
 
-        if (shouldUseOAuthUnion) {
+        if (hasOAuthTokenOverride) {
             // Generate undiscriminated union type for OAuth with token override
             const baseClientOptionsType = getTextOfTsNode(
                 context.sdkClientClass.getReferenceToBaseClientOptions().getTypeNode()
