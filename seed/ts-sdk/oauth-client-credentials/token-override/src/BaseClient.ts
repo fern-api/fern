@@ -4,7 +4,7 @@ import { OAuthAuthProvider } from "./auth/OAuthAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
-export interface BaseClientCoreOptions {
+export interface BaseClientOptions {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
@@ -19,8 +19,6 @@ export interface BaseClientCoreOptions {
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
 }
-
-export type BaseClientOptions = BaseClientCoreOptions & OAuthAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */
@@ -69,7 +67,7 @@ export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
 ): NormalizedClientOptionsWithAuth<T> {
     const normalized = normalizeClientOptions(options) as NormalizedClientOptionsWithAuth<T>;
     const normalizedWithNoOpAuthProvider = withNoOpAuthProvider(normalized);
-    normalized.authProvider ??= new OAuthAuthProvider(normalizedWithNoOpAuthProvider);
+    normalized.authProvider ??= OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider);
     return normalized;
 }
 

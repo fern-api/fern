@@ -42,30 +42,9 @@ export class BaseClientTypeGenerator {
             });
         }
 
-        const hasOAuthWithTokenOverride = this.hasOAuthScheme() && this.oauthTokenOverridePropertyName !== undefined;
-
-        if (hasOAuthWithTokenOverride) {
-            // When OAuth with token override is enabled, generate a core interface and then
-            // BaseClientOptions as a type alias that combines the core with the OAuth union
-            const coreInterface = context.baseClient.generateBaseClientOptionsInterface(context);
-            coreInterface.name = "BaseClientCoreOptions";
-            context.sourceFile.addInterface(coreInterface);
-
-            // Import OAuthAuthProvider to access the AuthOptions union type
-            context.sourceFile.addImportDeclaration({
-                moduleSpecifier: "./auth/OAuthAuthProvider.js",
-                namedImports: ["OAuthAuthProvider"]
-            });
-
-            // Generate BaseClientOptions as a type alias combining core options with OAuth union
-            context.sourceFile.addTypeAlias({
-                name: "BaseClientOptions",
-                isExported: true,
-                type: "BaseClientCoreOptions & OAuthAuthProvider.AuthOptions"
-            });
-        } else {
-            context.sourceFile.addInterface(context.baseClient.generateBaseClientOptionsInterface(context));
-        }
+        // Always generate BaseClientOptions as a simple interface
+        // The auth union is handled separately in OAuthAuthProvider.Options
+        context.sourceFile.addInterface(context.baseClient.generateBaseClientOptionsInterface(context));
 
         context.sourceFile.addInterface(context.baseClient.generateBaseRequestOptionsInterface(context));
         if (this.generateIdempotentRequestOptions) {
@@ -252,9 +231,12 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                         namedImports: ["OAuthAuthProvider"]
                     });
                     providerImports.push("OAuthAuthProvider");
-                    providerInstantiations.push(
-                        "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider)); }"
-                    );
+                    // Use createInstance when token override is enabled, otherwise use new OAuthAuthProvider
+                    const oauthCreation =
+                        this.oauthTokenOverridePropertyName !== undefined
+                            ? "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)); }"
+                            : "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider)); }";
+                    providerInstantiations.push(oauthCreation);
                 }
             }
 
@@ -293,7 +275,11 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                         moduleSpecifier: "./auth/OAuthAuthProvider.js",
                         namedImports: ["OAuthAuthProvider"]
                     });
-                    authProviderCreation = "new OAuthAuthProvider(normalizedWithNoOpAuthProvider)";
+                    // Use createInstance when token override is enabled, otherwise use new OAuthAuthProvider
+                    authProviderCreation =
+                        this.oauthTokenOverridePropertyName !== undefined
+                            ? "OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)"
+                            : "new OAuthAuthProvider(normalizedWithNoOpAuthProvider)";
                     break;
                 } else if (authScheme.type === "inferred") {
                     context.sourceFile.addImportDeclaration({
