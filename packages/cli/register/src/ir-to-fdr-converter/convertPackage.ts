@@ -13,6 +13,16 @@ import { noop, startCase } from "lodash-es";
 
 import { convertTypeReference } from "./convertTypeShape";
 
+/**
+ * Local extension type for ErrorDeclarationV2 that includes the `headers` field.
+ * This is needed because the FDR SDK types haven't been regenerated yet to include
+ * the `headers` field that was added to the FDR API definition.
+ * Once the FDR SDK is regenerated with the new schema, this type can be removed.
+ */
+type ErrorDeclarationV2WithHeaders = FdrCjsSdk.api.v1.register.ErrorDeclarationV2 & {
+    headers?: FdrCjsSdk.api.v1.register.Header[];
+};
+
 export function convertPackage(
     irPackage: Ir.ir.Package,
     ir: Ir.ir.IntermediateRepresentation
@@ -759,7 +769,7 @@ function convertResponseErrorsV2(
     irResponseErrors: Ir.http.ResponseErrors,
     ir: IntermediateRepresentation
 ): FdrCjsSdk.api.v1.register.ErrorDeclarationV2[] {
-    const errors: FdrCjsSdk.api.v1.register.ErrorDeclarationV2[] = [];
+    const errors: ErrorDeclarationV2WithHeaders[] = [];
     if (ir.errorDiscriminationStrategy.type === "statusCode") {
         for (const irResponseError of irResponseErrors) {
             const errorDeclaration = ir.errors[irResponseError.error.errorId];
