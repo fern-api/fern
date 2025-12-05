@@ -506,10 +506,7 @@ export class ZodFormat implements SerializationFormat {
             // For JSON serialization, convert Set to Array: Array.from(value)
             toJsonExpression: (parsed) =>
                 ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        ts.factory.createIdentifier("Array"),
-                        "from"
-                    ),
+                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("Array"), "from"),
                     undefined,
                     [parsed]
                 )
