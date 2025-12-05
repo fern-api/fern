@@ -26,6 +26,12 @@ interface ZodBaseSchema extends Schema {
     toExpression: () => ts.Expression;
     isOptional: boolean;
     isNullable: boolean;
+    /**
+     * Optional: generate expression to serialize value to JSON.
+     * If not provided, value passes through unchanged.
+     * Used for types that need transformation (Set → Array, etc.)
+     */
+    toJsonExpression?: (parsed: ts.Expression) => ts.Expression;
 }
 
 /**
@@ -97,8 +103,10 @@ export class ZodFormat implements SerializationFormat {
                 return chainMethod(baseSchema.toExpression(), "parse", [raw]);
             },
             json: (parsed, _opts) => {
-                // For Zod, "json" (serialization) is just identity since Zod doesn't transform
-                // We return the parsed value as-is - actual serialization happens elsewhere
+                // Use schema-specific serialization if defined, otherwise pass through
+                if (baseSchema.toJsonExpression) {
+                    return baseSchema.toJsonExpression(parsed);
+                }
                 return parsed;
             },
             parseOrThrow: (raw, _opts) => {
@@ -106,7 +114,10 @@ export class ZodFormat implements SerializationFormat {
                 return chainMethod(baseSchema.toExpression(), "parse", [raw]);
             },
             jsonOrThrow: (parsed, _opts) => {
-                // Just return the value - no transformation needed
+                // Use schema-specific serialization if defined, otherwise pass through
+                if (baseSchema.toJsonExpression) {
+                    return baseSchema.toJsonExpression(parsed);
+                }
                 return parsed;
             },
             transform: ({ transform, untransform }) => {
@@ -130,7 +141,22 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: schema.isOptional,
             isNullable: true,
-            toExpression: () => chainMethod(schema.toExpression(), "nullable")
+            toExpression: () => chainMethod(schema.toExpression(), "nullable"),
+            // Preserve inner serialization, handling null: value != null ? transform(value) : null
+            toJsonExpression: schema.toJsonExpression
+                ? (parsed) =>
+                      ts.factory.createConditionalExpression(
+                          ts.factory.createBinaryExpression(
+                              parsed,
+                              ts.SyntaxKind.ExclamationEqualsEqualsToken,
+                              ts.factory.createNull()
+                          ),
+                          undefined,
+                          schema.toJsonExpression!(parsed),
+                          undefined,
+                          ts.factory.createNull()
+                      )
+                : undefined
         };
         return {
             ...baseSchema,
@@ -142,7 +168,22 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: true,
             isNullable: schema.isNullable,
-            toExpression: () => chainMethod(schema.toExpression(), "optional")
+            toExpression: () => chainMethod(schema.toExpression(), "optional"),
+            // Preserve inner serialization, handling undefined: value != null ? transform(value) : value
+            toJsonExpression: schema.toJsonExpression
+                ? (parsed) =>
+                      ts.factory.createConditionalExpression(
+                          ts.factory.createBinaryExpression(
+                              parsed,
+                              ts.SyntaxKind.ExclamationEqualsEqualsToken,
+                              ts.factory.createNull()
+                          ),
+                          undefined,
+                          schema.toJsonExpression!(parsed),
+                          undefined,
+                          parsed
+                      )
+                : undefined
         };
         return {
             ...baseSchema,
@@ -154,7 +195,22 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: true,
             isNullable: true,
-            toExpression: () => chainMethod(chainMethod(schema.toExpression(), "optional"), "nullable")
+            toExpression: () => chainMethod(chainMethod(schema.toExpression(), "optional"), "nullable"),
+            // Preserve inner serialization, handling null/undefined
+            toJsonExpression: schema.toJsonExpression
+                ? (parsed) =>
+                      ts.factory.createConditionalExpression(
+                          ts.factory.createBinaryExpression(
+                              parsed,
+                              ts.SyntaxKind.ExclamationEqualsEqualsToken,
+                              ts.factory.createNull()
+                          ),
+                          undefined,
+                          schema.toJsonExpression!(parsed),
+                          undefined,
+                          parsed
+                      )
+                : undefined
         };
         return {
             ...baseSchema,
@@ -441,13 +497,22 @@ export class ZodFormat implements SerializationFormat {
 
     public set = (itemSchema: Schema): SchemaWithUtils => {
         // JSON wire format uses arrays for sets
-        // We keep as array (not transform to Set) because:
-        // 1. JSON.stringify(Set) produces "{}" which breaks serialization
-        // 2. Arrays are JSON-compatible and work bidirectionally
+        // Parsing: z.array() validates the input
+        // Serialization: Array.from() converts Set → Array (handles both Set and Array input)
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => this.zodCall("array", [itemSchema.toExpression()])
+            toExpression: () => this.zodCall("array", [itemSchema.toExpression()]),
+            // For JSON serialization, convert Set to Array: Array.from(value)
+            toJsonExpression: (parsed) =>
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(
+                        ts.factory.createIdentifier("Array"),
+                        "from"
+                    ),
+                    undefined,
+                    [parsed]
+                )
         };
 
         return {

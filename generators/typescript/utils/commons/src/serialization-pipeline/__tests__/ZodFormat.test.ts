@@ -344,4 +344,92 @@ describe("ZodFormat AST Generation", () => {
             expect(patterns).toBeNull();
         });
     });
+
+    describe("JSON Serialization Compatibility", () => {
+        it("set() generates plain z.array() for JSON compatibility", () => {
+            // Sets must be arrays for JSON serialization to work correctly
+            // JSON.stringify(Set) produces "{}" which is wrong
+            const schema = zod.set(zod.string());
+            const ast = printNode(schema.toExpression());
+            // Should NOT contain .transform() - just a plain array
+            expect(ast).toBe("z.array(z.string())");
+            expect(ast).not.toContain("transform");
+            expect(ast).not.toContain("Set");
+        });
+
+        it("set().json() generates Array.from() for Set serialization", () => {
+            // When serializing, we need to convert Set → Array
+            const schema = zod.set(zod.string());
+            const valueExpr = ts.factory.createIdentifier("value");
+            const jsonExpr = schema.json(valueExpr, {
+                unrecognizedObjectKeys: "fail",
+                allowUnrecognizedUnionMembers: false,
+                allowUnrecognizedEnumValues: false,
+                skipValidation: false,
+                omitUndefined: false
+            });
+            const ast = printNode(jsonExpr);
+            // Should generate Array.from(value)
+            expect(ast).toBe("Array.from(value)");
+        });
+
+        it("set().optional().json() handles undefined correctly", () => {
+            // Optional set should check for null/undefined before converting
+            const schema = zod.set(zod.string()).optional();
+            const valueExpr = ts.factory.createIdentifier("value");
+            const jsonExpr = schema.json(valueExpr, {
+                unrecognizedObjectKeys: "fail",
+                allowUnrecognizedUnionMembers: false,
+                allowUnrecognizedEnumValues: false,
+                skipValidation: false,
+                omitUndefined: false
+            });
+            const ast = printNode(jsonExpr);
+            // Should generate: value !== null ? Array.from(value) : value
+            expect(ast).toContain("Array.from(value)");
+            expect(ast).toContain("!==");
+            expect(ast).toContain("null");
+        });
+
+        it("record() always uses string keys for JSON compatibility", () => {
+            // JSON object keys are always strings, even if Fern declares map<integer, string>
+            const schema = zod.record({
+                keySchema: zod.number(), // Even with number key schema
+                valueSchema: zod.string()
+            });
+            const ast = printNode(schema.toExpression());
+            // Key should be z.string(), not z.number()
+            expect(ast).toBe("z.record(z.string(), z.string())");
+        });
+
+        it("record() ignores key schema and uses string", () => {
+            // Verify various key types all become string
+            const withBoolKey = zod.record({
+                keySchema: zod.boolean(),
+                valueSchema: zod.number()
+            });
+            const withAnyKey = zod.record({
+                keySchema: zod.any(),
+                valueSchema: zod.string()
+            });
+
+            expect(printNode(withBoolKey.toExpression())).toContain("z.string()");
+            expect(printNode(withAnyKey.toExpression())).toContain("z.string()");
+        });
+
+        it("primitive types have no json transformation", () => {
+            // Primitives should just pass through
+            const stringSchema = zod.string();
+            const valueExpr = ts.factory.createIdentifier("value");
+            const jsonExpr = stringSchema.json(valueExpr, {
+                unrecognizedObjectKeys: "fail",
+                allowUnrecognizedUnionMembers: false,
+                allowUnrecognizedEnumValues: false,
+                skipValidation: false,
+                omitUndefined: false
+            });
+            // Should just return the value as-is
+            expect(printNode(jsonExpr)).toBe("value");
+        });
+    });
 });
