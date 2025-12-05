@@ -84,6 +84,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
+                serializationFormat: customConfig.serializationFormat,
                 outputEsm: customConfig.outputEsm,
                 retainOriginalCasing: customConfig.retainOriginalCasing,
                 allowExtraFields: customConfig.allowExtraFields,
