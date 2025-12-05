@@ -10,6 +10,45 @@ import { topologicalCompareAsIsFiles } from "../AsIs";
 import { AbstractRubyGeneratorContext } from "../context/AbstractRubyGeneratorContext";
 import { RubocopFile } from "./RubocopFile";
 
+/**
+ * Formats a dependency entry for use in gemspec or Gemfile.
+ * Supports both simple string versions (e.g., "1.0") and complex dependency objects
+ * with upper/lower bounds.
+ *
+ * @param packageName - The name of the gem package
+ * @param value - Either a version string or a dependency object with bounds
+ * @param forGemspec - If true, formats for gemspec (spec.add_dependency), otherwise for Gemfile (gem)
+ * @returns Formatted dependency string
+ */
+function formatDependency(
+    packageName: string,
+    value:
+        | string
+        | {
+              upperBound?: { version: string; specifier?: string };
+              lowerBound?: { version: string; specifier?: string };
+          },
+    forGemspec: boolean
+): string {
+    const prefix = forGemspec ? `spec.add_dependency "${packageName}"` : `gem "${packageName}"`;
+
+    if (typeof value === "string") {
+        return `${prefix}, "~> ${value}"`;
+    }
+
+    const parts: string[] = [prefix];
+    if (value.lowerBound != null) {
+        const specifier = value.lowerBound.specifier ?? ">=";
+        parts.push(`"${specifier} ${value.lowerBound.version}"`);
+    }
+    if (value.upperBound != null) {
+        const specifier = value.upperBound.specifier ?? "<=";
+        parts.push(`"${specifier} ${value.upperBound.version}"`);
+    }
+
+    return parts.join(", ");
+}
+
 const GEMFILE_FILENAME = "Gemfile";
 const CUSTOM_GEMFILE_FILENAME = "Gemfile.custom";
 const RAKEFILE_FILENAME = "Rakefile";
@@ -226,9 +265,23 @@ class GemspecFile {
         this.context = context;
     }
 
+    private getExtraDependenciesString(): string {
+        const extraDependencies = this.context.customConfig.extraDependencies;
+        if (extraDependencies == null || Object.keys(extraDependencies).length === 0) {
+            return "";
+        }
+
+        const dependencyLines = Object.entries(extraDependencies).map(([packageName, value]) =>
+            formatDependency(packageName, value, true)
+        );
+
+        return "\n" + dependencyLines.join("\n");
+    }
+
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModuleName();
+        const extraDependenciesString = this.getExtraDependenciesString();
 
         return dedent`
             # frozen_string_literal: true
@@ -259,10 +312,7 @@ class GemspecFile {
             spec.bindir = "exe"
             spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
             spec.require_paths = ["lib"]
-
-            # Uncomment to register a new dependency of your gem
-            # spec.add_dependency "example-gem", "~> 1.0"
-
+${extraDependenciesString}
             # For more information and examples about making a new gem, check out our
             # guide at: https://bundler.io/guides/creating_gem.html
             
@@ -325,7 +375,22 @@ class Gemfile {
         this.context = context;
     }
 
+    private getExtraDevDependenciesString(): string {
+        const extraDevDependencies = this.context.customConfig.extraDevDependencies;
+        if (extraDevDependencies == null || Object.keys(extraDevDependencies).length === 0) {
+            return "";
+        }
+
+        const dependencyLines = Object.entries(extraDevDependencies).map(([packageName, value]) =>
+            formatDependency(packageName, value, false)
+        );
+
+        return "\n" + dependencyLines.join("\n");
+    }
+
     public async toString(): Promise<string> {
+        const extraDevDependenciesString = this.getExtraDevDependenciesString();
+
         return dedent`
             # frozen_string_literal: true
 
@@ -345,6 +410,7 @@ class Gemfile {
                 gem "pry"
 
                 gem "webmock"
+${extraDevDependenciesString}
             end
 
             # Load custom Gemfile configuration if it exists
