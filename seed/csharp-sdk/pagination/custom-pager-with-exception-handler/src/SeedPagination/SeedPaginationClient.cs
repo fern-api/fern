@@ -40,7 +40,7 @@ public partial class SeedPaginationClient
         catch (Exception ex)
         {
             var interceptor = new SeedPaginationExceptionInterceptor();
-            interceptor.CaptureException(ex);
+            interceptor.Intercept(ex);
             throw;
         }
     }

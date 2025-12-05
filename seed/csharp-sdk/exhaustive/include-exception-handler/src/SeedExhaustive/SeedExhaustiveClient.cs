@@ -42,7 +42,7 @@ public partial class SeedExhaustiveClient
         catch (Exception ex)
         {
             var interceptor = new SeedExhaustiveExceptionInterceptor();
-            interceptor.CaptureException(ex);
+            interceptor.Intercept(ex);
             throw;
         }
     }

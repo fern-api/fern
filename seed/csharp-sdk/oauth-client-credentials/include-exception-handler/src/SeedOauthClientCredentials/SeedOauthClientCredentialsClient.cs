@@ -53,7 +53,7 @@ public partial class SeedOauthClientCredentialsClient
         catch (Exception ex)
         {
             var interceptor = new SeedOauthClientCredentialsExceptionInterceptor();
-            interceptor.CaptureException(ex);
+            interceptor.Intercept(ex);
             throw;
         }
     }
