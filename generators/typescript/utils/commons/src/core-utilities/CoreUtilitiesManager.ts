@@ -102,7 +102,7 @@ export class CoreUtilitiesManager {
         });
 
         // Create the serialization format based on configuration
-        const serializationFormat = this.createSerializationFormat(getReferenceToExport);
+        const serializationFormat = this.createSerializationFormat(getReferenceToExport, importsManager);
 
         return {
             zurg: serializationFormat,
@@ -146,7 +146,8 @@ export class CoreUtilitiesManager {
         getReferenceToExport: (args: {
             manifest: CoreUtility.Manifest;
             exportedName: string;
-        }) => ReturnType<typeof getReferenceToExportViaNamespaceImport>
+        }) => ReturnType<typeof getReferenceToExportViaNamespaceImport>,
+        importsManager: ImportsManager
     ) {
         const config = {
             getReferenceToExport,
@@ -160,7 +161,7 @@ export class CoreUtilitiesManager {
                 return new ZurgFormat(config);
 
             case "zod":
-                return new ZodFormat(config);
+                return new ZodFormat(config, importsManager);
 
             case "none":
                 return new PassthroughFormat(config);

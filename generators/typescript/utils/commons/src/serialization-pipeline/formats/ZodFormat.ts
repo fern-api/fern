@@ -1,5 +1,6 @@
 import { ts } from "ts-morph";
 
+import { ImportsManager } from "../../imports-manager";
 import {
     AdditionalProperty,
     ObjectLikeSchema,
@@ -30,7 +31,7 @@ interface ZodBaseSchema extends Schema {
 /**
  * Helper to create a property access expression like `z.string()`
  */
-function zodCall(methodName: string, args: ts.Expression[] = []): ts.Expression {
+function createZodCall(methodName: string, args: ts.Expression[] = []): ts.Expression {
     return ts.factory.createCallExpression(
         ts.factory.createPropertyAccessExpression(
             ts.factory.createIdentifier("z"),
@@ -59,8 +60,29 @@ function chainMethod(expr: ts.Expression, methodName: string, args: ts.Expressio
 export class ZodFormat implements SerializationFormat {
     public readonly name = "zod" as const;
 
-    constructor(_config: SerializationFormatConfig) {
-        // No special configuration needed - Zod is an npm dependency
+    private importsManager?: ImportsManager;
+    private hasAddedZodImport = false;
+
+    constructor(_config: SerializationFormatConfig, importsManager?: ImportsManager) {
+        this.importsManager = importsManager;
+    }
+
+    /**
+     * Ensure the zod import is added to the current file
+     */
+    private ensureZodImport(): void {
+        if (!this.hasAddedZodImport && this.importsManager) {
+            this.importsManager.addImport("zod", { namedImports: ["z"] });
+            this.hasAddedZodImport = true;
+        }
+    }
+
+    /**
+     * Create a zod call expression and ensure the import is added
+     */
+    private zodCall(methodName: string, args: ts.Expression[] = []): ts.Expression {
+        this.ensureZodImport();
+        return createZodCall(methodName, args);
     }
 
     // ==================== Schema Utilities ====================
@@ -241,7 +263,7 @@ export class ZodFormat implements SerializationFormat {
                     );
                 });
 
-                return zodCall("object", [ts.factory.createObjectLiteralExpression(propAssignments, true)]);
+                return this.zodCall("object", [ts.factory.createObjectLiteralExpression(propAssignments, true)]);
             }
         };
 
@@ -310,19 +332,19 @@ export class ZodFormat implements SerializationFormat {
                     // Create an object schema with the discriminant + non-discriminant properties
                     const discriminantProp = ts.factory.createPropertyAssignment(
                         ts.factory.createStringLiteral(rawDiscriminant),
-                        zodCall("literal", [ts.factory.createStringLiteral(variant.discriminantValue)])
+                        this.zodCall("literal", [ts.factory.createStringLiteral(variant.discriminantValue)])
                     );
 
                     // Get the properties from the non-discriminant schema
                     // We need to merge them with the discriminant
                     return chainMethod(
-                        zodCall("object", [ts.factory.createObjectLiteralExpression([discriminantProp], false)]),
+                        this.zodCall("object", [ts.factory.createObjectLiteralExpression([discriminantProp], false)]),
                         "merge",
                         [variant.nonDiscriminantProperties.toExpression()]
                     );
                 });
 
-                return zodCall("discriminatedUnion", [
+                return this.zodCall("discriminatedUnion", [
                     ts.factory.createStringLiteral(rawDiscriminant),
                     ts.factory.createArrayLiteralExpression(variants, true)
                 ]);
@@ -377,7 +399,7 @@ export class ZodFormat implements SerializationFormat {
             isOptional: false,
             isNullable: false,
             toExpression: () => {
-                return zodCall("union", [
+                return this.zodCall("union", [
                     ts.factory.createArrayLiteralExpression(
                         schemas.map((s) => s.toExpression()),
                         false
@@ -398,7 +420,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => zodCall("array", [itemSchema.toExpression()])
+            toExpression: () => this.zodCall("array", [itemSchema.toExpression()])
         };
 
         return {
@@ -412,7 +434,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => zodCall("set", [itemSchema.toExpression()])
+            toExpression: () => this.zodCall("set", [itemSchema.toExpression()])
         };
 
         return {
@@ -425,7 +447,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => zodCall("record", [keySchema.toExpression(), valueSchema.toExpression()])
+            toExpression: () => this.zodCall("record", [keySchema.toExpression(), valueSchema.toExpression()])
         };
 
         return {
@@ -441,7 +463,7 @@ export class ZodFormat implements SerializationFormat {
             isOptional: false,
             isNullable: false,
             toExpression: () =>
-                zodCall("enum", [
+                this.zodCall("enum", [
                     ts.factory.createArrayLiteralExpression(
                         values.map((v) => ts.factory.createStringLiteral(v)),
                         false
@@ -461,7 +483,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => zodCall("string")
+            toExpression: () => this.zodCall("string")
         };
 
         return {
@@ -474,7 +496,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => zodCall("literal", [ts.factory.createStringLiteral(literal)])
+            toExpression: () => this.zodCall("literal", [ts.factory.createStringLiteral(literal)])
         };
 
         return {
@@ -487,7 +509,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => zodCall("literal", [literal ? ts.factory.createTrue() : ts.factory.createFalse()])
+            toExpression: () => this.zodCall("literal", [literal ? ts.factory.createTrue() : ts.factory.createFalse()])
         };
 
         return {
@@ -500,7 +522,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => zodCall("number")
+            toExpression: () => this.zodCall("number")
         };
 
         return {
@@ -513,7 +535,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => zodCall("bigint")
+            toExpression: () => this.zodCall("bigint")
         };
 
         return {
@@ -526,7 +548,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => zodCall("boolean")
+            toExpression: () => this.zodCall("boolean")
         };
 
         return {
@@ -543,7 +565,7 @@ export class ZodFormat implements SerializationFormat {
             isNullable: false,
             toExpression: () => {
                 // Use z.string() with transform to parse ISO strings to Date
-                return chainMethod(zodCall("string"), "transform", [
+                return chainMethod(this.zodCall("string"), "transform", [
                     ts.factory.createArrowFunction(
                         undefined,
                         undefined,
@@ -568,7 +590,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: true, // any includes null
-            toExpression: () => zodCall("any")
+            toExpression: () => this.zodCall("any")
         };
 
         return {
@@ -581,7 +603,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: true, // unknown can be undefined
             isNullable: false,
-            toExpression: () => zodCall("unknown")
+            toExpression: () => this.zodCall("unknown")
         };
 
         return {
@@ -594,7 +616,7 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => zodCall("never")
+            toExpression: () => this.zodCall("never")
         };
 
         return {
@@ -610,7 +632,7 @@ export class ZodFormat implements SerializationFormat {
             isOptional: schema.isOptional,
             isNullable: schema.isNullable,
             toExpression: () =>
-                zodCall("lazy", [
+                this.zodCall("lazy", [
                     ts.factory.createArrowFunction(
                         undefined,
                         undefined,
@@ -633,7 +655,7 @@ export class ZodFormat implements SerializationFormat {
             isOptional: false,
             isNullable: schema.isNullable,
             toExpression: () =>
-                zodCall("lazy", [
+                this.zodCall("lazy", [
                     ts.factory.createArrowFunction(
                         undefined,
                         undefined,
