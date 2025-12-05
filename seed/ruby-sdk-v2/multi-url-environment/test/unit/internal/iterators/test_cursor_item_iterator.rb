@@ -85,11 +85,11 @@ class CursorItemIteratorTest < Minitest::Test
 
     items = []
     expected_times_called = 0
-    while (item = iterator.next_element)
+    while (item = iterator.get_next)
       expected_times_called += 1 if (item % 10) == 1
 
       assert_equal expected_times_called, @times_called
-      assert_equal item != NUMBERS.last, iterator.next?, "#{item} #{iterator}"
+      assert_equal item != NUMBERS.last, iterator.has_next?, "#{item} #{iterator}"
       items.push(item)
     end
 
@@ -155,7 +155,7 @@ class CursorItemIteratorTest < Minitest::Test
 
     iterator.each_with_index do |_page, index|
       assert_equal index + 1, @times_called
-      assert_equal index < 6, iterator.next?
+      assert_equal index < 6, iterator.has_next?
     end
   end
 
@@ -166,7 +166,7 @@ class CursorItemIteratorTest < Minitest::Test
 
     lengths = []
     expected_times_called = 0
-    while (page = iterator.next_page)
+    while (page = iterator.get_next)
       expected_times_called += 1
 
       assert_equal expected_times_called, @times_called

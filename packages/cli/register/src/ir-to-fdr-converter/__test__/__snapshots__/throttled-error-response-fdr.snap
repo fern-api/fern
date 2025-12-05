@@ -29,6 +29,7 @@
                 },
               },
             ],
+            "headers": undefined,
             "isWildcard": undefined,
             "name": "TooManyRequestsError",
             "statusCode": 429,

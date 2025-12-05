@@ -33,11 +33,6 @@ export class RawClient {
     private writeBaseUrlDeclaration(writer: ruby.Writer): void {
         // Write base URL declaration, including default environment if specified
         writer.write("base_url: request_options[:base_url]");
-        const defaultEnvironmentReference = this.context.getDefaultEnvironmentClassReference();
-        if (defaultEnvironmentReference != null) {
-            writer.write(" || ");
-            writer.writeNode(defaultEnvironmentReference);
-        }
     }
 
     public sendRequest({

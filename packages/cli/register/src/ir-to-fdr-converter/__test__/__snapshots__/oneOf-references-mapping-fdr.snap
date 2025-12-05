@@ -35,6 +35,7 @@
                 },
               },
             ],
+            "headers": undefined,
             "isWildcard": undefined,
             "name": "BadRequestError",
             "statusCode": 400,
