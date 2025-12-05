@@ -778,7 +778,17 @@ function convertResponseErrorsV2(
                     name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,
                     availability: undefined,
                     examples: getErrorExamplesFromDeclaration(errorDeclaration, ir),
-                    headers: undefined
+                    headers:
+                        errorDeclaration.headers != null && errorDeclaration.headers.length > 0
+                            ? errorDeclaration.headers.map(
+                                  (header): FdrCjsSdk.api.v1.register.Header => ({
+                                      description: header.docs ?? undefined,
+                                      key: header.name.wireValue,
+                                      type: convertTypeReference(header.valueType),
+                                      availability: convertIrAvailability(header.availability)
+                                  })
+                              )
+                            : undefined
                 });
             }
         }
@@ -834,7 +844,17 @@ function convertResponseErrorsV2(
                             description: irExample.docs
                         };
                     }),
-                    headers: undefined
+                    headers:
+                        errorDeclaration.headers != null && errorDeclaration.headers.length > 0
+                            ? errorDeclaration.headers.map(
+                                  (header): FdrCjsSdk.api.v1.register.Header => ({
+                                      description: header.docs ?? undefined,
+                                      key: header.name.wireValue,
+                                      type: convertTypeReference(header.valueType),
+                                      availability: convertIrAvailability(header.availability)
+                                  })
+                              )
+                            : undefined
                 });
             }
         }
