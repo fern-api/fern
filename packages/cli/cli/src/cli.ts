@@ -628,7 +628,8 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 .option("fernignore", {
                     type: "string",
                     description:
-                        "Path to a custom .fernignore file to use instead of the one on the main branch (remote generation only)"
+                        "Path to a custom .fernignore file to use instead of the one on the main branch (remote generation only)",
+                    requiresArg: true
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -644,6 +645,20 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                 return cliContext.failWithoutThrowing(
                     "The --fernignore flag is not supported with local generation (--local or --runner). It can only be used with remote generation."
                 );
+            }
+            // Handle case where --fernignore is provided without a value (yargs sets it to true)
+            // or with an empty string. Cast to unknown first since yargs types it as string but
+            // can set it to true at runtime when no value is provided.
+            if (argv.fernignore != null) {
+                const fernignoreValue = argv.fernignore as unknown;
+                if (
+                    fernignoreValue === true ||
+                    (typeof fernignoreValue === "string" && fernignoreValue.trim().length === 0)
+                ) {
+                    return cliContext.failWithoutThrowing(
+                        "The --fernignore flag requires a path to a .fernignore file."
+                    );
+                }
             }
             if (argv.api != null) {
                 return await generateAPIWorkspaces({
