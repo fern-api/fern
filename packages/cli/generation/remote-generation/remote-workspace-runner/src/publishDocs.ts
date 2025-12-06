@@ -2,7 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml } from "@fern-api/configuration";
 import { createFdrService } from "@fern-api/core";
-import { MediaType } from "@fern-api/core-utils";
+import { MediaType, replaceEnvVariables } from "@fern-api/core-utils";
 import { DocsDefinitionResolver, UploadedFile, wrapWithHttps } from "@fern-api/docs-resolver";
 import { APIV1Write, FdrAPI as CjsFdrSdk, DocsV1Write, DocsV2Write, FdrClient } from "@fern-api/fdr-sdk";
 
@@ -338,8 +338,20 @@ export async function publishDocs({
 
     context.logger.info("Resolving docs definition...");
     const resolveStart = performance.now();
-    const docsDefinition = await resolver.resolve();
+    let docsDefinition = await resolver.resolve();
     const resolveTime = performance.now() - resolveStart;
+
+    if (docsWorkspace.config.settings?.substituteEnvVars) {
+        context.logger.debug("Applying environment variable substitution to docs definition...");
+        // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
+        const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
+        const substitutedDocs = replaceEnvVariables(
+            docsWithoutJsFiles,
+            { onError: (e) => context.failAndThrow(e) },
+            { substituteAsEmpty: false }
+        );
+        docsDefinition = { ...substitutedDocs, jsFiles };
+    }
 
     const pageCount = Object.keys(docsDefinition.pages).length;
     const apiWorkspaceCount = apiWorkspaces.length;

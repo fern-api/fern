@@ -92,6 +92,13 @@ exports[`snippets > examples > 'POST /movie (invalid request body)' 1`] = `
   {
     "severity": "CRITICAL",
     "path": [
+      "pathParameters"
+    ],
+    "message": "Expected string, got number"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
       "requestBody"
     ],
     "message": "Expected string, got number"
@@ -112,7 +119,6 @@ client.service.create_movie(
     title="The Boy and the Heron",
     from="Hayao Miyazaki",
     rating=8,
-    type="movie",
     tag="development",
     metadata={
         "actors": [
@@ -154,9 +160,9 @@ client.endpoints.object.get_and_return_with_optional_field(
         "list",
         "list"
     ],
-    set={
+    set=[
         "set"
-    },
+    ],
     map={
         1: "map"
     },
@@ -167,6 +173,30 @@ client.endpoints.object.get_and_return_with_optional_field(
 
 exports[`snippets > exhaustive > 'POST /container/list-of-objects (inva…' 1`] = `
 "[
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "pathParameters[0]",
+      "string"
+    ],
+    "message": "Expected string, got boolean"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "pathParameters[1]",
+      "invalid"
+    ],
+    "message": "\\"invalid\\" is not a recognized parameter for this endpoint"
+  },
+  {
+    "severity": "CRITICAL",
+    "path": [
+      "pathParameters[2]",
+      "string"
+    ],
+    "message": "Expected string, got number"
+  },
   {
     "severity": "CRITICAL",
     "path": [
@@ -241,7 +271,8 @@ client = Acme()
 
 client.service.post(
     file="Hello, world!",
-    file_list=["First", "Second"]
+    file_list=["First", "Second"],
+    maybe_file="example_maybe_file"
 )
 "
 `;

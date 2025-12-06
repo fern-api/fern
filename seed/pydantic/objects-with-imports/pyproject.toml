@@ -1,5 +1,6 @@
 [project]
 name = "fern_objects-with-imports"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_objects-with-imports"

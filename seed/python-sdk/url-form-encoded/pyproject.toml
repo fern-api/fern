@@ -1,5 +1,6 @@
 [project]
 name = "fern_url-form-encoded"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_url-form-encoded"

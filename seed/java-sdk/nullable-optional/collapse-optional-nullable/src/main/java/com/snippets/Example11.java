@@ -1,9 +1,9 @@
 package com.snippets;
 
 import com.seed.nullableOptional.SeedNullableOptionalClient;
+import com.seed.nullableOptional.core.OptionalNullable;
 import com.seed.nullableOptional.resources.nullableoptional.requests.UpdateTagsRequest;
 import java.util.Arrays;
-import java.util.Optional;
 
 public class Example11 {
     public static void main(String[] args) {
@@ -14,9 +14,9 @@ public class Example11 {
                 .updateTags(
                         "userId",
                         UpdateTagsRequest.builder()
-                                .tags(Optional.of(Arrays.asList("tags", "tags")))
-                                .categories(Optional.of(Arrays.asList("categories", "categories")))
-                                .labels(Optional.of(Arrays.asList("labels", "labels")))
+                                .tags(OptionalNullable.of(Arrays.asList("tags", "tags")))
+                                .categories(OptionalNullable.of(Arrays.asList("categories", "categories")))
+                                .labels(OptionalNullable.of(Arrays.asList("labels", "labels")))
                                 .build());
     }
 }

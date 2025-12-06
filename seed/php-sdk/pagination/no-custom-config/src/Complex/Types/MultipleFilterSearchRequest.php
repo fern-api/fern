@@ -20,7 +20,7 @@ class MultipleFilterSearchRequest extends JsonSerializableType
      *   |array<SingleFilterSearchRequest>
      * )|null $value
      */
-    #[JsonProperty('value'), Union([MultipleFilterSearchRequest::class], [SingleFilterSearchRequest::class], 'null')]
+    #[JsonProperty('value'), Union([MultipleFilterSearchRequest::class],[SingleFilterSearchRequest::class],'null')]
     public array|null $value;
 
     /**
@@ -34,16 +34,15 @@ class MultipleFilterSearchRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->operator = $values['operator'] ?? null;
-        $this->value = $values['value'] ?? null;
+    )
+    {
+        $this->operator = $values['operator'] ?? null;$this->value = $values['value'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

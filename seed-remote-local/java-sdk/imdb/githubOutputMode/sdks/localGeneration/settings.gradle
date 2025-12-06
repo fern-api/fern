@@ -1,3 +1,0 @@
-rootProject.name = 'test-remote-local-sdk'
-
-include 'sample-app'

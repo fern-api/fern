@@ -194,8 +194,6 @@ export class ExampleTypeFactory {
 
                         unionVariants.push(...Object.entries(schema.value.schemas));
 
-                        let selectedVariant: [string, SchemaWithExample] | null = null;
-
                         for (const unionVariant of unionVariants) {
                             if (
                                 exampleDiscriminant != null &&
@@ -207,7 +205,6 @@ export class ExampleTypeFactory {
                                 result[schema.value.discriminantProperty] = FullExample.primitive(
                                     PrimitiveExample.string(exampleDiscriminant)
                                 );
-                                selectedVariant = unionVariant;
                                 break;
                             } else {
                                 const example = this.buildExampleHelper({
@@ -227,18 +224,6 @@ export class ExampleTypeFactory {
                                     break;
                                 }
                             }
-                        }
-
-                        // If no variants have been selected choose the first available one
-                        const firstVariant = Object.entries(schema.value.schemas)[0];
-                        if (selectedVariant === null && firstVariant) {
-                            // Select the first available variant as a fallback
-                            selectedVariant = firstVariant;
-
-                            // Set the discriminant property to the first variant
-                            result[schema.value.discriminantProperty] = FullExample.primitive(
-                                PrimitiveExample.string(firstVariant[0])
-                            );
                         }
 
                         for (const commonProperty of schema.value.commonProperties) {
@@ -631,6 +616,12 @@ export class ExampleTypeFactory {
             if (variantWithExample != null) {
                 return variantWithExample;
             }
+            // Check for variants that have inherent examples (literals and enums with values)
+            // These are preferred over primitive types that would fall back to using the parameter name
+            const variantWithInherentExample = schema.schemas.find((variant) => this.hasInherentExample(variant));
+            if (variantWithInherentExample != null) {
+                return variantWithInherentExample;
+            }
             // Fall back to first variant if no variant has an example
             return schema.schemas[0];
         }
@@ -795,6 +786,30 @@ export class ExampleTypeFactory {
                 return Object.values(schema.value.schemas).some((schema) =>
                     this.hasExample(schema, depth, visitedSchemaIds, options)
                 );
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Checks if a schema has an "inherent" example value that can be used without
+     * falling back to generic placeholder values like the parameter name.
+     * This is used to prefer literal and enum variants in undiscriminated unions
+     * over primitive types that would generate placeholder examples.
+     */
+    private hasInherentExample(schema: SchemaWithExample): boolean {
+        switch (schema.type) {
+            case "literal":
+                return true;
+            case "enum":
+                return schema.values.length > 0;
+            case "optional":
+            case "nullable":
+                return this.hasInherentExample(schema.value);
+            case "reference": {
+                const resolvedSchema = this.schemas[schema.schema];
+                return resolvedSchema != null ? this.hasInherentExample(resolvedSchema) : false;
+            }
             default:
                 return false;
         }

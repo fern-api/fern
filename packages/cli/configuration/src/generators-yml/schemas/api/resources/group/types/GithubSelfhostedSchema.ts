@@ -7,6 +7,7 @@ import * as FernDefinition from "../../../index";
 export interface GithubSelfhostedSchema {
     uri: string;
     token: string;
-    mode?: "pull-request";
+    mode?: FernDefinition.GithubSelfhostedMode;
+    branch?: string;
     license?: FernDefinition.GithubLicenseSchema;
 }

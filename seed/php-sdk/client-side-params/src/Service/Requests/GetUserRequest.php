@@ -24,8 +24,8 @@ class GetUserRequest extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
-        $this->fields = $values['fields'] ?? null;
-        $this->includeFields = $values['includeFields'] ?? null;
+    )
+    {
+        $this->fields = $values['fields'] ?? null;$this->includeFields = $values['includeFields'] ?? null;
     }
 }

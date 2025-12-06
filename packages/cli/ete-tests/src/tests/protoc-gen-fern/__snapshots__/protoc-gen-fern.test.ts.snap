@@ -80531,7 +80531,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                 "v2Examples": null
               }
             },
-            "status-code": null
+            "status-code": null,
+            "isWildcardStatusCode": null
           },
           "v2Responses": null,
           "displayName": "PublishEntity",
@@ -81717,7 +81718,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                 "v2Examples": null
               }
             },
-            "status-code": null
+            "status-code": null,
+            "isWildcardStatusCode": null
           },
           "v2Responses": null,
           "displayName": "PublishEntities",
@@ -82903,7 +82905,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                 "v2Examples": null
               }
             },
-            "status-code": null
+            "status-code": null,
+            "isWildcardStatusCode": null
           },
           "v2Responses": null,
           "displayName": "GetEntity",
@@ -84091,7 +84094,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                 "v2Examples": null
               }
             },
-            "status-code": null
+            "status-code": null,
+            "isWildcardStatusCode": null
           },
           "v2Responses": null,
           "displayName": "OverrideEntity",
@@ -85292,7 +85296,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                 "v2Examples": null
               }
             },
-            "status-code": null
+            "status-code": null,
+            "isWildcardStatusCode": null
           },
           "v2Responses": null,
           "displayName": "RemoveEntityOverride",
@@ -85466,7 +85471,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                 "v2Examples": null
               }
             },
-            "status-code": null
+            "status-code": null,
+            "isWildcardStatusCode": null
           },
           "v2Responses": null,
           "displayName": "StreamEntityComponents",
@@ -86789,7 +86795,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                 "v2Examples": null
               }
             },
-            "status-code": null
+            "status-code": null,
+            "isWildcardStatusCode": null
           },
           "v2Responses": null,
           "displayName": "CreateTask",
@@ -89069,7 +89076,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                 "v2Examples": null
               }
             },
-            "status-code": null
+            "status-code": null,
+            "isWildcardStatusCode": null
           },
           "v2Responses": null,
           "displayName": "GetTask",
@@ -90308,7 +90316,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                 "v2Examples": null
               }
             },
-            "status-code": null
+            "status-code": null,
+            "isWildcardStatusCode": null
           },
           "v2Responses": null,
           "displayName": "QueryTasks",
@@ -91550,7 +91559,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                 "v2Examples": null
               }
             },
-            "status-code": null
+            "status-code": null,
+            "isWildcardStatusCode": null
           },
           "v2Responses": null,
           "displayName": "UpdateStatus",
@@ -92841,7 +92851,8 @@ exports[`fern protoc-gen-fern > test with buf 1`] = `
                 "v2Examples": null
               }
             },
-            "status-code": null
+            "status-code": null,
+            "isWildcardStatusCode": null
           },
           "v2Responses": null,
           "displayName": "ListenAsAgent",

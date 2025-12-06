@@ -37,7 +37,8 @@ class RawClient
      */
     public function __construct(
         public readonly ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $this->options['client']
             ?? $this->createDefaultClient();
         $this->headers = $this->options['headers'] ?? [];
@@ -68,7 +69,8 @@ class RawClient
     public function sendRequest(
         BaseApiRequest $request,
         ?array         $options = null,
-    ): ResponseInterface {
+    ): ResponseInterface
+    {
         $opts = $options ?? [];
         $httpRequest = $this->buildRequest($request, $opts);
         return $this->client->send($httpRequest, $this->toGuzzleOptions($opts));
@@ -105,7 +107,8 @@ class RawClient
     private function buildRequest(
         BaseApiRequest $request,
         array          $options
-    ): Request {
+    ): Request
+    {
         $url = $this->buildUrl($request, $options);
         $headers = $this->encodeHeaders($request, $options);
         $body = $this->encodeRequestBody($request, $options);
@@ -127,7 +130,8 @@ class RawClient
     private function encodeHeaders(
         BaseApiRequest $request,
         array          $options,
-    ): array {
+    ): array
+    {
         return match (get_class($request)) {
             JsonApiRequest::class => array_merge(
                 [
@@ -157,7 +161,8 @@ class RawClient
     private function encodeRequestBody(
         BaseApiRequest $request,
         array          $options,
-    ): ?StreamInterface {
+    ): ?StreamInterface
+    {
         return match (get_class($request)) {
             JsonApiRequest::class => $request->body === null ? null : Utils::streamFor(
                 json_encode(
@@ -182,7 +187,8 @@ class RawClient
     private function buildJsonBody(
         mixed $body,
         array $options,
-    ): mixed {
+    ): mixed
+    {
         $overrideProperties = $options['bodyProperties'] ?? [];
         if (is_array($body) && (empty($body) || self::isSequential($body))) {
             return array_merge($body, $overrideProperties);
@@ -214,7 +220,8 @@ class RawClient
     private function buildUrl(
         BaseApiRequest $request,
         array          $options,
-    ): string {
+    ): string
+    {
         $baseUrl = $request->baseUrl;
         $trimmedBaseUrl = rtrim($baseUrl, '/');
         $trimmedBasePath = ltrim($request->path, '/');
@@ -273,9 +280,7 @@ class RawClient
      */
     private static function isSequential(array $arr): bool
     {
-        if (empty($arr)) {
-            return false;
-        }
+        if (empty($arr)) return false;
         $length = count($arr);
         $keys = array_keys($arr);
         for ($i = 0; $i < $length; $i++) {

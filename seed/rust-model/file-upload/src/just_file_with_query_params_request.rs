@@ -11,10 +11,9 @@ pub struct JustFileWithQueryParamsRequest {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub maybe_integer: Option<i64>,
     #[serde(rename = "listOfStrings")]
-    pub list_of_strings: String,
+    pub list_of_strings: Vec<String>,
     #[serde(rename = "optionalListOfStrings")]
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub optional_list_of_strings: Option<String>,
+    pub optional_list_of_strings: Vec<Option<String>>,
 }
 impl JustFileWithQueryParamsRequest {
     pub fn to_multipart(self) -> reqwest::multipart::Form {
@@ -47,10 +46,8 @@ impl JustFileWithQueryParamsRequest {
         form = form.text("listOfStrings", json_str);
     }
 
-    if let Some(ref value) = self.optional_list_of_strings {
-        if let Ok(json_str) = serde_json::to_string(value) {
-            form = form.text("optionalListOfStrings", json_str);
-        }
+    if let Ok(json_str) = serde_json::to_string(&self.optional_list_of_strings) {
+        form = form.text("optionalListOfStrings", json_str);
     }
 
     form

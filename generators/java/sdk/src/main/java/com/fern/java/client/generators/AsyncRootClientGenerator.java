@@ -25,6 +25,7 @@ public class AsyncRootClientGenerator extends AbstractRootClientGenerator {
             GeneratedJavaFile requestOptionsFile,
             Map<TypeId, GeneratedJavaInterface> allGeneratedInterfaces,
             Optional<GeneratedJavaFile> generatedOAuthTokenSupplier,
+            Optional<GeneratedJavaFile> generatedInferredAuthTokenSupplier,
             Map<ErrorId, GeneratedJavaFile> generatedErrors) {
         super(
                 generatorContext,
@@ -36,6 +37,7 @@ public class AsyncRootClientGenerator extends AbstractRootClientGenerator {
                 requestOptionsFile,
                 allGeneratedInterfaces,
                 generatedOAuthTokenSupplier,
+                generatedInferredAuthTokenSupplier,
                 generatedErrors);
     }
 

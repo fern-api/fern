@@ -824,6 +824,7 @@
                 "wireValue": "NotFoundError"
             },
             "statusCode": 404,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -1208,6 +1209,7 @@
             ],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         },
         "error_commons:BadRequestError": {
@@ -1299,6 +1301,7 @@
                 "wireValue": "BadRequestError"
             },
             "statusCode": 400,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -1371,6 +1374,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         },
         "error_commons:InternalServerError": {
@@ -1462,6 +1466,7 @@
                 "wireValue": "InternalServerError"
             },
             "statusCode": 500,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -1534,6 +1539,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         },
         "error_simple:FooTooMuch": {
@@ -1625,6 +1631,7 @@
                 "wireValue": "FooTooMuch"
             },
             "statusCode": 429,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -1697,6 +1704,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         },
         "error_simple:FooTooLittle": {
@@ -1788,6 +1796,7 @@
                 "wireValue": "FooTooLittle"
             },
             "statusCode": 500,
+            "isWildcardStatusCode": null,
             "type": {
                 "_type": "named",
                 "name": {
@@ -1860,6 +1869,7 @@
             "examples": [],
             "v2Examples": null,
             "displayName": null,
+            "headers": [],
             "docs": null
         }
     },
@@ -2221,7 +2231,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -4778,7 +4789,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [
@@ -8573,7 +8585,8 @@
                                 "v2Examples": null
                             }
                         },
-                        "status-code": null
+                        "status-code": null,
+                        "isWildcardStatusCode": null
                     },
                     "v2Responses": null,
                     "errors": [

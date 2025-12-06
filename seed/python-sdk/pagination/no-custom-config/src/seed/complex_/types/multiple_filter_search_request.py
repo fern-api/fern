@@ -29,8 +29,8 @@ from .multiple_filter_search_request_operator import MultipleFilterSearchRequest
 
 update_forward_refs(
     MultipleFilterSearchRequest,
-    SingleFilterSearchRequestOperator=SingleFilterSearchRequestOperator,
+    MultipleFilterSearchRequestOperator=MultipleFilterSearchRequestOperator,
     MultipleFilterSearchRequestValue=MultipleFilterSearchRequestValue,
     SingleFilterSearchRequest=SingleFilterSearchRequest,
-    MultipleFilterSearchRequestOperator=MultipleFilterSearchRequestOperator,
+    SingleFilterSearchRequestOperator=SingleFilterSearchRequestOperator,
 )

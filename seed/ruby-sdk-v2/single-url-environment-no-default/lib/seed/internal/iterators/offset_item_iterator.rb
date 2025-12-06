@@ -12,9 +12,9 @@ module Seed
       # @param block [Proc] A block which is responsible for receiving a page number to use and returning the given page from the API.
       #
       # @return [Seed::Internal::OffsetItemIterator]
-      def initialize(initial_page:, item_field:, has_next_field:, step:, &block)
+      def initialize(initial_page:, item_field:, has_next_field:, step:, &)
         @item_field = item_field
-        @page_iterator = OffsetPageIterator.new(initial_page:, item_field:, has_next_field:, step:, &block)
+        @page_iterator = OffsetPageIterator.new(initial_page:, item_field:, has_next_field:, step:, &)
         @page = nil
       end
 

@@ -172,9 +172,16 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                     };
                 }),
                 ...(this.channel.queryParameters ?? []).map((queryParameter) => {
+                    const type = context.type.getReferenceToType(queryParameter.valueType);
+                    const typeNode = queryParameter.allowMultiple
+                        ? ts.factory.createUnionTypeNode([
+                              type.typeNodeWithoutUndefined,
+                              ts.factory.createArrayTypeNode(type.typeNodeWithoutUndefined)
+                          ])
+                        : type.typeNodeWithoutUndefined;
                     return {
                         name: getPropertyKey(this.getPropertyNameOfQueryParameter(queryParameter).propertyName),
-                        type: getTextOfTsNode(context.type.getReferenceToType(queryParameter.valueType).typeNode),
+                        type: getTextOfTsNode(typeNode),
                         hasQuestionToken: context.type.isOptional(queryParameter.valueType)
                     };
                 }),
@@ -229,6 +236,7 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
         const bindingElements: ts.BindingElement[] = [];
         const usedNames = new Set<string>();
         const pathParameterLocalNames = new Map<string, string>();
+        const queryParameterLocalNames = new Map<string, string>();
 
         const getNonConflictingName = (name: string) => {
             while (usedNames.has(name)) {
@@ -260,11 +268,17 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
         // Add query parameters binding
         for (const queryParameter of this.channel.queryParameters ?? []) {
+            const propertyNames = this.getPropertyNameOfQueryParameter(queryParameter);
+            const localVarName = getNonConflictingName(propertyNames.safeName);
+            queryParameterLocalNames.set(queryParameter.name.wireValue, localVarName);
+
             bindingElements.push(
                 ts.factory.createBindingElement(
                     undefined,
-                    undefined,
-                    ts.factory.createIdentifier(this.getPropertyNameOfQueryParameter(queryParameter).propertyName)
+                    localVarName !== propertyNames.propertyName
+                        ? ts.factory.createStringLiteral(propertyNames.propertyName)
+                        : undefined,
+                    ts.factory.createIdentifier(localVarName)
                 )
             );
         }
@@ -322,15 +336,28 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
 
         const queryParameters = new GeneratedQueryParams({
             queryParameters: this.channel.queryParameters,
-            referenceToQueryParameterProperty: (key, context) => {
-                return this.getReferenceToQueryParameter(key, context);
+            referenceToQueryParameterProperty: (key, _context) => {
+                const localVarName = queryParameterLocalNames.get(key);
+                if (localVarName == null) {
+                    throw new Error(`Could not find local variable name for query parameter: ${key}`);
+                }
+                return ts.factory.createIdentifier(localVarName);
             }
         });
 
         const mergeHeaders: ts.Expression[] = [];
         const authProviderStatements = [];
         const mergeOnlyDefinedHeaders: (ts.PropertyAssignment | ts.SpreadAssignment)[] = [];
-        if (this.generatedSdkClientClass.hasAuthProvider()) {
+        if (this.generatedSdkClientClass.hasAuthProvider() && this.channel.auth) {
+            const metadataArg = this.generatedSdkClientClass.getGenerateEndpointMetadata()
+                ? ts.factory.createObjectLiteralExpression([
+                      ts.factory.createPropertyAssignment(
+                          "endpointMetadata",
+                          this.generatedSdkClientClass.getReferenceToMetadataForEndpointSupplier()
+                      )
+                  ])
+                : undefined;
+
             authProviderStatements.push(
                 ts.factory.createVariableStatement(
                     undefined,
@@ -341,7 +368,8 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                                 undefined,
                                 context.coreUtilities.auth.AuthRequest._getReferenceToType(),
                                 context.coreUtilities.auth.AuthProvider.getAuthRequest.invoke(
-                                    this.generatedSdkClientClass.getReferenceToAuthProviderOrThrow()
+                                    this.generatedSdkClientClass.getReferenceToAuthProviderOrThrow(),
+                                    metadataArg
                                 )
                             )
                         ],
@@ -350,28 +378,6 @@ export class GeneratedDefaultWebsocketImplementation implements GeneratedWebsock
                 )
             );
             mergeHeaders.push(ts.factory.createIdentifier("_authRequest.headers"));
-        } else {
-            const getAuthHeaderValue = this.generatedSdkClientClass.getAuthorizationHeaderValue({ context });
-            mergeOnlyDefinedHeaders.push(
-                ...(getAuthHeaderValue
-                    ? [ts.factory.createPropertyAssignment("Authorization", getAuthHeaderValue)]
-                    : this.generatedSdkClientClass.shouldGenerateCustomAuthorizationHeaderHelperMethod()
-                      ? [
-                            ts.factory.createSpreadAssignment(
-                                ts.factory.createAwaitExpression(
-                                    ts.factory.createCallExpression(
-                                        ts.factory.createPropertyAccessExpression(
-                                            ts.factory.createThis(),
-                                            GeneratedSdkClientClassImpl.CUSTOM_AUTHORIZATION_HEADER_HELPER_METHOD_NAME
-                                        ),
-                                        undefined,
-                                        []
-                                    )
-                                )
-                            )
-                        ]
-                      : [])
-            );
         }
         mergeOnlyDefinedHeaders.push(
             ...this.channel.headers.map((header) => {

@@ -1,3 +1,18 @@
+//! Service clients and API endpoints
+//!
+//! This module contains client implementations for:
+//!
+//! - **V2**
+//! - **Admin**
+//! - **Commons**
+//! - **Homepage**
+//! - **LangServer**
+//! - **Migration**
+//! - **Playlist**
+//! - **Problem**
+//! - **Submission**
+//! - **Sysprop**
+
 use crate::{ApiError, ClientConfig};
 
 pub mod admin;

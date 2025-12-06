@@ -1,4 +1,4 @@
-import { AbstractFormatter, Severity } from "@fern-api/browser-compatible-base-generator";
+import { AbstractFormatter, Options, Severity } from "@fern-api/browser-compatible-base-generator";
 import { assertNever } from "@fern-api/core-utils";
 import { FernIr } from "@fern-api/dynamic-ir-sdk";
 import { ruby } from "@fern-api/ruby-ast";
@@ -42,6 +42,18 @@ export class EndpointSnippetGenerator {
             customConfig: this.context.customConfig ?? {},
             formatter: this.formatter
         });
+    }
+
+    public async generateSnippetAst({
+        endpoint,
+        request,
+        options
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        request: FernIr.dynamic.EndpointSnippetRequest;
+        options?: Options;
+    }): Promise<ruby.AstNode> {
+        return this.buildCodeBlock({ endpoint, snippet: request });
     }
 
     private buildCodeBlock({
@@ -157,7 +169,9 @@ export class EndpointSnippetGenerator {
             case "oauth":
                 return values.type === "oauth" ? this.getRootClientOAuthArgs({ auth, values }) : [];
             case "inferred":
-                this.addWarning("Ruby SDK does not support inferred auth yet");
+                // Inferred auth parameters are handled by the root client constructor
+                // (e.g., client_id, client_secret from the token endpoint request)
+                // No additional auth arguments needed here
                 return [];
             default:
                 assertNever(auth);
@@ -328,7 +342,8 @@ export class EndpointSnippetGenerator {
                 });
                 break;
             case "body":
-                invokeMethodArgs.arguments_ = this.getMethodArgsForBodyRequest({
+                // Ruby SDK methods use keyword arguments (via **params), not positional arguments
+                invokeMethodArgs.keywordArguments = this.getMethodArgsForBodyRequest({
                     request: endpoint.request,
                     snippet
                 });
@@ -337,7 +352,73 @@ export class EndpointSnippetGenerator {
                 assertNever(endpoint.request);
         }
 
+        // Add request_options with additional_headers for unmapped headers (e.g., X-Test-Id)
+        const requestOptions = this.getRequestOptions({ endpoint, snippet });
+        if (requestOptions != null) {
+            invokeMethodArgs.keywordArguments = invokeMethodArgs.keywordArguments ?? [];
+            invokeMethodArgs.keywordArguments.push(requestOptions);
+        }
+
         return ruby.invokeMethod(invokeMethodArgs);
+    }
+
+    /**
+     * Builds request_options from snippet headers for per-request options.
+     * This is used when generating snippets for wire tests where headers like X-Test-Id
+     * should be passed as request_options[:additional_headers] rather than as method parameters.
+     * Only includes headers that are NOT already mapped to the request directly (i.e., not defined in the IR).
+     */
+    private getRequestOptions({
+        endpoint,
+        snippet
+    }: {
+        endpoint: FernIr.dynamic.Endpoint;
+        snippet: FernIr.dynamic.EndpointSnippetRequest;
+    }): ruby.KeywordArgument | undefined {
+        const headers = snippet.headers ?? {};
+        const entries = Object.entries(headers);
+        if (entries.length === 0) {
+            return undefined;
+        }
+
+        // Build a set of header names that are already mapped to the request directly
+        const mappedHeaderNames = new Set<string>();
+
+        // Add global headers from IR
+        if (this.context.ir.headers != null) {
+            for (const header of this.context.ir.headers) {
+                mappedHeaderNames.add(header.name.wireValue.toLowerCase());
+            }
+        }
+
+        // Add endpoint-level headers from inlined request
+        if (endpoint.request.type === "inlined" && endpoint.request.headers != null) {
+            for (const header of endpoint.request.headers) {
+                mappedHeaderNames.add(header.name.wireValue.toLowerCase());
+            }
+        }
+
+        // Filter out headers that are already mapped to the request
+        const unmappedEntries = entries.filter(([name]) => !mappedHeaderNames.has(name.toLowerCase()));
+        if (unmappedEntries.length === 0) {
+            return undefined;
+        }
+
+        // Build request_options: { additional_headers: { "X-Test-Id" => "value" } }
+        const additionalHeadersEntries = unmappedEntries.map(([name, value]) => ({
+            key: ruby.TypeLiteral.string(name),
+            value: ruby.TypeLiteral.string(String(value))
+        }));
+
+        return ruby.keywordArgument({
+            name: "request_options",
+            value: ruby.TypeLiteral.hash([
+                {
+                    key: ruby.TypeLiteral.string("additional_headers"),
+                    value: ruby.TypeLiteral.hash(additionalHeadersEntries)
+                }
+            ])
+        });
     }
 
     private getMethodArgsForInlinedRequest({
@@ -407,10 +488,15 @@ export class EndpointSnippetGenerator {
                 ignoreMissingParameters: true
             });
             for (const parameter of associated) {
+                const value = this.context.dynamicTypeLiteralMapper.convert(parameter);
+                // Skip nop values (undefined/null) to avoid generating empty arguments like "channel: ,"
+                if (ruby.TypeLiteral.isNop(value)) {
+                    continue;
+                }
                 args.push(
                     ruby.keywordArgument({
                         name: this.context.getPropertyName(parameter.name.name),
-                        value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                        value
                     })
                 );
             }
@@ -433,10 +519,15 @@ export class EndpointSnippetGenerator {
             values: this.context.getRecord(snippet.requestBody) ?? {}
         });
         for (const parameter of bodyProperties) {
+            const value = this.context.dynamicTypeLiteralMapper.convert(parameter);
+            // Skip nop values (undefined/null) to avoid generating empty arguments like "channel: ,"
+            if (ruby.TypeLiteral.isNop(value)) {
+                continue;
+            }
             args.push(
                 ruby.keywordArgument({
                     name: this.context.getPropertyName(parameter.name.name),
-                    value: this.context.dynamicTypeLiteralMapper.convert(parameter)
+                    value
                 })
             );
         }
@@ -449,31 +540,105 @@ export class EndpointSnippetGenerator {
     }: {
         request: FernIr.dynamic.BodyRequest;
         snippet: FernIr.dynamic.EndpointSnippetRequest;
-    }): ruby.AstNode[] {
-        if (request.body == null) {
-            return [];
+    }): ruby.KeywordArgument[] {
+        const args: ruby.KeywordArgument[] = [];
+
+        // Add path parameters as keyword arguments (Ruby SDK uses **params)
+        args.push(
+            ...this.getNamedParameterArgs({
+                kind: "PathParameters",
+                namedParameters: request.pathParameters,
+                values: snippet.pathParameters
+            })
+        );
+
+        // Add body fields as keyword arguments
+        if (request.body != null) {
+            switch (request.body.type) {
+                case "bytes":
+                    // Not supported in Ruby snippets yet
+                    this.context.errors.add({
+                        severity: "CRITICAL",
+                        message: "Bytes request body is not supported in Ruby snippets yet"
+                    });
+                    break;
+                case "typeReference": {
+                    // For typeReference bodies, we need to flatten the body fields into keyword arguments
+                    // The Ruby SDK expects keyword args that get wrapped into the type by the method
+                    const bodyRecord = this.context.getRecord(snippet.requestBody);
+                    if (bodyRecord != null) {
+                        // Get the type definition to understand the field names
+                        const typeRef = request.body.value;
+                        if (typeRef.type === "named") {
+                            const namedType = this.context.resolveNamedType({ typeId: typeRef.value });
+                            if (namedType != null) {
+                                // Convert the body record fields to keyword arguments
+                                const bodyFields = this.getBodyFieldsAsKeywordArgs({
+                                    namedType,
+                                    bodyRecord
+                                });
+                                args.push(...bodyFields);
+                            }
+                        }
+                    }
+                    break;
+                }
+                default:
+                    assertNever(request.body);
+            }
         }
 
-        switch (request.body.type) {
-            case "bytes":
-                // Not supported in Ruby snippets yet
-                this.context.errors.add({
-                    severity: "CRITICAL",
-                    message: "Multi-environment values are not supported in Ruby snippets yet"
-                });
-                return [];
-            case "typeReference":
-                return [
-                    ruby.positionalArgument({
-                        value: this.context.dynamicTypeLiteralMapper.convert({
-                            typeReference: request.body.value,
-                            value: this.context.getRecord(snippet.requestBody)
-                        })
-                    })
-                ];
+        return args;
+    }
+
+    private getBodyFieldsAsKeywordArgs({
+        namedType,
+        bodyRecord
+    }: {
+        namedType: FernIr.dynamic.NamedType;
+        bodyRecord: Record<string, unknown>;
+    }): ruby.KeywordArgument[] {
+        const args: ruby.KeywordArgument[] = [];
+
+        // Handle different type shapes
+        switch (namedType.type) {
+            case "object": {
+                // For objects, convert each property to a keyword argument
+                for (const property of namedType.properties) {
+                    const wireValue = property.name.wireValue;
+                    const value = bodyRecord[wireValue];
+                    if (value !== undefined) {
+                        // Scope errors to the property name for better error messages
+                        this.context.errors.scope(wireValue);
+                        const convertedValue = this.context.dynamicTypeLiteralMapper.convert({
+                            typeReference: property.typeReference,
+                            value
+                        });
+                        this.context.errors.unscope();
+                        if (!ruby.TypeLiteral.isNop(convertedValue)) {
+                            args.push(
+                                ruby.keywordArgument({
+                                    name: this.context.getPropertyName(property.name.name),
+                                    value: convertedValue
+                                })
+                            );
+                        }
+                    }
+                }
+                break;
+            }
+            case "alias":
+            case "discriminatedUnion":
+            case "undiscriminatedUnion":
+            case "enum":
+                // For these types, we can't easily flatten to keyword args
+                // Fall back to passing the whole body as-is (this may need refinement)
+                break;
             default:
-                assertNever(request.body);
+                assertNever(namedType);
         }
+
+        return args;
     }
 
     private getMethod({ endpoint }: { endpoint: FernIr.dynamic.Endpoint }): string {

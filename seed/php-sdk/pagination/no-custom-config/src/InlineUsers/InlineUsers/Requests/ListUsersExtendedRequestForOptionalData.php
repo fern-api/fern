@@ -18,7 +18,8 @@ class ListUsersExtendedRequestForOptionalData extends JsonSerializableType
      */
     public function __construct(
         array $values = [],
-    ) {
+    )
+    {
         $this->cursor = $values['cursor'] ?? null;
     }
 }

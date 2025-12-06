@@ -34,17 +34,15 @@ class WorkspaceRunDetails extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->exceptionV2 = $values['exceptionV2'] ?? null;
-        $this->exception = $values['exception'] ?? null;
-        $this->stdout = $values['stdout'];
+    )
+    {
+        $this->exceptionV2 = $values['exceptionV2'] ?? null;$this->exception = $values['exception'] ?? null;$this->stdout = $values['stdout'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

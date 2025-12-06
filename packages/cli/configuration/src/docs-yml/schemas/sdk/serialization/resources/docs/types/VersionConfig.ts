@@ -7,6 +7,7 @@ import * as FernDocsConfig from "../../../../api/index";
 import * as core from "../../../../core";
 import { VersionAvailability } from "./VersionAvailability";
 import { Audience } from "./Audience";
+import { AnnouncementConfig } from "./AnnouncementConfig";
 import { WithPermissions } from "./WithPermissions";
 import { WithFeatureFlags } from "./WithFeatureFlags";
 
@@ -21,6 +22,7 @@ export const VersionConfig: core.serialization.ObjectSchema<
         availability: VersionAvailability.optional(),
         audiences: Audience.optional(),
         hidden: core.serialization.boolean().optional(),
+        announcement: AnnouncementConfig.optional(),
     })
     .extend(WithPermissions)
     .extend(WithFeatureFlags);
@@ -33,5 +35,6 @@ export declare namespace VersionConfig {
         availability?: VersionAvailability.Raw | null;
         audiences?: Audience.Raw | null;
         hidden?: boolean | null;
+        announcement?: AnnouncementConfig.Raw | null;
     }
 }

@@ -51,6 +51,9 @@ export const V61_TO_V60_MIGRATION: IrMigration<
         const { apiPlayground: _apiPlayground, ...rest } = v61;
         return {
             ...rest,
+            errors: Object.fromEntries(
+                Object.entries(v61.errors).map(([key, error]) => [key, convertErrorDeclaration(error)])
+            ),
             dynamic: v61.dynamic != null ? convertDynamic(v61.dynamic) : undefined,
             publishConfig: v61.publishConfig != null ? convertPublishConfig(v61.publishConfig) : undefined,
             services: Object.fromEntries(
@@ -59,6 +62,14 @@ export const V61_TO_V60_MIGRATION: IrMigration<
         };
     }
 };
+
+function convertErrorDeclaration(
+    error: IrVersions.V61.errors.ErrorDeclaration
+): IrVersions.V60.errors.ErrorDeclaration {
+    // Remove the isWildcardStatusCode field since it doesn't exist in v60
+    const { isWildcardStatusCode, ...v60ErrorDeclaration } = error;
+    return v60ErrorDeclaration as IrVersions.V60.errors.ErrorDeclaration;
+}
 
 function convertHttpService(service: IrVersions.V61.http.HttpService): IrVersions.V60.http.HttpService {
     return {

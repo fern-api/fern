@@ -17,7 +17,7 @@ use Psr\Http\Client\ClientExceptionInterface;
 use Seed\Nullable\Requests\CreateUserRequest;
 use Seed\Nullable\Requests\DeleteUserRequest;
 
-class NullableClient
+class NullableClient 
 {
     /**
      * @var array{
@@ -26,7 +26,7 @@ class NullableClient
      *   maxRetries?: int,
      *   timeout?: float,
      *   headers?: array<string, string>,
-     * } $options
+     * } $options @phpstan-ignore-next-line Property is used in endpoint methods via HttpEndpointGenerator
      */
     private array $options;
 
@@ -45,10 +45,11 @@ class NullableClient
      *   headers?: array<string, string>,
      * } $options
      */
-    public function __construct(
+    function __construct(
         RawClient $client,
         ?array $options = null,
-    ) {
+    )
+    {
         $this->client = $client;
         $this->options = $options ?? [];
     }
@@ -67,23 +68,22 @@ class NullableClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function getUsers(GetUsersRequest $request = new GetUsersRequest(), ?array $options = null): array
-    {
+    public function getUsers(GetUsersRequest $request = new GetUsersRequest(), ?array $options = null): array {
         $options = array_merge($this->options, $options ?? []);
         $query = [];
-        if ($request->usernames != null) {
+        if ($request->usernames != null){
             $query['usernames'] = $request->usernames;
         }
-        if ($request->avatar != null) {
+        if ($request->avatar != null){
             $query['avatar'] = $request->avatar;
         }
-        if ($request->activated != null) {
+        if ($request->activated != null){
             $query['activated'] = $request->activated;
         }
-        if ($request->tags != null) {
+        if ($request->tags != null){
             $query['tags'] = $request->tags;
         }
-        if ($request->extra != null) {
+        if ($request->extra != null){
             $query['extra'] = $request->extra;
         }
         try {
@@ -97,15 +97,15 @@ class NullableClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeArray($json, [User::class]); // @phpstan-ignore-line
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -137,8 +137,7 @@ class NullableClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function createUser(CreateUserRequest $request, ?array $options = null): User
-    {
+    public function createUser(CreateUserRequest $request, ?array $options = null): User {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -151,15 +150,15 @@ class NullableClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return User::fromJson($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(
@@ -191,8 +190,7 @@ class NullableClient
      * @throws SeedException
      * @throws SeedApiException
      */
-    public function deleteUser(DeleteUserRequest $request = new DeleteUserRequest(), ?array $options = null): bool
-    {
+    public function deleteUser(DeleteUserRequest $request = new DeleteUserRequest(), ?array $options = null): bool {
         $options = array_merge($this->options, $options ?? []);
         try {
             $response = $this->client->sendRequest(
@@ -205,15 +203,15 @@ class NullableClient
                 $options,
             );
             $statusCode = $response->getStatusCode();
-            if ($statusCode >= 200 && $statusCode < 400) {
+            if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
                 return JsonDecoder::decodeBool($json);
             }
-        } catch (JsonException $e) {
-            throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
         } catch (RequestException $e) {
             $response = $e->getResponse();
-            if ($response === null) {
+            if ($response === null){
                 throw new SeedException(message: $e->getMessage(), previous: $e);
             }
             throw new SeedApiException(

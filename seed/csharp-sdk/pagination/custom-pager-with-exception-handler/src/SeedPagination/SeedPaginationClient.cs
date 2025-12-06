@@ -9,28 +9,40 @@ public partial class SeedPaginationClient
 
     public SeedPaginationClient(string token, ClientOptions? clientOptions = null)
     {
-        var defaultHeaders = new Headers(
-            new Dictionary<string, string>()
-            {
-                { "Authorization", $"Bearer {token}" },
-                { "X-Fern-Language", "C#" },
-                { "X-Fern-SDK-Name", "SeedPagination" },
-                { "X-Fern-SDK-Version", Version.Current },
-                { "User-Agent", "Fernpagination/0.0.1" },
-            }
-        );
-        clientOptions ??= new ClientOptions();
-        foreach (var header in defaultHeaders)
+        try
         {
-            if (!clientOptions.Headers.ContainsKey(header.Key))
+            var defaultHeaders = new Headers(
+                new Dictionary<string, string>()
+                {
+                    { "Authorization", $"Bearer {token}" },
+                    { "X-Fern-Language", "C#" },
+                    { "X-Fern-SDK-Name", "SeedPagination" },
+                    { "X-Fern-SDK-Version", Version.Current },
+                    { "User-Agent", "Fernpagination/0.0.1" },
+                }
+            );
+            clientOptions ??= new ClientOptions();
+            clientOptions.ExceptionHandler = new ExceptionHandler(
+                new SeedPaginationExceptionInterceptor()
+            );
+            foreach (var header in defaultHeaders)
             {
-                clientOptions.Headers[header.Key] = header.Value;
+                if (!clientOptions.Headers.ContainsKey(header.Key))
+                {
+                    clientOptions.Headers[header.Key] = header.Value;
+                }
             }
+            _client = new RawClient(clientOptions);
+            Complex = new ComplexClient(_client);
+            InlineUsers = new InlineUsersClient(_client);
+            Users = new UsersClient(_client);
         }
-        _client = new RawClient(clientOptions);
-        Complex = new ComplexClient(_client);
-        InlineUsers = new InlineUsersClient(_client);
-        Users = new UsersClient(_client);
+        catch (Exception ex)
+        {
+            var interceptor = new SeedPaginationExceptionInterceptor();
+            interceptor.Intercept(ex);
+            throw;
+        }
     }
 
     public ComplexClient Complex { get; }

@@ -1,4 +1,0 @@
-display-name: AllOf/OneOf/AnyOf Edge Cases
-error-discrimination:
-  strategy: status-code
-name: api

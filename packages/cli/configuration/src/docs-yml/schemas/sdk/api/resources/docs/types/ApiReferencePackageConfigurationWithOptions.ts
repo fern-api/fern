@@ -5,8 +5,7 @@
 import * as FernDocsConfig from "../../../index";
 
 export interface ApiReferencePackageConfigurationWithOptions
-    extends FernDocsConfig.WithPermissions,
-        FernDocsConfig.WithFeatureFlags {
+    extends FernDocsConfig.WithPermissions, FernDocsConfig.WithFeatureFlags {
     title?: string;
     /** Relative path to the markdown file. This summary is displayed at the top of the API section. */
     summary?: string;

@@ -5,27 +5,27 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.problem.create_problem({
-  problemName: 'problemName',
-  problemDescription: {
+client.problem.create_problem(
+  problem_name: 'problemName',
+  problem_description: {
     boards: []
   },
   files: {},
-  inputParams: [{
+  input_params: [{
     name: 'name'
   }, {
     name: 'name'
   }],
   testcases: [{
-    testCase: {
+    test_case: {
       id: 'id',
       params: []
     }
   }, {
-    testCase: {
+    test_case: {
       id: 'id',
       params: []
     }
   }],
-  methodName: 'methodName'
-});
+  method_name: 'methodName'
+);

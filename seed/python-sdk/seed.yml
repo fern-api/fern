@@ -131,7 +131,8 @@ fixtures:
           enum_type: "python_enums"
       outputFolder: real-enum
   exhaustive:
-    - customConfig: null
+    - customConfig:
+        enable_wire_tests: true
       outputFolder: no-custom-config
     - customConfig:
         inline_path_params: true
@@ -251,6 +252,9 @@ fixtures:
     - customConfig:
         lazy_imports: false
       outputFolder: eager-imports
+    - customConfig:
+        package_path: matryoshka/doll/structure
+      outputFolder: package-path
   file-upload:
     - customConfig: null
       outputFolder: no-custom-config
@@ -307,6 +311,10 @@ fixtures:
         pydantic_config:
           skip_validation: true
       outputFolder: skip-pydantic-validation
+  server-sent-events:
+    - customConfig:
+        enable_wire_tests: true
+      outputFolder: with-wire-tests
   unions:
     - customConfig: null
       outputFolder: no-custom-config
@@ -335,27 +343,35 @@ scripts:
   - name: test-pydantic-v2
     image: fernapi/python-seed
     commands:
-      # Tests now run a mock server, you can always run seed with --skip-scripts to save time
-      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
-      - export HOME="$(pwd)/"
-      - poetry config virtualenvs.path .
-      - poetry add pydantic=^2.8
-      - poetry lock
-      - poetry install
-      - poetry run mypy ./src ./tests
-      - poetry run pytest -rP .
+      build:
+        # Tests now run a mock server, you can always run seed with --skip-scripts to save time
+        - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+        - export HOME="$(pwd)/"
+        - poetry config virtualenvs.path .
+        - poetry add pydantic=^2.8
+        - poetry lock
+        - poetry install
+        - poetry run mypy ./src ./tests
+      test:
+        - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+        - export HOME="$(pwd)/"
+        - poetry run pytest -rP .
   # Test Pydantic V1
   - name: test-pydantic-v1
     image: fernapi/python-seed
     commands:
-      - export NPM_CONFIG_CACHE="$(pwd)/.cache"
-      - export HOME="$(pwd)/"
-      - poetry config virtualenvs.path .
-      - poetry add pydantic=^1.10
-      - poetry lock
-      - poetry install
-      - poetry run mypy ./src ./tests
-      - poetry run pytest -rP .
+      build:
+        - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+        - export HOME="$(pwd)/"
+        - poetry config virtualenvs.path .
+        - poetry add pydantic=^1.10
+        - poetry lock
+        - poetry install
+        - poetry run mypy ./src ./tests
+      test:
+        - export NPM_CONFIG_CACHE="$(pwd)/.cache"
+        - export HOME="$(pwd)/"
+        - poetry run pytest -rP .
 allowedFailures:
   - any-auth
   - examples:client-filename
@@ -367,5 +383,7 @@ allowedFailures:
   - pagination-custom
   - response-property
   - streaming-parameter
+  - server-sent-event-examples:with-wire-tests # TODO: update wiretests geranation then remove it
+  - server-sent-events:with-wire-tests # TODO: update wiretests geranation then remove it
   - trace
   - websocket

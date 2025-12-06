@@ -44,7 +44,8 @@ public class Example8 {
                                                                                         put(
                                                                                                 "variables",
                                                                                                 DebugVariableValue
-                                                                                                        .integerValue());
+                                                                                                        .integerValue(
+                                                                                                                1));
                                                                                     }
                                                                                 })
                                                                         .build(),
@@ -56,13 +57,14 @@ public class Example8 {
                                                                                         put(
                                                                                                 "variables",
                                                                                                 DebugVariableValue
-                                                                                                        .integerValue());
+                                                                                                        .integerValue(
+                                                                                                                1));
                                                                                     }
                                                                                 })
                                                                         .build()))
                                                         .build())
                                                 .build())
-                                        .returnValue(DebugVariableValue.integerValue())
+                                        .returnValue(DebugVariableValue.integerValue(1))
                                         .expressionLocation(ExpressionLocation.builder()
                                                 .start(1)
                                                 .offset(1)
@@ -90,7 +92,8 @@ public class Example8 {
                                                                                         put(
                                                                                                 "variables",
                                                                                                 DebugVariableValue
-                                                                                                        .integerValue());
+                                                                                                        .integerValue(
+                                                                                                                1));
                                                                                     }
                                                                                 })
                                                                         .build(),
@@ -102,13 +105,14 @@ public class Example8 {
                                                                                         put(
                                                                                                 "variables",
                                                                                                 DebugVariableValue
-                                                                                                        .integerValue());
+                                                                                                        .integerValue(
+                                                                                                                1));
                                                                                     }
                                                                                 })
                                                                         .build()))
                                                         .build())
                                                 .build())
-                                        .returnValue(DebugVariableValue.integerValue())
+                                        .returnValue(DebugVariableValue.integerValue(1))
                                         .expressionLocation(ExpressionLocation.builder()
                                                 .start(1)
                                                 .offset(1)

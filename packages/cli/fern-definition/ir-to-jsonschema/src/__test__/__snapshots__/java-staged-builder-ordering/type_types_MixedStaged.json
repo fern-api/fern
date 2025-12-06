@@ -1,0 +1,52 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "name": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "nested": {
+      "$ref": "#/definitions/types.SimpleStaged"
+    },
+    "count": {
+      "type": "integer"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "timestamp",
+    "nested",
+    "count"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "types.SimpleStaged": {
+      "type": "object",
+      "properties": {
+        "first": {
+          "type": "string"
+        },
+        "second": {
+          "type": "string"
+        },
+        "third": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "first",
+        "second",
+        "third"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

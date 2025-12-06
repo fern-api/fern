@@ -12,6 +12,74 @@ function isUrl(src: string): boolean {
     return src.startsWith("http://") || src.startsWith("https://");
 }
 
+/**
+ * Parses a lines parameter value and extracts the specified lines from content.
+ * Supports formats:
+ * - Single number: "5" or "[5]" (line 5)
+ * - Range: "1-10" or "[1-10]" (lines 1 through 10, inclusive)
+ * - Array of numbers: "[1,3,5]" (lines 1, 3, and 5)
+ * - Array with ranges: "[1-3,5,7-10]" (lines 1-3, 5, and 7-10)
+ * All line numbers are 1-indexed.
+ * @param content The full file content
+ * @param linesParam The lines parameter value
+ * @returns The extracted lines as a string, or the original content if parsing fails
+ */
+function extractLines(content: string, linesParam: string): string {
+    const allLines = content.split("\n");
+    const lineIndices = new Set<number>();
+
+    // Strip array brackets if present: [1,3,5] -> 1,3,5
+    let normalizedParam = linesParam.trim();
+    if (normalizedParam.startsWith("[") && normalizedParam.endsWith("]")) {
+        normalizedParam = normalizedParam.slice(1, -1);
+    }
+
+    // Split by comma to handle comma-separated values
+    const parts = normalizedParam.split(",");
+
+    for (const part of parts) {
+        const trimmedPart = part.trim();
+
+        // Check for range format: "start-end"
+        const rangeMatch = trimmedPart.match(/^(\d+)-(\d+)$/);
+        if (rangeMatch) {
+            const start = parseInt(rangeMatch[1] ?? "1", 10);
+            const end = parseInt(rangeMatch[2] ?? "1", 10);
+            // Add all lines in the range (inclusive, 1-indexed)
+            for (let i = start; i <= end; i++) {
+                lineIndices.add(i - 1); // Convert to 0-indexed
+            }
+            continue;
+        }
+
+        // Check for single number format: "5"
+        const singleMatch = trimmedPart.match(/^(\d+)$/);
+        if (singleMatch) {
+            const lineNum = parseInt(singleMatch[1] ?? "1", 10);
+            lineIndices.add(lineNum - 1); // Convert to 0-indexed
+            continue;
+        }
+
+        // If any part doesn't match, return original content
+        if (trimmedPart !== "") {
+            return content;
+        }
+    }
+
+    // If no valid line indices were found, return original content
+    if (lineIndices.size === 0) {
+        return content;
+    }
+
+    // Sort indices and extract lines in order
+    const sortedIndices = Array.from(lineIndices).sort((a, b) => a - b);
+    const extractedLines = sortedIndices
+        .filter((idx) => idx >= 0 && idx < allLines.length)
+        .map((idx) => allLines[idx] ?? "");
+
+    return extractedLines.join("\n");
+}
+
 // TODO: add a newline before and after the code block if inline to improve markdown parsing. i.e. <CodeGroup> <Code src="" /> </CodeGroup>
 export async function replaceReferencedCode({
     markdown,
@@ -27,11 +95,11 @@ export async function replaceReferencedCode({
     context: TaskContext;
     fileLoader?: (filepath: AbsoluteFilePath) => Promise<string>;
 }): Promise<string> {
-    if (!markdown.includes("<Code ")) {
+    if (!markdown.includes("<Code")) {
         return markdown;
     }
 
-    const regex = /([ \t]*)<Code(?:\s+[^>]*?)?\s+src={?['"]([^'"]+)['"](?! \+)}?((?:\s+[^>]*)?)\/>/g;
+    const regex = /([ \t]*)<Code(?![a-zA-Z])[\s\S]*?src={?['"]([^'"]+)['"](?! \+)}?([\s\S]*?)\/>/g;
 
     let newMarkdown = markdown;
 
@@ -123,6 +191,13 @@ export async function replaceReferencedCode({
             if (titleProp) {
                 title = titleProp.value;
                 allProps.delete("title");
+            }
+
+            // Handle lines parameter - extract specific lines from the content
+            const linesProp = allProps.get("lines");
+            if (linesProp) {
+                replacement = extractLines(replacement, linesProp.value);
+                allProps.delete("lines");
             }
 
             // Build metastring

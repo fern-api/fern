@@ -20,32 +20,27 @@ class LimpingStep extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->value = $values['value'];
     }
 
     /**
      * @return string
      */
-    public function getValue(): string
-    {
-        return $this->value;
-    }
+    public function getValue(): string {
+        return $this->value;}
 
     /**
      * @param string $value
      */
-    public function setValue(string $value): self
-    {
-        $this->value = $value;
-        return $this;
-    }
+    public function setValue(string $value): self {
+        $this->value = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

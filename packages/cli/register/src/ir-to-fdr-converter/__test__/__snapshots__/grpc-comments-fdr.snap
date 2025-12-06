@@ -44,8 +44,10 @@
       "displayName": undefined,
       "endpoints": [
         {
-          "auth": false,
-          "authV2": undefined,
+          "auth": true,
+          "authV2": [
+            "Bearer",
+          ],
           "availability": undefined,
           "defaultEnvironment": "Production",
           "description": "buf:lint:ignore RPC_REQUEST_STANDARD_NAME
@@ -100,7 +102,13 @@
           "id": "createcomment",
           "includeInApiExplorer": undefined,
           "method": "POST",
-          "multiAuth": undefined,
+          "multiAuth": [
+            {
+              "schemes": [
+                "Bearer",
+              ],
+            },
+          ],
           "name": "Add a Comment",
           "originalEndpointId": "endpoint_commentsService.createcomment",
           "path": {

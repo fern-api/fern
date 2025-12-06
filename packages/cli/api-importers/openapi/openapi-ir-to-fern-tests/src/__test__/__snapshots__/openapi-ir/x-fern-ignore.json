@@ -98,7 +98,6 @@
       "servers": [],
       "description": "",
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/list",
       "examples": [

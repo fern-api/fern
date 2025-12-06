@@ -2,16 +2,16 @@
 
 import { DummyClient } from "./api/resources/dummy/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedStreamingClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedStreamingClient {
-    protected readonly _options: SeedStreamingClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedStreamingClient.Options>;
     protected _dummy: DummyClient | undefined;
 
     constructor(options: SeedStreamingClient.Options) {

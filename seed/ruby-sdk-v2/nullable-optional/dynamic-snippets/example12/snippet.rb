@@ -7,5 +7,5 @@ client.nullable_optional.get_search_results(
   filters: {
     filters: 'filters'
   },
-  includeTypes: ['includeTypes', 'includeTypes']
+  include_types: ['includeTypes', 'includeTypes']
 );

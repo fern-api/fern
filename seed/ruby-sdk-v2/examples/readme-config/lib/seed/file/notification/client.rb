@@ -6,7 +6,7 @@ module Seed
       class Client
         # @param client [Seed::Internal::Http::RawClient]
         #
-        # @return [Seed::File::Notification::Client]
+        # @return [void]
         def initialize(client:)
           @client = client
         end

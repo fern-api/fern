@@ -18,7 +18,6 @@
       "errors": {},
       "servers": [],
       "authed": true,
-      "security": [],
       "method": "GET",
       "path": "/data",
       "examples": [
@@ -224,6 +223,11 @@
       "type": "header"
     }
   },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
   "globalHeaders": [],
   "idempotencyHeaders": [],
   "groups": {}

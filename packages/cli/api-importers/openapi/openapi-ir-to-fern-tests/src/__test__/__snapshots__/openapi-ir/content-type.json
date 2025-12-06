@@ -143,7 +143,6 @@
       "servers": [],
       "description": "Test multipart request with different content types.\n",
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/test",
       "examples": [
@@ -286,7 +285,6 @@
       "servers": [],
       "description": "Test request with dual content types.\n",
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/example",
       "examples": [

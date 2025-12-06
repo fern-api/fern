@@ -47,9 +47,18 @@ types:
         docs: Deprecated, use `metadata` on the output block instead.
 
   GeneratorAPISettingsSchema:
+    docs: |
+      Override API configuration settings for a specific generator.
+      When specs is provided, it completely replaces the top-level api.specs configuration for this generator.
     properties:
       auth: optional<auth.ApiAuthSchema>
-      settings: optional<generators.APIDefinitionSettingsSchema>
+      auth-schemes: optional<map<string, auth.AuthSchemeDeclarationSchema>>
+      settings: optional<generators.APIConfigurationV2SettingsSchema>
+      specs:
+        type: optional<generators.APIConfigurationV2SpecsSchema>
+        docs: |
+          Override the specs configuration for this generator.
+          When provided, this completely replaces the top-level api.specs configuration.
 
   GeneratorOutputSchema:
     discriminant: location
@@ -75,8 +84,15 @@ types:
     properties:
       uri: string
       token: string
-      mode: optional<literal<"pull-request">>
+      mode: optional<GithubSelfhostedMode>
+      branch: optional<string>
       license: optional<license.GithubLicenseSchema>
+
+  GithubSelfhostedMode:
+    enum:
+      - name: pullRequest
+        value: pull-request
+      - push
 
   GeneratorSnippetsSchema:
     properties:

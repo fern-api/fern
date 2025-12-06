@@ -20,7 +20,8 @@ class BootInstanceRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->size = $values['size'];
     }
 }

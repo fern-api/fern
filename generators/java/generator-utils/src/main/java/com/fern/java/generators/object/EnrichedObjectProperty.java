@@ -137,12 +137,24 @@ public interface EnrichedObjectProperty {
         }
         // Headers have empty wireKey to avoid JSON serialization
         boolean hasWireKey = wireKey().isPresent() && !wireKey().get().isEmpty();
-        if (hasWireKey && !nullable() && !aliasOfNullable()) {
+        if (hasWireKey && !nullable() && !aliasOfNullable() && !isOptionalNullableField()) {
             getterBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
                     .addMember("value", "$S", wireKey().get())
                     .build());
         } else {
-            getterBuilder.addAnnotation(AnnotationSpec.builder(JsonIgnore.class).build());
+            // Check if this is an OptionalNullable field - if so, add @JsonInclude + @JsonProperty
+            if (hasWireKey && isOptionalNullableField()) {
+                getterBuilder.addAnnotation(AnnotationSpec.builder(JsonInclude.class)
+                        .addMember("value", "$T.Include.CUSTOM", JsonInclude.class)
+                        .addMember("valueFilter", "$T.class", nullableNonemptyFilterClassName())
+                        .build());
+                getterBuilder.addAnnotation(AnnotationSpec.builder(JsonProperty.class)
+                        .addMember("value", "$S", wireKey().get())
+                        .build());
+            } else {
+                getterBuilder.addAnnotation(
+                        AnnotationSpec.builder(JsonIgnore.class).build());
+            }
         }
         if (fromInterface() && !inline()) {
             getterBuilder.addAnnotation(ClassName.get("", "java.lang.Override"));

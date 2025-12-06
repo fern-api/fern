@@ -15,4 +15,5 @@ export interface VersionConfig extends FernDocsConfig.WithPermissions, FernDocsC
     audiences?: FernDocsConfig.Audience;
     /** If true, this version will be hidden from navigation, search, and indexing, but still accessible via direct URL. */
     hidden?: boolean;
+    announcement?: FernDocsConfig.AnnouncementConfig;
 }

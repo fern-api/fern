@@ -12,6 +12,7 @@ from fern_python.generators.pydantic_model.fern_aware_pydantic_model import (
     FernAwarePydanticModel,
 )
 from fern_python.generators.pydantic_model.type_declaration_handler.discriminated_union.simple_discriminated_union_generator import (
+    get_discriminant_parameter_name,
     get_single_union_type_class_name,
 )
 from fern_python.pydantic_codegen import PydanticField, PydanticModel
@@ -76,7 +77,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
                         kwargs=[
                             (
                                 "discriminant",
-                                AST.Expression(f'"{self._union.discriminant.wire_value}"'),
+                                AST.Expression(f'"{get_discriminant_parameter_name(self._union.discriminant)}"'),
                             )
                         ],
                     )
@@ -88,7 +89,7 @@ class PydanticModelSimpleDiscriminatedUnionGenerator(AbstractSimpleDiscriminated
             kwargs=[
                 (
                     "discriminator",
-                    AST.Expression(f'"{self._union.discriminant.wire_value}"'),
+                    AST.Expression(f'"{get_discriminant_parameter_name(self._union.discriminant)}"'),
                 )
             ],
         )

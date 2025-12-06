@@ -27,16 +27,15 @@ class UserPage extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->data = $values['data'];
-        $this->next = $values['next'] ?? null;
+    )
+    {
+        $this->data = $values['data'];$this->next = $values['next'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

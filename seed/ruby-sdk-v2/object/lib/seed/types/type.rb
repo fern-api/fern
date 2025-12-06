@@ -17,9 +17,9 @@ module Seed
       field :eleven, -> { Internal::Types::Array[Integer] }, optional: false, nullable: false
       field :twelve, -> { Internal::Types::Hash[String, Internal::Types::Boolean] }, optional: false, nullable: false
       field :thirteen, -> { Integer }, optional: true, nullable: false
-      field :fourteen, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: false
+      field :fourteen, -> { Object }, optional: false, nullable: false
       field :fifteen, -> { Internal::Types::Array[Internal::Types::Array[Integer]] }, optional: false, nullable: false
-      field :sixteen, lambda {
+      field :sixteen, -> {
         Internal::Types::Array[Internal::Types::Hash[String, Integer]]
       }, optional: false, nullable: false
       field :seventeen, -> { Internal::Types::Array[String] }, optional: false, nullable: false

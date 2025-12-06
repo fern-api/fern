@@ -43,7 +43,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/alias/array",
       "examples": [
@@ -106,7 +105,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/alias/object",
       "examples": [
@@ -176,7 +174,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/alias/string",
       "examples": [
@@ -240,7 +237,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/alias/optional-string",
       "examples": [
@@ -302,7 +298,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/alias/optional-object",
       "examples": [
@@ -365,7 +360,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/alias/dont-resolve-me",
       "examples": [

@@ -2,19 +2,20 @@
 
 import type * as stream from "stream";
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
-import { normalizeClientOptions } from "../../../../BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace ServiceClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class ServiceClient {
-    protected readonly _options: ServiceClient.Options;
+    protected readonly _options: NormalizedClientOptions<ServiceClient.Options>;
 
     constructor(options: ServiceClient.Options) {
         this._options = normalizeClientOptions(options);
@@ -59,21 +60,7 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedFileDownloadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedFileDownloadTimeoutError("Timeout exceeded when calling POST /snippet.");
-            case "unknown":
-                throw new errors.SeedFileDownloadError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/snippet");
     }
 
     public downloadFile(requestOptions?: ServiceClient.RequestOptions): core.HttpResponsePromise<stream.Readable> {
@@ -110,20 +97,6 @@ export class ServiceClient {
             });
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.SeedFileDownloadError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.SeedFileDownloadTimeoutError("Timeout exceeded when calling POST /.");
-            case "unknown":
-                throw new errors.SeedFileDownloadError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/");
     }
 }

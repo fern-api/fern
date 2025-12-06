@@ -18,6 +18,7 @@ import {
     EnvironmentsContext,
     GenericAPISdkErrorContext,
     JsonContext,
+    NonStatusCodeErrorHandlerContext,
     SdkClientClassContext,
     SdkContext,
     SdkInlinedRequestBodySchemaContext,
@@ -44,6 +45,7 @@ import { EndpointDeclarationReferencer } from "../declaration-referencers/Endpoi
 import { EnvironmentsDeclarationReferencer } from "../declaration-referencers/EnvironmentsDeclarationReferencer";
 import { GenericAPISdkErrorDeclarationReferencer } from "../declaration-referencers/GenericAPISdkErrorDeclarationReferencer";
 import { JsonDeclarationReferencer } from "../declaration-referencers/JsonDeclarationReferencer";
+import { NonStatusCodeErrorHandlerDeclarationReferencer } from "../declaration-referencers/NonStatusCodeErrorHandlerDeclarationReferencer";
 import { RequestWrapperDeclarationReferencer } from "../declaration-referencers/RequestWrapperDeclarationReferencer";
 import { SdkClientClassDeclarationReferencer } from "../declaration-referencers/SdkClientClassDeclarationReferencer";
 import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErrorDeclarationReferencer";
@@ -53,11 +55,13 @@ import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclar
 import { VersionDeclarationReferencer } from "../declaration-referencers/VersionDeclarationReferencer";
 import { WebsocketSocketDeclarationReferencer } from "../declaration-referencers/WebsocketSocketDeclarationReferencer";
 import { WebsocketTypeSchemaDeclarationReferencer } from "../declaration-referencers/WebsocketTypeSchemaDeclarationReferencer";
+import { NonStatusCodeErrorHandlerGenerator } from "../non-status-code-error-handler/NonStatusCodeErrorHandlerGenerator";
 import { VersionGenerator } from "../version/VersionGenerator";
 import { EndpointErrorUnionContextImpl } from "./endpoint-error-union/EndpointErrorUnionContextImpl";
 import { EnvironmentsContextImpl } from "./environments/EnvironmentsContextImpl";
 import { GenericAPISdkErrorContextImpl } from "./generic-api-sdk-error/GenericAPISdkErrorContextImpl";
 import { JsonContextImpl } from "./json/JsonContextImpl";
+import { NonStatusCodeErrorHandlerContextImpl } from "./non-status-code-error-handler/NonStatusCodeErrorHandlerContextImpl";
 import { RequestWrapperContextImpl } from "./request-wrapper/RequestWrapperContextImpl";
 import { SdkClientClassContextImpl } from "./sdk-client-class/SdkClientClassContextImpl";
 import { SdkEndpointTypeSchemasContextImpl } from "./sdk-endpoint-type-schemas/SdkEndpointTypeSchemasContextImpl";
@@ -123,6 +127,8 @@ export declare namespace SdkContextImpl {
         genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
         timeoutSdkErrorDeclarationReferencer: TimeoutSdkErrorDeclarationReferencer;
         timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
+        nonStatusCodeErrorHandlerDeclarationReferencer: NonStatusCodeErrorHandlerDeclarationReferencer;
+        nonStatusCodeErrorHandlerGenerator: NonStatusCodeErrorHandlerGenerator;
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
         isForSnippet: boolean;
@@ -178,6 +184,7 @@ export class SdkContextImpl implements SdkContext {
     public readonly environments: EnvironmentsContext;
     public readonly genericAPISdkError: GenericAPISdkErrorContext;
     public readonly timeoutSdkError: TimeoutSdkErrorContext;
+    public readonly nonStatusCodeErrorHandler: NonStatusCodeErrorHandlerContext;
     public readonly includeSerdeLayer: boolean;
     public readonly retainOriginalCasing: boolean;
     public readonly inlineFileProperties: boolean;
@@ -238,6 +245,8 @@ export class SdkContextImpl implements SdkContext {
         genericAPISdkErrorGenerator,
         timeoutSdkErrorDeclarationReferencer,
         timeoutSdkErrorGenerator,
+        nonStatusCodeErrorHandlerDeclarationReferencer,
+        nonStatusCodeErrorHandlerGenerator,
         treatUnknownAsAny,
         sourceFile,
         importsManager,
@@ -458,6 +467,13 @@ export class SdkContextImpl implements SdkContext {
             exportsManager,
             timeoutSdkErrorDeclarationReferencer,
             timeoutSdkErrorGenerator
+        });
+        this.nonStatusCodeErrorHandler = new NonStatusCodeErrorHandlerContextImpl({
+            sourceFile: this.sourceFile,
+            importsManager,
+            exportsManager,
+            nonStatusCodeErrorHandlerDeclarationReferencer,
+            nonStatusCodeErrorHandlerGenerator
         });
         this.authProvider = new AuthProviderContext({
             context: this

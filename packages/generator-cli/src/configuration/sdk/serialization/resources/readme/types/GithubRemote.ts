@@ -12,11 +12,13 @@ export const GithubRemote: core.serialization.ObjectSchema<
 > = core.serialization.object({
     repoUrl: core.serialization.string(),
     installationToken: core.serialization.string(),
+    branch: core.serialization.string().optional(),
 });
 
 export declare namespace GithubRemote {
     interface Raw {
         repoUrl: string;
         installationToken: string;
+        branch?: string | null;
     }
 }

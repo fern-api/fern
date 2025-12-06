@@ -31,7 +31,8 @@ export async function runRemoteGenerationForGenerator({
     whitelabel,
     irVersionOverride,
     absolutePathToPreview,
-    readme
+    readme,
+    fernignorePath
 }: {
     projectConfig: fernConfigJson.ProjectConfig;
     organization: string;
@@ -46,6 +47,7 @@ export async function runRemoteGenerationForGenerator({
     irVersionOverride: string | undefined;
     absolutePathToPreview: AbsoluteFilePath | undefined;
     readme: generatorsYml.ReadmeSchema | undefined;
+    fernignorePath: string | undefined;
 }): Promise<RemoteTaskHandler.Response | undefined> {
     const fdr = createFdrService({ token: token.value });
 
@@ -104,6 +106,7 @@ export async function runRemoteGenerationForGenerator({
             }
             ir.readmeConfig.whiteLabel = true;
         }
+        ir.selfHosted = orgResponse.body.selfHostedSdKs;
     }
 
     const sources = workspace.getSources();
@@ -172,7 +175,8 @@ export async function runRemoteGenerationForGenerator({
         token,
         whitelabel: whitelabel != null ? substituteEnvVars(whitelabel) : undefined,
         irVersionOverride,
-        absolutePathToPreview
+        absolutePathToPreview,
+        fernignorePath
     });
     interactiveTaskContext.logger.debug(`Job ID: ${job.jobId}`);
 

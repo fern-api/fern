@@ -10,6 +10,7 @@ describe("AuthClient", () => {
         mockOAuthScheme(server);
 
         const client = new SeedOauthClientCredentialsEnvironmentVariablesClient({
+            maxRetries: 0,
             clientId: "client_id",
             clientSecret: "client_secret",
             environment: server.baseUrl,
@@ -48,6 +49,7 @@ describe("AuthClient", () => {
         mockOAuthScheme(server);
 
         const client = new SeedOauthClientCredentialsEnvironmentVariablesClient({
+            maxRetries: 0,
             clientId: "client_id",
             clientSecret: "client_secret",
             environment: server.baseUrl,

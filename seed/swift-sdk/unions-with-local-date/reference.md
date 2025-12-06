@@ -195,6 +195,125 @@ try await main()
 </dl>
 </details>
 
+## Types
+<details><summary><code>client.types.<a href="/Sources/Resources/Types/TypesClient.swift">get</a>(id: String, requestOptions: RequestOptions?) -> UnionWithTime</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Unions
+
+private func main() async throws {
+    let client = UnionsClient()
+
+    _ = try await client.types.get(id: "date-example")
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `String` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.types.<a href="/Sources/Resources/Types/TypesClient.swift">update</a>(request: UnionWithTime, requestOptions: RequestOptions?) -> Bool</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```swift
+import Foundation
+import Unions
+
+private func main() async throws {
+    let client = UnionsClient()
+
+    _ = try await client.types.update(request: UnionWithTime.date(
+        .init(
+            date: 
+        )
+    ))
+}
+
+try await main()
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `UnionWithTime` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `RequestOptions?` — Additional options for configuring the request, such as custom headers or timeout settings.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Union
 <details><summary><code>client.union.<a href="/Sources/Resources/Union/UnionClient.swift">get</a>(id: String, requestOptions: RequestOptions?) -> Shape</code></summary>
 <dl>

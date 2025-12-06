@@ -1,4 +1,4 @@
-irVersion: v61
+irVersion: v62
 displayName: PHP Model
 image: fernapi/fern-php-model
 changelogLocation: ../../generators/php/model/versions.yml
@@ -29,10 +29,12 @@ fixtures: {}
 scripts:
   - image: composer:2.7.9
     commands:
-      - composer install
-      - composer build
-      - composer analyze
-      - composer test
+      build:
+        - composer install
+        - composer build
+        - composer analyze
+      test:
+        - composer test
 
 allowedFailures:
   # Generating a union called "Exception" makes our references to Exception throws be escaped incorrectly
@@ -41,3 +43,5 @@ allowedFailures:
   - trace
   - circular-references
   - circular-references-advanced
+  # Java-specific fixture for staged builder ordering
+  - java-staged-builder-ordering

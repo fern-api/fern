@@ -49,7 +49,7 @@ export class SubPackageClientGenerator extends FileGenerator<RubyFile, SdkCustom
                         })
                     ]
                 },
-                returnType: ruby.Type.class_(this.getClientClassReference()),
+                returnType: ruby.Type.void(),
                 statements: [ruby.codeblock("@client = client")]
             })
         );

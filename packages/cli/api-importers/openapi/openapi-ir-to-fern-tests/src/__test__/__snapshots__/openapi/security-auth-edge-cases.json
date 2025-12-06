@@ -10,7 +10,7 @@
           "base-path": "",
           "endpoints": {
             "getData": {
-              "auth": undefined,
+              "auth": true,
               "docs": undefined,
               "examples": [
                 {
@@ -161,6 +161,7 @@ service:
     getData:
       path: /data
       method: GET
+      auth: true
       source:
         openapi: ../openapi.yml
       examples:

@@ -7,4 +7,6 @@ export interface GithubRemote {
     repoUrl: string;
     /** The token used to clone the GitHub repository. */
     installationToken: string;
+    /** The branch to clone from. If not specified, the default branch will be used. */
+    branch?: string;
 }

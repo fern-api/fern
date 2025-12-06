@@ -1,5 +1,6 @@
 [project]
 name = "fern_multi-url-environment-no-default"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_multi-url-environment-no-default"

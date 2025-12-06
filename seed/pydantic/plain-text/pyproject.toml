@@ -1,5 +1,6 @@
 [project]
 name = "fern_plain-text"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_plain-text"

@@ -44,7 +44,34 @@ export class RootClientGenerator {
         const subpackages = this.getSubpackages();
         const rawDeclarations = this.buildRawDeclarations(subpackages);
 
+        // Build module documentation
+        const moduleDoc: string[] = [];
+        moduleDoc.push("Service clients and API endpoints");
+        moduleDoc.push("");
+
+        // Add documentation based on available subpackages
+        if (subpackages.length > 0) {
+            moduleDoc.push("This module contains client implementations for:");
+            moduleDoc.push("");
+            subpackages.forEach((subpackage) => {
+                const name = subpackage.name.pascalCase.safeName;
+                const displayName = subpackage.displayName ?? name;
+
+                // Try to get service docs if the subpackage has a service
+                if (subpackage.service) {
+                    const service = this.context.getHttpServiceOrThrow(subpackage.service);
+                    const serviceDisplayName = service.displayName ?? displayName;
+                    moduleDoc.push(`- **${serviceDisplayName}**`);
+                } else {
+                    moduleDoc.push(`- **${displayName}**`);
+                }
+            });
+        } else {
+            moduleDoc.push("This module provides the client implementations for all available services.");
+        }
+
         const module = rust.module({
+            moduleDoc,
             useStatements: this.generateImports(),
             rawDeclarations
         });

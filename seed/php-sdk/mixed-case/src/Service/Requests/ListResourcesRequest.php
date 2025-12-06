@@ -25,8 +25,8 @@ class ListResourcesRequest extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->pageLimit = $values['pageLimit'];
-        $this->beforeDate = $values['beforeDate'];
+    )
+    {
+        $this->pageLimit = $values['pageLimit'];$this->beforeDate = $values['beforeDate'];
     }
 }

@@ -22,8 +22,7 @@ TestIteratorConfig = Struct.new(
   end
 end
 
-LAZY_TEST_ITERATOR_CONFIG = TestIteratorConfig.new(initial_page: 1, step: false, has_next_field: :has_next,
-                                                   total_item_count: 65, per_page: 10)
+LAZY_TEST_ITERATOR_CONFIG = TestIteratorConfig.new(initial_page: 1, step: false, has_next_field: :has_next, total_item_count: 65, per_page: 10)
 ALL_TEST_ITERATOR_CONFIGS = [true, false].map do |step|
   [:has_next, nil].map do |has_next_field|
     [0, 5, 10, 60, 63].map do |total_item_count|

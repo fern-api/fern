@@ -5,7 +5,7 @@ module Seed
     module Types
       class GradedResponse < Internal::Types::Model
         field :submission_id, -> { String }, optional: false, nullable: false, api_name: "submissionId"
-        field :test_cases, lambda {
+        field :test_cases, -> {
           Internal::Types::Hash[String, Seed::Submission::Types::TestCaseResultWithStdout]
         }, optional: false, nullable: false, api_name: "testCases"
       end

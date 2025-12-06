@@ -52,21 +52,15 @@ class Account extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->id = $values['id'];
-        $this->relatedResources = $values['relatedResources'];
-        $this->memo = $values['memo'];
-        $this->resourceType = $values['resourceType'];
-        $this->name = $values['name'];
-        $this->patient = $values['patient'] ?? null;
-        $this->practitioner = $values['practitioner'] ?? null;
+    )
+    {
+        $this->id = $values['id'];$this->relatedResources = $values['relatedResources'];$this->memo = $values['memo'];$this->resourceType = $values['resourceType'];$this->name = $values['name'];$this->patient = $values['patient'] ?? null;$this->practitioner = $values['practitioner'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

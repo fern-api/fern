@@ -1,12 +1,16 @@
 import { GeneratorNotificationService } from "@fern-api/base-generator";
 import { extractErrorMessage } from "@fern-api/core-utils";
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { AbstractRustGeneratorCli, formatRustCode, RustFile } from "@fern-api/rust-base";
+import { AbstractRustGeneratorCli, formatRustCode, formatRustSnippet, RustFile } from "@fern-api/rust-base";
 import { Module, ModuleDeclaration, UseStatement } from "@fern-api/rust-codegen";
-import { DynamicSnippetsGenerator } from "@fern-api/rust-dynamic-snippets";
+import {
+    DynamicSnippetsGenerator,
+    DynamicSnippetsGeneratorContext,
+    EndpointSnippetGenerator
+} from "@fern-api/rust-dynamic-snippets";
 import { generateModels } from "@fern-api/rust-model";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { dynamic, HttpRequestBody, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { exec } from "child_process";
 import { promisify } from "util";
 import { EnvironmentGenerator } from "./environment/EnvironmentGenerator";
@@ -291,6 +295,38 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const moduleDeclarations: ModuleDeclaration[] = [];
         const useStatements: UseStatement[] = [];
 
+        // Build module documentation
+        const moduleDoc: string[] = [];
+        const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
+        const apiDescription = context.ir.apiDocs;
+
+        moduleDoc.push(`API client and types for the ${apiName}`);
+        moduleDoc.push("");
+
+        if (apiDescription) {
+            // Add first paragraph of description
+            const paragraphs = apiDescription.split("\n\n");
+            const firstParagraph = paragraphs[0];
+            if (firstParagraph) {
+                const lines = firstParagraph.split("\n");
+                lines.forEach((line) => {
+                    moduleDoc.push(line.trim());
+                });
+            }
+            moduleDoc.push("");
+        } else {
+            moduleDoc.push("This module contains all the API definitions including request/response types");
+            moduleDoc.push("and client implementations for interacting with the API.");
+            moduleDoc.push("");
+        }
+
+        moduleDoc.push("## Modules");
+        moduleDoc.push("");
+        moduleDoc.push("- [`resources`] - Service clients and endpoints");
+        if (hasTypes) {
+            moduleDoc.push("- [`types`] - Request, response, and model types");
+        }
+
         // Add module declarations
         moduleDeclarations.push(new ModuleDeclaration({ name: "resources", isPublic: true }));
         if (hasTypes) {
@@ -309,6 +345,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         }
 
         const apiModule = new Module({
+            moduleDoc,
             moduleDeclarations,
             useStatements
         });
@@ -383,6 +420,44 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         const useStatements: UseStatement[] = [];
         const rawDeclarations: string[] = [];
 
+        // Build module documentation
+        const moduleDoc: string[] = [];
+        const apiName = context.ir.apiDisplayName ?? context.ir.apiName?.pascalCase.safeName ?? "API";
+        const apiDescription = context.ir.apiDocs;
+
+        // Add main title
+        moduleDoc.push(`# ${apiName} SDK`);
+        moduleDoc.push("");
+
+        // Add API description if available (from OpenAPI info.description or Fern API docs)
+        if (apiDescription) {
+            // Split multi-line descriptions and add each line
+            const descLines = apiDescription.split("\n");
+            descLines.forEach((line) => {
+                moduleDoc.push(line.trim());
+            });
+            moduleDoc.push("");
+        } else {
+            // Fallback if no description
+            moduleDoc.push(`The official Rust SDK for the ${apiName}.`);
+            moduleDoc.push("");
+        }
+
+        // Add getting started section using generated code
+        moduleDoc.push("## Getting Started");
+        moduleDoc.push("");
+        moduleDoc.push(...this.generateGettingStartedSnippet(context));
+
+        // Add modules section
+        moduleDoc.push("## Modules");
+        moduleDoc.push("");
+        moduleDoc.push("- [`api`] - Core API types and models");
+        moduleDoc.push("- [`client`] - Client implementations");
+        moduleDoc.push("- [`config`] - Configuration options");
+        moduleDoc.push("- [`core`] - Core utilities and infrastructure");
+        moduleDoc.push("- [`error`] - Error types and handling");
+        moduleDoc.push("- [`prelude`] - Common imports for convenience");
+
         // Add module declarations
         moduleDeclarations.push(new ModuleDeclaration({ name: "api", isPublic: true }));
         moduleDeclarations.push(new ModuleDeclaration({ name: "error", isPublic: true }));
@@ -427,6 +502,7 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
         useStatements.push(new UseStatement({ path: "client", items: ["*"], isPublic: true }));
 
         return new Module({
+            moduleDoc,
             moduleDeclarations,
             useStatements,
             rawDeclarations
@@ -720,6 +796,56 @@ export class SdkGeneratorCli extends AbstractRustGeneratorCli<SdkCustomConfigSch
     // ===========================
     // UTILITY METHODS
     // ===========================
+
+    private generateGettingStartedSnippet(context: SdkGeneratorContext): string[] {
+        const dynamicIr = context.ir.dynamic;
+        if (!dynamicIr) {
+            return [];
+        }
+
+        let firstEndpointId: string | undefined;
+        let firstExample: dynamic.EndpointSnippetRequest | undefined;
+
+        for (const [endpointId, endpoint] of Object.entries(dynamicIr.endpoints)) {
+            if (endpoint.examples && endpoint.examples.length > 0) {
+                firstEndpointId = endpointId;
+                firstExample = endpoint.examples[0];
+                break;
+            }
+        }
+
+        if (!firstEndpointId || !firstExample) {
+            return [];
+        }
+
+        try {
+            const convertedIr = convertIr(dynamicIr);
+            const snippetRequest = convertDynamicEndpointSnippetRequest(firstExample);
+            const dynContext = new DynamicSnippetsGeneratorContext({
+                ir: convertedIr,
+                config: context.config
+            });
+            const generator = new EndpointSnippetGenerator({ context: dynContext });
+            const dynEndpoint = convertedIr.endpoints[firstEndpointId];
+
+            if (!dynEndpoint) {
+                return [];
+            }
+
+            // Generate components directly
+            const components = generator.buildCodeComponents({
+                endpoint: dynEndpoint,
+                snippet: snippetRequest
+            });
+            const rawCode = components.join("\n") + "\n";
+            const formattedCode = formatRustSnippet(rawCode);
+
+            return ["```rust", ...formattedCode.trimEnd().split("\n"), "```", ""];
+        } catch (error) {
+            context.logger.debug(`Failed to generate snippet using EndpointSnippetGenerator: ${error}`);
+            return [];
+        }
+    }
 
     private hasTypes(context: SdkGeneratorContext): boolean {
         // Check for regular IR types

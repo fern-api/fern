@@ -20,32 +20,27 @@ class Square extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
+    )
+    {
         $this->length = $values['length'];
     }
 
     /**
      * @return float
      */
-    public function getLength(): float
-    {
-        return $this->length;
-    }
+    public function getLength(): float {
+        return $this->length;}
 
     /**
      * @param float $value
      */
-    public function setLength(float $value): self
-    {
-        $this->length = $value;
-        return $this;
-    }
+    public function setLength(float $value): self {
+        $this->length = $value;return $this;}
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

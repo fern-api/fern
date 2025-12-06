@@ -88,7 +88,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/users",
       "examples": [
@@ -148,7 +147,6 @@
       "errors": {},
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "HEAD",
       "path": "/users",
       "examples": [

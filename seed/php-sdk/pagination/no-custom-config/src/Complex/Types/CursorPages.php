@@ -48,19 +48,15 @@ class CursorPages extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->next = $values['next'] ?? null;
-        $this->page = $values['page'] ?? null;
-        $this->perPage = $values['perPage'] ?? null;
-        $this->totalPages = $values['totalPages'] ?? null;
-        $this->type = $values['type'];
+    )
+    {
+        $this->next = $values['next'] ?? null;$this->page = $values['page'] ?? null;$this->perPage = $values['perPage'] ?? null;$this->totalPages = $values['totalPages'] ?? null;$this->type = $values['type'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

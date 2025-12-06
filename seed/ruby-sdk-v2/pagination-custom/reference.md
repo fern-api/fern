@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.users.list_usernames_custom(startingAfter: 'starting_after');
+client.users.list_usernames_custom(starting_after: 'starting_after');
 ```
 </dd>
 </dl>

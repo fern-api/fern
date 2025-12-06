@@ -214,37 +214,9 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Setup Node.js
+      - name: Install
         if: steps.parse.outputs.checked-languages != ''
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install pnpm
-        if: steps.parse.outputs.checked-languages != ''
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9.4.0
-
-      - name: Get pnpm store directory
-        if: steps.parse.outputs.checked-languages != ''
-        id: pnpm-cache
-        shell: bash
-        run: |
-          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_OUTPUT
-
-      - name: Setup pnpm cache
-        if: steps.parse.outputs.checked-languages != ''
-        uses: actions/cache@v4
-        with:
-          path: ${{ steps.pnpm-cache.outputs.STORE_PATH }}
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
-
-      - name: Install dependencies
-        if: steps.parse.outputs.checked-languages != ''
-        run: pnpm install --frozen-lockfile
+        uses: ./.github/actions/install
 
       - name: Run seed tests for selected languages
         if: steps.parse.outputs.checked-languages != ''

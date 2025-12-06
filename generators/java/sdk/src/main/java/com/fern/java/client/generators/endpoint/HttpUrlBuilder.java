@@ -96,7 +96,8 @@ public final class HttpUrlBuilder {
                                         .getContainer()
                                         .get()
                                         .isOptional());
-        this.inlinePathParams = context.getCustomConfig().inlinePathParameters()
+        this.inlinePathParams = requestName != null
+                && context.getCustomConfig().inlinePathParameters()
                 && httpEndpoint.getSdkRequest().isPresent()
                 && httpEndpoint.getSdkRequest().get().getShape().isWrapper()
                 && (httpEndpoint
@@ -256,15 +257,8 @@ public final class HttpUrlBuilder {
             } else {
                 String paramName = poetPathParameter.poetParam().name;
                 if (inlinePathParams
-                        && poetPathParameter.irParam().getLocation().equals(PathParameterLocation.ENDPOINT)
-                        && httpEndpoint.getSdkRequest().isPresent()) {
-                    paramName = httpEndpoint
-                                    .getSdkRequest()
-                                    .get()
-                                    .getRequestParameterName()
-                                    .getCamelCase()
-                                    .getSafeName()
-                            // TODO(agateno): How do we get the getter name from the request body file?
+                        && poetPathParameter.irParam().getLocation().equals(PathParameterLocation.ENDPOINT)) {
+                    paramName = requestName
                             + ".get" + paramName.substring(0, 1).toUpperCase(Locale.ROOT) + paramName.substring(1)
                             + "()";
                 }

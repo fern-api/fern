@@ -65,21 +65,15 @@ class Address extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->street = $values['street'];
-        $this->city = $values['city'] ?? null;
-        $this->state = $values['state'] ?? null;
-        $this->zipCode = $values['zipCode'];
-        $this->country = $values['country'] ?? null;
-        $this->buildingId = $values['buildingId'] ?? null;
-        $this->tenantId = $values['tenantId'] ?? null;
+    )
+    {
+        $this->street = $values['street'];$this->city = $values['city'] ?? null;$this->state = $values['state'] ?? null;$this->zipCode = $values['zipCode'];$this->country = $values['country'] ?? null;$this->buildingId = $values['buildingId'] ?? null;$this->tenantId = $values['tenantId'] ?? null;
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

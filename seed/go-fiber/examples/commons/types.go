@@ -10,9 +10,9 @@ import (
 )
 
 type Data struct {
-	Type   string
-	String string
-	Base64 []byte
+	Type        string
+	FieldString string
+	Base64      []byte
 }
 
 func (d *Data) GetType() string {
@@ -22,11 +22,11 @@ func (d *Data) GetType() string {
 	return d.Type
 }
 
-func (d *Data) GetString() string {
+func (d *Data) GetFieldString() string {
 	if d == nil {
 		return ""
 	}
-	return d.String
+	return d.FieldString
 }
 
 func (d *Data) GetBase64() []byte {
@@ -50,12 +50,12 @@ func (d *Data) UnmarshalJSON(data []byte) error {
 	switch unmarshaler.Type {
 	case "string":
 		var valueUnmarshaler struct {
-			String string `json:"value"`
+			FieldString string `json:"value"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		d.String = valueUnmarshaler.String
+		d.FieldString = valueUnmarshaler.FieldString
 	case "base64":
 		var valueUnmarshaler struct {
 			Base64 []byte `json:"value"`
@@ -72,13 +72,13 @@ func (d Data) MarshalJSON() ([]byte, error) {
 	if err := d.validate(); err != nil {
 		return nil, err
 	}
-	if d.String != "" {
+	if d.FieldString != "" {
 		var marshaler = struct {
-			Type   string `json:"type"`
-			String string `json:"value"`
+			Type        string `json:"type"`
+			FieldString string `json:"value"`
 		}{
-			Type:   "string",
-			String: d.String,
+			Type:        "string",
+			FieldString: d.FieldString,
 		}
 		return json.Marshal(marshaler)
 	}
@@ -96,13 +96,13 @@ func (d Data) MarshalJSON() ([]byte, error) {
 }
 
 type DataVisitor interface {
-	VisitString(string) error
+	VisitFieldString(string) error
 	VisitBase64([]byte) error
 }
 
 func (d *Data) Accept(visitor DataVisitor) error {
-	if d.String != "" {
-		return visitor.VisitString(d.String)
+	if d.FieldString != "" {
+		return visitor.VisitFieldString(d.FieldString)
 	}
 	if d.Base64 != nil {
 		return visitor.VisitBase64(d.Base64)
@@ -115,7 +115,7 @@ func (d *Data) validate() error {
 		return fmt.Errorf("type %T is nil", d)
 	}
 	var fields []string
-	if d.String != "" {
+	if d.FieldString != "" {
 		fields = append(fields, "string")
 	}
 	if d.Base64 != nil {

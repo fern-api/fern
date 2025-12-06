@@ -1,6 +1,6 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
-import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
     replaceImagePathsAndUrls,
@@ -978,7 +978,8 @@ export class DocsDefinitionResolver {
                 pointsTo: undefined,
                 viewers: product.viewers,
                 orphaned: product.orphaned,
-                featureFlags: product.featureFlags
+                featureFlags: product.featureFlags,
+                announcement: product.announcement != null ? { text: product.announcement.message } : undefined
             };
         } else {
             return {
@@ -1028,7 +1029,8 @@ export class DocsDefinitionResolver {
             orphaned: version.orphaned,
             icon: undefined,
             pointsTo: undefined,
-            featureFlags: version.featureFlags
+            featureFlags: version.featureFlags,
+            announcement: version.announcement != null ? { text: version.announcement.message } : undefined
         };
     }
 
@@ -1206,6 +1208,24 @@ export class DocsDefinitionResolver {
                 // noop
             }
         }
+
+        // Extract OpenAPI IR tags when tag description pages are enabled
+        let openApiTags: Record<string, { id: string; description: string | undefined }> | undefined;
+        if (item.tagDescriptionPages && useV3Parser) {
+            try {
+                const openapiWorkspace = this.getOpenApiWorkspaceForApiSection(item);
+                const openApiIr = await openapiWorkspace.getOpenAPIIr({ context: this.taskContext });
+                if (openApiIr.tags.tagsById) {
+                    openApiTags = Object.fromEntries(
+                        Object.entries(openApiIr.tags.tagsById)
+                            .filter(([_, tag]) => tag.description && tag.description.trim().length > 0)
+                            .map(([tagId, tag]) => [tagId, { id: String(tag.id), description: tag.description }])
+                    );
+                }
+            } catch (error) {
+                this.taskContext.logger.warn("Failed to extract OpenAPI tags for tag description pages", String(error));
+            }
+        }
         // This case runs if either the V3 parser is not enabled, or if we failed to load the OpenAPI workspace
         if (ir == null) {
             ir = generateIntermediateRepresentation({
@@ -1225,6 +1245,19 @@ export class DocsDefinitionResolver {
                 context: this.taskContext,
                 sourceResolver: new SourceResolverImpl(this.taskContext, workspace)
             });
+        }
+
+        // Apply environment variable substitution to the IR if enabled in docs.yml settings
+        // This allows ${VAR} patterns in OpenAPI specs and Fern definitions to be replaced
+        if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+            ir = replaceEnvVariables(
+                ir,
+                {
+                    onError: (e) =>
+                        this.taskContext.failAndThrow(`Error substituting environment variables in API spec: ${e}`)
+                },
+                { substituteAsEmpty: false }
+            );
         }
 
         const apiDefinitionId = await this.registerApi({
@@ -1254,8 +1287,37 @@ export class DocsDefinitionResolver {
             this.collectedFileIds,
             workspace,
             hideChildren,
-            parentAvailability ?? item.availability
+            parentAvailability ?? item.availability,
+            openApiTags
         );
+
+        // Extract tag description content and add it to both rawMarkdownFiles and parsedDocsConfig.pages
+        const tagDescriptionContent = node.getTagDescriptionContent();
+        for (const [absolutePath, content] of tagDescriptionContent.entries()) {
+            // Extract just the filename from the absolute path (e.g., "/tag-users.md" -> "tag-users.md")
+            const filename = absolutePath.split("/").pop() || absolutePath;
+            const relativePath = RelativeFilePath.of(filename);
+
+            // Apply environment variable substitution if enabled
+            let processedContent = content;
+            if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+                processedContent = replaceEnvVariables(
+                    content,
+                    {
+                        onError: (e) =>
+                            this.taskContext.logger.error(
+                                `Error in tag description environment variable substitution: ${e}`
+                            )
+                    },
+                    { substituteAsEmpty: false }
+                );
+            }
+
+            // Add to both collections so the file appears in the final pages output
+            this.rawMarkdownFiles[relativePath] = processedContent;
+            this.parsedDocsConfig.pages[relativePath] = processedContent;
+        }
+
         return node.get();
     }
 

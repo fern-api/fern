@@ -5,15 +5,20 @@ module Seed
     class Client
       # @param client [Seed::Internal::Http::RawClient]
       #
-      # @return [Seed::FileUploadExample::Client]
+      # @return [void]
       def initialize(client:)
         @client = client
       end
 
       # Upload a file to the database
       #
-      # @param request_options [Seed::RequestOptions]
+      # @param request_options [Hash]
       # @param params [void]
+      # @option request_options [String] :base_url
+      # @option request_options [Hash{String => Object}] :additional_headers
+      # @option request_options [Hash{String => Object}] :additional_query_parameters
+      # @option request_options [Hash{String => Object}] :additional_body_parameters
+      # @option request_options [Integer] :timeout_in_seconds
       #
       # @return [String]
       def upload_file(request_options: {}, **params)
@@ -27,22 +32,24 @@ module Seed
         end
         body.add_part(params[:file].to_form_data_part(name: "file")) if params[:file]
 
-        _request = Seed::Internal::Multipart::Request.new(
-          method: POST,
+        request = Seed::Internal::Multipart::Request.new(
+          base_url: request_options[:base_url],
+          method: "POST",
           path: "upload-file",
-          body: body
+          body: body,
+          request_options: request_options
         )
         begin
-          _response = @client.send(_request)
+          response = @client.send(request)
         rescue Net::HTTPRequestTimeout
           raise Seed::Errors::TimeoutError
         end
-        code = _response.code.to_i
+        code = response.code.to_i
         if code.between?(200, 299)
-          Seed::Types::FileId.load(_response.body)
+          Seed::Types::FileId.load(response.body)
         else
           error_class = Seed::Errors::ResponseError.subclass_for_code(code)
-          raise error_class.new(_response.body, code: code)
+          raise error_class.new(response.body, code: code)
         end
       end
     end

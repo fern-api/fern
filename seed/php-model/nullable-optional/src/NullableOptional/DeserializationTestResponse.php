@@ -46,18 +46,15 @@ class DeserializationTestResponse extends JsonSerializableType
      */
     public function __construct(
         array $values,
-    ) {
-        $this->echo = $values['echo'];
-        $this->processedAt = $values['processedAt'];
-        $this->nullCount = $values['nullCount'];
-        $this->presentFieldsCount = $values['presentFieldsCount'];
+    )
+    {
+        $this->echo = $values['echo'];$this->processedAt = $values['processedAt'];$this->nullCount = $values['nullCount'];$this->presentFieldsCount = $values['presentFieldsCount'];
     }
 
     /**
      * @return string
      */
-    public function __toString(): string
-    {
+    public function __toString(): string {
         return $this->toJson();
     }
 }

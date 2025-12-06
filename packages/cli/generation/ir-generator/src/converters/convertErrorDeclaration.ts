@@ -57,9 +57,11 @@ export function convertErrorDeclaration({
         }),
         docs: typeof errorDeclaration !== "string" ? errorDeclaration.docs : undefined,
         statusCode: errorDeclaration["status-code"],
+        isWildcardStatusCode: undefined,
         type: errorDeclaration.type != null ? file.parseTypeReference(errorDeclaration.type) : undefined,
         examples,
         v2Examples: undefined,
-        displayName: undefined
+        displayName: undefined,
+        headers: []
     };
 }

@@ -2,8 +2,8 @@
 
 namespace Seed\Playlist\Types;
 
-enum ReservedKeywordEnum: string
-{
+enum ReservedKeywordEnum
+ : string {
     case Is = "is";
     case As_ = "as";
 }

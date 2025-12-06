@@ -2,16 +2,16 @@
 
 import { NullableOptionalClient } from "./api/resources/nullableOptional/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-import { normalizeClientOptions } from "./BaseClient.js";
+import { type NormalizedClientOptions, normalizeClientOptions } from "./BaseClient.js";
 
 export declare namespace SeedNullableOptionalClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
 export class SeedNullableOptionalClient {
-    protected readonly _options: SeedNullableOptionalClient.Options;
+    protected readonly _options: NormalizedClientOptions<SeedNullableOptionalClient.Options>;
     protected _nullableOptional: NullableOptionalClient | undefined;
 
     constructor(options: SeedNullableOptionalClient.Options) {

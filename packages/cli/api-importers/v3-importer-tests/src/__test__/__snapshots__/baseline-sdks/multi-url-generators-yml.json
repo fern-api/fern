@@ -465,7 +465,8 @@
       "type": {
         "type": "unknown"
       },
-      "examples": []
+      "examples": [],
+      "headers": []
     },
     "error_:NotFoundError": {
       "name": {
@@ -521,7 +522,8 @@
       "type": {
         "type": "unknown"
       },
-      "examples": []
+      "examples": [],
+      "headers": []
     }
   },
   "services": {

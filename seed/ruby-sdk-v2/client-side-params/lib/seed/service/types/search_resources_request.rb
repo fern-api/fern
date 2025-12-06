@@ -7,7 +7,7 @@ module Seed
         field :limit, -> { Integer }, optional: false, nullable: false
         field :offset, -> { Integer }, optional: false, nullable: false
         field :query, -> { String }, optional: true, nullable: false
-        field :filters, lambda {
+        field :filters, -> {
           Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]
         }, optional: true, nullable: false
       end

@@ -881,7 +881,6 @@
       },
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/api/v1/auth/sign-in",
       "examples": [
@@ -1011,7 +1010,6 @@
       },
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "POST",
       "path": "/api/v1/auth/sign-up",
       "examples": [
@@ -1209,7 +1207,6 @@
       },
       "servers": [],
       "authed": false,
-      "security": [],
       "method": "GET",
       "path": "/api/v1/users/{userId}",
       "examples": [
