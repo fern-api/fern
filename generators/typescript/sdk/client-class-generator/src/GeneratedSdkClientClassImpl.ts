@@ -596,15 +596,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             hasDeclareKeyword: true
         };
 
-        const optionsDeclaration = this.generateOptionsInterface(context);
-        const optionsStatements = Array.isArray(optionsDeclaration) ? optionsDeclaration : [optionsDeclaration];
-        const optionsTypeName = GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME;
-        const allOptionsOptional =
-            optionsDeclaration.kind === StructureKind.TypeAlias
-                ? false
-                : (optionsDeclaration.properties?.every((property) => property.hasQuestionToken) ?? true);
+        const optionsInterface = this.generateOptionsInterface(context);
         serviceModule.statements = [
-            ...optionsStatements,
+            optionsInterface,
             ...(this.generatedEndpointImplementations.length > 0 || this.isRoot
                 ? [this.generateRequestOptionsInterface(context)]
                 : []),
@@ -644,7 +638,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                               ts.factory.createTypeReferenceNode(
                                   ts.factory.createQualifiedName(
                                       ts.factory.createIdentifier(serviceModule.name),
-                                      ts.factory.createIdentifier(optionsTypeName)
+                                      ts.factory.createIdentifier(optionsInterface.name)
                                   )
                               )
                           ]
@@ -661,7 +655,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                               ts.factory.createTypeReferenceNode(
                                   ts.factory.createQualifiedName(
                                       ts.factory.createIdentifier(serviceModule.name),
-                                      ts.factory.createIdentifier(optionsTypeName)
+                                      ts.factory.createIdentifier(optionsInterface.name)
                                   )
                               )
                           ]
@@ -684,7 +678,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                         ts.factory.createTypeReferenceNode(
                             ts.factory.createQualifiedName(
                                 ts.factory.createIdentifier(serviceModule.name),
-                                ts.factory.createIdentifier(optionsTypeName)
+                                ts.factory.createIdentifier(optionsInterface.name)
                             )
                         )
                     ),
@@ -708,7 +702,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             ts.factory.createTypeReferenceNode(
                                 ts.factory.createQualifiedName(
                                     ts.factory.createIdentifier(serviceModule.name),
-                                    ts.factory.createIdentifier(optionsTypeName)
+                                    ts.factory.createIdentifier(optionsInterface.name)
                                 )
                             )
                         ),
