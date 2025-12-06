@@ -338,6 +338,12 @@ fixtures:
     - customConfig:
         use_typeddict_requests: true
       outputFolder: use-typeddict-requests
+
+  oauth-client-credentials:
+      - customConfig:
+          oauth-token-override: true
+        outputFolder: token-override 
+
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2
