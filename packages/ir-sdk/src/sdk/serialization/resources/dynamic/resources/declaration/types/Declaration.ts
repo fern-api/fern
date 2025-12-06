@@ -14,11 +14,13 @@ export const Declaration: core.serialization.ObjectSchema<
 > = core.serialization.objectWithoutOptionalProperties({
     fernFilepath: FernFilepath,
     name: Name,
+    inline: core.serialization.boolean().optional(),
 });
 
 export declare namespace Declaration {
     export interface Raw {
         fernFilepath: FernFilepath.Raw;
         name: Name.Raw;
+        inline?: boolean | null;
     }
 }

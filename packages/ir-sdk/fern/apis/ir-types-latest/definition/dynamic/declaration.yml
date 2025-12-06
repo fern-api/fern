@@ -5,3 +5,6 @@ types:
     properties:
       fernFilepath: commons.FernFilepath
       name: commons.Name
+      inline:
+        docs: Whether this type is an inline type that should be generated as a nested class.
+        type: optional<boolean>

@@ -67,11 +67,13 @@ export class DynamicTypeLiteralMapper {
             case "map":
                 return this.convertMap({ map: args.typeReference, value: args.value, as: args.as });
             case "named": {
-                const named = this.context.resolveNamedType({ typeId: args.typeReference.value });
+                const typeId = args.typeReference.value;
+                const named = this.context.resolveNamedType({ typeId });
                 if (named == null) {
                     return java.TypeLiteral.nop();
                 }
                 return this.convertNamed({
+                    typeId,
                     named,
                     value: args.value,
                     as: args.as,
@@ -278,11 +280,13 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertNamed({
+        typeId,
         named,
         value,
         as,
         inUndiscriminatedUnion
     }: {
+        typeId: string;
         named: FernIr.dynamic.NamedType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
@@ -293,30 +297,34 @@ export class DynamicTypeLiteralMapper {
                 return this.convert({ typeReference: named.typeReference, value, as, inUndiscriminatedUnion });
             case "discriminatedUnion":
                 return this.convertDiscriminatedUnion({
+                    typeId,
                     discriminatedUnion: named,
                     value
                 });
             case "enum":
-                return this.convertEnum({ enum_: named, value });
+                return this.convertEnum({ typeId, enum_: named, value });
             case "object":
-                return this.convertObject({ object_: named, value, as });
+                return this.convertObject({ typeId, object_: named, value, as });
             case "undiscriminatedUnion":
                 // Don't pass inUndiscriminatedUnion here - we're AT the undiscriminated union level,
                 // not within it. The flag should only apply to the variants within the union.
-                return this.convertUndiscriminatedUnion({ undiscriminatedUnion: named, value });
+                return this.convertUndiscriminatedUnion({ typeId, undiscriminatedUnion: named, value });
             default:
                 assertNever(named);
         }
     }
 
     private convertDiscriminatedUnion({
+        typeId,
         discriminatedUnion,
         value
     }: {
+        typeId: string;
         discriminatedUnion: FernIr.dynamic.DiscriminatedUnionType;
         value: unknown;
     }): java.TypeLiteral {
-        const classReference = this.context.getJavaClassReferenceFromDeclaration({
+        const classReference = this.context.getJavaClassReferenceForNamedType({
+            typeId,
             declaration: discriminatedUnion.declaration
         });
         const discriminatedUnionTypeInstance = this.context.resolveDiscriminatedUnionTypeInstance({
@@ -329,8 +337,9 @@ export class DynamicTypeLiteralMapper {
         const unionVariant = discriminatedUnionTypeInstance.singleDiscriminatedUnionType;
         switch (unionVariant.type) {
             case "samePropertiesAsObject": {
+                const variantTypeId = unionVariant.typeId;
                 const named = this.context.resolveNamedType({
-                    typeId: unionVariant.typeId
+                    typeId: variantTypeId
                 });
                 if (named == null) {
                     return java.TypeLiteral.nop();
@@ -339,7 +348,13 @@ export class DynamicTypeLiteralMapper {
                     java.invokeMethod({
                         on: classReference,
                         method: this.context.getPropertyName(unionVariant.discriminantValue.name),
-                        arguments_: [this.convertNamed({ named, value: discriminatedUnionTypeInstance.value })]
+                        arguments_: [
+                            this.convertNamed({
+                                typeId: variantTypeId,
+                                named,
+                                value: discriminatedUnionTypeInstance.value
+                            })
+                        ]
                     })
                 );
             }
@@ -382,10 +397,12 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertObject({
+        typeId,
         object_,
         value,
         as
     }: {
+        typeId: string;
         object_: FernIr.dynamic.ObjectType;
         value: unknown;
         as?: DynamicTypeLiteralMapper.ConvertedAs;
@@ -399,7 +416,8 @@ export class DynamicTypeLiteralMapper {
                 ? properties.filter((property) => !this.context.isDirectLiteral(property.typeReference))
                 : properties;
         return java.TypeLiteral.builder({
-            classReference: this.context.getJavaClassReferenceFromDeclaration({
+            classReference: this.context.getJavaClassReferenceForNamedType({
+                typeId,
                 declaration: object_.declaration
             }),
             parameters: filteredProperties.map((property) => {
@@ -416,13 +434,22 @@ export class DynamicTypeLiteralMapper {
         });
     }
 
-    private convertEnum({ enum_, value }: { enum_: FernIr.dynamic.EnumType; value: unknown }): java.TypeLiteral {
+    private convertEnum({
+        typeId,
+        enum_,
+        value
+    }: {
+        typeId: string;
+        enum_: FernIr.dynamic.EnumType;
+        value: unknown;
+    }): java.TypeLiteral {
         const name = this.getEnumValueName({ enum_, value });
         if (name == null) {
             return java.TypeLiteral.nop();
         }
         return java.TypeLiteral.enum_({
-            classReference: this.context.getJavaClassReferenceFromDeclaration({
+            classReference: this.context.getJavaClassReferenceForNamedType({
+                typeId,
                 declaration: enum_.declaration
             }),
             value: name
@@ -449,9 +476,11 @@ export class DynamicTypeLiteralMapper {
     }
 
     private convertUndiscriminatedUnion({
+        typeId,
         undiscriminatedUnion,
         value
     }: {
+        typeId: string;
         undiscriminatedUnion: FernIr.dynamic.UndiscriminatedUnionType;
         value: unknown;
     }): java.TypeLiteral {
@@ -462,14 +491,16 @@ export class DynamicTypeLiteralMapper {
         if (result == null) {
             return java.TypeLiteral.nop();
         }
+        const classReference = this.context.getJavaClassReferenceForNamedType({
+            typeId,
+            declaration: undiscriminatedUnion.declaration
+        });
         if (this.context.isPrimitive(result.valueTypeReference)) {
             // Primitive types overload the 'of' method rather than
             // defining a separate method from the type.
             return java.TypeLiteral.reference(
                 java.invokeMethod({
-                    on: this.context.getJavaClassReferenceFromDeclaration({
-                        declaration: undiscriminatedUnion.declaration
-                    }),
+                    on: classReference,
                     method: "of",
                     arguments_: [result.typeInstantiation]
                 })
@@ -479,9 +510,7 @@ export class DynamicTypeLiteralMapper {
         // This matches the Java SDK's generated code pattern
         return java.TypeLiteral.reference(
             java.invokeMethod({
-                on: this.context.getJavaClassReferenceFromDeclaration({
-                    declaration: undiscriminatedUnion.declaration
-                }),
+                on: classReference,
                 method: "of",
                 arguments_: [result.typeInstantiation]
             })
