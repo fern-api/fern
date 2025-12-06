@@ -78,8 +78,11 @@ public interface JavaSdkCustomConfig extends ICustomConfig {
     }
 
     @Override
-    @JsonProperty("oauth-token-override-property-name")
-    Optional<String> oauthTokenOverridePropertyName();
+    @Value.Default
+    @JsonProperty("oauth-token-override")
+    default Boolean oauthTokenOverride() {
+        return false;
+    }
 
     static ImmutableJavaSdkCustomConfig.Builder builder() {
         return ImmutableJavaSdkCustomConfig.builder();

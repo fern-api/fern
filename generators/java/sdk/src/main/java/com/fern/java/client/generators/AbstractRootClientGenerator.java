@@ -1035,23 +1035,37 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         public class OAuthSchemeHandler implements OAuthConfiguration.Visitor<Void> {
 
-            private static final String DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME = "token";
-
             @Override
             public Void visitClientCredentials(OAuthClientCredentials clientCredentials) {
                 EndpointReference tokenEndpointReference =
                         clientCredentials.getTokenEndpoint().getEndpointReference();
 
-                // Get the token override property name from config (default: "token")
-                Optional<String> tokenOverridePropertyNameOpt =
-                        clientGeneratorContext.getCustomConfig().oauthTokenOverridePropertyName();
-                String tokenOverridePropertyName =
-                        tokenOverridePropertyNameOpt.orElse(DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME);
-                boolean hasTokenOverride = tokenOverridePropertyNameOpt.isPresent();
+                boolean hasTokenOverride = clientGeneratorContext.getCustomConfig().oauthTokenOverride();
+                String tokenOverridePropertyName = "token";
 
-                // Create setter for token override if enabled
                 if (hasTokenOverride) {
-                    createSetter(tokenOverridePropertyName, Optional.empty(), Optional.empty());
+                    createTokenOverrideSetter(tokenOverridePropertyName);
+
+                    // Add validation: must provide either token OR (clientId AND clientSecret), but not both
+                    buildMethod
+                            .beginControlFlow(
+                                    "if (this.$L != null && (this.clientId != null || this.clientSecret != null))",
+                                    tokenOverridePropertyName)
+                            .addStatement(
+                                    "throw new $T($S)",
+                                    IllegalStateException.class,
+                                    "Cannot provide both '" + tokenOverridePropertyName
+                                            + "' and 'clientId'/'clientSecret'. Use one authentication method.")
+                            .endControlFlow()
+                            .beginControlFlow(
+                                    "if (this.$L == null && (this.clientId == null || this.clientSecret == null))",
+                                    tokenOverridePropertyName)
+                            .addStatement(
+                                    "throw new $T($S)",
+                                    IllegalStateException.class,
+                                    "Please provide either '" + tokenOverridePropertyName
+                                            + "' or both 'clientId' and 'clientSecret'")
+                            .endControlFlow();
                 }
 
                 createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
@@ -1267,6 +1281,26 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         ".\nDefaults to the $L environment variable.",
                         environmentVariable.get().get());
             }
+            clientBuilder.addMethod(setter.build());
+        }
+
+        private void createTokenOverrideSetter(String fieldName) {
+            FieldSpec.Builder field = FieldSpec.builder(String.class, fieldName)
+                    .addModifiers(Modifier.PRIVATE)
+                    .initializer("null");
+            clientBuilder.addField(field.build());
+
+            MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldName)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(String.class, fieldName)
+                    .returns(isExtensible ? TypeVariableName.get("T") : builderName)
+                    .addJavadoc(
+                            "Sets a pre-generated access token for authentication, bypassing the OAuth client credentials flow.\n")
+                    .addJavadoc("Use this when you already have a valid access token.\n")
+                    .addJavadoc("@param $L The access token to use for Authorization header\n", fieldName)
+                    .addJavadoc("@return This builder for method chaining")
+                    .addStatement("this.$L = $L", fieldName, fieldName)
+                    .addStatement(isExtensible ? "return self()" : "return this");
             clientBuilder.addMethod(setter.build());
         }
 
