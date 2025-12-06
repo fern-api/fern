@@ -134,10 +134,10 @@ export namespace OAuthAuthProvider {
     export type Options = BaseClientOptions;
 
     export function createInstance(options: Options): core.AuthProvider {
-        if (OAuthAuthProvider.canCreate(options)) {
-            return new OAuthAuthProvider(options);
-        } else if (OAuthTokenOverrideAuthProvider.canCreate(options)) {
+        if (OAuthTokenOverrideAuthProvider.canCreate(options)) {
             return new OAuthTokenOverrideAuthProvider(options);
+        } else if (OAuthAuthProvider.canCreate(options)) {
+            return new OAuthAuthProvider(options);
         }
         throw new errors.SeedOauthClientCredentialsError({
             message:

@@ -403,8 +403,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this._refreshPromise;
         `;
 
+        // For token override, we still need to check for env var fallback if configured
         const canCreateStatements = hasTokenOverride
-            ? `return "clientId" in options && options.clientId != null && "clientSecret" in options && options.clientSecret != null;`
+            ? this.generatecanCreateStatementsForTokenOverride(oauthConfig.clientIdEnvVar, oauthConfig.clientSecretEnvVar)
             : this.generatecanCreateStatements(oauthConfig.clientIdEnvVar, oauthConfig.clientSecretEnvVar);
 
         const canCreateReturnType = hasTokenOverride
@@ -706,6 +707,25 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return `return ${oauthCheck};`;
     }
 
+    private generatecanCreateStatementsForTokenOverride(
+        clientIdEnvVar: string | undefined,
+        clientSecretEnvVar: string | undefined
+    ): string {
+        // With token override, we need to check for env var fallback if configured
+        // This allows users to not pass clientId/clientSecret if they're set in env vars
+        const clientIdCheck =
+            clientIdEnvVar != null
+                ? `(("clientId" in options && options.clientId != null) || process.env?.["${clientIdEnvVar}"] != null)`
+                : `"clientId" in options && options.clientId != null`;
+
+        const clientSecretCheck =
+            clientSecretEnvVar != null
+                ? `(("clientSecret" in options && options.clientSecret != null) || process.env?.["${clientSecretEnvVar}"] != null)`
+                : `"clientSecret" in options && options.clientSecret != null`;
+
+        return `return (${clientIdCheck}) && (${clientSecretCheck});`;
+    }
+
     private getName(name: FernIr.Name | FernIr.NameAndWireValue): string {
         if (this.includeSerdeLayer) {
             if ("name" in name) {
@@ -744,6 +764,13 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         if (hasTokenOverride) {
             // When token override is enabled, generate the full namespace with AuthOptions union and createInstance factory
             // Options must be a type alias (not interface) because BaseClientOptions is a type alias with a union
+            const clientIdIsOptional = oauthConfig.clientIdEnvVar != null;
+            const clientSecretIsOptional = oauthConfig.clientSecretEnvVar != null;
+
+            // If env vars are configured, clientId/clientSecret can be undefined (will fallback to env vars)
+            const clientIdType = clientIdIsOptional ? `${supplierType} | undefined` : supplierType;
+            const clientSecretType = clientSecretIsOptional ? `${supplierType} | undefined` : supplierType;
+
             context.sourceFile.addModule({
                 name: CLASS_NAME,
                 isExported: true,
@@ -765,8 +792,8 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                                 name: "ClientCredentials",
                                 isExported: true,
                                 properties: [
-                                    { name: "clientId", type: supplierType },
-                                    { name: "clientSecret", type: supplierType }
+                                    { name: "clientId", type: clientIdType },
+                                    { name: "clientSecret", type: clientSecretType }
                                 ]
                             },
                             {
@@ -790,10 +817,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                         parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
                         returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
                         statements: `
-        if (${CLASS_NAME}.canCreate(options)) {
-            return new ${CLASS_NAME}(options);
-        } else if (${TOKEN_OVERRIDE_CLASS_NAME}.canCreate(options)) {
+        if (${TOKEN_OVERRIDE_CLASS_NAME}.canCreate(options)) {
             return new ${TOKEN_OVERRIDE_CLASS_NAME}(options);
+        } else if (${CLASS_NAME}.canCreate(options)) {
+            return new ${CLASS_NAME}(options);
         }
         throw new ${errorConstructor}({
             message: "Insufficient options to create OAuthAuthProvider. Please provide either clientId and clientSecret, or ${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME}."

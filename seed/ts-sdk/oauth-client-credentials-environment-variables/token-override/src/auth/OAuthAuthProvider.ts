@@ -25,10 +25,8 @@ export class OAuthAuthProvider implements core.AuthProvider {
         options: OAuthAuthProvider.Options,
     ): options is OAuthAuthProvider.Options & OAuthAuthProvider.AuthOptions.ClientCredentials {
         return (
-            "clientId" in options &&
-            options.clientId != null &&
-            "clientSecret" in options &&
-            options.clientSecret != null
+            (("clientId" in options && options.clientId != null) || process.env?.CLIENT_ID != null) &&
+            (("clientSecret" in options && options.clientSecret != null) || process.env?.CLIENT_SECRET != null)
         );
     }
 
@@ -124,8 +122,8 @@ export namespace OAuthAuthProvider {
 
     export namespace AuthOptions {
         export interface ClientCredentials {
-            clientId: core.Supplier<string>;
-            clientSecret: core.Supplier<string>;
+            clientId: core.Supplier<string> | undefined;
+            clientSecret: core.Supplier<string> | undefined;
         }
 
         export interface TokenOverride {
@@ -136,10 +134,10 @@ export namespace OAuthAuthProvider {
     export type Options = BaseClientOptions;
 
     export function createInstance(options: Options): core.AuthProvider {
-        if (OAuthAuthProvider.canCreate(options)) {
-            return new OAuthAuthProvider(options);
-        } else if (OAuthTokenOverrideAuthProvider.canCreate(options)) {
+        if (OAuthTokenOverrideAuthProvider.canCreate(options)) {
             return new OAuthTokenOverrideAuthProvider(options);
+        } else if (OAuthAuthProvider.canCreate(options)) {
+            return new OAuthAuthProvider(options);
         }
         throw new errors.SeedOauthClientCredentialsEnvironmentVariablesError({
             message:
