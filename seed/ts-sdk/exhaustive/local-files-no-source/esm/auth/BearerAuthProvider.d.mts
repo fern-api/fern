@@ -1,7 +1,9 @@
 import * as core from "../core/index.mjs";
 export declare namespace BearerAuthProvider {
-    interface Options {
-        token?: core.Supplier<core.BearerToken | undefined>;
+    interface AuthOptions {
+        token?: core.Supplier<core.BearerToken>;
+    }
+    interface Options extends AuthOptions {
     }
 }
 export declare class BearerAuthProvider implements core.AuthProvider {
