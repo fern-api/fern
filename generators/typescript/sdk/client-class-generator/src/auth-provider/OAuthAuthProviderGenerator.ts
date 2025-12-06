@@ -78,7 +78,6 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
         const hasTokenOverride = this.oauthTokenOverride;
         if (hasTokenOverride) {
-            // When token override is enabled, use the factory function
             return ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(CLASS_NAME), "createInstance"),
                 undefined,
@@ -90,8 +89,6 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
     public writeToFile(context: SdkContext): void {
         const hasTokenOverride = this.oauthTokenOverride;
-        // Write classes first, then namespace - TypeScript requires namespace to come after
-        // the class when they share the same name (declaration merging)
         this.writeClass(context);
         if (hasTokenOverride) {
             this.writeTokenOverrideClass(context);
@@ -166,14 +163,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         const hasTokenOverride = this.oauthTokenOverride;
 
-        // Constructor type depends on whether token override is enabled
         const constructorOptionsType = hasTokenOverride
             ? `${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.ClientCredentials`
             : getTextOfTsNode(this.getOptionsType());
 
         let constructorStatements = "";
 
-        // Without token override, we can access clientId and clientSecret directly
         if (!clientIdIsOptional) {
             const envVarHint =
                 oauthConfig.clientIdEnvVar != null
@@ -403,7 +398,6 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this._refreshPromise;
         `;
 
-        // For token override, we still need to check for env var fallback if configured
         const canCreateStatements = hasTokenOverride
             ? this.generatecanCreateStatementsForTokenOverride(
                   oauthConfig.clientIdEnvVar,
@@ -714,8 +708,6 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         clientIdEnvVar: string | undefined,
         clientSecretEnvVar: string | undefined
     ): string {
-        // With token override, we need to check for env var fallback if configured
-        // This allows users to not pass clientId/clientSecret if they're set in env vars
         const clientIdCheck =
             clientIdEnvVar != null
                 ? `(("clientId" in options && options.clientId != null) || process.env?.["${clientIdEnvVar}"] != null)`
@@ -765,12 +757,9 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         );
 
         if (hasTokenOverride) {
-            // When token override is enabled, generate the full namespace with AuthOptions union and createInstance factory
-            // Options must be a type alias (not interface) because BaseClientOptions is a type alias with a union
             const clientIdIsOptional = oauthConfig.clientIdEnvVar != null;
             const clientSecretIsOptional = oauthConfig.clientSecretEnvVar != null;
 
-            // If env vars are configured, clientId/clientSecret can be undefined (will fallback to env vars)
             const clientIdType = clientIdIsOptional ? `${supplierType} | undefined` : supplierType;
             const clientSecretType = clientSecretIsOptional ? `${supplierType} | undefined` : supplierType;
 

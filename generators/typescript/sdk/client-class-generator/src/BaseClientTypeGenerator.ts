@@ -42,32 +42,26 @@ export class BaseClientTypeGenerator {
             });
         }
 
-        // When OAuth token override is enabled, generate BaseClientOptions as a type alias
-        // that intersects with OAuthAuthProvider.AuthOptions
         const baseOptionsInterface = context.baseClient.generateBaseClientOptionsInterface(context);
         if (this.oauthTokenOverride && this.hasOAuthScheme() && context.generateOAuthClients) {
-            // Emit a core interface with the base properties (non-exported to keep public surface clean)
             context.sourceFile.addInterface({
                 ...baseOptionsInterface,
                 name: "BaseClientCoreOptions",
                 isExported: false
             });
 
-            // Import OAuthAuthProvider as type-only to avoid runtime circular dependency
             context.sourceFile.addImportDeclaration({
                 moduleSpecifier: "./auth/OAuthAuthProvider.js",
                 namedImports: ["OAuthAuthProvider"],
                 isTypeOnly: true
             });
 
-            // Emit the intersection alias that includes the OAuth auth options union
             context.sourceFile.addTypeAlias({
                 isExported: true,
                 name: "BaseClientOptions",
                 type: "BaseClientCoreOptions & OAuthAuthProvider.AuthOptions"
             });
         } else {
-            // Non-OAuth or no token-override: keep the existing, simple interface
             context.sourceFile.addInterface(baseOptionsInterface);
         }
 
@@ -188,9 +182,6 @@ export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
     logging: ${getTextOfTsNode(context.coreUtilities.logging.Logger._getReferenceToType())};${authProviderProperty}
 }`;
 
-        // Only generate NormalizedClientOptionsWithAuth if there are auth schemes
-        // The union type is now in BaseClientOptions directly when token override is enabled,
-        // so we don't need a separate OAuthBaseClientOptions alias
         if (shouldGenerateAuthCode) {
             typesCode += `
 
@@ -256,7 +247,6 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                         namedImports: ["OAuthAuthProvider"]
                     });
                     providerImports.push("OAuthAuthProvider");
-                    // Use createInstance when token override is enabled, otherwise use new OAuthAuthProvider
                     const oauthCreation = this.oauthTokenOverride
                         ? "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)); }"
                         : "if (OAuthAuthProvider.canCreate(normalizedWithNoOpAuthProvider)) { authProviders.push(new OAuthAuthProvider(normalizedWithNoOpAuthProvider)); }";
@@ -299,7 +289,6 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                         moduleSpecifier: "./auth/OAuthAuthProvider.js",
                         namedImports: ["OAuthAuthProvider"]
                     });
-                    // Use createInstance when token override is enabled, otherwise use new OAuthAuthProvider
                     authProviderCreation = this.oauthTokenOverride
                         ? "OAuthAuthProvider.createInstance(normalizedWithNoOpAuthProvider)"
                         : "new OAuthAuthProvider(normalizedWithNoOpAuthProvider)";
@@ -320,8 +309,6 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
             return;
         }
 
-        // The union type is now in BaseClientOptions directly when token override is enabled,
-        // so we use BaseClientOptions for all cases
         const functionCode = `
 export function normalizeClientOptionsWithAuth<T extends BaseClientOptions>(
     ${OPTIONS_PARAMETER_NAME}: T

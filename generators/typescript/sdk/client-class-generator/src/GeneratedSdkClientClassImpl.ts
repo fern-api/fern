@@ -600,11 +600,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
 
         const optionsDeclaration = this.generateOptionsInterface(context);
         const optionsStatements = Array.isArray(optionsDeclaration) ? optionsDeclaration : [optionsDeclaration];
-        // When we have an array (type aliases for OAuth union), the Options type is always the last one
-        // When we have a single interface, it's the interface itself
         const optionsTypeName = GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME;
-        // Check if options are all optional (only applicable for interface, not type alias)
-        // Type alias (for OAuth token override) requires either clientId+clientSecret OR token, so not all optional
         const allOptionsOptional =
             optionsDeclaration.kind === StructureKind.TypeAlias
                 ? false
@@ -1012,13 +1008,9 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private generateOptionsInterface(
         context: SdkContext
     ): InterfaceDeclarationStructure | TypeAliasDeclarationStructure {
-        // When OAuth token override is enabled, BaseClientOptions is a type alias that includes a union type
-        // (OAuthAuthProvider.AuthOptions). TypeScript doesn't allow interfaces to extend union types,
-        // so we must generate Options as a type alias instead of an interface.
         const hasOAuthTokenOverride = this.oauthTokenOverride && this.authProvider instanceof OAuthAuthProviderInstance;
 
         if (hasOAuthTokenOverride) {
-            // Generate Options as a type alias that equals BaseClientOptions
             return {
                 kind: StructureKind.TypeAlias,
                 name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
@@ -1027,7 +1019,6 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
             };
         }
 
-        // Default: generate Options as an interface that extends BaseClientOptions
         const properties: OptionalKind<PropertySignatureStructure>[] = [];
         return {
             kind: StructureKind.Interface,
