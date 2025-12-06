@@ -19,10 +19,4 @@ public final class GeneratorLogging {
         execClient.sendUpdate(GeneratorUpdate.log(
                 LogUpdate.builder().level(LogLevel.ERROR).message(message).build()));
     }
-
-    public static void warn(DefaultGeneratorExecClient execClient, String message) {
-        System.out.println("Warning: " + message);
-        execClient.sendUpdate(GeneratorUpdate.log(
-                LogUpdate.builder().level(LogLevel.WARN).message(message).build()));
-    }
 }
