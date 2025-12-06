@@ -5,11 +5,10 @@ import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 import type * as environments from "./environments.js";
 
-export interface BaseClientOptions {
+export type BaseClientOptions = {
     environment?: core.Supplier<environments.SeedTraceEnvironment | string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    token?: core.Supplier<core.BearerToken | undefined>;
     /** Override the X-Random-Header header */
     xRandomHeader?: core.Supplier<string | undefined>;
     /** Additional headers to include in requests. */
@@ -22,7 +21,7 @@ export interface BaseClientOptions {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
-}
+} & BearerAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */

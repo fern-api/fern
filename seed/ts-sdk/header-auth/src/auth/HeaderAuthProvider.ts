@@ -8,9 +8,7 @@ export namespace HeaderAuthProvider {
         headerTokenAuth: core.Supplier<string>;
     }
 
-    export interface Options {
-        headerTokenAuth: core.Supplier<string>;
-    }
+    export interface Options extends AuthOptions {}
 }
 
 export class HeaderAuthProvider implements core.AuthProvider {

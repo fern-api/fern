@@ -4,9 +4,11 @@ import * as core from "../core";
 import * as errors from "../errors/index";
 
 export namespace BearerAuthProvider {
-    export interface Options {
+    export interface AuthOptions {
         token: core.Supplier<core.BearerToken>;
     }
+
+    export interface Options extends AuthOptions {}
 }
 
 export class BearerAuthProvider implements core.AuthProvider {

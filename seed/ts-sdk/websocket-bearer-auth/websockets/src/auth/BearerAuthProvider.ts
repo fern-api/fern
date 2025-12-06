@@ -5,12 +5,10 @@ import * as errors from "../errors/index.js";
 
 export namespace BearerAuthProvider {
     export interface AuthOptions {
-        apiKey?: core.Supplier<core.BearerToken>;
+        apiKey?: core.Supplier<core.BearerToken | undefined>;
     }
 
-    export interface Options {
-        apiKey?: core.Supplier<core.BearerToken>;
-    }
+    export interface Options extends AuthOptions {}
 }
 
 export class BearerAuthProvider implements core.AuthProvider {
