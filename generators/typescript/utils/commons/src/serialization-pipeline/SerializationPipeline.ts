@@ -22,21 +22,31 @@ export interface SerializationPipelineConfig extends SerializationFormat.Config 
 }
 
 /**
- * SerializationPipeline manages the creation and configuration of serialization formats.
- * It provides a unified interface for generating schema AST code regardless of the
- * underlying format being used.
+ * SerializationPipeline is an abstraction around various serialization formats. It provides a unified interface
+ * for generating serialization schema AST code regardless of the underlying format being used.
  */
 export class SerializationPipeline {
+    /**
+     * The concrete format implementation.
+     */
     private readonly format: SerializationFormat;
+
+    /**
+     * The type of the selected serialization format.
+     */
     private readonly formatType: SerializationFormatType;
 
+    /**
+     * Create a new SerializationPipeline instance.
+     * @param config - The configuration for the pipeline.
+     */
     constructor(config: SerializationPipelineConfig) {
         this.formatType = config.format;
         this.format = this.createFormat(config);
     }
 
     /**
-     * Create the appropriate serialization format based on configuration
+     * Given a pipeline configuration, generate the appropriate serialization format.
      */
     private createFormat(config: SerializationPipelineConfig): SerializationFormat {
         switch (config.format) {
@@ -69,29 +79,36 @@ export class SerializationPipeline {
     }
 
     /**
-     * Check if serialization is enabled
+     * Check if serialization is enabled i.e. not passthrough.
      */
     public isEnabled(): boolean {
         return this.formatType !== "none";
     }
 
     /**
-     * Get runtime dependencies required by the active format
+     * Check if the serialization format is passthrough.
      */
+    public isPassthrough(): boolean {
+        return this.formatType === "none";
+    }
+
+    /**
+     * Get runtime dependencies required by the active format.
+     * Note: only used for legacy zurg format until it can be refactored into a npm dependency.
     public getRuntimeDependencies(): Record<string, string> {
         return this.format.getRuntimeDependencies();
     }
 
     /**
-     * Get runtime file patterns for the active format
-     * Returns null if the format uses npm dependencies instead of bundled files
+     * Get runtime file patterns for the active format.
+     * Used only for legacy zurg format until it can be refactored into a npm dependency.
      */
     public getRuntimeFilePatterns(): { patterns: string[]; ignore?: string[] } | null {
         return this.format.getRuntimeFilePatterns();
     }
 
     /**
-     * Helper to determine the format type from legacy noSerdeLayer config
+     * Helper to determine the format type from legacy noSerdeLayer config. Helps with backwards compatibility.
      */
     public static resolveFormatType(options: {
         serializationFormat?: SerializationFormatType;
