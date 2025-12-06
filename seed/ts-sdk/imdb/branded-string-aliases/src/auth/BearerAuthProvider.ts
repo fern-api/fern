@@ -12,7 +12,7 @@ export namespace BearerAuthProvider {
 }
 
 export class BearerAuthProvider implements core.AuthProvider {
-    private readonly token: core.Supplier<core.BearerToken | undefined>;
+    private readonly token: core.Supplier<core.BearerToken>;
 
     constructor(options: BearerAuthProvider.Options) {
         this.token = options.token;
