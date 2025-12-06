@@ -473,12 +473,15 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
                     properties: authOptionsProperties
                 },
                 {
-                    kind: StructureKind.Interface,
+                    // Use type alias instead of interface because BaseClientOptions may include union types
+                    // (e.g., AtLeastOneOf pattern for AnyAuthProvider.AuthOptions)
+                    // TypeScript interfaces can only extend object types with statically known members
+                    kind: StructureKind.TypeAlias,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
                     // Options extends BaseClientOptions because InferredAuthProvider creates an AuthClient
                     // which requires the full BaseClientOptions (environment, baseUrl, etc.)
-                    extends: ["BaseClientOptions"]
+                    type: "BaseClientOptions"
                 }
             ]
         });

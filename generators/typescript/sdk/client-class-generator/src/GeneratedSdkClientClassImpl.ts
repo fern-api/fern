@@ -41,7 +41,8 @@ import {
     PropertySignatureStructure,
     Scope,
     StructureKind,
-    ts
+    ts,
+    TypeAliasDeclarationStructure
 } from "ts-morph";
 import { Code, code } from "ts-poet";
 import {
@@ -679,11 +680,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                             )
                         )
                     ),
-                    initializer:
-                        optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
-                        !context.baseClient.anyRequiredBaseClientOptions(context)
-                            ? "{}"
-                            : undefined
+                    initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
                 }
             ];
             const statements = code`
@@ -707,11 +704,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
                                 )
                             )
                         ),
-                        initializer:
-                            optionsInterface.properties?.every((property) => property.hasQuestionToken) &&
-                            !context.baseClient.anyRequiredBaseClientOptions(context)
-                                ? "{}"
-                                : undefined
+                        initializer: !context.baseClient.anyRequiredBaseClientOptions(context) ? "{}" : undefined
                     }
                 ]
             });
@@ -996,14 +989,14 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return properties;
     }
 
-    private generateOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
-        const properties: OptionalKind<PropertySignatureStructure>[] = [];
-
+    private generateOptionsInterface(context: SdkContext): TypeAliasDeclarationStructure {
+        // Use type alias instead of interface because BaseClientOptions may include union types
+        // (e.g., AtLeastOneOf pattern for AnyAuthProvider.AuthOptions)
+        // TypeScript interfaces can only extend object types with statically known members
         return {
-            kind: StructureKind.Interface,
+            kind: StructureKind.TypeAlias,
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
-            properties,
-            extends: [getTextOfTsNode(context.sdkClientClass.getReferenceToBaseClientOptions().getTypeNode())],
+            type: getTextOfTsNode(context.sdkClientClass.getReferenceToBaseClientOptions().getTypeNode()),
             isExported: true
         };
     }

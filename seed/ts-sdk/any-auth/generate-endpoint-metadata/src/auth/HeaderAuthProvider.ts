@@ -5,14 +5,14 @@ import * as errors from "../errors/index.js";
 
 export namespace HeaderAuthProvider {
     export interface AuthOptions {
-        apiKey?: core.EndpointSupplier<string | undefined>;
+        apiKey?: core.EndpointSupplier<string> | undefined;
     }
 
     export interface Options extends AuthOptions {}
 }
 
 export class HeaderAuthProvider implements core.AuthProvider {
-    private readonly headerValue: core.EndpointSupplier<string | undefined> | undefined;
+    private readonly headerValue: core.EndpointSupplier<string> | undefined;
 
     constructor(options: HeaderAuthProvider.Options) {
         this.headerValue = options.apiKey;

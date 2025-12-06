@@ -5,14 +5,14 @@ import * as errors from "../errors/index.js";
 
 export namespace BearerAuthProvider {
     export interface AuthOptions {
-        token?: core.EndpointSupplier<core.BearerToken | undefined>;
+        token?: core.EndpointSupplier<core.BearerToken> | undefined;
     }
 
     export interface Options extends AuthOptions {}
 }
 
 export class BearerAuthProvider implements core.AuthProvider {
-    private readonly token: core.EndpointSupplier<core.BearerToken | undefined> | undefined;
+    private readonly token: core.EndpointSupplier<core.BearerToken> | undefined;
 
     constructor(options: BearerAuthProvider.Options) {
         this.token = options.token;

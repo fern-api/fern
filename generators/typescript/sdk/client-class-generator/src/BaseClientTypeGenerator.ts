@@ -81,11 +81,10 @@ export type BaseClientOptions = {
         const isAnyAuth = this.ir.auth.requirement === "ANY";
 
         if (isAnyAuth) {
-            // For ANY auth, use AnyAuthProvider.AllAuthOptions (intersection type) for BaseClientOptions
-            // This ensures BaseClientOptions is an object type with statically known members
+            // For ANY auth, use AnyAuthProvider.AuthOptions (AtLeastOneOf pattern)
             // Note: The import for AnyAuthProvider is added in generateNormalizeClientOptionsWithAuthFunction()
-            authOptionsTypes.push("AnyAuthProvider.AllAuthOptions");
-        } else {
+            authOptionsTypes.push("AnyAuthProvider.AuthOptions");
+        }else {
             // For single auth, use the first auth scheme's AuthOptions
             for (const authScheme of this.ir.auth.schemes) {
                 const authOptionsType = this.getAuthOptionsTypeForScheme(authScheme, context);

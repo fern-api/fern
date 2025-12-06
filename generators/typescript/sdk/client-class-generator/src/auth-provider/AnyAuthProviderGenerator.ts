@@ -18,7 +18,6 @@ export declare namespace AnyAuthProviderGenerator {
 const CLASS_NAME = "AnyAuthProvider";
 const AUTH_PROVIDERS_FIELD_NAME = "authProviders";
 const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
-const ALL_AUTH_OPTIONS_TYPE_NAME = "AllAuthOptions";
 
 export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -48,9 +47,7 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public getAuthOptionsType(): ts.TypeNode {
-        // For BaseClientOptions intersection, use AllAuthOptions (intersection type)
-        // This ensures BaseClientOptions is an object type with statically known members
-        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${ALL_AUTH_OPTIONS_TYPE_NAME}`);
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
     }
 
     public getAuthOptionsProperties(_context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
@@ -110,31 +107,30 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
             });
         }
 
-        // Generate two types:
-        // 1. AuthOptions - union type for user-facing semantics (user only needs ONE auth method)
-        // 2. AllAuthOptions - intersection type for BaseClientOptions (needs all properties for type safety)
+        // Generate AuthOptions using AtLeastOneOf pattern
+        // This ensures the user must provide at least one complete auth scheme,
+        // while other auth schemes are optional (partial)
         const authOptionsTypes = childClassNames.map((className) => `${className}.AuthOptions`);
-        const unionTypeStr = authOptionsTypes.join(" | ");
-        const intersectionTypeStr = authOptionsTypes.join(" & ");
+        const tupleStr = authOptionsTypes.join(",\n        ");
+
+        // Generate the AtLeastOneOf helper types and AuthOptions
+        const typeCode = `
+    type UnionToIntersection<U> =
+        (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;
+
+    type AtLeastOneOf<T extends any[]> = {
+        [K in keyof T]: T[K] & Partial<UnionToIntersection<Exclude<T[number], T[K]>>>;
+    }[number];
+
+    export type ${AUTH_OPTIONS_TYPE_NAME} = AtLeastOneOf<[
+        ${tupleStr}
+    ]>;`;
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
             kind: StructureKind.Module,
-            statements: [
-                {
-                    kind: StructureKind.TypeAlias,
-                    name: AUTH_OPTIONS_TYPE_NAME,
-                    isExported: true,
-                    type: unionTypeStr
-                },
-                {
-                    kind: StructureKind.TypeAlias,
-                    name: ALL_AUTH_OPTIONS_TYPE_NAME,
-                    isExported: true,
-                    type: intersectionTypeStr
-                }
-            ]
+            statements: typeCode
         });
     }
 

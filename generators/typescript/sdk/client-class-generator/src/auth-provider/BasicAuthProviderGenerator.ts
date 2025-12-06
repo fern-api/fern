@@ -57,35 +57,39 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
         const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
 
-        // When there's an env var fallback, use Supplier<T | undefined> because the value can be undefined
-        // when falling back to env vars. When there's no env var fallback, use Supplier<T> directly.
-        const usernameType = hasUsernameEnv
-            ? ts.factory.createUnionTypeNode([
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-              ])
-            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+        // When there's an env var fallback, use Supplier<T> | undefined because the supplier itself can be undefined
+        // When there's no env var fallback, use Supplier<T> directly.
+        const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+        const supplierType = context.coreUtilities.fetcher.Supplier._getReferenceToType(stringType);
 
-        const passwordType = hasPasswordEnv
+        // For env var fallback: prop?: Supplier<T> | undefined
+        const usernamePropertyType = hasUsernameEnv
             ? ts.factory.createUnionTypeNode([
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                  supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
-            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+            : supplierType;
+
+        const passwordPropertyType = hasPasswordEnv
+            ? ts.factory.createUnionTypeNode([
+                  supplierType,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : supplierType;
 
         return [
             {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(this.authScheme.username.camelCase.safeName),
                 hasQuestionToken: hasUsernameEnv,
-                type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(usernameType)),
+                type: getTextOfTsNode(usernamePropertyType),
                 docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
             },
             {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(this.authScheme.password.camelCase.safeName),
                 hasQuestionToken: hasPasswordEnv,
-                type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(passwordType)),
+                type: getTextOfTsNode(passwordPropertyType),
                 docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
             }
         ];
@@ -104,33 +108,23 @@ export class BasicAuthProviderGenerator implements AuthProviderGenerator {
         const hasUsernameEnv = this.authScheme.usernameEnvVar != null;
         const hasPasswordEnv = this.authScheme.passwordEnvVar != null;
 
+        // For class fields, use Supplier<T> | undefined when env var fallback exists
+        const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+        const supplierType = context.coreUtilities.fetcher.Supplier._getReferenceToType(stringType);
+
         const usernameFieldType = hasUsernameEnv
             ? ts.factory.createUnionTypeNode([
-                  context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                      ts.factory.createUnionTypeNode([
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                      ])
-                  ),
+                  supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
-            : context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-              );
+            : supplierType;
 
         const passwordFieldType = hasPasswordEnv
             ? ts.factory.createUnionTypeNode([
-                  context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                      ts.factory.createUnionTypeNode([
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                          ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                      ])
-                  ),
+                  supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
-            : context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-              );
+            : supplierType;
 
         context.sourceFile.addClass({
             name: CLASS_NAME,

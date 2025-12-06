@@ -63,23 +63,25 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         const hasHeaderEnv = this.authScheme.headerEnvVar != null;
         const isHeaderOptional = !this.isAuthMandatory || hasHeaderEnv;
-        // When there's an env var fallback, use Supplier<T | undefined> because the value can be undefined
-        // when falling back to env vars. When there's no env var fallback, use Supplier<T> directly.
-        const headerType = hasHeaderEnv
+        // When there's an env var fallback, use Supplier<T> | undefined because the supplier itself can be undefined
+        // When there's no env var fallback, use Supplier<T> directly.
+        const headerType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+        const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerType);
+
+        // For env var fallback: prop?: Supplier<T> | undefined
+        const propertyType = hasHeaderEnv
             ? ts.factory.createUnionTypeNode([
-                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+                  supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
-            : ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+            : supplierType;
 
         return [
             {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(this.authScheme.name.name.camelCase.safeName),
                 hasQuestionToken: isHeaderOptional,
-                type: getTextOfTsNode(
-                    context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerType)
-                ),
+                type: getTextOfTsNode(propertyType),
                 docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
             }
         ];
@@ -97,20 +99,16 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     private writeClass(context: SdkContext): void {
         const hasHeaderEnv = this.authScheme.headerEnvVar != null;
 
-        const headerValueType =
-            this.isAuthMandatory && !hasHeaderEnv
-                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                : ts.factory.createUnionTypeNode([
-                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                  ]);
+        // For class fields, use Supplier<T> | undefined when env var fallback exists
+        const headerType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+        const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerType);
 
         const headerFieldType = hasHeaderEnv
             ? ts.factory.createUnionTypeNode([
-                  context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerValueType),
+                  supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
-            : context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerValueType);
+            : supplierType;
 
         context.sourceFile.addClass({
             name: CLASS_NAME,

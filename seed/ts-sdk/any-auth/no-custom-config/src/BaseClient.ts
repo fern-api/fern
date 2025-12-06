@@ -21,7 +21,7 @@ export type BaseClientOptions = {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
-} & AnyAuthProvider.AllAuthOptions;
+} & AnyAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */

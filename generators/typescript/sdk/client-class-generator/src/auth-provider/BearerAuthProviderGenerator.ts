@@ -62,23 +62,25 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
         const hasTokenEnv = this.authScheme.tokenEnvVar != null;
         const isTokenOptional = !this.isAuthMandatory || hasTokenEnv;
-        // When there's an env var fallback, use Supplier<T | undefined> because the value can be undefined
-        // when falling back to env vars. When there's no env var fallback, use Supplier<T> directly.
-        const tokenType = hasTokenEnv
+        // When there's an env var fallback, use Supplier<T> | undefined because the supplier itself can be undefined
+        // When there's no env var fallback, use Supplier<T> directly.
+        const tokenType = context.coreUtilities.auth.BearerToken._getReferenceToType();
+        const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(tokenType);
+
+        // For env var fallback: prop?: Supplier<T> | undefined
+        const propertyType = hasTokenEnv
             ? ts.factory.createUnionTypeNode([
-                  context.coreUtilities.auth.BearerToken._getReferenceToType(),
+                  supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
-            : context.coreUtilities.auth.BearerToken._getReferenceToType();
+            : supplierType;
 
         return [
             {
                 kind: StructureKind.PropertySignature,
                 name: getPropertyKey(this.authScheme.token.camelCase.safeName),
                 hasQuestionToken: isTokenOptional,
-                type: getTextOfTsNode(
-                    context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(tokenType)
-                ),
+                type: getTextOfTsNode(propertyType),
                 docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
             }
         ];
@@ -96,20 +98,16 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
     private writeClass(context: SdkContext): void {
         const hasTokenEnv = this.authScheme.tokenEnvVar != null;
 
-        const tokenType =
-            this.isAuthMandatory && !hasTokenEnv
-                ? context.coreUtilities.auth.BearerToken._getReferenceToType()
-                : ts.factory.createUnionTypeNode([
-                      context.coreUtilities.auth.BearerToken._getReferenceToType(),
-                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                  ]);
+        // For class fields, use Supplier<T> | undefined when env var fallback exists
+        const tokenType = context.coreUtilities.auth.BearerToken._getReferenceToType();
+        const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(tokenType);
 
         const tokenFieldType = hasTokenEnv
             ? ts.factory.createUnionTypeNode([
-                  context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(tokenType),
+                  supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
-            : context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(tokenType);
+            : supplierType;
 
         context.sourceFile.addClass({
             name: CLASS_NAME,

@@ -6,13 +6,15 @@ import type { HeaderAuthProvider } from "./HeaderAuthProvider.js";
 import type { OAuthAuthProvider } from "./OAuthAuthProvider.js";
 
 export namespace AnyAuthProvider {
-    export type AuthOptions =
-        | BearerAuthProvider.AuthOptions
-        | HeaderAuthProvider.AuthOptions
-        | OAuthAuthProvider.AuthOptions;
-    export type AllAuthOptions = BearerAuthProvider.AuthOptions &
-        HeaderAuthProvider.AuthOptions &
-        OAuthAuthProvider.AuthOptions;
+    type UnionToIntersection<U> = (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;
+
+    type AtLeastOneOf<T extends any[]> = {
+        [K in keyof T]: T[K] & Partial<UnionToIntersection<Exclude<T[number], T[K]>>>;
+    }[number];
+
+    export type AuthOptions = AtLeastOneOf<
+        [BearerAuthProvider.AuthOptions, HeaderAuthProvider.AuthOptions, OAuthAuthProvider.AuthOptions]
+    >;
 }
 
 export class AnyAuthProvider implements core.AuthProvider {
