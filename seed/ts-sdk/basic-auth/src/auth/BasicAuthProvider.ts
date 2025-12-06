@@ -9,10 +9,7 @@ export namespace BasicAuthProvider {
         password: core.Supplier<string>;
     }
 
-    export interface Options {
-        username: core.Supplier<string>;
-        password: core.Supplier<string>;
-    }
+    export interface Options extends AuthOptions {}
 }
 
 export class BasicAuthProvider implements core.AuthProvider {
