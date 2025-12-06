@@ -305,7 +305,6 @@ allowedFailures:
   - exhaustive:signed_publish
   - extends
   - java-inline-types:no-wrapped-aliases
-  - literal
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
   - oauth-client-credentials
@@ -314,23 +313,17 @@ allowedFailures:
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
   - oauth-client-credentials-with-variables
-  - query-parameters-openapi
-  - query-parameters-openapi-as-objects
   - request-parameters
   - streaming-parameter
-  - trace
-  - websocket-inferred-auth
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
   - any-auth
-  - extra-properties
   - java-inline-types:inline
   - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
   - nullable:no-custom-config
   - pagination-custom
-  - query-parameters
 
   - java-pagination-deep-cursor-path:wire-tests
 
