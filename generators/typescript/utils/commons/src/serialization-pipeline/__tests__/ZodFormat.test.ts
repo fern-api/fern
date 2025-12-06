@@ -386,9 +386,9 @@ describe("ZodFormat AST Generation", () => {
                 breadcrumbsPrefix: []
             });
             const ast = printNode(jsonExpr);
-            // Should generate: value !== null ? Array.from(value) : value
+            // Should generate: value != null ? Array.from(value) : value
             expect(ast).toContain("Array.from(value)");
-            expect(ast).toContain("!==");
+            expect(ast).toContain("!=");
             expect(ast).toContain("null");
         });
 
