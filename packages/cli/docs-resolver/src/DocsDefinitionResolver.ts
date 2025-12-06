@@ -2,6 +2,7 @@ import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
 import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
+    isValidRelativeSlug,
     parseImagePaths,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -518,7 +519,10 @@ export class DocsDefinitionResolver {
             const frontmatter = matter(markdown);
             const slug = frontmatter.data.slug;
             if (typeof slug === "string" && slug.trim().length > 0) {
-                mdxFilePathToSlug.set(this.resolveFilepath(relativePath), slug.trim());
+                const trimmedSlug = slug.trim();
+                if (isValidRelativeSlug(trimmedSlug)) {
+                    mdxFilePathToSlug.set(this.resolveFilepath(relativePath), trimmedSlug);
+                }
             }
         }
         return mdxFilePathToSlug;
