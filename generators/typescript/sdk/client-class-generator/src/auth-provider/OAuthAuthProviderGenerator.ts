@@ -652,7 +652,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 statements: `
         return {
             headers: {
-                Authorization: \`Bearer \${await ${tokenSupplierCall}}\`
+                Authorization: \`Bearer \${${tokenSupplierCall}}\`
             }
         };
         `

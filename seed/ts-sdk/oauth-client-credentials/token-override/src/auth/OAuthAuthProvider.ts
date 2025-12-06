@@ -111,7 +111,7 @@ export class OAuthTokenOverrideAuthProvider implements core.AuthProvider {
     public async getAuthRequest(_arg?: { endpointMetadata?: core.EndpointMetadata }): Promise<core.AuthRequest> {
         return {
             headers: {
-                Authorization: `Bearer ${await await core.Supplier.get(this._token)}`,
+                Authorization: `Bearer ${await core.Supplier.get(this._token)}`,
             },
         };
     }
