@@ -743,6 +743,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         if (hasTokenOverride) {
             // When token override is enabled, generate the full namespace with AuthOptions union and createInstance factory
+            // Options must be a type alias (not interface) because BaseClientOptions is a type alias with a union
             context.sourceFile.addModule({
                 name: CLASS_NAME,
                 isExported: true,
@@ -777,11 +778,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                         ]
                     },
                     {
-                        kind: StructureKind.Interface,
+                        kind: StructureKind.TypeAlias,
                         name: OPTIONS_TYPE_NAME,
                         isExported: true,
-                        extends: ["BaseClientOptions"],
-                        properties: []
+                        type: "BaseClientOptions"
                     },
                     {
                         kind: StructureKind.Function,
@@ -802,7 +802,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     }
                 ]
             });
-        } else {
+        }else {
             // No token override - use simple interface extending BaseClientOptions
             context.sourceFile.addModule({
                 name: CLASS_NAME,

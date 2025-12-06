@@ -131,7 +131,7 @@ export namespace OAuthAuthProvider {
         }
     }
 
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export function createInstance(options: Options): core.AuthProvider {
         if (OAuthAuthProvider.canCreate(options)) {

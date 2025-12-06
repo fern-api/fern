@@ -6,13 +6,9 @@ import { NestedNoAuthClient } from "./api/resources/nestedNoAuth/client/Client.j
 import { SimpleClient } from "./api/resources/simple/client/Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "./BaseClient.js";
-import type * as core from "./core/index.js";
 
 export declare namespace SeedOauthClientCredentialsClient {
-    export type OAuthAuthOptions =
-        | { clientId: core.Supplier<string>; clientSecret: core.Supplier<string> }
-        | { token: core.Supplier<string> };
-    export type Options = BaseClientOptions & OAuthAuthOptions;
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

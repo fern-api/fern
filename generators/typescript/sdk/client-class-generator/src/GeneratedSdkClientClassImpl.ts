@@ -41,7 +41,8 @@ import {
     PropertySignatureStructure,
     Scope,
     StructureKind,
-    ts
+    ts,
+    TypeAliasDeclarationStructure
 } from "ts-morph";
 import { Code, code } from "ts-poet";
 import {
@@ -602,10 +603,12 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         // When we have an array (type aliases for OAuth union), the Options type is always the last one
         // When we have a single interface, it's the interface itself
         const optionsTypeName = GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME;
-        // Check if options are all optional (only applicable for interface, not type alias union)
-        const allOptionsOptional = Array.isArray(optionsDeclaration)
-            ? false // Type alias union requires either clientId+clientSecret OR token, so not all optional
-            : (optionsDeclaration.properties?.every((property) => property.hasQuestionToken) ?? true);
+        // Check if options are all optional (only applicable for interface, not type alias)
+        // Type alias (for OAuth token override) requires either clientId+clientSecret OR token, so not all optional
+        const allOptionsOptional =
+            optionsDeclaration.kind === StructureKind.TypeAlias
+                ? false
+                : (optionsDeclaration.properties?.every((property) => property.hasQuestionToken) ?? true);
         serviceModule.statements = [
             ...optionsStatements,
             ...(this.generatedEndpointImplementations.length > 0 || this.isRoot
@@ -1006,12 +1009,27 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         return properties;
     }
 
-    private generateOptionsInterface(context: SdkContext): InterfaceDeclarationStructure {
-        const properties: OptionalKind<PropertySignatureStructure>[] = [];
+    private generateOptionsInterface(
+        context: SdkContext
+    ): InterfaceDeclarationStructure | TypeAliasDeclarationStructure {
+        // When OAuth token override is enabled, BaseClientOptions is a type alias that includes a union type
+        // (OAuthAuthProvider.AuthOptions). TypeScript doesn't allow interfaces to extend union types,
+        // so we must generate Options as a type alias instead of an interface.
+        const hasOAuthTokenOverride =
+            this.oauthTokenOverride && this.authProvider instanceof OAuthAuthProviderInstance;
 
-        // When OAuth token override is enabled, BaseClientOptions already includes the union type
-        // via intersection with OAuthAuthProvider.AuthOptions, so we don't need a separate
-        // OAuthAuthOptions type here. Options just extends BaseClientOptions.
+        if (hasOAuthTokenOverride) {
+            // Generate Options as a type alias that equals BaseClientOptions
+            return {
+                kind: StructureKind.TypeAlias,
+                name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,
+                type: getTextOfTsNode(context.sdkClientClass.getReferenceToBaseClientOptions().getTypeNode()),
+                isExported: true
+            };
+        }
+
+        // Default: generate Options as an interface that extends BaseClientOptions
+        const properties: OptionalKind<PropertySignatureStructure>[] = [];
         return {
             kind: StructureKind.Interface,
             name: GeneratedSdkClientClassImpl.OPTIONS_INTERFACE_NAME,

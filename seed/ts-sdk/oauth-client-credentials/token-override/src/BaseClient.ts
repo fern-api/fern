@@ -4,7 +4,7 @@ import { OAuthAuthProvider } from "./auth/OAuthAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
-export interface BaseClientOptions {
+interface BaseClientCoreOptions {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
@@ -19,6 +19,8 @@ export interface BaseClientOptions {
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
 }
+
+export type BaseClientOptions = BaseClientCoreOptions & OAuthAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */

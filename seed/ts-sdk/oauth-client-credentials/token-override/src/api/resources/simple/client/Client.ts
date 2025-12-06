@@ -8,10 +8,7 @@ import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCode
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace SimpleClient {
-    export type OAuthAuthOptions =
-        | { clientId: core.Supplier<string>; clientSecret: core.Supplier<string> }
-        | { token: core.Supplier<string> };
-    export type Options = BaseClientOptions & OAuthAuthOptions;
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
