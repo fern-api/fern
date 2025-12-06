@@ -1,7 +1,5 @@
 import { ts } from "ts-morph";
 import { describe, expect, it } from "vitest";
-import { CoreUtility } from "../../core-utilities/CoreUtility";
-import { Reference } from "../../referencing";
 import { ZURG_MANIFEST, ZurgFormat } from "../formats/ZurgFormat";
 
 /**
@@ -14,42 +12,15 @@ function printNode(node: ts.Node): string {
 }
 
 /**
- * Create a mock reference that simulates what the real system does.
- * This creates references like `serialization.object(...)` etc.
- */
-function createMockReference(exportedName: string): Reference {
-    return {
-        getExpression: () => {
-            return ts.factory.createPropertyAccessExpression(
-                ts.factory.createIdentifier("serialization"),
-                ts.factory.createIdentifier(exportedName)
-            );
-        },
-        getTypeNode: () => {
-            return ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(
-                    ts.factory.createIdentifier("serialization"),
-                    ts.factory.createIdentifier(exportedName)
-                ),
-                undefined
-            );
-        },
-        getEntityName: () => {
-            return ts.factory.createQualifiedName(
-                ts.factory.createIdentifier("serialization"),
-                ts.factory.createIdentifier(exportedName)
-            );
-        }
-    };
-}
-
-/**
- * Create a ZurgFormat instance for testing
+ * Create a ZurgFormat instance for testing.
+ * We don't pass ImportsManager for unit tests - the import tracking
+ * is only needed for actual code generation.
  */
 function createZurg(): ZurgFormat {
     return new ZurgFormat({
-        getReferenceToExport: ({ exportedName }: { manifest: CoreUtility.Manifest; exportedName: string }) =>
-            createMockReference(exportedName),
+        getReferenceToExport: () => {
+            throw new Error("getReferenceToExport should not be called in new ZurgFormat");
+        },
         generateEndpointMetadata: false
     });
 }

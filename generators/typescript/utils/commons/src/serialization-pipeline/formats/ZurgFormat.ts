@@ -1,6 +1,7 @@
 import { ts } from "ts-morph";
+
 import { CoreUtility } from "../../core-utilities/CoreUtility";
-import { Reference } from "../../referencing";
+import { ImportsManager } from "../../imports-manager";
 import {
     AdditionalProperty,
     ObjectLikeSchema,
@@ -17,6 +18,7 @@ import {
 
 /**
  * Manifest for the Zurg runtime files.
+ * Used by CoreUtilitiesManager to copy runtime files to generated SDK.
  */
 export const ZURG_MANIFEST: CoreUtility.Manifest = {
     name: "schemas",
@@ -36,34 +38,62 @@ interface ZurgBaseSchema extends Schema {
 }
 
 /**
- * Zurg implementation of the SerializationFormat protocol.
- * This generates TypeScript AST that uses Zurg's runtime schema library.
+ * Helper to create a property access expression like `serialization.string()`.
+ */
+function createSerializationCall(methodName: string, args: ts.Expression[] = []): ts.Expression {
+    return ts.factory.createCallExpression(
+        ts.factory.createPropertyAccessExpression(
+            ts.factory.createIdentifier("serialization"),
+            ts.factory.createIdentifier(methodName)
+        ),
+        undefined,
+        args
+    );
+}
+
+/**
+ * Helper to chain a method call on an expression
+ */
+function chainMethod(expr: ts.Expression, methodName: string, args: ts.Expression[] = []): ts.Expression {
+    return ts.factory.createCallExpression(
+        ts.factory.createPropertyAccessExpression(expr, ts.factory.createIdentifier(methodName)),
+        undefined,
+        args
+    );
+}
+
+/**
+ * ZurgFormat - generates Zurg schema code.
+ * Uses locally bundled runtime files with simple import pattern.
  */
 export class ZurgFormat implements SerializationFormat {
     public readonly name = "zurg" as const;
 
-    private getReferenceToExport: (args: { manifest: CoreUtility.Manifest; exportedName: string }) => Reference;
+    private importsManager?: ImportsManager;
+    private hasAddedSerializationImport = false;
     private generateEndpointMetadata: boolean;
 
-    constructor(config: SerializationFormatConfig) {
-        this.getReferenceToExport = config.getReferenceToExport;
+    constructor(config: SerializationFormatConfig, importsManager?: ImportsManager) {
+        this.importsManager = importsManager;
         this.generateEndpointMetadata = config.generateEndpointMetadata;
     }
 
-    // ==================== Helper to get reference to exported name ====================
+    /**
+     * Ensure the serialization import is added to the current file
+     */
+    private ensureSerializationImport(): void {
+        if (!this.hasAddedSerializationImport && this.importsManager) {
+            this.importsManager.addImportFromRoot("core/schemas", { namespaceImport: "serialization" });
+            this.hasAddedSerializationImport = true;
+        }
+    }
 
-    private withExportedName<F extends (...args: any[]) => any>(
-        exportedName: string,
-        run: (reference: Reference) => F
-    ): F {
-        const wrapper = (...args: Parameters<F>): ReturnType<F> => {
-            const reference = this.getReferenceToExport({
-                manifest: ZURG_MANIFEST,
-                exportedName
-            });
-            return run(reference)(...args);
-        };
-        return wrapper as F;
+    /**
+     * Create a serialization call expression and ensure the import is added
+     */
+    private serializationCall(methodName: string, args: ts.Expression[] = []): ts.Expression {
+        this.ensureSerializationImport();
+        return createSerializationCall(methodName, args);
     }
 
     // ==================== Schema Utilities ====================
@@ -178,15 +208,7 @@ export class ZurgFormat implements SerializationFormat {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: true,
-            toExpression: () =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        schema.toExpression(),
-                        ts.factory.createIdentifier("nullable")
-                    ),
-                    undefined,
-                    []
-                )
+            toExpression: () => chainMethod(schema.toExpression(), "nullable")
         };
 
         return {
@@ -199,15 +221,7 @@ export class ZurgFormat implements SerializationFormat {
         const baseSchema: ZurgBaseSchema = {
             isOptional: true,
             isNullable: false,
-            toExpression: () =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        schema.toExpression(),
-                        ts.factory.createIdentifier("optional")
-                    ),
-                    undefined,
-                    []
-                )
+            toExpression: () => chainMethod(schema.toExpression(), "optional")
         };
 
         return {
@@ -220,15 +234,7 @@ export class ZurgFormat implements SerializationFormat {
         const baseSchema: ZurgBaseSchema = {
             isOptional: true,
             isNullable: true,
-            toExpression: () =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        schema.toExpression(),
-                        ts.factory.createIdentifier("optionalNullable")
-                    ),
-                    undefined,
-                    []
-                )
+            toExpression: () => chainMethod(schema.toExpression(), "optionalNullable")
         };
 
         return {
@@ -348,15 +354,7 @@ export class ZurgFormat implements SerializationFormat {
                 const baseSchema: ZurgBaseSchema = {
                     isOptional: false,
                     isNullable: false,
-                    toExpression: () =>
-                        ts.factory.createCallExpression(
-                            ts.factory.createPropertyAccessExpression(
-                                objectSchema.toExpression(),
-                                ts.factory.createIdentifier("passthrough")
-                            ),
-                            undefined,
-                            []
-                        )
+                    toExpression: () => chainMethod(objectSchema.toExpression(), "passthrough")
                 };
 
                 return {
@@ -373,15 +371,7 @@ export class ZurgFormat implements SerializationFormat {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(
-                        objectSchema.toExpression(),
-                        ts.factory.createIdentifier("extend")
-                    ),
-                    undefined,
-                    [extension.toExpression()]
-                )
+            toExpression: () => chainMethod(objectSchema.toExpression(), "extend", [extension.toExpression()])
         };
 
         return {
@@ -394,12 +384,28 @@ export class ZurgFormat implements SerializationFormat {
 
     // ==================== Object Schema Builders ====================
 
-    public object = this.withExportedName("object", (object) => (properties: Property[]): ObjectSchema => {
+    public object = (properties: Property[]): ObjectSchema => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
             toExpression: () =>
-                ts.factory.createCallExpression(object.getExpression(), undefined, [
+                this.serializationCall("object", [this.constructObjectLiteralForProperties(properties)])
+        };
+
+        return {
+            ...baseSchema,
+            ...this.getSchemaUtils(baseSchema),
+            ...this.getObjectLikeUtils(baseSchema),
+            ...this.getObjectUtils(baseSchema)
+        };
+    };
+
+    public objectWithoutOptionalProperties = (properties: Property[]): ObjectSchema => {
+        const baseSchema: ZurgBaseSchema = {
+            isOptional: false,
+            isNullable: false,
+            toExpression: () =>
+                this.serializationCall("objectWithoutOptionalProperties", [
                     this.constructObjectLiteralForProperties(properties)
                 ])
         };
@@ -410,29 +416,7 @@ export class ZurgFormat implements SerializationFormat {
             ...this.getObjectLikeUtils(baseSchema),
             ...this.getObjectUtils(baseSchema)
         };
-    });
-
-    public objectWithoutOptionalProperties = this.withExportedName(
-        "objectWithoutOptionalProperties",
-        (objectWithoutOptionalProperties) =>
-            (properties: Property[]): ObjectSchema => {
-                const baseSchema: ZurgBaseSchema = {
-                    isOptional: false,
-                    isNullable: false,
-                    toExpression: () =>
-                        ts.factory.createCallExpression(objectWithoutOptionalProperties.getExpression(), undefined, [
-                            this.constructObjectLiteralForProperties(properties)
-                        ])
-                };
-
-                return {
-                    ...baseSchema,
-                    ...this.getSchemaUtils(baseSchema),
-                    ...this.getObjectLikeUtils(baseSchema),
-                    ...this.getObjectUtils(baseSchema)
-                };
-            }
-    );
+    };
 
     private constructObjectLiteralForProperties(properties: Property[]): ts.ObjectLiteralExpression {
         return ts.factory.createObjectLiteralExpression(
@@ -447,149 +431,122 @@ export class ZurgFormat implements SerializationFormat {
         );
     }
 
-    private property = this.withExportedName(
-        "property",
-        (property) =>
-            (rawValue: string, value: ts.Expression): ts.Expression => {
-                return ts.factory.createCallExpression(property.getExpression(), undefined, [
-                    ts.factory.createStringLiteral(rawValue),
-                    value
-                ]);
-            }
-    );
+    private property(rawValue: string, value: ts.Expression): ts.Expression {
+        return this.serializationCall("property", [ts.factory.createStringLiteral(rawValue), value]);
+    }
 
     // ==================== Union Schema Builders ====================
 
-    public union = this.withExportedName(
-        "union",
-        (union: Reference) =>
-            ({ parsedDiscriminant, rawDiscriminant, singleUnionTypes }: UnionArgs): ObjectLikeSchema => {
-                const discriminantArgument =
-                    parsedDiscriminant === rawDiscriminant
-                        ? ts.factory.createStringLiteral(parsedDiscriminant)
-                        : this.discriminant({ parsedDiscriminant, rawDiscriminant });
+    public union = ({ parsedDiscriminant, rawDiscriminant, singleUnionTypes }: UnionArgs): ObjectLikeSchema => {
+        const discriminantArgument =
+            parsedDiscriminant === rawDiscriminant
+                ? ts.factory.createStringLiteral(parsedDiscriminant)
+                : this.discriminant({ parsedDiscriminant, rawDiscriminant });
 
-                const baseSchema: ZurgBaseSchema = {
-                    isOptional: false,
-                    isNullable: false,
-                    toExpression: () =>
-                        ts.factory.createCallExpression(union.getExpression(), undefined, [
-                            discriminantArgument,
-                            ts.factory.createObjectLiteralExpression(
-                                singleUnionTypes.map((singleUnionType) =>
-                                    ts.factory.createPropertyAssignment(
-                                        ts.factory.createStringLiteral(singleUnionType.discriminantValue),
-                                        singleUnionType.nonDiscriminantProperties.toExpression()
-                                    )
-                                ),
-                                true
+        const baseSchema: ZurgBaseSchema = {
+            isOptional: false,
+            isNullable: false,
+            toExpression: () =>
+                this.serializationCall("union", [
+                    discriminantArgument,
+                    ts.factory.createObjectLiteralExpression(
+                        singleUnionTypes.map((singleUnionType) =>
+                            ts.factory.createPropertyAssignment(
+                                ts.factory.createStringLiteral(singleUnionType.discriminantValue),
+                                singleUnionType.nonDiscriminantProperties.toExpression()
                             )
-                        ])
-                };
+                        ),
+                        true
+                    )
+                ])
+        };
 
-                return {
-                    ...baseSchema,
-                    ...this.getSchemaUtils(baseSchema),
-                    ...this.getObjectLikeUtils(baseSchema)
-                };
-            }
-    );
+        return {
+            ...baseSchema,
+            ...this.getSchemaUtils(baseSchema),
+            ...this.getObjectLikeUtils(baseSchema)
+        };
+    };
 
-    private discriminant = this.withExportedName(
-        "discriminant",
-        (discriminant) =>
-            ({
-                parsedDiscriminant,
-                rawDiscriminant
-            }: {
-                parsedDiscriminant: string;
-                rawDiscriminant: string;
-            }): ts.Expression => {
-                return ts.factory.createCallExpression(discriminant.getExpression(), undefined, [
-                    ts.factory.createStringLiteral(parsedDiscriminant),
-                    ts.factory.createStringLiteral(rawDiscriminant)
-                ]);
-            }
-    );
+    private discriminant({
+        parsedDiscriminant,
+        rawDiscriminant
+    }: {
+        parsedDiscriminant: string;
+        rawDiscriminant: string;
+    }): ts.Expression {
+        return this.serializationCall("discriminant", [
+            ts.factory.createStringLiteral(parsedDiscriminant),
+            ts.factory.createStringLiteral(rawDiscriminant)
+        ]);
+    }
 
-    public undiscriminatedUnion = this.withExportedName(
-        "undiscriminatedUnion",
-        (undiscriminatedUnion: Reference) => (schemas: Schema[]) => {
-            const baseSchema: ZurgBaseSchema = {
-                isOptional: false,
-                isNullable: false,
-                toExpression: () =>
-                    ts.factory.createCallExpression(undiscriminatedUnion.getExpression(), undefined, [
-                        ts.factory.createArrayLiteralExpression(schemas.map((schema) => schema.toExpression()))
-                    ])
-            };
+    public undiscriminatedUnion = (schemas: Schema[]): SchemaWithUtils => {
+        const baseSchema: ZurgBaseSchema = {
+            isOptional: false,
+            isNullable: false,
+            toExpression: () =>
+                this.serializationCall("undiscriminatedUnion", [
+                    ts.factory.createArrayLiteralExpression(schemas.map((schema) => schema.toExpression()))
+                ])
+        };
 
-            return {
-                ...baseSchema,
-                ...this.getSchemaUtils(baseSchema)
-            };
-        }
-    );
+        return {
+            ...baseSchema,
+            ...this.getSchemaUtils(baseSchema)
+        };
+    };
 
     // ==================== Collection Schema Builders ====================
 
-    public list = this.withExportedName("list", (list: Reference) => (itemSchema: Schema) => {
+    public list = (itemSchema: Schema): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () =>
-                ts.factory.createCallExpression(list.getExpression(), undefined, [itemSchema.toExpression()])
+            toExpression: () => this.serializationCall("list", [itemSchema.toExpression()])
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
-    public set = this.withExportedName("set", (set: Reference) => (itemSchema: Schema) => {
+    public set = (itemSchema: Schema): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () =>
-                ts.factory.createCallExpression(set.getExpression(), undefined, [itemSchema.toExpression()])
+            toExpression: () => this.serializationCall("set", [itemSchema.toExpression()])
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
-    public record = this.withExportedName(
-        "record",
-        (record: Reference) =>
-            ({ keySchema, valueSchema }: { keySchema: Schema; valueSchema: Schema }) => {
-                const baseSchema: ZurgBaseSchema = {
-                    isOptional: false,
-                    isNullable: false,
-                    toExpression: () =>
-                        ts.factory.createCallExpression(record.getExpression(), undefined, [
-                            keySchema.toExpression(),
-                            valueSchema.toExpression()
-                        ])
-                };
+    public record = ({ keySchema, valueSchema }: { keySchema: Schema; valueSchema: Schema }): SchemaWithUtils => {
+        const baseSchema: ZurgBaseSchema = {
+            isOptional: false,
+            isNullable: false,
+            toExpression: () =>
+                this.serializationCall("record", [keySchema.toExpression(), valueSchema.toExpression()])
+        };
 
-                return {
-                    ...baseSchema,
-                    ...this.getSchemaUtils(baseSchema)
-                };
-            }
-    );
+        return {
+            ...baseSchema,
+            ...this.getSchemaUtils(baseSchema)
+        };
+    };
 
     // ==================== Enum Schema Builder ====================
 
-    public enum = this.withExportedName("enum_", (enum_: Reference) => (values: string[]) => {
+    public enum = (values: string[]): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
             toExpression: () =>
-                ts.factory.createCallExpression(enum_.getExpression(), undefined, [
+                this.serializationCall("enum_", [
                     ts.factory.createArrayLiteralExpression(
                         values.map((value) => ts.factory.createStringLiteral(value))
                     )
@@ -600,30 +557,43 @@ export class ZurgFormat implements SerializationFormat {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
     // ==================== Primitive Schema Builders ====================
 
-    public string = this.withExportedName("string", (string: Reference) => () => {
+    public string = (): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(string.getExpression(), undefined, undefined)
+            toExpression: () => this.serializationCall("string")
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
-    public stringLiteral = this.withExportedName("stringLiteral", (stringLiteral: Reference) => (literal: string) => {
+    public stringLiteral = (literal: string): SchemaWithUtils => {
+        const baseSchema: ZurgBaseSchema = {
+            isOptional: false,
+            isNullable: false,
+            toExpression: () => this.serializationCall("stringLiteral", [ts.factory.createStringLiteral(literal)])
+        };
+
+        return {
+            ...baseSchema,
+            ...this.getSchemaUtils(baseSchema)
+        };
+    };
+
+    public booleanLiteral = (literal: boolean): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
             toExpression: () =>
-                ts.factory.createCallExpression(stringLiteral.getExpression(), undefined, [
-                    ts.factory.createStringLiteral(literal)
+                this.serializationCall("booleanLiteral", [
+                    literal ? ts.factory.createTrue() : ts.factory.createFalse()
                 ])
         };
 
@@ -631,126 +601,107 @@ export class ZurgFormat implements SerializationFormat {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
-    public booleanLiteral = this.withExportedName(
-        "booleanLiteral",
-        (booleanLiteral: Reference) => (literal: boolean) => {
-            const baseSchema: ZurgBaseSchema = {
-                isOptional: false,
-                isNullable: false,
-                toExpression: () =>
-                    ts.factory.createCallExpression(booleanLiteral.getExpression(), undefined, [
-                        literal ? ts.factory.createTrue() : ts.factory.createFalse()
-                    ])
-            };
-
-            return {
-                ...baseSchema,
-                ...this.getSchemaUtils(baseSchema)
-            };
-        }
-    );
-
-    public number = this.withExportedName("number", (number: Reference) => () => {
+    public number = (): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(number.getExpression(), undefined, undefined)
+            toExpression: () => this.serializationCall("number")
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
-    public bigint = this.withExportedName("bigint", (bigint: Reference) => () => {
+    public bigint = (): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(bigint.getExpression(), undefined, undefined)
+            toExpression: () => this.serializationCall("bigint")
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
-    public boolean = this.withExportedName("boolean", (boolean: Reference) => () => {
+    public boolean = (): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(boolean.getExpression(), undefined, undefined)
+            toExpression: () => this.serializationCall("boolean")
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
-    public date = this.withExportedName("date", (date: Reference) => () => {
+    public date = (): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(date.getExpression(), undefined, undefined)
+            toExpression: () => this.serializationCall("date")
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
-    public any = this.withExportedName("any", (any: Reference) => () => {
+    public any = (): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: true,
-            toExpression: () => ts.factory.createCallExpression(any.getExpression(), undefined, undefined)
+            toExpression: () => this.serializationCall("any")
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
-    public unknown = this.withExportedName("unknown", (unknown: Reference) => () => {
+    public unknown = (): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: true,
             isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(unknown.getExpression(), undefined, undefined)
+            toExpression: () => this.serializationCall("unknown")
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
-    public never = this.withExportedName("never", (never: Reference) => () => {
+    public never = (): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => ts.factory.createCallExpression(never.getExpression(), undefined, undefined)
+            toExpression: () => this.serializationCall("never")
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
     // ==================== Lazy Schema Builders ====================
 
-    public lazy = this.withExportedName("lazy", (lazy) => (schema: Schema): SchemaWithUtils => {
+    public lazy = (schema: Schema): SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: schema.isOptional,
             isNullable: schema.isNullable,
             toExpression: () =>
-                ts.factory.createCallExpression(lazy.getExpression(), undefined, [
+                this.serializationCall("lazy", [
                     ts.factory.createArrowFunction([], undefined, [], undefined, undefined, schema.toExpression())
                 ])
         };
@@ -759,14 +710,14 @@ export class ZurgFormat implements SerializationFormat {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema)
         };
-    });
+    };
 
-    public lazyObject = this.withExportedName("lazyObject", (lazyObject) => (schema: Schema): ObjectSchema => {
+    public lazyObject = (schema: Schema): ObjectSchema => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: schema.isNullable,
             toExpression: () =>
-                ts.factory.createCallExpression(lazyObject.getExpression(), undefined, [
+                this.serializationCall("lazyObject", [
                     ts.factory.createArrowFunction([], undefined, [], undefined, undefined, schema.toExpression())
                 ])
         };
@@ -777,17 +728,18 @@ export class ZurgFormat implements SerializationFormat {
             ...this.getObjectLikeUtils(baseSchema),
             ...this.getObjectUtils(baseSchema)
         };
-    });
+    };
 
     // ==================== Type Utilities ====================
 
     public Schema = {
-        _getReferenceToType: this.withExportedName(
-            "Schema",
-            (Schema) =>
-                ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) =>
-                    ts.factory.createTypeReferenceNode(Schema.getEntityName(), [rawShape, parsedShape])
-        ),
+        _getReferenceToType: ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
+            this.ensureSerializationImport();
+            return ts.factory.createTypeReferenceNode(
+                ts.factory.createQualifiedName(ts.factory.createIdentifier("serialization"), "Schema"),
+                [rawShape, parsedShape]
+            );
+        },
 
         _fromExpression: (expression: ts.Expression, opts?: { isObject: boolean }): SchemaWithUtils => {
             const baseSchema: ZurgBaseSchema = {
@@ -864,12 +816,13 @@ export class ZurgFormat implements SerializationFormat {
     };
 
     public ObjectSchema = {
-        _getReferenceToType: this.withExportedName(
-            "ObjectSchema",
-            (ObjectSchema) =>
-                ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) =>
-                    ts.factory.createTypeReferenceNode(ObjectSchema.getEntityName(), [rawShape, parsedShape])
-        )
+        _getReferenceToType: ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
+            this.ensureSerializationImport();
+            return ts.factory.createTypeReferenceNode(
+                ts.factory.createQualifiedName(ts.factory.createIdentifier("serialization"), "ObjectSchema"),
+                [rawShape, parsedShape]
+            );
+        }
     };
 
     public MaybeValid = {
@@ -890,7 +843,7 @@ export class ZurgFormat implements SerializationFormat {
     // ==================== Runtime Configuration ====================
 
     public getRuntimeDependencies(): Record<string, string> {
-        // Zurg bundles its own runtime, no npm dependencies needed
+        // Zurg uses locally bundled runtime, no npm dependencies needed
         return {};
     }
 

@@ -158,7 +158,7 @@ export class CoreUtilitiesManager {
             case "zurg":
                 // Add Zurg manifest to referenced utilities so it gets copied
                 this.addManifestAndDependencies(ZURG_MANIFEST);
-                return new ZurgFormat(config);
+                return new ZurgFormat(config, importsManager);
 
             case "zod":
                 return new ZodFormat(config, importsManager);
