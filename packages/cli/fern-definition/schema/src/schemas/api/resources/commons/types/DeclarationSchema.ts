@@ -5,6 +5,4 @@
 import * as FernDefinition from "../../../index";
 
 export interface DeclarationSchema
-    extends FernDefinition.WithDocsSchema,
-        FernDefinition.WithAvailability,
-        FernDefinition.WithAudiences {}
+    extends FernDefinition.WithDocsSchema, FernDefinition.WithAvailability, FernDefinition.WithAudiences {}

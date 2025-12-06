@@ -20,6 +20,7 @@ import { NoMissingAuthRule } from "./rules/no-missing-auth";
 import { NoMissingErrorDiscriminantRule } from "./rules/no-missing-error-discriminant";
 import { NoMissingRequestNameRule } from "./rules/no-missing-request-name";
 import { NoObjectSinglePropertyKeyRule } from "./rules/no-object-single-property-key";
+import { NoResponseAndResponsesRule } from "./rules/no-response-and-responses";
 import { NoResponsePropertyRule } from "./rules/no-response-property";
 import { NoUndefinedErrorReferenceRule } from "./rules/no-undefined-error-reference";
 import { NoUndefinedExampleReferenceRule } from "./rules/no-undefined-example-reference";
@@ -82,6 +83,7 @@ export function getAllRules(): Rule[] {
         ValidNavigationRule,
         NoUndefinedVariableReferenceRule,
         OnlyObjectExtensionsRule,
+        NoResponseAndResponsesRule,
         NoResponsePropertyRule,
         ValidOauthRule,
         ValidPaginationRule,

@@ -5,8 +5,7 @@
 import * as FernDefinition from "../../../index";
 
 export interface WebSocketChannelMessageSchema
-    extends FernDefinition.DeclarationSchema,
-        FernDefinition.WithDisplayName {
+    extends FernDefinition.DeclarationSchema, FernDefinition.WithDisplayName {
     origin: FernDefinition.WebSocketOrigin;
     body: FernDefinition.WebSocketChannelMessageBodySchema;
 }

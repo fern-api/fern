@@ -11,7 +11,8 @@ import {
     HttpResponseBody,
     JsonResponse,
     NonStreamHttpResponseBody,
-    StreamingResponse
+    StreamingResponse,
+    V2HttpResponses
 } from "@fern-api/ir-sdk";
 
 import { FernFileContext } from "../../FernFileContext";
@@ -217,4 +218,105 @@ function convertJsonResponse(
             v2Examples: undefined
         })
     );
+}
+
+/**
+ * Converts a single HttpResponseSchema to an HttpResponse for the IR.
+ * When a response is just a string, it's assumed to be a 200 status code.
+ */
+function convertSingleResponseToHttpResponse({
+    response,
+    file,
+    typeResolver
+}: {
+    response: RawSchemas.HttpResponseSchema;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): HttpResponse {
+    const isString = typeof response === "string";
+    const statusCode = isString ? 200 : (response["status-code"] ?? 200);
+    const responseType = isString ? response : response.type;
+    const docs = isString ? undefined : response.docs;
+
+    let body: HttpResponseBody | undefined;
+
+    if (responseType != null) {
+        if (parseRawFileType(responseType) != null) {
+            body = HttpResponseBody.fileDownload({
+                docs,
+                v2Examples: undefined
+            });
+        } else if (parseRawTextType(responseType) != null) {
+            body = HttpResponseBody.text({
+                docs,
+                v2Examples: undefined
+            });
+        } else if (parseRawBytesType(responseType) != null) {
+            body = HttpResponseBody.bytes({
+                docs,
+                v2Examples: undefined
+            });
+        } else {
+            const responseBodyType = file.parseTypeReference(responseType);
+            body = HttpResponseBody.json(
+                JsonResponse.response({
+                    docs,
+                    responseBodyType,
+                    v2Examples: undefined
+                })
+            );
+        }
+    }
+
+    return {
+        statusCode,
+        isWildcardStatusCode: undefined,
+        body
+    };
+}
+
+export function convertV2HttpResponses({
+    endpoint,
+    file,
+    typeResolver
+}: {
+    endpoint: RawSchemas.HttpEndpointSchema;
+    file: FernFileContext;
+    typeResolver: TypeResolver;
+}): V2HttpResponses | undefined {
+    const { responses } = endpoint;
+
+    if (responses == null) {
+        return undefined;
+    }
+
+    // Handle single response (string or object)
+    if (!Array.isArray(responses)) {
+        const httpResponse = convertSingleResponseToHttpResponse({
+            response: responses,
+            file,
+            typeResolver
+        });
+        return {
+            responses: [httpResponse]
+        };
+    }
+
+    // Handle empty array
+    if (responses.length === 0) {
+        return undefined;
+    }
+
+    // Handle array of responses
+    const convertedResponses: HttpResponse[] = responses.map((responseItem) => {
+        return convertSingleResponseToHttpResponse({
+            response: responseItem,
+            file,
+            typeResolver
+        });
+    });
+
+    return {
+        responses: convertedResponses
+    };
 }

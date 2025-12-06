@@ -44,7 +44,8 @@ export const RootApiFileSchema: core.serialization.ObjectSchema<
 
 export declare namespace RootApiFileSchema {
     export interface Raw
-        extends WithDocsSchema.Raw,
+        extends
+            WithDocsSchema.Raw,
             WithDisplayName.Raw,
             WithEnvironmentsSchema.Raw,
             WithAuthSchema.Raw,
