@@ -11,8 +11,7 @@ import { PutClient } from "../resources/put/client/Client.js";
 import { UnionClient } from "../resources/union/client/Client.js";
 import { UrlsClient } from "../resources/urls/client/Client.js";
 export declare namespace EndpointsClient {
-    interface Options extends BaseClientOptions {
-    }
+    type Options = BaseClientOptions;
 }
 export declare class EndpointsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<EndpointsClient.Options>;

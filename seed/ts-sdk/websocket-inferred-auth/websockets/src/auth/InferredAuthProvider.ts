@@ -12,7 +12,7 @@ export namespace InferredAuthProvider {
         scope?: core.Supplier<string>;
     }
 
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 }
 
 export class InferredAuthProvider implements core.AuthProvider {

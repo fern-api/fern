@@ -11,7 +11,7 @@ export namespace OAuthAuthProvider {
         clientSecret: core.Supplier<string>;
     }
 
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 }
 
 export class OAuthAuthProvider implements core.AuthProvider {

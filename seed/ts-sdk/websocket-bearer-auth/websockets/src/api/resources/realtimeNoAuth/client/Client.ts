@@ -6,7 +6,7 @@ import * as core from "../../../../core/index.js";
 import { RealtimeNoAuthSocket } from "./Socket.js";
 
 export declare namespace RealtimeNoAuthClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface ConnectArgs {
         session_id: string;

@@ -5,16 +5,16 @@ import * as errors from "../errors/index.js";
 
 export namespace BasicAuthProvider {
     export interface AuthOptions {
-        username?: core.Supplier<string | undefined>;
-        accessToken?: core.Supplier<string | undefined>;
+        username?: core.Supplier<string> | undefined;
+        accessToken?: core.Supplier<string> | undefined;
     }
 
     export interface Options extends AuthOptions {}
 }
 
 export class BasicAuthProvider implements core.AuthProvider {
-    private readonly username: core.Supplier<string | undefined> | undefined;
-    private readonly password: core.Supplier<string | undefined> | undefined;
+    private readonly username: core.Supplier<string> | undefined;
+    private readonly password: core.Supplier<string> | undefined;
 
     constructor(options: BasicAuthProvider.Options) {
         this.username = options.username;
