@@ -1,3 +1,30 @@
+- version: 3.22.0
+  changelogEntry:
+    - summary: |
+        Add support for inferred authentication schemes. Inferred auth allows SDKs to automatically
+        fetch tokens from custom (non-OAuth) token endpoints using `scheme: bearer` with `get-token`
+        configuration. The generated `InferredAuthTokenSupplier` class handles token caching and
+        automatic refresh with a 2-minute buffer before expiry.
+
+        Configuration example:
+        ```yaml
+        auth:
+          scheme: bearer
+          get-token:
+            endpoint: POST auth.retrieveToken
+        ```
+
+        Generated usage:
+        ```java
+        SeedApiClient client = SeedApiClient.builder()
+            .apiKey("your-api-key")
+            .build();
+        // Token is automatically fetched and refreshed as needed
+        ```
+      type: feat
+  createdAt: "2025-12-05"
+  irVersion: 61
+
 - version: 3.21.1
   changelogEntry:
     - summary: |

@@ -36,7 +36,7 @@ public partial class SeedApiClient
         catch (Exception ex)
         {
             var interceptor = new SeedApiExceptionInterceptor();
-            interceptor.CaptureException(ex);
+            interceptor.Intercept(ex);
             throw;
         }
     }

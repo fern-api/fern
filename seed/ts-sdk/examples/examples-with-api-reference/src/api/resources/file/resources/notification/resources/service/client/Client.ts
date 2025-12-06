@@ -12,7 +12,7 @@ import * as errors from "../../../../../../../../errors/index.js";
 import type * as SeedExamples from "../../../../../../../index.js";
 
 export declare namespace ServiceClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

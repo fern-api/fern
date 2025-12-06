@@ -5,7 +5,7 @@ import { type NormalizedClientOptions, normalizeClientOptions } from "../../../.
 import { ApiClient } from "../resources/api/client/Client.js";
 
 export declare namespace NestedNoAuthClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 }
 
 export class NestedNoAuthClient {

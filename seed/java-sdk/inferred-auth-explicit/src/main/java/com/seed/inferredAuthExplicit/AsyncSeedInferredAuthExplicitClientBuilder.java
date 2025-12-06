@@ -5,6 +5,8 @@ package com.seed.inferredAuthExplicit;
 
 import com.seed.inferredAuthExplicit.core.ClientOptions;
 import com.seed.inferredAuthExplicit.core.Environment;
+import com.seed.inferredAuthExplicit.core.InferredAuthTokenSupplier;
+import com.seed.inferredAuthExplicit.resources.auth.AuthClient;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -17,9 +19,49 @@ public class AsyncSeedInferredAuthExplicitClientBuilder {
 
     private final Map<String, String> customHeaders = new HashMap<>();
 
+    private String xApiKey = null;
+
+    private String clientId = null;
+
+    private String clientSecret = null;
+
+    private String scope = null;
+
     private Environment environment;
 
     private OkHttpClient httpClient;
+
+    /**
+     * Sets xApiKey
+     */
+    public AsyncSeedInferredAuthExplicitClientBuilder xApiKey(String xApiKey) {
+        this.xApiKey = xApiKey;
+        return this;
+    }
+
+    /**
+     * Sets clientId
+     */
+    public AsyncSeedInferredAuthExplicitClientBuilder clientId(String clientId) {
+        this.clientId = clientId;
+        return this;
+    }
+
+    /**
+     * Sets clientSecret
+     */
+    public AsyncSeedInferredAuthExplicitClientBuilder clientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
+        return this;
+    }
+
+    /**
+     * Sets scope
+     */
+    public AsyncSeedInferredAuthExplicitClientBuilder scope(String scope) {
+        this.scope = scope;
+        return this;
+    }
 
     public AsyncSeedInferredAuthExplicitClientBuilder url(String url) {
         this.environment = Environment.custom(url);
@@ -66,6 +108,7 @@ public class AsyncSeedInferredAuthExplicitClientBuilder {
     protected ClientOptions buildClientOptions() {
         ClientOptions.Builder builder = ClientOptions.builder();
         setEnvironment(builder);
+        setAuthentication(builder);
         setHttpClient(builder);
         setTimeouts(builder);
         setRetries(builder);
@@ -84,6 +127,33 @@ public class AsyncSeedInferredAuthExplicitClientBuilder {
      */
     protected void setEnvironment(ClientOptions.Builder builder) {
         builder.environment(this.environment);
+    }
+
+    /**
+     * Override this method to customize authentication.
+     * This method is called during client options construction to set up authentication headers.
+     *
+     * @param builder The ClientOptions.Builder to configure
+     *
+     * Example:
+     * <pre>{@code
+     * &#64;Override
+     * protected void setAuthentication(ClientOptions.Builder builder) {
+     *     super.setAuthentication(builder); // Keep existing auth
+     *     builder.addHeader("X-API-Key", this.apiKey);
+     * }
+     * }</pre>
+     */
+    protected void setAuthentication(ClientOptions.Builder builder) {
+        if (this.xApiKey != null && this.clientId != null && this.clientSecret != null) {
+            ClientOptions.Builder authClientOptionsBuilder =
+                    ClientOptions.builder().environment(this.environment);
+            AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
+            InferredAuthTokenSupplier inferredAuthTokenSupplier = new InferredAuthTokenSupplier(
+                    this.xApiKey, this.clientId, this.clientSecret, this.scope, authClient);
+            builder.addHeader(
+                    "Authorization", () -> inferredAuthTokenSupplier.get().get("Authorization"));
+        }
     }
 
     /**

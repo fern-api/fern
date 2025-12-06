@@ -10,7 +10,7 @@ import * as serializers from "../../../../serialization/index.js";
 import type * as SeedStreaming from "../../../index.js";
 
 export declare namespace DummyClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

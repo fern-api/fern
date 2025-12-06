@@ -24,10 +24,11 @@ module Seed
         body_bag = params.slice(*body_prop_names)
 
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PRODUCTION,
+          base_url: request_options[:base_url],
           method: "POST",
           path: "/ec2/boot",
-          body: Seed::Ec2::Types::BootInstanceRequest.new(body_bag).to_h
+          body: Seed::Ec2::Types::BootInstanceRequest.new(body_bag).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

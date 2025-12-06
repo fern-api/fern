@@ -5,6 +5,15 @@ import type { BaseClientOptions } from "../BaseClient.js";
 import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
+export namespace OAuthAuthProvider {
+    export interface AuthOptions {
+        clientId: core.Supplier<string>;
+        clientSecret: core.Supplier<string>;
+    }
+
+    export type Options = BaseClientOptions;
+}
+
 export class OAuthAuthProvider implements core.AuthProvider {
     private readonly BUFFER_IN_MINUTES: number = 2;
     private readonly _clientId: core.Supplier<string>;
@@ -83,8 +92,4 @@ export class OAuthAuthProvider implements core.AuthProvider {
         const now = new Date();
         return new Date(now.getTime() + expiresInSeconds * 1000 - bufferInMinutes * 60 * 1000);
     }
-}
-
-export namespace OAuthAuthProvider {
-    export interface Options extends BaseClientOptions {}
 }

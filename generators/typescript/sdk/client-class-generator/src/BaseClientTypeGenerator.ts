@@ -42,28 +42,7 @@ export class BaseClientTypeGenerator {
             });
         }
 
-        const baseOptionsInterface = context.baseClient.generateBaseClientOptionsInterface(context);
-        if (this.oauthTokenOverride && this.hasOAuthScheme() && context.generateOAuthClients) {
-            context.sourceFile.addInterface({
-                ...baseOptionsInterface,
-                name: "BaseClientCoreOptions",
-                isExported: false
-            });
-
-            context.sourceFile.addImportDeclaration({
-                moduleSpecifier: "./auth/OAuthAuthProvider.js",
-                namedImports: ["OAuthAuthProvider"],
-                isTypeOnly: true
-            });
-
-            context.sourceFile.addTypeAlias({
-                isExported: true,
-                name: "BaseClientOptions",
-                type: "BaseClientCoreOptions & OAuthAuthProvider.AuthOptions"
-            });
-        } else {
-            context.sourceFile.addInterface(baseOptionsInterface);
-        }
+        this.generateBaseClientOptionsType(context);
 
         context.sourceFile.addInterface(context.baseClient.generateBaseRequestOptionsInterface(context));
         if (this.generateIdempotentRequestOptions) {
@@ -73,6 +52,69 @@ export class BaseClientTypeGenerator {
         this.generateNormalizedClientOptionsTypes(context);
         this.generateNormalizeClientOptionsFunction(context);
         this.generateNormalizeClientOptionsWithAuthFunction(context);
+    }
+
+    private generateBaseClientOptionsType(context: SdkContext): void {
+        const baseInterface = context.baseClient.generateBaseClientOptionsInterface(context);
+        const authOptionsTypes = this.getAuthOptionsTypes(context);
+
+        if (authOptionsTypes.length === 0) {
+            context.sourceFile.addInterface(baseInterface);
+            return;
+        }
+
+        const basePropertiesStr = baseInterface.properties
+            .map((prop) => {
+                const docs = prop.docs ? `/** ${prop.docs.join(" ")} */\n    ` : "";
+                const questionMark = prop.hasQuestionToken ? "?" : "";
+                return `${docs}${prop.name}${questionMark}: ${prop.type};`;
+            })
+            .join("\n    ");
+
+        const authOptionsIntersection = authOptionsTypes.join(" & ");
+        const typeCode = `
+export type BaseClientOptions = {
+    ${basePropertiesStr}
+} & ${authOptionsIntersection};`;
+
+        context.sourceFile.addStatements(typeCode);
+    }
+
+    private getAuthOptionsTypes(context: SdkContext): string[] {
+        const authOptionsTypes: string[] = [];
+        const isAnyAuth = this.ir.auth.requirement === "ANY";
+
+        if (isAnyAuth) {
+            authOptionsTypes.push("AnyAuthProvider.AuthOptions");
+        } else {
+            for (const authScheme of this.ir.auth.schemes) {
+                const authOptionsType = this.getAuthOptionsTypeForScheme(authScheme, context);
+                if (authOptionsType != null) {
+                    authOptionsTypes.push(authOptionsType);
+                    break;
+                }
+            }
+        }
+
+        return authOptionsTypes;
+    }
+
+    private getAuthOptionsTypeForScheme(authScheme: FernIr.AuthScheme, context: SdkContext): string | undefined {
+        if (authScheme.type === "bearer") {
+            return "BearerAuthProvider.AuthOptions";
+        } else if (authScheme.type === "basic") {
+            return "BasicAuthProvider.AuthOptions";
+        } else if (authScheme.type === "header") {
+            return "HeaderAuthProvider.AuthOptions";
+        } else if (authScheme.type === "oauth") {
+            if (!context.generateOAuthClients) {
+                return undefined;
+            }
+            return "OAuthAuthProvider.AuthOptions";
+        } else if (authScheme.type === "inferred") {
+            return "InferredAuthProvider.AuthOptions";
+        }
+        return undefined;
     }
 
     private generateNormalizeClientOptionsFunction(context: SdkContext): void {
@@ -85,7 +127,6 @@ export class BaseClientTypeGenerator {
                 ts.factory.createStringLiteral("JavaScript")
             ]);
 
-            // X-Fern-SDK-Name and X-Fern-SDK-Version headers (only if npmPackage exists)
             if (context.npmPackage != null) {
                 fernHeaderEntries.push(
                     [
@@ -99,21 +140,18 @@ export class BaseClientTypeGenerator {
                 );
             }
 
-            // User-Agent header
             if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
                 fernHeaderEntries.push([
                     this.ir.sdkConfig.platformHeaders.userAgent.header,
                     ts.factory.createStringLiteral(this.ir.sdkConfig.platformHeaders.userAgent.value)
                 ]);
             } else if (context.npmPackage != null) {
-                // Fallback: generate User-Agent header from npm package info
                 fernHeaderEntries.push([
                     "User-Agent",
                     ts.factory.createStringLiteral(`${context.npmPackage.packageName}/${context.npmPackage.version}`)
                 ]);
             }
 
-            // X-Fern-Runtime and X-Fern-Runtime-Version headers
             fernHeaderEntries.push(
                 ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
                 ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
@@ -172,7 +210,6 @@ export function normalizeClientOptions<T extends BaseClientOptions>(
     private generateNormalizedClientOptionsTypes(context: SdkContext): void {
         const shouldGenerateAuthCode = this.shouldGenerateAuthCode();
 
-        // Generate NormalizedClientOptions with optional authProvider only if auth is configured
         const authProviderProperty = shouldGenerateAuthCode
             ? `\n    authProvider?: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};`
             : "";
@@ -198,18 +235,15 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
     }
 
     private generateNormalizeClientOptionsWithAuthFunction(context: SdkContext): void {
-        // Determine which auth provider to use
         let authProviderCreation = "";
         const isAnyAuth = this.ir.auth.requirement === "ANY";
 
-        // Handle ANY auth case - create AnyAuthProvider that aggregates all schemes
         if (isAnyAuth) {
             context.sourceFile.addImportDeclaration({
                 moduleSpecifier: "./auth/AnyAuthProvider.js",
                 namedImports: ["AnyAuthProvider"]
             });
 
-            // Import all auth provider classes
             const providerImports: string[] = [];
             const providerInstantiations: string[] = [];
 
@@ -254,14 +288,12 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                 }
             }
 
-            // Generate code to instantiate providers array and pass to AnyAuthProvider
             authProviderCreation = `(() => {
         const authProviders: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())}[] = [];
         ${providerInstantiations.join("\n        ")}
         return new AnyAuthProvider(authProviders);
     })()`;
         } else {
-            // Only generate auth provider for non-ANY auth schemes
             for (const authScheme of this.ir.auth.schemes) {
                 if (authScheme.type === "bearer") {
                     context.sourceFile.addImportDeclaration({
@@ -304,7 +336,6 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
             }
         }
 
-        // If no auth provider creation code, don't generate the function
         if (!authProviderCreation) {
             return;
         }
@@ -334,7 +365,6 @@ function withNoOpAuthProvider<T extends BaseClientOptions>(
     private getRootHeaders(context: SdkContext): GeneratedHeader[] {
         const headers: GeneratedHeader[] = [
             ...this.ir.headers
-                // auth headers are handled separately
                 .filter((header) => !this.isAuthorizationHeader(header))
                 .map((header) => {
                     const headerName = this.getOptionKeyForHeader(header);

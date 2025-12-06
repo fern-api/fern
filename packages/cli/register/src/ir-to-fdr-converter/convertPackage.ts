@@ -777,7 +777,18 @@ function convertResponseErrorsV2(
                     description: errorDeclaration.docs ?? undefined,
                     name: errorDeclaration.displayName ?? errorDeclaration.name.name.originalName,
                     availability: undefined,
-                    examples: getErrorExamplesFromDeclaration(errorDeclaration, ir)
+                    examples: getErrorExamplesFromDeclaration(errorDeclaration, ir),
+                    headers:
+                        errorDeclaration.headers != null && errorDeclaration.headers.length > 0
+                            ? errorDeclaration.headers.map(
+                                  (header): FdrCjsSdk.api.v1.register.Header => ({
+                                      description: header.docs ?? undefined,
+                                      key: header.name.wireValue,
+                                      type: convertTypeReference(header.valueType),
+                                      availability: convertIrAvailability(header.availability)
+                                  })
+                              )
+                            : undefined
                 });
             }
         }
@@ -832,7 +843,18 @@ function convertResponseErrorsV2(
                             responseBody: { type: "json", value: irExample.jsonExample },
                             description: irExample.docs
                         };
-                    })
+                    }),
+                    headers:
+                        errorDeclaration.headers != null && errorDeclaration.headers.length > 0
+                            ? errorDeclaration.headers.map(
+                                  (header): FdrCjsSdk.api.v1.register.Header => ({
+                                      description: header.docs ?? undefined,
+                                      key: header.name.wireValue,
+                                      type: convertTypeReference(header.valueType),
+                                      availability: convertIrAvailability(header.availability)
+                                  })
+                              )
+                            : undefined
                 });
             }
         }

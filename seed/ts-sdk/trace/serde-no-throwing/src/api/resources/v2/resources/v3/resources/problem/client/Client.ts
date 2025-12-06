@@ -9,7 +9,7 @@ import * as serializers from "../../../../../../../../serialization/index.js";
 import * as SeedTrace from "../../../../../../../index.js";
 
 export declare namespace ProblemClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

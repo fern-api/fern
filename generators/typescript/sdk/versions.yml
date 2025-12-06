@@ -1,5 +1,5 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
-- version: 3.36.0
+- version: 3.37.0
   changelogEntry:
     - summary: |
         Add support for OAuth token override, allowing users to skip the OAuth flow by providing a pre-generated bearer token directly.
@@ -30,6 +30,16 @@
         ```
       type: feat
   createdAt: "2025-12-04"
+  irVersion: 62
+
+- version: 3.36.0
+  changelogEntry:
+    - summary: |
+        Refactor auth options to be defined in individual AuthProvider classes instead of directly in BaseClientOptions.
+        BaseClientOptions is now a type alias that intersects with the auth provider's AuthOptions interface.
+        This improves code organization and makes auth options more discoverable.
+      type: feat
+  createdAt: "2025-12-05"
   irVersion: 62
 
 - version: 3.35.9

@@ -304,9 +304,6 @@ allowedFailures:
   - exhaustive:publish-to
   - exhaustive:signed_publish
   - extends
-  - inferred-auth-explicit
-  - inferred-auth-implicit
-  - inferred-auth-implicit-no-expiry
   - java-inline-types:no-wrapped-aliases
   - literal
   - nullable-optional:with-nullable-annotation

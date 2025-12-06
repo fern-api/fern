@@ -3,8 +3,7 @@ import { type NormalizedClientOptionsWithAuth } from "../../../../../../BaseClie
 import * as core from "../../../../../../core/index.mjs";
 import type * as SeedExhaustive from "../../../../../index.mjs";
 export declare namespace PutClient {
-    interface Options extends BaseClientOptions {
-    }
+    type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
     }
 }

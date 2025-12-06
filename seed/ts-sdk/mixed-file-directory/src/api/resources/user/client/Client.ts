@@ -10,7 +10,7 @@ import type * as SeedMixedFileDirectory from "../../../index.js";
 import { EventsClient } from "../resources/events/client/Client.js";
 
 export declare namespace UserClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

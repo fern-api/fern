@@ -3,8 +3,7 @@ import { type NormalizedClientOptions } from "../../../../BaseClient.mjs";
 import * as core from "../../../../core/index.mjs";
 import * as SeedExhaustive from "../../../index.mjs";
 export declare namespace InlinedRequestsClient {
-    interface Options extends BaseClientOptions {
-    }
+    type Options = BaseClientOptions;
     interface RequestOptions extends BaseRequestOptions {
     }
 }
