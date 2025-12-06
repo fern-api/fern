@@ -570,6 +570,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newOptionalTestFile(g.coordinator))
 		}
 		files = append(files, newApiErrorFile(g.coordinator))
+		files = append(files, newAuthCoreFile(g.coordinator))
 		files = append(files, newFileParamFile(g.coordinator, rootPackageName, generatedNames))
 		files = append(files, newHttpCoreFile(g.coordinator))
 		files = append(files, newHttpInternalFile(g.coordinator))
@@ -1197,6 +1198,14 @@ func newApiErrorFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/api_error.go",
 		[]byte(apiErrorFile),
+	)
+}
+
+func newAuthCoreFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/auth.go",
+		[]byte(authCoreFile),
 	)
 }
 
