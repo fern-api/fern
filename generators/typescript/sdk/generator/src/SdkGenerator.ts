@@ -131,7 +131,7 @@ export declare namespace SdkGenerator {
         allowExtraFields: boolean;
         writeUnitTests: boolean;
         inlineFileProperties: boolean;
-        inlinePathParameters: boolean;
+        inlinePathParameters: boolean | "always";
         enableInlineTypes: boolean;
         omitUndefined: boolean;
         executionEnvironment: "local" | "dev" | "prod";
@@ -343,7 +343,8 @@ export class SdkGenerator {
             containingDirectory: apiDirectory,
             namespaceExport,
             packageResolver: this.packageResolver,
-            exportAllRequestsAtRoot: config.exportAllRequestsAtRoot
+            exportAllRequestsAtRoot: config.exportAllRequestsAtRoot,
+            inlinePathParameters: config.inlinePathParameters
         });
         this.sdkInlinedRequestBodySchemaDeclarationReferencer = new SdkInlinedRequestBodyDeclarationReferencer({
             containingDirectory: schemaDirectory,
@@ -928,7 +929,11 @@ export class SdkGenerator {
     private generateIndividualRequestWrappers() {
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
-                if (endpoint.sdkRequest?.shape.type === "wrapper") {
+                const shouldGenerateWrapper =
+                    endpoint.sdkRequest?.shape.type === "wrapper" ||
+                    this.shouldGenerateSyntheticWrapper(service, endpoint);
+
+                if (shouldGenerateWrapper) {
                     this.withSourceFile({
                         filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
                             packageId,
@@ -951,7 +956,11 @@ export class SdkGenerator {
         const requestWrappers: Array<{ packageId: PackageId; endpoint: HttpEndpoint }> = [];
         this.forEachService((service, packageId) => {
             for (const endpoint of service.endpoints) {
-                if (endpoint.sdkRequest?.shape.type === "wrapper") {
+                const shouldGenerateWrapper =
+                    endpoint.sdkRequest?.shape.type === "wrapper" ||
+                    this.shouldGenerateSyntheticWrapper(service, endpoint);
+
+                if (shouldGenerateWrapper) {
                     requestWrappers.push({ packageId, endpoint });
                 }
             }
@@ -970,6 +979,35 @@ export class SdkGenerator {
             },
             addExportTypeModifier: true
         });
+    }
+
+    private shouldGenerateSyntheticWrapper(service: HttpService, endpoint: HttpEndpoint): boolean {
+        if (this.config.inlinePathParameters !== "always") {
+            return false;
+        }
+
+        if (endpoint.sdkRequest != null) {
+            return false;
+        }
+
+        if (endpoint.requestBody != null) {
+            return false;
+        }
+
+        if (endpoint.queryParameters.length > 0) {
+            return false;
+        }
+
+        if (endpoint.headers.length > 0) {
+            return false;
+        }
+
+        const hasPathParameters = service.pathParameters.length > 0 || endpoint.pathParameters.length > 0;
+        if (!hasPathParameters) {
+            return false;
+        }
+
+        return true;
     }
 
     private generateUnionedResponseSchemas(): { generated: boolean } {
