@@ -97,12 +97,14 @@ export class BearerAuthProviderGenerator implements AuthProviderGenerator {
 
     private writeClass(context: SdkContext): void {
         const hasTokenEnv = this.authScheme.tokenEnvVar != null;
+        // Token is optional when auth is not mandatory OR when there's an env var fallback
+        const isTokenOptional = !this.isAuthMandatory || hasTokenEnv;
 
-        // For class fields, use Supplier<T> | undefined when env var fallback exists
+        // For class fields, use Supplier<T> | undefined when the token is optional
         const tokenType = context.coreUtilities.auth.BearerToken._getReferenceToType();
         const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(tokenType);
 
-        const tokenFieldType = hasTokenEnv
+        const tokenFieldType = isTokenOptional
             ? ts.factory.createUnionTypeNode([
                   supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
