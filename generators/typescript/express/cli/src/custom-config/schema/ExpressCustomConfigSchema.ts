@@ -2,7 +2,7 @@ import { z } from "zod";
 
 /**
  * Serialization format options:
- * - "default": Use Zurg (bundled runtime) - same as legacy behavior
+ * - "zurg": Use Zurg (bundled runtime) - same as legacy behavior
  * - "zod": Use Zod as npm dependency
  * - "none": No serialization layer - same as noSerdeLayer: true
  */
