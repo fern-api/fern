@@ -149,6 +149,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             class_name=self._context.get_class_name_for_exported_root_client(),
             async_class_name="Async" + exported_client_class_name,
             constructor_parameters=self._root_client_constructor_params,
+            oauth_token_override=self._oauth_scheme is not None and self._context.custom_config.oauth_token_override,
         )
         self._generated_root_client = root_client_builder.build()
 
@@ -199,12 +200,18 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             for param in constructor_parameters
         ]
 
-        snippet = self._context.source_file_factory.create_snippet()
-        snippet.add_expression(
-            self._generated_root_client.async_instantiation
+        # Build snippet(s) for the docstring examples
+        instantiations = (
+            self._generated_root_client.async_instantiations
             if is_async
-            else self._generated_root_client.sync_instantiation
+            else self._generated_root_client.sync_instantiations
         )
+        snippet_parts: List[str] = []
+        for instantiation in instantiations:
+            snippet = self._context.source_file_factory.create_snippet()
+            snippet.add_expression(instantiation)
+            snippet_parts.append(snippet.to_str())
+        combined_snippet = "\n# or ...\n\n".join(snippet_parts)
 
         # Generate constructor overloads for OAuth token override
         constructor_overloads = self._get_constructor_overloads(is_async=is_async)
@@ -221,7 +228,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 overloads=constructor_overloads,
             ),
             docstring=AST.Docstring(self._write_root_class_docstring),
-            snippet=snippet.to_str(),
+            snippet=combined_snippet,
             write_parameter_docstring=True,
         )
 
@@ -1217,15 +1224,17 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             class_name: str,
             async_class_name: str,
             constructor_parameters: List[ConstructorParameter],
+            oauth_token_override: bool = False,
         ):
             self._module_path = module_path
             self._class_name = class_name
             self._async_class_name = async_class_name
             self._constructor_parameters = constructor_parameters
+            self._oauth_token_override = oauth_token_override
 
         def build(self) -> GeneratedRootClient:
-            def client_snippet_writer(class_name: str) -> typing.Tuple[AST.ClassReference, CodeWriterFunction]:
-                client_class_reference = AST.ClassReference(
+            def create_class_reference(class_name: str) -> AST.ClassReference:
+                return AST.ClassReference(
                     qualified_name_excluding_import=(),
                     import_=AST.ReferenceImport(
                         module=AST.Module.snippet(
@@ -1235,25 +1244,52 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     ),
                 )
 
+            def create_snippet_writer(
+                class_reference: AST.ClassReference,
+                args: List[AST.Expression],
+            ) -> CodeWriterFunction:
                 def write_client_snippet(writer: AST.NodeWriter) -> None:
                     client_instantiation = AST.ClassInstantiation(
-                        class_=client_class_reference,
-                        args=[
-                            param.initializer for param in self._constructor_parameters if param.initializer is not None
-                        ],
+                        class_=class_reference,
+                        args=args,
                     )
-
                     writer.write("client = ")
                     writer.write_node(AST.Expression(client_instantiation))
                     writer.write_newline_if_last_line_not()
 
-                return client_class_reference, write_client_snippet
+                return write_client_snippet
 
-            async_class_reference, async_class_snippet_writer = client_snippet_writer(self._async_class_name)
-            sync_class_reference, sync_class_snippet_writer = client_snippet_writer(self._class_name)
+            async_class_reference = create_class_reference(self._async_class_name)
+            sync_class_reference = create_class_reference(self._class_name)
+
+            # Default instantiation args (all parameters with initializers)
+            default_args = [
+                param.initializer for param in self._constructor_parameters if param.initializer is not None
+            ]
+
+            async_instantiations: List[AST.Expression] = [
+                AST.Expression(AST.CodeWriter(create_snippet_writer(async_class_reference, default_args)))
+            ]
+            sync_instantiations: List[AST.Expression] = [
+                AST.Expression(AST.CodeWriter(create_snippet_writer(sync_class_reference, default_args)))
+            ]
+
+            # Add token-based instantiation example if oauth_token_override is enabled
+            if self._oauth_token_override:
+                token_args = [
+                    AST.Expression('base_url="https://yourhost.com/path/to/api"'),
+                    AST.Expression('token="YOUR_BEARER_TOKEN"'),
+                ]
+                async_instantiations.append(
+                    AST.Expression(AST.CodeWriter(create_snippet_writer(async_class_reference, token_args)))
+                )
+                sync_instantiations.append(
+                    AST.Expression(AST.CodeWriter(create_snippet_writer(sync_class_reference, token_args)))
+                )
+
             return GeneratedRootClient(
-                async_instantiation=AST.Expression(AST.CodeWriter(async_class_snippet_writer)),
+                async_instantiations=async_instantiations,
                 async_client=RootClient(class_reference=async_class_reference, parameters=self._constructor_parameters),
-                sync_instantiation=AST.Expression(AST.CodeWriter(sync_class_snippet_writer)),
+                sync_instantiations=sync_instantiations,
                 sync_client=RootClient(class_reference=sync_class_reference, parameters=self._constructor_parameters),
             )
