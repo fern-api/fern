@@ -11,6 +11,7 @@ import {
     ImportsManager,
     NpmPackage,
     PackageId,
+    SerializationFormatType,
     SimpleTypescriptProject,
     TypescriptProject
 } from "@fern-typescript/commons";
@@ -59,7 +60,7 @@ export declare namespace ExpressGenerator {
         includeOtherInUnionTypes: boolean;
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
-        serializationFormat: "zurg" | "zod" | "none";
+        serializationFormat: SerializationFormatType;
         outputEsm: boolean;
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;
