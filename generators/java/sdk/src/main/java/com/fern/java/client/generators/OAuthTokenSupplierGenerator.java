@@ -21,6 +21,7 @@ import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
+import com.fern.java.client.generators.visitors.RequestPropertyToTypeVisitor;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.squareup.javapoet.ClassName;
@@ -37,6 +38,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -108,7 +110,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
         Map<String, RequestPropertyInfo> allOAuthProperties = collectOAuthProperties(requestProperties, httpEndpoint);
         List<BuilderProperty> orderedBuilderProperties =
-                getOrderedBuilderProperties(httpEndpoint, clientIdPropertyName, clientSecretPropertyName, allOAuthProperties);
+                getOrderedBuilderProperties(httpEndpoint, allOAuthProperties);
         List<BuilderProperty> nonLiteralProperties = orderedBuilderProperties.stream()
                 .filter(p -> !p.isLiteral)
                 .collect(Collectors.toList());
@@ -259,7 +261,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
      */
     private Map<String, RequestPropertyInfo> collectOAuthProperties(
             OAuthAccessTokenRequestProperties requestProperties, HttpEndpoint httpEndpoint) {
-        Map<String, RequestPropertyInfo> properties = new HashMap<>();
+        Map<String, RequestPropertyInfo> properties = new LinkedHashMap<>();
 
         String clientIdName = requestProperties
                 .getClientId()
@@ -280,15 +282,22 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         properties.put(clientSecretName, new RequestPropertyInfo(clientSecretName, CLIENT_SECRET_FIELD_NAME));
 
         if (requestProperties.getScopes().isPresent()) {
-            String scopesName = requestProperties
+            TypeReference scopesType = requestProperties
                     .getScopes()
                     .get()
                     .getProperty()
-                    .visit(new RequestPropertyToNameVisitor())
-                    .getName()
-                    .getCamelCase()
-                    .getUnsafeName();
-            properties.put(scopesName, new RequestPropertyInfo(scopesName, scopesName));
+                    .visit(new RequestPropertyToTypeVisitor());
+            if (!isLiteralType(scopesType)) {
+                String scopesName = requestProperties
+                        .getScopes()
+                        .get()
+                        .getProperty()
+                        .visit(new RequestPropertyToNameVisitor())
+                        .getName()
+                        .getCamelCase()
+                        .getUnsafeName();
+                properties.put(scopesName, new RequestPropertyInfo(scopesName, scopesName));
+            }
         }
 
         if (requestProperties.getCustomProperties().isPresent()) {
@@ -317,10 +326,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
      * as such so they can be skipped when generating constructor parameters and fields.
      */
     private List<BuilderProperty> getOrderedBuilderProperties(
-            HttpEndpoint httpEndpoint,
-            String clientIdPropertyName,
-            String clientSecretPropertyName,
-            Map<String, RequestPropertyInfo> allOAuthProperties) {
+            HttpEndpoint httpEndpoint, Map<String, RequestPropertyInfo> allOAuthProperties) {
         List<BuilderProperty> requiredProperties = new ArrayList<>();
         List<BuilderProperty> optionalProperties = new ArrayList<>();
         Set<String> processedProperties = new HashSet<>();

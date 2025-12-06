@@ -1326,6 +1326,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                 authClientClassName);
 
                         // Build OAuthTokenSupplier constructor call with custom properties
+                        // TODO: Order of customPropertyNames must match OAuthTokenSupplierGenerator.getOrderedBuilderProperties()
+                        // Currently what we have works but but this would be a more robust solution
                         CodeBlock.Builder oauthConstructorArgs =
                                 CodeBlock.builder().add("this.clientId, this.clientSecret");
                         for (String customPropName : customPropertyNames) {
