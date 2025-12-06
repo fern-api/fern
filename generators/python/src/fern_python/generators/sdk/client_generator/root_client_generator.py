@@ -692,7 +692,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         """
         Generate constructor overloads for OAuth token override.
         Returns two overload signatures:
-        1. OAuth client credentials: client_id + client_secret (required)
+        1. OAuth client credentials: client_id + client_secret (required, or optional if env vars configured)
         2. Direct token: token (required)
         """
         if self._oauth_scheme is None or not self._context.custom_config.oauth_token_override:
@@ -705,17 +705,53 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         # Get base parameters (everything except OAuth-specific params)
         base_params = self._get_non_oauth_constructor_parameters(is_async=is_async)
 
-        # Overload 1: OAuth client credentials (client_id + client_secret required)
-        oauth_params = base_params + [
-            AST.NamedFunctionParameter(
+        # Overload 1: OAuth client credentials
+        # If env vars are configured, make parameters optional with os.getenv() defaults
+        # Otherwise, keep them required
+        client_id_param: AST.NamedFunctionParameter
+        client_secret_param: AST.NamedFunctionParameter
+
+        if oauth.client_id_env_var is not None:
+            client_id_param = AST.NamedFunctionParameter(
+                name="client_id",
+                type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                initializer=AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                            qualified_name_excluding_import=("getenv",),
+                        ),
+                        args=[AST.Expression(f'"{oauth.client_id_env_var}"')],
+                    )
+                ),
+            )
+        else:
+            client_id_param = AST.NamedFunctionParameter(
                 name="client_id",
                 type_hint=AST.TypeHint.str_(),
-            ),
-            AST.NamedFunctionParameter(
+            )
+
+        if oauth.client_secret_env_var is not None:
+            client_secret_param = AST.NamedFunctionParameter(
+                name="client_secret",
+                type_hint=AST.TypeHint.optional(AST.TypeHint.str_()),
+                initializer=AST.Expression(
+                    AST.FunctionInvocation(
+                        function_definition=AST.Reference(
+                            import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                            qualified_name_excluding_import=("getenv",),
+                        ),
+                        args=[AST.Expression(f'"{oauth.client_secret_env_var}"')],
+                    )
+                ),
+            )
+        else:
+            client_secret_param = AST.NamedFunctionParameter(
                 name="client_secret",
                 type_hint=AST.TypeHint.str_(),
-            ),
-        ]
+            )
+
+        oauth_params = base_params + [client_id_param, client_secret_param]
         oauth_signature = AST.FunctionSignature(named_parameters=oauth_params)
 
         # Overload 2: Direct token (token required)
