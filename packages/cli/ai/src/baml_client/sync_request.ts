@@ -22,7 +22,7 @@ import type { BamlRuntime, BamlCtxManager, ClientRegistry, Image, Audio, Pdf, Vi
 import { toBamlError, HTTPRequest } from "@boundaryml/baml"
 import type { Checked, Check } from "./types"
 import type * as types from "./types"
-import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, VersionBump} from "./types"
+import type {AnalyzeCommitDiffRequest, AnalyzeCommitDiffResponse, PrettifiedDocsResponse, VersionBump} from "./types"
 import type TypeBuilder from "./type_builder"
 import type * as events from "./events"
 
@@ -62,6 +62,31 @@ export class HttpRequest {
     }
   }
   
+  PrettifyDocs(
+      markdown_content: string,fern_components_reference: string,
+      __baml_options__?: BamlCallOptions<never>
+  ): HTTPRequest {
+    try {
+      const rawEnv = __baml_options__?.env ? { ...process.env, ...__baml_options__.env } : { ...process.env };
+      const env: Record<string, string> = Object.fromEntries(
+        Object.entries(rawEnv).filter(([_, value]) => value !== undefined) as [string, string][]
+      );
+      return this.runtime.buildRequestSync(
+        "PrettifyDocs",
+        {
+          "markdown_content": markdown_content,"fern_components_reference": fern_components_reference
+        },
+        this.ctxManager.cloneContext(),
+        __baml_options__?.tb?.__tb(),
+        __baml_options__?.clientRegistry,
+        false,
+        env,
+      )
+    } catch (error) {
+      throw toBamlError(error);
+    }
+  }
+  
 }
 
 export class HttpStreamRequest {
@@ -81,6 +106,31 @@ export class HttpStreamRequest {
         "AnalyzeSdkDiff",
         {
           "diff": diff
+        },
+        this.ctxManager.cloneContext(),
+        __baml_options__?.tb?.__tb(),
+        __baml_options__?.clientRegistry,
+        true,
+        env,
+      )
+    } catch (error) {
+      throw toBamlError(error);
+    }
+  }
+  
+  PrettifyDocs(
+      markdown_content: string,fern_components_reference: string,
+      __baml_options__?: BamlCallOptions<never>
+  ): HTTPRequest {
+    try {
+      const rawEnv = __baml_options__?.env ? { ...process.env, ...__baml_options__.env } : { ...process.env };
+      const env: Record<string, string> = Object.fromEntries(
+        Object.entries(rawEnv).filter(([_, value]) => value !== undefined) as [string, string][]
+      );
+      return this.runtime.buildRequestSync(
+        "PrettifyDocs",
+        {
+          "markdown_content": markdown_content,"fern_components_reference": fern_components_reference
         },
         this.ctxManager.cloneContext(),
         __baml_options__?.tb?.__tb(),
