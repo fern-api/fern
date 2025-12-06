@@ -572,7 +572,18 @@ public abstract class AbstractHttpResponseParserGenerator {
             // error types map to the same HTTP status code.
             Map<Integer, ErrorDeclaration> dedupedByStatusCode = new LinkedHashMap<>();
             for (ErrorDeclaration errorDeclaration : errorDeclarations) {
-                dedupedByStatusCode.putIfAbsent(errorDeclaration.getStatusCode(), errorDeclaration);
+                if (dedupedByStatusCode.containsKey(errorDeclaration.getStatusCode())) {
+                    // Warn about duplicate status code mapping
+                    ErrorDeclaration firstError = dedupedByStatusCode.get(errorDeclaration.getStatusCode());
+                    System.out.println("Warning: Multiple errors map to HTTP status code "
+                            + errorDeclaration.getStatusCode() + ". Only '"
+                            + firstError.getName().getName().getOriginalName()
+                            + "' will be thrown; '"
+                            + errorDeclaration.getName().getName().getOriginalName()
+                            + "' will be ignored.");
+                } else {
+                    dedupedByStatusCode.put(errorDeclaration.getStatusCode(), errorDeclaration);
+                }
             }
             List<ErrorDeclaration> uniqueErrorDeclarations = new ArrayList<>(dedupedByStatusCode.values());
 
