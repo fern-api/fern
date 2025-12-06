@@ -80,7 +80,6 @@
       "fixtures": [
         "websocket-inferred-auth",
         "exhaustive:no-custom-config",
-        "oauth-client-credentials-default",
         "exhaustive:pyproject_extras",
         "accept-header",
         "exhaustive:follow_redirects_by_default",
@@ -189,7 +188,6 @@
         "required-nullable",
         "version",
         "mixed-case",
-        "oauth-client-credentials",
         "exhaustive:five-second-timeout",
         "objects-with-imports",
         "exhaustive:union-utils",
