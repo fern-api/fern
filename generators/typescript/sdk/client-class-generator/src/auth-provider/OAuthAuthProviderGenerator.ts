@@ -1,7 +1,7 @@
 import type { FernIr } from "@fern-fern/ir-sdk";
-import { type ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
+import { type ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
-import { Scope, StructureKind, ts } from "ts-morph";
+import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator";
 
@@ -16,6 +16,7 @@ export declare namespace OAuthAuthProviderGenerator {
 
 const CLASS_NAME = "OAuthAuthProvider";
 const OPTIONS_TYPE_NAME = "Options";
+const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 const OPTIONS_PARAM_NAME = "options";
 const CLIENT_ID_VAR_NAME = "clientId";
 const CLIENT_SECRET_VAR_NAME = "clientSecret";
@@ -67,6 +68,63 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
     public getOptionsType(): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsType(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        const oauthConfig = this.authScheme.configuration;
+        if (oauthConfig.type !== "clientCredentials") {
+            return undefined;
+        }
+
+        const requestProperties = oauthConfig.tokenEndpoint.requestProperties;
+        const clientIdType = context.type.getReferenceToType(requestProperties.clientId.property.valueType).typeNode;
+        const clientSecretType = context.type.getReferenceToType(
+            requestProperties.clientSecret.property.valueType
+        ).typeNode;
+
+        const clientIdIsOptional = oauthConfig.clientIdEnvVar != null;
+        const clientSecretIsOptional = oauthConfig.clientSecretEnvVar != null;
+
+        const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType;
+
+        // When there's an env var fallback, use Supplier<T> | undefined because the supplier itself can be undefined
+        // When there's no env var fallback, use Supplier<T> directly.
+        const clientIdSupplier = supplierType(clientIdType);
+        const clientSecretSupplier = supplierType(clientSecretType);
+
+        // For env var fallback: prop?: Supplier<T> | undefined
+        const clientIdPropertyType = clientIdIsOptional
+            ? ts.factory.createUnionTypeNode([
+                  clientIdSupplier,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : clientIdSupplier;
+
+        const clientSecretPropertyType = clientSecretIsOptional
+            ? ts.factory.createUnionTypeNode([
+                  clientSecretSupplier,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : clientSecretSupplier;
+
+        return [
+            {
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(CLIENT_ID_VAR_NAME),
+                hasQuestionToken: clientIdIsOptional,
+                type: getTextOfTsNode(clientIdPropertyType)
+            },
+            {
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(CLIENT_SECRET_VAR_NAME),
+                hasQuestionToken: clientSecretIsOptional,
+                type: getTextOfTsNode(clientSecretPropertyType)
+            }
+        ];
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
@@ -198,6 +256,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         }> = [
             {
                 name: CLIENT_ID_FIELD_NAME,
+                // When env var fallback exists, use Supplier<T> | undefined to match AuthOptions
                 type: clientIdIsOptional
                     ? `${supplierType}<${clientIdType}> | undefined`
                     : `${supplierType}<${clientIdType}>`,
@@ -206,6 +265,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             },
             {
                 name: CLIENT_SECRET_FIELD_NAME,
+                // When env var fallback exists, use Supplier<T> | undefined to match AuthOptions
                 type: clientSecretIsOptional
                     ? `${supplierType}<${clientSecretType}> | undefined`
                     : `${supplierType}<${clientSecretType}>`,
@@ -569,14 +629,20 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeOptions(context: SdkContext): void {
-        context.importsManager.addImportFromRoot("BaseClient", {
-            namedImports: ["BaseClientOptions"]
-        });
-
         const oauthConfig = this.authScheme.configuration;
         if (oauthConfig.type !== "clientCredentials") {
             return;
         }
+
+        const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
+
+        // Import BaseClientOptions for Options to extend
+        // OAuthAuthProvider.Options needs to extend BaseClientOptions because it creates an AuthClient
+        context.sourceFile.addImportDeclaration({
+            moduleSpecifier: "../BaseClient.js",
+            namedImports: ["BaseClientOptions"],
+            isTypeOnly: true
+        });
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
@@ -585,9 +651,20 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             statements: [
                 {
                     kind: StructureKind.Interface,
+                    name: AUTH_OPTIONS_TYPE_NAME,
+                    isExported: true,
+                    properties: authOptionsProperties
+                },
+                {
+                    // Use type alias instead of interface because BaseClientOptions may include union types
+                    // (e.g., AtLeastOneOf pattern for AnyAuthProvider.AuthOptions)
+                    // TypeScript interfaces can only extend object types with statically known members
+                    kind: StructureKind.TypeAlias,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    extends: ["BaseClientOptions"]
+                    // Options extends BaseClientOptions because OAuthAuthProvider creates an AuthClient
+                    // which requires the full BaseClientOptions (environment, baseUrl, etc.)
+                    type: "BaseClientOptions"
                 }
             ]
         });

@@ -9,7 +9,7 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedPagination from "../../../index.js";
 
 export declare namespace UsersClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

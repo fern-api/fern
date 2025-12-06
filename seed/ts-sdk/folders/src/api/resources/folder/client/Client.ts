@@ -9,7 +9,7 @@ import * as errors from "../../../../errors/index.js";
 import { ServiceClient } from "../resources/service/client/Client.js";
 
 export declare namespace FolderClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

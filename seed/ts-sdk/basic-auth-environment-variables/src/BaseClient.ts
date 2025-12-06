@@ -4,12 +4,10 @@ import { BasicAuthProvider } from "./auth/BasicAuthProvider.js";
 import { mergeHeaders } from "./core/headers.js";
 import * as core from "./core/index.js";
 
-export interface BaseClientOptions {
+export type BaseClientOptions = {
     environment: core.Supplier<string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    username?: core.Supplier<string | undefined>;
-    accessToken?: core.Supplier<string | undefined>;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -20,7 +18,7 @@ export interface BaseClientOptions {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
-}
+} & BasicAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */

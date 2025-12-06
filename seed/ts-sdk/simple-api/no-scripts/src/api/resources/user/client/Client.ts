@@ -10,8 +10,7 @@ import * as errors from "../../../../errors/index.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 
 export declare namespace UserClient {
-    export interface Options extends BaseClientOptions {
-    }
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {
     }
