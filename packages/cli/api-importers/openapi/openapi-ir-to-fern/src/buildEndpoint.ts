@@ -18,7 +18,11 @@ import { resolveLocationWithNamespace } from "./utils/convertSdkGroupName";
 import { convertToHttpMethod } from "./utils/convertToHttpMethod";
 import { convertToSourceSchema } from "./utils/convertToSourceSchema";
 import { getEndpointNamespace } from "./utils/getNamespaceFromGroup";
-import { getDocsFromTypeReference, getTypeFromTypeReference } from "./utils/getTypeFromTypeReference";
+import {
+    getDocsFromTypeReference,
+    getTypeFromTypeReference,
+    stripNullableWrapperForExtends
+} from "./utils/getTypeFromTypeReference";
 import { isWriteMethod } from "./utils/isWriteMethod";
 
 export interface ConvertedEndpoint {
@@ -625,7 +629,7 @@ function getRequest({
                     namespace,
                     declarationDepth: 0
                 });
-                return getTypeFromTypeReference(allOfTypeReference);
+                return stripNullableWrapperForExtends(getTypeFromTypeReference(allOfTypeReference));
             })
             .filter((schema) => schema !== "unknown");
 
