@@ -187,7 +187,7 @@ function resolveGroupAlias(
     return []; // unreachable, but TypeScript needs this
 }
 
-function applyLfsOverride(
+export function applyLfsOverride(
     group: generatorsYml.GeneratorGroup,
     lfsOverridePath: string,
     context: TaskContext

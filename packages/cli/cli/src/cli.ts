@@ -29,6 +29,8 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { diff } from "./commands/diff/diff";
 import { previewDocsWorkspace } from "./commands/docs-dev/devDocsWorkspace";
 import { downgrade } from "./commands/downgrade/downgrade";
+import { cleanCache, showCache, warmCache } from "./commands/exp/commands/cache";
+import { generateAPIWorkspacesLocal } from "./commands/exp/commands/generate";
 import { generateOpenAPIForWorkspaces } from "./commands/export/generateOpenAPIForWorkspaces";
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { GenerationMode, generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
@@ -201,6 +203,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDocsDefinitionCommand(cli, cliContext);
     addWriteTranslationCommand(cli, cliContext);
     addExportCommand(cli, cliContext);
+    addExperimentalCommands(cli, cliContext);
 
     // CLI V2 Sanctioned Commands
     addGetOrganizationCommand(cli, cliContext);
@@ -1612,6 +1615,128 @@ function addExportCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
             });
         }
     );
+}
+
+function addExperimentalCommands(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command("exp", "Experimental commands", (yargs) => {
+        yargs.command(
+            ["generate-sdks"],
+            "Generate SDKs for the specified APIs.",
+            (yargs) =>
+                yargs
+                    .option("remote", {
+                        boolean: true,
+                        default: false,
+                        description: "Run the generator(s) remotely."
+                    })
+                    .option("api", {
+                        string: true,
+                        description: "If multiple APIs, specify the name with --api <name>. Otherwise, just --api."
+                    })
+                    .option("group", {
+                        type: "string",
+                        description: "The group to generate"
+                    })
+                    .option("mode", {
+                        choices: Object.values(GenerationMode),
+                        description: "Defaults to the mode specified in generators.yml"
+                    })
+                    .option("version", {
+                        type: "string",
+                        description: "The version for the generated packages"
+                    })
+                    .option("printZipUrl", {
+                        boolean: true,
+                        hidden: true,
+                        default: false
+                    })
+                    .option("keepDocker", {
+                        boolean: true,
+                        default: false,
+                        description: "Prevent auto-deletion of the Docker containers."
+                    })
+                    .option("lfs-override", {
+                        type: "string",
+                        hidden: true,
+                        description: "Override output mode to local-file-system with the specified path"
+                    })
+                    .option("preview", {
+                        boolean: true,
+                        default: false,
+                        description: "Whether to generate a preview version of the SDK"
+                    })
+                    .option("force", {
+                        boolean: true,
+                        default: false,
+                        description: "Ignore prompts to confirm generation, defaults to false"
+                    }),
+            async (argv) => {
+                const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                });
+                if (argv.remote) {
+                    return await generateAPIWorkspaces({
+                        project,
+                        cliContext,
+                        version: argv.version,
+                        groupName: argv.group,
+                        shouldLogS3Url: argv.printZipUrl,
+                        keepDocker: argv.keepDocker,
+                        useLocalDocker: false,
+                        mode: argv.mode,
+                        runner: "docker",
+                        inspect: false,
+                        lfsOverride: argv.lfsOverride,
+                        preview: argv.preview,
+                        force: argv.force
+                    });
+                }
+                return await generateAPIWorkspacesLocal({
+                    project,
+                    cliContext,
+                    groupName: argv.group,
+                    version: argv.version,
+                    force: argv.force,
+                    lfsOverride: argv.lfsOverride
+                });
+            }
+        );
+
+        cli.command("cache", "Manage local generator cache", (cacheYargs) =>
+            cacheYargs
+                .command(
+                    "warm",
+                    "Pre-fetch and cache generator artifacts used in this project",
+                    (subYargs) => subYargs,
+                    async () => {
+                        const project = await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                            commandLineApiWorkspace: undefined,
+                            defaultToAllApiWorkspaces: true
+                        });
+                        await warmCache({ project, cliContext });
+                    }
+                )
+                .command(
+                    "clean",
+                    "Delete all cached generator artifacts",
+                    (subYargs) => subYargs,
+                    async () => {
+                        await cleanCache({ cliContext });
+                    }
+                )
+                .command(
+                    "$0",
+                    "Show generator cache contents and total size",
+                    (subYargs) => subYargs,
+                    async () => {
+                        await showCache({ cliContext });
+                    }
+                )
+        );
+
+        return yargs;
+    });
 }
 
 function addProtocGenFernCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
