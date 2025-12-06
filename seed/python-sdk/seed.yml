@@ -343,13 +343,15 @@ fixtures:
       - customConfig:
           oauth-token-override: true
         outputFolder: token-override 
+      - outputFolder: no-custom-config
 
   oauth-client-credentials-environment-variables:
     - customConfig:
         oauth-token-override: true
       outputFolder: token-override
+    - outputFolder: no-custom-config
 
-      
+
 scripts:
   # Test Pydantic V2
   - name: test-pydantic-v2
