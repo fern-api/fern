@@ -1040,7 +1040,8 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 EndpointReference tokenEndpointReference =
                         clientCredentials.getTokenEndpoint().getEndpointReference();
 
-                boolean hasTokenOverride = clientGeneratorContext.getCustomConfig().oauthTokenOverride();
+                boolean hasTokenOverride =
+                        clientGeneratorContext.getCustomConfig().oauthTokenOverride();
                 String tokenOverridePropertyName = "token";
 
                 if (hasTokenOverride) {
