@@ -11,6 +11,7 @@ import {
     ImportsManager,
     NpmPackage,
     PackageId,
+    SerializationFormatType,
     SimpleTypescriptProject,
     TypescriptProject
 } from "@fern-typescript/commons";
@@ -59,6 +60,7 @@ export declare namespace ExpressGenerator {
         includeOtherInUnionTypes: boolean;
         treatUnknownAsAny: boolean;
         includeSerdeLayer: boolean;
+        serializationFormat: SerializationFormatType;
         outputEsm: boolean;
         retainOriginalCasing: boolean;
         allowExtraFields: boolean;
@@ -134,7 +136,8 @@ export class ExpressGenerator {
             fetchSupport: "node-fetch",
             relativePackagePath: this.getRelativePackagePath(),
             relativeTestPath: this.getRelativeTestPath(),
-            generateEndpointMetadata: false
+            generateEndpointMetadata: false,
+            serializationFormat: config.serializationFormat
         });
         this.asIsManager = new AsIsManager({
             useBigInt: config.useBigInt,
@@ -525,7 +528,7 @@ export class ExpressGenerator {
         this.context.logger.debug(`Generating ${filepathStr}`);
 
         const sourceFile = this.rootDirectory.createSourceFile(filepathStr);
-        const importsManager = new ImportsManager({ packagePath: this.config.packagePath });
+        const importsManager = new ImportsManager({ packagePath: this.getRelativePackagePath() });
 
         run({ sourceFile, importsManager });
 

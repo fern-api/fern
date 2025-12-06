@@ -33,6 +33,7 @@ export { type PackageId } from "./PackageId";
 export * from "./public-exports-manager";
 export * from "./referencing";
 export { removeUndefinedAndNullFromTypeNode } from "./removeUndefinedAndNullFromTypeNode";
+export * from "./serialization-pipeline";
 export { type TypeReferenceNode } from "./TypeReferenceNode";
 export * from "./typescript-project";
 export { convertJestImportsToVitest } from "./typescript-project/convertJestImportsToVitest";

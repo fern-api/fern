@@ -9,6 +9,7 @@ import {
     fixImportsForEsm,
     NpmPackage,
     PersistedTypescriptProject,
+    SerializationPipeline,
     writeTemplateFiles
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
@@ -35,7 +36,15 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
 
     protected parseCustomConfig(customConfig: unknown, logger: Logger): SdkCustomConfig {
         const parsed = customConfig != null ? SdkCustomConfigSchema.parse(customConfig) : undefined;
-        const noSerdeLayer = parsed?.noSerdeLayer ?? true;
+
+        // Resolve serialization format from new option or legacy noSerdeLayer
+        // Note: SDK defaults to noSerdeLayer: true (no serialization) for backward compatibility
+        const serializationFormat = SerializationPipeline.resolveFormatType({
+            serializationFormat: parsed?.serializationFormat,
+            noSerdeLayer: parsed?.noSerdeLayer ?? true
+        });
+        const noSerdeLayer = serializationFormat === "none";
+
         const config = {
             useBrandedStringAliases: parsed?.useBrandedStringAliases ?? false,
             outputSourceFiles: parsed?.outputSourceFiles ?? true,
@@ -58,6 +67,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             includeContentHeadersOnFileDownloadResponse: parsed?.includeContentHeadersOnFileDownloadResponse ?? false,
             noSerdeLayer,
+            serializationFormat,
             extraPeerDependencies: parsed?.extraPeerDependencies ?? {},
             extraPeerDependenciesMeta: parsed?.extraPeerDependenciesMeta ?? {},
             noOptionalProperties: parsed?.noOptionalProperties ?? false,
@@ -207,6 +217,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
+                serializationFormat: customConfig.serializationFormat,
                 retainOriginalCasing: customConfig.retainOriginalCasing ?? false,
                 parameterNaming: customConfig.parameterNaming ?? "default",
                 noOptionalProperties: customConfig.noOptionalProperties,
