@@ -16,7 +16,7 @@ import {
 } from "../SerializationFormat";
 
 /**
- * Manifest for the Zurg runtime files
+ * Manifest for the Zurg runtime files.
  */
 export const ZURG_MANIFEST: CoreUtility.Manifest = {
     name: "schemas",

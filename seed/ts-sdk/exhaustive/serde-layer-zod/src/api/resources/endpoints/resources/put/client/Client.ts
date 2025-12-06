@@ -66,7 +66,7 @@ export class PutClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.PutResponse.parse(_response.body),
+                data: serializers.endpoints.PutResponse._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }

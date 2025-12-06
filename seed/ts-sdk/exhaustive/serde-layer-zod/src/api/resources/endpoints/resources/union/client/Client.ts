@@ -61,7 +61,7 @@ export class UnionClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.Animal.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -69,7 +69,7 @@ export class UnionClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: serializers.types.Animal.parse(_response.body), rawResponse: _response.rawResponse };
+            return { data: serializers.types.Animal._schema.parse(_response.body), rawResponse: _response.rawResponse };
         }
 
         if (_response.error.reason === "status-code") {

@@ -60,7 +60,7 @@ export class NoReqBodyClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.ObjectWithOptionalField.parse(_response.body),
+                data: serializers.types.ObjectWithOptionalField._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -112,7 +112,7 @@ export class NoReqBodyClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.noReqBody.postWithNoRequestBody.Response.parse(_response.body),
+                data: serializers.noReqBody.postWithNoRequestBody.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }

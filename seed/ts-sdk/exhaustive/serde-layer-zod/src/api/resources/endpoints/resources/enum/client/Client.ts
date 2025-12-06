@@ -57,7 +57,7 @@ export class EnumClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.WeatherReport.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -65,7 +65,10 @@ export class EnumClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: serializers.types.WeatherReport.parse(_response.body), rawResponse: _response.rawResponse };
+            return {
+                data: serializers.types.WeatherReport._schema.parse(_response.body),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {

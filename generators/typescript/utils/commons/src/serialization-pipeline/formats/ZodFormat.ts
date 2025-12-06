@@ -15,7 +15,9 @@ import {
 } from "../SerializationFormat";
 
 /**
- * Zod version to use as dependency
+ * Zod version to use as dependency.
+ * @todo Make this configurable from a client standpoint. This would be complex to implement because it would likely 
+ * involve scanning Zod's api at the given version and code-generating based on the results of the scan.
  */
 const ZOD_VERSION = "^3.23.0";
 
@@ -26,6 +28,7 @@ interface ZodBaseSchema extends Schema {
     toExpression: () => ts.Expression;
     isOptional: boolean;
     isNullable: boolean;
+
     /**
      * Optional: generate expression to serialize value to JSON.
      * If not provided, value passes through unchanged.
@@ -35,7 +38,7 @@ interface ZodBaseSchema extends Schema {
 }
 
 /**
- * Helper to create a property access expression like `z.string()`
+ * Helper to create a property access expression like `z.string()`.
  */
 function createZodCall(methodName: string, args: ts.Expression[] = []): ts.Expression {
     return ts.factory.createCallExpression(
@@ -137,18 +140,22 @@ export class ZodFormat implements SerializationFormat {
         };
     }
 
+    /**
+     * Wrap schema to allow null values.
+     */
     private nullable(schema: ZodBaseSchema): SchemaWithUtils {
         const baseSchema: ZodBaseSchema = {
             isOptional: schema.isOptional,
             isNullable: true,
             toExpression: () => chainMethod(schema.toExpression(), "nullable"),
             // Preserve inner serialization, handling null: value != null ? transform(value) : null
+            // Use != (loose inequality) to catch both null and undefined
             toJsonExpression: schema.toJsonExpression
                 ? (parsed) =>
                       ts.factory.createConditionalExpression(
                           ts.factory.createBinaryExpression(
                               parsed,
-                              ts.SyntaxKind.ExclamationEqualsEqualsToken,
+                              ts.SyntaxKind.ExclamationEqualsToken, // != (loose)
                               ts.factory.createNull()
                           ),
                           undefined,
@@ -164,18 +171,22 @@ export class ZodFormat implements SerializationFormat {
         };
     }
 
+    /**
+     * Wrap schema to allow undefined values.
+     */
     private optional(schema: ZodBaseSchema): SchemaWithUtils {
         const baseSchema: ZodBaseSchema = {
             isOptional: true,
             isNullable: schema.isNullable,
             toExpression: () => chainMethod(schema.toExpression(), "optional"),
             // Preserve inner serialization, handling undefined: value != null ? transform(value) : value
+            // Use != (loose inequality) to check for both null and undefined
             toJsonExpression: schema.toJsonExpression
                 ? (parsed) =>
                       ts.factory.createConditionalExpression(
                           ts.factory.createBinaryExpression(
                               parsed,
-                              ts.SyntaxKind.ExclamationEqualsEqualsToken,
+                              ts.SyntaxKind.ExclamationEqualsToken, // != (loose) to catch both null and undefined
                               ts.factory.createNull()
                           ),
                           undefined,
@@ -191,18 +202,22 @@ export class ZodFormat implements SerializationFormat {
         };
     }
 
+    /**
+     * Wrap schema to allow both null and undefined values.
+     */
     private optionalNullable(schema: ZodBaseSchema): SchemaWithUtils {
         const baseSchema: ZodBaseSchema = {
             isOptional: true,
             isNullable: true,
             toExpression: () => chainMethod(chainMethod(schema.toExpression(), "optional"), "nullable"),
             // Preserve inner serialization, handling null/undefined
+            // Use != (loose inequality) to catch both null and undefined
             toJsonExpression: schema.toJsonExpression
                 ? (parsed) =>
                       ts.factory.createConditionalExpression(
                           ts.factory.createBinaryExpression(
                               parsed,
-                              ts.SyntaxKind.ExclamationEqualsEqualsToken,
+                              ts.SyntaxKind.ExclamationEqualsToken, // != (loose)
                               ts.factory.createNull()
                           ),
                           undefined,
@@ -313,41 +328,45 @@ export class ZodFormat implements SerializationFormat {
         /**
          * Creates a toJsonExpression for objects that recursively transforms properties needing serialization.
          *
-         * COMPLEXITY: O(n) where n = number of properties at each level with transforms.
-         * The spread operator copies all properties, even unchanged ones, at each level on the path
-         * to a property requiring transformation (e.g., Set → Array).
-         *
-         * POTENTIAL IMPROVEMENTS (follow-up work):
-         * 1. Persistent data structures (HAMT/Immutable.js): O(log n) updates with structural sharing,
-         *    but requires changing the entire data model and adds ~50KB bundle size.
-         * 2. Lazy/Proxy-based transforms: Defer transformation until JSON.stringify, achieving O(k)
-         *    where k = properties actually serialized. Adds runtime complexity.
-         * 3. Surgical Object.assign: Minor constant-factor improvement, same O(n) complexity.
-         *
-         * For typical API payloads (< 100 properties), current O(n) is acceptable.
+         * When property keys differ between raw/parsed (e.g., NestedObject vs nestedObject),
+         * we must explicitly map ALL properties to avoid having both keys in the output.
          */
+        const hasKeyRenaming = properties.some((p) => p.key.raw !== p.key.parsed);
         const createObjectJsonExpression = (parsed: ts.Expression): ts.Expression => {
-            if (propsWithJsonTransform.length === 0) {
+            if (propsWithJsonTransform.length === 0 && !hasKeyRenaming) {
                 return parsed; // No transform needed - O(1)
             }
-            // Generate: { ...parsed, propName: Array.from(parsed.propName), ... }
-            // This spreads all properties (O(n)) then overwrites transformed ones
-            const propAssignments: ts.ObjectLiteralElementLike[] = [
-                ts.factory.createSpreadAssignment(parsed)
-            ];
-            for (const prop of propsWithJsonTransform) {
+
+            // If there's key renaming OR transforms, we must explicitly map all properties
+            // to ensure correct key names and proper serialization
+            const propAssignments: ts.ObjectLiteralElementLike[] = properties.map((prop) => {
                 const propSchema = prop.value as ZodBaseSchema;
+                const propAccess = ts.factory.createPropertyAccessExpression(parsed, prop.key.parsed);
+
+                // If this property has a toJsonExpression, use it
                 if (propSchema.toJsonExpression) {
-                    propAssignments.push(
-                        ts.factory.createPropertyAssignment(
-                            prop.key.raw, // Use raw key for wire format
-                            propSchema.toJsonExpression(
-                                ts.factory.createPropertyAccessExpression(parsed, prop.key.parsed)
-                            )
-                        )
-                    );
+                    // If property is optional or nullable, wrap with null check
+                    const transformExpr =
+                        propSchema.isOptional || propSchema.isNullable
+                            ? ts.factory.createConditionalExpression(
+                                  ts.factory.createBinaryExpression(
+                                      propAccess,
+                                      ts.SyntaxKind.ExclamationEqualsToken, // != (loose)
+                                      ts.factory.createNull()
+                                  ),
+                                  undefined,
+                                  propSchema.toJsonExpression(propAccess),
+                                  undefined,
+                                  propAccess
+                              )
+                            : propSchema.toJsonExpression(propAccess);
+                    return ts.factory.createPropertyAssignment(prop.key.raw, transformExpr);
                 }
-            }
+
+                // No transform needed - just map the key
+                return ts.factory.createPropertyAssignment(prop.key.raw, propAccess);
+            });
+
             return ts.factory.createObjectLiteralExpression(propAssignments, true);
         };
 
@@ -367,13 +386,13 @@ export class ZodFormat implements SerializationFormat {
 
                 return this.zodCall("object", [ts.factory.createObjectLiteralExpression(propAssignments, true)]);
             },
+            // Need toJsonExpression if there are transforms OR key renamings
             toJsonExpression:
-                propsWithJsonTransform.length > 0 ? createObjectJsonExpression : undefined
+                propsWithJsonTransform.length > 0 || hasKeyRenaming ? createObjectJsonExpression : undefined
         };
 
-        // If any properties have different raw/parsed keys, wrap with transform
-        const needsTransform = properties.some((p) => p.key.raw !== p.key.parsed);
-        if (needsTransform) {
+        // If any properties have different raw/parsed keys, wrap with transform for parsing
+        if (hasKeyRenaming) {
             const transformedBase: ZodBaseSchema = {
                 isOptional: false,
                 isNullable: false,
@@ -400,8 +419,9 @@ export class ZodFormat implements SerializationFormat {
                     );
                     return chainMethod(inner, "transform", [transformExpr]);
                 },
+                // Need toJsonExpression if there are transforms OR key renamings
                 toJsonExpression:
-                    propsWithJsonTransform.length > 0 ? createObjectJsonExpression : undefined
+                    propsWithJsonTransform.length > 0 || hasKeyRenaming ? createObjectJsonExpression : undefined
             };
             return {
                 ...transformedBase,
@@ -536,7 +556,25 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => this.zodCall("array", [itemSchema.toExpression()])
+            toExpression: () => this.zodCall("array", [itemSchema.toExpression()]),
+            // If items need serialization, map over array and serialize each item
+            toJsonExpression: itemSchema.toJsonExpression
+                ? (parsed) =>
+                      ts.factory.createCallExpression(
+                          ts.factory.createPropertyAccessExpression(parsed, "map"),
+                          undefined,
+                          [
+                              ts.factory.createArrowFunction(
+                                  undefined,
+                                  undefined,
+                                  [ts.factory.createParameterDeclaration(undefined, undefined, undefined, "item")],
+                                  undefined,
+                                  ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                  itemSchema.toJsonExpression!(ts.factory.createIdentifier("item"))
+                              )
+                          ]
+                      )
+                : undefined
         };
 
         return {
@@ -548,7 +586,7 @@ export class ZodFormat implements SerializationFormat {
     public set = (itemSchema: Schema): SchemaWithUtils => {
         // JSON wire format uses arrays for sets
         // Parsing: z.array().transform(arr => new Set(arr)) converts array → Set
-        // Serialization: Array.from() converts Set → Array
+        // Serialization: Array.from() converts Set → Array (with item serialization if needed)
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -567,13 +605,41 @@ export class ZodFormat implements SerializationFormat {
                 );
                 return chainMethod(arraySchema, "transform", [transformFn]);
             },
-            // For JSON serialization, convert Set to Array: Array.from(value)
-            toJsonExpression: (parsed) =>
-                ts.factory.createCallExpression(
-                    ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("Array"), "from"),
-                    undefined,
-                    [parsed]
-                )
+            // For JSON serialization, convert Set to Array
+            // If items need serialization, map over them: Array.from(set).map(item => item.json(item))
+            // Otherwise just: Array.from(set)
+            toJsonExpression: itemSchema.toJsonExpression
+                ? (parsed) =>
+                      ts.factory.createCallExpression(
+                          ts.factory.createPropertyAccessExpression(
+                              ts.factory.createCallExpression(
+                                  ts.factory.createPropertyAccessExpression(
+                                      ts.factory.createIdentifier("Array"),
+                                      "from"
+                                  ),
+                                  undefined,
+                                  [parsed]
+                              ),
+                              "map"
+                          ),
+                          undefined,
+                          [
+                              ts.factory.createArrowFunction(
+                                  undefined,
+                                  undefined,
+                                  [ts.factory.createParameterDeclaration(undefined, undefined, undefined, "item")],
+                                  undefined,
+                                  ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                  itemSchema.toJsonExpression!(ts.factory.createIdentifier("item"))
+                              )
+                          ]
+                      )
+                : (parsed) =>
+                      ts.factory.createCallExpression(
+                          ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier("Array"), "from"),
+                          undefined,
+                          [parsed]
+                      )
         };
 
         return {
@@ -594,7 +660,57 @@ export class ZodFormat implements SerializationFormat {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () => this.zodCall("record", [this.zodCall("string"), valueSchema.toExpression()])
+            toExpression: () => this.zodCall("record", [this.zodCall("string"), valueSchema.toExpression()]),
+            // If values need serialization, transform each value in the record
+            toJsonExpression: valueSchema.toJsonExpression
+                ? (parsed) =>
+                      ts.factory.createCallExpression(
+                          ts.factory.createPropertyAccessExpression(
+                              ts.factory.createIdentifier("Object"),
+                              "fromEntries"
+                          ),
+                          undefined,
+                          [
+                              ts.factory.createCallExpression(
+                                  ts.factory.createPropertyAccessExpression(
+                                      ts.factory.createCallExpression(
+                                          ts.factory.createPropertyAccessExpression(
+                                              ts.factory.createIdentifier("Object"),
+                                              "entries"
+                                          ),
+                                          undefined,
+                                          [parsed]
+                                      ),
+                                      "map"
+                                  ),
+                                  undefined,
+                                  [
+                                      ts.factory.createArrowFunction(
+                                          undefined,
+                                          undefined,
+                                          [
+                                              ts.factory.createParameterDeclaration(
+                                                  undefined,
+                                                  undefined,
+                                                  undefined,
+                                                  ts.factory.createArrayBindingPattern([
+                                                      ts.factory.createBindingElement(undefined, undefined, "k"),
+                                                      ts.factory.createBindingElement(undefined, undefined, "v")
+                                                  ])
+                                              )
+                                          ],
+                                          undefined,
+                                          ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
+                                          ts.factory.createArrayLiteralExpression([
+                                              ts.factory.createIdentifier("k"),
+                                              valueSchema.toJsonExpression!(ts.factory.createIdentifier("v"))
+                                          ])
+                                      )
+                                  ]
+                              )
+                          ]
+                      )
+                : undefined
         };
 
         return {
@@ -724,7 +840,14 @@ export class ZodFormat implements SerializationFormat {
                         ])
                     )
                 ]);
-            }
+            },
+            // For JSON serialization, convert Date back to ISO string: date.toISOString()
+            toJsonExpression: (parsed) =>
+                ts.factory.createCallExpression(
+                    ts.factory.createPropertyAccessExpression(parsed, "toISOString"),
+                    undefined,
+                    []
+                )
         };
 
         return {
@@ -825,22 +948,82 @@ export class ZodFormat implements SerializationFormat {
     // ==================== Type Utilities ====================
 
     public Schema = {
-        _getReferenceToType: (_args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
-            // Use z.ZodTypeAny to avoid type inference issues with transforms (ZodEffects)
-            // The parsed/raw shapes are not used because Zod's strict inference doesn't work
-            // well with discriminated unions and transforms that rename properties
+        _getReferenceToType: ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
+            // Generate a type literal that matches the wrapper object structure:
+            // { _schema: z.ZodTypeAny; parse: (raw: unknown) => Parsed; json: (parsed: Parsed) => Raw }
             this.ensureZodImport();
-            return ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "ZodTypeAny"),
-                undefined
-            );
+            return ts.factory.createTypeLiteralNode([
+                // _schema: z.ZodTypeAny
+                ts.factory.createPropertySignature(
+                    undefined,
+                    "_schema",
+                    undefined,
+                    ts.factory.createTypeReferenceNode(
+                        ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "ZodTypeAny"),
+                        undefined
+                    )
+                ),
+                // parse: (raw: unknown) => Parsed
+                ts.factory.createPropertySignature(
+                    undefined,
+                    "parse",
+                    undefined,
+                    ts.factory.createFunctionTypeNode(
+                        undefined,
+                        [
+                            ts.factory.createParameterDeclaration(
+                                undefined,
+                                undefined,
+                                undefined,
+                                "raw",
+                                undefined,
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
+                            )
+                        ],
+                        parsedShape
+                    )
+                ),
+                // json: (parsed: Parsed) => Raw
+                ts.factory.createPropertySignature(
+                    undefined,
+                    "json",
+                    undefined,
+                    ts.factory.createFunctionTypeNode(
+                        undefined,
+                        [
+                            ts.factory.createParameterDeclaration(
+                                undefined,
+                                undefined,
+                                undefined,
+                                "parsed",
+                                undefined,
+                                parsedShape
+                            )
+                        ],
+                        rawShape
+                    )
+                )
+            ]);
         },
 
         _fromExpression: (expression: ts.Expression, opts?: { isObject: boolean }): SchemaWithUtils => {
+            // For Zod format, schemas are wrapped with { _schema, parse, json } structure
+            // When used in schema composition (z.array, z.record, etc.), we need the actual Zod schema
+            // When serializing, we call the wrapper's .json() method
             const baseSchema: ZodBaseSchema = {
                 isOptional: false,
                 isNullable: false,
-                toExpression: () => expression
+                // Return expression._schema for use in schema composition (z.array(), z.record(), etc.)
+                toExpression: () =>
+                    ts.factory.createPropertyAccessExpression(expression, "_schema"),
+                // Generate: schemaRef.json(parsed) for serialization
+                // This calls the json method on the wrapper object generated in writeSchemaToFile
+                toJsonExpression: (parsed) =>
+                    ts.factory.createCallExpression(
+                        ts.factory.createPropertyAccessExpression(expression, "json"),
+                        undefined,
+                        [parsed]
+                    )
             };
             if (opts?.isObject) {
                 return {
@@ -882,13 +1065,61 @@ export class ZodFormat implements SerializationFormat {
     };
 
     public ObjectSchema = {
-        _getReferenceToType: (_args: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
-            // Use z.ZodTypeAny to avoid type inference issues with transforms (ZodEffects)
+        _getReferenceToType: ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
+            // Generate same wrapper type as Schema - objects use the same structure
             this.ensureZodImport();
-            return ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "ZodTypeAny"),
-                undefined
-            );
+            return ts.factory.createTypeLiteralNode([
+                // _schema: z.ZodTypeAny
+                ts.factory.createPropertySignature(
+                    undefined,
+                    "_schema",
+                    undefined,
+                    ts.factory.createTypeReferenceNode(
+                        ts.factory.createQualifiedName(ts.factory.createIdentifier("z"), "ZodTypeAny"),
+                        undefined
+                    )
+                ),
+                // parse: (raw: unknown) => Parsed
+                ts.factory.createPropertySignature(
+                    undefined,
+                    "parse",
+                    undefined,
+                    ts.factory.createFunctionTypeNode(
+                        undefined,
+                        [
+                            ts.factory.createParameterDeclaration(
+                                undefined,
+                                undefined,
+                                undefined,
+                                "raw",
+                                undefined,
+                                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
+                            )
+                        ],
+                        parsedShape
+                    )
+                ),
+                // json: (parsed: Parsed) => Raw
+                ts.factory.createPropertySignature(
+                    undefined,
+                    "json",
+                    undefined,
+                    ts.factory.createFunctionTypeNode(
+                        undefined,
+                        [
+                            ts.factory.createParameterDeclaration(
+                                undefined,
+                                undefined,
+                                undefined,
+                                "parsed",
+                                undefined,
+                                parsedShape
+                            )
+                        ],
+                        rawShape
+                    )
+                )
+            ]);
         }
     };
 

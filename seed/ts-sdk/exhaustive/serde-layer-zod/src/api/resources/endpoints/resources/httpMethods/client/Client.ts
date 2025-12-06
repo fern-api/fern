@@ -60,7 +60,7 @@ export class HttpMethodsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.httpMethods.testGet.Response.parse(_response.body),
+                data: serializers.endpoints.httpMethods.testGet.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -113,7 +113,7 @@ export class HttpMethodsClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.ObjectWithRequiredField.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -122,7 +122,7 @@ export class HttpMethodsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.ObjectWithOptionalField.parse(_response.body),
+                data: serializers.types.ObjectWithOptionalField._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -178,7 +178,7 @@ export class HttpMethodsClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.ObjectWithRequiredField.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -187,7 +187,7 @@ export class HttpMethodsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.ObjectWithOptionalField.parse(_response.body),
+                data: serializers.types.ObjectWithOptionalField._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -257,7 +257,7 @@ export class HttpMethodsClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.ObjectWithOptionalField.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -266,7 +266,7 @@ export class HttpMethodsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.ObjectWithOptionalField.parse(_response.body),
+                data: serializers.types.ObjectWithOptionalField._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -323,7 +323,7 @@ export class HttpMethodsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.httpMethods.testDelete.Response.parse(_response.body),
+                data: serializers.endpoints.httpMethods.testDelete.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }

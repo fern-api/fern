@@ -62,7 +62,7 @@ export class ParamsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.params.getWithPath.Response.parse(_response.body),
+                data: serializers.endpoints.params.getWithPath.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -124,7 +124,7 @@ export class ParamsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.params.getWithInlinePath.Response.parse(_response.body),
+                data: serializers.endpoints.params.getWithInlinePath.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -442,7 +442,7 @@ export class ParamsClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.params.modifyWithPath.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -451,7 +451,7 @@ export class ParamsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.params.modifyWithPath.Response.parse(_response.body),
+                data: serializers.endpoints.params.modifyWithPath.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -508,7 +508,7 @@ export class ParamsClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: _body,
+            body: serializers.endpoints.params.modifyWithInlinePath.Request.json(_body),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -517,7 +517,7 @@ export class ParamsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.params.modifyWithInlinePath.Response.parse(_response.body),
+                data: serializers.endpoints.params.modifyWithInlinePath.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }

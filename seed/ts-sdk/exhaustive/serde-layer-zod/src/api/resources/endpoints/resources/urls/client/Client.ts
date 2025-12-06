@@ -55,7 +55,7 @@ export class UrlsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.urls.withMixedCase.Response.parse(_response.body),
+                data: serializers.endpoints.urls.withMixedCase.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -105,7 +105,7 @@ export class UrlsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.urls.noEndingSlash.Response.parse(_response.body),
+                data: serializers.endpoints.urls.noEndingSlash.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -155,7 +155,7 @@ export class UrlsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.urls.withEndingSlash.Response.parse(_response.body),
+                data: serializers.endpoints.urls.withEndingSlash.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -205,7 +205,7 @@ export class UrlsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.urls.withUnderscores.Response.parse(_response.body),
+                data: serializers.endpoints.urls.withUnderscores.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }

@@ -67,7 +67,7 @@ export class NoAuthClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.noAuth.postWithNoAuth.Response.parse(_response.body),
+                data: serializers.noAuth.postWithNoAuth.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -76,7 +76,7 @@ export class NoAuthClient {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new SeedExhaustive.BadRequestBody(
-                        serializers.BadObjectRequestInfo.parse(_response.error.body),
+                        serializers.BadObjectRequestInfo._schema.parse(_response.error.body),
                         _response.rawResponse,
                     );
                 default:

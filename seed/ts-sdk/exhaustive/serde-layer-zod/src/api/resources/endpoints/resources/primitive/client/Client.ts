@@ -56,7 +56,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.primitive.getAndReturnString.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -65,7 +65,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.primitive.getAndReturnString.Response.parse(_response.body),
+                data: serializers.endpoints.primitive.getAndReturnString.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -116,7 +116,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.primitive.getAndReturnInt.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -125,7 +125,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.primitive.getAndReturnInt.Response.parse(_response.body),
+                data: serializers.endpoints.primitive.getAndReturnInt.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -176,7 +176,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.primitive.getAndReturnLong.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -185,7 +185,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.primitive.getAndReturnLong.Response.parse(_response.body),
+                data: serializers.endpoints.primitive.getAndReturnLong.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -236,7 +236,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.primitive.getAndReturnDouble.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -245,7 +245,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.primitive.getAndReturnDouble.Response.parse(_response.body),
+                data: serializers.endpoints.primitive.getAndReturnDouble.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -296,7 +296,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.primitive.getAndReturnBool.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -305,7 +305,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.primitive.getAndReturnBool.Response.parse(_response.body),
+                data: serializers.endpoints.primitive.getAndReturnBool.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -356,7 +356,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.primitive.getAndReturnDatetime.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -365,7 +365,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.primitive.getAndReturnDatetime.Response.parse(_response.body),
+                data: serializers.endpoints.primitive.getAndReturnDatetime.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -416,7 +416,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.primitive.getAndReturnDate.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -425,7 +425,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.primitive.getAndReturnDate.Response.parse(_response.body),
+                data: serializers.endpoints.primitive.getAndReturnDate.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -476,7 +476,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.primitive.getAndReturnUuid.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -485,7 +485,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.primitive.getAndReturnUuid.Response.parse(_response.body),
+                data: serializers.endpoints.primitive.getAndReturnUuid.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -536,7 +536,7 @@ export class PrimitiveClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.primitive.getAndReturnBase64.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -545,7 +545,7 @@ export class PrimitiveClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.primitive.getAndReturnBase64.Response.parse(_response.body),
+                data: serializers.endpoints.primitive.getAndReturnBase64.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }

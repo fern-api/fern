@@ -33,6 +33,13 @@ export interface Schema {
      * Whether this schema represents a nullable value
      */
     isNullable: boolean;
+
+    /**
+     * Optional: Generate expression to serialize parsed value to JSON.
+     * If not provided, value passes through unchanged.
+     * Used for types that need transformation during serialization (Set → Array, etc.)
+     */
+    toJsonExpression?: (parsed: ts.Expression) => ts.Expression;
 }
 
 /**

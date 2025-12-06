@@ -76,7 +76,7 @@ export class InlinedRequestsClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.PostWithObjectBody.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -85,7 +85,7 @@ export class InlinedRequestsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.ObjectWithOptionalField.parse(_response.body),
+                data: serializers.types.ObjectWithOptionalField._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -94,7 +94,7 @@ export class InlinedRequestsClient {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new SeedExhaustive.BadRequestBody(
-                        serializers.BadObjectRequestInfo.parse(_response.error.body),
+                        serializers.BadObjectRequestInfo._schema.parse(_response.error.body),
                         _response.rawResponse,
                     );
                 default:

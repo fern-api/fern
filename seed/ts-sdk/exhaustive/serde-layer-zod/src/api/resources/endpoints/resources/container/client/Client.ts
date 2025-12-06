@@ -57,7 +57,7 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.container.getAndReturnListOfPrimitives.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -66,7 +66,9 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.container.getAndReturnListOfPrimitives.Response.parse(_response.body),
+                data: serializers.endpoints.container.getAndReturnListOfPrimitives.Response._schema.parse(
+                    _response.body,
+                ),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -126,7 +128,7 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.container.getAndReturnListOfObjects.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -135,7 +137,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.container.getAndReturnListOfObjects.Response.parse(_response.body),
+                data: serializers.endpoints.container.getAndReturnListOfObjects.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -186,7 +188,7 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.container.getAndReturnSetOfPrimitives.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -195,7 +197,9 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.container.getAndReturnSetOfPrimitives.Response.parse(_response.body),
+                data: serializers.endpoints.container.getAndReturnSetOfPrimitives.Response._schema.parse(
+                    _response.body,
+                ),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -248,7 +252,7 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.container.getAndReturnSetOfObjects.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -257,7 +261,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.container.getAndReturnSetOfObjects.Response.parse(_response.body),
+                data: serializers.endpoints.container.getAndReturnSetOfObjects.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -310,7 +314,7 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.container.getAndReturnMapPrimToPrim.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -319,7 +323,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.container.getAndReturnMapPrimToPrim.Response.parse(_response.body),
+                data: serializers.endpoints.container.getAndReturnMapPrimToPrim.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -374,7 +378,7 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -383,7 +387,9 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response.parse(_response.body),
+                data: serializers.endpoints.container.getAndReturnMapOfPrimToObject.Response._schema.parse(
+                    _response.body,
+                ),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -441,7 +447,10 @@ export class ContainerClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request != null ? request : undefined,
+            body:
+                request != null
+                    ? serializers.endpoints.container.getAndReturnOptional.Request.json(request)
+                    : undefined,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -450,7 +459,7 @@ export class ContainerClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.endpoints.container.getAndReturnOptional.Response.parse(_response.body),
+                data: serializers.endpoints.container.getAndReturnOptional.Response._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }

@@ -73,7 +73,7 @@ export class ObjectClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.ObjectWithOptionalField.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -82,7 +82,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.ObjectWithOptionalField.parse(_response.body),
+                data: serializers.types.ObjectWithOptionalField._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -140,7 +140,7 @@ export class ObjectClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.ObjectWithRequiredField.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -149,7 +149,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.ObjectWithRequiredField.parse(_response.body),
+                data: serializers.types.ObjectWithRequiredField._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -211,7 +211,7 @@ export class ObjectClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.ObjectWithMapOfMap.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -220,7 +220,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.ObjectWithMapOfMap.parse(_response.body),
+                data: serializers.types.ObjectWithMapOfMap._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -297,7 +297,7 @@ export class ObjectClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.NestedObjectWithOptionalField.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -306,7 +306,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.NestedObjectWithOptionalField.parse(_response.body),
+                data: serializers.types.NestedObjectWithOptionalField._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -386,7 +386,7 @@ export class ObjectClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.types.NestedObjectWithRequiredField.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -395,7 +395,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.NestedObjectWithRequiredField.parse(_response.body),
+                data: serializers.types.NestedObjectWithRequiredField._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -491,7 +491,7 @@ export class ObjectClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.endpoints.object.getAndReturnNestedWithRequiredFieldAsList.Request.json(request),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -500,7 +500,7 @@ export class ObjectClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.types.NestedObjectWithRequiredField.parse(_response.body),
+                data: serializers.types.NestedObjectWithRequiredField._schema.parse(_response.body),
                 rawResponse: _response.rawResponse,
             };
         }
