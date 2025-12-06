@@ -11,7 +11,7 @@ import { getReferenceToExportViaNamespaceImport } from "../referencing";
 import {
     PassthroughFormat,
     SerializationFormatType,
-    SerializationPipeline,
+    ZOD_VERSION,
     ZodFormat,
     ZURG_MANIFEST,
     ZurgFormat
@@ -199,7 +199,7 @@ export class CoreUtilitiesManager {
     private addSerializationDependencies(dependencyManager: DependencyManager): void {
         if (this.serializationFormat === "zod") {
             // Zod uses an npm dependency instead of bundled runtime files
-            dependencyManager.addDependency("zod", "^3.23.0");
+            dependencyManager.addDependency("zod", ZOD_VERSION);
         }
         // Zurg and Passthrough formats don't require external npm dependencies
     }

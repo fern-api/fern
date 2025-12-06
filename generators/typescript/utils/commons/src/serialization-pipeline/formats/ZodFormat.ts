@@ -19,7 +19,7 @@ import {
  * @todo Make this configurable from a client standpoint. This would be complex to implement because it would likely
  * involve scanning Zod's api at the given version and code-generating based on the results of the scan.
  */
-const ZOD_VERSION = "^3.23.0";
+export const ZOD_VERSION = "^3.23.0";
 
 /**
  * Base schema implementation for Zod format
