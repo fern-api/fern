@@ -7,4 +7,6 @@ import * as FernIr from "../../../../../index";
 export interface Declaration {
     fernFilepath: FernIr.dynamic.FernFilepath;
     name: FernIr.dynamic.Name;
+    /** Whether this type is an inline type that should be generated as a nested class. */
+    inline: boolean | undefined;
 }

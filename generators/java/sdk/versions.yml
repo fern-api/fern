@@ -1,3 +1,14 @@
+- version: 3.23.2
+  changelogEntry:
+    - summary: |
+        Fix dynamic snippets to correctly reference inline types as nested classes. When `enable-inline-types`
+        is configured, types are generated as nested static classes within parent types (e.g.,
+        `GetDiscriminatedUnionRequest.Bar`). Dynamic snippets now correctly reference these nested classes
+        instead of trying to import them from `com.seed.object.types.*` where they don't exist.
+      type: fix
+  createdAt: "2025-12-06"
+  irVersion: 61
+
 - version: 3.23.1
   changelogEntry:
     - summary: |
