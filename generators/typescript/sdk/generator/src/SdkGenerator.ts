@@ -27,6 +27,7 @@ import {
     NpmPackage,
     PackageId,
     PublicExportsManager,
+    SerializationFormatType,
     SimpleTypescriptProject,
     TypescriptProject
 } from "@fern-typescript/commons";
@@ -124,7 +125,7 @@ export declare namespace SdkGenerator {
         treatUnknownAsAny: boolean;
         includeContentHeadersOnFileDownloadResponse: boolean;
         includeSerdeLayer: boolean;
-        serializationFormat: "zurg" | "zod" | "none";
+        serializationFormat: SerializationFormatType;
         noOptionalProperties: boolean;
         tolerateRepublish: boolean;
         retainOriginalCasing: boolean;
