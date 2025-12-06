@@ -42,12 +42,15 @@ interface ZurgBaseSchema extends Schema {
 }
 
 /**
- * Helper to create a property access expression like `serialization.string()`.
+ * Helper to create a property access expression like `core.serialization.string()`.
  */
 function createSerializationCall(methodName: string, args: ts.Expression[] = []): ts.Expression {
     return ts.factory.createCallExpression(
         ts.factory.createPropertyAccessExpression(
-            ts.factory.createIdentifier("serialization"),
+            ts.factory.createPropertyAccessExpression(
+                ts.factory.createIdentifier("core"),
+                ts.factory.createIdentifier("serialization")
+            ),
             ts.factory.createIdentifier(methodName)
         ),
         undefined,
@@ -83,11 +86,11 @@ export class ZurgFormat implements SerializationFormat {
     }
 
     /**
-     * Ensure the serialization import is added to the current file
+     * Ensure the core import is added to the current file
      */
     private ensureSerializationImport(): void {
         if (!this.hasAddedSerializationImport && this.importsManager) {
-            this.importsManager.addImportFromRoot("core/schemas", { namespaceImport: "serialization" });
+            this.importsManager.addImportFromRoot("core", { namespaceImport: "core" });
             this.hasAddedSerializationImport = true;
         }
     }
@@ -736,7 +739,10 @@ export class ZurgFormat implements SerializationFormat {
         _getReferenceToType: ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
             this.ensureSerializationImport();
             return ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(ts.factory.createIdentifier("serialization"), "Schema"),
+                ts.factory.createQualifiedName(
+                    ts.factory.createQualifiedName(ts.factory.createIdentifier("core"), "serialization"),
+                    "Schema"
+                ),
                 [rawShape, parsedShape]
             );
         },
@@ -819,7 +825,10 @@ export class ZurgFormat implements SerializationFormat {
         _getReferenceToType: ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) => {
             this.ensureSerializationImport();
             return ts.factory.createTypeReferenceNode(
-                ts.factory.createQualifiedName(ts.factory.createIdentifier("serialization"), "ObjectSchema"),
+                ts.factory.createQualifiedName(
+                    ts.factory.createQualifiedName(ts.factory.createIdentifier("core"), "serialization"),
+                    "ObjectSchema"
+                ),
                 [rawShape, parsedShape]
             );
         }
