@@ -528,7 +528,7 @@ export class ExpressGenerator {
         this.context.logger.debug(`Generating ${filepathStr}`);
 
         const sourceFile = this.rootDirectory.createSourceFile(filepathStr);
-        const importsManager = new ImportsManager({ packagePath: this.getRelativePackagePath() });
+        const importsManager = new ImportsManager({ packagePath: this.config.packagePath });
 
         run({ sourceFile, importsManager });
 
