@@ -23,6 +23,7 @@ class ReadmeSnippetBuilder:
     PAGINATION_FEATURE_ID: generatorcli.FeatureId = "PAGINATION"
     ACCESS_RAW_RESPONSE_DATA_FEATURE_ID: generatorcli.FeatureId = "ACCESS_RAW_RESPONSE_DATA"
     WEBSOCKETS_FEATURE_ID: generatorcli.FeatureId = "WEBSOCKETS"
+    OAUTH_TOKEN_OVERRIDE_FEATURE_ID: generatorcli.FeatureId = "OAUTH_TOKEN_OVERRIDE"
 
     NO_FEATURE_PLACEHOLDER_ID: generatorcli.FeatureId = "NO_FEATURE"
 
@@ -43,6 +44,7 @@ class ReadmeSnippetBuilder:
         source_file_factory: SourceFileFactory,
         pagination_enabled: Optional[bool] = False,
         websocket_enabled: Optional[bool] = False,
+        oauth_token_override: Optional[bool] = False,
     ):
         self._ir = ir
         self._package_name = package_name
@@ -52,6 +54,7 @@ class ReadmeSnippetBuilder:
         # flags and how many places need this context.
         self._pagination_enabled = pagination_enabled
         self._websocket_enabled = websocket_enabled
+        self._oauth_token_override = oauth_token_override
 
         self._source_file_factory = source_file_factory
 
@@ -80,6 +83,9 @@ class ReadmeSnippetBuilder:
 
         if self._websocket_enabled:
             snippets[ReadmeSnippetBuilder.WEBSOCKETS_FEATURE_ID] = self._build_websocket_snippets()
+
+        if self._oauth_token_override:
+            snippets[ReadmeSnippetBuilder.OAUTH_TOKEN_OVERRIDE_FEATURE_ID] = self._build_oauth_token_override_snippets()
 
         snippets[ReadmeSnippetBuilder.ACCESS_RAW_RESPONSE_DATA_FEATURE_ID] = (
             self._build_access_raw_response_data_snippets()
@@ -496,6 +502,47 @@ for page in pager.iter_pages():
             return []
         except Exception as e:
             print(f"Failed to generage async client snippets with exception {e}")
+            return []
+
+    def _build_oauth_token_override_snippets(self) -> List[str]:
+        """Build snippets demonstrating OAuth token override authentication options."""
+        try:
+
+            def _client_writer_token(writer: AST.NodeWriter) -> None:
+                writer.write_line("# Option 1: Direct bearer token (bypass OAuth flow)")
+                writer.write("client = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        class_=self._root_client.sync_client.class_reference,
+                        args=[AST.Expression("...")],
+                        kwargs=[("token", AST.Expression('"my-pre-generated-bearer-token"'))],
+                    ),
+                    should_write_as_snippet=False,
+                )
+
+            def _client_writer_credentials(writer: AST.NodeWriter) -> None:
+                writer.write_line("# Option 2: OAuth client credentials flow (automatic token management)")
+                writer.write("client = ")
+                writer.write_node(
+                    AST.ClassInstantiation(
+                        class_=self._root_client.sync_client.class_reference,
+                        args=[AST.Expression("...")],
+                        kwargs=[
+                            ("client_id", AST.Expression('"your-client-id"')),
+                            ("client_secret", AST.Expression('"your-client-secret"')),
+                        ],
+                    ),
+                    should_write_as_snippet=False,
+                )
+
+            token_snippet = self._expression_to_snippet_str(AST.Expression(AST.CodeWriter(_client_writer_token)))
+            credentials_snippet = self._expression_to_snippet_str(
+                AST.Expression(AST.CodeWriter(_client_writer_credentials))
+            )
+
+            return [f"{token_snippet}\n{credentials_snippet}"]
+        except Exception as e:
+            print(f"Failed to generate oauth token override snippets with exception {e}")
             return []
 
     def _build_endpoint_feature_map(

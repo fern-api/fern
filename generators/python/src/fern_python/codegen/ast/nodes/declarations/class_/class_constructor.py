@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Sequence
 
 from ....ast_node import AstNode, AstNodeMetadata, NodeWriter
 from ...code_writer import CodeWriter
@@ -12,6 +12,7 @@ class ClassConstructor(AstNode):
         *,
         signature: FunctionSignature,
         body: CodeWriter,
+        overloads: Optional[Sequence[FunctionSignature]] = None,
     ):
         new_signature = FunctionSignature(
             parameters=[FunctionParameter(name="self")] + list(signature.parameters),
@@ -20,10 +21,24 @@ class ClassConstructor(AstNode):
             include_kwargs=signature.include_kwargs,
             return_type=None if signature.has_arguments() else TypeHint.none(),
         )
+        # Convert overload signatures to include 'self' parameter
+        new_overloads = None
+        if overloads is not None:
+            new_overloads = [
+                FunctionSignature(
+                    parameters=[FunctionParameter(name="self")] + list(overload.parameters),
+                    include_args=overload.include_args,
+                    named_parameters=overload.named_parameters,
+                    include_kwargs=overload.include_kwargs,
+                    return_type=None,
+                )
+                for overload in overloads
+            ]
         self.function_declaration = FunctionDeclaration(
             name="__init__",
             signature=new_signature,
             body=body,
+            overloads=new_overloads,
         )
 
     def get_metadata(self) -> AstNodeMetadata:

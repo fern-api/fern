@@ -624,6 +624,7 @@ __version__ = metadata.version("{project._project_config.package_name}")
             pagination_enabled=context.generator_config.generate_paginated_clients,
             websocket_enabled=write_websocket_snippets,
             generated_root_client=generated_root_client,
+            oauth_token_override=context.custom_config.oauth_token_override,
         )
         project.add_file(
             os.path.join(

@@ -15,7 +15,25 @@ class RootClient:
 
 @dataclass
 class GeneratedRootClient:
-    async_instantiation: AST.Expression
+    async_instantiations: List[AST.Expression]
     async_client: RootClient
-    sync_instantiation: AST.Expression
+    sync_instantiations: List[AST.Expression]
     sync_client: RootClient
+
+    @property
+    def async_instantiation(self) -> AST.Expression:
+        """Returns the primary/first async instantiation"""
+        if not self.async_instantiations:
+            raise ValueError(
+                "No async instantiations available. GeneratedRootClientBuilder must create at least one instantiation."
+            )
+        return self.async_instantiations[0]
+
+    @property
+    def sync_instantiation(self) -> AST.Expression:
+        """Returns the primary/first sync instantiation"""
+        if not self.sync_instantiations:
+            raise ValueError(
+                "No sync instantiations available. GeneratedRootClientBuilder must create at least one instantiation."
+            )
+        return self.sync_instantiations[0]
