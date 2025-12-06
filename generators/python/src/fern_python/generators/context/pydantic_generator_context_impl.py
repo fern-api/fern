@@ -3,16 +3,16 @@ from __future__ import annotations
 from collections import defaultdict
 from typing import Callable, Dict, List, Optional, Set
 
+import fern.ir.resources as ir_types
 from ...external_dependencies.pydantic import PydanticVersionCompatibility
 from .pydantic_generator_context import PydanticGeneratorContext
 from .type_reference_to_type_hint_converter import TypeReferenceToTypeHintConverter
+from fern.generator_exec import GeneratorConfig
+from ordered_set import OrderedSet
+
 from fern_python.codegen import AST, Filepath
 from fern_python.declaration_referencer import AbstractDeclarationReferencer
 from fern_python.generators.pydantic_model.custom_config import UnionNamingVersions
-from ordered_set import OrderedSet
-
-import fern.ir.resources as ir_types
-from fern.generator_exec import GeneratorConfig
 
 
 class PydanticGeneratorContextImpl(PydanticGeneratorContext):

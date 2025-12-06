@@ -1,14 +1,14 @@
 from typing import List
 
+import fern.ir.resources as ir_types
 from .base_client_generator import BaseClientGeneratorKwargs, ConstructorParameter
 from .base_wrapped_client_generator import BaseWrappedClientGenerator
 from .websocket_connect_method_generator import WebsocketConnectMethodGenerator
+from typing_extensions import Unpack
+
 from fern_python.codegen import AST, SourceFile
 from fern_python.codegen.ast.nodes.code_writer.code_writer import CodeWriterFunction
 from fern_python.generators.sdk.client_generator.generated_root_client import GeneratedRootClient
-from typing_extensions import Unpack
-
-import fern.ir.resources as ir_types
 
 
 class ClientGenerator(BaseWrappedClientGenerator[ConstructorParameter]):
