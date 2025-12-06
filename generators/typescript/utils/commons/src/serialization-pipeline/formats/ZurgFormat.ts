@@ -19,6 +19,10 @@ import {
 /**
  * Manifest for the Zurg runtime files.
  * Used by CoreUtilitiesManager to copy runtime files to generated SDK.
+ *
+ * @abstract @Zurg validation schema files. Note that while they are still currently bundled in the source, the
+ * next phase will to be move them into a separate public npm package that can be imported in the same manner as Zod and other libs.
+ * A possible alternative to that is to generate them using ASTs but that would end up being more complex to maintain.
  */
 export const ZURG_MANIFEST: CoreUtility.Manifest = {
     name: "schemas",
