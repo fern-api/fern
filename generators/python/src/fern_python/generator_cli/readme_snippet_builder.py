@@ -507,6 +507,7 @@ for page in pager.iter_pages():
     def _build_oauth_token_override_snippets(self) -> List[str]:
         """Build snippets demonstrating OAuth token override authentication options."""
         try:
+
             def _client_writer_token(writer: AST.NodeWriter) -> None:
                 writer.write_line("# Option 1: Direct bearer token (bypass OAuth flow)")
                 writer.write("client = ")

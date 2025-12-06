@@ -1063,7 +1063,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                     headers=None,
                     status_code=None,
                     body=AST.Expression(
-                        '"The client must be instantiated with either \'token\' or both \'client_id\' and \'client_secret\'"'
+                        "\"The client must be instantiated with either 'token' or both 'client_id' and 'client_secret'\""
                     ),
                 )
             )

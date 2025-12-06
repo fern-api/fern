@@ -25,8 +25,7 @@ class GeneratedRootClient:
         """Returns the primary/first async instantiation"""
         if not self.async_instantiations:
             raise ValueError(
-                "No async instantiations available. "
-                "GeneratedRootClientBuilder must create at least one instantiation."
+                "No async instantiations available. GeneratedRootClientBuilder must create at least one instantiation."
             )
         return self.async_instantiations[0]
 
@@ -35,7 +34,6 @@ class GeneratedRootClient:
         """Returns the primary/first sync instantiation"""
         if not self.sync_instantiations:
             raise ValueError(
-                "No sync instantiations available. "
-                "GeneratedRootClientBuilder must create at least one instantiation."
+                "No sync instantiations available. GeneratedRootClientBuilder must create at least one instantiation."
             )
         return self.sync_instantiations[0]
