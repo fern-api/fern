@@ -1,0 +1,9 @@
+instances:
+  - url: https://example.docs.buildwithfern.com
+navigation:
+  - page: Page With Absolute Slug
+    path: ./page-with-absolute-slug.mdx
+  - page: Page With Relative Slug
+    path: ./page-with-relative-slug.mdx
+  - page: Page Without Slug
+    path: ./page-without-slug.mdx
