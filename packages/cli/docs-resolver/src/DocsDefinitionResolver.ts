@@ -3,6 +3,7 @@ import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks }
 import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
     parseImagePaths,
+    type ReferencedMarkdownFile,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
     replaceReferencedMarkdown
@@ -219,6 +220,7 @@ export class DocsDefinitionResolver {
     private markdownFilesToNoIndex: Map<AbsoluteFilePath, boolean> = new Map();
     private markdownFilesToTags: Map<AbsoluteFilePath, string[]> = new Map();
     private rawMarkdownFiles: Record<RelativeFilePath, string> = {};
+    private referencedMarkdownFiles: ReferencedMarkdownFile[] = [];
     public async resolve(): Promise<DocsV1Write.DocsDefinition> {
         const resolveStartTime = performance.now();
         const startMemory = process.memoryUsage();
@@ -301,18 +303,28 @@ export class DocsDefinitionResolver {
 
         // replaces all instances of <Markdown src="path/to/file.md" /> with the content of the referenced markdown file
         // this should happen before we parse image paths, as the referenced markdown files may contain images.
+        // Also collects all referenced markdown files to store in jsFiles
         this.taskContext.logger.debug("Replacing referenced markdown files...");
         const refMdStart = performance.now();
         for (const [relativePath, markdown] of Object.entries(this.parsedDocsConfig.pages)) {
-            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = await replaceReferencedMarkdown({
+            const result = await replaceReferencedMarkdown({
                 markdown,
                 absolutePathToFernFolder: this.docsWorkspace.absoluteFilePath,
                 absolutePathToMarkdownFile: this.resolveFilepath(relativePath),
                 context: this.taskContext
             });
+            this.parsedDocsConfig.pages[RelativeFilePath.of(relativePath)] = result.markdown;
+            // Collect referenced markdown files (deduplicated by absolute path)
+            for (const refFile of result.referencedFiles) {
+                if (!this.referencedMarkdownFiles.some((f) => f.absoluteFilePath === refFile.absoluteFilePath)) {
+                    this.referencedMarkdownFiles.push(refFile);
+                }
+            }
         }
         const refMdTime = performance.now() - refMdStart;
-        this.taskContext.logger.debug(`Replaced referenced markdown in ${refMdTime.toFixed(0)}ms`);
+        this.taskContext.logger.debug(
+            `Replaced referenced markdown in ${refMdTime.toFixed(0)}ms, found ${this.referencedMarkdownFiles.length} referenced files`
+        );
 
         // replaces all instances of <Code src="path/to/file.js" /> with the content of the referenced code file
         this.taskContext.logger.debug("Replacing referenced code files...");
@@ -476,6 +488,17 @@ export class DocsDefinitionResolver {
             this.taskContext.logger.debug(
                 `Processed ${jsFilePaths.size} MDX component files in ${mdxTime.toFixed(0)}ms`
             );
+        }
+
+        // Add referenced markdown files to jsFiles so they are preserved in the docs definition
+        if (this.referencedMarkdownFiles.length > 0) {
+            this.taskContext.logger.debug(
+                `Adding ${this.referencedMarkdownFiles.length} referenced markdown files to jsFiles...`
+            );
+            for (const refFile of this.referencedMarkdownFiles) {
+                // Use the relative path as the key, and the raw content as the value
+                jsFiles[refFile.relativeFilePath] = refFile.content;
+            }
         }
 
         const totalResolveTime = performance.now() - resolveStartTime;

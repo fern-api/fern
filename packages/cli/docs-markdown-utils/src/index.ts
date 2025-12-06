@@ -4,5 +4,9 @@ export { isMdxExpression, isMdxJsxAttribute, isMdxJsxElement, isMdxJsxExpression
 export { getReplacedHref, parseImagePaths, replaceImagePathsAndUrls, trimAnchor } from "./parseImagePaths";
 export { parseMarkdownToTree } from "./parseMarkdownToTree";
 export { replaceReferencedCode } from "./replaceReferencedCode";
-export { replaceReferencedMarkdown } from "./replaceReferencedMarkdown";
+export {
+    type ReferencedMarkdownFile,
+    type ReplaceReferencedMarkdownResult,
+    replaceReferencedMarkdown
+} from "./replaceReferencedMarkdown";
 export { walkEstreeJsxAttributes } from "./walk-estree-jsx-attributes";
