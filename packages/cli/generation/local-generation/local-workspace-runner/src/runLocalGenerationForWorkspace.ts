@@ -23,6 +23,7 @@ import path from "path";
 import tmp from "tmp-promise";
 import { writeFilesToDiskAndRunGenerator } from "./runGenerator";
 import { isAutoVersion } from "./VersionUtils";
+import { warnOnDuplicateErrorStatusCodes } from "./warnOnDuplicateErrorStatusCodes";
 
 export async function runLocalGenerationForWorkspace({
     token,
@@ -95,6 +96,9 @@ export async function runLocalGenerationForWorkspace({
                         generatorConfig: generatorInvocation.config
                     }
                 });
+
+                // Warn about duplicate error status codes (once per workspace, not per generator)
+                warnOnDuplicateErrorStatusCodes(intermediateRepresentation, context.logger);
 
                 const venus = createVenusService({ token: token?.value });
 

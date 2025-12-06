@@ -7,6 +7,7 @@ import { FdrAPI, FdrClient } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import { FernIr } from "@fern-api/ir-sdk";
+import { warnOnDuplicateErrorStatusCodes } from "@fern-api/local-workspace-runner";
 import { convertIrToFdrApi } from "@fern-api/register";
 import { InteractiveTaskContext } from "@fern-api/task-context";
 import { FernVenusApi } from "@fern-api/venus-api-sdk";
@@ -95,6 +96,9 @@ export async function runRemoteGenerationForGenerator({
             generatorConfig: generatorInvocation.config
         }
     });
+
+    // Warn about duplicate error status codes (once per workspace, not per generator)
+    warnOnDuplicateErrorStatusCodes(ir, interactiveTaskContext.logger);
 
     const venus = createVenusService({ token: token.value });
     const orgResponse = await venus.organization.get(FernVenusApi.OrganizationId(projectConfig.organization));
