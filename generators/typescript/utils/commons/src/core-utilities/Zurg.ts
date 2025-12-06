@@ -1,17 +1,7 @@
-import {
-    AdditionalProperty,
-    ObjectLikeSchema,
-    ObjectSchema,
-    Property,
-    SchemaOptions,
-    SchemaWithUtils,
-    SerializationFormat,
-    SingleUnionType,
-    UnionArgs
-} from "../serialization-pipeline/SerializationFormat";
+import { SerializationFormat } from "../serialization-pipeline/SerializationFormat";
 
 // Re-export types from SerializationFormat for backward compatibility
-export type { SchemaOptions };
+export type SchemaOptions = SerializationFormat.SchemaOptions;
 
 /**
  * Zurg is now a type alias for SerializationFormat.
@@ -24,14 +14,14 @@ export type Zurg = SerializationFormat;
  * All types are aliased to their SerializationFormat equivalents.
  */
 export declare namespace Zurg {
-    export { SchemaWithUtils as Schema };
-    export { ObjectSchema };
-    export { ObjectLikeSchema };
-    export { AdditionalProperty };
-    export { Property };
+    export type Schema = SerializationFormat.SchemaWithUtils;
+    export type ObjectSchema = SerializationFormat.ObjectSchema;
+    export type ObjectLikeSchema = SerializationFormat.ObjectLikeSchema;
+    export type AdditionalProperty = SerializationFormat.AdditionalProperty;
+    export type Property = SerializationFormat.Property;
 
     export namespace union {
-        export { UnionArgs as Args };
-        export { SingleUnionType };
+        export type Args = SerializationFormat.UnionArgs;
+        export type SingleUnionType = SerializationFormat.SingleUnionType;
     }
 }

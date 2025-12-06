@@ -1,3 +1,3 @@
 export { PassthroughFormat } from "./PassthroughFormat";
-export { ZodFormat } from "./ZodFormat";
+export { ZodFormat, ZOD_VERSION } from "./ZodFormat";
 export { ZURG_MANIFEST, ZurgFormat } from "./ZurgFormat";

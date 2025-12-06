@@ -2,19 +2,7 @@ import { ts } from "ts-morph";
 
 import { CoreUtility } from "../../core-utilities/CoreUtility";
 import { ImportsManager } from "../../imports-manager";
-import {
-    AdditionalProperty,
-    ObjectLikeSchema,
-    ObjectSchema,
-    Property,
-    Schema,
-    SchemaOptions,
-    SchemaWithUtils,
-    SerializationFormat,
-    SerializationFormatConfig,
-    SingleUnionType,
-    UnionArgs
-} from "../SerializationFormat";
+import { SerializationFormat } from "../SerializationFormat";
 
 /**
  * Manifest for the Zurg runtime files.
@@ -35,7 +23,7 @@ export const ZURG_MANIFEST: CoreUtility.Manifest = {
 /**
  * Base schema implementation for Zurg format
  */
-interface ZurgBaseSchema extends Schema {
+interface ZurgBaseSchema extends SerializationFormat.Schema {
     toExpression: () => ts.Expression;
     isOptional: boolean;
     isNullable: boolean;
@@ -80,7 +68,7 @@ export class ZurgFormat implements SerializationFormat {
     private hasAddedSerializationImport = false;
     private generateEndpointMetadata: boolean;
 
-    constructor(config: SerializationFormatConfig, importsManager?: ImportsManager) {
+    constructor(config: SerializationFormat.Config, importsManager?: ImportsManager) {
         this.importsManager = importsManager;
         this.generateEndpointMetadata = config.generateEndpointMetadata;
     }
@@ -105,7 +93,9 @@ export class ZurgFormat implements SerializationFormat {
 
     // ==================== Schema Utilities ====================
 
-    private getSchemaUtils(baseSchema: ZurgBaseSchema): Omit<SchemaWithUtils, keyof Schema> {
+    private getSchemaUtils(
+        baseSchema: ZurgBaseSchema
+    ): Omit<SerializationFormat.SchemaWithUtils, keyof SerializationFormat.Schema> {
         return {
             nullable: () => this.nullable(baseSchema),
             optional: () => this.optional(baseSchema),
@@ -150,7 +140,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     }
 
-    private constructSchemaOptionsArgs(schemaOptions: Required<SchemaOptions>): ts.Expression[] {
+    private constructSchemaOptionsArgs(schemaOptions: Required<SerializationFormat.SchemaOptions>): ts.Expression[] {
         const properties: ts.ObjectLiteralElementLike[] = [];
 
         if (schemaOptions.unrecognizedObjectKeys !== "fail") {
@@ -211,7 +201,7 @@ export class ZurgFormat implements SerializationFormat {
         }
     }
 
-    private nullable(schema: ZurgBaseSchema): SchemaWithUtils {
+    private nullable(schema: ZurgBaseSchema): SerializationFormat.SchemaWithUtils {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: true,
@@ -224,7 +214,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     }
 
-    private optional(schema: ZurgBaseSchema): SchemaWithUtils {
+    private optional(schema: ZurgBaseSchema): SerializationFormat.SchemaWithUtils {
         const baseSchema: ZurgBaseSchema = {
             isOptional: true,
             isNullable: false,
@@ -237,7 +227,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     }
 
-    private optionalNullable(schema: ZurgBaseSchema): SchemaWithUtils {
+    private optionalNullable(schema: ZurgBaseSchema): SerializationFormat.SchemaWithUtils {
         const baseSchema: ZurgBaseSchema = {
             isOptional: true,
             isNullable: true,
@@ -253,7 +243,7 @@ export class ZurgFormat implements SerializationFormat {
     private transform(
         schema: ZurgBaseSchema,
         { newShape, transformer }: { newShape: ts.TypeNode | undefined; transformer: ZurgBaseSchema }
-    ): SchemaWithUtils {
+    ): SerializationFormat.SchemaWithUtils {
         const baseSchema: ZurgBaseSchema = {
             isOptional: transformer.isOptional,
             isNullable: transformer.isNullable,
@@ -276,17 +266,19 @@ export class ZurgFormat implements SerializationFormat {
 
     // ==================== Object-like Utilities ====================
 
-    private getObjectLikeUtils(objectLike: ZurgBaseSchema): Pick<ObjectLikeSchema, "withParsedProperties"> {
+    private getObjectLikeUtils(
+        objectLike: ZurgBaseSchema
+    ): Pick<SerializationFormat.ObjectLikeSchema, "withParsedProperties"> {
         return {
-            withParsedProperties: (additionalProperties: AdditionalProperty[]) =>
+            withParsedProperties: (additionalProperties: SerializationFormat.AdditionalProperty[]) =>
                 this.withParsedProperties(objectLike, additionalProperties)
         };
     }
 
     private withParsedProperties(
         objectLike: ZurgBaseSchema,
-        additionalProperties: AdditionalProperty[]
-    ): ObjectLikeSchema {
+        additionalProperties: SerializationFormat.AdditionalProperty[]
+    ): SerializationFormat.ObjectLikeSchema {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -354,7 +346,9 @@ export class ZurgFormat implements SerializationFormat {
 
     // ==================== Object Utilities ====================
 
-    private getObjectUtils(objectSchema: ZurgBaseSchema): Pick<ObjectSchema, "extend" | "passthrough"> {
+    private getObjectUtils(
+        objectSchema: ZurgBaseSchema
+    ): Pick<SerializationFormat.ObjectSchema, "extend" | "passthrough"> {
         return {
             extend: (extension) => this.extend(objectSchema, extension as ZurgBaseSchema),
             passthrough: () => {
@@ -374,7 +368,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     }
 
-    private extend(objectSchema: ZurgBaseSchema, extension: ZurgBaseSchema): ObjectSchema {
+    private extend(objectSchema: ZurgBaseSchema, extension: ZurgBaseSchema): SerializationFormat.ObjectSchema {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -391,7 +385,7 @@ export class ZurgFormat implements SerializationFormat {
 
     // ==================== Object Schema Builders ====================
 
-    public object = (properties: Property[]): ObjectSchema => {
+    public object = (properties: SerializationFormat.Property[]): SerializationFormat.ObjectSchema => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -406,7 +400,9 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public objectWithoutOptionalProperties = (properties: Property[]): ObjectSchema => {
+    public objectWithoutOptionalProperties = (
+        properties: SerializationFormat.Property[]
+    ): SerializationFormat.ObjectSchema => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -424,7 +420,9 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    private constructObjectLiteralForProperties(properties: Property[]): ts.ObjectLiteralExpression {
+    private constructObjectLiteralForProperties(
+        properties: SerializationFormat.Property[]
+    ): ts.ObjectLiteralExpression {
         return ts.factory.createObjectLiteralExpression(
             properties.map((property) => {
                 let value = property.value.toExpression();
@@ -443,7 +441,11 @@ export class ZurgFormat implements SerializationFormat {
 
     // ==================== Union Schema Builders ====================
 
-    public union = ({ parsedDiscriminant, rawDiscriminant, singleUnionTypes }: UnionArgs): ObjectLikeSchema => {
+    public union = ({
+        parsedDiscriminant,
+        rawDiscriminant,
+        singleUnionTypes
+    }: SerializationFormat.UnionArgs): SerializationFormat.ObjectLikeSchema => {
         const discriminantArgument =
             parsedDiscriminant === rawDiscriminant
                 ? ts.factory.createStringLiteral(parsedDiscriminant)
@@ -487,7 +489,7 @@ export class ZurgFormat implements SerializationFormat {
         ]);
     }
 
-    public undiscriminatedUnion = (schemas: Schema[]): SchemaWithUtils => {
+    public undiscriminatedUnion = (schemas: SerializationFormat.Schema[]): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -505,7 +507,7 @@ export class ZurgFormat implements SerializationFormat {
 
     // ==================== Collection Schema Builders ====================
 
-    public list = (itemSchema: Schema): SchemaWithUtils => {
+    public list = (itemSchema: SerializationFormat.Schema): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -518,7 +520,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public set = (itemSchema: Schema): SchemaWithUtils => {
+    public set = (itemSchema: SerializationFormat.Schema): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -531,7 +533,13 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public record = ({ keySchema, valueSchema }: { keySchema: Schema; valueSchema: Schema }): SchemaWithUtils => {
+    public record = ({
+        keySchema,
+        valueSchema
+    }: {
+        keySchema: SerializationFormat.Schema;
+        valueSchema: SerializationFormat.Schema;
+    }): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -546,7 +554,7 @@ export class ZurgFormat implements SerializationFormat {
 
     // ==================== Enum Schema Builder ====================
 
-    public enum = (values: string[]): SchemaWithUtils => {
+    public enum = (values: string[]): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -566,7 +574,7 @@ export class ZurgFormat implements SerializationFormat {
 
     // ==================== Primitive Schema Builders ====================
 
-    public string = (): SchemaWithUtils => {
+    public string = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -579,7 +587,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public stringLiteral = (literal: string): SchemaWithUtils => {
+    public stringLiteral = (literal: string): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -592,7 +600,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public booleanLiteral = (literal: boolean): SchemaWithUtils => {
+    public booleanLiteral = (literal: boolean): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -606,7 +614,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public number = (): SchemaWithUtils => {
+    public number = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -619,7 +627,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public bigint = (): SchemaWithUtils => {
+    public bigint = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -632,7 +640,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public boolean = (): SchemaWithUtils => {
+    public boolean = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -645,7 +653,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public date = (): SchemaWithUtils => {
+    public date = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -658,7 +666,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public any = (): SchemaWithUtils => {
+    public any = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: true,
@@ -671,7 +679,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public unknown = (): SchemaWithUtils => {
+    public unknown = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: true,
             isNullable: false,
@@ -684,7 +692,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public never = (): SchemaWithUtils => {
+    public never = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -699,7 +707,7 @@ export class ZurgFormat implements SerializationFormat {
 
     // ==================== Lazy Schema Builders ====================
 
-    public lazy = (schema: Schema): SchemaWithUtils => {
+    public lazy = (schema: SerializationFormat.Schema): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: schema.isOptional,
             isNullable: schema.isNullable,
@@ -715,7 +723,7 @@ export class ZurgFormat implements SerializationFormat {
         };
     };
 
-    public lazyObject = (schema: Schema): ObjectSchema => {
+    public lazyObject = (schema: SerializationFormat.Schema): SerializationFormat.ObjectSchema => {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: schema.isNullable,
@@ -747,7 +755,10 @@ export class ZurgFormat implements SerializationFormat {
             );
         },
 
-        _fromExpression: (expression: ts.Expression, opts?: { isObject: boolean }): SchemaWithUtils => {
+        _fromExpression: (
+            expression: ts.Expression,
+            opts?: { isObject: boolean }
+        ): SerializationFormat.SchemaWithUtils => {
             const baseSchema: ZurgBaseSchema = {
                 isOptional: false,
                 isNullable: false,
@@ -759,7 +770,7 @@ export class ZurgFormat implements SerializationFormat {
                     ...this.getSchemaUtils(baseSchema),
                     ...this.getObjectLikeUtils(baseSchema),
                     ...this.getObjectUtils(baseSchema)
-                } as SchemaWithUtils;
+                } as SerializationFormat.SchemaWithUtils;
             }
             return {
                 ...baseSchema,

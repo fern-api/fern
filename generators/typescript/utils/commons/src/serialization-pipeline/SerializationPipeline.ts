@@ -1,7 +1,7 @@
 import { PassthroughFormat } from "./formats/PassthroughFormat";
 import { ZodFormat } from "./formats/ZodFormat";
 import { ZurgFormat } from "./formats/ZurgFormat";
-import { SerializationFormat, SerializationFormatConfig } from "./SerializationFormat";
+import { SerializationFormat } from "./SerializationFormat";
 
 /**
  * Supported serialization format types
@@ -11,7 +11,7 @@ export type SerializationFormatType = "zurg" | "zod" | "none";
 /**
  * Configuration for creating a SerializationPipeline
  */
-export interface SerializationPipelineConfig extends SerializationFormatConfig {
+export interface SerializationPipelineConfig extends SerializationFormat.Config {
     /**
      * The serialization format to use.
      * - "zurg": Use Zurg (bundled runtime)

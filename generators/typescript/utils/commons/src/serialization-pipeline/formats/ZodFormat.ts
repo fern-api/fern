@@ -1,18 +1,7 @@
 import { ts } from "ts-morph";
 
 import { ImportsManager } from "../../imports-manager";
-import {
-    AdditionalProperty,
-    ObjectLikeSchema,
-    ObjectSchema,
-    Property,
-    Schema,
-    SchemaOptions,
-    SchemaWithUtils,
-    SerializationFormat,
-    SerializationFormatConfig,
-    UnionArgs
-} from "../SerializationFormat";
+import { SerializationFormat } from "../SerializationFormat";
 
 /**
  * Zod version to use as dependency.
@@ -24,7 +13,7 @@ export const ZOD_VERSION = "^3.23.0";
 /**
  * Base schema implementation for Zod format
  */
-interface ZodBaseSchema extends Schema {
+interface ZodBaseSchema extends SerializationFormat.Schema {
     toExpression: () => ts.Expression;
     isOptional: boolean;
     isNullable: boolean;
@@ -72,7 +61,7 @@ export class ZodFormat implements SerializationFormat {
     private importsManager?: ImportsManager;
     private hasAddedZodImport = false;
 
-    constructor(_config: SerializationFormatConfig, importsManager?: ImportsManager) {
+    constructor(_config: SerializationFormat.Config, importsManager?: ImportsManager) {
         this.importsManager = importsManager;
     }
 
@@ -96,7 +85,7 @@ export class ZodFormat implements SerializationFormat {
 
     // ==================== Schema Utilities ====================
 
-    private getSchemaUtils(baseSchema: ZodBaseSchema): Omit<SchemaWithUtils, keyof Schema> {
+    private getSchemaUtils(baseSchema: ZodBaseSchema): Omit<SerializationFormat.SchemaWithUtils, keyof SerializationFormat.Schema> {
         return {
             nullable: () => this.nullable(baseSchema),
             optional: () => this.optional(baseSchema),
@@ -143,7 +132,7 @@ export class ZodFormat implements SerializationFormat {
     /**
      * Wrap schema to allow null values.
      */
-    private nullable(schema: ZodBaseSchema): SchemaWithUtils {
+    private nullable(schema: ZodBaseSchema): SerializationFormat.SchemaWithUtils {
         const baseSchema: ZodBaseSchema = {
             isOptional: schema.isOptional,
             isNullable: true,
@@ -174,7 +163,7 @@ export class ZodFormat implements SerializationFormat {
     /**
      * Wrap schema to allow undefined values.
      */
-    private optional(schema: ZodBaseSchema): SchemaWithUtils {
+    private optional(schema: ZodBaseSchema): SerializationFormat.SchemaWithUtils {
         const baseSchema: ZodBaseSchema = {
             isOptional: true,
             isNullable: schema.isNullable,
@@ -205,7 +194,7 @@ export class ZodFormat implements SerializationFormat {
     /**
      * Wrap schema to allow both null and undefined values.
      */
-    private optionalNullable(schema: ZodBaseSchema): SchemaWithUtils {
+    private optionalNullable(schema: ZodBaseSchema): SerializationFormat.SchemaWithUtils {
         const baseSchema: ZodBaseSchema = {
             isOptional: true,
             isNullable: true,
@@ -235,13 +224,13 @@ export class ZodFormat implements SerializationFormat {
 
     // ==================== Object-like Utilities ====================
 
-    private getObjectLikeUtils(_objectLike: ZodBaseSchema): Pick<ObjectLikeSchema, "withParsedProperties"> {
+    private getObjectLikeUtils(_objectLike: ZodBaseSchema): Pick<SerializationFormat.ObjectLikeSchema, "withParsedProperties"> {
         return {
-            withParsedProperties: (additionalProperties: AdditionalProperty[]) => {
+            withParsedProperties: (additionalProperties: SerializationFormat.AdditionalProperty[]) => {
                 // Zod doesn't have direct equivalent of withParsedProperties
                 // We use .transform() to add computed properties
                 if (additionalProperties.length === 0) {
-                    return _objectLike as unknown as ObjectLikeSchema;
+                    return _objectLike as unknown as SerializationFormat.ObjectLikeSchema;
                 }
 
                 const transformExpr = ts.factory.createArrowFunction(
@@ -282,9 +271,9 @@ export class ZodFormat implements SerializationFormat {
 
     // ==================== Object Utilities ====================
 
-    private getObjectUtils(objectSchema: ZodBaseSchema): Pick<ObjectSchema, "extend" | "passthrough"> {
+    private getObjectUtils(objectSchema: ZodBaseSchema): Pick<SerializationFormat.ObjectSchema, "extend" | "passthrough"> {
         return {
-            extend: (extension) => {
+            extend: (extension: SerializationFormat.Schema) => {
                 // Zod uses .merge() for extending objects
                 const extendedExpr = chainMethod(objectSchema.toExpression(), "merge", [extension.toExpression()]);
                 const newBase: ZodBaseSchema = {
@@ -319,7 +308,7 @@ export class ZodFormat implements SerializationFormat {
 
     // ==================== Object Schema Builders ====================
 
-    public object = (properties: Property[]): ObjectSchema => {
+    public object = (properties: SerializationFormat.Property[]): SerializationFormat.ObjectSchema => {
         // Check if any property has toJsonExpression (needs serialization transform)
         const propsWithJsonTransform = properties.filter((p) => (p.value as ZodBaseSchema).toJsonExpression != null);
 
@@ -437,7 +426,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public objectWithoutOptionalProperties = (properties: Property[]): ObjectSchema => {
+    public objectWithoutOptionalProperties = (properties: SerializationFormat.Property[]): SerializationFormat.ObjectSchema => {
         // In Zod, we use .strict() to disallow extra properties
         // For "without optional properties", we just create a regular object
         // The optionality is handled at the property level
@@ -446,7 +435,7 @@ export class ZodFormat implements SerializationFormat {
 
     // ==================== Union Schema Builders ====================
 
-    public union = ({ parsedDiscriminant, rawDiscriminant, singleUnionTypes }: UnionArgs): ObjectLikeSchema => {
+    public union = ({ parsedDiscriminant, rawDiscriminant, singleUnionTypes }: SerializationFormat.UnionArgs): SerializationFormat.ObjectLikeSchema => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -528,7 +517,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public undiscriminatedUnion = (schemas: Schema[]): SchemaWithUtils => {
+    public undiscriminatedUnion = (schemas: SerializationFormat.Schema[]): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -550,7 +539,7 @@ export class ZodFormat implements SerializationFormat {
 
     // ==================== Collection Schema Builders ====================
 
-    public list = (itemSchema: Schema): SchemaWithUtils => {
+    public list = (itemSchema: SerializationFormat.Schema): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -581,7 +570,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public set = (itemSchema: Schema): SchemaWithUtils => {
+    public set = (itemSchema: SerializationFormat.Schema): SerializationFormat.SchemaWithUtils => {
         // JSON wire format uses arrays for sets
         // Parsing: z.array().transform(arr => new Set(arr)) converts array → Set
         // Serialization: Array.from() converts Set → Array (with item serialization if needed)
@@ -650,9 +639,9 @@ export class ZodFormat implements SerializationFormat {
         keySchema: _keySchema,
         valueSchema
     }: {
-        keySchema: Schema;
-        valueSchema: Schema;
-    }): SchemaWithUtils => {
+        keySchema: SerializationFormat.Schema;
+        valueSchema: SerializationFormat.Schema;
+    }): SerializationFormat.SchemaWithUtils => {
         // JSON object keys are always strings, so we use z.string() for the key
         // regardless of the declared key type (e.g., even if Fern declares map<integer, string>)
         const baseSchema: ZodBaseSchema = {
@@ -719,7 +708,7 @@ export class ZodFormat implements SerializationFormat {
 
     // ==================== Enum Schema Builder ====================
 
-    public enum = (values: string[]): SchemaWithUtils => {
+    public enum = (values: string[]): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -740,7 +729,7 @@ export class ZodFormat implements SerializationFormat {
 
     // ==================== Primitive Schema Builders ====================
 
-    public string = (): SchemaWithUtils => {
+    public string = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -753,7 +742,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public stringLiteral = (literal: string): SchemaWithUtils => {
+    public stringLiteral = (literal: string): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -766,7 +755,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public booleanLiteral = (literal: boolean): SchemaWithUtils => {
+    public booleanLiteral = (literal: boolean): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -779,7 +768,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public number = (): SchemaWithUtils => {
+    public number = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -792,7 +781,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public bigint = (): SchemaWithUtils => {
+    public bigint = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -805,7 +794,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public boolean = (): SchemaWithUtils => {
+    public boolean = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -818,7 +807,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public date = (): SchemaWithUtils => {
+    public date = (): SerializationFormat.SchemaWithUtils => {
         // Zod's z.date() parses Date objects, but we need to parse ISO strings
         // Use z.coerce.date() or z.string().transform() for ISO string parsing
         const baseSchema: ZodBaseSchema = {
@@ -854,7 +843,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public any = (): SchemaWithUtils => {
+    public any = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: true, // any includes null
@@ -867,7 +856,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public unknown = (): SchemaWithUtils => {
+    public unknown = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: true, // unknown can be undefined
             isNullable: false,
@@ -880,7 +869,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public never = (): SchemaWithUtils => {
+    public never = (): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: false,
@@ -895,7 +884,7 @@ export class ZodFormat implements SerializationFormat {
 
     // ==================== Lazy Schema Builders ====================
 
-    public lazy = (schema: Schema): SchemaWithUtils => {
+    public lazy = (schema: SerializationFormat.Schema): SerializationFormat.SchemaWithUtils => {
         const baseSchema: ZodBaseSchema = {
             isOptional: schema.isOptional,
             isNullable: schema.isNullable,
@@ -918,7 +907,7 @@ export class ZodFormat implements SerializationFormat {
         };
     };
 
-    public lazyObject = (schema: Schema): ObjectSchema => {
+    public lazyObject = (schema: SerializationFormat.Schema): SerializationFormat.ObjectSchema => {
         const baseSchema: ZodBaseSchema = {
             isOptional: false,
             isNullable: schema.isNullable,
@@ -1004,7 +993,7 @@ export class ZodFormat implements SerializationFormat {
             ]);
         },
 
-        _fromExpression: (expression: ts.Expression, opts?: { isObject: boolean }): SchemaWithUtils => {
+        _fromExpression: (expression: ts.Expression, opts?: { isObject: boolean }): SerializationFormat.SchemaWithUtils => {
             // For Zod format, schemas are wrapped with { _schema, parse, json } structure
             // When used in schema composition (z.array, z.record, etc.), we need the actual Zod schema
             // When serializing, we call the wrapper's .json() method
@@ -1028,7 +1017,7 @@ export class ZodFormat implements SerializationFormat {
                     ...this.getSchemaUtils(baseSchema),
                     ...this.getObjectLikeUtils(baseSchema),
                     ...this.getObjectUtils(baseSchema)
-                } as SchemaWithUtils;
+                } as SerializationFormat.SchemaWithUtils;
             }
             return {
                 ...baseSchema,
