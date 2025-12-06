@@ -406,11 +406,18 @@ class AsyncHttpClient:
         base_timeout: typing.Callable[[], typing.Optional[float]],
         base_headers: typing.Callable[[], typing.Dict[str, str]],
         base_url: typing.Optional[typing.Callable[[], str]] = None,
+        async_base_headers: typing.Optional[typing.Callable[[], typing.Awaitable[typing.Dict[str, str]]]] = None,
     ):
         self.base_url = base_url
         self.base_timeout = base_timeout
         self.base_headers = base_headers
+        self.async_base_headers = async_base_headers
         self.httpx_client = httpx_client
+
+    async def _get_headers(self) -> typing.Dict[str, str]:
+        if self.async_base_headers is not None:
+            return await self.async_base_headers()
+        return self.base_headers()
 
     def get_base_url(self, maybe_base_url: typing.Optional[str]) -> str:
         base_url = maybe_base_url
@@ -463,6 +470,9 @@ class AsyncHttpClient:
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
+        # Get headers (supports async token providers)
+        _headers = await self._get_headers()
+
         # Add the input to each of these and do None-safety checks
         response = await self.httpx_client.request(
             method=method,
@@ -470,7 +480,7 @@ class AsyncHttpClient:
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        **self.base_headers(),
+                        **_headers,
                         **(headers if headers is not None else {}),
                         **(request_options.get("additional_headers", {}) or {} if request_options is not None else {}),
                     }
@@ -562,13 +572,16 @@ class AsyncHttpClient:
 
         data_body = _maybe_filter_none_from_multipart_data(data_body, request_files, force_multipart)
 
+        # Get headers (supports async token providers)
+        _headers = await self._get_headers()
+
         async with self.httpx_client.stream(
             method=method,
             url=urllib.parse.urljoin(f"{base_url}/", path),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
-                        **self.base_headers(),
+                        **_headers,
                         **(headers if headers is not None else {}),
                         **(request_options.get("additional_headers", {}) if request_options is not None else {}),
                     }
