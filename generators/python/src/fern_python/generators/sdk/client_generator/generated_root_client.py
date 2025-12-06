@@ -22,7 +22,7 @@ class GeneratedRootClient:
 
     @property
     def async_instantiation(self) -> AST.Expression:
-        """Returns the first async instantiation (for backwards compatibility)."""
+        """Returns the primary/first async instantiation"""
         if not self.async_instantiations:
             raise ValueError(
                 "No async instantiations available. "
@@ -32,7 +32,7 @@ class GeneratedRootClient:
 
     @property
     def sync_instantiation(self) -> AST.Expression:
-        """Returns the first sync instantiation (for backwards compatibility)."""
+        """Returns the primary/first sync instantiation"""
         if not self.sync_instantiations:
             raise ValueError(
                 "No sync instantiations available. "
