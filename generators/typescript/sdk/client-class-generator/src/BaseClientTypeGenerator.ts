@@ -34,7 +34,6 @@ export class BaseClientTypeGenerator {
             });
         }
 
-        // Generate BaseClientOptions as a type alias with intersection of auth options
         this.generateBaseClientOptionsType(context);
 
         context.sourceFile.addInterface(context.baseClient.generateBaseRequestOptionsInterface(context));
@@ -52,12 +51,10 @@ export class BaseClientTypeGenerator {
         const authOptionsTypes = this.getAuthOptionsTypes(context);
 
         if (authOptionsTypes.length === 0) {
-            // No auth schemes, just generate the interface as before
             context.sourceFile.addInterface(baseInterface);
             return;
         }
 
-        // Generate the base properties as a type literal
         const basePropertiesStr = baseInterface.properties
             .map((prop) => {
                 const docs = prop.docs ? `/** ${prop.docs.join(" ")} */\n    ` : "";
@@ -66,7 +63,6 @@ export class BaseClientTypeGenerator {
             })
             .join("\n    ");
 
-        // Generate the type alias with intersection
         const authOptionsIntersection = authOptionsTypes.join(" & ");
         const typeCode = `
 export type BaseClientOptions = {
@@ -81,11 +77,8 @@ export type BaseClientOptions = {
         const isAnyAuth = this.ir.auth.requirement === "ANY";
 
         if (isAnyAuth) {
-            // For ANY auth, use AnyAuthProvider.AuthOptions (AtLeastOneOf pattern)
-            // Note: The import for AnyAuthProvider is added in generateNormalizeClientOptionsWithAuthFunction()
             authOptionsTypes.push("AnyAuthProvider.AuthOptions");
         } else {
-            // For single auth, use the first auth scheme's AuthOptions
             for (const authScheme of this.ir.auth.schemes) {
                 const authOptionsType = this.getAuthOptionsTypeForScheme(authScheme, context);
                 if (authOptionsType != null) {
@@ -99,8 +92,6 @@ export type BaseClientOptions = {
     }
 
     private getAuthOptionsTypeForScheme(authScheme: FernIr.AuthScheme, context: SdkContext): string | undefined {
-        // Note: Imports for auth providers are added in generateNormalizeClientOptionsWithAuthFunction()
-        // We only return the type string here to avoid duplicate imports
         if (authScheme.type === "bearer") {
             return "BearerAuthProvider.AuthOptions";
         } else if (authScheme.type === "basic") {
@@ -128,7 +119,6 @@ export type BaseClientOptions = {
                 ts.factory.createStringLiteral("JavaScript")
             ]);
 
-            // X-Fern-SDK-Name and X-Fern-SDK-Version headers (only if npmPackage exists)
             if (context.npmPackage != null) {
                 fernHeaderEntries.push(
                     [
@@ -142,21 +132,18 @@ export type BaseClientOptions = {
                 );
             }
 
-            // User-Agent header
             if (this.ir.sdkConfig.platformHeaders.userAgent != null) {
                 fernHeaderEntries.push([
                     this.ir.sdkConfig.platformHeaders.userAgent.header,
                     ts.factory.createStringLiteral(this.ir.sdkConfig.platformHeaders.userAgent.value)
                 ]);
             } else if (context.npmPackage != null) {
-                // Fallback: generate User-Agent header from npm package info
                 fernHeaderEntries.push([
                     "User-Agent",
                     ts.factory.createStringLiteral(`${context.npmPackage.packageName}/${context.npmPackage.version}`)
                 ]);
             }
 
-            // X-Fern-Runtime and X-Fern-Runtime-Version headers
             fernHeaderEntries.push(
                 ["X-Fern-Runtime", context.coreUtilities.runtime.type._getReferenceTo()],
                 ["X-Fern-Runtime-Version", context.coreUtilities.runtime.version._getReferenceTo()]
@@ -215,7 +202,6 @@ export function normalizeClientOptions<T extends BaseClientOptions>(
     private generateNormalizedClientOptionsTypes(context: SdkContext): void {
         const shouldGenerateAuthCode = this.shouldGenerateAuthCode();
 
-        // Generate NormalizedClientOptions with optional authProvider only if auth is configured
         const authProviderProperty = shouldGenerateAuthCode
             ? `\n    authProvider?: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())};`
             : "";
@@ -225,7 +211,6 @@ export type NormalizedClientOptions<T extends BaseClientOptions> = T & {
     logging: ${getTextOfTsNode(context.coreUtilities.logging.Logger._getReferenceToType())};${authProviderProperty}
 }`;
 
-        // Only generate NormalizedClientOptionsWithAuth if there are auth schemes
         if (shouldGenerateAuthCode) {
             typesCode += `
 
@@ -238,18 +223,15 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
     }
 
     private generateNormalizeClientOptionsWithAuthFunction(context: SdkContext): void {
-        // Determine which auth provider to use
         let authProviderCreation = "";
         const isAnyAuth = this.ir.auth.requirement === "ANY";
 
-        // Handle ANY auth case - create AnyAuthProvider that aggregates all schemes
         if (isAnyAuth) {
             context.sourceFile.addImportDeclaration({
                 moduleSpecifier: "./auth/AnyAuthProvider.js",
                 namedImports: ["AnyAuthProvider"]
             });
 
-            // Import all auth provider classes
             const providerImports: string[] = [];
             const providerInstantiations: string[] = [];
 
@@ -293,14 +275,12 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                 }
             }
 
-            // Generate code to instantiate providers array and pass to AnyAuthProvider
             authProviderCreation = `(() => {
         const authProviders: ${getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())}[] = [];
         ${providerInstantiations.join("\n        ")}
         return new AnyAuthProvider(authProviders);
     })()`;
         } else {
-            // Only generate auth provider for non-ANY auth schemes
             for (const authScheme of this.ir.auth.schemes) {
                 if (authScheme.type === "bearer") {
                     context.sourceFile.addImportDeclaration({
@@ -341,7 +321,6 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
             }
         }
 
-        // If no auth provider creation code, don't generate the function
         if (!authProviderCreation) {
             return;
         }
@@ -371,7 +350,6 @@ function withNoOpAuthProvider<T extends BaseClientOptions>(
     private getRootHeaders(context: SdkContext): GeneratedHeader[] {
         const headers: GeneratedHeader[] = [
             ...this.ir.headers
-                // auth headers are handled separately
                 .filter((header) => !this.isAuthorizationHeader(header))
                 .map((header) => {
                     const headerName = this.getOptionKeyForHeader(header);

@@ -98,7 +98,6 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     private writeOptions(context: SdkContext): void {
         const childClassNames = this.getChildAuthProviderClassNames(context);
 
-        // Add imports for child auth providers
         for (const className of childClassNames) {
             context.sourceFile.addImportDeclaration({
                 moduleSpecifier: `./${className}.js`,
@@ -107,13 +106,9 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
             });
         }
 
-        // Generate AuthOptions using AtLeastOneOf pattern
-        // This ensures the user must provide at least one complete auth scheme,
-        // while other auth schemes are optional (partial)
         const authOptionsTypes = childClassNames.map((className) => `${className}.AuthOptions`);
         const tupleStr = authOptionsTypes.join(",\n        ");
 
-        // Generate the AtLeastOneOf helper types and AuthOptions
         const typeCode = `
     type UnionToIntersection<U> =
         (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;
