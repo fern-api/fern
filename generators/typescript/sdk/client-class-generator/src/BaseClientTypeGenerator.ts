@@ -84,7 +84,7 @@ export type BaseClientOptions = {
             // For ANY auth, use AnyAuthProvider.AuthOptions (AtLeastOneOf pattern)
             // Note: The import for AnyAuthProvider is added in generateNormalizeClientOptionsWithAuthFunction()
             authOptionsTypes.push("AnyAuthProvider.AuthOptions");
-        }else {
+        } else {
             // For single auth, use the first auth scheme's AuthOptions
             for (const authScheme of this.ir.auth.schemes) {
                 const authOptionsType = this.getAuthOptionsTypeForScheme(authScheme, context);

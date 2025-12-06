@@ -37,12 +37,10 @@ import {
     InterfaceDeclarationStructure,
     MethodDeclarationStructure,
     ModuleDeclarationStructure,
-    OptionalKind,
-    PropertySignatureStructure,
     Scope,
     StructureKind,
-    ts,
-    TypeAliasDeclarationStructure
+    TypeAliasDeclarationStructure,
+    ts
 } from "ts-morph";
 import { Code, code } from "ts-poet";
 import {
