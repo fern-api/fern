@@ -1,28 +1,26 @@
 - version: 3.23.0
   changelogEntry:
     - summary: |
-        Add OAuth token override support. When `oauth-token-override-property-name` is configured,
-        SDK users can skip the OAuth client credentials flow by providing a pre-generated bearer
-        token directly. This is useful for scenarios where tokens are obtained through external
-        processes or for testing purposes.
+        Add OAuth token override support with compile-time safe staged builder pattern. When
+        `oauth-token-override: true` is configured, SDK users can choose between the OAuth client
+        credentials flow or providing a pre-generated bearer token directly.
 
         Configuration example:
         ```yaml
         config:
-          oauth-token-override-property-name: token
+          oauth-token-override: true
         ```
 
         Generated usage:
         ```java
-        // Option 1: OAuth flow (existing behavior)
-        SeedApiClient client = SeedApiClient.builder()
-            .clientId("your-client-id")
-            .clientSecret("your-client-secret")
+        // Option 1: Direct bearer token (bypass OAuth flow)
+        SeedApiClient client = SeedApiClient.withToken("my-pre-generated-bearer-token")
+            .url("https://api.example.com")
             .build();
 
-        // Option 2: Direct bearer token override (new capability)
-        SeedApiClient client = SeedApiClient.builder()
-            .token("my-pre-generated-bearer-token")
+        // Option 2: OAuth client credentials flow (automatic token management)
+        SeedApiClient client = SeedApiClient.withCredentials("your-client-id", "your-client-secret")
+            .url("https://api.example.com")
             .build();
         ```
       type: feat

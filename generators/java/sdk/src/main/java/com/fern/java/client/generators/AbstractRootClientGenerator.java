@@ -219,6 +219,53 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         TypeSpec builderTypeSpec = getClientBuilder();
 
         boolean isExtensible = clientGeneratorContext.getCustomConfig().enableExtensibleBuilders();
+        boolean hasOAuthTokenOverride = clientGeneratorContext.getCustomConfig().oauthTokenOverride();
+
+        // Check if we have OAuth client credentials auth scheme for staged builder
+        boolean hasOAuthClientCredentials = generatorContext.getResolvedAuthSchemes().stream()
+                .anyMatch(scheme -> scheme.visit(new AuthScheme.Visitor<Boolean>() {
+                    @Override
+                    public Boolean visitBearer(BearerAuthScheme bearer) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBasic(BasicAuthScheme basic) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitHeader(HeaderAuthScheme header) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitOauth(OAuthScheme oauth) {
+                        return oauth.getConfiguration().visit(new OAuthConfiguration.Visitor<Boolean>() {
+                            @Override
+                            public Boolean visitClientCredentials(OAuthClientCredentials clientCredentials) {
+                                return true;
+                            }
+
+                            @Override
+                            public Boolean _visitUnknown(Object unknownType) {
+                                return false;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public Boolean visitInferred(InferredAuthScheme inferred) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean _visitUnknown(Object unknownType) {
+                        return false;
+                    }
+                }));
+
+        boolean useStagedBuilder = hasOAuthTokenOverride && hasOAuthClientCredentials && !isExtensible;
 
         if (isExtensible) {
             ClassName implClassName = builderName.nestedClass("Impl");
@@ -227,6 +274,34 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                             .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
                             .returns(implClassName)
                             .addStatement("return new $T()", implClassName)
+                            .build());
+        } else if (useStagedBuilder) {
+            // For staged builder, add static factory methods that delegate to builder class
+            ClassName tokenAuthClassName = builderName.nestedClass("_TokenAuth");
+            ClassName credentialsAuthClassName = builderName.nestedClass("_CredentialsAuth");
+
+            result.getClientImpl()
+                    .addMethod(MethodSpec.methodBuilder("withToken")
+                            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                            .addJavadoc("Creates a client builder using a pre-generated access token.\n")
+                            .addJavadoc("@param token The access token to use for authentication\n")
+                            .addJavadoc("@return A builder configured for token authentication")
+                            .addParameter(String.class, "token")
+                            .returns(tokenAuthClassName)
+                            .addStatement("return $T.withToken(token)", builderName)
+                            .build());
+
+            result.getClientImpl()
+                    .addMethod(MethodSpec.methodBuilder("withCredentials")
+                            .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                            .addJavadoc("Creates a client builder using OAuth client credentials.\n")
+                            .addJavadoc("@param clientId The OAuth client ID\n")
+                            .addJavadoc("@param clientSecret The OAuth client secret\n")
+                            .addJavadoc("@return A builder configured for OAuth authentication")
+                            .addParameter(String.class, "clientId")
+                            .addParameter(String.class, "clientSecret")
+                            .returns(credentialsAuthClassName)
+                            .addStatement("return $T.withCredentials(clientId, clientSecret)", builderName)
                             .build());
         } else {
             result.getClientImpl()
@@ -258,6 +333,54 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
     private TypeSpec getClientBuilder() {
         boolean isExtensible = clientGeneratorContext.getCustomConfig().enableExtensibleBuilders();
+        boolean hasOAuthTokenOverride = clientGeneratorContext.getCustomConfig().oauthTokenOverride();
+
+        // Check if we have OAuth client credentials auth scheme
+        boolean hasOAuthClientCredentials = generatorContext.getResolvedAuthSchemes().stream()
+                .anyMatch(scheme -> scheme.visit(new AuthScheme.Visitor<Boolean>() {
+                    @Override
+                    public Boolean visitBearer(BearerAuthScheme bearer) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitBasic(BasicAuthScheme basic) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitHeader(HeaderAuthScheme header) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean visitOauth(OAuthScheme oauth) {
+                        return oauth.getConfiguration().visit(new OAuthConfiguration.Visitor<Boolean>() {
+                            @Override
+                            public Boolean visitClientCredentials(OAuthClientCredentials clientCredentials) {
+                                return true;
+                            }
+
+                            @Override
+                            public Boolean _visitUnknown(Object unknownType) {
+                                return false;
+                            }
+                        });
+                    }
+
+                    @Override
+                    public Boolean visitInferred(InferredAuthScheme inferred) {
+                        return false;
+                    }
+
+                    @Override
+                    public Boolean _visitUnknown(Object unknownType) {
+                        return false;
+                    }
+                }));
+
+        // Use staged builder pattern when OAuth token override is enabled
+        boolean useStagedBuilder = hasOAuthTokenOverride && hasOAuthClientCredentials && !isExtensible;
 
         TypeSpec.Builder clientBuilder;
         if (isExtensible) {
@@ -300,9 +423,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                 .initializer("new $T<>()", HashMap.class)
                 .build());
 
+        // Use protected visibility for environment field when using staged builder (subclasses need access)
         FieldSpec.Builder environmentFieldBuilder = FieldSpec.builder(
                         generatedEnvironmentsClass.getClassName(), ENVIRONMENT_FIELD_NAME)
-                .addModifiers(Modifier.PRIVATE);
+                .addModifiers(useStagedBuilder ? Modifier.PROTECTED : Modifier.PRIVATE);
 
         boolean hasAuth = !generatorContext.getResolvedAuthSchemes().isEmpty();
         boolean hasCustomHeaders = !generatorContext.getIr().getHeaders().isEmpty();
@@ -350,7 +474,12 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
 
         if (hasAuth || hasCustomHeaders) {
             AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(
-                    clientBuilder, buildMethod, configureAuthBuilder, configureCustomHeadersBuilder, isExtensible);
+                    clientBuilder,
+                    buildMethod,
+                    configureAuthBuilder,
+                    configureCustomHeadersBuilder,
+                    isExtensible,
+                    useStagedBuilder);
 
             if (hasAuth) {
                 generatorContext.getResolvedAuthSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
@@ -744,19 +873,22 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
         private final MethodSpec.Builder configureCustomHeadersMethod;
         private final boolean isMandatory;
         private final boolean isExtensible;
+        private final boolean useStagedBuilder;
 
         private AuthSchemeHandler(
                 TypeSpec.Builder clientBuilder,
                 MethodSpec.Builder buildMethod,
                 MethodSpec.Builder configureAuthMethod,
                 MethodSpec.Builder configureCustomHeadersMethod,
-                boolean isExtensible) {
+                boolean isExtensible,
+                boolean useStagedBuilder) {
             this.clientBuilder = clientBuilder;
             this.buildMethod = buildMethod;
             this.configureAuthMethod = configureAuthMethod;
             this.configureCustomHeadersMethod = configureCustomHeadersMethod;
             this.isMandatory = clientGeneratorContext.getIr().getSdkConfig().getIsAuthMandatory();
             this.isExtensible = isExtensible;
+            this.useStagedBuilder = useStagedBuilder;
         }
 
         @Override
@@ -1044,35 +1176,7 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         clientGeneratorContext.getCustomConfig().oauthTokenOverride();
                 String tokenOverridePropertyName = "token";
 
-                if (hasTokenOverride) {
-                    createTokenOverrideSetter(tokenOverridePropertyName);
-
-                    // Add validation: must provide either token OR (clientId AND clientSecret), but not both
-                    buildMethod
-                            .beginControlFlow(
-                                    "if (this.$L != null && (this.clientId != null || this.clientSecret != null))",
-                                    tokenOverridePropertyName)
-                            .addStatement(
-                                    "throw new $T($S)",
-                                    IllegalStateException.class,
-                                    "Cannot provide both '" + tokenOverridePropertyName
-                                            + "' and 'clientId'/'clientSecret'. Use one authentication method.")
-                            .endControlFlow()
-                            .beginControlFlow(
-                                    "if (this.$L == null && (this.clientId == null || this.clientSecret == null))",
-                                    tokenOverridePropertyName)
-                            .addStatement(
-                                    "throw new $T($S)",
-                                    IllegalStateException.class,
-                                    "Please provide either '" + tokenOverridePropertyName
-                                            + "' or both 'clientId' and 'clientSecret'")
-                            .endControlFlow();
-                }
-
-                createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
-                createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
-
-                // Create setters for custom properties
+                // Collect custom properties info for OAuth token supplier
                 OAuthAccessTokenRequestProperties requestProperties =
                         clientCredentials.getTokenEndpoint().getRequestProperties();
                 List<String> customPropertyNames = new ArrayList<>();
@@ -1086,11 +1190,10 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                 .getCamelCase()
                                 .getSafeName();
                         customPropertyNames.add(propName);
-                        createSetter(propName, Optional.empty(), Optional.empty());
                     }
                 }
 
-                // Also create setters for header properties from the endpoint (like x-api-key)
+                // Also collect header properties from the endpoint (like x-api-key)
                 HttpService httpService =
                         clientGeneratorContext.getIr().getServices().get(tokenEndpointReference.getServiceId());
                 HttpEndpoint httpEndpoint = httpService.getEndpoints().stream()
@@ -1101,7 +1204,6 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                     String headerName =
                             header.getName().getName().getCamelCase().getSafeName();
                     customPropertyNames.add(headerName);
-                    createSetter(headerName, Optional.empty(), Optional.empty());
                 }
 
                 Subpackage subpackage = clientGeneratorContext
@@ -1112,62 +1214,272 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         clientGeneratorContext.getPoetClassNameFactory().getClientClassName(subpackage);
                 ClassName oauthTokenSupplierClassName =
                         generatedOAuthTokenSupplier.get().getClassName();
-                if (configureAuthMethod != null) {
-                    // If token override is enabled, check for token first
+
+                String tokenPrefix = clientCredentials.getTokenPrefix().orElse("Bearer");
+
+                if (useStagedBuilder && hasTokenOverride) {
+                    generateStagedBuilderForOAuth(
+                            clientCredentials,
+                            tokenOverridePropertyName,
+                            tokenPrefix,
+                            customPropertyNames,
+                            authClientClassName,
+                            oauthTokenSupplierClassName);
+                } else {
+                    // Original behavior: flat builder with runtime validation
                     if (hasTokenOverride) {
-                        String tokenPrefix = clientCredentials.getTokenPrefix().orElse("Bearer");
-                        configureAuthMethod.beginControlFlow("if (this.$L != null)", tokenOverridePropertyName);
+                        createTokenOverrideSetter(tokenOverridePropertyName);
+
+                        // Add validation: must provide either token OR (clientId AND clientSecret), but not both
+                        buildMethod
+                                .beginControlFlow(
+                                        "if (this.$L != null && (this.clientId != null || this.clientSecret != null))",
+                                        tokenOverridePropertyName)
+                                .addStatement(
+                                        "throw new $T($S)",
+                                        IllegalStateException.class,
+                                        "Cannot provide both '" + tokenOverridePropertyName
+                                                + "' and 'clientId'/'clientSecret'. Use one authentication method.")
+                                .endControlFlow()
+                                .beginControlFlow(
+                                        "if (this.$L == null && (this.clientId == null || this.clientSecret == null))",
+                                        tokenOverridePropertyName)
+                                .addStatement(
+                                        "throw new $T($S)",
+                                        IllegalStateException.class,
+                                        "Please provide either '" + tokenOverridePropertyName
+                                                + "' or both 'clientId' and 'clientSecret'")
+                                .endControlFlow();
+                    }
+
+                    createSetter("clientId", clientCredentials.getClientIdEnvVar(), Optional.empty());
+                    createSetter("clientSecret", clientCredentials.getClientSecretEnvVar(), Optional.empty());
+
+                    // Create setters for custom properties
+                    for (String propName : customPropertyNames) {
+                        createSetter(propName, Optional.empty(), Optional.empty());
+                    }
+
+                    if (configureAuthMethod != null) {
+                        // If token override is enabled, check for token first
+                        if (hasTokenOverride) {
+                            configureAuthMethod.beginControlFlow("if (this.$L != null)", tokenOverridePropertyName);
+                            configureAuthMethod.addStatement(
+                                    "builder.addHeader($S, $S + this.$L)",
+                                    "Authorization",
+                                    tokenPrefix + " ",
+                                    tokenOverridePropertyName);
+                            configureAuthMethod.nextControlFlow(
+                                    "else if (this.clientId != null && this.clientSecret != null)");
+                        } else {
+                            configureAuthMethod.beginControlFlow(
+                                    "if (this.clientId != null && this.clientSecret != null)");
+                        }
+
                         configureAuthMethod.addStatement(
+                                "$T.Builder authClientOptionsBuilder = $T.builder().environment(this.$L)",
+                                generatedClientOptions.getClassName(),
+                                generatedClientOptions.getClassName(),
+                                ENVIRONMENT_FIELD_NAME);
+
+                        generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
+                            String variableName =
+                                    variableDeclaration.getName().getCamelCase().getSafeName();
+                            MethodSpec variableMethod =
+                                    generatedClientOptions.variableGetters().get(variableDeclaration.getId());
+                            configureAuthMethod
+                                    .beginControlFlow("if (this.$L != null)", variableName)
+                                    .addStatement("authClientOptionsBuilder.$N(this.$L)", variableMethod, variableName)
+                                    .endControlFlow();
+                        });
+
+                        configureAuthMethod.addStatement(
+                                "$T authClient = new $T(authClientOptionsBuilder.build())",
+                                authClientClassName,
+                                authClientClassName);
+
+                        // Build OAuthTokenSupplier constructor call with custom properties
+                        CodeBlock.Builder oauthConstructorArgs =
+                                CodeBlock.builder().add("this.clientId, this.clientSecret");
+                        for (String customPropName : customPropertyNames) {
+                            oauthConstructorArgs.add(", this.$L", customPropName);
+                        }
+                        oauthConstructorArgs.add(", authClient");
+
+                        configureAuthMethod
+                                .addStatement(
+                                        "$T oAuthTokenSupplier = new $T($L)",
+                                        oauthTokenSupplierClassName,
+                                        oauthTokenSupplierClassName,
+                                        oauthConstructorArgs.build())
+                                .addStatement("builder.addHeader($S, oAuthTokenSupplier)", "Authorization")
+                                .endControlFlow();
+                    }
+                }
+                return null;
+            }
+
+            private void generateStagedBuilderForOAuth(
+                    OAuthClientCredentials clientCredentials,
+                    String tokenOverridePropertyName,
+                    String tokenPrefix,
+                    List<String> customPropertyNames,
+                    ClassName authClientClassName,
+                    ClassName oauthTokenSupplierClassName) {
+
+                // Create _TokenAuth nested class
+                ClassName tokenAuthClassName = builderName.nestedClass("_TokenAuth");
+                TypeSpec.Builder tokenAuthBuilder = TypeSpec.classBuilder("_TokenAuth")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                        .superclass(builderName);
+
+                // Add token field
+                tokenAuthBuilder.addField(FieldSpec.builder(String.class, tokenOverridePropertyName)
+                        .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                        .build());
+
+                // Constructor
+                tokenAuthBuilder.addMethod(MethodSpec.constructorBuilder()
+                        .addParameter(String.class, tokenOverridePropertyName)
+                        .addStatement("this.$L = $L", tokenOverridePropertyName, tokenOverridePropertyName)
+                        .build());
+
+                // Override setAuthentication to use token
+                tokenAuthBuilder.addMethod(MethodSpec.methodBuilder("setAuthentication")
+                        .addAnnotation(Override.class)
+                        .addModifiers(Modifier.PROTECTED)
+                        .addParameter(generatedClientOptions.builderClassName(), "builder")
+                        .addStatement(
                                 "builder.addHeader($S, $S + this.$L)",
                                 "Authorization",
                                 tokenPrefix + " ",
-                                tokenOverridePropertyName);
-                        configureAuthMethod.nextControlFlow(
-                                "else if (this.clientId != null && this.clientSecret != null)");
-                    } else {
-                        configureAuthMethod.beginControlFlow("if (this.clientId != null && this.clientSecret != null)");
-                    }
+                                tokenOverridePropertyName)
+                        .build());
 
-                    configureAuthMethod.addStatement(
-                            "$T.Builder authClientOptionsBuilder = $T.builder().environment(this.$L)",
-                            generatedClientOptions.getClassName(),
-                            generatedClientOptions.getClassName(),
-                            ENVIRONMENT_FIELD_NAME);
+                clientBuilder.addType(tokenAuthBuilder.build());
 
-                    generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
-                        String variableName =
-                                variableDeclaration.getName().getCamelCase().getSafeName();
-                        MethodSpec variableMethod =
-                                generatedClientOptions.variableGetters().get(variableDeclaration.getId());
-                        configureAuthMethod
-                                .beginControlFlow("if (this.$L != null)", variableName)
-                                .addStatement("authClientOptionsBuilder.$N(this.$L)", variableMethod, variableName)
-                                .endControlFlow();
-                    });
+                // Create _CredentialsAuth nested class
+                ClassName credentialsAuthClassName = builderName.nestedClass("_CredentialsAuth");
+                TypeSpec.Builder credentialsAuthBuilder = TypeSpec.classBuilder("_CredentialsAuth")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
+                        .superclass(builderName);
 
-                    configureAuthMethod.addStatement(
-                            "$T authClient = new $T(authClientOptionsBuilder.build())",
-                            authClientClassName,
-                            authClientClassName);
+                // Add clientId and clientSecret fields
+                credentialsAuthBuilder.addField(FieldSpec.builder(String.class, "clientId")
+                        .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                        .build());
+                credentialsAuthBuilder.addField(FieldSpec.builder(String.class, "clientSecret")
+                        .addModifiers(Modifier.PRIVATE, Modifier.FINAL)
+                        .build());
 
-                    // Build OAuthTokenSupplier constructor call with custom properties
-                    CodeBlock.Builder oauthConstructorArgs =
-                            CodeBlock.builder().add("this.clientId, this.clientSecret");
-                    for (String customPropName : customPropertyNames) {
-                        oauthConstructorArgs.add(", this.$L", customPropName);
-                    }
-                    oauthConstructorArgs.add(", authClient");
+                // Add custom property fields to credentials auth
+                for (String propName : customPropertyNames) {
+                    credentialsAuthBuilder.addField(FieldSpec.builder(String.class, propName)
+                            .addModifiers(Modifier.PRIVATE)
+                            .initializer("null")
+                            .build());
 
-                    configureAuthMethod
-                            .addStatement(
-                                    "$T oAuthTokenSupplier = new $T($L)",
-                                    oauthTokenSupplierClassName,
-                                    oauthTokenSupplierClassName,
-                                    oauthConstructorArgs.build())
-                            .addStatement("builder.addHeader($S, oAuthTokenSupplier)", "Authorization")
-                            .endControlFlow();
+                    // Add setter for custom property
+                    credentialsAuthBuilder.addMethod(MethodSpec.methodBuilder(propName)
+                            .addModifiers(Modifier.PUBLIC)
+                            .addParameter(String.class, propName)
+                            .returns(credentialsAuthClassName)
+                            .addStatement("this.$L = $L", propName, propName)
+                            .addStatement("return this")
+                            .build());
                 }
-                return null;
+
+                // Constructor
+                credentialsAuthBuilder.addMethod(MethodSpec.constructorBuilder()
+                        .addParameter(String.class, "clientId")
+                        .addParameter(String.class, "clientSecret")
+                        .addStatement("this.clientId = clientId")
+                        .addStatement("this.clientSecret = clientSecret")
+                        .build());
+
+                // Override setAuthentication to use OAuth flow
+                MethodSpec.Builder setAuthMethod = MethodSpec.methodBuilder("setAuthentication")
+                        .addAnnotation(Override.class)
+                        .addModifiers(Modifier.PROTECTED)
+                        .addParameter(generatedClientOptions.builderClassName(), "builder");
+
+                setAuthMethod.addStatement(
+                        "$T.Builder authClientOptionsBuilder = $T.builder().environment(this.environment)",
+                        generatedClientOptions.getClassName(),
+                        generatedClientOptions.getClassName());
+
+                generatorContext.getIr().getVariables().forEach(variableDeclaration -> {
+                    String variableName =
+                            variableDeclaration.getName().getCamelCase().getSafeName();
+                    MethodSpec variableMethod =
+                            generatedClientOptions.variableGetters().get(variableDeclaration.getId());
+                    setAuthMethod
+                            .beginControlFlow("if (this.$L != null)", variableName)
+                            .addStatement("authClientOptionsBuilder.$N(this.$L)", variableMethod, variableName)
+                            .endControlFlow();
+                });
+
+                setAuthMethod.addStatement(
+                        "$T authClient = new $T(authClientOptionsBuilder.build())",
+                        authClientClassName,
+                        authClientClassName);
+
+                // Build OAuthTokenSupplier constructor call with custom properties
+                CodeBlock.Builder oauthConstructorArgs = CodeBlock.builder().add("this.clientId, this.clientSecret");
+                for (String customPropName : customPropertyNames) {
+                    oauthConstructorArgs.add(", this.$L", customPropName);
+                }
+                oauthConstructorArgs.add(", authClient");
+
+                setAuthMethod
+                        .addStatement(
+                                "$T oAuthTokenSupplier = new $T($L)",
+                                oauthTokenSupplierClassName,
+                                oauthTokenSupplierClassName,
+                                oauthConstructorArgs.build())
+                        .addStatement("builder.addHeader($S, oAuthTokenSupplier)", "Authorization");
+
+                credentialsAuthBuilder.addMethod(setAuthMethod.build());
+
+                clientBuilder.addType(credentialsAuthBuilder.build());
+
+                // Add withToken factory method to base builder
+                clientBuilder.addMethod(MethodSpec.methodBuilder("withToken")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                        .addJavadoc("Creates a builder that uses a pre-generated access token for authentication.\n")
+                        .addJavadoc("Use this when you already have a valid access token and want to bypass\n")
+                        .addJavadoc("the OAuth client credentials flow.\n")
+                        .addJavadoc("\n")
+                        .addJavadoc(
+                                "@param $L The access token to use for Authorization header\n",
+                                tokenOverridePropertyName)
+                        .addJavadoc("@return A builder configured for token authentication")
+                        .addParameter(String.class, tokenOverridePropertyName)
+                        .returns(tokenAuthClassName)
+                        .addStatement("return new _TokenAuth($L)", tokenOverridePropertyName)
+                        .build());
+
+                // Add withCredentials factory method to base builder
+                MethodSpec.Builder withCredentialsMethod = MethodSpec.methodBuilder("withCredentials")
+                        .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
+                        .addJavadoc("Creates a builder that uses OAuth client credentials for authentication.\n")
+                        .addJavadoc("The builder will automatically handle token acquisition and refresh.\n")
+                        .addJavadoc("\n")
+                        .addJavadoc("@param clientId The OAuth client ID\n")
+                        .addJavadoc("@param clientSecret The OAuth client secret\n")
+                        .addJavadoc("@return A builder configured for OAuth client credentials authentication")
+                        .addParameter(String.class, "clientId")
+                        .addParameter(String.class, "clientSecret")
+                        .returns(credentialsAuthClassName)
+                        .addStatement("return new _CredentialsAuth(clientId, clientSecret)");
+
+                clientBuilder.addMethod(withCredentialsMethod.build());
+
+                // Make configureAuthMethod empty for base class (subclasses override)
+                if (configureAuthMethod != null) {
+                    // Base class setAuthentication is empty - subclasses provide the implementation
+                    // This is intentionally empty as _TokenAuth and _CredentialsAuth override it
+                }
             }
 
             @Override
