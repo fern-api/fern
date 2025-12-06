@@ -4,13 +4,15 @@ import * as core from "../core/index.js";
 import * as errors from "../errors/index.js";
 
 export namespace HeaderAuthProvider {
-    export interface Options {
-        headerTokenAuth?: core.Supplier<string | undefined>;
+    export interface AuthOptions {
+        headerTokenAuth?: core.Supplier<string> | undefined;
     }
+
+    export interface Options extends AuthOptions {}
 }
 
 export class HeaderAuthProvider implements core.AuthProvider {
-    private readonly headerValue: core.Supplier<string | undefined> | undefined;
+    private readonly headerValue: core.Supplier<string> | undefined;
 
     constructor(options: HeaderAuthProvider.Options) {
         this.headerValue = options.headerTokenAuth;

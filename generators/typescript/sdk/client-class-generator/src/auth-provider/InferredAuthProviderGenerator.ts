@@ -1,8 +1,16 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { ExportedFilePath, getTextOfTsNode, maybeAddDocsStructure, PackageId } from "@fern-typescript/commons";
+import {
+    ExportedFilePath,
+    getPropertyKey,
+    getTextOfTsNode,
+    maybeAddDocsStructure,
+    PackageId
+} from "@fern-typescript/commons";
 import { GeneratedRequestWrapper, SdkContext } from "@fern-typescript/contexts";
 import {
     MethodDeclarationStructure,
+    OptionalKind,
+    PropertySignatureStructure,
     Scope,
     StatementStructures,
     StructureKind,
@@ -21,6 +29,7 @@ export declare namespace InferredAuthProviderGenerator {
 }
 const CLASS_NAME = "InferredAuthProvider";
 const OPTIONS_TYPE_NAME = "Options";
+const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 const BUFFER_IN_MINUTES_VAR_NAME = "BUFFER_IN_MINUTES";
 const GET_EXPIRES_AT_FN_NAME = "getExpiresAt";
 const GET_AUTH_REQUEST_METHOD_NAME = "getAuthRequest";
@@ -88,6 +97,27 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
 
     public getOptionsType(): ts.TypeNode {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsType(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
+            FernIr.AuthScheme.inferred(this.authScheme)
+        );
+        const properties: OptionalKind<PropertySignatureStructure>[] = [];
+        for (const param of authTokenParams) {
+            properties.push({
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(param.name),
+                type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(param.type)),
+                hasQuestionToken: param.isOptional,
+                docs: param.docs
+            });
+        }
+        return properties.length > 0 ? properties : undefined;
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
@@ -420,9 +450,16 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeOptions(context: SdkContext): void {
-        context.importsManager.addImportFromRoot("BaseClient", {
-            namedImports: ["BaseClientOptions"]
+        // Import BaseClientOptions for Options to extend
+        // InferredAuthProvider.Options needs to extend BaseClientOptions because it creates an AuthClient
+        // which requires the full BaseClientOptions (environment, baseUrl, etc.)
+        context.sourceFile.addImportDeclaration({
+            moduleSpecifier: "../BaseClient.js",
+            namedImports: ["BaseClientOptions"],
+            isTypeOnly: true
         });
+
+        const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
@@ -431,10 +468,20 @@ export class InferredAuthProviderGenerator implements AuthProviderGenerator {
             statements: [
                 {
                     kind: StructureKind.Interface,
+                    name: AUTH_OPTIONS_TYPE_NAME,
+                    isExported: true,
+                    properties: authOptionsProperties
+                },
+                {
+                    // Use type alias instead of interface because BaseClientOptions may include union types
+                    // (e.g., AtLeastOneOf pattern for AnyAuthProvider.AuthOptions)
+                    // TypeScript interfaces can only extend object types with statically known members
+                    kind: StructureKind.TypeAlias,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    extends: ["BaseClientOptions"],
-                    properties: []
+                    // Options extends BaseClientOptions because InferredAuthProvider creates an AuthClient
+                    // which requires the full BaseClientOptions (environment, baseUrl, etc.)
+                    type: "BaseClientOptions"
                 }
             ]
         });

@@ -5,11 +5,10 @@ import * as core from "./core";
 import { mergeHeaders } from "./core/headers";
 import type * as environments from "./environments";
 
-export interface BaseClientOptions {
+export type BaseClientOptions = {
     environment: core.Supplier<environments.SeedSimpleApiEnvironment | string>;
     /** Specify a custom URL to connect the client to. */
     baseUrl?: core.Supplier<string>;
-    token: core.Supplier<core.BearerToken>;
     /** Additional headers to include in requests. */
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     /** The default maximum time to wait for a response in seconds. */
@@ -20,7 +19,7 @@ export interface BaseClientOptions {
     fetch?: typeof fetch;
     /** Configure logging for the client. */
     logging?: core.logging.LogConfig | core.logging.Logger;
-}
+} & BearerAuthProvider.AuthOptions;
 
 export interface BaseRequestOptions {
     /** The maximum time to wait for a response in seconds. */

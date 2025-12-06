@@ -1,7 +1,7 @@
 import type { FernIr } from "@fern-fern/ir-sdk";
 import { type ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
 import type { SdkContext } from "@fern-typescript/contexts";
-import { type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
+import { type OptionalKind, type PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 
 import type { AuthProviderGenerator } from "./AuthProviderGenerator";
 
@@ -16,6 +16,7 @@ export declare namespace HeaderAuthProviderGenerator {
 const CLASS_NAME = "HeaderAuthProvider";
 const HEADER_FIELD_NAME = "headerValue";
 const OPTIONS_TYPE_NAME = "Options";
+const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 
 export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -55,6 +56,37 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
         return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${OPTIONS_TYPE_NAME}`);
     }
 
+    public getAuthOptionsType(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsProperties(context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        const hasHeaderEnv = this.authScheme.headerEnvVar != null;
+        const isHeaderOptional = !this.isAuthMandatory || hasHeaderEnv;
+        // When there's an env var fallback, use Supplier<T> | undefined because the supplier itself can be undefined
+        // When there's no env var fallback, use Supplier<T> directly.
+        const headerType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+        const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerType);
+
+        // For env var fallback: prop?: Supplier<T> | undefined
+        const propertyType = hasHeaderEnv
+            ? ts.factory.createUnionTypeNode([
+                  supplierType,
+                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
+              ])
+            : supplierType;
+
+        return [
+            {
+                kind: StructureKind.PropertySignature,
+                name: getPropertyKey(this.authScheme.name.name.camelCase.safeName),
+                hasQuestionToken: isHeaderOptional,
+                type: getTextOfTsNode(propertyType),
+                docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
+            }
+        ];
+    }
+
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
         return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
     }
@@ -66,21 +98,19 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
 
     private writeClass(context: SdkContext): void {
         const hasHeaderEnv = this.authScheme.headerEnvVar != null;
+        // Header is optional when auth is not mandatory OR when there's an env var fallback
+        const isHeaderOptional = !this.isAuthMandatory || hasHeaderEnv;
 
-        const headerValueType =
-            this.isAuthMandatory && !hasHeaderEnv
-                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                : ts.factory.createUnionTypeNode([
-                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                  ]);
+        // For class fields, use Supplier<T> | undefined when the header is optional
+        const headerType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+        const supplierType = context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerType);
 
-        const headerFieldType = hasHeaderEnv
+        const headerFieldType = isHeaderOptional
             ? ts.factory.createUnionTypeNode([
-                  context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerValueType),
+                  supplierType,
                   ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
               ])
-            : context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerValueType);
+            : supplierType;
 
         context.sourceFile.addClass({
             name: CLASS_NAME,
@@ -261,26 +291,7 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     private writeOptions(context: SdkContext): void {
-        const hasHeaderEnv = this.authScheme.headerEnvVar != null;
-
-        const isHeaderOptional = !this.isAuthMandatory || hasHeaderEnv;
-        const headerType =
-            this.isAuthMandatory && !hasHeaderEnv
-                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                : ts.factory.createUnionTypeNode([
-                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                  ]);
-
-        const headerProperty: PropertySignatureStructure = {
-            kind: StructureKind.PropertySignature,
-            name: getPropertyKey(this.authScheme.name.name.camelCase.safeName),
-            hasQuestionToken: isHeaderOptional,
-            type: getTextOfTsNode(
-                context.coreUtilities.fetcher.SupplierOrEndpointSupplier._getReferenceToType(headerType)
-            ),
-            docs: this.authScheme.docs != null ? [this.authScheme.docs] : undefined
-        };
+        const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
@@ -289,9 +300,15 @@ export class HeaderAuthProviderGenerator implements AuthProviderGenerator {
             statements: [
                 {
                     kind: StructureKind.Interface,
+                    name: AUTH_OPTIONS_TYPE_NAME,
+                    isExported: true,
+                    properties: authOptionsProperties
+                },
+                {
+                    kind: StructureKind.Interface,
                     name: OPTIONS_TYPE_NAME,
                     isExported: true,
-                    properties: [headerProperty]
+                    extends: [AUTH_OPTIONS_TYPE_NAME]
                 }
             ]
         });

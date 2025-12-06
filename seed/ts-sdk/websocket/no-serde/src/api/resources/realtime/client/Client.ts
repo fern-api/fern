@@ -6,7 +6,7 @@ import * as core from "../../../../core/index.js";
 import { RealtimeSocket } from "./Socket.js";
 
 export declare namespace RealtimeClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface ConnectArgs {
         session_id: string;

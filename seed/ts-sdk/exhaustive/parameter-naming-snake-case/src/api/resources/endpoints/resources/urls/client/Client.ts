@@ -8,7 +8,7 @@ import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStat
 import * as errors from "../../../../../../errors/index.js";
 
 export declare namespace UrlsClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
