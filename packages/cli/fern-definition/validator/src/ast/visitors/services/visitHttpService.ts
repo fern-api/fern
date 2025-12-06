@@ -25,6 +25,7 @@ export function visitHttpService({
     visitor.httpService?.(service, nodePath);
 
     visitObject(service, {
+        docs: createDocsVisitor(visitor, nodePath),
         url: (url) => {
             visitor.serviceBaseUrl?.(url, [...nodePath, "url"]);
         },

@@ -101,6 +101,7 @@ export function convertHttpService({
 
     const serviceName = { fernFilepath: file.fernFilepath };
     const service: HttpService = {
+        docs: serviceDefinition.docs ?? undefined,
         availability: convertAvailability(serviceDefinition.availability),
         name: serviceName,
         displayName: serviceDefinition["display-name"] ?? undefined,

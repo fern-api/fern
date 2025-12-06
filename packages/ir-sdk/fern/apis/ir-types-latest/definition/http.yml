@@ -13,6 +13,7 @@ imports:
 
 types:
   HttpService:
+    extends: commons.WithDocs
     properties:
       availability: optional<commons.Availability>
       name: DeclaredServiceName
