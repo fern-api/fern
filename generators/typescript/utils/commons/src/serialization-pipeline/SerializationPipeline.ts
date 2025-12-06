@@ -95,6 +95,7 @@ export class SerializationPipeline {
     /**
      * Get runtime dependencies required by the active format.
      * Note: only used for legacy zurg format until it can be refactored into a npm dependency.
+     */
     public getRuntimeDependencies(): Record<string, string> {
         return this.format.getRuntimeDependencies();
     }
