@@ -23,8 +23,6 @@ public class AsyncSeedOauthClientCredentialsDefaultClientBuilder {
 
     private String clientSecret = null;
 
-    private String grantType = null;
-
     private Environment environment;
 
     private OkHttpClient httpClient;
@@ -42,14 +40,6 @@ public class AsyncSeedOauthClientCredentialsDefaultClientBuilder {
      */
     public AsyncSeedOauthClientCredentialsDefaultClientBuilder clientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
-        return this;
-    }
-
-    /**
-     * Sets grantType
-     */
-    public AsyncSeedOauthClientCredentialsDefaultClientBuilder grantType(String grantType) {
-        this.grantType = grantType;
         return this;
     }
 
@@ -140,7 +130,7 @@ public class AsyncSeedOauthClientCredentialsDefaultClientBuilder {
                     ClientOptions.builder().environment(this.environment);
             AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
             OAuthTokenSupplier oAuthTokenSupplier =
-                    new OAuthTokenSupplier(this.clientId, this.clientSecret, this.grantType, authClient);
+                    new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
             builder.addHeader("Authorization", oAuthTokenSupplier);
         }
     }

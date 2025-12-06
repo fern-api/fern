@@ -44,6 +44,12 @@ interface Builder {
     type: "builder";
     classReference: ClassReference;
     parameters: BuilderParameter[];
+    entryMethod?: BuilderEntryMethod;
+}
+
+export interface BuilderEntryMethod {
+    name: string;
+    arguments: TypeLiteral[];
 }
 
 export interface BuilderParameter {
@@ -278,12 +284,14 @@ export class TypeLiteral extends AstNode {
 
     public static builder({
         classReference,
-        parameters
+        parameters,
+        entryMethod
     }: {
         classReference: ClassReference;
         parameters: BuilderParameter[];
+        entryMethod?: BuilderEntryMethod;
     }): TypeLiteral {
-        return new this({ type: "builder", classReference, parameters });
+        return new this({ type: "builder", classReference, parameters, entryMethod });
     }
 
     public static bytes(value: string): TypeLiteral {
@@ -501,13 +509,36 @@ export class TypeLiteral extends AstNode {
         writer.indent();
         this.writeBuilderParameters({
             writer,
-            parameters: this.orderBuilderParameters(filterNopBuilderParameters({ parameters: builder.parameters }))
+            parameters: this.orderBuilderParameters(filterNopBuilderParameters({ parameters: builder.parameters })),
+            entryMethod: builder.entryMethod
         });
         writer.dedent();
     }
 
-    private writeBuilderParameters({ writer, parameters }: { writer: Writer; parameters: BuilderParameter[] }): void {
-        writer.writeLine(".builder()");
+    private writeBuilderParameters({
+        writer,
+        parameters,
+        entryMethod
+    }: {
+        writer: Writer;
+        parameters: BuilderParameter[];
+        entryMethod?: BuilderEntryMethod;
+    }): void {
+        if (entryMethod) {
+            writer.write(`.${entryMethod.name}(`);
+            for (let i = 0; i < entryMethod.arguments.length; i++) {
+                if (i > 0) {
+                    writer.write(", ");
+                }
+                const arg = entryMethod.arguments[i];
+                if (arg != null) {
+                    writer.writeNode(arg);
+                }
+            }
+            writer.writeLine(")");
+        } else {
+            writer.writeLine(".builder()");
+        }
         for (const parameter of parameters) {
             writer.write(`.${parameter.name}(`);
             if (!parameter.value.shouldWriteInLine()) {
