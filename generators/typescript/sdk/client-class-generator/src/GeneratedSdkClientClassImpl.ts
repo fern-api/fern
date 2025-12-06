@@ -93,6 +93,7 @@ export declare namespace GeneratedSdkClientClassImpl {
         generateEndpointMetadata: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         offsetSemantics: "item-index" | "page-index";
+        oauthTokenOverride: boolean;
     }
 }
 
@@ -136,6 +137,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
     private readonly anyEndpointWithAuth: boolean;
     private readonly generateEndpointMetadata: boolean;
     private readonly offsetSemantics: "item-index" | "page-index";
+    private readonly oauthTokenOverride: boolean;
 
     constructor({
         isRoot,
@@ -162,7 +164,8 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         formDataSupport,
         generateEndpointMetadata,
         parameterNaming,
-        offsetSemantics
+        offsetSemantics,
+        oauthTokenOverride
     }: GeneratedSdkClientClassImpl.Init) {
         this.isRoot = isRoot;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -182,6 +185,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         this.generateEndpointMetadata = generateEndpointMetadata;
         this.parameterNaming = parameterNaming;
         this.offsetSemantics = offsetSemantics;
+        this.oauthTokenOverride = oauthTokenOverride;
 
         const package_ = packageResolver.resolvePackage(packageId);
         this.package_ = package_;

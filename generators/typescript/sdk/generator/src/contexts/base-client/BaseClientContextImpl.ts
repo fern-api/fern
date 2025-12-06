@@ -22,6 +22,7 @@ export declare namespace BaseClientContextImpl {
         generateIdempotentRequestOptions: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+        oauthTokenOverride: boolean;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -42,6 +43,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+    private readonly oauthTokenOverride: boolean;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -66,7 +68,8 @@ export class BaseClientContextImpl implements BaseClientContext {
         retainOriginalCasing,
         generateIdempotentRequestOptions,
         parameterNaming,
-        baseClientTypeDeclarationReferencer
+        baseClientTypeDeclarationReferencer,
+        oauthTokenOverride
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
@@ -75,6 +78,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.parameterNaming = parameterNaming;
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
+        this.oauthTokenOverride = oauthTokenOverride;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {

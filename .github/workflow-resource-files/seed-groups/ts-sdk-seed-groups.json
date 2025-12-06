@@ -177,7 +177,6 @@
         "version",
         "streaming:serde-layer",
         "enum:no-custom-config",
-        "oauth-client-credentials-environment-variables",
         "imdb:branded-string-aliases",
         "single-url-environment-no-default",
         "path-parameters:no-custom-config",

@@ -11,10 +11,12 @@ export declare namespace OAuthAuthProviderGenerator {
         authScheme: FernIr.OAuthScheme;
         neverThrowErrors: boolean;
         includeSerdeLayer: boolean;
+        oauthTokenOverride: boolean;
     }
 }
 
 const CLASS_NAME = "OAuthAuthProvider";
+const TOKEN_OVERRIDE_CLASS_NAME = "OAuthTokenOverrideAuthProvider";
 const OPTIONS_TYPE_NAME = "Options";
 const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 const OPTIONS_PARAM_NAME = "options";
@@ -30,6 +32,8 @@ const AUTH_CLIENT_FIELD_NAME = "_authClient";
 const ACCESS_TOKEN_FIELD_NAME = "_accessToken";
 const EXPIRES_AT_FIELD_NAME = "_expiresAt";
 const REFRESH_PROMISE_FIELD_NAME = "_refreshPromise";
+const TOKEN_FIELD_NAME = "_token";
+const DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME = "token";
 
 export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -38,12 +42,14 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     private readonly authScheme: FernIr.OAuthScheme;
     private readonly neverThrowErrors: boolean;
     private readonly includeSerdeLayer: boolean;
+    private readonly oauthTokenOverride: boolean;
 
     constructor(init: OAuthAuthProviderGenerator.Init) {
         this.ir = init.ir;
         this.authScheme = init.authScheme;
         this.neverThrowErrors = init.neverThrowErrors;
         this.includeSerdeLayer = init.includeSerdeLayer;
+        this.oauthTokenOverride = init.oauthTokenOverride;
     }
 
     public getFilePath(): ExportedFilePath {
@@ -128,12 +134,24 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
     }
 
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
+        const hasTokenOverride = this.oauthTokenOverride;
+        if (hasTokenOverride) {
+            return ts.factory.createCallExpression(
+                ts.factory.createPropertyAccessExpression(ts.factory.createIdentifier(CLASS_NAME), "createInstance"),
+                undefined,
+                constructorArgs
+            );
+        }
         return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
     }
 
     public writeToFile(context: SdkContext): void {
-        this.writeOptions(context);
+        const hasTokenOverride = this.oauthTokenOverride;
         this.writeClass(context);
+        if (hasTokenOverride) {
+            this.writeTokenOverrideClass(context);
+        }
+        this.writeOptions(context);
     }
 
     private writeClass(context: SdkContext): void {
@@ -200,6 +218,12 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         const errorConstructor = getTextOfTsNode(
             context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
         );
+
+        const hasTokenOverride = this.oauthTokenOverride;
+
+        const constructorOptionsType = hasTokenOverride
+            ? `${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.ClientCredentials`
+            : getTextOfTsNode(this.getOptionsType());
 
         let constructorStatements = "";
 
@@ -330,9 +354,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this.${GET_TOKEN_INTERNAL_METHOD_NAME}(${ENDPOINT_METADATA_ARG_NAME});
         `;
 
+        const clientIdPropertyAccess = ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientId");
         const clientIdSupplierCall = getTextOfTsNode(
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientId"),
+                clientIdPropertyAccess,
                 ts.factory.createObjectLiteralExpression([
                     ts.factory.createPropertyAssignment(
                         "endpointMetadata",
@@ -360,9 +385,13 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             : `
         const clientId = ${clientIdSupplierCall};`;
 
+        const clientSecretPropertyAccess = ts.factory.createPropertyAccessExpression(
+            ts.factory.createThis(),
+            "_clientSecret"
+        );
         const clientSecretSupplierCall = getTextOfTsNode(
             context.coreUtilities.fetcher.SupplierOrEndpointSupplier.get(
-                ts.factory.createPropertyAccessExpression(ts.factory.createThis(), "_clientSecret"),
+                clientSecretPropertyAccess,
                 ts.factory.createObjectLiteralExpression([
                     ts.factory.createPropertyAssignment(
                         "endpointMetadata",
@@ -429,10 +458,16 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         return this._refreshPromise;
         `;
 
-        const canCreateStatements = this.generatecanCreateStatements(
-            oauthConfig.clientIdEnvVar,
-            oauthConfig.clientSecretEnvVar
-        );
+        const canCreateStatements = hasTokenOverride
+            ? this.generatecanCreateStatementsForTokenOverride(
+                  oauthConfig.clientIdEnvVar,
+                  oauthConfig.clientSecretEnvVar
+              )
+            : this.generatecanCreateStatements(oauthConfig.clientIdEnvVar, oauthConfig.clientSecretEnvVar);
+
+        const canCreateReturnType = hasTokenOverride
+            ? `options is ${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.ClientCredentials`
+            : "boolean";
 
         const methods: Array<{
             kind: StructureKind.Method;
@@ -450,7 +485,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 isStatic: true,
                 name: "canCreate",
                 isAsync: false,
-                returnType: "boolean",
+                returnType: canCreateReturnType,
                 statements: canCreateStatements,
                 parameters: [
                     {
@@ -577,7 +612,119 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     parameters: [
                         {
                             name: "options",
-                            type: getTextOfTsNode(this.getOptionsType())
+                            type: constructorOptionsType
+                        }
+                    ],
+                    statements: [constructorStatements]
+                }
+            ]
+        });
+    }
+
+    private writeTokenOverrideClass(context: SdkContext): void {
+        const oauthConfig = this.authScheme.configuration;
+
+        if (oauthConfig.type !== "clientCredentials") {
+            return;
+        }
+
+        const errorConstructor = getTextOfTsNode(
+            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+        );
+
+        const supplierType = getTextOfTsNode(
+            context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+            )
+        );
+
+        const constructorStatements = `
+        if (${OPTIONS_PARAM_NAME}.${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME} == null) {
+            throw new ${errorConstructor}({
+                message: "${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME} is required. Please provide it in ${OPTIONS_PARAM_NAME}."
+            });
+        }
+        this.${TOKEN_FIELD_NAME} = ${OPTIONS_PARAM_NAME}.${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME};
+        `;
+
+        const tokenPropertyAccess = ts.factory.createPropertyAccessExpression(
+            ts.factory.createThis(),
+            TOKEN_FIELD_NAME
+        );
+        const tokenSupplierCall = getTextOfTsNode(context.coreUtilities.fetcher.Supplier.get(tokenPropertyAccess));
+
+        const properties = [
+            {
+                name: TOKEN_FIELD_NAME,
+                type: supplierType,
+                isReadonly: true,
+                scope: Scope.Private
+            }
+        ];
+
+        const methods = [
+            {
+                kind: StructureKind.Method as const,
+                scope: Scope.Public,
+                isStatic: true,
+                name: "canCreate",
+                isAsync: false,
+                returnType: `options is ${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.TokenOverride`,
+                statements: `return "${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME}" in options && options.${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME} != null;`,
+                parameters: [
+                    {
+                        name: "options",
+                        type: getTextOfTsNode(this.getOptionsType())
+                    }
+                ]
+            },
+            {
+                kind: StructureKind.Method as const,
+                scope: Scope.Public,
+                name: "getAuthRequest",
+                isAsync: true,
+                parameters: [
+                    {
+                        name: "arg?",
+                        type: getTextOfTsNode(
+                            ts.factory.createTypeLiteralNode([
+                                ts.factory.createPropertySignature(
+                                    undefined,
+                                    "endpointMetadata",
+                                    ts.factory.createToken(ts.SyntaxKind.QuestionToken),
+                                    context.coreUtilities.fetcher.EndpointMetadata._getReferenceToType()
+                                )
+                            ])
+                        )
+                    }
+                ],
+                returnType: getTextOfTsNode(
+                    ts.factory.createTypeReferenceNode(ts.factory.createIdentifier("Promise"), [
+                        context.coreUtilities.auth.AuthRequest._getReferenceToType()
+                    ])
+                ),
+                statements: `
+        return {
+            headers: {
+                Authorization: \`Bearer \${${tokenSupplierCall}}\`
+            }
+        };
+        `
+            }
+        ];
+
+        context.sourceFile.addClass({
+            name: TOKEN_OVERRIDE_CLASS_NAME,
+            isExported: true,
+            implements: [getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())],
+            properties,
+            methods,
+            ctors: [
+                {
+                    parameters: [
+                        {
+                            name: "options",
+                            type: `${CLASS_NAME}.${OPTIONS_TYPE_NAME} & ${CLASS_NAME}.AuthOptions.TokenOverride`
                         }
                     ],
                     statements: [constructorStatements]
@@ -602,6 +749,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
         clientIdEnvVar: string | undefined,
         clientSecretEnvVar: string | undefined
     ): string {
+        // Without token override, we can access clientId and clientSecret directly
         const clientIdCheck =
             clientIdEnvVar != null
                 ? `(options.clientId != null || process.env?.["${clientIdEnvVar}"] != null)`
@@ -612,7 +760,25 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                 ? `(options.clientSecret != null || process.env?.["${clientSecretEnvVar}"] != null)`
                 : `options.clientSecret != null`;
 
-        return `return ${clientIdCheck} && ${clientSecretCheck};`;
+        const oauthCheck = `(${clientIdCheck} && ${clientSecretCheck})`;
+        return `return ${oauthCheck};`;
+    }
+
+    private generatecanCreateStatementsForTokenOverride(
+        clientIdEnvVar: string | undefined,
+        clientSecretEnvVar: string | undefined
+    ): string {
+        const clientIdCheck =
+            clientIdEnvVar != null
+                ? `(("clientId" in options && options.clientId != null) || process.env?.["${clientIdEnvVar}"] != null)`
+                : `"clientId" in options && options.clientId != null`;
+
+        const clientSecretCheck =
+            clientSecretEnvVar != null
+                ? `(("clientSecret" in options && options.clientSecret != null) || process.env?.["${clientSecretEnvVar}"] != null)`
+                : `"clientSecret" in options && options.clientSecret != null`;
+
+        return `return (${clientIdCheck}) && (${clientSecretCheck});`;
     }
 
     private getName(name: FernIr.Name | FernIr.NameAndWireValue): string {
@@ -634,7 +800,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             return;
         }
 
-        const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
+        const hasTokenOverride = this.oauthTokenOverride;
 
         // Import BaseClientOptions for Options to extend
         // OAuthAuthProvider.Options needs to extend BaseClientOptions because it creates an AuthClient
@@ -644,29 +810,104 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
             isTypeOnly: true
         });
 
-        context.sourceFile.addModule({
-            name: CLASS_NAME,
-            isExported: true,
-            kind: StructureKind.Module,
-            statements: [
-                {
-                    kind: StructureKind.Interface,
-                    name: AUTH_OPTIONS_TYPE_NAME,
-                    isExported: true,
-                    properties: authOptionsProperties
-                },
-                {
-                    // Use type alias instead of interface because BaseClientOptions may include union types
-                    // (e.g., AtLeastOneOf pattern for AnyAuthProvider.AuthOptions)
-                    // TypeScript interfaces can only extend object types with statically known members
-                    kind: StructureKind.TypeAlias,
-                    name: OPTIONS_TYPE_NAME,
-                    isExported: true,
-                    // Options extends BaseClientOptions because OAuthAuthProvider creates an AuthClient
-                    // which requires the full BaseClientOptions (environment, baseUrl, etc.)
-                    type: "BaseClientOptions"
-                }
-            ]
+        const supplierType = getTextOfTsNode(
+            context.coreUtilities.fetcher.Supplier._getReferenceToType(
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
+            )
+        );
+
+        const errorConstructor = getTextOfTsNode(
+            context.genericAPISdkError.getReferenceToGenericAPISdkError().getExpression()
+        );
+
+        if (hasTokenOverride) {
+            const clientIdIsOptional = oauthConfig.clientIdEnvVar != null;
+            const clientSecretIsOptional = oauthConfig.clientSecretEnvVar != null;
+
+            const clientIdType = clientIdIsOptional ? `${supplierType} | undefined` : supplierType;
+            const clientSecretType = clientSecretIsOptional ? `${supplierType} | undefined` : supplierType;
+
+            context.sourceFile.addModule({
+                name: CLASS_NAME,
+                isExported: true,
+                kind: StructureKind.Module,
+                statements: [
+                    {
+                        kind: StructureKind.TypeAlias,
+                        name: "AuthOptions",
+                        isExported: true,
+                        type: `AuthOptions.ClientCredentials | AuthOptions.TokenOverride`
+                    },
+                    {
+                        kind: StructureKind.Module,
+                        name: "AuthOptions",
+                        isExported: true,
+                        statements: [
+                            {
+                                kind: StructureKind.Interface,
+                                name: "ClientCredentials",
+                                isExported: true,
+                                properties: [
+                                    { name: "clientId", type: clientIdType },
+                                    { name: "clientSecret", type: clientSecretType }
+                                ]
+                            },
+                            {
+                                kind: StructureKind.Interface,
+                                name: "TokenOverride",
+                                isExported: true,
+                                properties: [{ name: DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME, type: supplierType }]
+                            }
+                        ]
+                    },
+                    {
+                        kind: StructureKind.TypeAlias,
+                        name: OPTIONS_TYPE_NAME,
+                        isExported: true,
+                        type: "BaseClientOptions"
+                    },
+                    {
+                        kind: StructureKind.Function,
+                        name: "createInstance",
+                        isExported: true,
+                        parameters: [{ name: "options", type: OPTIONS_TYPE_NAME }],
+                        returnType: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
+                        statements: `
+        if (${TOKEN_OVERRIDE_CLASS_NAME}.canCreate(options)) {
+            return new ${TOKEN_OVERRIDE_CLASS_NAME}(options);
+        } else if (${CLASS_NAME}.canCreate(options)) {
+            return new ${CLASS_NAME}(options);
+        }
+        throw new ${errorConstructor}({
+            message: "Insufficient options to create OAuthAuthProvider. Please provide either clientId and clientSecret, or ${DEFAULT_TOKEN_OVERRIDE_PROPERTY_NAME}."
         });
+        `
+                    }
+                ]
+            });
+        } else {
+            // No token override - use the new AuthOptions pattern from main
+            const authOptionsProperties = this.getAuthOptionsProperties(context) ?? [];
+
+            context.sourceFile.addModule({
+                name: CLASS_NAME,
+                isExported: true,
+                kind: StructureKind.Module,
+                statements: [
+                    {
+                        kind: StructureKind.Interface,
+                        name: AUTH_OPTIONS_TYPE_NAME,
+                        isExported: true,
+                        properties: authOptionsProperties
+                    },
+                    {
+                        kind: StructureKind.TypeAlias,
+                        name: OPTIONS_TYPE_NAME,
+                        isExported: true,
+                        type: "BaseClientOptions"
+                    }
+                ]
+            });
+        }
     }
 }
