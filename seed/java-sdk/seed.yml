@@ -298,7 +298,6 @@ allowedFailures:
   - alias-extends
   - enum:forward-compatible-enums
   - enum:no-custom-config
-  - errors
   - examples:default
   - examples:inline-file-properties
   - examples:no-custom-config
