@@ -45,7 +45,7 @@ runs:
       shell: bash
       run: |
         echo "Building seed CLI once with Turbo caching..."
-        pnpm turbo run dist:cli --filter=@fern-api/seed-cli
+        pnpm seed:build
 
     - name: Run publish (auto)
       if: inputs.manual-trigger == 'false'
@@ -179,7 +179,7 @@ runs:
         SNIPPET_PACKAGE: ${{ steps.snippet-info.outputs.snippet_package }}
       run: |
         echo "Building snippet package: $SNIPPET_PACKAGE"
-        pnpm --filter=$SNIPPET_PACKAGE compile
+        pnpm turbo run compile --filter=$SNIPPET_PACKAGE
 
     - name: Test snippet package
       if: steps.snippet-info.outputs.snippet_package != ''
@@ -188,7 +188,7 @@ runs:
         SNIPPET_PACKAGE: ${{ steps.snippet-info.outputs.snippet_package }}
       run: |
         echo "Testing snippet package: $SNIPPET_PACKAGE"
-        pnpm --filter=$SNIPPET_PACKAGE test
+        pnpm turbo run test --filter=$SNIPPET_PACKAGE
 
     - name: Publish snippet package (auto)
       if: inputs.manual-trigger == 'false' && steps.snippet-info.outputs.snippet_package != ''
@@ -200,7 +200,7 @@ runs:
       run: |
         echo "Publishing snippet package: $SNIPPET_PACKAGE at version $VERSION"
         cd $SNIPPET_DIR
-        pnpm --filter=$SNIPPET_PACKAGE dist $VERSION
+        pnpm turbo run dist --filter=$SNIPPET_PACKAGE -- $VERSION
         cd dist
         npx -y npm@latest publish --access public --tag latest
 
@@ -214,6 +214,6 @@ runs:
       run: |
         echo "Publishing snippet package: $SNIPPET_PACKAGE at version $VERSION"
         cd $SNIPPET_DIR
-        pnpm --filter=$SNIPPET_PACKAGE dist $VERSION
+        pnpm turbo run dist --filter=$SNIPPET_PACKAGE -- $VERSION
         cd dist
         npx -y npm@latest publish --access public --tag latest

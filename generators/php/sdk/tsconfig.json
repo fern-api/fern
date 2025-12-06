@@ -7,10 +7,16 @@
       "path": "../model"
     },
     {
+      "path": "../dynamic-snippets"
+    },
+    {
       "path": "../codegen"
     },
     {
       "path": "../base"
+    },
+    {
+      "path": "../../../packages/cli/logger"
     },
     {
       "path": "../../../packages/commons/fs-utils"
@@ -19,10 +25,7 @@
       "path": "../../../packages/commons/core-utils"
     },
     {
-      "path": "../dynamic-snippets"
-    },
-    {
-      "path": "../../../packages/cli/logger"
+      "path": "../../../packages/commons/mock-utils"
     },
     {
       "path": "../../base"

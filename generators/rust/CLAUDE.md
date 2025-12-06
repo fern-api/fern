@@ -43,10 +43,10 @@ This file provides guidance for Claude Code when working with the Rust generator
 
 ```bash
 pnpm install
-pnpm --filter @fern-api/rust-sdk compile
-pnpm --filter @fern-api/rust-model compile
-pnpm --filter @fern-api/rust-sdk dist:cli    # Build Docker CLI
-pnpm --filter @fern-api/rust-model dist:cli  # Build Docker CLI
+pnpm turbo run compile --filter @fern-api/rust-sdk
+pnpm turbo run compile --filter @fern-api/rust-model
+pnpm turbo run dist:cli --filter @fern-api/rust-sdk    # Build Docker CLI
+pnpm turbo run dist:cli --filter @fern-api/rust-model  # Build Docker CLI
 ```
 
 ### Configuration Options

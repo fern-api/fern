@@ -1,25 +1,40 @@
-const { NodeModulesPolyfillPlugin } = require('@esbuild-plugins/node-modules-polyfill');
-const { NodeGlobalsPolyfillPlugin } = require('@esbuild-plugins/node-globals-polyfill');
-const packageJson = require("./package.json");
-const tsup = require('tsup');
-const { writeFile, mkdir } = require("fs/promises");
-const path = require("path");
+import { polyfillNode } from 'esbuild-plugin-polyfill-node';
+import packageJson from "./package.json" with { type: "json" };
+import tsup from 'tsup';
+import { writeFile, mkdir, rm } from "fs/promises";
+import path from "path";
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 main();
 
 async function main() {
+    // Change to the package directory to ensure relative paths work
+    process.chdir(__dirname);
+
+    // Remove dist directory entirely
+    await rm(path.join(__dirname, "dist"), { recursive: true, force: true });
+
     const config = {
         entry: ['src/**/*.ts', '!src/__test__'],
-        target: "es2017",
+        target: "es2020",
         minify: true,
         dts: true,
         sourcemap: true,
         esbuildPlugins: [
-            NodeModulesPolyfillPlugin(),
-            NodeGlobalsPolyfillPlugin({
-                process: true,
-                buffer: true,
-                util: true
+            polyfillNode({
+                // Inject globals for backwards compatibility
+                globals: {
+                    buffer: true,
+                    process: true
+                },
+                // Disable fs and crypto polyfills (use native/external instead)
+                // All other Node.js built-ins (including util) are polyfilled by default
+                polyfills: {
+                    fs: false,
+                    crypto: false
+                }
             })
         ],
         tsconfig: "./build.tsconfig.json"
@@ -29,7 +44,7 @@ async function main() {
         ...config,
         format: ['cjs'],
         outDir: 'dist/cjs',
-        clean: true,
+        clean: false,
     });
 
     await tsup.build({

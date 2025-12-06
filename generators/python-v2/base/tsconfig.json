@@ -10,6 +10,9 @@
       "path": "../ast"
     },
     {
+      "path": "../../../packages/commons/logging-execa"
+    },
+    {
       "path": "../../../packages/commons/fs-utils"
     },
     {

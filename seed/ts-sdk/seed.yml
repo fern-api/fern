@@ -5,7 +5,7 @@ imageAliases: [fernapi/fern-typescript-node-sdk]
 changelogLocation: ../../generators/typescript/sdk/versions.yml
 publish:
   preBuildCommands:
-    - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
+    - pnpm turbo run dist:cli --filter @fern-typescript/sdk-generator-cli
   docker:
     file: ./generators/typescript/sdk/cli/Dockerfile
     image: fernapi/fern-typescript-sdk
@@ -15,15 +15,15 @@ test:
   docker:
     image: fernapi/fern-typescript-sdk:latest
     command:
-      - pnpm --filter @fern-typescript/sdk-generator-cli dockerTagLatest
+      - pnpm turbo run dockerTagLatest --filter @fern-typescript/sdk-generator-cli
   podman:
     image: fernapi/fern-typescript-sdk:latest
     command:
-      - pnpm --filter @fern-typescript/sdk-generator-cli podmanTagLatest
+      - pnpm turbo run podmanTagLatest --filter @fern-typescript/sdk-generator-cli
   local:
     workingDirectory: generators/typescript
     buildCommand:
-      - pnpm --filter @fern-typescript/sdk-generator-cli dist:cli
+      - pnpm turbo run dist:cli --filter @fern-typescript/sdk-generator-cli
     runCommand: node --enable-source-maps sdk/cli/dist/cli.cjs {CONFIG_PATH}
     env:
       NODE_ENV: test

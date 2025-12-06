@@ -39,9 +39,6 @@ jobs:
       - name: Install
         uses: ./.github/actions/install
 
-      - name: Compile
-        run: pnpm exec turbo compile '--filter=@fern-api/seed-cli'
-
       - name: Seed Build
         run: pnpm seed:build
 

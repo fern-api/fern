@@ -35,6 +35,9 @@
     },
     {
       "path": "../docs-resolver"
+    },
+    {
+      "path": "../../commons/core-utils"
     }
   ]
 }

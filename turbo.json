@@ -17,13 +17,13 @@
     },
     "compile": {
       "dependsOn": ["^compile"],
-      "outputs": ["lib/**"],
-      "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json"]
+      "outputs": ["lib/**", "*.tsbuildinfo"],
+      "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json", "$TURBO_ROOT$/packages/configs/**"]
     },
     "compile:debug": {
       "dependsOn": ["^compile:debug"],
-      "outputs": ["lib/**"],
-      "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json"]
+      "outputs": ["lib/**", "*.tsbuildinfo"],
+      "inputs": ["src/**", "tests/**", "package.json", "tsconfig.json", "$TURBO_ROOT$/packages/configs/**"]
     },
     "depcheck": {
       "outputs": [],
@@ -38,9 +38,10 @@
       "inputs": ["src/**", "tests/**", "$TURBO_ROOT$/.eslintrc.js", "$TURBO_ROOT$/.eslintignore", "tsconfig.json"]
     },
     "test": {
-      "dependsOn": ["^compile"],
+      "dependsOn": ["^compile", "compile"],
       "outputs": [],
       "inputs": [
+        "$TURBO_ROOT$/packages/configs/**",
         "$TURBO_ROOT$/shared/vitest.config.ts",
         "$TURBO_ROOT$/test-definitions-openapi/**",
         "$TURBO_ROOT$/test-definitions/**",
@@ -56,6 +57,7 @@
       "dependsOn": ["^compile:debug"],
       "outputs": [],
       "inputs": [
+        "$TURBO_ROOT$/packages/configs/**",
         "$TURBO_ROOT$/shared/vitest.config.ts",
         "$TURBO_ROOT$/test-definitions-openapi/**",
         "$TURBO_ROOT$/test-definitions/**",
@@ -68,9 +70,10 @@
       ]
     },
     "test:update": {
-      "dependsOn": ["^compile"],
+      "dependsOn": ["^compile", "compile"],
       "outputs": [],
       "inputs": [
+        "$TURBO_ROOT$/packages/configs/**",
         "$TURBO_ROOT$/shared/vitest.config.ts",
         "$TURBO_ROOT$/test-definitions-openapi/**",
         "$TURBO_ROOT$/test-definitions/**",
@@ -83,55 +86,67 @@
       ]
     },
     "dist:cli": {
-      "dependsOn": ["^compile"],
       "outputs": ["dist/**"],
+      "dependsOn": ["^compile", "compile"],
       "inputs": [
         "src/**",
         "tests/**",
         "package.json",
         "tsconfig.json",
+        "build-utils.mjs",
+        "build.mjs",
+        "$TURBO_ROOT$/packages/configs/**",
         "$TURBO_ROOT$/shared/.prettierignore",
         "$TURBO_ROOT$/shared/stylelintrc.shared.json",
         "$TURBO_ROOT$/tsconfig.eslint.json"
       ]
     },
     "dist:cli:dev": {
-      "dependsOn": ["^compile"],
-      "outputs": ["dist/**"],
+      "outputs": ["dist/dev/**"],
+      "dependsOn": ["^compile", "compile"],
       "inputs": [
         "src/**",
         "tests/**",
         "package.json",
         "tsconfig.json",
+        "build-utils.mjs",
+        "build.dev.mjs",
         "$TURBO_ROOT$/shared/.prettierignore",
         "$TURBO_ROOT$/shared/stylelintrc.shared.json",
-        "$TURBO_ROOT$/tsconfig.eslint.json"
+        "$TURBO_ROOT$/tsconfig.eslint.json",
+        "$TURBO_ROOT$/packages/configs/**"
       ]
     },
     "dist:cli:local": {
-      "dependsOn": ["^compile"],
-      "outputs": ["dist/**"],
+      "outputs": ["dist/local/**"],
+      "dependsOn": ["^compile", "compile"],
       "inputs": [
         "src/**",
         "tests/**",
         "package.json",
         "tsconfig.json",
+        "build-utils.mjs",
+        "build.local.mjs",
         "$TURBO_ROOT$/shared/.prettierignore",
         "$TURBO_ROOT$/shared/stylelintrc.shared.json",
-        "$TURBO_ROOT$/tsconfig.eslint.json"
+        "$TURBO_ROOT$/tsconfig.eslint.json",
+        "$TURBO_ROOT$/packages/configs/**"
       ]
     },
     "dist:cli:prod": {
-      "dependsOn": ["^compile"],
-      "outputs": ["dist/**"],
+      "outputs": ["dist/prod/**"],
+      "dependsOn": ["^compile", "compile"],
       "inputs": [
         "src/**",
         "tests/**",
         "package.json",
         "tsconfig.json",
+        "build-utils.mjs",
+        "build.prod.mjs",
         "$TURBO_ROOT$/shared/.prettierignore",
         "$TURBO_ROOT$/shared/stylelintrc.shared.json",
-        "$TURBO_ROOT$/tsconfig.eslint.json"
+        "$TURBO_ROOT$/tsconfig.eslint.json",
+        "$TURBO_ROOT$/packages/configs/**"
       ]
     },
     "dist": {
@@ -143,37 +158,31 @@
         "tests/**",
         "package.json",
         "tsconfig.json",
+        "build-utils.mjs",
+        "build.mjs",
         "$TURBO_ROOT$/shared/.prettierignore",
         "$TURBO_ROOT$/shared/stylelintrc.shared.json",
-        "$TURBO_ROOT$/tsconfig.eslint.json"
+        "$TURBO_ROOT$/tsconfig.eslint.json",
+        "$TURBO_ROOT$/packages/configs/**"
       ]
     },
-    "fern:build": {
-      "dependsOn": ["^compile"],
-      "outputs": ["packages/cli/cli/dist/prod/**"],
-      "inputs": [
-        "packages/cli/cli/src/**",
-        "packages/cli/cli/tests/**",
-        "packages/cli/cli/package.json",
-        "packages/cli/cli/tsconfig.json",
-        "packages/cli/cli/build.prod.cjs",
-        "$TURBO_ROOT$/shared/.prettierignore",
-        "$TURBO_ROOT$/shared/stylelintrc.shared.json",
-        "$TURBO_ROOT$/tsconfig.eslint.json"
-      ]
+    "dockerTagLatest": {
+      "outputs": [],
+      "dependsOn": ["dist:cli"],
+      "inputs": ["dist/**", "Dockerfile", "Dockerfile.*"]
     },
-    "fern-dev:build": {
-      "dependsOn": ["^compile"],
-      "outputs": ["packages/cli/cli/dist/dev/**"],
+    "podmanTagLatest": {
+      "outputs": [],
+      "dependsOn": ["dist:cli"],
       "inputs": [
-        "packages/cli/cli/src/**",
-        "packages/cli/cli/tests/**",
-        "packages/cli/cli/package.json",
-        "packages/cli/cli/tsconfig.json",
-        "packages/cli/cli/build.dev.cjs",
+        "Dockerfile",
         "$TURBO_ROOT$/shared/.prettierignore",
         "$TURBO_ROOT$/shared/stylelintrc.shared.json",
-        "$TURBO_ROOT$/tsconfig.eslint.json"
+        "$TURBO_ROOT$/packages/configs/**",
+        "src/**",
+        "tests/**",
+        "package.json",
+        "tsconfig.json"
       ]
     }
   }

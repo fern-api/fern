@@ -33,8 +33,8 @@ This file provides guidance for Claude Code when working with the C# generator.
 
 ```bash
 pnpm install
-pnpm --filter @fern-api/fern-csharp-sdk compile
-pnpm --filter @fern-api/fern-csharp-model compile
+pnpm turbo run compile --filter @fern-api/fern-csharp-sdk
+pnpm turbo run compile --filter @fern-api/fern-csharp-model
 ```
 
 ### Configuration Options
