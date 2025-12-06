@@ -41,8 +41,8 @@ import {
     PropertySignatureStructure,
     Scope,
     StructureKind,
-    ts,
-    TypeAliasDeclarationStructure
+    TypeAliasDeclarationStructure,
+    ts
 } from "ts-morph";
 import { Code, code } from "ts-poet";
 import {
@@ -1015,8 +1015,7 @@ export class GeneratedSdkClientClassImpl implements GeneratedSdkClientClass {
         // When OAuth token override is enabled, BaseClientOptions is a type alias that includes a union type
         // (OAuthAuthProvider.AuthOptions). TypeScript doesn't allow interfaces to extend union types,
         // so we must generate Options as a type alias instead of an interface.
-        const hasOAuthTokenOverride =
-            this.oauthTokenOverride && this.authProvider instanceof OAuthAuthProviderInstance;
+        const hasOAuthTokenOverride = this.oauthTokenOverride && this.authProvider instanceof OAuthAuthProviderInstance;
 
         if (hasOAuthTokenOverride) {
             // Generate Options as a type alias that equals BaseClientOptions

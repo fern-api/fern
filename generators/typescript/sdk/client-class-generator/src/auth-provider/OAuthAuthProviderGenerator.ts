@@ -405,7 +405,10 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
 
         // For token override, we still need to check for env var fallback if configured
         const canCreateStatements = hasTokenOverride
-            ? this.generatecanCreateStatementsForTokenOverride(oauthConfig.clientIdEnvVar, oauthConfig.clientSecretEnvVar)
+            ? this.generatecanCreateStatementsForTokenOverride(
+                  oauthConfig.clientIdEnvVar,
+                  oauthConfig.clientSecretEnvVar
+              )
             : this.generatecanCreateStatements(oauthConfig.clientIdEnvVar, oauthConfig.clientSecretEnvVar);
 
         const canCreateReturnType = hasTokenOverride
@@ -829,7 +832,7 @@ export class OAuthAuthProviderGenerator implements AuthProviderGenerator {
                     }
                 ]
             });
-        }else {
+        } else {
             // No token override - use simple interface extending BaseClientOptions
             context.sourceFile.addModule({
                 name: CLASS_NAME,
