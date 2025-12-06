@@ -268,6 +268,12 @@ fixtures:
         noSerdeLayer: false
     - outputFolder: token-override
       customConfig:
+        oauthTokenOverride: true  
+  oauth-client-credentials-environment-variables:
+    - outputFolder: no-custom-config
+      customConfig: null
+    - outputFolder: token-override
+      customConfig:
         oauthTokenOverride: true
   oauth-client-credentials-nested-root:
     - outputFolder: no-custom-config
