@@ -16,7 +16,7 @@ import {
 
 /**
  * Zod version to use as dependency.
- * @todo Make this configurable from a client standpoint. This would be complex to implement because it would likely 
+ * @todo Make this configurable from a client standpoint. This would be complex to implement because it would likely
  * involve scanning Zod's api at the given version and code-generating based on the results of the scan.
  */
 const ZOD_VERSION = "^3.23.0";
@@ -321,9 +321,7 @@ export class ZodFormat implements SerializationFormat {
 
     public object = (properties: Property[]): ObjectSchema => {
         // Check if any property has toJsonExpression (needs serialization transform)
-        const propsWithJsonTransform = properties.filter(
-            (p) => (p.value as ZodBaseSchema).toJsonExpression != null
-        );
+        const propsWithJsonTransform = properties.filter((p) => (p.value as ZodBaseSchema).toJsonExpression != null);
 
         /**
          * Creates a toJsonExpression for objects that recursively transforms properties needing serialization.
@@ -1014,8 +1012,7 @@ export class ZodFormat implements SerializationFormat {
                 isOptional: false,
                 isNullable: false,
                 // Return expression._schema for use in schema composition (z.array(), z.record(), etc.)
-                toExpression: () =>
-                    ts.factory.createPropertyAccessExpression(expression, "_schema"),
+                toExpression: () => ts.factory.createPropertyAccessExpression(expression, "_schema"),
                 // Generate: schemaRef.json(parsed) for serialization
                 // This calls the json method on the wrapper object generated in writeSchemaToFile
                 toJsonExpression: (parsed) =>

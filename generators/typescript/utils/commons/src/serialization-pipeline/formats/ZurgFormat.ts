@@ -388,8 +388,7 @@ export class ZurgFormat implements SerializationFormat {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () =>
-                this.serializationCall("object", [this.constructObjectLiteralForProperties(properties)])
+            toExpression: () => this.serializationCall("object", [this.constructObjectLiteralForProperties(properties)])
         };
 
         return {
@@ -529,8 +528,7 @@ export class ZurgFormat implements SerializationFormat {
         const baseSchema: ZurgBaseSchema = {
             isOptional: false,
             isNullable: false,
-            toExpression: () =>
-                this.serializationCall("record", [keySchema.toExpression(), valueSchema.toExpression()])
+            toExpression: () => this.serializationCall("record", [keySchema.toExpression(), valueSchema.toExpression()])
         };
 
         return {
@@ -592,9 +590,7 @@ export class ZurgFormat implements SerializationFormat {
             isOptional: false,
             isNullable: false,
             toExpression: () =>
-                this.serializationCall("booleanLiteral", [
-                    literal ? ts.factory.createTrue() : ts.factory.createFalse()
-                ])
+                this.serializationCall("booleanLiteral", [literal ? ts.factory.createTrue() : ts.factory.createFalse()])
         };
 
         return {
