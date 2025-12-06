@@ -14,6 +14,7 @@ export const LogoConfiguration: core.serialization.ObjectSchema<
     light: core.serialization.string().optional(),
     height: core.serialization.number().optional(),
     href: core.serialization.string().optional(),
+    rightText: core.serialization.property("right-text", core.serialization.string().optional()),
 });
 
 export declare namespace LogoConfiguration {
@@ -22,5 +23,6 @@ export declare namespace LogoConfiguration {
         light?: string | null;
         height?: number | null;
         href?: string | null;
+        "right-text"?: string | null;
     }
 }
