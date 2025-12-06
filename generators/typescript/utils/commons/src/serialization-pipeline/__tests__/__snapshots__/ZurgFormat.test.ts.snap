@@ -1,52 +1,52 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ZurgFormat AST Generation > Collection Schemas > list(string()) generates correct AST 1`] = `"serialization.list(serialization.string())"`;
+exports[`ZurgFormat AST Generation > Collection Schemas > list(string()) generates correct AST 1`] = `"core.serialization.list(core.serialization.string())"`;
 
-exports[`ZurgFormat AST Generation > Collection Schemas > record(string, any) generates correct AST 1`] = `"serialization.record(serialization.string(), serialization.any())"`;
+exports[`ZurgFormat AST Generation > Collection Schemas > record(string, any) generates correct AST 1`] = `"core.serialization.record(core.serialization.string(), core.serialization.any())"`;
 
-exports[`ZurgFormat AST Generation > Collection Schemas > set(number()) generates correct AST 1`] = `"serialization.set(serialization.number())"`;
+exports[`ZurgFormat AST Generation > Collection Schemas > set(number()) generates correct AST 1`] = `"core.serialization.set(core.serialization.number())"`;
 
-exports[`ZurgFormat AST Generation > Enum Schema > enum with values generates correct AST 1`] = `"serialization.enum_(["A", "B", "C"])"`;
+exports[`ZurgFormat AST Generation > Enum Schema > enum with values generates correct AST 1`] = `"core.serialization.enum_(["A", "B", "C"])"`;
 
-exports[`ZurgFormat AST Generation > Lazy Schemas > lazy() generates correct AST 1`] = `"serialization.lazy(() => serialization.string())"`;
+exports[`ZurgFormat AST Generation > Lazy Schemas > lazy() generates correct AST 1`] = `"core.serialization.lazy(() => core.serialization.string())"`;
 
 exports[`ZurgFormat AST Generation > Lazy Schemas > lazyObject() generates correct AST 1`] = `
-"serialization.lazyObject(() => serialization.object({
-    "id": serialization.string()
+"core.serialization.lazyObject(() => core.serialization.object({
+    "id": core.serialization.string()
 }))"
 `;
 
-exports[`ZurgFormat AST Generation > Object Schemas > empty object generates correct AST 1`] = `"serialization.object({})"`;
+exports[`ZurgFormat AST Generation > Object Schemas > empty object generates correct AST 1`] = `"core.serialization.object({})"`;
 
 exports[`ZurgFormat AST Generation > Object Schemas > object with different raw/parsed keys generates correct AST 1`] = `
-"serialization.object({
-    "firstName": serialization.property("first_name", serialization.string()),
-    "lastName": serialization.property("last_name", serialization.string())
+"core.serialization.object({
+    "firstName": core.serialization.property("first_name", core.serialization.string()),
+    "lastName": core.serialization.property("last_name", core.serialization.string())
 })"
 `;
 
 exports[`ZurgFormat AST Generation > Object Schemas > object with same raw/parsed keys generates correct AST 1`] = `
-"serialization.object({
-    "name": serialization.string(),
-    "age": serialization.number()
+"core.serialization.object({
+    "name": core.serialization.string(),
+    "age": core.serialization.number()
 })"
 `;
 
-exports[`ZurgFormat AST Generation > Schema Modifiers > nullable() generates correct AST 1`] = `"serialization.string().nullable()"`;
+exports[`ZurgFormat AST Generation > Schema Modifiers > nullable() generates correct AST 1`] = `"core.serialization.string().nullable()"`;
 
-exports[`ZurgFormat AST Generation > Schema Modifiers > optional() generates correct AST 1`] = `"serialization.string().optional()"`;
+exports[`ZurgFormat AST Generation > Schema Modifiers > optional() generates correct AST 1`] = `"core.serialization.string().optional()"`;
 
-exports[`ZurgFormat AST Generation > Schema Modifiers > optionalNullable() generates correct AST 1`] = `"serialization.string().optionalNullable()"`;
+exports[`ZurgFormat AST Generation > Schema Modifiers > optionalNullable() generates correct AST 1`] = `"core.serialization.string().optionalNullable()"`;
 
 exports[`ZurgFormat AST Generation > Union Schemas > discriminated union generates correct AST 1`] = `
-"serialization.union("type", {
-    "dog": serialization.object({
-        "breed": serialization.string()
+"core.serialization.union("type", {
+    "dog": core.serialization.object({
+        "breed": core.serialization.string()
     }),
-    "cat": serialization.object({
-        "indoor": serialization.boolean()
+    "cat": core.serialization.object({
+        "indoor": core.serialization.boolean()
     })
 })"
 `;
 
-exports[`ZurgFormat AST Generation > Union Schemas > undiscriminated union generates correct AST 1`] = `"serialization.undiscriminatedUnion([serialization.string(), serialization.number(), serialization.boolean()])"`;
+exports[`ZurgFormat AST Generation > Union Schemas > undiscriminated union generates correct AST 1`] = `"core.serialization.undiscriminatedUnion([core.serialization.string(), core.serialization.number(), core.serialization.boolean()])"`;

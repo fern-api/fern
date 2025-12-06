@@ -59,59 +59,59 @@ describe("ZurgFormat AST Generation", () => {
     describe("Primitive Schemas", () => {
         it("string() generates correct AST", () => {
             const ast = printNode(zurg.string().toExpression());
-            expect(ast).toBe("serialization.string()");
+            expect(ast).toBe("core.serialization.string()");
         });
 
         it("number() generates correct AST", () => {
             const ast = printNode(zurg.number().toExpression());
-            expect(ast).toBe("serialization.number()");
+            expect(ast).toBe("core.serialization.number()");
         });
 
         it("boolean() generates correct AST", () => {
             const ast = printNode(zurg.boolean().toExpression());
-            expect(ast).toBe("serialization.boolean()");
+            expect(ast).toBe("core.serialization.boolean()");
         });
 
         it("bigint() generates correct AST", () => {
             const ast = printNode(zurg.bigint().toExpression());
-            expect(ast).toBe("serialization.bigint()");
+            expect(ast).toBe("core.serialization.bigint()");
         });
 
         it("date() generates correct AST", () => {
             const ast = printNode(zurg.date().toExpression());
-            expect(ast).toBe("serialization.date()");
+            expect(ast).toBe("core.serialization.date()");
         });
 
         it("any() generates correct AST", () => {
             const ast = printNode(zurg.any().toExpression());
-            expect(ast).toBe("serialization.any()");
+            expect(ast).toBe("core.serialization.any()");
         });
 
         it("unknown() generates correct AST", () => {
             const ast = printNode(zurg.unknown().toExpression());
-            expect(ast).toBe("serialization.unknown()");
+            expect(ast).toBe("core.serialization.unknown()");
         });
 
         it("never() generates correct AST", () => {
             const ast = printNode(zurg.never().toExpression());
-            expect(ast).toBe("serialization.never()");
+            expect(ast).toBe("core.serialization.never()");
         });
     });
 
     describe("Literal Schemas", () => {
         it("stringLiteral() generates correct AST", () => {
             const ast = printNode(zurg.stringLiteral("hello").toExpression());
-            expect(ast).toBe('serialization.stringLiteral("hello")');
+            expect(ast).toBe('core.serialization.stringLiteral("hello")');
         });
 
         it("booleanLiteral(true) generates correct AST", () => {
             const ast = printNode(zurg.booleanLiteral(true).toExpression());
-            expect(ast).toBe("serialization.booleanLiteral(true)");
+            expect(ast).toBe("core.serialization.booleanLiteral(true)");
         });
 
         it("booleanLiteral(false) generates correct AST", () => {
             const ast = printNode(zurg.booleanLiteral(false).toExpression());
-            expect(ast).toBe("serialization.booleanLiteral(false)");
+            expect(ast).toBe("core.serialization.booleanLiteral(false)");
         });
     });
 

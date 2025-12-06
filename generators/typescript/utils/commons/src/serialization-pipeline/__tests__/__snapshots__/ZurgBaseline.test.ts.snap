@@ -1,43 +1,43 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ZurgFormat AST Generation Baseline > Collection Schemas > list() generates correct AST 1`] = `"serialization.list(serialization.string())"`;
+exports[`ZurgFormat AST Generation Baseline > Collection Schemas > list() generates correct AST 1`] = `"core.serialization.list(core.serialization.string())"`;
 
-exports[`ZurgFormat AST Generation Baseline > Collection Schemas > nested list generates correct AST 1`] = `"serialization.list(serialization.list(serialization.string()))"`;
+exports[`ZurgFormat AST Generation Baseline > Collection Schemas > nested list generates correct AST 1`] = `"core.serialization.list(core.serialization.list(core.serialization.string()))"`;
 
-exports[`ZurgFormat AST Generation Baseline > Collection Schemas > record() generates correct AST 1`] = `"serialization.record(serialization.string(), serialization.number())"`;
+exports[`ZurgFormat AST Generation Baseline > Collection Schemas > record() generates correct AST 1`] = `"core.serialization.record(core.serialization.string(), core.serialization.number())"`;
 
-exports[`ZurgFormat AST Generation Baseline > Collection Schemas > set() generates correct AST 1`] = `"serialization.set(serialization.number())"`;
+exports[`ZurgFormat AST Generation Baseline > Collection Schemas > set() generates correct AST 1`] = `"core.serialization.set(core.serialization.number())"`;
 
 exports[`ZurgFormat AST Generation Baseline > Complex Nested Schemas > deeply nested object generates correct AST 1`] = `
-"serialization.object({
-    "user": serialization.object({
-        "profile": serialization.object({
-            "name": serialization.string(),
-            "age": serialization.number().optional()
+"core.serialization.object({
+    "user": core.serialization.object({
+        "profile": core.serialization.object({
+            "name": core.serialization.string(),
+            "age": core.serialization.number().optional()
         })
     }),
-    "tags": serialization.list(serialization.string()),
-    "metadata": serialization.record(serialization.string(), serialization.any())
+    "tags": core.serialization.list(core.serialization.string()),
+    "metadata": core.serialization.record(core.serialization.string(), core.serialization.any())
 })"
 `;
 
-exports[`ZurgFormat AST Generation Baseline > Enum Schemas > enum with multiple values generates correct AST 1`] = `"serialization.enum_(["ACTIVE", "INACTIVE", "PENDING"])"`;
+exports[`ZurgFormat AST Generation Baseline > Enum Schemas > enum with multiple values generates correct AST 1`] = `"core.serialization.enum_(["ACTIVE", "INACTIVE", "PENDING"])"`;
 
-exports[`ZurgFormat AST Generation Baseline > Enum Schemas > enum with single value generates correct AST 1`] = `"serialization.enum_(["ACTIVE"])"`;
+exports[`ZurgFormat AST Generation Baseline > Enum Schemas > enum with single value generates correct AST 1`] = `"core.serialization.enum_(["ACTIVE"])"`;
 
-exports[`ZurgFormat AST Generation Baseline > Lazy Schemas (for recursion) > lazy() generates correct AST 1`] = `"serialization.lazy(() => serialization.string())"`;
+exports[`ZurgFormat AST Generation Baseline > Lazy Schemas (for recursion) > lazy() generates correct AST 1`] = `"core.serialization.lazy(() => core.serialization.string())"`;
 
 exports[`ZurgFormat AST Generation Baseline > Lazy Schemas (for recursion) > lazyObject() generates correct AST 1`] = `
-"serialization.lazyObject(() => serialization.object({
-    "id": serialization.string()
+"core.serialization.lazyObject(() => core.serialization.object({
+    "id": core.serialization.string()
 }))"
 `;
 
-exports[`ZurgFormat AST Generation Baseline > Literal Schemas > booleanLiteral(false) generates correct AST 1`] = `"serialization.booleanLiteral(false)"`;
+exports[`ZurgFormat AST Generation Baseline > Literal Schemas > booleanLiteral(false) generates correct AST 1`] = `"core.serialization.booleanLiteral(false)"`;
 
-exports[`ZurgFormat AST Generation Baseline > Literal Schemas > booleanLiteral(true) generates correct AST 1`] = `"serialization.booleanLiteral(true)"`;
+exports[`ZurgFormat AST Generation Baseline > Literal Schemas > booleanLiteral(true) generates correct AST 1`] = `"core.serialization.booleanLiteral(true)"`;
 
-exports[`ZurgFormat AST Generation Baseline > Literal Schemas > stringLiteral() generates correct AST 1`] = `"serialization.stringLiteral("hello")"`;
+exports[`ZurgFormat AST Generation Baseline > Literal Schemas > stringLiteral() generates correct AST 1`] = `"core.serialization.stringLiteral("hello")"`;
 
 exports[`ZurgFormat AST Generation Baseline > MaybeValid Visitor > _visitMaybeValid generates correct AST 1`] = `
 "{
@@ -50,95 +50,95 @@ exports[`ZurgFormat AST Generation Baseline > MaybeValid Visitor > _visitMaybeVa
 }"
 `;
 
-exports[`ZurgFormat AST Generation Baseline > Object Schemas > empty object generates correct AST 1`] = `"serialization.object({})"`;
+exports[`ZurgFormat AST Generation Baseline > Object Schemas > empty object generates correct AST 1`] = `"core.serialization.object({})"`;
 
 exports[`ZurgFormat AST Generation Baseline > Object Schemas > object with different raw/parsed keys generates correct AST 1`] = `
-"serialization.object({
-    "firstName": serialization.property("first_name", serialization.string()),
-    "lastName": serialization.property("last_name", serialization.string())
+"core.serialization.object({
+    "firstName": core.serialization.property("first_name", core.serialization.string()),
+    "lastName": core.serialization.property("last_name", core.serialization.string())
 })"
 `;
 
 exports[`ZurgFormat AST Generation Baseline > Object Schemas > object with nullable property generates correct AST 1`] = `
-"serialization.object({
-    "name": serialization.string().nullable()
+"core.serialization.object({
+    "name": core.serialization.string().nullable()
 })"
 `;
 
 exports[`ZurgFormat AST Generation Baseline > Object Schemas > object with optional property generates correct AST 1`] = `
-"serialization.object({
-    "name": serialization.string(),
-    "nickname": serialization.string().optional()
+"core.serialization.object({
+    "name": core.serialization.string(),
+    "nickname": core.serialization.string().optional()
 })"
 `;
 
 exports[`ZurgFormat AST Generation Baseline > Object Schemas > object with same raw/parsed keys generates correct AST 1`] = `
-"serialization.object({
-    "name": serialization.string(),
-    "age": serialization.number()
+"core.serialization.object({
+    "name": core.serialization.string(),
+    "age": core.serialization.number()
 })"
 `;
 
 exports[`ZurgFormat AST Generation Baseline > Object Schemas > object.extend() generates correct AST 1`] = `
-"serialization.object({
-    "id": serialization.string()
-}).extend(serialization.object({
-    "name": serialization.string()
+"core.serialization.object({
+    "id": core.serialization.string()
+}).extend(core.serialization.object({
+    "name": core.serialization.string()
 }))"
 `;
 
 exports[`ZurgFormat AST Generation Baseline > Object Schemas > object.passthrough() generates correct AST 1`] = `
-"serialization.object({
-    "id": serialization.string()
+"core.serialization.object({
+    "id": core.serialization.string()
 }).passthrough()"
 `;
 
 exports[`ZurgFormat AST Generation Baseline > Object Schemas > objectWithoutOptionalProperties generates correct AST 1`] = `
-"serialization.objectWithoutOptionalProperties({
-    "id": serialization.string()
+"core.serialization.objectWithoutOptionalProperties({
+    "id": core.serialization.string()
 })"
 `;
 
-exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > any() generates correct AST 1`] = `"serialization.any()"`;
+exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > any() generates correct AST 1`] = `"core.serialization.any()"`;
 
-exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > bigint() generates correct AST 1`] = `"serialization.bigint()"`;
+exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > bigint() generates correct AST 1`] = `"core.serialization.bigint()"`;
 
-exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > boolean() generates correct AST 1`] = `"serialization.boolean()"`;
+exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > boolean() generates correct AST 1`] = `"core.serialization.boolean()"`;
 
-exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > date() generates correct AST 1`] = `"serialization.date()"`;
+exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > date() generates correct AST 1`] = `"core.serialization.date()"`;
 
-exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > never() generates correct AST 1`] = `"serialization.never()"`;
+exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > never() generates correct AST 1`] = `"core.serialization.never()"`;
 
-exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > number() generates correct AST 1`] = `"serialization.number()"`;
+exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > number() generates correct AST 1`] = `"core.serialization.number()"`;
 
-exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > string() generates correct AST 1`] = `"serialization.string()"`;
+exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > string() generates correct AST 1`] = `"core.serialization.string()"`;
 
-exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > unknown() generates correct AST 1`] = `"serialization.unknown()"`;
+exports[`ZurgFormat AST Generation Baseline > Primitive Schemas > unknown() generates correct AST 1`] = `"core.serialization.unknown()"`;
 
-exports[`ZurgFormat AST Generation Baseline > Schema Modifiers > nullable() generates correct AST 1`] = `"serialization.string().nullable()"`;
+exports[`ZurgFormat AST Generation Baseline > Schema Modifiers > nullable() generates correct AST 1`] = `"core.serialization.string().nullable()"`;
 
-exports[`ZurgFormat AST Generation Baseline > Schema Modifiers > optional() generates correct AST 1`] = `"serialization.string().optional()"`;
+exports[`ZurgFormat AST Generation Baseline > Schema Modifiers > optional() generates correct AST 1`] = `"core.serialization.string().optional()"`;
 
-exports[`ZurgFormat AST Generation Baseline > Schema Modifiers > optionalNullable() generates correct AST 1`] = `"serialization.string().optionalNullable()"`;
+exports[`ZurgFormat AST Generation Baseline > Schema Modifiers > optionalNullable() generates correct AST 1`] = `"core.serialization.string().optionalNullable()"`;
 
-exports[`ZurgFormat AST Generation Baseline > Schema Operations > json() generates correct AST 1`] = `"serialization.string().json(parsedValue)"`;
+exports[`ZurgFormat AST Generation Baseline > Schema Operations > json() generates correct AST 1`] = `"core.serialization.string().json(parsedValue)"`;
 
-exports[`ZurgFormat AST Generation Baseline > Schema Operations > jsonOrThrow() generates correct AST 1`] = `"serialization.string().jsonOrThrow(parsedValue)"`;
+exports[`ZurgFormat AST Generation Baseline > Schema Operations > jsonOrThrow() generates correct AST 1`] = `"core.serialization.string().jsonOrThrow(parsedValue)"`;
 
-exports[`ZurgFormat AST Generation Baseline > Schema Operations > parse() generates correct AST 1`] = `"serialization.string().parse(rawValue)"`;
+exports[`ZurgFormat AST Generation Baseline > Schema Operations > parse() generates correct AST 1`] = `"core.serialization.string().parse(rawValue)"`;
 
 exports[`ZurgFormat AST Generation Baseline > Schema Operations > parse() with skipValidation generates correct AST 1`] = `
-"serialization.object({
-    "name": serialization.string()
+"core.serialization.object({
+    "name": core.serialization.string()
 }).parse(rawValue, { unrecognizedObjectKeys: "passthrough", allowUnrecognizedUnionMembers: true, allowUnrecognizedEnumValues: true, skipValidation: true, omitUndefined: true, breadcrumbsPrefix: ["request"] })"
 `;
 
-exports[`ZurgFormat AST Generation Baseline > Schema Operations > parseOrThrow() generates correct AST 1`] = `"serialization.string().parseOrThrow(rawValue)"`;
+exports[`ZurgFormat AST Generation Baseline > Schema Operations > parseOrThrow() generates correct AST 1`] = `"core.serialization.string().parseOrThrow(rawValue)"`;
 
-exports[`ZurgFormat AST Generation Baseline > Type References > ObjectSchema._getReferenceToType generates correct AST 1`] = `"serialization.ObjectSchema<{}, {}>"`;
+exports[`ZurgFormat AST Generation Baseline > Type References > ObjectSchema._getReferenceToType generates correct AST 1`] = `"core.serialization.ObjectSchema<{}, {}>"`;
 
 exports[`ZurgFormat AST Generation Baseline > Type References > Schema._getReferenceToType generates correct AST 1`] = `
-"serialization.Schema<{
+"core.serialization.Schema<{
     name: string;
 }, {
     name: string;
@@ -146,20 +146,20 @@ exports[`ZurgFormat AST Generation Baseline > Type References > Schema._getRefer
 `;
 
 exports[`ZurgFormat AST Generation Baseline > Union Schemas > discriminated union generates correct AST 1`] = `
-"serialization.union("type", {
-    "dog": serialization.object({
-        "breed": serialization.string()
+"core.serialization.union("type", {
+    "dog": core.serialization.object({
+        "breed": core.serialization.string()
     }),
-    "cat": serialization.object({
-        "indoor": serialization.boolean()
+    "cat": core.serialization.object({
+        "indoor": core.serialization.boolean()
     })
 })"
 `;
 
-exports[`ZurgFormat AST Generation Baseline > Union Schemas > undiscriminatedUnion generates correct AST 1`] = `"serialization.undiscriminatedUnion([serialization.string(), serialization.number(), serialization.boolean()])"`;
+exports[`ZurgFormat AST Generation Baseline > Union Schemas > undiscriminatedUnion generates correct AST 1`] = `"core.serialization.undiscriminatedUnion([core.serialization.string(), core.serialization.number(), core.serialization.boolean()])"`;
 
 exports[`ZurgFormat AST Generation Baseline > Union Schemas > union with different raw/parsed discriminant generates correct AST 1`] = `
-"serialization.union(serialization.discriminant("animalType", "animal_type"), {
-    "dog": serialization.object({})
+"core.serialization.union(core.serialization.discriminant("animalType", "animal_type"), {
+    "dog": core.serialization.object({})
 })"
 `;
