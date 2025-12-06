@@ -3,13 +3,15 @@
 import * as core from "../core/index.js";
 
 export namespace BearerAuthProvider {
-    export interface Options {
-        token?: core.Supplier<core.BearerToken | undefined>;
+    export interface AuthOptions {
+        token?: core.Supplier<core.BearerToken>;
     }
+
+    export interface Options extends AuthOptions {}
 }
 
 export class BearerAuthProvider implements core.AuthProvider {
-    private readonly token: core.Supplier<core.BearerToken | undefined>;
+    private readonly token: core.Supplier<core.BearerToken> | undefined;
 
     constructor(options: BearerAuthProvider.Options) {
         this.token = options.token;

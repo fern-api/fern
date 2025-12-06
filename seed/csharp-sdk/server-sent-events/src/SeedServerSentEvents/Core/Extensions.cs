@@ -11,7 +11,7 @@ internal static class Extensions
         if (field != null)
         {
             var attribute = (EnumMemberAttribute?)
-                Attribute.GetCustomAttribute(field, typeof(EnumMemberAttribute));
+                global::System.Attribute.GetCustomAttribute(field, typeof(EnumMemberAttribute));
             return attribute?.Value ?? value.ToString();
         }
         return value.ToString();

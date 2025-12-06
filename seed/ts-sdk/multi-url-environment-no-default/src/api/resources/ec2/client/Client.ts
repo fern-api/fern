@@ -9,7 +9,7 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedMultiUrlEnvironmentNoDefault from "../../../index.js";
 
 export declare namespace Ec2Client {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
