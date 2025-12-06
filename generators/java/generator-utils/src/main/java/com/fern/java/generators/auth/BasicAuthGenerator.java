@@ -88,7 +88,7 @@ public final class BasicAuthGenerator extends AbstractFileGenerator {
                         .addAnnotation(ClassName.get("", "java.lang.Override"))
                         .addModifiers(Modifier.PUBLIC)
                         .returns(String.class)
-                        .addStatement("return $S + $L()", "Basic ", GET_TOKEN_METHOD_NAME)
+                        .addStatement("return $S", "BasicAuth{credentials=[REDACTED]}")
                         .build())
                 .addMethod(MethodSpec.methodBuilder("of")
                         .addModifiers(Modifier.PUBLIC, Modifier.STATIC)
