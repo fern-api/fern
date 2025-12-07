@@ -23,10 +23,6 @@ public class AsyncSeedOauthClientCredentialsEnvironmentVariablesClientBuilder {
 
     private String clientSecret = System.getenv("CLIENT_SECRET");
 
-    private String audience = null;
-
-    private String grantType = null;
-
     private String scope = null;
 
     private Environment environment;
@@ -48,22 +44,6 @@ public class AsyncSeedOauthClientCredentialsEnvironmentVariablesClientBuilder {
      */
     public AsyncSeedOauthClientCredentialsEnvironmentVariablesClientBuilder clientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
-        return this;
-    }
-
-    /**
-     * Sets audience
-     */
-    public AsyncSeedOauthClientCredentialsEnvironmentVariablesClientBuilder audience(String audience) {
-        this.audience = audience;
-        return this;
-    }
-
-    /**
-     * Sets grantType
-     */
-    public AsyncSeedOauthClientCredentialsEnvironmentVariablesClientBuilder grantType(String grantType) {
-        this.grantType = grantType;
         return this;
     }
 
@@ -161,8 +141,8 @@ public class AsyncSeedOauthClientCredentialsEnvironmentVariablesClientBuilder {
             ClientOptions.Builder authClientOptionsBuilder =
                     ClientOptions.builder().environment(this.environment);
             AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
-            OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(
-                    this.clientId, this.clientSecret, this.audience, this.grantType, this.scope, authClient);
+            OAuthTokenSupplier oAuthTokenSupplier =
+                    new OAuthTokenSupplier(this.clientId, this.clientSecret, this.scope, authClient);
             builder.addHeader("Authorization", oAuthTokenSupplier);
         }
     }

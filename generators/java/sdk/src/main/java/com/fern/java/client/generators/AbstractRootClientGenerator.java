@@ -44,6 +44,7 @@ import com.fern.java.client.GeneratedEnvironmentsClass.SingleUrlEnvironmentClass
 import com.fern.java.client.GeneratedRootClient;
 import com.fern.java.client.generators.AbstractClientGeneratorUtils.Result;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
+import com.fern.java.client.generators.visitors.RequestPropertyToTypeVisitor;
 import com.fern.java.generators.AbstractFileGenerator;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedJavaInterface;
@@ -1176,34 +1177,60 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                         clientGeneratorContext.getCustomConfig().oauthTokenOverride();
                 String tokenOverridePropertyName = "token";
 
-                // Collect custom properties info for OAuth token supplier
-                OAuthAccessTokenRequestProperties requestProperties =
-                        clientCredentials.getTokenEndpoint().getRequestProperties();
-                List<String> customPropertyNames = new ArrayList<>();
-                if (requestProperties.getCustomProperties().isPresent()) {
-                    for (RequestProperty customProp :
-                            requestProperties.getCustomProperties().get()) {
-                        String propName = customProp
-                                .getProperty()
-                                .visit(new RequestPropertyToNameVisitor())
-                                .getName()
-                                .getCamelCase()
-                                .getSafeName();
-                        customPropertyNames.add(propName);
-                    }
-                }
-
-                // Also collect header properties from the endpoint (like x-api-key)
+                // Get HTTP endpoint for header inspection
                 HttpService httpService =
                         clientGeneratorContext.getIr().getServices().get(tokenEndpointReference.getServiceId());
                 HttpEndpoint httpEndpoint = httpService.getEndpoints().stream()
                         .filter(it -> it.getId().equals(tokenEndpointReference.getEndpointId()))
                         .findFirst()
                         .orElseThrow();
+
+                // Collect custom properties info for OAuth token supplier, excluding literals
+                OAuthAccessTokenRequestProperties requestProperties =
+                        clientCredentials.getTokenEndpoint().getRequestProperties();
+                List<String> customPropertyNames = new ArrayList<>();
+
+                // Add scopes property if present and not a literal
+                if (requestProperties.getScopes().isPresent()) {
+                    com.fern.ir.model.types.TypeReference scopesPropType =
+                            requestProperties.getScopes().get().getProperty().visit(new RequestPropertyToTypeVisitor());
+                    if (!isLiteralType(scopesPropType)) {
+                        String scopesName = requestProperties
+                                .getScopes()
+                                .get()
+                                .getProperty()
+                                .visit(new RequestPropertyToNameVisitor())
+                                .getName()
+                                .getCamelCase()
+                                .getSafeName();
+                        customPropertyNames.add(scopesName);
+                    }
+                }
+
+                if (requestProperties.getCustomProperties().isPresent()) {
+                    for (RequestProperty customProp :
+                            requestProperties.getCustomProperties().get()) {
+                        com.fern.ir.model.types.TypeReference propType =
+                                customProp.getProperty().visit(new RequestPropertyToTypeVisitor());
+                        if (!isLiteralType(propType)) {
+                            String propName = customProp
+                                    .getProperty()
+                                    .visit(new RequestPropertyToNameVisitor())
+                                    .getName()
+                                    .getCamelCase()
+                                    .getSafeName();
+                            customPropertyNames.add(propName);
+                        }
+                    }
+                }
+
+                // Also collect header properties from the endpoint (like x-api-key), excluding literals
                 for (var header : httpEndpoint.getHeaders()) {
-                    String headerName =
-                            header.getName().getName().getCamelCase().getSafeName();
-                    customPropertyNames.add(headerName);
+                    if (!isLiteralType(header.getValueType())) {
+                        String headerName =
+                                header.getName().getName().getCamelCase().getSafeName();
+                        customPropertyNames.add(headerName);
+                    }
                 }
 
                 Subpackage subpackage = clientGeneratorContext
@@ -1299,6 +1326,9 @@ public abstract class AbstractRootClientGenerator extends AbstractFileGenerator 
                                 authClientClassName);
 
                         // Build OAuthTokenSupplier constructor call with custom properties
+                        // TODO: Order of customPropertyNames must match
+                        // OAuthTokenSupplierGenerator.getOrderedBuilderProperties()
+                        // Currently what we have works but but this would be a more robust solution
                         CodeBlock.Builder oauthConstructorArgs =
                                 CodeBlock.builder().add("this.clientId, this.clientSecret");
                         for (String customPropName : customPropertyNames) {

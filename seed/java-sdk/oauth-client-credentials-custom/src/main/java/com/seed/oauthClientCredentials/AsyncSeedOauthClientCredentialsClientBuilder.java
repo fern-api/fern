@@ -23,11 +23,9 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
 
     private String clientSecret = null;
 
+    private String scp = null;
+
     private String entityId = null;
-
-    private String audience = null;
-
-    private String grantType = null;
 
     private String scope = null;
 
@@ -52,26 +50,18 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
     }
 
     /**
+     * Sets scp
+     */
+    public AsyncSeedOauthClientCredentialsClientBuilder scp(String scp) {
+        this.scp = scp;
+        return this;
+    }
+
+    /**
      * Sets entityId
      */
     public AsyncSeedOauthClientCredentialsClientBuilder entityId(String entityId) {
         this.entityId = entityId;
-        return this;
-    }
-
-    /**
-     * Sets audience
-     */
-    public AsyncSeedOauthClientCredentialsClientBuilder audience(String audience) {
-        this.audience = audience;
-        return this;
-    }
-
-    /**
-     * Sets grantType
-     */
-    public AsyncSeedOauthClientCredentialsClientBuilder grantType(String grantType) {
-        this.grantType = grantType;
         return this;
     }
 
@@ -170,13 +160,7 @@ public class AsyncSeedOauthClientCredentialsClientBuilder {
                     ClientOptions.builder().environment(this.environment);
             AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
             OAuthTokenSupplier oAuthTokenSupplier = new OAuthTokenSupplier(
-                    this.clientId,
-                    this.clientSecret,
-                    this.entityId,
-                    this.audience,
-                    this.grantType,
-                    this.scope,
-                    authClient);
+                    this.clientId, this.clientSecret, this.scp, this.entityId, this.scope, authClient);
             builder.addHeader("Authorization", oAuthTokenSupplier);
         }
     }
