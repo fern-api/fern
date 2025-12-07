@@ -1,45 +1,21 @@
 # frozen_string_literal: true
 
-require "test_helper"
-require "net/http"
-require "json"
-require "uri"
-require "seed"
+require_relative "wiremock_test_case"
 
-class EndpointsObjectWireTest < Minitest::Test
-  WIREMOCK_BASE_URL = "http://localhost:8080"
-  WIREMOCK_ADMIN_URL = "http://localhost:8080/__admin"
-
+class EndpointsObjectWireTest < WireMockTestCase
   def setup
     super
-    return if ENV["RUN_WIRE_TESTS"] == "true"
 
-    skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."
-  end
-
-  def verify_request_count(test_id:, method:, url_path:, expected:, query_params: nil)
-    uri = URI("#{WIREMOCK_ADMIN_URL}/requests/find")
-    http = Net::HTTP.new(uri.host, uri.port)
-    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
-
-    request_body = { "method" => method, "urlPath" => url_path }
-    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
-    request_body["queryParameters"] = query_params.transform_values { |v| { "equalTo" => v } } if query_params
-
-    post_request.body = request_body.to_json
-    response = http.request(post_request)
-    result = JSON.parse(response.body)
-    requests = result["requests"] || []
-
-    assert_equal expected, requests.length, "Expected #{expected} requests, found #{requests.length}"
+    @client = Seed::Client.new(
+      token: "<token>",
+      base_url: WIREMOCK_BASE_URL
+    )
   end
 
   def test_endpoints_object_get_and_return_with_optional_field_with_wiremock
     test_id = "endpoints.object.get_and_return_with_optional_field.0"
 
-    require "seed"
-    client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.object.get_and_return_with_optional_field(
+    @client.endpoints.object.get_and_return_with_optional_field(
       string: "string",
       integer: 1,
       long: 1_000_000,
@@ -55,10 +31,11 @@ class EndpointsObjectWireTest < Minitest::Test
         1 => "map"
       },
       bigint: "1000000",
-      request_options: { base_url: WIREMOCK_BASE_URL,
-                         additional_headers: {
-                           "X-Test-Id" => "endpoints.object.get_and_return_with_optional_field.0"
-                         } }
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.object.get_and_return_with_optional_field.0"
+        }
+      }
     )
 
     verify_request_count(
@@ -73,14 +50,13 @@ class EndpointsObjectWireTest < Minitest::Test
   def test_endpoints_object_get_and_return_with_required_field_with_wiremock
     test_id = "endpoints.object.get_and_return_with_required_field.0"
 
-    require "seed"
-    client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.object.get_and_return_with_required_field(
+    @client.endpoints.object.get_and_return_with_required_field(
       string: "string",
-      request_options: { base_url: WIREMOCK_BASE_URL,
-                         additional_headers: {
-                           "X-Test-Id" => "endpoints.object.get_and_return_with_required_field.0"
-                         } }
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.object.get_and_return_with_required_field.0"
+        }
+      }
     )
 
     verify_request_count(
@@ -95,18 +71,17 @@ class EndpointsObjectWireTest < Minitest::Test
   def test_endpoints_object_get_and_return_with_map_of_map_with_wiremock
     test_id = "endpoints.object.get_and_return_with_map_of_map.0"
 
-    require "seed"
-    client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.object.get_and_return_with_map_of_map(
+    @client.endpoints.object.get_and_return_with_map_of_map(
       map: {
         map: {
           map: "map"
         }
       },
-      request_options: { base_url: WIREMOCK_BASE_URL,
-                         additional_headers: {
-                           "X-Test-Id" => "endpoints.object.get_and_return_with_map_of_map.0"
-                         } }
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.object.get_and_return_with_map_of_map.0"
+        }
+      }
     )
 
     verify_request_count(
@@ -121,9 +96,7 @@ class EndpointsObjectWireTest < Minitest::Test
   def test_endpoints_object_get_and_return_nested_with_optional_field_with_wiremock
     test_id = "endpoints.object.get_and_return_nested_with_optional_field.0"
 
-    require "seed"
-    client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.object.get_and_return_nested_with_optional_field(
+    @client.endpoints.object.get_and_return_nested_with_optional_field(
       string: "string",
       nested_object: {
         string: "string",
@@ -142,10 +115,11 @@ class EndpointsObjectWireTest < Minitest::Test
         },
         bigint: "1000000"
       },
-      request_options: { base_url: WIREMOCK_BASE_URL,
-                         additional_headers: {
-                           "X-Test-Id" => "endpoints.object.get_and_return_nested_with_optional_field.0"
-                         } }
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.object.get_and_return_nested_with_optional_field.0"
+        }
+      }
     )
 
     verify_request_count(
@@ -160,9 +134,7 @@ class EndpointsObjectWireTest < Minitest::Test
   def test_endpoints_object_get_and_return_nested_with_required_field_with_wiremock
     test_id = "endpoints.object.get_and_return_nested_with_required_field.0"
 
-    require "seed"
-    client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.object.get_and_return_nested_with_required_field(
+    @client.endpoints.object.get_and_return_nested_with_required_field(
       string: "string",
       string: "string",
       nested_object: {
@@ -182,10 +154,11 @@ class EndpointsObjectWireTest < Minitest::Test
         },
         bigint: "1000000"
       },
-      request_options: { base_url: WIREMOCK_BASE_URL,
-                         additional_headers: {
-                           "X-Test-Id" => "endpoints.object.get_and_return_nested_with_required_field.0"
-                         } }
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "endpoints.object.get_and_return_nested_with_required_field.0"
+        }
+      }
     )
 
     verify_request_count(
@@ -200,12 +173,11 @@ class EndpointsObjectWireTest < Minitest::Test
   def test_endpoints_object_get_and_return_nested_with_required_field_as_list_with_wiremock
     test_id = "endpoints.object.get_and_return_nested_with_required_field_as_list.0"
 
-    require "seed"
-    client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.endpoints.object.get_and_return_nested_with_required_field_as_list(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                                                                 additional_headers: {
-                                                                                                   "X-Test-Id" => "endpoints.object.get_and_return_nested_with_required_field_as_list.0"
-                                                                                                 } })
+    @client.endpoints.object.get_and_return_nested_with_required_field_as_list(request_options: {
+                                                                                 additional_headers: {
+                                                                                   "X-Test-Id" => "endpoints.object.get_and_return_nested_with_required_field_as_list.0"
+                                                                                 }
+                                                                               })
 
     verify_request_count(
       test_id: test_id,

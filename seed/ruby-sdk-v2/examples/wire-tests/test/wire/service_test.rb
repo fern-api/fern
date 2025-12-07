@@ -1,50 +1,27 @@
 # frozen_string_literal: true
 
-require "test_helper"
-require "net/http"
-require "json"
-require "uri"
-require "seed"
+require_relative "wiremock_test_case"
 
-class ServiceWireTest < Minitest::Test
-  WIREMOCK_BASE_URL = "http://localhost:8080"
-  WIREMOCK_ADMIN_URL = "http://localhost:8080/__admin"
-
+class ServiceWireTest < WireMockTestCase
   def setup
     super
-    return if ENV["RUN_WIRE_TESTS"] == "true"
 
-    skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."
-  end
-
-  def verify_request_count(test_id:, method:, url_path:, expected:, query_params: nil)
-    uri = URI("#{WIREMOCK_ADMIN_URL}/requests/find")
-    http = Net::HTTP.new(uri.host, uri.port)
-    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })
-
-    request_body = { "method" => method, "urlPath" => url_path }
-    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }
-    request_body["queryParameters"] = query_params.transform_values { |v| { "equalTo" => v } } if query_params
-
-    post_request.body = request_body.to_json
-    response = http.request(post_request)
-    result = JSON.parse(response.body)
-    requests = result["requests"] || []
-
-    assert_equal expected, requests.length, "Expected #{expected} requests, found #{requests.length}"
+    @client = Seed::Client.new(
+      token: "<token>",
+      base_url: WIREMOCK_BASE_URL
+    )
   end
 
   def test_service_get_movie_with_wiremock
     test_id = "service.get_movie.0"
 
-    require "seed"
-    client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.service.get_movie(
+    @client.service.get_movie(
       movie_id: "movie-c06a4ad7",
-      request_options: { base_url: WIREMOCK_BASE_URL,
-                         additional_headers: {
-                           "X-Test-Id" => "service.get_movie.0"
-                         } }
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "service.get_movie.0"
+        }
+      }
     )
 
     verify_request_count(
@@ -59,9 +36,7 @@ class ServiceWireTest < Minitest::Test
   def test_service_create_movie_with_wiremock
     test_id = "service.create_movie.0"
 
-    require "seed"
-    client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.service.create_movie(
+    @client.service.create_movie(
       id: "movie-c06a4ad7",
       prequel: "movie-cv9b914f",
       title: "The Boy and the Heron",
@@ -71,10 +46,11 @@ class ServiceWireTest < Minitest::Test
       tag: "tag-wf9as23d",
       metadata: {},
       revenue: 1_000_000,
-      request_options: { base_url: WIREMOCK_BASE_URL,
-                         additional_headers: {
-                           "X-Test-Id" => "service.create_movie.0"
-                         } }
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "service.create_movie.0"
+        }
+      }
     )
 
     verify_request_count(
@@ -89,15 +65,14 @@ class ServiceWireTest < Minitest::Test
   def test_service_get_metadata_with_wiremock
     test_id = "service.get_metadata.0"
 
-    require "seed"
-    client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.service.get_metadata(
+    @client.service.get_metadata(
       shallow: false,
       x_api_version: "0.0.1",
-      request_options: { base_url: WIREMOCK_BASE_URL,
-                         additional_headers: {
-                           "X-Test-Id" => "service.get_metadata.0"
-                         } }
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "service.get_metadata.0"
+        }
+      }
     )
 
     verify_request_count(
@@ -112,9 +87,7 @@ class ServiceWireTest < Minitest::Test
   def test_service_create_big_entity_with_wiremock
     test_id = "service.create_big_entity.0"
 
-    require "seed"
-    client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.service.create_big_entity(
+    @client.service.create_big_entity(
       extended_movie: {
         cast: %w[cast cast],
         id: "id",
@@ -250,10 +223,11 @@ class ServiceWireTest < Minitest::Test
         date: "2023-01-15",
         datetime: "2024-01-15T09:30:00Z"
       },
-      request_options: { base_url: WIREMOCK_BASE_URL,
-                         additional_headers: {
-                           "X-Test-Id" => "service.create_big_entity.0"
-                         } }
+      request_options: {
+        additional_headers: {
+          "X-Test-Id" => "service.create_big_entity.0"
+        }
+      }
     )
 
     verify_request_count(
@@ -268,12 +242,11 @@ class ServiceWireTest < Minitest::Test
   def test_service_refresh_token_with_wiremock
     test_id = "service.refresh_token.0"
 
-    require "seed"
-    client = Seed::Client.new(base_url: WIREMOCK_BASE_URL, token: "<token>")
-    client.service.refresh_token(request_options: { base_url: WIREMOCK_BASE_URL,
-                                                    additional_headers: {
-                                                      "X-Test-Id" => "service.refresh_token.0"
-                                                    } })
+    @client.service.refresh_token(request_options: {
+                                    additional_headers: {
+                                      "X-Test-Id" => "service.refresh_token.0"
+                                    }
+                                  })
 
     verify_request_count(
       test_id: test_id,
