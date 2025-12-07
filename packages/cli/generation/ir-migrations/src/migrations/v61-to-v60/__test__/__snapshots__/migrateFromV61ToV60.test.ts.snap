@@ -103,6 +103,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
             },
             "packagePath": [],
           },
+          "inline": undefined,
           "name": {
             "camelCase": {
               "safeName": "generate",
@@ -241,6 +242,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
               },
               "packagePath": [],
             },
+            "inline": undefined,
             "name": {
               "camelCase": {
                 "safeName": "generateequest",
@@ -320,6 +322,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
             },
             "packagePath": [],
           },
+          "inline": undefined,
           "name": {
             "camelCase": {
               "safeName": "generateStream",
@@ -458,6 +461,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
               },
               "packagePath": [],
             },
+            "inline": undefined,
             "name": {
               "camelCase": {
                 "safeName": "generateStreamRequest",
@@ -543,6 +547,7 @@ exports[`migrateFromV61ToV60 > streaming 1`] = `
             },
             "packagePath": [],
           },
+          "inline": undefined,
           "name": {
             "camelCase": {
               "safeName": "streamResponse",
