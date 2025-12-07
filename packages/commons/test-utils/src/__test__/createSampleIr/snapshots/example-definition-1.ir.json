@@ -107,6 +107,7 @@
             },
             "packagePath": [],
           },
+          "inline": undefined,
           "name": {
             "camelCase": {
               "safeName": "order",
@@ -368,6 +369,7 @@
             },
             "packagePath": [],
           },
+          "inline": undefined,
           "name": {
             "camelCase": {
               "safeName": "orderItem",
@@ -531,6 +533,7 @@
             },
             "packagePath": [],
           },
+          "inline": undefined,
           "name": {
             "camelCase": {
               "safeName": "orderStatus",
