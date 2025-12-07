@@ -51,7 +51,7 @@ function phpFileContent({
     customConfig: BasePhpCustomConfigSchema;
 }): string {
     return (
-        "<?php\n\n" +
+        "<?php\n\ndeclare(strict_types=1);\n\n" +
         clazz.toString({
             namespace: clazz.namespace,
             rootNamespace,
