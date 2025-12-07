@@ -3,7 +3,7 @@
 - version: 1.0.0-rc62
   createdAt: "2025-12-07"
   changelogEntry:
-    - type: feat
+    - type: chore
       summary: |
         Improve wire test generation with client reuse and AST-level snippet handling.
         The client is now instantiated once in the setup method and reused across all tests,
