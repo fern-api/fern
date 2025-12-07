@@ -131,25 +131,15 @@ export class WireTestGenerator {
         // File header
         lines.push("# frozen_string_literal: true");
         lines.push("");
-        lines.push('require "test_helper"');
-        lines.push('require "net/http"');
-        lines.push('require "json"');
-        lines.push('require "uri"');
-        lines.push(`require "${this.context.getRootFolderName()}"`);
+        lines.push('require_relative "wiremock_test_case"');
         lines.push("");
 
-        // Test class
-        lines.push(`class ${this.toPascalCase(serviceName)}WireTest < Minitest::Test`);
-        lines.push('  WIREMOCK_BASE_URL = "http://localhost:8080"');
-        lines.push('  WIREMOCK_ADMIN_URL = "http://localhost:8080/__admin"');
+        // Test class inherits from WireMockTestCase which provides helper methods
+        lines.push(`class ${this.toPascalCase(serviceName)}WireTest < WireMockTestCase`);
         lines.push("");
 
-        // Setup method that creates the client once and skips wire tests unless RUN_WIRE_TESTS=true
+        // Setup method that creates the client once (base class handles skip logic)
         lines.push(...this.generateSetupMethod());
-        lines.push("");
-
-        // Helper methods
-        lines.push(...this.generateHelperMethods());
         lines.push("");
 
         // Test methods
@@ -169,15 +159,13 @@ export class WireTestGenerator {
     /**
      * Generates the setup method that creates the client once with auth and base_url.
      * This follows the PHP/Python pattern of client reuse for better performance.
+     * The base class (WireMockTestCase) handles the skip logic for wire tests.
      */
     private generateSetupMethod(): string[] {
         const lines: string[] = [];
 
         lines.push("  def setup");
         lines.push("    super");
-        lines.push('    unless ENV["RUN_WIRE_TESTS"] == "true"');
-        lines.push('      skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."');
-        lines.push("    end");
         lines.push("");
 
         // Build auth parameters for the client constructor
@@ -296,34 +284,6 @@ export class WireTestGenerator {
             }
         }
         return undefined;
-    }
-
-    private generateHelperMethods(): string[] {
-        const lines: string[] = [];
-
-        // verify_request_count method - filters by X-Test-Id header
-        lines.push("  def verify_request_count(test_id:, method:, url_path:, query_params: nil, expected:)");
-        lines.push('    uri = URI("#{WIREMOCK_ADMIN_URL}/requests/find")');
-        lines.push("    http = Net::HTTP.new(uri.host, uri.port)");
-        lines.push('    post_request = Net::HTTP::Post.new(uri.path, { "Content-Type" => "application/json" })');
-        lines.push("");
-        lines.push('    request_body = { "method" => method, "urlPath" => url_path }');
-        lines.push('    request_body["headers"] = { "X-Test-Id" => { "equalTo" => test_id } }');
-        lines.push("    if query_params");
-        lines.push('      request_body["queryParameters"] = query_params.transform_values { |v| { "equalTo" => v } }');
-        lines.push("    end");
-        lines.push("");
-        lines.push("    post_request.body = request_body.to_json");
-        lines.push("    response = http.request(post_request)");
-        lines.push("    result = JSON.parse(response.body)");
-        lines.push('    requests = result["requests"] || []');
-        lines.push("");
-        lines.push(
-            '    assert_equal expected, requests.length, "Expected #{expected} requests, found #{requests.length}"'
-        );
-        lines.push("  end");
-
-        return lines;
     }
 
     private async generateEndpointTestMethod(
