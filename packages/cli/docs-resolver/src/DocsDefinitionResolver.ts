@@ -522,6 +522,10 @@ export class DocsDefinitionResolver {
                 const trimmedSlug = slug.trim();
                 if (isValidRelativeSlug(trimmedSlug)) {
                     mdxFilePathToSlug.set(this.resolveFilepath(relativePath), trimmedSlug);
+                } else {
+                    this.taskContext.logger.warn(
+                        `Ignoring absolute URL slug "${trimmedSlug}" in ${relativePath}. Absolute URLs are not allowed for frontmatter slugs.`
+                    );
                 }
             }
         }
