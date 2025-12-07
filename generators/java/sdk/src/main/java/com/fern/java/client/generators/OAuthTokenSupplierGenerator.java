@@ -36,7 +36,6 @@ import com.squareup.javapoet.TypeSpec.Builder;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -109,11 +108,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .getUnsafeName();
 
         Map<String, RequestPropertyInfo> allOAuthProperties = collectOAuthProperties(requestProperties, httpEndpoint);
-        List<BuilderProperty> orderedBuilderProperties =
-                getOrderedBuilderProperties(httpEndpoint, allOAuthProperties);
-        List<BuilderProperty> nonLiteralProperties = orderedBuilderProperties.stream()
-                .filter(p -> !p.isLiteral)
-                .collect(Collectors.toList());
+        List<BuilderProperty> orderedBuilderProperties = getOrderedBuilderProperties(httpEndpoint, allOAuthProperties);
+        List<BuilderProperty> nonLiteralProperties =
+                orderedBuilderProperties.stream().filter(p -> !p.isLiteral).collect(Collectors.toList());
 
         TypeName fetchTokenRequestType = getFetchTokenRequestType(httpEndpoint, httpService);
         HttpResponseBody tokenHttpResponseBody =
@@ -179,8 +176,7 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                         "return $S + $L",
                         clientCredentials.getTokenPrefix().orElse("Bearer") + " ",
                         ACCESS_TOKEN_FIELD_NAME);
-        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder()
-                .addModifiers(Modifier.PUBLIC);
+        MethodSpec.Builder constructorBuilder = MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC);
 
         for (BuilderProperty prop : nonLiteralProperties) {
             constructorBuilder.addParameter(String.class, prop.fieldName);
@@ -213,7 +209,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 .addField(FieldSpec.builder(String.class, ACCESS_TOKEN_FIELD_NAME, Modifier.PRIVATE)
                         .build())
                 .addMethod(constructorBuilder.build())
-                .addMethod(buildFetchTokenMethod(fetchTokenReturnType, fetchTokenRequestType, orderedBuilderProperties, httpEndpoint))
+                .addMethod(buildFetchTokenMethod(
+                        fetchTokenReturnType, fetchTokenRequestType, orderedBuilderProperties, httpEndpoint))
                 .addMethod(getMethodSpecBuilder.build());
         if (refreshRequired) {
             oauthTypeSpecBuilder
@@ -282,11 +279,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         properties.put(clientSecretName, new RequestPropertyInfo(clientSecretName, CLIENT_SECRET_FIELD_NAME));
 
         if (requestProperties.getScopes().isPresent()) {
-            TypeReference scopesType = requestProperties
-                    .getScopes()
-                    .get()
-                    .getProperty()
-                    .visit(new RequestPropertyToTypeVisitor());
+            TypeReference scopesType =
+                    requestProperties.getScopes().get().getProperty().visit(new RequestPropertyToTypeVisitor());
             if (!isLiteralType(scopesType)) {
                 String scopesName = requestProperties
                         .getScopes()
@@ -301,7 +295,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
         }
 
         if (requestProperties.getCustomProperties().isPresent()) {
-            for (RequestProperty customProp : requestProperties.getCustomProperties().get()) {
+            for (RequestProperty customProp :
+                    requestProperties.getCustomProperties().get()) {
                 String propName = customProp
                         .getProperty()
                         .visit(new RequestPropertyToNameVisitor())
@@ -321,9 +316,9 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     }
 
     /**
-     * Returns builder properties in the correct order for staged builders: required properties first
-     * (in their definition order), then optional properties. Literal properties are included but marked
-     * as such so they can be skipped when generating constructor parameters and fields.
+     * Returns builder properties in the correct order for staged builders: required properties first (in their
+     * definition order), then optional properties. Literal properties are included but marked as such so they can be
+     * skipped when generating constructor parameters and fields.
      */
     private List<BuilderProperty> getOrderedBuilderProperties(
             HttpEndpoint httpEndpoint, Map<String, RequestPropertyInfo> allOAuthProperties) {
@@ -336,7 +331,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
                 @Override
                 public Void visitInlinedRequestBody(InlinedRequestBody inlinedRequestBody) {
                     for (InlinedRequestBodyProperty prop : inlinedRequestBody.getProperties()) {
-                        String propName = prop.getName().getName().getCamelCase().getUnsafeName();
+                        String propName =
+                                prop.getName().getName().getCamelCase().getUnsafeName();
                         RequestPropertyInfo oauthProp = allOAuthProperties.get(propName);
                         if (oauthProp == null) {
                             continue;
@@ -383,7 +379,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
         for (Map.Entry<String, RequestPropertyInfo> entry : allOAuthProperties.entrySet()) {
             if (!processedProperties.contains(entry.getKey())) {
-                optionalProperties.add(new BuilderProperty(entry.getValue().builderMethodName, entry.getValue().fieldName, false));
+                optionalProperties.add(
+                        new BuilderProperty(entry.getValue().builderMethodName, entry.getValue().fieldName, false));
             }
         }
 
@@ -410,8 +407,8 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
     }
 
     /**
-     * Builds the fetchToken method that constructs the token request and calls the auth client.
-     * Properties are added to the builder in the correct staged builder order.
+     * Builds the fetchToken method that constructs the token request and calls the auth client. Properties are added to
+     * the builder in the correct staged builder order.
      */
     private MethodSpec buildFetchTokenMethod(
             TypeName fetchTokenReturnType,

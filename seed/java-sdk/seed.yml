@@ -310,19 +310,11 @@ allowedFailures:
   - java-inline-types:no-wrapped-aliases
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
-  - oauth-client-credentials
-  - oauth-client-credentials:token-override
-  - oauth-client-credentials-custom
-  - oauth-client-credentials-default
-  - oauth-client-credentials-environment-variables
-  - oauth-client-credentials-nested-root
-  - oauth-client-credentials-with-variables
   - request-parameters
   - streaming-parameter
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
-  - any-auth
   - java-inline-types:inline
   - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases

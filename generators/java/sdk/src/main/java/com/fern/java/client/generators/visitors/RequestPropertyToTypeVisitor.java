@@ -6,8 +6,8 @@ import com.fern.ir.model.types.ObjectProperty;
 import com.fern.ir.model.types.TypeReference;
 
 /**
- * Extracts the TypeReference from a RequestPropertyValue to enable type introspection
- * (e.g., checking if a property is a literal, optional, etc.).
+ * Extracts the TypeReference from a RequestPropertyValue to enable type introspection (e.g., checking if a property is
+ * a literal, optional, etc.).
  */
 public class RequestPropertyToTypeVisitor implements RequestPropertyValue.Visitor<TypeReference> {
 
