@@ -91,6 +91,20 @@ class UniversalBaseModel(pydantic.BaseModel):
             return super().model_dump_json(**kwargs_with_defaults)  # type: ignore[misc]
         return super().json(**kwargs_with_defaults)
 
+    def model_dump_json(self, **kwargs: Any) -> str:
+        """
+        Override model_dump_json to use our custom dict() method which properly
+        handles FieldMetadata aliases, then serialize to JSON.
+        """
+        import json
+
+        data = self.dict(**kwargs)
+        if IS_PYDANTIC_V2:
+            from pydantic_core import to_jsonable_python
+
+            return json.dumps(to_jsonable_python(data, fallback=encode_by_type))
+        return json.dumps(data, default=encode_by_type)
+
     def dict(self, **kwargs: Any) -> Dict[str, Any]:
         """
         Override the default dict method to `exclude_unset` by default. This function patches
