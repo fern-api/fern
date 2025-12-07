@@ -19,13 +19,15 @@
         ```ts
         // Option 1: OAuth flow (existing behavior)
         const client = new Client({
-          clientId: process.env.CLIENT_ID,
-          clientSecret: process.env.CLIENT_SECRET,
+          clientId: "YOUR_CLIENT_ID",
+          clientSecret: "YOUR_CLIENT_SECRET",
+          ...
         });
 
         // Option 2: Direct bearer token override (new capability)
         const client = new Client({
           token: "my-pre-generated-bearer-token",
+          ...
         });
         ```
       type: feat

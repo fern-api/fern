@@ -528,7 +528,8 @@ export class SdkGenerator {
                 endpointSnippets: this.endpointSnippets,
                 fileResponseType: this.config.fileResponseType,
                 fetchSupport: this.config.fetchSupport,
-                generateSubpackageExports: this.config.generateSubpackageExports
+                generateSubpackageExports: this.config.generateSubpackageExports,
+                oauthTokenOverride: this.config.oauthTokenOverride
             }),
             ir: intermediateRepresentation
         });
