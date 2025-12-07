@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix `fern generate` crash when inheriting from a schema with top-level `nullable: true` via `allOf`. The OpenAPI importer now correctly strips nullable wrappers from type references in extends lists.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-06"
+  version: 3.4.2
+
+- changelogEntry:
+    - summary: |
         Map error response headers from IR to FDR for docs display.
       type: fix
   irVersion: 63

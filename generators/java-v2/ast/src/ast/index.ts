@@ -9,4 +9,4 @@ export { Method } from "./Method";
 export { MethodInvocation } from "./MethodInvocation";
 export { Parameter } from "./Parameter";
 export { Type } from "./Type";
-export { type BuilderParameter, type ConstructorParameter, TypeLiteral } from "./TypeLiteral";
+export { type BuilderEntryMethod, type BuilderParameter, type ConstructorParameter, TypeLiteral } from "./TypeLiteral";
