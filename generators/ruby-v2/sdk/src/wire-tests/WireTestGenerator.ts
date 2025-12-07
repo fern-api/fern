@@ -1,22 +1,16 @@
 import { File } from "@fern-api/base-generator";
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { WireMockMapping } from "@fern-api/mock-utils";
+import { ruby } from "@fern-api/ruby-ast";
 import { DynamicSnippetsGenerator } from "@fern-api/ruby-dynamic-snippets";
-import {
-    dynamic,
-    HttpEndpoint,
-    HttpService,
-    InferredAuthScheme,
-    IntermediateRepresentation,
-    Literal
-} from "@fern-fern/ir-sdk/api";
+import { dynamic, HttpEndpoint, HttpService, IntermediateRepresentation, Literal } from "@fern-fern/ir-sdk/api";
 import { SdkGeneratorContext } from "../SdkGeneratorContext";
 import { convertDynamicEndpointSnippetRequest } from "../utils/convertEndpointSnippetRequest";
 import { convertIr } from "../utils/convertIr";
 import { WireTestSetupGenerator } from "./WireTestSetupGenerator";
 
 interface EndpointTestCase {
-    snippet: string;
+    snippetAst: ruby.AstNode;
     endpoint: HttpEndpoint;
     service: HttpService;
     exampleIndex: number;
@@ -96,14 +90,12 @@ export class WireTestGenerator {
                 const testId = this.buildDeterministicTestId(service, endpoint, exampleIndex);
 
                 try {
-                    const snippet = await this.generateSnippetForExample({
+                    const snippetAst = await this.generateSnippetAstForExample({
                         example: firstExample,
-                        service,
                         endpoint,
-                        exampleIndex,
                         testId
                     });
-                    endpointTestCases.set(endpoint.id, { snippet, endpoint, service, exampleIndex, testId });
+                    endpointTestCases.set(endpoint.id, { snippetAst, endpoint, service, exampleIndex, testId });
                 } catch (error) {
                     this.context.logger.warn(`Failed to generate snippet for endpoint ${endpoint.id}: ${error}`);
                     continue;
@@ -111,7 +103,7 @@ export class WireTestGenerator {
             }
         }
 
-        const testFileContent = this.buildTestFileContent(serviceName, endpointTestCases);
+        const testFileContent = await this.buildTestFileContent(serviceName, endpointTestCases);
 
         return new File(`${serviceName}_test.rb`, RelativeFilePath.of("test/wire"), testFileContent);
     }
@@ -130,7 +122,10 @@ export class WireTestGenerator {
         return segments.join(".");
     }
 
-    private buildTestFileContent(serviceName: string, endpointTestCases: Map<string, EndpointTestCase>): string {
+    private async buildTestFileContent(
+        serviceName: string,
+        endpointTestCases: Map<string, EndpointTestCase>
+    ): Promise<string> {
         const lines: string[] = [];
 
         // File header
@@ -149,13 +144,8 @@ export class WireTestGenerator {
         lines.push('  WIREMOCK_ADMIN_URL = "http://localhost:8080/__admin"');
         lines.push("");
 
-        // Setup method to skip wire tests unless RUN_WIRE_TESTS=true
-        lines.push("  def setup");
-        lines.push("    super");
-        lines.push('    unless ENV["RUN_WIRE_TESTS"] == "true"');
-        lines.push('      skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."');
-        lines.push("    end");
-        lines.push("  end");
+        // Setup method that creates the client once and skips wire tests unless RUN_WIRE_TESTS=true
+        lines.push(...this.generateSetupMethod());
         lines.push("");
 
         // Helper methods
@@ -163,8 +153,8 @@ export class WireTestGenerator {
         lines.push("");
 
         // Test methods
-        for (const { snippet, endpoint, testId } of endpointTestCases.values()) {
-            const testMethod = this.generateEndpointTestMethod(endpoint, snippet, serviceName, testId);
+        for (const { snippetAst, endpoint, testId } of endpointTestCases.values()) {
+            const testMethod = await this.generateEndpointTestMethod(endpoint, snippetAst, serviceName, testId);
             if (testMethod) {
                 lines.push(...testMethod);
                 lines.push("");
@@ -174,6 +164,138 @@ export class WireTestGenerator {
         lines.push("end");
 
         return lines.join("\n");
+    }
+
+    /**
+     * Generates the setup method that creates the client once with auth and base_url.
+     * This follows the PHP/Python pattern of client reuse for better performance.
+     */
+    private generateSetupMethod(): string[] {
+        const lines: string[] = [];
+
+        lines.push("  def setup");
+        lines.push("    super");
+        lines.push('    unless ENV["RUN_WIRE_TESTS"] == "true"');
+        lines.push('      skip "Wire tests are disabled by default. Set RUN_WIRE_TESTS=true to enable them."');
+        lines.push("    end");
+        lines.push("");
+
+        // Build auth parameters for the client constructor
+        const authParams = this.buildAuthParamsForSetup();
+        const clientClassName = `${this.context.getRootModuleName()}::Client`;
+
+        // Generate client instantiation with auth and base_url
+        if (authParams.length > 0) {
+            lines.push(`    @client = ${clientClassName}.new(`);
+            for (const param of authParams) {
+                lines.push(`      ${param},`);
+            }
+            lines.push("      base_url: WIREMOCK_BASE_URL");
+            lines.push("    )");
+        } else {
+            lines.push(`    @client = ${clientClassName}.new(base_url: WIREMOCK_BASE_URL)`);
+        }
+
+        lines.push("  end");
+
+        return lines;
+    }
+
+    /**
+     * Builds auth parameters for the setup method based on global auth schemes.
+     */
+    private buildAuthParamsForSetup(): string[] {
+        const authParams: string[] = [];
+
+        for (const scheme of this.context.ir.auth.schemes) {
+            switch (scheme.type) {
+                case "bearer":
+                    authParams.push(`${scheme.token.snakeCase.safeName}: "<token>"`);
+                    break;
+                case "header":
+                    authParams.push(`${scheme.name.name.snakeCase.safeName}: "test-api-key"`);
+                    break;
+                case "basic":
+                    authParams.push(`${scheme.username.snakeCase.safeName}: "test-username"`);
+                    authParams.push(`${scheme.password.snakeCase.safeName}: "test-password"`);
+                    break;
+                case "oauth":
+                    authParams.push('client_id: "test-client-id"');
+                    authParams.push('client_secret: "test-client-secret"');
+                    break;
+                case "inferred": {
+                    // Handle inferred auth by extracting parameters from the token endpoint
+                    const inferredAuth = this.context.getInferredAuth();
+                    if (inferredAuth != null) {
+                        const inferredParams = this.buildInferredAuthParamsForSetup(inferredAuth);
+                        authParams.push(...inferredParams);
+                    }
+                    break;
+                }
+            }
+        }
+
+        return authParams;
+    }
+
+    /**
+     * Builds inferred auth parameters for the setup method.
+     */
+    private buildInferredAuthParamsForSetup(scheme: ReturnType<SdkGeneratorContext["getInferredAuth"]>): string[] {
+        if (scheme == null) {
+            return [];
+        }
+
+        const params: string[] = [];
+        const tokenEndpointRef = scheme.tokenEndpoint.endpoint;
+        const service = this.context.ir.services[tokenEndpointRef.serviceId];
+        if (service == null) {
+            return [];
+        }
+
+        const endpoint = service.endpoints.find((e) => e.id === tokenEndpointRef.endpointId);
+        if (endpoint == null) {
+            return [];
+        }
+
+        // Extract parameters from request body properties
+        const requestBody = endpoint.requestBody;
+        if (requestBody != null && requestBody.type === "inlinedRequestBody") {
+            for (const property of requestBody.properties) {
+                const literal = this.maybeLiteral(property.valueType);
+                if (literal == null) {
+                    const paramName = property.name.name.snakeCase.safeName;
+                    params.push(`${paramName}: "test-${paramName.replace(/_/g, "-")}"`);
+                }
+            }
+        }
+
+        // Extract parameters from endpoint headers
+        for (const header of endpoint.headers) {
+            const literal = this.maybeLiteral(header.valueType);
+            if (literal == null) {
+                const paramName = header.name.name.snakeCase.safeName;
+                params.push(`${paramName}: "test-${paramName.replace(/_/g, "-")}"`);
+            }
+        }
+
+        return params;
+    }
+
+    /**
+     * Checks if a type reference is a literal type and returns the literal value if so.
+     */
+    private maybeLiteral(typeReference: {
+        type: string;
+        container?: { type: string; literal?: Literal };
+    }): Literal | undefined {
+        if (typeReference.type === "container") {
+            const container = typeReference as { type: string; container: { type: string; literal?: Literal } };
+            if (container.container?.type === "literal") {
+                return container.container.literal;
+            }
+        }
+        return undefined;
     }
 
     private generateHelperMethods(): string[] {
@@ -204,12 +326,12 @@ export class WireTestGenerator {
         return lines;
     }
 
-    private generateEndpointTestMethod(
+    private async generateEndpointTestMethod(
         endpoint: HttpEndpoint,
-        snippet: string,
+        snippetAst: ruby.AstNode,
         serviceName: string,
         testId: string
-    ): string[] | null {
+    ): Promise<string[] | null> {
         try {
             const testName = this.getTestMethodName(endpoint, serviceName);
             const basePath = this.buildBasePath(endpoint);
@@ -221,9 +343,11 @@ export class WireTestGenerator {
             lines.push(`    test_id = "${testId}"`);
             lines.push("");
 
-            // Process the snippet to use WireMock base URL and inject auth
-            const processedSnippet = this.processSnippetForWireMock(snippet, endpoint);
-            const snippetLines = processedSnippet.split("\n");
+            // Convert the snippet AST to string
+            const snippetCode = await (snippetAst as ruby.AstNode).toStringAsync({
+                customConfig: this.context.customConfig ?? {}
+            });
+            const snippetLines = snippetCode.split("\n");
             for (const line of snippetLines) {
                 if (line.trim()) {
                     lines.push(`    ${line}`);
@@ -246,277 +370,6 @@ export class WireTestGenerator {
             this.context.logger.warn(`Failed to generate test method for endpoint ${endpoint.id}: ${error}`);
             return null;
         }
-    }
-
-    private processSnippetForWireMock(snippet: string, _endpoint: HttpEndpoint): string {
-        // Replace the base_url in the client constructor with WireMock URL
-        // Look for patterns like: base_url: "..." or environment: ...
-        let processed = snippet;
-
-        // If there's a base_url argument, replace it
-        if (processed.includes("base_url:")) {
-            processed = processed.replace(/base_url:\s*["'][^"']*["']/, "base_url: WIREMOCK_BASE_URL");
-        } else if (processed.includes("environment:")) {
-            // Replace environment with base_url
-            processed = processed.replace(/environment:\s*[^,)\n]+/, "base_url: WIREMOCK_BASE_URL");
-        } else {
-            // Add base_url to the client constructor
-            // Find the Client.new( pattern and add base_url
-            processed = processed.replace(/(\w+::Client\.new\()/, "$1base_url: WIREMOCK_BASE_URL, ");
-        }
-
-        // Inject global auth if available and not already present in the snippet
-        // Check if auth is already in the snippet to avoid duplicates
-        if (this.context.ir.auth.schemes.length > 0 && !this.snippetHasAuth(processed)) {
-            processed = this.injectAuthIntoSnippet(processed);
-        }
-
-        // Inject base_url into request_options for the method call
-        // This ensures the endpoint uses WireMock URL even if the SDK falls back to a default environment
-        processed = this.injectBaseUrlIntoRequestOptions(processed);
-
-        return processed;
-    }
-
-    /**
-     * Injects base_url: WIREMOCK_BASE_URL into the request_options hash of the method call.
-     * This is necessary because the SDK endpoint code may fall back to a default environment
-     * if request_options[:base_url] is not provided.
-     */
-    private injectBaseUrlIntoRequestOptions(snippet: string): string {
-        // Check if there's already a request_options in the method call
-        if (snippet.includes("request_options:")) {
-            // Add base_url to existing request_options hash
-            // Pattern: request_options: { ... } -> request_options: { base_url: WIREMOCK_BASE_URL, ... }
-            return snippet.replace(/request_options:\s*\{/, "request_options: { base_url: WIREMOCK_BASE_URL, ");
-        }
-
-        // No request_options, need to add it to the method call
-        // Find the method call pattern: client.some.method(...) or client.some.method
-        // Look for the last method call (after client initialization)
-
-        // Pattern for method call with arguments: .method_name(args)
-        const methodCallWithArgsPattern = /(\.\w+\()([^)]*)\)(\s*)$/;
-        const matchWithArgs = snippet.match(methodCallWithArgsPattern);
-
-        if (matchWithArgs) {
-            const [, methodStart, existingArgs, trailingSpace] = matchWithArgs;
-            if (existingArgs && existingArgs.trim()) {
-                // There are existing arguments, add request_options at the end
-                return snippet.replace(
-                    methodCallWithArgsPattern,
-                    `${methodStart}${existingArgs}, request_options: { base_url: WIREMOCK_BASE_URL })${trailingSpace}`
-                );
-            } else {
-                // Empty parentheses, add request_options
-                return snippet.replace(
-                    methodCallWithArgsPattern,
-                    `${methodStart}request_options: { base_url: WIREMOCK_BASE_URL })${trailingSpace}`
-                );
-            }
-        }
-
-        // Pattern for method call without parentheses: .method_name at end of line
-        const methodCallNoParensPattern = /(\.\w+)(\s*)$/;
-        const matchNoParens = snippet.match(methodCallNoParensPattern);
-
-        if (matchNoParens) {
-            const [, methodName, trailingSpace] = matchNoParens;
-            return snippet.replace(
-                methodCallNoParensPattern,
-                `${methodName}(request_options: { base_url: WIREMOCK_BASE_URL })${trailingSpace}`
-            );
-        }
-
-        return snippet;
-    }
-
-    /**
-     * Checks if the snippet already contains auth parameters in the client constructor.
-     * Only checks within the Client.new(...) call, not in method calls.
-     */
-    private snippetHasAuth(snippet: string): boolean {
-        const scheme = this.context.ir.auth.schemes[0];
-        if (!scheme) {
-            return true; // No auth scheme means "auth is satisfied"
-        }
-
-        // Extract just the client constructor portion to avoid false positives
-        // from auth parameters that appear in method calls
-        const clientConstructorMatch = snippet.match(/::Client\.new\([^)]*\)/);
-        if (!clientConstructorMatch) {
-            return false; // No client constructor found, auth needs to be injected
-        }
-        const clientConstructor = clientConstructorMatch[0];
-
-        switch (scheme.type) {
-            case "bearer":
-                // Check for token parameter in client constructor
-                return clientConstructor.includes(`${scheme.token.snakeCase.safeName}:`);
-            case "header":
-                // Check for header auth parameter in client constructor
-                return clientConstructor.includes(`${scheme.name.name.snakeCase.safeName}:`);
-            case "basic":
-                // Check for username parameter in client constructor
-                return clientConstructor.includes(`${scheme.username.snakeCase.safeName}:`);
-            case "oauth":
-                // Check for client_id parameter in client constructor
-                return clientConstructor.includes("client_id:");
-            case "inferred": {
-                // Check if the first inferred auth parameter is present in the client constructor
-                // The inferred auth params are extracted from the token endpoint
-                const inferredParams = this.getParametersForInferredAuth(scheme);
-                if (inferredParams.length === 0) {
-                    return true; // No params to inject
-                }
-                // Check if the first non-literal param is present
-                const firstParam = inferredParams.find((p) => p.literal == null);
-                return firstParam ? clientConstructor.includes(`${firstParam.snakeName}:`) : true;
-            }
-            default:
-                return true;
-        }
-    }
-
-    /**
-     * Injects auth parameters into the client constructor based on global auth schemes.
-     * This is necessary because the dynamic snippets generator only handles auth when
-     * endpoint.auth is set, but global auth is defined at the API level.
-     */
-    private injectAuthIntoSnippet(snippet: string): string {
-        const scheme = this.context.ir.auth.schemes[0];
-        if (!scheme) {
-            return snippet;
-        }
-
-        let authArg: string | undefined;
-
-        switch (scheme.type) {
-            case "bearer":
-                authArg = `${scheme.token.snakeCase.safeName}: "<token>"`;
-                break;
-            case "header":
-                authArg = `${scheme.name.name.snakeCase.safeName}: "test-api-key"`;
-                break;
-            case "basic":
-                authArg = `${scheme.username.snakeCase.safeName}: "test-username", ${scheme.password.snakeCase.safeName}: "test-password"`;
-                break;
-            case "oauth":
-                // OAuth client credentials
-                authArg = `client_id: "test-client-id", client_secret: "test-client-secret"`;
-                break;
-            case "inferred":
-                // Build auth args from the inferred auth parameters
-                authArg = this.buildInferredAuthArgs(scheme);
-                break;
-            default:
-                return snippet;
-        }
-
-        if (authArg) {
-            // Insert auth arg into the Client.new(...) call
-            // Handle case where there are already args (has comma after opening paren content)
-            if (snippet.match(/::Client\.new\([^)]+\)/)) {
-                // There are already arguments, add auth at the beginning
-                snippet = snippet.replace(/(\w+::Client\.new\()/, `$1${authArg}, `);
-            } else {
-                // Empty args, just add auth
-                snippet = snippet.replace(/(\w+::Client\.new\()(\))/, `$1${authArg}$2`);
-            }
-        }
-
-        return snippet;
-    }
-
-    /**
-     * Builds the auth args string for inferred auth schemes.
-     * Extracts the required parameters from the token endpoint and creates test values.
-     */
-    private buildInferredAuthArgs(scheme: InferredAuthScheme): string | undefined {
-        const params = this.getParametersForInferredAuth(scheme);
-        if (params.length === 0) {
-            return undefined;
-        }
-
-        return params
-            .filter((p) => p.literal == null) // Only include non-literal parameters
-            .map((p) => `${p.snakeName}: "test-${p.snakeName.replace(/_/g, "-")}"`)
-            .join(", ");
-    }
-
-    /**
-     * Extracts the required parameters from the inferred auth token endpoint.
-     * This mirrors the logic in InferredAuthProviderGenerator.getTokenEndpointRequestProperties.
-     */
-    private getParametersForInferredAuth(
-        scheme: InferredAuthScheme
-    ): Array<{ snakeName: string; isOptional: boolean; literal?: Literal }> {
-        const parameters: Array<{ snakeName: string; isOptional: boolean; literal?: Literal }> = [];
-
-        const tokenEndpointReference = scheme.tokenEndpoint.endpoint;
-        const service = this.context.ir.services[tokenEndpointReference.serviceId];
-        if (service == null) {
-            return [];
-        }
-
-        const endpoint = service.endpoints.find((e) => e.id === tokenEndpointReference.endpointId);
-        if (endpoint == null) {
-            return [];
-        }
-
-        // Add query parameters
-        // This matches InferredAuthProviderGenerator behavior
-        for (const query of endpoint.queryParameters) {
-            const literal = this.maybeLiteral(query.valueType);
-            parameters.push({
-                snakeName: query.name.name.snakeCase.unsafeName,
-                isOptional: this.isOptional(query.valueType),
-                literal
-            });
-        }
-
-        // Get the request body properties (if inlined request body)
-        const requestBody = endpoint.requestBody;
-        if (requestBody != null && requestBody.type === "inlinedRequestBody") {
-            for (const property of requestBody.properties) {
-                const literal = this.maybeLiteral(property.valueType);
-                parameters.push({
-                    snakeName: property.name.name.snakeCase.unsafeName,
-                    isOptional: this.isOptional(property.valueType),
-                    literal
-                });
-            }
-        }
-
-        // Add headers (service-level and endpoint-level)
-        // This matches InferredAuthProviderGenerator behavior
-        for (const header of [...service.headers, ...endpoint.headers]) {
-            const literal = this.maybeLiteral(header.valueType);
-            parameters.push({
-                snakeName: header.name.name.snakeCase.unsafeName,
-                isOptional: this.isOptional(header.valueType),
-                literal
-            });
-        }
-
-        return parameters;
-    }
-
-    private isOptional(typeReference: { type: string }): boolean {
-        return typeReference.type === "container" || typeReference.type === "unknown";
-    }
-
-    private maybeLiteral(typeReference: {
-        type: string;
-        container?: { type: string; literal?: Literal };
-    }): Literal | undefined {
-        if (typeReference.type === "container") {
-            const container = typeReference as { type: string; container: { type: string; literal?: Literal } };
-            if (container.container?.type === "literal") {
-                return container.container.literal;
-            }
-        }
-        return undefined;
     }
 
     private buildBasePath(endpoint: HttpEndpoint): string {
@@ -616,109 +469,35 @@ export class WireTestGenerator {
         return example.examples?.[0] ?? null;
     }
 
-    private async generateSnippetForExample({
+    /**
+     * Generates a snippet AST for an example using skipClientInstantiation.
+     * This is the new approach that passes base_url and auth through the snippet request
+     * instead of post-processing the generated snippet string with regex.
+     */
+    private async generateSnippetAstForExample({
         example,
         endpoint,
         testId
     }: {
         example: dynamic.EndpointSnippetRequest;
-        service: HttpService;
         endpoint: HttpEndpoint;
-        exampleIndex: number;
         testId: string;
-    }): Promise<string> {
-        // Inject the X-Test-Id header and test auth values into the example request
+    }): Promise<ruby.AstNode> {
+        // Inject the X-Test-Id header into the example request
+        // Auth is handled in the setup method, so we don't need to inject it here
         const exampleWithTestId: dynamic.EndpointSnippetRequest = {
             ...example,
             headers: {
                 ...(example.headers ?? {}),
                 "X-Test-Id": testId
-            },
-            // Inject test auth values if the endpoint requires auth but example doesn't have them
-            auth: example.auth ?? this.getTestAuthValues(endpoint)
+            }
         };
 
         const snippetRequest = convertDynamicEndpointSnippetRequest(exampleWithTestId);
-        const response = this.dynamicSnippetsGenerator.generateSync(snippetRequest);
-        if (!response.snippet) {
-            throw new Error("No snippet generated for example");
-        }
-        return response.snippet;
-    }
-
-    /**
-     * Generates test auth values for wire tests based on the endpoint's or global auth configuration.
-     * These are placeholder values that work with WireMock stubs.
-     */
-    private getTestAuthValues(endpoint: HttpEndpoint): dynamic.AuthValues | undefined {
-        // First try to get auth from the dynamic endpoint
-        const dynamicEndpoint = this.dynamicIr.endpoints[endpoint.id];
-        if (dynamicEndpoint?.auth) {
-            return this.createAuthValuesFromDynamicAuth(dynamicEndpoint.auth);
-        }
-
-        // Fall back to global auth schemes if endpoint doesn't have specific auth
-        if (this.context.ir.auth.schemes.length > 0) {
-            return this.createAuthValuesFromGlobalSchemes();
-        }
-
-        return undefined;
-    }
-
-    private createAuthValuesFromDynamicAuth(auth: dynamic.Auth): dynamic.AuthValues | undefined {
-        switch (auth.type) {
-            case "bearer":
-                return dynamic.AuthValues.bearer({
-                    token: "<token>"
-                });
-            case "basic":
-                return dynamic.AuthValues.basic({
-                    username: "test-username",
-                    password: "test-password"
-                });
-            case "header":
-                return dynamic.AuthValues.header({
-                    value: "test-api-key"
-                });
-            case "oauth":
-                return dynamic.AuthValues.oauth({
-                    clientId: "test-client-id",
-                    clientSecret: "test-client-secret"
-                });
-            default:
-                return undefined;
-        }
-    }
-
-    private createAuthValuesFromGlobalSchemes(): dynamic.AuthValues | undefined {
-        // Use the first auth scheme defined in the IR
-        const scheme = this.context.ir.auth.schemes[0];
-        if (!scheme) {
-            return undefined;
-        }
-
-        switch (scheme.type) {
-            case "bearer":
-                return dynamic.AuthValues.bearer({
-                    token: "<token>"
-                });
-            case "basic":
-                return dynamic.AuthValues.basic({
-                    username: "test-username",
-                    password: "test-password"
-                });
-            case "header":
-                return dynamic.AuthValues.header({
-                    value: "test-api-key"
-                });
-            case "oauth":
-                return dynamic.AuthValues.oauth({
-                    clientId: "test-client-id",
-                    clientSecret: "test-client-secret"
-                });
-            default:
-                return undefined;
-        }
+        const snippetAst = await this.dynamicSnippetsGenerator.generateSnippetAst(snippetRequest, {
+            skipClientInstantiation: true
+        });
+        return snippetAst as ruby.AstNode;
     }
 
     private groupEndpointsByService(): Map<string, HttpEndpoint[]> {
