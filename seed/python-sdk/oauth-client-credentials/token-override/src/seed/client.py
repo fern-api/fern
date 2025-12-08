@@ -211,7 +211,7 @@ class AsyncSeedOauthClientCredentials:
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
-    httpx_client : typing.Optional[httpx.Client]
+    httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
     # or ...
@@ -228,7 +228,7 @@ class AsyncSeedOauthClientCredentials:
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
 
-    httpx_client : typing.Optional[httpx.Client]
+    httpx_client : typing.Optional[httpx.AsyncClient]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
     Examples

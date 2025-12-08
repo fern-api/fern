@@ -192,7 +192,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             if environments_union.type == "singleBaseUrl":
                 source_file.add_declaration(self._get_base_url_function_declaration(), should_export=False)
 
-    def _write_root_class_docstring(self, writer: AST.NodeWriter) -> None:
+    def _write_root_class_docstring(self, writer: AST.NodeWriter, *, is_async: bool) -> None:
         writer.write_line(self.ROOT_CLASS_DOCSTRING)
 
         oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
@@ -214,7 +214,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
 
         # Use the same constructor parameter definitions that drive the function
         # signature so types/docs stay in sync with the actual AST.
-        constructor_parameters = self._get_constructor_parameters(is_async=False)
+        constructor_parameters = self._get_constructor_parameters(is_async=is_async)
         params_by_name: dict[str, RootClientConstructorParameter] = {
             param.constructor_parameter_name: param for param in constructor_parameters
         }
@@ -321,7 +321,9 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
                 ),
                 overloads=constructor_overloads,
             ),
-            docstring=AST.Docstring(self._write_root_class_docstring),
+            docstring=AST.Docstring(
+                lambda writer, is_async=is_async: self._write_root_class_docstring(writer, is_async=is_async)
+            ),
             snippet=combined_snippet,
             write_parameter_docstring=write_parameter_docstring,
         )
