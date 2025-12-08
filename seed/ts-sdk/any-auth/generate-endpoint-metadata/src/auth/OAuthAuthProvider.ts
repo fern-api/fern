@@ -14,14 +14,14 @@ export class OAuthAuthProvider implements core.AuthProvider {
     private _expiresAt: Date;
     private _refreshPromise: Promise<string> | undefined;
 
-    constructor(options: OAuthAuthProvider.Options) {
+    constructor(options: OAuthAuthProvider.Options & OAuthAuthProvider.AuthOptions) {
         this._clientId = options.clientId;
         this._clientSecret = options.clientSecret;
         this._authClient = new AuthClient(options);
         this._expiresAt = new Date();
     }
 
-    public static canCreate(options: OAuthAuthProvider.Options): boolean {
+    public static canCreate(options: OAuthAuthProvider.Options & Partial<OAuthAuthProvider.AuthOptions>): boolean {
         return (
             (options.clientId != null || process.env?.MY_CLIENT_ID != null) &&
             (options.clientSecret != null || process.env?.MY_CLIENT_SECRET != null)

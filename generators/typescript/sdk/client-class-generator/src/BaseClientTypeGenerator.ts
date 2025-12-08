@@ -254,7 +254,7 @@ export type NormalizedClientOptionsWithAuth<T extends BaseClientOptions> = Norma
                     namedImports: ["AnyAuthProvider"]
                 });
 
-                authProviderCreation = `new AnyAuthProvider(${OPTIONS_PARAMETER_NAME}.auth)`;
+                authProviderCreation = `new AnyAuthProvider(${OPTIONS_PARAMETER_NAME})`;
             } else {
                 // Use the existing AnyAuthProvider approach
                 context.sourceFile.addImportDeclaration({

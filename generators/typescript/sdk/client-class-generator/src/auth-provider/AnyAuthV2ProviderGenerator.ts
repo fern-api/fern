@@ -3,6 +3,10 @@ import { ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescr
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 import { AuthProviderGenerator } from "./AuthProviderGenerator";
+import { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator";
+import { BearerAuthProviderGenerator } from "./BearerAuthProviderGenerator";
+import { HeaderAuthProviderGenerator } from "./HeaderAuthProviderGenerator";
+import { OAuthAuthProviderGenerator } from "./OAuthAuthProviderGenerator";
 
 export declare namespace AnyAuthV2ProviderGenerator {
     export interface Init {
@@ -16,6 +20,7 @@ export declare namespace AnyAuthV2ProviderGenerator {
 const CLASS_NAME = "AnyAuthProvider";
 const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 const AUTH_FIELD_NAME = "auth";
+const OPTIONS_FIELD_NAME = "options";
 const DELEGATE_FIELD_NAME = "delegate";
 
 export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
@@ -69,11 +74,53 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
         this.writeClass(context);
     }
 
-    private addImports(_context: SdkContext): void {
-        _context.sourceFile.addImportDeclaration({
+    private addImports(context: SdkContext): void {
+        context.sourceFile.addImportDeclaration({
             moduleSpecifier: "../core/index.js",
             namespaceImport: "core"
         });
+
+        // Import BaseClientOptions for the constructor parameter type
+        context.sourceFile.addImportDeclaration({
+            moduleSpecifier: "../BaseClient.js",
+            namedImports: ["BaseClientOptions"],
+            isTypeOnly: true
+        });
+
+        // Import individual auth providers based on auth schemes
+        const authSchemes = this.ir.auth.schemes;
+        for (const authScheme of authSchemes) {
+            switch (authScheme.type) {
+                case "bearer":
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: `./${BearerAuthProviderGenerator.CLASS_NAME}.js`,
+                        namedImports: [BearerAuthProviderGenerator.CLASS_NAME]
+                    });
+                    break;
+                case "basic":
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: `./${BasicAuthProviderGenerator.CLASS_NAME}.js`,
+                        namedImports: [BasicAuthProviderGenerator.CLASS_NAME]
+                    });
+                    break;
+                case "header":
+                    context.sourceFile.addImportDeclaration({
+                        moduleSpecifier: `./${HeaderAuthProviderGenerator.CLASS_NAME}.js`,
+                        namedImports: [HeaderAuthProviderGenerator.CLASS_NAME]
+                    });
+                    break;
+                case "oauth":
+                    if (context.generateOAuthClients) {
+                        context.sourceFile.addImportDeclaration({
+                            moduleSpecifier: `./${OAuthAuthProviderGenerator.CLASS_NAME}.js`,
+                            namedImports: [OAuthAuthProviderGenerator.CLASS_NAME]
+                        });
+                    }
+                    break;
+                case "inferred":
+                    break;
+            }
+        }
     }
 
     private getAuthSchemeKey(authScheme: FernIr.AuthScheme): string {
@@ -102,64 +149,32 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
 
             switch (authScheme.type) {
                 case "bearer": {
-                    const tokenName = getPropertyKey(authScheme.token.camelCase.safeName);
-                    const hasTokenEnv = authScheme.tokenEnvVar != null;
-                    const isOptional = !this.ir.sdkConfig.isAuthMandatory || hasTokenEnv;
-                    const optionalMarker = isOptional ? "?" : "";
-                    const tokenType = context.coreUtilities.auth.BearerToken._getReferenceToType();
-                    const supplierType = getTextOfTsNode(
-                        context.coreUtilities.fetcher.Supplier._getReferenceToType(tokenType)
+                    // Use the BearerAuthProvider.AuthOptions type
+                    unionMembers.push(
+                        `{ type: "${schemeKey}" } & ${BearerAuthProviderGenerator.CLASS_NAME}.AuthOptions`
                     );
-                    unionMembers.push(`{ type: "${schemeKey}"; ${tokenName}${optionalMarker}: ${supplierType}; }`);
                     break;
                 }
                 case "basic": {
-                    const usernameName = getPropertyKey(authScheme.username.camelCase.safeName);
-                    const passwordName = getPropertyKey(authScheme.password.camelCase.safeName);
-                    const hasUsernameEnv = authScheme.usernameEnvVar != null;
-                    const hasPasswordEnv = authScheme.passwordEnvVar != null;
-                    const isUsernameOptional = !this.ir.sdkConfig.isAuthMandatory || hasUsernameEnv;
-                    const isPasswordOptional = !this.ir.sdkConfig.isAuthMandatory || hasPasswordEnv;
-                    const usernameOptional = isUsernameOptional ? "?" : "";
-                    const passwordOptional = isPasswordOptional ? "?" : "";
-                    const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
-                    const supplierType = getTextOfTsNode(
-                        context.coreUtilities.fetcher.Supplier._getReferenceToType(stringType)
-                    );
+                    // Use the BasicAuthProvider.AuthOptions type
                     unionMembers.push(
-                        `{ type: "${schemeKey}"; ${usernameName}${usernameOptional}: ${supplierType}; ${passwordName}${passwordOptional}: ${supplierType}; }`
+                        `{ type: "${schemeKey}" } & ${BasicAuthProviderGenerator.CLASS_NAME}.AuthOptions`
                     );
                     break;
                 }
                 case "header": {
-                    const headerName = getPropertyKey(authScheme.name.name.camelCase.safeName);
-                    const hasHeaderEnv = authScheme.headerEnvVar != null;
-                    const isOptional = !this.ir.sdkConfig.isAuthMandatory || hasHeaderEnv;
-                    const optionalMarker = isOptional ? "?" : "";
-                    const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
-                    const supplierType = getTextOfTsNode(
-                        context.coreUtilities.fetcher.Supplier._getReferenceToType(stringType)
+                    // Use the HeaderAuthProvider.AuthOptions type
+                    unionMembers.push(
+                        `{ type: "${schemeKey}" } & ${HeaderAuthProviderGenerator.CLASS_NAME}.AuthOptions`
                     );
-                    unionMembers.push(`{ type: "${schemeKey}"; ${headerName}${optionalMarker}: ${supplierType}; }`);
                     break;
                 }
                 case "oauth": {
                     const config = authScheme.configuration;
                     if (config.type === "clientCredentials" && context.generateOAuthClients) {
-                        const clientIdName = "clientId";
-                        const clientSecretName = "clientSecret";
-                        const hasClientIdEnv = config.clientIdEnvVar != null;
-                        const hasClientSecretEnv = config.clientSecretEnvVar != null;
-                        const isClientIdOptional = !this.ir.sdkConfig.isAuthMandatory || hasClientIdEnv;
-                        const isClientSecretOptional = !this.ir.sdkConfig.isAuthMandatory || hasClientSecretEnv;
-                        const clientIdOptional = isClientIdOptional ? "?" : "";
-                        const clientSecretOptional = isClientSecretOptional ? "?" : "";
-                        const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
-                        const supplierType = getTextOfTsNode(
-                            context.coreUtilities.fetcher.Supplier._getReferenceToType(stringType)
-                        );
+                        // Use the OAuthAuthProvider.AuthOptions type
                         unionMembers.push(
-                            `{ type: "${schemeKey}"; ${clientIdName}${clientIdOptional}: ${supplierType}; ${clientSecretName}${clientSecretOptional}: ${supplierType}; }`
+                            `{ type: "${schemeKey}" } & ${OAuthAuthProviderGenerator.CLASS_NAME}.AuthOptions`
                         );
                     }
                     break;
@@ -203,8 +218,8 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
                 {
                     parameters: [
                         {
-                            name: AUTH_FIELD_NAME,
-                            type: `${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}["${AUTH_FIELD_NAME}"]`
+                            name: OPTIONS_FIELD_NAME,
+                            type: `BaseClientOptions & ${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`
                         }
                     ],
                     statements: this.generateConstructorStatements(context, authSchemes)
@@ -243,7 +258,7 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
         });
     }
 
-    private generateConstructorStatements(_context: SdkContext, authSchemes: FernIr.AuthScheme[]): string {
+    private generateConstructorStatements(context: SdkContext, authSchemes: FernIr.AuthScheme[]): string {
         const switchCases: string[] = [];
 
         for (const authScheme of authSchemes) {
@@ -252,74 +267,43 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
             switch (authScheme.type) {
                 case "bearer": {
                     const tokenName = getPropertyKey(authScheme.token.camelCase.safeName);
-                    const tokenEnvVar = authScheme.tokenEnvVar;
-                    const tokenFallback = tokenEnvVar != null ? ` ?? process.env?.["${tokenEnvVar}"]` : "";
+                    // Instantiate BearerAuthProvider with full options spread and auth-specific field
+                    // Use narrowed `auth` variable for type safety
                     switchCases.push(`
             case "${schemeKey}":
-                this.${DELEGATE_FIELD_NAME} = {
-                    getAuthRequest: async (): Promise<core.AuthRequest> => {
-                        const tokenValue = ${AUTH_FIELD_NAME}.${tokenName};
-                        const token = await core.Supplier.get(tokenValue)${tokenFallback};
-                        if (token != null) {
-                            return { headers: { Authorization: \`Bearer \${token}\` } };
-                        }
-                        return { headers: {} };
-                    }
-                };
+                this.${DELEGATE_FIELD_NAME} = new ${BearerAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, ${tokenName}: ${AUTH_FIELD_NAME}.${tokenName} });
                 break;`);
                     break;
                 }
                 case "basic": {
                     const usernameName = getPropertyKey(authScheme.username.camelCase.safeName);
                     const passwordName = getPropertyKey(authScheme.password.camelCase.safeName);
-                    const usernameEnvVar = authScheme.usernameEnvVar;
-                    const passwordEnvVar = authScheme.passwordEnvVar;
-                    const usernameFallback = usernameEnvVar != null ? ` ?? process.env?.["${usernameEnvVar}"]` : "";
-                    const passwordFallback = passwordEnvVar != null ? ` ?? process.env?.["${passwordEnvVar}"]` : "";
+                    // Instantiate BasicAuthProvider with full options spread and auth-specific fields
+                    // Use narrowed `auth` variable for type safety
                     switchCases.push(`
             case "${schemeKey}":
-                this.${DELEGATE_FIELD_NAME} = {
-                    getAuthRequest: async (): Promise<core.AuthRequest> => {
-                        const usernameValue = ${AUTH_FIELD_NAME}.${usernameName};
-                        const passwordValue = ${AUTH_FIELD_NAME}.${passwordName};
-                        const username = await core.Supplier.get(usernameValue)${usernameFallback};
-                        const password = await core.Supplier.get(passwordValue)${passwordFallback};
-                        if (username != null && password != null) {
-                            const credentials = Buffer.from(\`\${username}:\${password}\`).toString("base64");
-                            return { headers: { Authorization: \`Basic \${credentials}\` } };
-                        }
-                        return { headers: {} };
-                    }
-                };
+                this.${DELEGATE_FIELD_NAME} = new ${BasicAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, ${usernameName}: ${AUTH_FIELD_NAME}.${usernameName}, ${passwordName}: ${AUTH_FIELD_NAME}.${passwordName} });
                 break;`);
                     break;
                 }
                 case "header": {
                     const headerName = getPropertyKey(authScheme.name.name.camelCase.safeName);
-                    const headerWireValue = authScheme.name.wireValue;
-                    const headerEnvVar = authScheme.headerEnvVar;
-                    const headerFallback = headerEnvVar != null ? ` ?? process.env?.["${headerEnvVar}"]` : "";
-                    const prefix = authScheme.prefix != null ? `"${authScheme.prefix} " + ` : "";
+                    // Instantiate HeaderAuthProvider with full options spread and auth-specific field
+                    // Use narrowed `auth` variable for type safety
                     switchCases.push(`
             case "${schemeKey}":
-                this.${DELEGATE_FIELD_NAME} = {
-                    getAuthRequest: async (): Promise<core.AuthRequest> => {
-                        const headerValue = ${AUTH_FIELD_NAME}.${headerName};
-                        const header = await core.Supplier.get(headerValue)${headerFallback};
-                        if (header != null) {
-                            return { headers: { "${headerWireValue}": ${prefix}header } };
-                        }
-                        return { headers: {} };
-                    }
-                };
+                this.${DELEGATE_FIELD_NAME} = new ${HeaderAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, ${headerName}: ${AUTH_FIELD_NAME}.${headerName} });
                 break;`);
                     break;
                 }
                 case "oauth": {
-                    if (_context.generateOAuthClients) {
+                    if (context.generateOAuthClients) {
+                        // Instantiate OAuthAuthProvider with full options spread and auth-specific fields
+                        // Use narrowed `auth` variable for type safety
                         switchCases.push(`
             case "${schemeKey}":
-                throw new Error("OAuth authentication in AnyAuthProvider v2 is not yet supported. Please use the OAuth token endpoint directly.");`);
+                this.${DELEGATE_FIELD_NAME} = new ${OAuthAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, clientId: ${AUTH_FIELD_NAME}.clientId, clientSecret: ${AUTH_FIELD_NAME}.clientSecret });
+                break;`);
                     }
                     break;
                 }
@@ -329,6 +313,7 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
         }
 
         return `
+        const ${AUTH_FIELD_NAME} = ${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME};
         if (${AUTH_FIELD_NAME} == null) {
             this.${DELEGATE_FIELD_NAME} = new core.NoOpAuthProvider();
             return;

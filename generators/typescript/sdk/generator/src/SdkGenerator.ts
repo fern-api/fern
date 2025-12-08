@@ -1394,9 +1394,29 @@ export class SdkGenerator {
         if (isAnyAuth) {
             // Check if we should use v2 (discriminated union) auth
             if (this.config.anyAuth === "v2") {
-                // Generate the AnyAuthProvider (v2 style with discriminated union)
-                // Note: v2 does not generate individual auth providers separately since
-                // the AnyAuthProvider handles all auth logic internally
+                // For v2 auth, we need to generate all individual auth providers first,
+                // then generate the AnyAuthProvider that delegates to them
+                for (const authScheme of this.intermediateRepresentation.auth.schemes) {
+                    const authProvidersGenerator = new AuthProvidersGenerator({
+                        ir: this.intermediateRepresentation,
+                        authScheme,
+                        neverThrowErrors: this.config.neverThrowErrors,
+                        includeSerdeLayer: this.config.includeSerdeLayer,
+                        oauthTokenOverride: this.config.oauthTokenOverride
+                    });
+                    if (!authProvidersGenerator.shouldWriteFile()) {
+                        continue;
+                    }
+                    this.withSourceFile({
+                        filepath: authProvidersGenerator.getFilePath(),
+                        run: ({ sourceFile, importsManager }) => {
+                            const context = this.generateSdkContext({ sourceFile, importsManager });
+                            authProvidersGenerator.writeToFile(context);
+                        }
+                    });
+                }
+
+                // Now generate the AnyAuthProvider (v2 style with discriminated union)
                 const anyAuthV2ProvidersGenerator = new AuthProvidersGenerator({
                     ir: this.intermediateRepresentation,
                     authScheme: { type: "anyAuthV2" },
