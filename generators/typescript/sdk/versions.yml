@@ -3,7 +3,7 @@
   changelogEntry:
     - summary: |
         The README now demonstrates how to pass custom headers to both the client constructor and individual endpoint invocations.
-      type: feat
+      type: chore
   createdAt: "2025-12-08"
   irVersion: 62
 
