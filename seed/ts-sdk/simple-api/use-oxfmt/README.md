@@ -142,12 +142,15 @@ const client = new SeedSimpleApiClient({
     }
 });
 ```
+
 The `logging` object can have the following properties:
+
 - `level`: The log level to use. Defaults to `logging.LogLevel.Info`.
 - `logger`: The logger to use. Defaults to a `logging.ConsoleLogger`.
 - `silent`: Whether to silence the logger. Defaults to `true`.
 
 The `level` property can be one of the following values:
+
 - `logging.LogLevel.Debug`
 - `logging.LogLevel.Info`
 - `logging.LogLevel.Warn`
@@ -159,6 +162,7 @@ To provide a custom logger, you can pass in an object that implements the `loggi
 <summary>Custom logger examples</summary>
 
 Here's an example using the popular `winston` logging library.
+
 ```ts
 import winston from 'winston';
 
@@ -186,15 +190,12 @@ const logger: logging.ILogger = {
   error: (msg, ...args) => pinoLogger.error(args, msg),
 };
 ```
-</details>
 
+</details>
 
 ### Runtime Compatibility
 
-
 The SDK works in the following runtimes:
-
-
 
 - Node.js 18+
 - Vercel
