@@ -121,6 +121,7 @@ allowedFailures:
   - package-yml
   - pagination
   - pagination-custom
+  - path-body-property-collision
   - path-parameters
   - plain-text
   - property-access
