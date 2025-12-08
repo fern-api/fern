@@ -1,0 +1,106 @@
+openapi: 3.0.3
+info:
+  title: OneOf Discriminator Test API
+  version: 1.0.0
+  description: Test API for oneOf with discriminator mapping
+
+servers:
+  - url: https://api.example.com/v1
+
+paths:
+  /oneOf/discriminator:
+    post:
+      tags:
+        - oneOf Examples
+      summary: Example endpoint using oneOf with discriminator
+      description: Demonstrates oneOf with discriminator mapping.
+      operationId: oneOfExample
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/OneOfDiscriminatedA"
+                - $ref: "#/components/schemas/OneOfDiscriminatedB"
+              discriminator:
+                propertyName: type
+                mapping:
+                  variantA: "#/components/schemas/OneOfDiscriminatedA"
+                  variantB: "#/components/schemas/OneOfDiscriminatedB"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+        "400":
+          description: Bad request error
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: "#/components/schemas/ValidationError"
+                  - $ref: "#/components/schemas/InvalidTypeError"
+                discriminator:
+                  propertyName: errorType
+                  mapping:
+                    validation: "#/components/schemas/ValidationError"
+                    invalidType: "#/components/schemas/InvalidTypeError"
+
+components:
+  schemas:
+    OneOfDiscriminatedA:
+      type: object
+      description: First variant for discriminated oneOf
+      required:
+        - type
+        - variantAField
+      properties:
+        type:
+          type: string
+        variantAField:
+          type: string
+    OneOfDiscriminatedB:
+      type: object
+      description: Second variant for discriminated oneOf
+      required:
+        - type
+        - variantBField
+      properties:
+        type:
+          type: string
+        variantBField:
+          type: integer
+    ValidationError:
+      type: object
+      description: Validation error with discriminator
+      required:
+        - errorType
+        - message
+        - field
+      properties:
+        errorType:
+          type: string
+        message:
+          type: string
+        field:
+          type: string
+    InvalidTypeError:
+      type: object
+      description: Invalid type error with discriminator
+      required:
+        - errorType
+        - message
+        - expectedType
+      properties:
+        errorType:
+          type: string
+        message:
+          type: string
+        expectedType:
+          type: string

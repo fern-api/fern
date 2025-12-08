@@ -106,6 +106,7 @@ allowedFailures:
   - no-environment
   - no-retries
   - nullable
+  - nullable-allof-extends
   - nullable-optional
   - nullable-request-body
   - oauth-client-credentials

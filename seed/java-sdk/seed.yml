@@ -290,6 +290,11 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: streaming
+  java-optional-nullable-query-params:
+    - customConfig:
+        use-default-request-parameter-values: true
+        collapse-optional-nullable: true
+      outputFolder: default
 scripts:
   - image: fernapi/java-seed
     commands:
@@ -298,7 +303,6 @@ allowedFailures:
   - alias-extends
   - enum:forward-compatible-enums
   - enum:no-custom-config
-  - errors
   - examples:default
   - examples:inline-file-properties
   - examples:no-custom-config
