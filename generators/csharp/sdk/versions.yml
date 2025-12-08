@@ -1663,8 +1663,8 @@
     - type: break
       summary: >-
         The C# SDK is now on major version 1.0.0. To preserve compatibility with
-        pre-1.0.0, set all of \{root-namespace-for-core-classes,
-        pascal-case-environments, simplify-object-dictionaries\} to `false`.
+        pre-1.0.0, set all of `{root-namespace-for-core-classes,
+        pascal-case-environments, simplify-object-dictionaries}` to `false`.
     - type: internal
       summary: Core classes that are exposed publicly are now in the root namespace.
     - type: internal

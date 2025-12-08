@@ -382,7 +382,7 @@
 - version: 3.14.3
   changelogEntry:
     - summary: |
-        Skip empty object validation in wire tests for optional request bodies. When request bodies are optional(nullable(T)) where T has only optional properties, wire tests now correctly skip {} validation when Optional.empty() is passed, matching actual SDK behavior.
+        Skip empty object validation in wire tests for optional request bodies. When request bodies are optional(nullable(T)) where T has only optional properties, wire tests now correctly skip `{}` validation when Optional.empty() is passed, matching actual SDK behavior.
       type: fix
   createdAt: "2025-11-11"
   irVersion: 61
@@ -468,7 +468,7 @@
 - version: 3.11.6
   changelogEntry:
     - summary: |
-        Fix path parameter prefixes (e.g., v{version}) being split into separate segments, producing URLs like .../v/1 instead of .../v1.
+        Fix path parameter prefixes (e.g., `v{version}`) being split into separate segments, producing URLs like .../v/1 instead of .../v1.
       type: fix
   createdAt: "2025-11-04"
   irVersion: 61

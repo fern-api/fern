@@ -149,7 +149,7 @@
         Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`,
         environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
         including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
-        Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
+        Use `\$\{VAR\}` to escape and output literal `${VAR}` without substitution.
       type: feat
   irVersion: 62
   createdAt: "2025-12-02"
@@ -4359,7 +4359,7 @@
 - changelogEntry:
     - summary: |
         Improve server handling in OpenAPI imports by exploding servers with enum variables into multiple servers,
-        one for each enum value. For example, a server with URL "https://{region}.example.com" where region
+        one for each enum value. For example, a server with URL `https://{region}.example.com` where region
         is an enum ["us", "eu"] will be exploded into two servers: "https://us.example.com" and "https://eu.example.com".
       type: feat
   irVersion: 57

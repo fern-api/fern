@@ -137,7 +137,7 @@
 
 - version: 4.39.0
   changelogEntry:
-    - summary: Add environment_class_name config option to customize the environment class name. Default remains {ClientName}Environment.
+    - summary: Add environment_class_name config option to customize the environment class name. Default remains `{ClientName}Environment`.
       type: feat
   createdAt: "2025-11-25"
   irVersion: 61
