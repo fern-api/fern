@@ -525,10 +525,6 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
         ];
     }
 
-    public buildAuthenticationDescription(): string | undefined {
-        return undefined;
-    }
-
     private buildRuntimeCompatibilitySnippets(): string[] {
         const snippet = this.writeCode(
             code`
