@@ -60,17 +60,13 @@ export class ReadmeConfigBuilder {
         for (const feature of featureConfig.features) {
             const snippetForFeature = snippets[feature.id];
 
-            // Check if this is the AUTHENTICATION feature with a custom description
-            const isAuthenticationWithDescription =
-                feature.id === "AUTHENTICATION" && authenticationDescription != null;
-
-            // If snippet is explicitly false, skip this feature UNLESS it has a custom description
-            if (snippetForFeature === false && !isAuthenticationWithDescription) {
+            // If snippet is explicitly false, skip this feature
+            if (snippetForFeature === false) {
                 continue;
             }
 
-            // Skip features without snippets unless they have a custom description (like AUTHENTICATION)
-            if (snippetForFeature == null && !isAuthenticationWithDescription) {
+            // Skip features without snippets
+            if (snippetForFeature == null) {
                 continue;
             }
 
@@ -82,7 +78,7 @@ export class ReadmeConfigBuilder {
 
             // Override description for AUTHENTICATION feature if we have a custom one
             let description = feature.description ? this.processTemplateText(feature.description) : undefined;
-            if (isAuthenticationWithDescription) {
+            if (feature.id === "AUTHENTICATION" && authenticationDescription != null) {
                 description = authenticationDescription;
             }
 
@@ -90,9 +86,9 @@ export class ReadmeConfigBuilder {
                 id: feature.id,
                 advanced: feature.advanced,
                 description,
-                snippets: snippetForFeature === false ? [] : (snippetForFeature ?? []),
+                snippets: snippetForFeature,
                 addendum: feature.addendum ? this.processTemplateText(feature.addendum) : undefined,
-                snippetsAreOptional: isAuthenticationWithDescription
+                snippetsAreOptional: false
             });
         }
         return {
