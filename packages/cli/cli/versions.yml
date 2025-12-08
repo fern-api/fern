@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fallback to variant type for display name if title and mapping are not present.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-08"
+  version: 3.4.4
+
+- changelogEntry:
+    - summary: |
         Disallow absolute URLs as redirects in frontmatter slug definitions. `links` should be used in the navigation instead.
       type: fix
   irVersion: 63
