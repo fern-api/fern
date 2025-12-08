@@ -1,4 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- version: 3.37.1
+  changelogEntry:
+    - summary: |
+        Fix file upload request parameters to use bracket notation for property names that are not valid JavaScript identifiers (e.g., header names with hyphens like `X-UIPATH-OrganizationUnitId`).
+        Previously, the generator produced invalid JavaScript like `request.X - UIPATH - OrganizationUnitId` which was interpreted as subtraction operations.
+        Now it correctly generates `request["X-UIPATH-OrganizationUnitId"]`.
+      type: fix
+  createdAt: "2025-12-08"
+  irVersion: 62
+
 - version: 3.37.0
   changelogEntry:
     - summary: |
