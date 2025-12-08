@@ -18,29 +18,24 @@ export namespace AnyAuthProvider {
 export class AnyAuthProvider implements core.AuthProvider {
     private readonly delegate: core.AuthProvider;
 
-    constructor(options: BaseClientOptions & AnyAuthProvider.AuthOptions) {
-        const auth = options.auth;
-        if (auth == null) {
+    constructor(options: BaseClientOptions) {
+        if (options.auth == null) {
             this.delegate = new core.NoOpAuthProvider();
             return;
         }
-        switch (auth.type) {
+        switch (options.auth.type) {
             case "Bearer":
-                this.delegate = new BearerAuthProvider({ ...options, token: auth.token });
+                this.delegate = new BearerAuthProvider(options.auth);
                 break;
             case "ApiKey":
-                this.delegate = new HeaderAuthProvider({ ...options, apiKey: auth.apiKey });
+                this.delegate = new HeaderAuthProvider(options.auth);
                 break;
             case "OAuth":
-                this.delegate = new OAuthAuthProvider({
-                    ...options,
-                    clientId: auth.clientId,
-                    clientSecret: auth.clientSecret,
-                });
+                this.delegate = new OAuthAuthProvider({ ...options, ...options.auth });
                 break;
             default: {
-                const _exhaustive: never = auth;
-                throw new Error(`Unknown auth type: ${(auth as any).type}`);
+                const _exhaustive: never = options.auth;
+                throw new Error("Unknown auth type");
             }
         }
     }

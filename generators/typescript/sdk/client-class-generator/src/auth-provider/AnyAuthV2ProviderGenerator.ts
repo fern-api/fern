@@ -1,5 +1,5 @@
 import { FernIr } from "@fern-fern/ir-sdk";
-import { ExportedFilePath, getPropertyKey, getTextOfTsNode } from "@fern-typescript/commons";
+import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 import { AuthProviderGenerator } from "./AuthProviderGenerator";
@@ -219,7 +219,7 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
                     parameters: [
                         {
                             name: OPTIONS_FIELD_NAME,
-                            type: `BaseClientOptions & ${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`
+                            type: "BaseClientOptions"
                         }
                     ],
                     statements: this.generateConstructorStatements(context, authSchemes)
@@ -266,43 +266,35 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
 
             switch (authScheme.type) {
                 case "bearer": {
-                    const tokenName = getPropertyKey(authScheme.token.camelCase.safeName);
-                    // Instantiate BearerAuthProvider with full options spread and auth-specific field
-                    // Use narrowed `auth` variable for type safety
+                    // Pass options.auth directly to BearerAuthProvider - TypeScript narrows the type
                     switchCases.push(`
             case "${schemeKey}":
-                this.${DELEGATE_FIELD_NAME} = new ${BearerAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, ${tokenName}: ${AUTH_FIELD_NAME}.${tokenName} });
+                this.${DELEGATE_FIELD_NAME} = new ${BearerAuthProviderGenerator.CLASS_NAME}(${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME});
                 break;`);
                     break;
                 }
                 case "basic": {
-                    const usernameName = getPropertyKey(authScheme.username.camelCase.safeName);
-                    const passwordName = getPropertyKey(authScheme.password.camelCase.safeName);
-                    // Instantiate BasicAuthProvider with full options spread and auth-specific fields
-                    // Use narrowed `auth` variable for type safety
+                    // Pass options.auth directly to BasicAuthProvider - TypeScript narrows the type
                     switchCases.push(`
             case "${schemeKey}":
-                this.${DELEGATE_FIELD_NAME} = new ${BasicAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, ${usernameName}: ${AUTH_FIELD_NAME}.${usernameName}, ${passwordName}: ${AUTH_FIELD_NAME}.${passwordName} });
+                this.${DELEGATE_FIELD_NAME} = new ${BasicAuthProviderGenerator.CLASS_NAME}(${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME});
                 break;`);
                     break;
                 }
                 case "header": {
-                    const headerName = getPropertyKey(authScheme.name.name.camelCase.safeName);
-                    // Instantiate HeaderAuthProvider with full options spread and auth-specific field
-                    // Use narrowed `auth` variable for type safety
+                    // Pass options.auth directly to HeaderAuthProvider - TypeScript narrows the type
                     switchCases.push(`
             case "${schemeKey}":
-                this.${DELEGATE_FIELD_NAME} = new ${HeaderAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, ${headerName}: ${AUTH_FIELD_NAME}.${headerName} });
+                this.${DELEGATE_FIELD_NAME} = new ${HeaderAuthProviderGenerator.CLASS_NAME}(${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME});
                 break;`);
                     break;
                 }
                 case "oauth": {
                     if (context.generateOAuthClients) {
-                        // Instantiate OAuthAuthProvider with full options spread and auth-specific fields
-                        // Use narrowed `auth` variable for type safety
+                        // OAuthAuthProvider needs BaseClientOptions, so spread options and options.auth
                         switchCases.push(`
             case "${schemeKey}":
-                this.${DELEGATE_FIELD_NAME} = new ${OAuthAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, clientId: ${AUTH_FIELD_NAME}.clientId, clientSecret: ${AUTH_FIELD_NAME}.clientSecret });
+                this.${DELEGATE_FIELD_NAME} = new ${OAuthAuthProviderGenerator.CLASS_NAME}({ ...${OPTIONS_FIELD_NAME}, ...${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME} });
                 break;`);
                     }
                     break;
@@ -313,15 +305,14 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
         }
 
         return `
-        const ${AUTH_FIELD_NAME} = ${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME};
-        if (${AUTH_FIELD_NAME} == null) {
+        if (${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME} == null) {
             this.${DELEGATE_FIELD_NAME} = new core.NoOpAuthProvider();
             return;
         }
-        switch (${AUTH_FIELD_NAME}.type) {${switchCases.join("")}
+        switch (${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME}.type) {${switchCases.join("")}
             default: {
-                const _exhaustive: never = ${AUTH_FIELD_NAME};
-                throw new Error(\`Unknown auth type: \${(${AUTH_FIELD_NAME} as any).type}\`);
+                const _exhaustive: never = ${OPTIONS_FIELD_NAME}.${AUTH_FIELD_NAME};
+                throw new Error("Unknown auth type");
             }
         }`;
     }
