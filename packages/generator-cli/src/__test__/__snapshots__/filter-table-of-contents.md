@@ -22,7 +22,8 @@ npm i -s basic
 ```typescript
 import { BasicClient } from "basic";
 
-const client = new BasicClient({ apiKey: "YOUR_API_KEY" });```
+const client = new BasicClient({ apiKey: "YOUR_API_KEY" });
+```
 
 ## Contributing
 

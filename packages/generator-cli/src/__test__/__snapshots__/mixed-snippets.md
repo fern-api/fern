@@ -23,7 +23,8 @@ npm i -s @acme/sdk
 This example demonstrates intermingling markdown and code snippets.
 
 ```typescript
-const client = new AcmeClient({ apiKey: 'YOUR_API_KEY' });```
+const client = new AcmeClient({ apiKey: 'YOUR_API_KEY' });
+```
 
 You can also configure the client with additional options:
 
@@ -32,7 +33,8 @@ const client = new AcmeClient({
   apiKey: 'YOUR_API_KEY',
   timeout: 30000,
   retries: 3
-});```
+});
+```
 
 For Python users, the equivalent code is:
 
@@ -41,7 +43,8 @@ client = AcmeClient(
     api_key='YOUR_API_KEY',
     timeout=30000,
     retries=3
-)```
+)
+```
 
 ## Errors
 
@@ -54,7 +57,8 @@ try {
   if (error instanceof AcmeError) {
     console.error(error.message);
   }
-}```
+}
+```
 
 > **Note:** All errors extend the base `AcmeError` class.
 
