@@ -5,8 +5,9 @@ import com.seed.oauthClientCredentials.resources.auth.requests.RefreshTokenReque
 
 public class Example2 {
     public static void main(String[] args) {
-        SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.withCredentials(
-                        "<clientId>", "<clientSecret>")
+        SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient.builder()
+                .clientId("<clientId>")
+                .clientSecret("<clientSecret>")
                 .url("https://api.fern.com")
                 .build();
 

@@ -61,7 +61,9 @@ import com.seed.oauthClientCredentials.resources.auth.requests.GetTokenRequest;
 public class Example {
     public static void main(String[] args) {
         SeedOauthClientCredentialsClient client = SeedOauthClientCredentialsClient
-            .withCredentials("<clientId>", "<clientSecret>")
+            .builder()
+            .clientId("<clientId>")
+            .clientSecret("<clientSecret>")
             .build();
 
         client.auth().getTokenWithClientCredentials(

@@ -23,6 +23,8 @@ public class SeedOauthClientCredentialsDefaultClientBuilder {
 
     private String clientSecret = null;
 
+    private String grantType = null;
+
     private Environment environment;
 
     private OkHttpClient httpClient;
@@ -40,6 +42,14 @@ public class SeedOauthClientCredentialsDefaultClientBuilder {
      */
     public SeedOauthClientCredentialsDefaultClientBuilder clientSecret(String clientSecret) {
         this.clientSecret = clientSecret;
+        return this;
+    }
+
+    /**
+     * Sets grantType
+     */
+    public SeedOauthClientCredentialsDefaultClientBuilder grantType(String grantType) {
+        this.grantType = grantType;
         return this;
     }
 
@@ -130,7 +140,7 @@ public class SeedOauthClientCredentialsDefaultClientBuilder {
                     ClientOptions.builder().environment(this.environment);
             AuthClient authClient = new AuthClient(authClientOptionsBuilder.build());
             OAuthTokenSupplier oAuthTokenSupplier =
-                    new OAuthTokenSupplier(this.clientId, this.clientSecret, authClient);
+                    new OAuthTokenSupplier(this.clientId, this.clientSecret, this.grantType, authClient);
             builder.addHeader("Authorization", oAuthTokenSupplier);
         }
     }
