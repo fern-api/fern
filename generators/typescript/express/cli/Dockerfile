@@ -14,7 +14,7 @@ RUN pnpm install -g prettier@3.4.2
 RUN pnpm install -g oxfmt@0.17.0
 RUN pnpm install -g @biomejs/biome@2.3.1
 RUN pnpm install -g oxlint@1.32.0
-RUN pnpm install -g oxlint-tsgolint@0.4.0
+RUN pnpm install -g oxlint-tsgolint@0.8.4
 
 WORKDIR /tmp/cache-warm
 
@@ -32,7 +32,7 @@ RUN echo '{ \
     "prettier": "3.4.2", \
     "oxfmt": "0.17.0", \
     "oxlint": "1.32.0", \
-    "oxlint-tsgolint": "0.4.0", \
+    "oxlint-tsgolint": "0.8.4", \
     "typescript": "5.7.2", \
     "url-join": "4.0.1" \
   } \

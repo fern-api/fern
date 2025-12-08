@@ -14,7 +14,7 @@ RUN pnpm install -g prettier@3.4.2
 RUN pnpm install -g oxfmt@0.17.0
 RUN pnpm install -g @biomejs/biome@2.3.1
 RUN pnpm install -g oxlint@1.32.0
-RUN pnpm install -g oxlint-tsgolint@0.4.0
+RUN pnpm install -g oxlint-tsgolint@0.8.4
 RUN pnpm install -f -g @fern-api/generator-cli@0.2.0
 
 WORKDIR /tmp/cache-warm
@@ -39,7 +39,7 @@ RUN echo '{ \
     "oxfmt": "0.17.0", \
     "@biomejs/biome": "2.3.1", \
     "oxlint": "1.32.0", \
-    "oxlint-tsgolint": "0.4.0", \
+    "oxlint-tsgolint": "0.8.4", \
     "ts-jest": "^29.1.1", \
     "typescript": "~5.7.2", \
     "form-data-encoder": "^4.0.2", \

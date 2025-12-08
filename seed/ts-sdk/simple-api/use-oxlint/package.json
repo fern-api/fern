@@ -52,7 +52,7 @@
         "typescript": "~5.7.2",
         "@biomejs/biome": "2.3.1",
         "oxlint": "1.32.0",
-        "oxlint-tsgolint": "0.4.0"
+        "oxlint-tsgolint": "0.8.4"
     },
     "browser": {
         "fs": false,

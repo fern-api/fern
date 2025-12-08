@@ -2,7 +2,7 @@
 - version: 3.37.1
   changelogEntry:
     - summary: |
-        Update oxfmt to 0.17.0 and oxlint to 1.32.0.
+        Update oxfmt to 0.17.0, oxlint to 1.32.0, and oxlint-tsgolint to 0.8.4.
       type: chore
   createdAt: "2025-12-08"
   irVersion: 62
