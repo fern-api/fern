@@ -305,9 +305,13 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         # Generate constructor overloads for OAuth token override
         constructor_overloads = self._get_constructor_overloads(is_async=is_async)
 
-        write_parameter_docstring = not (
-            self._oauth_scheme is not None and self._context.custom_config.oauth_token_override
+        oauth_union = self._oauth_scheme.configuration.get_as_union() if self._oauth_scheme is not None else None
+        disable_param_docs = (
+            oauth_union is not None
+            and oauth_union.type == "clientCredentials"
+            and self._context.custom_config.oauth_token_override
         )
+        write_parameter_docstring = not disable_param_docs
 
         class_declaration = AST.ClassDeclaration(
             name=self._async_class_name if is_async else self._class_name,
