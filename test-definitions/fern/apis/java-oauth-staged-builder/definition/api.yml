@@ -1,0 +1,17 @@
+name: java-oauth-staged-builder
+imports:
+  auth: auth.yml
+
+auth: OAuthScheme
+auth-schemes:
+  OAuthScheme:
+    scheme: oauth
+    type: client-credentials
+    get-token:
+      endpoint: auth.getToken
+      request-properties:
+        client-id: $request.clientId
+        client-secret: $request.clientSecret
+      response-properties:
+        access-token: $response.accessToken
+        expires-in: $response.expiresIn

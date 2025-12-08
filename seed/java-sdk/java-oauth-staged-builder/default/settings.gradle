@@ -1,0 +1,3 @@
+rootProject.name = 'java-oauth-staged-builder'
+
+include 'sample-app'

@@ -1,0 +1,18 @@
+{
+    "endpoints": [
+        {
+            "example_identifier": "ff228f66",
+            "id": {
+                "method": "POST",
+                "path": "/token",
+                "identifier_override": "endpoint_auth.getToken"
+            },
+            "snippet": {
+                "type": "java",
+                "sync_client": "package com.example.usage;\n\nimport com.seed.javaOauthStagedBuilder.SeedJavaOauthStagedBuilderClient;\nimport com.seed.javaOauthStagedBuilder.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOauthStagedBuilderClient client = SeedJavaOauthStagedBuilderClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .apiKey(\"apiKey\")\n                .clientId(\"clientId\")\n                .clientSecret(\"clientSecret\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n",
+                "async_client": "package com.example.usage;\n\nimport com.seed.javaOauthStagedBuilder.SeedJavaOauthStagedBuilderClient;\nimport com.seed.javaOauthStagedBuilder.resources.auth.requests.GetTokenRequest;\n\npublic class Example {\n    public static void main(String[] args) {\n        SeedJavaOauthStagedBuilderClient client = SeedJavaOauthStagedBuilderClient\n            .builder()\n            .clientId(\"<clientId>\")\n            .clientSecret(\"<clientSecret>\")\n            .build();\n\n        client.auth().getToken(\n            GetTokenRequest\n                .builder()\n                .apiKey(\"apiKey\")\n                .clientId(\"clientId\")\n                .clientSecret(\"clientSecret\")\n                .scope(\"scope\")\n                .build()\n        );\n    }\n}\n"
+            }
+        }
+    ],
+    "types": {}
+}

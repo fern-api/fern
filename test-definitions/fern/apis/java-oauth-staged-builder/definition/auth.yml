@@ -1,0 +1,23 @@
+types:
+  TokenResponse:
+    properties:
+      accessToken: string
+      expiresIn: integer
+
+service:
+  auth: false
+  base-path: /
+  endpoints:
+    getToken:
+      path: /token
+      method: POST
+      request:
+        name: GetTokenRequest
+        body:
+          properties:
+            apiKey: string
+            clientId: string
+            clientSecret: string
+            grantType: literal<"client_credentials">
+            scope: optional<string>
+      response: TokenResponse

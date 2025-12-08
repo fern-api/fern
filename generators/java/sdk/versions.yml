@@ -1,3 +1,14 @@
+- version: 3.23.2
+  changelogEntry:
+    - summary: |
+        Fix OAuthTokenSupplier builder method ordering to match staged builder sequence. When
+        generating OAuth token supplier code for request types with staged builders, the builder
+        method calls are now generated in the correct order based on the type's property declaration
+        order, preventing compilation errors.
+      type: fix
+  createdAt: "2025-12-08"
+  irVersion: 61
+
 - version: 3.23.1
   changelogEntry:
     - summary: |
