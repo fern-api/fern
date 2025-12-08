@@ -2,6 +2,7 @@ import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
 import { Rule, RuleViolation } from "../../Rule";
+import { isSwagger2 } from "../../utils/isSwagger2";
 
 export const NoNonComponentRefsRule: Rule = {
     name: "no-non-component-refs",
@@ -27,13 +28,7 @@ export const NoNonComponentRefsRule: Rule = {
                                     );
 
                                     // Skip OpenAPI v2 files - they should be handled by the v2 rule first
-                                    const isOpenApiV2 =
-                                        contents.includes("swagger:") &&
-                                        (contents.includes('swagger: "2.0"') ||
-                                            contents.includes("swagger: '2.0'") ||
-                                            contents.includes("swagger: 2.0"));
-
-                                    if (isOpenApiV2) {
+                                    if (isSwagger2(contents)) {
                                         continue; // Skip v2 files
                                     }
 

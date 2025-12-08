@@ -3,6 +3,7 @@ import { readFile } from "fs/promises";
 import yaml from "js-yaml";
 
 import { Rule, RuleViolation } from "../../Rule";
+import { isSwagger2 } from "../../utils/isSwagger2";
 
 /**
  * Validates that a reference path exists in the OpenAPI specification
@@ -100,13 +101,7 @@ export const ValidLocalReferencesRule: Rule = {
                                 const relativePath = relative(docsWorkspace.absoluteFilePath, spec.absoluteFilepath);
 
                                 // Skip OpenAPI v2 files - they should be handled by the v2 rule first
-                                const isOpenApiV2 =
-                                    contents.includes("swagger:") &&
-                                    (contents.includes('swagger: "2.0"') ||
-                                        contents.includes("swagger: '2.0'") ||
-                                        contents.includes("swagger: 2.0"));
-
-                                if (isOpenApiV2) {
+                                if (isSwagger2(contents)) {
                                     continue; // Skip v2 files
                                 }
 

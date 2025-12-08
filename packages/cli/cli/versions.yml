@@ -1,6 +1,14 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 - changelogEntry:
     - summary: |
+        Fix `fern check` failing to detect Swagger 2.0 specs in JSON format. The docs validator now correctly identifies JSON-formatted Swagger 2.0 specs (with `"swagger": "2.0"`) in addition to YAML format, preventing false positive errors about `#/definitions/` references.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-08"
+  version: 3.4.3
+
+- changelogEntry:
+    - summary: |
         Fix `fern generate` crash when inheriting from a schema with top-level `nullable: true` via `allOf`. The OpenAPI importer now correctly strips nullable wrappers from type references in extends lists.
       type: fix
   irVersion: 63

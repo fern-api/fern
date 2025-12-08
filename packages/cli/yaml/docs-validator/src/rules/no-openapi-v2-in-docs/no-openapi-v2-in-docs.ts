@@ -2,6 +2,7 @@ import { relative } from "@fern-api/fs-utils";
 import { readFile } from "fs/promises";
 
 import { Rule, RuleViolation } from "../../Rule";
+import { isSwagger2 } from "../../utils/isSwagger2";
 
 export const NoOpenApiV2InDocsRule: Rule = {
     name: "no-openapi-v2-in-docs",
@@ -21,13 +22,8 @@ export const NoOpenApiV2InDocsRule: Rule = {
                                 // Use the docs workspace as reference point for more descriptive path
                                 const relativePath = relative(docsWorkspace.absoluteFilePath, spec.absoluteFilepath);
 
-                                // Simple check for OpenAPI v2 by looking for "swagger: " pattern
-                                if (
-                                    contents.includes("swagger:") &&
-                                    (contents.includes('swagger: "2.0"') ||
-                                        contents.includes("swagger: '2.0'") ||
-                                        contents.includes("swagger: 2.0"))
-                                ) {
+                                // Check for OpenAPI v2 (Swagger 2.0) in both YAML and JSON formats
+                                if (isSwagger2(contents)) {
                                     violations.push({
                                         severity: "error",
                                         name: "OpenAPI v2.0 not supported",
