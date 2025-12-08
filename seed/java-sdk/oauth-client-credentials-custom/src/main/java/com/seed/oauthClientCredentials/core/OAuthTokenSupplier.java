@@ -17,9 +17,11 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     private final String clientSecret;
 
-    private final String scp;
-
     private final String entityId;
+
+    private final String audience;
+
+    private final String grantType;
 
     private final String scope;
 
@@ -30,11 +32,18 @@ public final class OAuthTokenSupplier implements Supplier<String> {
     private Instant expiresAt;
 
     public OAuthTokenSupplier(
-            String clientId, String clientSecret, String scp, String entityId, String scope, AuthClient authClient) {
+            String clientId,
+            String clientSecret,
+            String entityId,
+            String audience,
+            String grantType,
+            String scope,
+            AuthClient authClient) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
-        this.scp = scp;
         this.entityId = entityId;
+        this.audience = audience;
+        this.grantType = grantType;
         this.scope = scope;
         this.authClient = authClient;
         this.expiresAt = Instant.now();
@@ -42,11 +51,12 @@ public final class OAuthTokenSupplier implements Supplier<String> {
 
     public TokenResponse fetchToken() {
         GetTokenRequest getTokenRequest = GetTokenRequest.builder()
+                .entityId(entityId)
+                .audience(audience)
+                .grantType(grantType)
+                .scope(scope)
                 .cid(clientId)
                 .csr(clientSecret)
-                .scp(scp)
-                .entityId(entityId)
-                .scope(scope)
                 .build();
         return authClient.getTokenWithClientCredentials(getTokenRequest);
     }
