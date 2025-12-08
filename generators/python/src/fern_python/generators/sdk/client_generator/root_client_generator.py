@@ -50,6 +50,18 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
     BASE_URL_MEMBER_NAME = "_base_url"
 
     HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME = "httpx_client"
+    HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS = (
+        "The httpx client to use for making requests, a preconfigured client is used by default, "
+        "however this is useful should you want to pass in any custom httpx configuration."
+    )
+
+    CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS = "The client identifier used for authentication."
+    CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS = "The client secret used for authentication."
+
+    FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_DOCS = (
+        "Whether the default httpx client follows redirects or not, this is irrelevant "
+        "if a custom httpx client is passed in."
+    )
 
     GET_BASEURL_FUNCTION_NAME = "_get_base_url"
     TOKEN_GETTER_PARAM_NAME = "_token_getter_override"
@@ -183,6 +195,83 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
     def _write_root_class_docstring(self, writer: AST.NodeWriter) -> None:
         writer.write_line(self.ROOT_CLASS_DOCSTRING)
 
+        if self._oauth_scheme is not None and self._context.custom_config.oauth_token_override:
+            writer.write_line("")
+            oauth = self._oauth_scheme.configuration.get_as_union()
+            if oauth.type == "clientCredentials":
+                writer.write_line("Parameters")
+                writer.write_line("----------")
+
+                timeout_phrase = (
+                    f"the timeout is {self._context.custom_config.timeout_in_seconds} seconds"
+                    if isinstance(self._context.custom_config.timeout_in_seconds, int)
+                    else "there is no timeout set"
+                )
+
+                # Overload 1: client_id + client_secret
+                writer.write_line("")
+                writer.write_line(f"{self.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} : str")
+                writer.indent()
+                writer.write_line(self.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS)
+                writer.outdent()
+                writer.write_line("client_id : str")
+                writer.indent()
+                writer.write_line(self.CLIENT_ID_CONSTRUCTOR_PARAMETER_DOCS)
+                writer.outdent()
+                writer.write_line("client_secret : str")
+                writer.indent()
+                writer.write_line(self.CLIENT_SECRET_CONSTRUCTOR_PARAMETER_DOCS)
+                writer.outdent()
+                writer.write_line("timeout : typing.Optional[float]")
+                writer.indent()
+                writer.write_line(
+                    f"The timeout to be used, in seconds, for requests. By default {timeout_phrase}, "
+                    "unless a custom httpx client is used, in which case this default is not enforced."
+                )
+                writer.outdent()
+                writer.write_line(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} : typing.Optional[bool]")
+                writer.indent()
+                writer.write_line(self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_DOCS)
+                writer.outdent()
+                writer.write_line(f"{self.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} : typing.Optional[httpx.Client]")
+                writer.indent()
+                writer.write_line(self.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS)
+                writer.outdent()
+
+                # Separator between overloads, mirroring Examples section style
+                writer.write_line("")
+                writer.write_line("# or ...")
+                writer.write_line("")
+
+                # Overload 2: token
+                writer.write_line(f"{self.BASE_URL_CONSTRUCTOR_PARAMETER_NAME} : str")
+                writer.indent()
+                writer.write_line(self.BASE_URL_CONSTRUCTOR_PARAMETER_DOCS)
+                writer.outdent()
+                writer.write_line("token : str")
+                writer.indent()
+                writer.write_line(
+                    "Authenticate by providing a pre-generated bearer token via 'token'. "
+                    "In this mode, OAuth client credentials are not required."
+                )
+                writer.outdent()
+                writer.write_line("timeout : typing.Optional[float]")
+                writer.indent()
+                writer.write_line(
+                    f"The timeout to be used, in seconds, for requests. By default {timeout_phrase}, "
+                    "unless a custom httpx client is used, in which case this default is not enforced."
+                )
+                writer.outdent()
+                writer.write_line(f"{self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_NAME} : typing.Optional[bool]")
+                writer.indent()
+                writer.write_line(self.FOLLOW_REDIRECTS_CONSTRUCTOR_PARAMETER_DOCS)
+                writer.outdent()
+                writer.write_line(f"{self.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME} : typing.Optional[httpx.Client]")
+                writer.indent()
+                writer.write_line(self.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_DOCS)
+                writer.outdent()
+                writer.write_line("")
+
     def _create_class_declaration(
         self,
         *,
@@ -216,6 +305,10 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
         # Generate constructor overloads for OAuth token override
         constructor_overloads = self._get_constructor_overloads(is_async=is_async)
 
+        write_parameter_docstring = not (
+            self._oauth_scheme is not None and self._context.custom_config.oauth_token_override
+        )
+
         class_declaration = AST.ClassDeclaration(
             name=self._async_class_name if is_async else self._class_name,
             constructor=AST.ClassConstructor(
@@ -229,7 +322,7 @@ class RootClientGenerator(BaseWrappedClientGenerator[RootClientConstructorParame
             ),
             docstring=AST.Docstring(self._write_root_class_docstring),
             snippet=combined_snippet,
-            write_parameter_docstring=True,
+            write_parameter_docstring=write_parameter_docstring,
         )
 
         if self._package.service is not None:
