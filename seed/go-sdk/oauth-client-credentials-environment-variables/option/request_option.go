@@ -62,3 +62,10 @@ func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
 		MaxAttempts: attempts,
 	}
 }
+
+// WithOAuthTokenProvider sets the OAuth token provider for automatic token refresh.
+func WithOAuthTokenProvider(tokenProvider *core.OAuthTokenProvider) *core.OAuthTokenProviderOption {
+	return &core.OAuthTokenProviderOption{
+		OAuthTokenProvider: tokenProvider,
+	}
+}

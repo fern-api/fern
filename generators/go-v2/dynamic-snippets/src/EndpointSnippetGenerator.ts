@@ -333,8 +333,7 @@ export class EndpointSnippetGenerator {
             case "header":
                 return values.type === "header" ? this.getConstructorHeaderAuthArg({ auth, values }) : TypeInst.nop();
             case "oauth":
-                this.addWarning("The Go SDK doesn't support OAuth client credentials yet");
-                return TypeInst.nop();
+                return values.type === "oauth" ? this.getConstructorOAuthArg({ auth, values }) : TypeInst.nop();
             case "inferred":
                 this.addWarning("The Go SDK Generator does not support Inferred auth scheme yet");
                 return TypeInst.nop();
@@ -476,6 +475,38 @@ export class EndpointSnippetGenerator {
                         this.context.dynamicTypeInstantiationMapper.convert({
                             typeReference: auth.header.typeReference,
                             value: values.value
+                        })
+                    ]
+                })
+            );
+        });
+    }
+
+    private getConstructorOAuthArg({
+        auth,
+        values
+    }: {
+        auth: FernIr.dynamic.OAuth;
+        values: FernIr.dynamic.OAuthValues;
+    }): go.AstNode {
+        return go.codeblock((writer) => {
+            writer.writeNode(
+                go.invokeFunc({
+                    func: go.typeReference({
+                        name: "WithOAuthTokenProvider",
+                        importPath: this.context.getOptionImportPath()
+                    }),
+                    arguments_: [
+                        go.invokeFunc({
+                            func: go.typeReference({
+                                name: "NewOAuthTokenProvider",
+                                importPath: `${this.context.rootImportPath}/core`
+                            }),
+                            arguments_: [
+                                go.TypeInstantiation.string(values.clientId),
+                                go.TypeInstantiation.string(values.clientSecret),
+                                go.codeblock("nil") // refreshFunc will be set by the SDK internally
+                            ]
                         })
                     ]
                 })

@@ -3,6 +3,7 @@ package example
 import (
     client "github.com/oauth-client-credentials-environment-variables/fern/client"
     option "github.com/oauth-client-credentials-environment-variables/fern/option"
+    core "github.com/oauth-client-credentials-environment-variables/fern/core"
     fern "github.com/oauth-client-credentials-environment-variables/fern"
     context "context"
 )
@@ -12,7 +13,13 @@ func do() {
         option.WithBaseURL(
             "https://api.fern.com",
         ),
-        nil,
+        option.WithOAuthTokenProvider(
+            core.NewOAuthTokenProvider(
+                "<clientId>",
+                "<clientSecret>",
+                nil,
+            ),
+        ),
     )
     request := &fern.GetTokenRequest{
         ClientId: "client_id",

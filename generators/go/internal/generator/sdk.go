@@ -57,6 +57,9 @@ var (
 	//go:embed sdk/core/optional_test.go
 	optionalTestFile string
 
+	//go:embed sdk/core/oauth.go
+	oauthFile string
+
 	//go:embed sdk/utils/pointer.go
 	pointerFile string
 
@@ -311,6 +314,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("MaxAttempts uint")
 
 	// Generate the exported RequestOptions type that all clients can act upon.
+	var hasOAuth bool
 	for _, authScheme := range auth.Schemes {
 		if authScheme.Bearer != nil {
 			f.P(authScheme.Bearer.Token.PascalCase.UnsafeName, " string")
@@ -328,6 +332,10 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 				" ",
 				typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false),
 			)
+		}
+		if authScheme.Oauth != nil {
+			hasOAuth = true
+			f.P("OAuthTokenProvider *OAuthTokenProvider")
 		}
 	}
 	for _, header := range headers {
@@ -449,6 +457,24 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("}")
 	f.P()
 
+	// Generate the ToHeaderWithContext method if OAuth is used.
+	if hasOAuth {
+		f.P("// ToHeaderWithContext maps the configured request options into a http.Header used")
+		f.P("// for the request(s). It handles OAuth token refresh if an OAuthTokenProvider is set.")
+		f.P("func (r *RequestOptions) ToHeaderWithContext(ctx context.Context) (http.Header, error) {")
+		f.P("header := r.ToHeader()")
+		f.P("if r.OAuthTokenProvider != nil {")
+		f.P("token, err := r.OAuthTokenProvider.GetToken(ctx)")
+		f.P("if err != nil {")
+		f.P("return nil, err")
+		f.P("}")
+		f.P(`header.Set("Authorization", "Bearer " + token)`)
+		f.P("}")
+		f.P("return header, nil")
+		f.P("}")
+		f.P()
+	}
+
 	if err := f.writePlatformHeaders(sdkConfig, moduleConfig, sdkVersion); err != nil {
 		return err
 	}
@@ -554,6 +580,11 @@ func (f *fileWriter) writeRequestOptionStructs(
 					goType     = typeReferenceToGoType(authScheme.Header.ValueType, f.types, f.scope, f.baseImportPath, "" /* The type is always imported */, false)
 				)
 				if err := f.writeOptionStruct(pascalCase, goType, true, asIdempotentRequestOption); err != nil {
+					return err
+				}
+			}
+			if authScheme.Oauth != nil {
+				if err := f.writeOptionStruct("OAuthTokenProvider", "*OAuthTokenProvider", true, asIdempotentRequestOption); err != nil {
 					return err
 				}
 			}
@@ -835,6 +866,39 @@ func (f *fileWriter) WriteRequestOptions(
 			f.P("}")
 			f.P()
 		}
+		if authScheme.Oauth != nil {
+			if i == 0 {
+				option = ast.NewCallExpr(
+					ast.NewImportedReference(
+						"WithOAuthTokenProvider",
+						importPath,
+					),
+					[]ast.Expr{
+						ast.NewBasicLit(`oauthTokenProvider`),
+					},
+				)
+				if authScheme.Oauth.Configuration != nil && authScheme.Oauth.Configuration.ClientCredentials != nil {
+					cc := authScheme.Oauth.Configuration.ClientCredentials
+					if cc.ClientIdEnvVar != nil {
+						environmentVars = append(environmentVars, string(*cc.ClientIdEnvVar))
+					}
+					if cc.ClientSecretEnvVar != nil {
+						environmentVars = append(environmentVars, string(*cc.ClientSecretEnvVar))
+					}
+				}
+			}
+			f.P("// WithOAuthTokenProvider sets the OAuth token provider for automatic token refresh.")
+			if includeCustomAuthDocs {
+				f.P("//")
+				f.WriteDocs(auth.Docs)
+			}
+			f.P("func WithOAuthTokenProvider(tokenProvider *core.OAuthTokenProvider) *core.OAuthTokenProviderOption {")
+			f.P("return &core.OAuthTokenProviderOption{")
+			f.P("OAuthTokenProvider: tokenProvider,")
+			f.P("}")
+			f.P("}")
+			f.P()
+		}
 	}
 
 	for _, header := range headers {
@@ -1061,6 +1125,32 @@ func (f *fileWriter) WriteClient(
 		f.P(receiver, ".header.Clone(),")
 		f.P("options.ToHeader(),")
 		f.P(")")
+		// Handle OAuth token refresh if OAuth is used.
+		if irAuth != nil {
+			for _, authScheme := range irAuth.Schemes {
+				if authScheme.Oauth != nil {
+					tokenPrefix := "Bearer"
+					tokenHeader := "Authorization"
+					if authScheme.Oauth.Configuration != nil && authScheme.Oauth.Configuration.ClientCredentials != nil {
+						cc := authScheme.Oauth.Configuration.ClientCredentials
+						if cc.TokenPrefix != nil {
+							tokenPrefix = *cc.TokenPrefix
+						}
+						if cc.TokenHeader != nil {
+							tokenHeader = *cc.TokenHeader
+						}
+					}
+					f.P("if ", receiver, ".options.OAuthTokenProvider != nil {")
+					f.P("oauthToken, err := ", receiver, ".options.OAuthTokenProvider.GetToken(ctx)")
+					f.P("if err != nil {")
+					f.P("return ", endpoint.ErrorReturnValues)
+					f.P("}")
+					f.P(fmt.Sprintf(`%s.Set(%q, %q + " " + oauthToken)`, headersParameter, tokenHeader, tokenPrefix))
+					f.P("}")
+					break
+				}
+			}
+		}
 		if len(endpoint.Headers) > 0 {
 			// Add endpoint-specific headers from the request, if any.
 			for _, header := range endpoint.Headers {

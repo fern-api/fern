@@ -580,6 +580,9 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			files = append(files, newMultipartFile(g.coordinator))
 			files = append(files, newMultipartTestFile(g.coordinator))
 		}
+		if needsOAuthHelpers(ir) {
+			files = append(files, newOAuthFile(g.coordinator))
+		}
 		clientTestFile, err := newClientTestFile(g.config.FullImportPath, rootPackageName, g.coordinator, g.config.ClientName, g.config.ClientConstructorName)
 		if err != nil {
 			return nil, err
@@ -1266,6 +1269,14 @@ func newOptionalTestFile(coordinator *coordinator.Client) *File {
 	)
 }
 
+func newOAuthFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/oauth.go",
+		[]byte(oauthFile),
+	)
+}
+
 func newQueryFile(coordinator *coordinator.Client) *File {
 	return NewFile(
 		coordinator,
@@ -1895,6 +1906,19 @@ func needsFileUploadHelpers(ir *fernir.IntermediateRepresentation) bool {
 			if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.FileUpload != nil {
 				return true
 			}
+		}
+	}
+	return false
+}
+
+// needsOAuthHelpers returns true if OAuth is used in the IR.
+func needsOAuthHelpers(ir *fernir.IntermediateRepresentation) bool {
+	if ir.Auth == nil {
+		return false
+	}
+	for _, authScheme := range ir.Auth.Schemes {
+		if authScheme.Oauth != nil {
+			return true
 		}
 	}
 	return false
