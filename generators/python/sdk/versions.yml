@@ -1,5 +1,15 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 # For unreleased changes, use unreleased.yml
+- version: 4.43.0
+  changelogEntry:
+    - summary: |
+        Add Python 3.11+ StrEnum compatibility. Generated enums now use StrEnum for Python >= 3.11
+        and the (str, Enum) mixin for older versions, fixing compatibility issues with Python 3.11's
+        stricter enum mixin handling.
+      type: feat
+  createdAt: "2025-12-08"
+  irVersion: 61
+
 - version: 4.42.1
   changelogEntry:
     - summary: |

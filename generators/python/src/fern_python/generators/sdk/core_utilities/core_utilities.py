@@ -55,6 +55,15 @@ class CoreUtilities:
         )
         self._copy_file_to_project(
             project=project,
+            relative_filepath_on_disk="fern_enum.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="fern_enum"),
+            ),
+            exports={"FernEnum"} if not self._exclude_types_from_init_exports else set(),
+        )
+        self._copy_file_to_project(
+            project=project,
             relative_filepath_on_disk="api_error.py",
             filepath_in_project=Filepath(
                 directories=self.filepath,
