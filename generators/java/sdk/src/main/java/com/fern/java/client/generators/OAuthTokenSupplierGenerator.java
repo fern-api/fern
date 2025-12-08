@@ -18,6 +18,9 @@ import com.fern.ir.model.http.SdkRequestShape.Visitor;
 import com.fern.ir.model.http.SdkRequestWrapper;
 import com.fern.ir.model.ir.Subpackage;
 import com.fern.ir.model.types.ContainerType;
+import com.fern.ir.model.types.ObjectProperty;
+import com.fern.ir.model.types.ObjectTypeDeclaration;
+import com.fern.ir.model.types.TypeDeclaration;
 import com.fern.ir.model.types.TypeReference;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.generators.visitors.RequestPropertyToNameVisitor;
@@ -357,6 +360,39 @@ public class OAuthTokenSupplierGenerator extends AbstractFileGenerator {
 
                 @Override
                 public Void visitReference(com.fern.ir.model.http.HttpRequestBodyReference reference) {
+                    TypeReference requestBodyType = reference.getRequestBodyType();
+                    if (requestBodyType.isNamed()) {
+                        TypeDeclaration typeDeclaration = generatorContext
+                                .getTypeDeclarations()
+                                .get(requestBodyType.getNamed().get().getTypeId());
+                        if (typeDeclaration != null && typeDeclaration.getShape().isObject()) {
+                            ObjectTypeDeclaration objectType =
+                                    typeDeclaration.getShape().getObject().get();
+                            for (ObjectProperty prop : objectType.getProperties()) {
+                                String propName =
+                                        prop.getName().getName().getCamelCase().getUnsafeName();
+                                RequestPropertyInfo oauthProp = allOAuthProperties.get(propName);
+                                if (oauthProp == null) {
+                                    continue;
+                                }
+
+                                processedProperties.add(propName);
+                                boolean isLiteral = isLiteralType(prop.getValueType());
+                                boolean isOptional = isOptionalType(prop.getValueType());
+
+                                BuilderProperty builderProp =
+                                        new BuilderProperty(propName, oauthProp.fieldName, isLiteral);
+
+                                if (isLiteral) {
+                                    continue;
+                                } else if (isOptional) {
+                                    optionalProperties.add(builderProp);
+                                } else {
+                                    requiredProperties.add(builderProp);
+                                }
+                            }
+                        }
+                    }
                     return null;
                 }
 

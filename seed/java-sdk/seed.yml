@@ -290,6 +290,8 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: streaming
+  java-oauth-staged-builder:
+    - outputFolder: default
 scripts:
   - image: fernapi/java-seed
     commands:
