@@ -199,50 +199,10 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
     public getRequestProperties(context: SdkContext): GeneratedRequestWrapper.Property[] {
         const properties: GeneratedRequestWrapper.Property[] = [];
 
-        for (const pathParameter of this.getPathParamsForRequestWrapper()) {
-            const type = context.type.getReferenceToType(pathParameter.valueType);
-            const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
-            const propertyName = this.getPropertyNameOfPathParameter(pathParameter);
-            properties.push({
-                name: getPropertyKey(propertyName.propertyName),
-                safeName: getPropertyKey(propertyName.safeName),
-                type: type.typeNodeWithoutUndefined,
-                isOptional: type.isOptional || hasDefaultValue,
-                docs: pathParameter.docs != null ? [pathParameter.docs] : undefined
-            });
-        }
-
-        for (const queryParameter of this.getAllQueryParameters()) {
-            const type = context.type.getReferenceToType(queryParameter.valueType);
-            const hasDefaultValue = this.hasDefaultValue(queryParameter.valueType, context);
-            const propertyName = this.getPropertyNameOfQueryParameter(queryParameter);
-            properties.push({
-                name: getPropertyKey(propertyName.propertyName),
-                safeName: getPropertyKey(propertyName.safeName),
-                type: queryParameter.allowMultiple
-                    ? ts.factory.createUnionTypeNode([
-                          type.typeNodeWithoutUndefined,
-                          ts.factory.createArrayTypeNode(type.typeNodeWithoutUndefined)
-                      ])
-                    : type.typeNodeWithoutUndefined,
-                isOptional: type.isOptional || hasDefaultValue,
-                docs: queryParameter.docs != null ? [queryParameter.docs] : undefined
-            });
-        }
-
-        for (const header of this.getAllNonLiteralHeaders(context)) {
-            const type = context.type.getReferenceToType(header.valueType);
-            const hasDefaultValue = this.hasDefaultValue(header.valueType, context);
-            const headerName = this.getPropertyNameOfNonLiteralHeader(header);
-            properties.push({
-                name: getPropertyKey(headerName.propertyName),
-                safeName: getPropertyKey(headerName.safeName),
-                type: type.typeNodeWithoutUndefined,
-                isOptional: type.isOptional || hasDefaultValue,
-                docs: header.docs != null ? [header.docs] : undefined
-            });
-        }
-
+        // First, collect body properties to build a set of names that should not be duplicated
+        // from path/query/header parameters. This handles the case where a body property has
+        // the same name as a path parameter (e.g., both have a "key" field).
+        const bodyProperties: GeneratedRequestWrapper.Property[] = [];
         const requestBody = this.endpoint.requestBody;
         if (requestBody != null) {
             HttpRequestBody._visit(requestBody, {
@@ -252,14 +212,14 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             inlinedRequestBody,
                             context
                         );
-                        properties.push(...inlinedProperties);
+                        bodyProperties.push(...inlinedProperties);
                     } else {
                         for (const property of this.getAllNonLiteralPropertiesFromInlinedRequest({
                             inlinedRequestBody,
                             context
                         })) {
                             const requestProperty = this.getInlineProperty(inlinedRequestBody, property, context);
-                            properties.push(requestProperty);
+                            bodyProperties.push(requestProperty);
                         }
                     }
                 },
@@ -269,7 +229,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             referenceToRequestBody,
                             context
                         );
-                        properties.push(...referencedProperties);
+                        bodyProperties.push(...referencedProperties);
                     } else {
                         const type = context.type.getReferenceToType(referenceToRequestBody.requestBodyType);
                         const name = this.getReferencedBodyPropertyName();
@@ -280,7 +240,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                             isOptional: type.isOptional,
                             docs: referenceToRequestBody.docs != null ? [referenceToRequestBody.docs] : undefined
                         };
-                        properties.push(requestProperty);
+                        bodyProperties.push(requestProperty);
                     }
                 },
                 fileUpload: (fileUploadRequest) => {
@@ -291,7 +251,7 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                                     return;
                                 }
                                 const propertyName = this.getPropertyNameOfFileParameterFromName(fileProperty.key);
-                                properties.push({
+                                bodyProperties.push({
                                     name: getPropertyKey(propertyName.propertyName),
                                     safeName: getPropertyKey(propertyName.safeName),
                                     type: this.getFileParameterType(fileProperty, context),
@@ -300,7 +260,9 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                                 });
                             },
                             bodyProperty: (inlinedProperty) => {
-                                properties.push(this.getInlineProperty(fileUploadRequest, inlinedProperty, context));
+                                bodyProperties.push(
+                                    this.getInlineProperty(fileUploadRequest, inlinedProperty, context)
+                                );
                             },
                             _other: () => {
                                 throw new Error("Unknown FileUploadRequestProperty: " + property.type);
@@ -316,6 +278,72 @@ export class GeneratedRequestWrapperImpl implements GeneratedRequestWrapper {
                 }
             });
         }
+
+        // Build a set of body property names to skip duplicates from path/query/header parameters.
+        // We use `name` (the actual interface property key) for deduplication, not `safeName`.
+        const bodyPropertyNames = new Set(bodyProperties.map((p) => p.name));
+
+        // Add path parameters, skipping any that conflict with body properties
+        for (const pathParameter of this.getPathParamsForRequestWrapper()) {
+            const propertyName = this.getPropertyNameOfPathParameter(pathParameter);
+            const name = getPropertyKey(propertyName.propertyName);
+            if (bodyPropertyNames.has(name)) {
+                continue;
+            }
+            const type = context.type.getReferenceToType(pathParameter.valueType);
+            const hasDefaultValue = this.hasDefaultValue(pathParameter.valueType, context);
+            properties.push({
+                name,
+                safeName: getPropertyKey(propertyName.safeName),
+                type: type.typeNodeWithoutUndefined,
+                isOptional: type.isOptional || hasDefaultValue,
+                docs: pathParameter.docs != null ? [pathParameter.docs] : undefined
+            });
+        }
+
+        // Add query parameters, skipping any that conflict with body properties
+        for (const queryParameter of this.getAllQueryParameters()) {
+            const propertyName = this.getPropertyNameOfQueryParameter(queryParameter);
+            const name = getPropertyKey(propertyName.propertyName);
+            if (bodyPropertyNames.has(name)) {
+                continue;
+            }
+            const type = context.type.getReferenceToType(queryParameter.valueType);
+            const hasDefaultValue = this.hasDefaultValue(queryParameter.valueType, context);
+            properties.push({
+                name,
+                safeName: getPropertyKey(propertyName.safeName),
+                type: queryParameter.allowMultiple
+                    ? ts.factory.createUnionTypeNode([
+                          type.typeNodeWithoutUndefined,
+                          ts.factory.createArrayTypeNode(type.typeNodeWithoutUndefined)
+                      ])
+                    : type.typeNodeWithoutUndefined,
+                isOptional: type.isOptional || hasDefaultValue,
+                docs: queryParameter.docs != null ? [queryParameter.docs] : undefined
+            });
+        }
+
+        // Add headers, skipping any that conflict with body properties
+        for (const header of this.getAllNonLiteralHeaders(context)) {
+            const headerName = this.getPropertyNameOfNonLiteralHeader(header);
+            const name = getPropertyKey(headerName.propertyName);
+            if (bodyPropertyNames.has(name)) {
+                continue;
+            }
+            const type = context.type.getReferenceToType(header.valueType);
+            const hasDefaultValue = this.hasDefaultValue(header.valueType, context);
+            properties.push({
+                name,
+                safeName: getPropertyKey(headerName.safeName),
+                type: type.typeNodeWithoutUndefined,
+                isOptional: type.isOptional || hasDefaultValue,
+                docs: header.docs != null ? [header.docs] : undefined
+            });
+        }
+
+        // Add body properties at the end
+        properties.push(...bodyProperties);
 
         return properties;
     }

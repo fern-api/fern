@@ -1,0 +1,54 @@
+openapi: 3.0.3
+info:
+  title: Path Body Property Collision API
+  description: |
+    This API tests the case where a path parameter has the same name as a body property.
+    The TypeScript SDK generator should not generate duplicate properties in the request wrapper.
+  version: 1.0.0
+paths:
+  /resources/{key}/toggle:
+    post:
+      operationId: toggleResource
+      summary: Toggle a resource by key
+      description: |
+        This endpoint has a path parameter 'key' and a request body that also contains a 'key' property.
+        The generated request wrapper should only have one 'key' property (from the body).
+      parameters:
+        - name: key
+          in: path
+          required: true
+          description: The resource key from the path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ToggleRequest'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ToggleResponse'
+components:
+  schemas:
+    ToggleRequest:
+      type: object
+      required:
+        - key
+        - enabled
+      properties:
+        key:
+          type: string
+          description: The resource key in the body
+        enabled:
+          type: boolean
+          description: Whether the resource should be enabled
+    ToggleResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
