@@ -1,7 +1,8 @@
 import { SourceResolverImpl } from "@fern-api/cli-source-resolver";
 import { docsYml, parseAudiences, parseDocsConfiguration, WithoutQuestionMarks } from "@fern-api/configuration-loader";
-import { assertNever, isNonNullish, visitDiscriminatedUnion } from "@fern-api/core-utils";
+import { assertNever, isNonNullish, replaceEnvVariables, visitDiscriminatedUnion } from "@fern-api/core-utils";
 import {
+    isValidRelativeSlug,
     parseImagePaths,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -518,7 +519,14 @@ export class DocsDefinitionResolver {
             const frontmatter = matter(markdown);
             const slug = frontmatter.data.slug;
             if (typeof slug === "string" && slug.trim().length > 0) {
-                mdxFilePathToSlug.set(this.resolveFilepath(relativePath), slug.trim());
+                const trimmedSlug = slug.trim();
+                if (isValidRelativeSlug(trimmedSlug)) {
+                    mdxFilePathToSlug.set(this.resolveFilepath(relativePath), trimmedSlug);
+                } else {
+                    this.taskContext.logger.warn(
+                        `Ignoring absolute URL slug "${trimmedSlug}" in ${relativePath}. Absolute URLs are not allowed for frontmatter slugs.`
+                    );
+                }
             }
         }
         return mdxFilePathToSlug;
@@ -1247,6 +1255,19 @@ export class DocsDefinitionResolver {
             });
         }
 
+        // Apply environment variable substitution to the IR if enabled in docs.yml settings
+        // This allows ${VAR} patterns in OpenAPI specs and Fern definitions to be replaced
+        if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+            ir = replaceEnvVariables(
+                ir,
+                {
+                    onError: (e) =>
+                        this.taskContext.failAndThrow(`Error substituting environment variables in API spec: ${e}`)
+                },
+                { substituteAsEmpty: false }
+            );
+        }
+
         const apiDefinitionId = await this.registerApi({
             ir,
             snippetsConfig,
@@ -1285,9 +1306,24 @@ export class DocsDefinitionResolver {
             const filename = absolutePath.split("/").pop() || absolutePath;
             const relativePath = RelativeFilePath.of(filename);
 
+            // Apply environment variable substitution if enabled
+            let processedContent = content;
+            if (this.docsWorkspace.config.settings?.substituteEnvVars) {
+                processedContent = replaceEnvVariables(
+                    content,
+                    {
+                        onError: (e) =>
+                            this.taskContext.logger.error(
+                                `Error in tag description environment variable substitution: ${e}`
+                            )
+                    },
+                    { substituteAsEmpty: false }
+                );
+            }
+
             // Add to both collections so the file appears in the final pages output
-            this.rawMarkdownFiles[relativePath] = content;
-            this.parsedDocsConfig.pages[relativePath] = content;
+            this.rawMarkdownFiles[relativePath] = processedContent;
+            this.parsedDocsConfig.pages[relativePath] = processedContent;
         }
 
         return node.get();

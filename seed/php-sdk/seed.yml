@@ -148,10 +148,12 @@ fixtures:
 scripts:
   - image: composer:2.7.9
     commands:
-      - composer install
-      - composer build
-      - composer analyze
-      - composer test
+      build:
+        - composer install
+        - composer build
+        - composer analyze
+      test:
+        - composer test
 allowedFailures:
   - pagination-custom
   # Dynamic snippets need to add support for global headers included in the client constructor.

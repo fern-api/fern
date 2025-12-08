@@ -14,12 +14,10 @@
 
 ```ruby
 client.complex.search(
-  'index',
-  {
-    pagination: {
-      per_page: 1,
-      starting_after: 'starting_after'
-    }
+  index: 'index',
+  pagination: {
+    per_page: 1,
+    starting_after: 'starting_after'
   }
 );
 ```
@@ -1220,6 +1218,49 @@ client.users.list_with_cursor_pagination();
 </details>
 
 <details><summary><code>client.users.list_usernames() -> Seed::Types::UsernameCursor</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```ruby
+client.users.list_with_cursor_pagination(starting_after: 'starting_after');
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**starting_after:** `String` 
+
+The cursor used for pagination in order to fetch
+the next page of results.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.users.list_usernames_with_optional_response() -> Seed::Types::UsernameCursor</code></summary>
 <dl>
 <dd>
 

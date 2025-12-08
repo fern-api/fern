@@ -3,7 +3,8 @@ import fs from "fs";
 export abstract class Writer {
     public async writeCodeBlock(language: string, content: string): Promise<void> {
         await this.writeLine(`\`\`\`${language}`);
-        await this.write(content);
+        const normalizedContent = content.endsWith("\n") ? content : content + "\n";
+        await this.write(normalizedContent);
         await this.writeLine("```");
     }
 

@@ -22,6 +22,7 @@ export declare namespace BaseClientContextImpl {
         generateIdempotentRequestOptions: boolean;
         parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
         baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+        oauthTokenOverride: boolean;
     }
 }
 const OPTIONS_INTERFACE_NAME = "BaseClientOptions";
@@ -42,6 +43,7 @@ export class BaseClientContextImpl implements BaseClientContext {
     private readonly parameterNaming: "originalName" | "wireValue" | "camelCase" | "snakeCase" | "default";
     private readonly generateIdempotentRequestOptions: boolean;
     private readonly baseClientTypeDeclarationReferencer: BaseClientTypeDeclarationReferencer;
+    private readonly oauthTokenOverride: boolean;
 
     public static readonly OPTIONS_INTERFACE_NAME = OPTIONS_INTERFACE_NAME;
 
@@ -66,7 +68,8 @@ export class BaseClientContextImpl implements BaseClientContext {
         retainOriginalCasing,
         generateIdempotentRequestOptions,
         parameterNaming,
-        baseClientTypeDeclarationReferencer
+        baseClientTypeDeclarationReferencer,
+        oauthTokenOverride
     }: BaseClientContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.allowCustomFetcher = allowCustomFetcher;
@@ -75,6 +78,7 @@ export class BaseClientContextImpl implements BaseClientContext {
         this.generateIdempotentRequestOptions = generateIdempotentRequestOptions;
         this.parameterNaming = parameterNaming;
         this.baseClientTypeDeclarationReferencer = baseClientTypeDeclarationReferencer;
+        this.oauthTokenOverride = oauthTokenOverride;
 
         this.authHeaders = [];
         for (const authScheme of intermediateRepresentation.auth.schemes) {
@@ -102,7 +106,64 @@ export class BaseClientContextImpl implements BaseClientContext {
     }
 
     public anyRequiredBaseClientOptions(context: SdkContext): boolean {
-        return this.generateBaseClientOptionsInterface(context).properties.some(isPropertyRequired);
+        // Check base properties
+        if (this.generateBaseClientOptionsInterface(context).properties.some(isPropertyRequired)) {
+            return true;
+        }
+
+        // Check auth options from the intersection type
+        // Auth options are required when auth is mandatory and there's no environment variable fallback
+        const isAuthMandatory = this.intermediateRepresentation.sdkConfig.isAuthMandatory;
+
+        if (this.bearerAuthScheme != null) {
+            const hasTokenEnv = this.bearerAuthScheme.tokenEnvVar != null;
+            if (isAuthMandatory && !hasTokenEnv) {
+                return true;
+            }
+        }
+
+        if (this.basicAuthScheme != null) {
+            const hasUsernameEnv = this.basicAuthScheme.usernameEnvVar != null;
+            const hasPasswordEnv = this.basicAuthScheme.passwordEnvVar != null;
+            if (isAuthMandatory && !(hasUsernameEnv && hasPasswordEnv)) {
+                return true;
+            }
+        }
+
+        for (const header of this.authHeaders) {
+            const hasHeaderEnv = header.headerEnvVar != null;
+            const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
+            if (isAuthMandatory && !hasHeaderEnv && !referenceToHeaderType.isOptional) {
+                return true;
+            }
+        }
+
+        // Check OAuth client credentials
+        const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
+        if (oauthScheme != null && oauthScheme.type === "oauth" && context.generateOAuthClients) {
+            const oauthConfig = oauthScheme.configuration;
+            if (oauthConfig.type === "clientCredentials") {
+                const hasClientIdEnv = oauthConfig.clientIdEnvVar != null;
+                const hasClientSecretEnv = oauthConfig.clientSecretEnvVar != null;
+                if (!hasClientIdEnv || !hasClientSecretEnv) {
+                    return true;
+                }
+            }
+        }
+
+        // Check inferred auth
+        if (this.inferredAuthScheme != null) {
+            const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
+                FernIr.AuthScheme.inferred(this.inferredAuthScheme)
+            );
+            for (const param of authTokenParams) {
+                if (!param.isOptional) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     public generateBaseClientOptionsInterface(
@@ -163,139 +224,8 @@ export class BaseClientContextImpl implements BaseClientContext {
             });
         }
 
-        if (this.bearerAuthScheme != null) {
-            properties.push({
-                kind: StructureKind.PropertySignature,
-                name: getPropertyKey(this.getBearerAuthOptionKey(this.bearerAuthScheme)),
-                type: getTextOfTsNode(
-                    supplier._getReferenceToType(
-                        this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
-                            this.bearerAuthScheme.tokenEnvVar == null
-                            ? context.coreUtilities.auth.BearerToken._getReferenceToType()
-                            : ts.factory.createUnionTypeNode([
-                                  context.coreUtilities.auth.BearerToken._getReferenceToType(),
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                              ])
-                    )
-                ),
-                hasQuestionToken:
-                    !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
-                    this.bearerAuthScheme.tokenEnvVar != null
-            });
-        }
-
-        if (this.basicAuthScheme != null) {
-            properties.push(
-                {
-                    kind: StructureKind.PropertySignature,
-                    name: getPropertyKey(this.getBasicAuthUsernameOptionKey(this.basicAuthScheme)),
-                    type: getTextOfTsNode(
-                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                            this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
-                                this.basicAuthScheme.passwordEnvVar == null &&
-                                this.basicAuthScheme.usernameEnvVar == null
-                                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                                : ts.factory.createUnionTypeNode([
-                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                                  ])
-                        )
-                    ),
-                    hasQuestionToken:
-                        !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
-                        (this.basicAuthScheme.passwordEnvVar != null && this.basicAuthScheme.usernameEnvVar != null)
-                },
-                {
-                    kind: StructureKind.PropertySignature,
-                    name: getPropertyKey(this.getBasicAuthPasswordOptionKey(this.basicAuthScheme)),
-                    type: getTextOfTsNode(
-                        context.coreUtilities.fetcher.Supplier._getReferenceToType(
-                            this.intermediateRepresentation.sdkConfig.isAuthMandatory &&
-                                this.basicAuthScheme.passwordEnvVar == null &&
-                                this.basicAuthScheme.usernameEnvVar == null
-                                ? ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                                : ts.factory.createUnionTypeNode([
-                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                      ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                                  ])
-                        )
-                    ),
-                    hasQuestionToken:
-                        !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
-                        (this.basicAuthScheme.passwordEnvVar != null && this.basicAuthScheme.usernameEnvVar != null)
-                }
-            );
-        }
-
-        if (this.inferredAuthScheme != null) {
-            const authTokenParams = context.authProvider.getPropertiesForAuthTokenParams(
-                FernIr.AuthScheme.inferred(this.inferredAuthScheme)
-            );
-            for (const param of authTokenParams) {
-                properties.push({
-                    kind: StructureKind.PropertySignature,
-                    name: getPropertyKey(param.name),
-                    type: getTextOfTsNode(context.coreUtilities.fetcher.Supplier._getReferenceToType(param.type)),
-                    hasQuestionToken: param.isOptional,
-                    docs: param.docs
-                });
-            }
-        }
-
-        for (const header of this.authHeaders) {
-            const referenceToHeaderType = context.type.getReferenceToType(header.valueType);
-            const isOptional =
-                referenceToHeaderType.isOptional ||
-                !this.intermediateRepresentation.sdkConfig.isAuthMandatory ||
-                header.headerEnvVar != null;
-            properties.push({
-                kind: StructureKind.PropertySignature,
-                name: getPropertyKey(this.getOptionKeyForAuthHeader(header)),
-                type: getTextOfTsNode(
-                    supplier._getReferenceToType(
-                        this.intermediateRepresentation.sdkConfig.isAuthMandatory
-                            ? referenceToHeaderType.typeNode
-                            : ts.factory.createUnionTypeNode([
-                                  referenceToHeaderType.typeNodeWithoutUndefined,
-                                  ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
-                              ])
-                    )
-                ),
-                hasQuestionToken: isOptional
-            });
-        }
-
-        // Add OAuth clientId and clientSecret to BaseClientOptions if OAuth is used
-        const oauthScheme = this.intermediateRepresentation.auth.schemes.find((scheme) => scheme.type === "oauth");
-        if (oauthScheme != null && oauthScheme.type === "oauth" && context.generateOAuthClients) {
-            const oauthConfig = oauthScheme.configuration;
-            if (oauthConfig.type === "clientCredentials") {
-                const clientIdProperty = oauthConfig.tokenEndpoint.requestProperties.clientId;
-                const clientSecretProperty = oauthConfig.tokenEndpoint.requestProperties.clientSecret;
-
-                properties.push({
-                    kind: StructureKind.PropertySignature,
-                    name: getPropertyKey("clientId"),
-                    type: getTextOfTsNode(
-                        supplier._getReferenceToType(
-                            context.type.getReferenceToType(clientIdProperty.property.valueType).typeNode
-                        )
-                    ),
-                    hasQuestionToken: oauthConfig.clientIdEnvVar != null
-                });
-
-                properties.push({
-                    kind: StructureKind.PropertySignature,
-                    name: getPropertyKey("clientSecret"),
-                    type: getTextOfTsNode(
-                        supplier._getReferenceToType(
-                            context.type.getReferenceToType(clientSecretProperty.property.valueType).typeNode
-                        )
-                    ),
-                    hasQuestionToken: oauthConfig.clientSecretEnvVar != null
-                });
-            }
-        }
+        // Auth properties are now generated by the auth provider generators
+        // and added via intersection type in BaseClientTypeGenerator
 
         for (const header of this.intermediateRepresentation.headers) {
             const type = context.type.getReferenceToType(header.valueType);

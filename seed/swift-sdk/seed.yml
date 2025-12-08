@@ -32,8 +32,10 @@ defaultCustomConfig: {}
 scripts:
   - image: swift:6.1.2
     commands:
-      - swift build -c release --build-tests
-      - swift test
+      build:
+        - swift build -c release --build-tests
+      test:
+        - swift test
 
 fixtures:
   client-side-params:

@@ -230,9 +230,10 @@ fixtures:
 scripts:
   - image: fernapi/go-seed:1.0.0
     commands:
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
-      - CGO_ENABLED=0 go test ./...
-      - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
+      test:
+        - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down && docker compose -f wiremock/docker-compose.test.yml up -d; fi
+        - CGO_ENABLED=0 go test ./...
+        - if [ -f wiremock/docker-compose.test.yml ]; then docker compose -f wiremock/docker-compose.test.yml down; fi
 allowedFailures:
   - alias-extends
   - bytes-download

@@ -1,4 +1,0 @@
-<Solution>
-  <Project Path="SeedNullable.Test/SeedNullable.Test.csproj" />
-  <Project Path="SeedNullable/SeedNullable.csproj" />
-</Solution>

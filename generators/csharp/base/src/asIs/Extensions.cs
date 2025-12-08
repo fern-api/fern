@@ -8,9 +8,11 @@ internal static class Extensions
     public static string Stringify(this Enum value)
     {
         var field = value.GetType().GetField(value.ToString());
-        if( field != null ) {
-          var attribute = (EnumMemberAttribute?)Attribute.GetCustomAttribute(field, typeof(EnumMemberAttribute));
-          return attribute?.Value ?? value.ToString();
+        if (field != null)
+        {
+            var attribute = (EnumMemberAttribute?)
+                global::System.Attribute.GetCustomAttribute(field, typeof(EnumMemberAttribute));
+            return attribute?.Value ?? value.ToString();
         }
         return value.ToString();
     }
@@ -21,11 +23,12 @@ internal static class Extensions
     /// <param name="condition">The condition to assert.</param>
     /// <param name="message">The exception message if the assertion fails.</param>
     /// <exception cref="Exception">Thrown when the condition is false.</exception>
-    internal static void Assert(this object value, bool condition, string message) {
-      if(!condition) 
-      {
-          throw new global::System.Exception(message);
-      }
+    internal static void Assert(this object value, bool condition, string message)
+    {
+        if (!condition)
+        {
+            throw new global::System.Exception(message);
+        }
     }
 
     /// <summary>
@@ -36,7 +39,11 @@ internal static class Extensions
     /// <param name="message">The exception message if the assertion fails.</param>
     /// <returns>The non-null value.</returns>
     /// <exception cref="Exception">Thrown when the value is null.</exception>
-    internal static TValue Assert<TValue>(this object _unused, [NotNull] TValue? value, string message)
+    internal static TValue Assert<TValue>(
+        this object _unused,
+        [NotNull] TValue? value,
+        string message
+    )
         where TValue : class
     {
         if (value == null)

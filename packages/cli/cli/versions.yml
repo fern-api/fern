@@ -1,4 +1,123 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
+- changelogEntry:
+    - summary: |
+        Fallback to variant type for display name if title and mapping are not present.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-08"
+  version: 3.4.4
+
+- changelogEntry:
+    - summary: |
+        Disallow absolute URLs as redirects in frontmatter slug definitions. `links` should be used in the navigation instead.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-08"
+  version: 3.4.3
+
+- changelogEntry:
+    - summary: |
+        Fix `fern generate` crash when inheriting from a schema with top-level `nullable: true` via `allOf`. The OpenAPI importer now correctly strips nullable wrappers from type references in extends lists.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-06"
+  version: 3.4.2
+
+- changelogEntry:
+    - summary: |
+        Map error response headers from IR to FDR for docs display.
+      type: fix
+  irVersion: 63
+  createdAt: "2025-12-05"
+  version: 3.4.1
+
+- changelogEntry:
+    - summary: |
+        Upgrade `@fern-api/fdr-sdk` to version `0.142.1-b1f6b6363` which adds support for error response headers.
+      type: chore
+  irVersion: 63
+  createdAt: "2025-12-05"
+  version: 3.4.0
+
+- changelogEntry:
+    - summary: |
+        Extend `substitute-env-vars` to apply to API specs (OpenAPI and Fern definitions) when generating docs. Environment variables using `${VAR_NAME}` syntax in API spec descriptions, examples, and other string fields are now substituted when `substitute-env-vars: true` is set in `docs.yml`.
+      type: feat
+  irVersion: 63
+  createdAt: "2025-12-05"
+  version: 3.3.0
+
+- changelogEntry:
+    - summary: |
+        Add recursive markdown snippet resolution for docs. Markdown snippets can now reference other markdown snippets, with automatic detection and warning for circular references to prevent infinite loops.
+      type: feat
+  irVersion: 63
+  createdAt: "2025-12-05"
+  version: 3.2.0
+
+- changelogEntry:
+    - summary: |
+        Preserve error response headers (e.g., Retry-After for 429 errors) from OpenAPI specs in the IR.
+      type: feat
+  irVersion: 63
+  createdAt: "2025-12-05"
+  version: 3.1.0
+
+- changelogEntry:
+    - summary: |
+        Fix AsyncAPI validation: exclude AsyncAPI files from OpenAPI-specific validation rules
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.0.5
+
+- changelogEntry:
+    - summary: |
+        Fix error response examples not displaying in docs when examples are defined at the property level in OpenAPI specs.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-05"
+  version: 3.0.4
+
+- changelogEntry:
+    - summary: |
+        Add basic preprocessing of names in the IR parser; for starters, `[]` -> `Array`.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-04"
+  version: 3.0.3
+
+- changelogEntry:
+    - summary: |
+        Fix OpenAPI parsing to properly handle `allOf` with `$ref` references inside `oneOf`/`anyOf` schemas. Previously, inline objects with `allOf` references but no direct properties were incorrectly converted to `map<string, any>`. Now they are properly preserved as named types with inheritance.
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-04"
+  version: 3.0.2
+
+- changelogEntry:
+    - summary: |
+        Fix `substitute-env-vars` not applying to arrays in docs configuration. The `replaceEnvVariables` function now recursively processes array elements, enabling environment variable substitution in arrays of strings, arrays of objects, and deeply nested array structures (such as navigation items, navbar links, footer links, redirects, etc.).
+      type: fix
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.1
+
+- changelogEntry:
+    - summary: |
+        **Breaking Change**: Enable `smart-casing` by default for all generators.
+
+        Smart-casing improves naming conventions in generated SDKs by:
+        - Capitalizing common initialisms like API, HTTP, ID, UUID, URL, HTML, JSON, XML, etc. in camelCase and PascalCase identifiers
+        - Better handling of number-letter combinations (e.g., `v2` stays as `v2` instead of becoming `v_2`, `md5` stays as `md5` instead of `md_5`)
+
+        **Migration Behavior**: The CLI will automatically upgrade your `generators.yml` to explicitly set `smart-casing: false` for all existing generators that don't have it configured. This preserves backwards compatibility for existing projects while enabling the improved naming for new projects.
+
+        **Opting In**: To enable smart-casing for existing generators, remove the `smart-casing: false` line that the migration adds, or explicitly set `smart-casing: true`.
+      type: break
+  irVersion: 62
+  createdAt: "2025-12-03"
+  version: 3.0.0
 
 - changelogEntry:
     - summary: |
@@ -43,10 +162,10 @@
 
 - changelogEntry:
     - summary: |
-        Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`, 
+        Add `substitute-env-vars` flag to `docs.yml` settings configuration. When set to `true`,
         environment variables using `${VAR_NAME}` syntax are substituted across all files in the docs bundle,
         including markdown/MDX content. This is useful for injecting dynamic values like API keys or URLs.
-        Use \$\{VAR\} to escape and output literal ${VAR} without substitution.
+        Use `\$\{VAR\}` to escape and output literal `${VAR}` without substitution.
       type: feat
   irVersion: 62
   createdAt: "2025-12-02"
@@ -4256,7 +4375,7 @@
 - changelogEntry:
     - summary: |
         Improve server handling in OpenAPI imports by exploding servers with enum variables into multiple servers,
-        one for each enum value. For example, a server with URL "https://{region}.example.com" where region
+        one for each enum value. For example, a server with URL `https://{region}.example.com` where region
         is an enum ["us", "eu"] will be exploded into two servers: "https://us.example.com" and "https://eu.example.com".
       type: feat
   irVersion: 57

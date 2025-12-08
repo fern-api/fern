@@ -1,8 +1,13 @@
 import { FernIr } from "@fern-fern/ir-sdk";
 import { ExportedFilePath, getTextOfTsNode } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
-import { Scope, StructureKind, ts } from "ts-morph";
+import { OptionalKind, PropertySignatureStructure, Scope, StructureKind, ts } from "ts-morph";
 import { AuthProviderGenerator } from "./AuthProviderGenerator";
+import { BasicAuthProviderGenerator } from "./BasicAuthProviderGenerator";
+import { BearerAuthProviderGenerator } from "./BearerAuthProviderGenerator";
+import { HeaderAuthProviderGenerator } from "./HeaderAuthProviderGenerator";
+import { InferredAuthProviderGenerator } from "./InferredAuthProviderGenerator";
+import { OAuthAuthProviderGenerator } from "./OAuthAuthProviderGenerator";
 
 export declare namespace AnyAuthProviderGenerator {
     export interface Init {
@@ -12,6 +17,7 @@ export declare namespace AnyAuthProviderGenerator {
 
 const CLASS_NAME = "AnyAuthProvider";
 const AUTH_PROVIDERS_FIELD_NAME = "authProviders";
+const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 
 export class AnyAuthProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -40,12 +46,87 @@ export class AnyAuthProviderGenerator implements AuthProviderGenerator {
         throw new Error("AnyAuthProvider does not have an Options type");
     }
 
+    public getAuthOptionsType(): ts.TypeNode {
+        return ts.factory.createTypeReferenceNode(`${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}`);
+    }
+
+    public getAuthOptionsProperties(_context: SdkContext): OptionalKind<PropertySignatureStructure>[] | undefined {
+        // AnyAuthProvider's AuthOptions extends all child auth providers' AuthOptions,
+        // so we don't need to return individual properties here
+        return undefined;
+    }
+
+    /**
+     * Gets the list of auth provider class names that this AnyAuthProvider combines.
+     * Used to generate the AuthOptions interface that extends all child auth providers' AuthOptions.
+     */
+    private getChildAuthProviderClassNames(context: SdkContext): string[] {
+        const classNames: string[] = [];
+        for (const authScheme of this.ir.auth.schemes) {
+            switch (authScheme.type) {
+                case "bearer":
+                    classNames.push(BearerAuthProviderGenerator.CLASS_NAME);
+                    break;
+                case "basic":
+                    classNames.push(BasicAuthProviderGenerator.CLASS_NAME);
+                    break;
+                case "header":
+                    classNames.push(HeaderAuthProviderGenerator.CLASS_NAME);
+                    break;
+                case "oauth":
+                    if (context.generateOAuthClients) {
+                        classNames.push(OAuthAuthProviderGenerator.CLASS_NAME);
+                    }
+                    break;
+                case "inferred":
+                    classNames.push(InferredAuthProviderGenerator.CLASS_NAME);
+                    break;
+            }
+        }
+        return classNames;
+    }
+
     public instantiate(constructorArgs: ts.Expression[]): ts.Expression {
         return ts.factory.createNewExpression(ts.factory.createIdentifier(CLASS_NAME), undefined, constructorArgs);
     }
 
     public writeToFile(context: SdkContext): void {
+        this.writeOptions(context);
         this.writeClass(context);
+    }
+
+    private writeOptions(context: SdkContext): void {
+        const childClassNames = this.getChildAuthProviderClassNames(context);
+
+        for (const className of childClassNames) {
+            context.sourceFile.addImportDeclaration({
+                moduleSpecifier: `./${className}.js`,
+                namedImports: [className],
+                isTypeOnly: true
+            });
+        }
+
+        const authOptionsTypes = childClassNames.map((className) => `${className}.AuthOptions`);
+        const tupleStr = authOptionsTypes.join(",\n        ");
+
+        const typeCode = `
+    type UnionToIntersection<U> =
+        (U extends any ? (x: U) => void : never) extends (x: infer I) => void ? I : never;
+
+    type AtLeastOneOf<T extends any[]> = {
+        [K in keyof T]: T[K] & Partial<UnionToIntersection<Exclude<T[number], T[K]>>>;
+    }[number];
+
+    export type ${AUTH_OPTIONS_TYPE_NAME} = AtLeastOneOf<[
+        ${tupleStr}
+    ]>;`;
+
+        context.sourceFile.addModule({
+            name: CLASS_NAME,
+            isExported: true,
+            kind: StructureKind.Module,
+            statements: typeCode
+        });
     }
 
     private writeClass(context: SdkContext): void {

@@ -27,7 +27,7 @@ Get a user by ID
 <dd>
 
 ```ruby
-client.nullable_optional.get_user('userId');
+client.nullable_optional.get_user(user_id: 'userId');
 ```
 </dd>
 </dl>
@@ -81,7 +81,7 @@ Create a new user
 <dd>
 
 ```ruby
-client.nullable_optional.create_user({
+client.nullable_optional.create_user(
   username: 'username',
   email: 'email',
   phone: 'phone',
@@ -94,7 +94,7 @@ client.nullable_optional.create_user({
     building_id: 'buildingId',
     tenant_id: 'tenantId'
   }
-});
+);
 ```
 </dd>
 </dl>
@@ -149,20 +149,18 @@ Update a user (partial update)
 
 ```ruby
 client.nullable_optional.update_user(
-  'userId',
-  {
-    username: 'username',
-    email: 'email',
-    phone: 'phone',
-    address: {
-      street: 'street',
-      city: 'city',
-      state: 'state',
-      zip_code: 'zipCode',
-      country: 'country',
-      building_id: 'buildingId',
-      tenant_id: 'tenantId'
-    }
+  user_id: 'userId',
+  username: 'username',
+  email: 'email',
+  phone: 'phone',
+  address: {
+    street: 'street',
+    city: 'city',
+    state: 'state',
+    zip_code: 'zipCode',
+    country: 'country',
+    building_id: 'buildingId',
+    tenant_id: 'tenantId'
   }
 );
 ```
@@ -392,7 +390,7 @@ Create a complex profile to test nullable enums and unions
 <dd>
 
 ```ruby
-client.nullable_optional.create_complex_profile({
+client.nullable_optional.create_complex_profile(
   id: 'id',
   nullable_array: ['nullableArray', 'nullableArray'],
   optional_array: ['optionalArray', 'optionalArray'],
@@ -411,7 +409,7 @@ client.nullable_optional.create_complex_profile({
   },
   nullable_list_of_unions: [],
   optional_map_of_enums: {}
-});
+);
 ```
 </dd>
 </dl>
@@ -465,7 +463,7 @@ Get a complex profile by ID
 <dd>
 
 ```ruby
-client.nullable_optional.get_complex_profile('profileId');
+client.nullable_optional.get_complex_profile(profile_id: 'profileId');
 ```
 </dd>
 </dl>
@@ -616,7 +614,7 @@ Test endpoint for validating null deserialization
 <dd>
 
 ```ruby
-client.nullable_optional.test_deserialization({
+client.nullable_optional.test_deserialization(
   required_string: 'requiredString',
   nullable_string: 'nullableString',
   optional_string: 'optionalString',
@@ -640,7 +638,7 @@ client.nullable_optional.test_deserialization({
     domain: 'domain',
     employee_count: 1
   }
-});
+);
 ```
 </dd>
 </dl>
@@ -764,7 +762,7 @@ Get notification settings which may be null
 <dd>
 
 ```ruby
-client.nullable_optional.get_notification_settings('userId');
+client.nullable_optional.get_notification_settings(user_id: 'userId');
 ```
 </dd>
 </dl>

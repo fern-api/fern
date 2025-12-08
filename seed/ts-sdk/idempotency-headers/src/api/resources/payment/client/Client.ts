@@ -9,7 +9,7 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedIdempotencyHeaders from "../../../index.js";
 
 export declare namespace PaymentClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 

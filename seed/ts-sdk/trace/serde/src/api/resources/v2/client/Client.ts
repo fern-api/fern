@@ -11,7 +11,7 @@ import { ProblemClient } from "../resources/problem/client/Client.js";
 import { V3Client } from "../resources/v3/client/Client.js";
 
 export declare namespace V2Client {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

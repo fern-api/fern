@@ -5,4 +5,4 @@ client = Seed::Client.new(
   base_url: 'https://api.fern.com'
 );
 
-client.v_2.problem.get_latest_problem('problemId');
+client.v_2.problem.get_latest_problem(problem_id: 'problemId');

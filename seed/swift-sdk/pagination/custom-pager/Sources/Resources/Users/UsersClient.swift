@@ -148,6 +148,18 @@ public final class UsersClient: Sendable {
         )
     }
 
+    public func listUsernamesWithOptionalResponse(startingAfter: String? = nil, requestOptions: RequestOptions? = nil) async throws -> UsernameCursor? {
+        return try await httpClient.performRequest(
+            method: .get,
+            path: "/users",
+            queryParams: [
+                "starting_after": startingAfter.map { .string($0) }
+            ],
+            requestOptions: requestOptions,
+            responseType: UsernameCursor?.self
+        )
+    }
+
     public func listWithGlobalConfig(offset: Int? = nil, requestOptions: RequestOptions? = nil) async throws -> UsernameContainerType {
         return try await httpClient.performRequest(
             method: .get,

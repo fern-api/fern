@@ -28,10 +28,10 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedInferredAuthImplicitNoExpiry
+        run: dotnet restore src/SeedInferredAuthImplicitNoExpiry/SeedInferredAuthImplicitNoExpiry.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedInferredAuthImplicitNoExpiry -c Release --no-restore
+        run: dotnet build src/SeedInferredAuthImplicitNoExpiry/SeedInferredAuthImplicitNoExpiry.csproj -c Release --no-restore
 
   unit-tests:
     runs-on: ubuntu-latest
@@ -53,13 +53,13 @@ jobs:
           dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src
+        run: dotnet restore src/SeedInferredAuthImplicitNoExpiry.Test/SeedInferredAuthImplicitNoExpiry.Test.csproj
 
       - name: Build Release
-        run: dotnet build src -c Release --no-restore
+        run: dotnet build src/SeedInferredAuthImplicitNoExpiry.Test/SeedInferredAuthImplicitNoExpiry.Test.csproj -c Release --no-restore
 
       - name: Run Tests
-        run: dotnet test src -c Release --no-build --no-restore
+        run: dotnet test src/SeedInferredAuthImplicitNoExpiry.Test/SeedInferredAuthImplicitNoExpiry.Test.csproj -c Release --no-build --no-restore
 
 
   publish:
@@ -83,15 +83,15 @@ jobs:
         run: dotnet tool restore
 
       - name: Restore dependencies
-        run: dotnet restore src/SeedInferredAuthImplicitNoExpiry
+        run: dotnet restore src/SeedInferredAuthImplicitNoExpiry/SeedInferredAuthImplicitNoExpiry.csproj
 
       - name: Build Release
-        run: dotnet build src/SeedInferredAuthImplicitNoExpiry -c Release --no-restore
+        run: dotnet build src/SeedInferredAuthImplicitNoExpiry/SeedInferredAuthImplicitNoExpiry.csproj -c Release --no-restore
 
       - name: Publish
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_TOKEN }}
         run: |
-          dotnet pack src/SeedInferredAuthImplicitNoExpiry -c Release --no-build --no-restore
+          dotnet pack src/SeedInferredAuthImplicitNoExpiry/SeedInferredAuthImplicitNoExpiry.csproj -c Release --no-build --no-restore
           dotnet nuget push src/SeedInferredAuthImplicitNoExpiry/bin/Release/*.nupkg --api-key $NUGET_API_KEY --source "nuget.org"
 

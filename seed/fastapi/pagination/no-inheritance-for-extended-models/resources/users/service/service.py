@@ -106,6 +106,11 @@ class AbstractUsersService(AbstractFernService):
     def list_usernames(self, *, starting_after: typing.Optional[str] = None) -> UsernameCursor: ...
 
     @abc.abstractmethod
+    def list_usernames_with_optional_response(
+        self, *, starting_after: typing.Optional[str] = None
+    ) -> typing.Optional[UsernameCursor]: ...
+
+    @abc.abstractmethod
     def list_with_global_config(self, *, offset: typing.Optional[int] = None) -> UsernameContainer: ...
 
     """
@@ -126,6 +131,7 @@ class AbstractUsersService(AbstractFernService):
         cls.__init_list_with_extended_results(router=router)
         cls.__init_list_with_extended_results_and_optional_data(router=router)
         cls.__init_list_usernames(router=router)
+        cls.__init_list_usernames_with_optional_response(router=router)
         cls.__init_list_with_global_config(router=router)
 
     @classmethod
@@ -628,6 +634,53 @@ class AbstractUsersService(AbstractFernService):
             response_model=UsernameCursor,
             description=AbstractUsersService.list_usernames.__doc__,
             **get_route_args(cls.list_usernames, default_tag="users"),
+        )(wrapper)
+
+    @classmethod
+    def __init_list_usernames_with_optional_response(cls, router: fastapi.APIRouter) -> None:
+        endpoint_function = inspect.signature(cls.list_usernames_with_optional_response)
+        new_parameters: typing.List[inspect.Parameter] = []
+        for index, (parameter_name, parameter) in enumerate(endpoint_function.parameters.items()):
+            if index == 0:
+                new_parameters.append(parameter.replace(default=fastapi.Depends(cls)))
+            elif parameter_name == "starting_after":
+                new_parameters.append(
+                    parameter.replace(
+                        default=fastapi.Query(
+                            default=None,
+                            description="The cursor used for pagination in order to fetch\nthe next page of results.",
+                        )
+                    )
+                )
+            else:
+                new_parameters.append(parameter)
+        setattr(
+            cls.list_usernames_with_optional_response,
+            "__signature__",
+            endpoint_function.replace(parameters=new_parameters),
+        )
+
+        @functools.wraps(cls.list_usernames_with_optional_response)
+        def wrapper(*args: typing.Any, **kwargs: typing.Any) -> typing.Optional[UsernameCursor]:
+            try:
+                return cls.list_usernames_with_optional_response(*args, **kwargs)
+            except FernHTTPException as e:
+                logging.getLogger(f"{cls.__module__}.{cls.__name__}").warn(
+                    f"Endpoint 'list_usernames_with_optional_response' unexpectedly threw {e.__class__.__name__}. "
+                    + f"If this was intentional, please add {e.__class__.__name__} to "
+                    + "the endpoint's errors list in your Fern Definition."
+                )
+                raise e
+
+        # this is necessary for FastAPI to find forward-ref'ed type hints.
+        # https://github.com/tiangolo/fastapi/pull/5077
+        wrapper.__globals__.update(cls.list_usernames_with_optional_response.__globals__)
+
+        router.get(
+            path="/users",
+            response_model=typing.Optional[UsernameCursor],
+            description=AbstractUsersService.list_usernames_with_optional_response.__doc__,
+            **get_route_args(cls.list_usernames_with_optional_response, default_tag="users"),
         )(wrapper)
 
     @classmethod

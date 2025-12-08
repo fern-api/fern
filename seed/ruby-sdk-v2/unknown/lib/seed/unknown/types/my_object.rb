@@ -4,7 +4,7 @@ module Seed
   module Unknown
     module Types
       class MyObject < Internal::Types::Model
-        field :unknown, -> { Internal::Types::Hash[String, Object] }, optional: false, nullable: false
+        field :unknown, -> { Object }, optional: false, nullable: false
       end
     end
   end

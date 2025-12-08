@@ -24,7 +24,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url],
           method: "GET",
-          path: "/#{params[:id]}"
+          path: "/#{params[:id]}",
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -54,7 +55,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "",
-          body: Seed::Bigunion::Types::BigUnion.new(params).to_h
+          body: Seed::Bigunion::Types::BigUnion.new(params).to_h,
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -82,7 +84,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "PATCH",
           path: "/many",
-          body: params
+          body: params,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

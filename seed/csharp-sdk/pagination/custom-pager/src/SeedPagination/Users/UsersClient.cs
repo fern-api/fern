@@ -571,6 +571,53 @@ public partial class UsersClient
         }
     }
 
+    private async Task<UsernameCursor?> ListUsernamesWithOptionalResponseInternalAsync(
+        ListUsernamesWithOptionalResponseRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var _query = new Dictionary<string, object>();
+        if (request.StartingAfter != null)
+        {
+            _query["starting_after"] = request.StartingAfter;
+        }
+        var response = await _client
+            .SendRequestAsync(
+                new JsonRequest
+                {
+                    BaseUrl = _client.Options.BaseUrl,
+                    Method = HttpMethod.Get,
+                    Path = "/users",
+                    Query = _query,
+                    Options = options,
+                },
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        if (response.StatusCode is >= 200 and < 400)
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            try
+            {
+                return JsonUtils.Deserialize<UsernameCursor?>(responseBody)!;
+            }
+            catch (JsonException e)
+            {
+                throw new SeedPaginationException("Failed to deserialize response", e);
+            }
+        }
+
+        {
+            var responseBody = await response.Raw.Content.ReadAsStringAsync();
+            throw new SeedPaginationApiException(
+                $"Error with status code {response.StatusCode}",
+                response.StatusCode,
+                responseBody
+            );
+        }
+    }
+
     private async Task<UsernameContainer> ListWithGlobalConfigInternalAsync(
         ListWithGlobalConfigRequest request,
         RequestOptions? options = null,
@@ -1063,6 +1110,44 @@ public partial class UsersClient
                 request,
                 options,
                 ListUsernamesInternalAsync,
+                (request, cursor) =>
+                {
+                    request.StartingAfter = cursor;
+                },
+                response => response.Cursor.After,
+                response => response.Cursor.Data?.ToList(),
+                cancellationToken
+            )
+            .ConfigureAwait(false);
+        return pager;
+    }
+
+    /// <example><code>
+    /// await client.Users.ListUsernamesWithOptionalResponseAsync(
+    ///     new ListUsernamesWithOptionalResponseRequest { StartingAfter = "starting_after" }
+    /// );
+    /// </code></example>
+    public async Task<Pager<string>> ListUsernamesWithOptionalResponseAsync(
+        ListUsernamesWithOptionalResponseRequest request,
+        RequestOptions? options = null,
+        CancellationToken cancellationToken = default
+    )
+    {
+        if (request is not null)
+        {
+            request = request with { };
+        }
+        var pager = await CursorPager<
+            ListUsernamesWithOptionalResponseRequest,
+            RequestOptions?,
+            UsernameCursor?,
+            string?,
+            string
+        >
+            .CreateInstanceAsync(
+                request,
+                options,
+                ListUsernamesWithOptionalResponseInternalAsync,
                 (request, cursor) =>
                 {
                     request.StartingAfter = cursor;

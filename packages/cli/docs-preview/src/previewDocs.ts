@@ -22,6 +22,7 @@ import grayMatter from "gray-matter";
 import { v4 as uuidv4 } from "uuid";
 
 import {
+    isValidRelativeSlug,
     parseImagePaths,
     replaceImagePathsAndUrls,
     replaceReferencedCode,
@@ -83,7 +84,8 @@ function extractFrontmatterSidebarTitle(markdown: string): string | undefined {
 
 /**
  * Extracts the slug field from markdown frontmatter.
- * Returns the string value if present, undefined otherwise.
+ * Returns the string value if present and is a valid relative path, undefined otherwise.
+ * Absolute URLs (e.g., https://google.com) are not valid slugs.
  */
 function extractFrontmatterSlug(markdown: string): string | undefined {
     try {
@@ -96,7 +98,10 @@ function extractFrontmatterSlug(markdown: string): string | undefined {
         const slug = data.slug;
 
         if (typeof slug === "string" && slug.trim().length > 0) {
-            return slug.trim();
+            const trimmedSlug = slug.trim();
+            if (isValidRelativeSlug(trimmedSlug)) {
+                return trimmedSlug;
+            }
         }
 
         return undefined;
@@ -305,11 +310,14 @@ export async function getPreviewDocsDefinition({
     };
 
     if (docsWorkspace.config.settings?.substituteEnvVars) {
-        docsDefinition = replaceEnvVariables(
-            docsDefinition,
+        // Exclude jsFiles from env var substitution to avoid conflicts with JS/TS template literals
+        const { jsFiles, ...docsWithoutJsFiles } = docsDefinition;
+        const substitutedDocs = replaceEnvVariables(
+            docsWithoutJsFiles,
             { onError: (e) => context.logger.error(e ?? "Unknown error during environment variable substitution") },
             { substituteAsEmpty: true }
         );
+        docsDefinition = { ...substitutedDocs, jsFiles };
     }
 
     return docsDefinition;

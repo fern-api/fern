@@ -9,7 +9,7 @@ import * as errors from "../../../../errors/index.js";
 import type * as SeedPagination from "../../../index.js";
 
 export declare namespace UsersClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
@@ -846,6 +846,77 @@ export class UsersClient {
         );
         const dataWithRawResponse = await list(request).withRawResponse();
         return new core.Page<string, SeedPagination.UsernameCursor>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.cursor.after != null &&
+                !(typeof response?.cursor.after === "string" && response?.cursor.after === ""),
+            getItems: (response) => response?.cursor.data ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "starting_after", response?.cursor.after));
+            },
+        });
+    }
+
+    /**
+     * @param {SeedPagination.ListUsernamesWithOptionalResponseRequest} request
+     * @param {UsersClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.users.listUsernamesWithOptionalResponse({
+     *         starting_after: "starting_after"
+     *     })
+     */
+    public async listUsernamesWithOptionalResponse(
+        request: SeedPagination.ListUsernamesWithOptionalResponseRequest = {},
+        requestOptions?: UsersClient.RequestOptions,
+    ): Promise<core.Page<string, SeedPagination.UsernameCursor | undefined>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: SeedPagination.ListUsernamesWithOptionalResponseRequest,
+            ): Promise<core.WithRawResponse<SeedPagination.UsernameCursor | undefined>> => {
+                const { starting_after: startingAfter } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (startingAfter != null) {
+                    _queryParams.starting_after = startingAfter;
+                }
+                const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    this._options?.headers,
+                    requestOptions?.headers,
+                );
+                const _response = await core.fetcher({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (await core.Supplier.get(this._options.environment)),
+                        "/users",
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+                    maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                    fetchFn: this._options?.fetch,
+                    logging: this._options.logging,
+                });
+                if (_response.ok) {
+                    return {
+                        data: _response.body as SeedPagination.UsernameCursor | undefined,
+                        rawResponse: _response.rawResponse,
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    throw new errors.SeedPaginationError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+                }
+                return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/users");
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Page<string, SeedPagination.UsernameCursor | undefined>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>

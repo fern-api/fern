@@ -9,6 +9,8 @@ export * from "./TestConfiguration";
 export * from "./LocalBuildInfo";
 export * from "./BuildScripts";
 export * from "./DockerCommand";
+export * from "./ScriptCommands";
+export * from "./ScriptCommandsByPhase";
 export * from "./Script";
 export * from "./ContainerScriptConfig";
 export * from "./Language";

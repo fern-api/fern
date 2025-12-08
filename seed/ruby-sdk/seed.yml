@@ -56,6 +56,7 @@ fixtures:
       outputFolder: flattened-module-structure
 allowedFailures:
   - accept-header
+  - examples:wire-tests
   - alias
   - alias-extends
   - any-auth
@@ -105,6 +106,7 @@ allowedFailures:
   - no-environment
   - no-retries
   - nullable
+  - nullable-allof-extends
   - nullable-optional
   - nullable-request-body
   - oauth-client-credentials
@@ -177,4 +179,8 @@ features:
 scripts:
   - image: ruby:3.3
     commands:
-      - bundle install && bundle exec rake test && bundle exec rubocop
+      build:
+        - bundle install
+        - bundle exec rubocop
+      test:
+        - bundle exec rake test

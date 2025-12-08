@@ -25,6 +25,7 @@ use Seed\Users\Requests\ListUsersExtendedRequestForOptionalData;
 use Seed\Users\Types\ListUsersExtendedOptionalListResponse;
 use Seed\Users\Requests\ListUsernamesRequest;
 use Seed\Types\UsernameCursor;
+use Seed\Users\Requests\ListUsernamesWithOptionalResponseRequest;
 use Seed\Users\Requests\ListWithGlobalConfigRequest;
 use Seed\Users\Types\UsernameContainer;
 use Seed\Exceptions\SeedException;
@@ -372,6 +373,32 @@ class UsersClient
             getNextCursor: fn (UsernameCursor $response) => $response?->getCursor()?->getAfter() ?? null,
             /* @phpstan-ignore-next-line */
             getItems: fn (UsernameCursor $response) => $response?->getCursor()?->getData() ?? [],
+        );
+    }
+
+    /**
+     * @param ListUsernamesWithOptionalResponseRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return Pager<string>
+     */
+    public function listUsernamesWithOptionalResponse(ListUsernamesWithOptionalResponseRequest $request = new ListUsernamesWithOptionalResponseRequest(), ?array $options = null): Pager {
+        return new CursorPager(
+            request: $request,
+            getNextPage: fn(ListUsernamesWithOptionalResponseRequest $request) => $this->_listUsernamesWithOptionalResponse($request, $options),
+            setCursor: function (ListUsernamesWithOptionalResponseRequest $request, ?string $cursor) { 
+                $request->setStartingAfter($cursor);
+            },
+            /* @phpstan-ignore-next-line */
+            getNextCursor: fn (?UsernameCursor $response) => $response?->getCursor()?->getAfter() ?? null,
+            /* @phpstan-ignore-next-line */
+            getItems: fn (?UsernameCursor $response) => $response?->getCursor()?->getData() ?? [],
         );
     }
 
@@ -1038,6 +1065,66 @@ class UsersClient
             $statusCode = $response->getStatusCode();
             if ($statusCode >= 200 && $statusCode < 400){
                 $json = $response->getBody()->getContents();
+                return UsernameCursor::fromJson($json);
+            }
+            } catch (JsonException $e) {
+                throw new SeedException(message: "Failed to deserialize response: {$e->getMessage()}", previous: $e);
+        } catch (RequestException $e) {
+            $response = $e->getResponse();
+            if ($response === null){
+                throw new SeedException(message: $e->getMessage(), previous: $e);
+            }
+            throw new SeedApiException(
+                message: "API request failed",
+                statusCode: $response->getStatusCode(),
+                body: $response->getBody()->getContents(),
+            );
+        } catch (ClientExceptionInterface $e) {
+            throw new SeedException(message: $e->getMessage(), previous: $e);
+        }
+        throw new SeedApiException(
+            message: 'API request failed',
+            statusCode: $statusCode,
+            body: $response->getBody()->getContents(),
+        );
+    }
+
+    /**
+     * @param ListUsernamesWithOptionalResponseRequest $request
+     * @param ?array{
+     *   baseUrl?: string,
+     *   maxRetries?: int,
+     *   timeout?: float,
+     *   headers?: array<string, string>,
+     *   queryParameters?: array<string, mixed>,
+     *   bodyProperties?: array<string, mixed>,
+     * } $options
+     * @return ?UsernameCursor
+     * @throws SeedException
+     * @throws SeedApiException
+     */
+    private function _listUsernamesWithOptionalResponse(ListUsernamesWithOptionalResponseRequest $request = new ListUsernamesWithOptionalResponseRequest(), ?array $options = null): ?UsernameCursor {
+        $options = array_merge($this->options, $options ?? []);
+        $query = [];
+        if ($request->getStartingAfter() != null){
+            $query['starting_after'] = $request->getStartingAfter();
+        }
+        try {
+            $response = $this->client->sendRequest(
+                new JsonApiRequest(
+                    baseUrl: $options['baseUrl'] ?? $this->client->options['baseUrl'] ?? '',
+                    path: "/users",
+                    method: HttpMethod::GET,
+                    query: $query,
+                ),
+                $options,
+            );
+            $statusCode = $response->getStatusCode();
+            if ($statusCode >= 200 && $statusCode < 400){
+                $json = $response->getBody()->getContents();
+                if (empty($json)){
+                    return null;
+                }
                 return UsernameCursor::fromJson($json);
             }
             } catch (JsonException $e) {

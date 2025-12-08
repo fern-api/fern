@@ -7,7 +7,7 @@ import * as core from "../../../../core/index.js";
 import * as SeedExhaustive from "../../../index.js";
 
 export declare namespace NoReqBodyClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }

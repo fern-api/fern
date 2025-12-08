@@ -255,7 +255,7 @@ client.service.search_resources(
 <dl>
 <dd>
 
-**filters:** `Internal::Types::Hash[String, Internal::Types::Hash[String, Object]]` 
+**filters:** `Internal::Types::Hash[String, Object]` 
     
 </dd>
 </dl>
@@ -487,7 +487,7 @@ Create a new user
 <dd>
 
 ```ruby
-client.service.create_user({
+client.service.create_user(
   email: 'email',
   email_verified: true,
   username: 'username',
@@ -497,7 +497,7 @@ client.service.create_user({
   user_metadata: {},
   app_metadata: {},
   connection: 'connection'
-});
+);
 ```
 </dd>
 </dl>
@@ -552,18 +552,16 @@ Update a user
 
 ```ruby
 client.service.update_user(
-  'userId',
-  {
-    email: 'email',
-    email_verified: true,
-    username: 'username',
-    phone_number: 'phone_number',
-    phone_verified: true,
-    user_metadata: {},
-    app_metadata: {},
-    password: 'password',
-    blocked: true
-  }
+  user_id: 'userId',
+  email: 'email',
+  email_verified: true,
+  username: 'username',
+  phone_number: 'phone_number',
+  phone_verified: true,
+  user_metadata: {},
+  app_metadata: {},
+  password: 'password',
+  blocked: true
 );
 ```
 </dd>
@@ -626,7 +624,7 @@ Delete a user
 <dd>
 
 ```ruby
-client.service.delete_user('userId');
+client.service.delete_user(user_id: 'userId');
 ```
 </dd>
 </dl>

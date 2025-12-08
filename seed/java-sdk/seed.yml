@@ -265,6 +265,9 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: oauth-client-credentials
+    - customConfig:
+        oauth-token-override: true
+      outputFolder: token-override
   header-auth:
     - customConfig:
         enable-wire-tests: true
@@ -287,6 +290,11 @@ fixtures:
     - customConfig:
         enable-wire-tests: true
       outputFolder: streaming
+  java-optional-nullable-query-params:
+    - customConfig:
+        use-default-request-parameter-values: true
+        collapse-optional-nullable: true
+      outputFolder: default
 scripts:
   - image: fernapi/java-seed
     commands:
@@ -295,7 +303,6 @@ allowedFailures:
   - alias-extends
   - enum:forward-compatible-enums
   - enum:no-custom-config
-  - errors
   - examples:default
   - examples:inline-file-properties
   - examples:no-custom-config
@@ -304,36 +311,27 @@ allowedFailures:
   - exhaustive:publish-to
   - exhaustive:signed_publish
   - extends
-  - inferred-auth-explicit
-  - inferred-auth-implicit
-  - inferred-auth-implicit-no-expiry
   - java-inline-types:no-wrapped-aliases
-  - literal
   - nullable-optional:with-nullable-annotation
   - nullable-optional:collapse-optional-nullable
   - oauth-client-credentials
+  - oauth-client-credentials:token-override
   - oauth-client-credentials-custom
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
   - oauth-client-credentials-nested-root
   - oauth-client-credentials-with-variables
-  - query-parameters-openapi
-  - query-parameters-openapi-as-objects
   - request-parameters
   - streaming-parameter
-  - trace
-  - websocket-inferred-auth
 
   # Snippet failures; many of these failures are due to the fact that a
   # required list of query parameters is not actually required by the builder.
   - any-auth
-  - extra-properties
   - java-inline-types:inline
   - java-inline-types:enable-forward-compatible-enums
   - nullable:wrapped-aliases
   - nullable:no-custom-config
   - pagination-custom
-  - query-parameters
 
   - java-pagination-deep-cursor-path:wire-tests
 

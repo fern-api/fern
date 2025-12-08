@@ -70,6 +70,11 @@ export function replaceEnvVariables<T>(
         return transformed as unknown as T;
     }
 
+    // Handle arrays by recursively processing each element
+    if (Array.isArray(content)) {
+        return content.map((value) => replaceEnvVariables(value, context, options)) as unknown as T;
+    }
+
     if (!isPlainObject(content)) {
         return content;
     }

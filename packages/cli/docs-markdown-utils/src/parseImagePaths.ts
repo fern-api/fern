@@ -511,6 +511,15 @@ function resolvePath(
         return undefined;
     }
 
+    // Reject double-slash paths that aren't valid external URLs (e.g., //cdn.example.com/image.png)
+    if (pathToImage.startsWith("//")) {
+        throw new Error(
+            `Invalid image path "${pathToImage}". ` +
+                `Paths starting with "//" are reserved for external URLs (e.g., //cdn.example.com/image.png). ` +
+                `For local files, use "/${pathToImage.slice(2)}" or a relative path instead.`
+        );
+    }
+
     const filepath = resolve(
         pathToImage.startsWith("/") ? absolutePathToFernFolder : dirname(absolutePathToMarkdownFile),
         RelativeFilePath.of(pathToImage.replace(/^\//, ""))
@@ -520,7 +529,26 @@ function resolvePath(
 }
 
 function isExternalUrl(url: string): boolean {
-    return /^(https?:)?\/\//.test(url);
+    // Match URLs that start with http:// or https://
+    if (/^https?:\/\//.test(url)) {
+        return true;
+    }
+    // Match protocol-relative URLs that have a valid host (e.g., //cdn.example.com/image.png)
+    // A valid host must contain at least one dot (e.g., example.com) or be localhost
+    // This prevents treating paths like //assets/images/logo.png as external URLs
+    if (url.startsWith("//")) {
+        const afterSlashes = url.slice(2);
+        const hostPart = afterSlashes.split("/")[0] ?? "";
+        // Check if it looks like a valid host (contains a dot or is localhost)
+        if (hostPart.includes(".") || hostPart.startsWith("localhost")) {
+            return true;
+        }
+    }
+    return false;
+}
+
+export function isValidRelativeSlug(slug: string): boolean {
+    return !isExternalUrl(slug);
 }
 
 function isWindowsAbsolutePath(path: string): boolean {

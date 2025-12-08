@@ -75,7 +75,7 @@ def test_json_body_preserves_none_values() -> None:
 
 def test_data_body_preserves_none_values_without_multipart() -> None:
     """Test that data bodies preserve None values when not using multipart.
-    
+
     The filtering of None values happens in HttpClient.request/stream methods,
     not in get_request_body. This test verifies get_request_body doesn't filter None.
     """

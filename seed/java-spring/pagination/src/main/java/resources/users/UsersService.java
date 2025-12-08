@@ -118,5 +118,12 @@ public interface UsersService {
       value = "",
       produces = "application/json"
   )
+  Optional<UsernameCursor> listUsernamesWithOptionalResponse(
+      @RequestParam("starting_after") Optional<String> startingAfter);
+
+  @GetMapping(
+      value = "",
+      produces = "application/json"
+  )
   UsernameContainer listWithGlobalConfig(@RequestParam("offset") Optional<Integer> offset);
 }

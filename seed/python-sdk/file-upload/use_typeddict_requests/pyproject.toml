@@ -1,5 +1,6 @@
 [project]
 name = "fern_file-upload"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_file-upload"

@@ -1,5 +1,6 @@
 [project]
 name = "fern_package-yml"
+dynamic = ["version"]
 
 [tool.poetry]
 name = "fern_package-yml"

@@ -21,9 +21,10 @@ module Seed
       # @return [String]
       def get_dummy(request_options: {}, **_params)
         request = Seed::Internal::JSON::Request.new(
-          base_url: request_options[:base_url] || Seed::Environment::PRODUCTION,
+          base_url: request_options[:base_url],
           method: "GET",
-          path: "dummy"
+          path: "dummy",
+          request_options: request_options
         )
         begin
           response = @client.send(request)

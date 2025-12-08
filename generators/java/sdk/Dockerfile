@@ -13,12 +13,14 @@ FROM gradle:jdk11-jammy
 # CVE-2022-4065: testng 6.3.1
 # CVE-2025-48924: commons-lang 2.6, commons-lang3 3.14.0
 # CVE-2020-36843: eddsa 0.3.0
+# CVE-2020-29582: kotlin-stdlib (insecure temp file/folder creation in versions < 1.4.21)
 RUN rm -f /opt/gradle/lib/plugins/org.eclipse.jgit-*.jar \
        /opt/gradle/lib/plugins/org.eclipse.jgit.ssh.apache-*.jar \
        /opt/gradle/lib/plugins/testng-*.jar \
        /opt/gradle/lib/commons-lang-*.jar \
        /opt/gradle/lib/commons-lang3-*.jar \
-       /opt/gradle/lib/plugins/eddsa-*.jar
+       /opt/gradle/lib/plugins/eddsa-*.jar \
+       /opt/gradle/lib/kotlin-stdlib-*.jar
 
 # Remove vulnerable packages not needed at runtime
 # CVE-2025-8291, CVE-2025-6075: python3.10 zipfile/expandvars vulnerabilities
@@ -54,7 +56,7 @@ RUN cd / \
     && tar -xvf sdk.tar \
     && rm -rf sdk.tar
 
-ENV JAVA_TOOL_OPTIONS="-Dfile.encoding=UTF8"
+ENV JAVA_TOOL_OPTIONS="-Xmx4g -Dfile.encoding=UTF8"
 
 # Copy over node contents to be able to run the compiled CLI
 COPY --from=node /usr/local/bin/node /usr/local/bin/

@@ -13,7 +13,7 @@
 <dd>
 
 ```ruby
-client.organizations.get_organization('organization_id');
+client.organizations.get_organization(organization_id: 'organization_id');
 ```
 </dd>
 </dl>
@@ -228,10 +228,10 @@ client.user.get_user(user_id: 'user_id');
 <dd>
 
 ```ruby
-client.user.create_user({
+client.user.create_user(
   name: 'name',
   tags: ['tags', 'tags']
-});
+);
 ```
 </dd>
 </dl>

@@ -226,9 +226,23 @@ class GemspecFile {
         this.context = context;
     }
 
+    private getExtraDependenciesString(): string {
+        const extraDependencies = this.context.customConfig.extraDependencies;
+        if (extraDependencies == null || Object.keys(extraDependencies).length === 0) {
+            return "";
+        }
+
+        const dependencyLines = Object.entries(extraDependencies).map(
+            ([packageName, versionConstraint]) => `spec.add_dependency "${packageName}", "${versionConstraint}"`
+        );
+
+        return "\n" + dependencyLines.join("\n");
+    }
+
     public async toString(): Promise<string> {
         const moduleFolderName = this.context.getRootFolderName();
         const moduleName = this.context.getRootModuleName();
+        const extraDependenciesString = this.getExtraDependenciesString();
 
         return dedent`
             # frozen_string_literal: true
@@ -259,10 +273,7 @@ class GemspecFile {
             spec.bindir = "exe"
             spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
             spec.require_paths = ["lib"]
-
-            # Uncomment to register a new dependency of your gem
-            # spec.add_dependency "example-gem", "~> 1.0"
-
+${extraDependenciesString}
             # For more information and examples about making a new gem, check out our
             # guide at: https://bundler.io/guides/creating_gem.html
             
@@ -325,7 +336,22 @@ class Gemfile {
         this.context = context;
     }
 
+    private getExtraDevDependenciesString(): string {
+        const extraDevDependencies = this.context.customConfig.extraDevDependencies;
+        if (extraDevDependencies == null || Object.keys(extraDevDependencies).length === 0) {
+            return "";
+        }
+
+        const dependencyLines = Object.entries(extraDevDependencies).map(
+            ([packageName, versionConstraint]) => `gem "${packageName}", "${versionConstraint}"`
+        );
+
+        return "\n" + dependencyLines.join("\n");
+    }
+
     public async toString(): Promise<string> {
+        const extraDevDependenciesString = this.getExtraDevDependenciesString();
+
         return dedent`
             # frozen_string_literal: true
 
@@ -345,6 +371,7 @@ class Gemfile {
                 gem "pry"
 
                 gem "webmock"
+${extraDevDependenciesString}
             end
 
             # Load custom Gemfile configuration if it exists
@@ -593,7 +620,12 @@ class ModuleFile {
         });
 
         rubyFilePaths.forEach((filePath) => {
-            relativeImportPaths.add(relative(this.filePath, filePath));
+            // Filter out test files from requires - they should not be loaded in the main lib file
+            const relativePath = relative(this.filePath, filePath);
+            if (relativePath.includes("/test/") || relativePath.startsWith("test/")) {
+                return;
+            }
+            relativeImportPaths.add(relativePath);
         });
 
         const contents =

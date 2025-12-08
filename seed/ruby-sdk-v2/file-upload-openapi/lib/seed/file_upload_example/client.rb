@@ -36,7 +36,8 @@ module Seed
           base_url: request_options[:base_url],
           method: "POST",
           path: "upload-file",
-          body: body
+          body: body,
+          request_options: request_options
         )
         begin
           response = @client.send(request)

@@ -1,5 +1,21 @@
 # yaml-language-server: $schema=../../../fern-versions-yml.schema.json
 
+- version: 1.25.0
+  changelogEntry:
+    - summary: |
+        Add support for custom pagination in PHP SDK. The generator now handles custom pagination endpoints by generating a CustomPager class that users can extend to implement their own pagination logic. The CustomPager provides access to the initial response and client instance for making subsequent requests. The class name can be customized via the `custom-pager-classname` configuration option.
+      type: feat
+  createdAt: "2025-12-03"
+  irVersion: 62
+
+- version: 1.24.2
+  changelogEntry:
+    - summary: |
+        Fix php-cs-fixer creating .php-cs-fixer.dist.php config files in subdirectories during generation. The interactive prompt was causing config files with @auto ruleset to be created, which then failed when running from subdirectories without composer.json. Added --no-interaction flag to prevent this behavior.
+      type: fix
+  createdAt: "2025-12-03"
+  irVersion: 62
+
 - version: 1.24.1
   changelogEntry:
     - summary: |
@@ -179,7 +195,7 @@
 - version: 1.18.3
   changelogEntry:
     - summary: |
-        Fix duplicate logging in PHP SDK generator by including class names in log messages. Previously, multiple types in the same directory would log identical "Generating {directory}" messages, causing log spam. Now each type logs a unique "Generating {directory}/{className}" message.
+        Fix duplicate logging in PHP SDK generator by including class names in log messages. Previously, multiple types in the same directory would log identical "Generating `{directory}`" messages, causing log spam. Now each type logs a unique "Generating `{directory}/{className}`" message.
       type: fix
   createdAt: "2025-11-20"
   irVersion: 61

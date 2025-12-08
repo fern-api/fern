@@ -22,6 +22,7 @@ interface EndpointWithRequest {
 
 export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private static readonly ABORTING_REQUESTS_FEATURE_ID: FernGeneratorCli.FeatureId = "ABORTING_REQUESTS";
+    private static readonly AUTHENTICATION_FEATURE_ID: FernGeneratorCli.FeatureId = "AUTHENTICATION";
     private static readonly EXCEPTION_HANDLING_FEATURE_ID: FernGeneratorCli.FeatureId = "EXCEPTION_HANDLING";
     private static readonly REQUEST_AND_RESPONSE_TYPES_FEATURE_ID: FernGeneratorCli.FeatureId =
         "REQUEST_AND_RESPONSE_TYPES";
@@ -40,6 +41,7 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
     private readonly context: SdkContext;
     private readonly isPaginationEnabled: boolean;
     private readonly generateSubpackageExports: boolean;
+    private readonly oauthTokenOverride: boolean;
     private readonly endpoints: Record<EndpointId, EndpointWithFilepath> = {};
     private readonly snippets: Record<EndpointId, string> = {};
     private readonly defaultEndpointId: EndpointId;
@@ -53,18 +55,21 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         context,
         endpointSnippets,
         fileResponseType,
-        generateSubpackageExports
+        generateSubpackageExports,
+        oauthTokenOverride
     }: {
         context: SdkContext;
         endpointSnippets: FernGeneratorExec.Endpoint[];
         fileResponseType: "stream" | "binary-response";
         generateSubpackageExports: boolean;
+        oauthTokenOverride: boolean;
     }) {
         super({ endpointSnippets });
         this.context = context;
         this.fileResponseType = fileResponseType;
         this.isPaginationEnabled = context.config.generatePaginatedClients ?? false;
         this.generateSubpackageExports = generateSubpackageExports;
+        this.oauthTokenOverride = oauthTokenOverride;
 
         this.endpoints = this.buildEndpoints();
         this.snippets = this.buildSnippets(endpointSnippets);
@@ -78,13 +83,14 @@ export class ReadmeSnippetBuilder extends AbstractReadmeSnippetBuilder {
         this.genericAPISdkErrorName = this.getGenericApiSdkErrorName();
     }
 
-    public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[]> {
-        const snippets: Record<FernGeneratorCli.FeatureId, string[]> = {};
+    public buildReadmeSnippets(): Record<FernGeneratorCli.FeatureId, string[] | false> {
+        const snippets: Record<FernGeneratorCli.FeatureId, string[] | false> = {};
         snippets[FernGeneratorCli.StructuredFeatureId.Usage] = this.buildUsageSnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Retries] = this.buildRetrySnippets();
         snippets[FernGeneratorCli.StructuredFeatureId.Timeouts] = this.buildTimeoutSnippets();
 
         snippets[ReadmeSnippetBuilder.ABORTING_REQUESTS_FEATURE_ID] = this.buildAbortSignalSnippets();
+        snippets[ReadmeSnippetBuilder.AUTHENTICATION_FEATURE_ID] = this.buildAuthenticationSnippets();
         snippets[ReadmeSnippetBuilder.EXCEPTION_HANDLING_FEATURE_ID] = this.buildExceptionHandlingSnippets();
         snippets[ReadmeSnippetBuilder.RUNTIME_COMPATIBILITY_FEATURE_ID] = this.buildRuntimeCompatibilitySnippets();
         snippets[ReadmeSnippetBuilder.STREAMING_RESPONSE_FEATURE_ID] = this.buildStreamingSnippets();
@@ -463,6 +469,46 @@ const ${this.clientVariableName} = new ${this.rootClientConstructorName}({
 `
             )
         ];
+    }
+
+    private buildAuthenticationSnippets(): string[] | false {
+        // Return false to explicitly skip snippets - the full description is built in buildAuthenticationDescription()
+        return false;
+    }
+
+    public buildAuthenticationDescription(): string | undefined {
+        // Only show authentication section when OAuth token override is enabled
+        if (!this.oauthTokenOverride) {
+            return undefined;
+        }
+
+        const oauthScheme = this.context.ir.auth.schemes.find((scheme) => scheme.type === "oauth");
+        if (oauthScheme == null) {
+            return undefined;
+        }
+
+        return (
+            "The SDK supports OAuth authentication with two options:\n\n" +
+            "**Option 1: OAuth Client Credentials Flow**\n\n" +
+            "Use this when you want the SDK to automatically handle OAuth token retrieval and refreshing:\n\n" +
+            "```typescript\n" +
+            `import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";\n\n` +
+            `const ${this.clientVariableName} = new ${this.rootClientConstructorName}({\n` +
+            `    clientId: "YOUR_CLIENT_ID",\n` +
+            `    clientSecret: "YOUR_CLIENT_SECRET",\n` +
+            `    ...\n` +
+            `});\n` +
+            "```\n\n" +
+            "**Option 2: Token Override**\n\n" +
+            "Use this when you already have a valid bearer token and want to skip the OAuth flow:\n\n" +
+            "```typescript\n" +
+            `import { ${this.rootClientConstructorName} } from "${this.rootPackageName}";\n\n` +
+            `const ${this.clientVariableName} = new ${this.rootClientConstructorName}({\n` +
+            `    token: "my-pre-generated-bearer-token",\n` +
+            `    ...\n` +
+            `});\n` +
+            "```"
+        );
     }
 
     private buildRuntimeCompatibilitySnippets(): string[] {

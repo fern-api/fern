@@ -25,7 +25,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "PUT",
-          path: "/sysprop/num-warm-instances/#{params[:language]}/#{params[:num_warm_instances]}"
+          path: "/sysprop/num-warm-instances/#{params[:language]}/#{params[:num_warm_instances]}",
+          request_options: request_options
         )
         begin
           response = @client.send(request)
@@ -52,7 +53,8 @@ module Seed
         request = Seed::Internal::JSON::Request.new(
           base_url: request_options[:base_url] || Seed::Environment::PROD,
           method: "GET",
-          path: "/sysprop/num-warm-instances"
+          path: "/sysprop/num-warm-instances",
+          request_options: request_options
         )
         begin
           response = @client.send(request)

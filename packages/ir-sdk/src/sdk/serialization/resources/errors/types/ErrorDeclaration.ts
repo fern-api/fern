@@ -9,6 +9,7 @@ import { DeclaredErrorName } from "./DeclaredErrorName";
 import { NameAndWireValue } from "../../commons/types/NameAndWireValue";
 import { ExampleError } from "./ExampleError";
 import { V2SchemaExamples } from "../../examples/types/V2SchemaExamples";
+import { HttpHeader } from "../../http/types/HttpHeader";
 import { WithDocs } from "../../commons/types/WithDocs";
 
 export const ErrorDeclaration: core.serialization.ObjectSchema<
@@ -24,6 +25,7 @@ export const ErrorDeclaration: core.serialization.ObjectSchema<
         isWildcardStatusCode: core.serialization.boolean().optional(),
         examples: core.serialization.list(ExampleError),
         v2Examples: V2SchemaExamples.optional(),
+        headers: core.serialization.list(HttpHeader).optional(),
     })
     .extend(WithDocs);
 
@@ -37,5 +39,6 @@ export declare namespace ErrorDeclaration {
         isWildcardStatusCode?: boolean | null;
         examples: ExampleError.Raw[];
         v2Examples?: V2SchemaExamples.Raw | null;
+        headers?: HttpHeader.Raw[] | null;
     }
 }
