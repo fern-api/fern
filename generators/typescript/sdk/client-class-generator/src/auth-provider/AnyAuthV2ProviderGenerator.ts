@@ -16,6 +16,7 @@ export declare namespace AnyAuthV2ProviderGenerator {
 const CLASS_NAME = "AnyAuthProvider";
 const AUTH_OPTIONS_TYPE_NAME = "AuthOptions";
 const AUTH_FIELD_NAME = "auth";
+const DELEGATE_FIELD_NAME = "delegate";
 
 export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
     public static readonly CLASS_NAME = CLASS_NAME;
@@ -63,8 +64,16 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
     }
 
     public writeToFile(context: SdkContext): void {
+        this.addImports(context);
         this.writeAuthOptionsType(context);
         this.writeClass(context);
+    }
+
+    private addImports(_context: SdkContext): void {
+        _context.sourceFile.addImportDeclaration({
+            moduleSpecifier: "../core/index.js",
+            namespaceImport: "core"
+        });
     }
 
     private getAuthSchemeKey(authScheme: FernIr.AuthScheme): string {
@@ -90,7 +99,6 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
 
         for (const authScheme of authSchemes) {
             const schemeKey = this.getAuthSchemeKey(authScheme);
-            const memberName = `${schemeKey}Auth`;
 
             switch (authScheme.type) {
                 case "bearer": {
@@ -98,9 +106,11 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
                     const hasTokenEnv = authScheme.tokenEnvVar != null;
                     const isOptional = !this.ir.sdkConfig.isAuthMandatory || hasTokenEnv;
                     const optionalMarker = isOptional ? "?" : "";
-                    unionMembers.push(
-                        `{ type: "${schemeKey}"; ${tokenName}${optionalMarker}: ${getTextOfTsNode(context.coreUtilities.auth.BearerToken._getReferenceToType())} | (() => ${getTextOfTsNode(context.coreUtilities.auth.BearerToken._getReferenceToType())}) | (() => Promise<${getTextOfTsNode(context.coreUtilities.auth.BearerToken._getReferenceToType())}>); }`
+                    const tokenType = context.coreUtilities.auth.BearerToken._getReferenceToType();
+                    const supplierType = getTextOfTsNode(
+                        context.coreUtilities.fetcher.Supplier._getReferenceToType(tokenType)
                     );
+                    unionMembers.push(`{ type: "${schemeKey}"; ${tokenName}${optionalMarker}: ${supplierType}; }`);
                     break;
                 }
                 case "basic": {
@@ -112,8 +122,12 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
                     const isPasswordOptional = !this.ir.sdkConfig.isAuthMandatory || hasPasswordEnv;
                     const usernameOptional = isUsernameOptional ? "?" : "";
                     const passwordOptional = isPasswordOptional ? "?" : "";
+                    const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+                    const supplierType = getTextOfTsNode(
+                        context.coreUtilities.fetcher.Supplier._getReferenceToType(stringType)
+                    );
                     unionMembers.push(
-                        `{ type: "${schemeKey}"; ${usernameName}${usernameOptional}: string | (() => string) | (() => Promise<string>); ${passwordName}${passwordOptional}: string | (() => string) | (() => Promise<string>); }`
+                        `{ type: "${schemeKey}"; ${usernameName}${usernameOptional}: ${supplierType}; ${passwordName}${passwordOptional}: ${supplierType}; }`
                     );
                     break;
                 }
@@ -122,14 +136,16 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
                     const hasHeaderEnv = authScheme.headerEnvVar != null;
                     const isOptional = !this.ir.sdkConfig.isAuthMandatory || hasHeaderEnv;
                     const optionalMarker = isOptional ? "?" : "";
-                    unionMembers.push(
-                        `{ type: "${schemeKey}"; ${headerName}${optionalMarker}: string | (() => string) | (() => Promise<string>); }`
+                    const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+                    const supplierType = getTextOfTsNode(
+                        context.coreUtilities.fetcher.Supplier._getReferenceToType(stringType)
                     );
+                    unionMembers.push(`{ type: "${schemeKey}"; ${headerName}${optionalMarker}: ${supplierType}; }`);
                     break;
                 }
                 case "oauth": {
                     const config = authScheme.configuration;
-                    if (config.type === "clientCredentials") {
+                    if (config.type === "clientCredentials" && context.generateOAuthClients) {
                         const clientIdName = "clientId";
                         const clientSecretName = "clientSecret";
                         const hasClientIdEnv = config.clientIdEnvVar != null;
@@ -138,8 +154,12 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
                         const isClientSecretOptional = !this.ir.sdkConfig.isAuthMandatory || hasClientSecretEnv;
                         const clientIdOptional = isClientIdOptional ? "?" : "";
                         const clientSecretOptional = isClientSecretOptional ? "?" : "";
+                        const stringType = ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword);
+                        const supplierType = getTextOfTsNode(
+                            context.coreUtilities.fetcher.Supplier._getReferenceToType(stringType)
+                        );
                         unionMembers.push(
-                            `{ type: "${schemeKey}"; ${clientIdName}${clientIdOptional}: string; ${clientSecretName}${clientSecretOptional}: string; }`
+                            `{ type: "${schemeKey}"; ${clientIdName}${clientIdOptional}: ${supplierType}; ${clientSecretName}${clientSecretOptional}: ${supplierType}; }`
                         );
                     }
                     break;
@@ -154,13 +174,12 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
         }
 
         const unionTypeStr = unionMembers.join(" | ");
-        const isAuthMandatory = this.ir.sdkConfig.isAuthMandatory;
 
         context.sourceFile.addModule({
             name: CLASS_NAME,
             isExported: true,
             kind: StructureKind.Module,
-            statements: `export type ${AUTH_OPTIONS_TYPE_NAME} = { ${AUTH_FIELD_NAME}${isAuthMandatory ? "" : "?"}: ${unionTypeStr} };`
+            statements: `export type ${AUTH_OPTIONS_TYPE_NAME} = { ${AUTH_FIELD_NAME}: ${unionTypeStr} };`
         });
     }
 
@@ -173,8 +192,8 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
             implements: [getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType())],
             properties: [
                 {
-                    name: AUTH_FIELD_NAME,
-                    type: `${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}["${AUTH_FIELD_NAME}"]`,
+                    name: DELEGATE_FIELD_NAME,
+                    type: getTextOfTsNode(context.coreUtilities.auth.AuthProvider._getReferenceToType()),
                     hasQuestionToken: false,
                     isReadonly: true,
                     scope: Scope.Private
@@ -188,7 +207,7 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
                             type: `${CLASS_NAME}.${AUTH_OPTIONS_TYPE_NAME}["${AUTH_FIELD_NAME}"]`
                         }
                     ],
-                    statements: [`this.${AUTH_FIELD_NAME} = ${AUTH_FIELD_NAME};`]
+                    statements: this.generateConstructorStatements(context, authSchemes)
                 }
             ],
             methods: [
@@ -218,17 +237,13 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
                             context.coreUtilities.auth.AuthRequest._getReferenceToType()
                         ])
                     ),
-                    statements: this.generateGetAuthRequestStatements(context, authSchemes)
+                    statements: `return this.${DELEGATE_FIELD_NAME}.getAuthRequest(arg);`
                 }
             ]
         });
     }
 
-    private generateGetAuthRequestStatements(context: SdkContext, authSchemes: FernIr.AuthScheme[]): string {
-        const errorHandling = this.ir.sdkConfig.isAuthMandatory
-            ? `throw new Error("No authentication credentials provided. Please provide one of the supported authentication methods.");`
-            : `return { headers: {} };`;
-
+    private generateConstructorStatements(_context: SdkContext, authSchemes: FernIr.AuthScheme[]): string {
         const switchCases: string[] = [];
 
         for (const authScheme of authSchemes) {
@@ -240,14 +255,18 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
                     const tokenEnvVar = authScheme.tokenEnvVar;
                     const tokenFallback = tokenEnvVar != null ? ` ?? process.env?.["${tokenEnvVar}"]` : "";
                     switchCases.push(`
-                case "${schemeKey}": {
-                    const tokenValue = this.${AUTH_FIELD_NAME}.${tokenName};
-                    const token = typeof tokenValue === "function" ? await tokenValue() : tokenValue${tokenFallback};
-                    if (token != null) {
-                        return { headers: { Authorization: \`Bearer \${token}\` } };
+            case "${schemeKey}":
+                this.${DELEGATE_FIELD_NAME} = {
+                    getAuthRequest: async (): Promise<core.AuthRequest> => {
+                        const tokenValue = ${AUTH_FIELD_NAME}.${tokenName};
+                        const token = await core.Supplier.get(tokenValue)${tokenFallback};
+                        if (token != null) {
+                            return { headers: { Authorization: \`Bearer \${token}\` } };
+                        }
+                        return { headers: {} };
                     }
-                    break;
-                }`);
+                };
+                break;`);
                     break;
                 }
                 case "basic": {
@@ -258,17 +277,21 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
                     const usernameFallback = usernameEnvVar != null ? ` ?? process.env?.["${usernameEnvVar}"]` : "";
                     const passwordFallback = passwordEnvVar != null ? ` ?? process.env?.["${passwordEnvVar}"]` : "";
                     switchCases.push(`
-                case "${schemeKey}": {
-                    const usernameValue = this.${AUTH_FIELD_NAME}.${usernameName};
-                    const passwordValue = this.${AUTH_FIELD_NAME}.${passwordName};
-                    const username = typeof usernameValue === "function" ? await usernameValue() : usernameValue${usernameFallback};
-                    const password = typeof passwordValue === "function" ? await passwordValue() : passwordValue${passwordFallback};
-                    if (username != null && password != null) {
-                        const credentials = Buffer.from(\`\${username}:\${password}\`).toString("base64");
-                        return { headers: { Authorization: \`Basic \${credentials}\` } };
+            case "${schemeKey}":
+                this.${DELEGATE_FIELD_NAME} = {
+                    getAuthRequest: async (): Promise<core.AuthRequest> => {
+                        const usernameValue = ${AUTH_FIELD_NAME}.${usernameName};
+                        const passwordValue = ${AUTH_FIELD_NAME}.${passwordName};
+                        const username = await core.Supplier.get(usernameValue)${usernameFallback};
+                        const password = await core.Supplier.get(passwordValue)${passwordFallback};
+                        if (username != null && password != null) {
+                            const credentials = Buffer.from(\`\${username}:\${password}\`).toString("base64");
+                            return { headers: { Authorization: \`Basic \${credentials}\` } };
+                        }
+                        return { headers: {} };
                     }
-                    break;
-                }`);
+                };
+                break;`);
                     break;
                 }
                 case "header": {
@@ -278,25 +301,25 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
                     const headerFallback = headerEnvVar != null ? ` ?? process.env?.["${headerEnvVar}"]` : "";
                     const prefix = authScheme.prefix != null ? `"${authScheme.prefix} " + ` : "";
                     switchCases.push(`
-                case "${schemeKey}": {
-                    const headerValue = this.${AUTH_FIELD_NAME}.${headerName};
-                    const header = typeof headerValue === "function" ? await headerValue() : headerValue${headerFallback};
-                    if (header != null) {
-                        return { headers: { "${headerWireValue}": ${prefix}header } };
+            case "${schemeKey}":
+                this.${DELEGATE_FIELD_NAME} = {
+                    getAuthRequest: async (): Promise<core.AuthRequest> => {
+                        const headerValue = ${AUTH_FIELD_NAME}.${headerName};
+                        const header = await core.Supplier.get(headerValue)${headerFallback};
+                        if (header != null) {
+                            return { headers: { "${headerWireValue}": ${prefix}header } };
+                        }
+                        return { headers: {} };
                     }
-                    break;
-                }`);
+                };
+                break;`);
                     break;
                 }
                 case "oauth": {
-                    const config = authScheme.configuration;
-                    if (config.type === "clientCredentials") {
+                    if (_context.generateOAuthClients) {
                         switchCases.push(`
-                case "${schemeKey}": {
-                    // OAuth client credentials - token should be obtained via the token endpoint
-                    // This is a placeholder - actual OAuth implementation requires token management
-                    throw new Error("OAuth authentication requires token management. Please use the OAuth token endpoint to obtain a token.");
-                }`);
+            case "${schemeKey}":
+                throw new Error("OAuth authentication in AnyAuthProvider v2 is not yet supported. Please use the OAuth token endpoint directly.");`);
                     }
                     break;
                 }
@@ -306,16 +329,15 @@ export class AnyAuthV2ProviderGenerator implements AuthProviderGenerator {
         }
 
         return `
-        if (this.${AUTH_FIELD_NAME} == null) {
-            ${errorHandling}
+        if (${AUTH_FIELD_NAME} == null) {
+            this.${DELEGATE_FIELD_NAME} = new core.NoOpAuthProvider();
+            return;
         }
-
-        switch (this.${AUTH_FIELD_NAME}.type) {
-            ${switchCases.join("\n")}
-            default:
-                ${errorHandling}
-        }
-
-        ${errorHandling}`;
+        switch (${AUTH_FIELD_NAME}.type) {${switchCases.join("")}
+            default: {
+                const _exhaustive: never = ${AUTH_FIELD_NAME};
+                throw new Error(\`Unknown auth type: \${(${AUTH_FIELD_NAME} as any).type}\`);
+            }
+        }`;
     }
 }

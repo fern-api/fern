@@ -1395,6 +1395,8 @@ export class SdkGenerator {
             // Check if we should use v2 (discriminated union) auth
             if (this.config.anyAuth === "v2") {
                 // Generate the AnyAuthProvider (v2 style with discriminated union)
+                // Note: v2 does not generate individual auth providers separately since
+                // the AnyAuthProvider handles all auth logic internally
                 const anyAuthV2ProvidersGenerator = new AuthProvidersGenerator({
                     ir: this.intermediateRepresentation,
                     authScheme: { type: "anyAuthV2" },
