@@ -22,19 +22,30 @@ class SeedOauthClientCredentials:
 
     Parameters
     ----------
+
     base_url : str
         The base url to use for requests from the client.
-
-    client_id : typing.Optional[str]
-    client_secret : typing.Optional[str]
-    token : typing.Optional[str]
-    _token_getter_override : typing.Optional[typing.Callable[[], str]]
+    client_id : str
+        The client identifier used for authentication.
+    client_secret : str
+        The client secret used for authentication.
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
-
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+    httpx_client : typing.Optional[httpx.Client]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
+    # or ...
+
+    base_url : str
+        The base url to use for requests from the client.
+    token : str
+        Authenticate by providing a pre-generated bearer token via 'token'. In this mode, OAuth client credentials are not required.
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
     httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
@@ -175,20 +186,31 @@ class AsyncSeedOauthClientCredentials:
 
     Parameters
     ----------
+
     base_url : str
         The base url to use for requests from the client.
-
-    client_id : typing.Optional[str]
-    client_secret : typing.Optional[str]
-    token : typing.Optional[str]
-    _token_getter_override : typing.Optional[typing.Callable[[], str]]
+    client_id : str
+        The client identifier used for authentication.
+    client_secret : str
+        The client secret used for authentication.
     timeout : typing.Optional[float]
         The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
-
     follow_redirects : typing.Optional[bool]
         Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+    httpx_client : typing.Optional[httpx.Client]
+        The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
-    httpx_client : typing.Optional[httpx.AsyncClient]
+    # or ...
+
+    base_url : str
+        The base url to use for requests from the client.
+    token : str
+        Authenticate by providing a pre-generated bearer token via 'token'. In this mode, OAuth client credentials are not required.
+    timeout : typing.Optional[float]
+        The timeout to be used, in seconds, for requests. By default the timeout is 60 seconds, unless a custom httpx client is used, in which case this default is not enforced.
+    follow_redirects : typing.Optional[bool]
+        Whether the default httpx client follows redirects or not, this is irrelevant if a custom httpx client is passed in.
+    httpx_client : typing.Optional[httpx.Client]
         The httpx client to use for making requests, a preconfigured client is used by default, however this is useful should you want to pass in any custom httpx configuration.
 
     Examples
