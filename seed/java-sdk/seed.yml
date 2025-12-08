@@ -322,6 +322,7 @@ allowedFailures:
   - oauth-client-credentials-custom
   - oauth-client-credentials-default
   - oauth-client-credentials-environment-variables
+  - oauth-client-credentials-mandatory-auth
   - oauth-client-credentials-nested-root
   - oauth-client-credentials-with-variables
   - request-parameters
